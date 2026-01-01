@@ -1,0 +1,2 @@
+D:\VB .Net Project\BookuID\Booku Installer\bin\Release\net8.0-windows\win-x64\publish\Booku Installer.pdb
+D:\VB .Net Project\BookuID\Booku Installer\bin\Release\net8.0-windows\win-x64\publish\Booku Installer.exe

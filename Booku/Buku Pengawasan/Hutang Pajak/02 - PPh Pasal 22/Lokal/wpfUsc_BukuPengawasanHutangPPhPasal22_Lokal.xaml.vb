@@ -1,0 +1,3 @@
+﻿Public Class wpfUsc_BukuPengawasanHutangPPhPasal22_Lokal
+
+End Class

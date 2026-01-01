@@ -1,0 +1,22 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Booku"
+>
+
+    <!-- RichTextBox Dasar -->
+    <Style x:Key="styleRichTextBoxDasar" TargetType="RichTextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="local:RichTextBoxBehavior.KarakterDilarang" Value="True"/>
+    </Style>
+
+    <!-- RichTextBox Form Dialog -->
+    <Style x:Key="styleRichTextBoxFormDialog" BasedOn="{StaticResource styleRichTextBoxDasar}" TargetType="RichTextBox">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Height" Value="Auto" />
+        <Setter Property="Margin" Value="0 3" />
+        <Setter Property="Padding" Value="2 3" />
+    </Style>
+
+</ResourceDictionary>

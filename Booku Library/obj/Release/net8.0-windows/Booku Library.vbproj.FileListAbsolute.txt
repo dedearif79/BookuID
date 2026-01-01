@@ -1,0 +1,12 @@
+D:\VB .Net Project\BookuID\Booku Library\bin\Release\net8.0-windows\bcomm.deps.json
+D:\VB .Net Project\BookuID\Booku Library\bin\Release\net8.0-windows\bcomm.dll
+D:\VB .Net Project\BookuID\Booku Library\bin\Release\net8.0-windows\bcomm.pdb
+D:\VB .Net Project\BookuID\Booku Library\obj\Release\net8.0-windows\Booku Library.GeneratedMSBuildEditorConfig.editorconfig
+D:\VB .Net Project\BookuID\Booku Library\obj\Release\net8.0-windows\Booku Library.AssemblyInfoInputs.cache
+D:\VB .Net Project\BookuID\Booku Library\obj\Release\net8.0-windows\Booku Library.AssemblyInfo.vb
+D:\VB .Net Project\BookuID\Booku Library\obj\Release\net8.0-windows\Booku Library.vbproj.CoreCompileInputs.cache
+D:\VB .Net Project\BookuID\Booku Library\obj\Release\net8.0-windows\bcomm.dll
+D:\VB .Net Project\BookuID\Booku Library\obj\Release\net8.0-windows\refint\bcomm.dll
+D:\VB .Net Project\BookuID\Booku Library\obj\Release\net8.0-windows\bcomm.pdb
+D:\VB .Net Project\BookuID\Booku Library\obj\Release\net8.0-windows\ref\bcomm.dll
+D:\VB .Net Project\BookuID\Booku Library\obj\Release\net8.0-windows\Booku Library.vbproj.AssemblyReference.cache

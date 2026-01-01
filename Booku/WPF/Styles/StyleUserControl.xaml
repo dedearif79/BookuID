@@ -1,0 +1,11 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Panel Dasar -->
+    <Style x:Key="styleUserControlDasar" TargetType="UserControl">
+        <Setter Property="Background" Value="WhiteSmoke"></Setter>
+        <Setter Property="Opacity" Value="1" ></Setter>
+        <Setter Property="Height" Value="450" ></Setter>
+    </Style>
+
+</ResourceDictionary>

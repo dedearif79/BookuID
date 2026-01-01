@@ -1,0 +1,70 @@
+﻿<Window x:Class="wpfWin_InputHutangPPhPasal25"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Input Hutang PPh Pasal 25"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+            <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="111"/>
+                    <ColumnDefinition Width="123"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Tahun"/>
+                <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Masa Pajak"/>
+                <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Nomor BPHP"/>
+                <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Jumlah Terutang"/>
+                <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Keterangan :"/>
+
+                <ComboBox       Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_Tahun"    Width="63"  HorizontalAlignment="Left"   />
+                <ComboBox       Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_MasaPajak"   />
+                <TextBox        Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorBPHP"/>
+                <TextBox        Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_JumlahTerutang"/>
+                <RichTextBox    Grid.Row="5"  Grid.Column="0"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Keterangan"   Grid.ColumnSpan="2"/>
+
+            </Grid>
+
+        </StackPanel>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"   Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogSimpan}"  Name="btn_Simpan" />
+            <Button Style="{StaticResource styleButtonFormDialogBatal}"   Name="btn_Batal" />
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

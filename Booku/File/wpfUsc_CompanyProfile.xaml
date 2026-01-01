@@ -1,0 +1,165 @@
+﻿<UserControl x:Class="wpfUsc_CompanyProfile"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Booku"
+             mc:Ignorable="d" 
+>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <Grid   Margin="27 15" HorizontalAlignment="Stretch">
+
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"  MinWidth="45"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <Grid   Grid.Row="0"    Grid.Column="0" Style="{StaticResource styleGridFormDialog}"    Margin="0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="123"/>
+                    <ColumnDefinition Width="201"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nomor Seri Produk" />
+                <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="ID" />
+                <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nama Perusahaan" />
+                <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Tagline" />
+                <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Jenis Usaha" />
+                <TextBlock  Grid.Row="5"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Jenis WP" />
+                <TextBlock  Grid.Row="6"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="NPWP" />
+                <TextBlock  Grid.Row="7"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nama Direktur" />
+                <TextBlock  Grid.Row="8"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Alamat" />
+                <TextBlock  Grid.Row="9"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Email" />
+                <TextBlock  Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="PIC" />
+                <TextBlock  Grid.Row="11" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nomor SKT" />
+                <TextBlock  Grid.Row="12" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Tanggal SKT" />
+                <TextBlock  Grid.Row="13" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Pemotong PPh" />
+                <TextBlock  Grid.Row="14" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Logo Perusahaan" />
+                <Button     Grid.Row="16" Grid.Column="0"   Margin="7"  Padding="7 5"   Content="Ganti Logo"       Name="btn_GantiLogo" />
+
+                <TextBox        Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorSeriProduk" />
+                <TextBox        Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_IDCustomer" />
+                <TextBox        Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaPerusahaan" />
+                <TextBox        Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_Tagline"  MaxLength="75" />
+                <ComboBox       Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_JenisUsahaPerusahaan"/>
+                <ComboBox       Grid.Row="5"  Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_JenisWPPerusahaan"/>
+                <TextBox        Grid.Row="6"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NPWP" />
+                <TextBox        Grid.Row="7"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaDirektur" />
+                <RichTextBox    Grid.Row="8"  Grid.Column="1"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Alamat" />
+                <TextBox        Grid.Row="9"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_Email" />
+                <TextBox        Grid.Row="10"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_PIC" />
+                <TextBox        Grid.Row="11" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorSKT" />
+                <StackPanel     Grid.Row="12" Grid.Column="1"   Orientation="Horizontal" >
+                    <DatePicker                                 Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalSKT" />
+                    <TextBlock  Text="Kode KPP"                 Style="{StaticResource styleTextBlockFormDialog}"       Margin="8 7 5 7" />
+                    <TextBox    Width="35"  MaxLength="3"       Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_KodeKPP" />
+                </StackPanel>
+                <ComboBox       Grid.Row="13" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_PemotongPPh"  Width="57"  HorizontalAlignment="Left"/>
+                <Image          Grid.Row="14" Grid.Column="1"   Stretch="Uniform"   Height="63"    Margin="0 5 0 0"     Name="img_LogoPerusahaan"   Grid.RowSpan="3"   />
+            </Grid>
+
+            <Grid   Grid.Row="0"    Grid.Column="2" Style="{StaticResource styleGridFormDialog}"    Margin="0" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="201"/>
+                    <ColumnDefinition Width="180"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0"  Grid.Column="0" Orientation="Horizontal">
+                    <CheckBox   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_TanggalExpireApp"/>
+                    <TextBlock  Style="{StaticResource styleTextBlockFormDialog}"       Name="lbl_TanggalExpireApp"     Text="  Tanggal Expire App" />
+                </StackPanel>
+                <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Email Akses djponline" />
+                <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Password Akses djponline" />
+                <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nomor Suket UMKM" />
+                <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Tanggal Suket UMKM" />
+                <StackPanel Grid.Row="5"  Grid.Column="0" Orientation="Horizontal">
+                    <CheckBox   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_TanggalPKP"/>
+                    <TextBlock  Style="{StaticResource styleTextBlockFormDialog}"       Name="lbl_TanggalPKP"       Text="  Tanggal PKP" />
+                </StackPanel>
+                <StackPanel Grid.Row="6"  Grid.Column="0" Orientation="Horizontal">
+                    <CheckBox   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_TanggalExpireSE"/>
+                    <TextBlock  Style="{StaticResource styleTextBlockFormDialog}"       Name="lbl_TanggalExpireSE"  Text="  Tanggal Exp. Sertifikat Elektronik" />
+                </StackPanel>
+                <TextBlock  Grid.Row="7"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Password e-Faktur" />
+                <TextBlock  Grid.Row="8"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Kode Aktivasi" />
+                <TextBlock  Grid.Row="9"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Passphrase" />
+                <StackPanel Grid.Row="10" Grid.Column="0" Orientation="Horizontal">
+                    <CheckBox   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_PJK"/>
+                    <TextBlock  Style="{StaticResource styleTextBlockFormDialog}"       Name="lbl_PJK"     Text="  Perusahaan Jasa Konstruksi" />
+                </StackPanel>
+                <StackPanel Grid.Row="11" Grid.Column="0" Orientation="Horizontal">
+                    <CheckBox   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_TanggalExpireSBU"/>
+                    <TextBlock  Style="{StaticResource styleTextBlockFormDialog}"       Name="lbl_TanggalExpireSBU"     Text="  Tgl. Exp. Sertifikat Badan Usaha" />
+                </StackPanel>
+
+                <DatePicker     Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalExpireApp" />
+                <TextBox        Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_EmailAksesDJPO" />
+                <TextBox        Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_PasswordAksesDJPO" />
+                <TextBox        Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorSuketUMKM" />
+                <DatePicker     Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalSuketUMKM" />
+                <DatePicker     Grid.Row="5"  Grid.Column="1"   Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalPKP" />
+                <DatePicker     Grid.Row="6"  Grid.Column="1"   Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalExpireSE" />
+                <TextBox        Grid.Row="7"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_Password_eFaktur" />
+                <TextBox        Grid.Row="8"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_KodeAktivasi" />
+                <TextBox        Grid.Row="9"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_Passphrase" />
+                <ComboBox       Grid.Row="10" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_LevelPJK"/>
+                <DatePicker     Grid.Row="11" Grid.Column="1"   Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalExpireSBU" />
+                <Button         Grid.Row="14" Grid.Column="1"   Style="{StaticResource styleButtonFormDialogSimpanPerubahan}"    Name="btn_Simpan"  Margin="0 63 0 0" />
+            </Grid>
+
+
+        </Grid>
+
+    </StackPanel>
+    
+</UserControl>

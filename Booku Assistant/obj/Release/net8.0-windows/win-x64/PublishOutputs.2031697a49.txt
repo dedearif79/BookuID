@@ -1,0 +1,2 @@
+d:\VB .Net Project\BookuID\Booku Assistant\bin\Release\net8.0-windows\win-x64\publish\Booku Assistant.pdb
+d:\VB .Net Project\BookuID\Booku Assistant\bin\Release\net8.0-windows\win-x64\publish\Booku Assistant.exe

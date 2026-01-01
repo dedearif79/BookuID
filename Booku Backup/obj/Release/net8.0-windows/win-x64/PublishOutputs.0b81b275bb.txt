@@ -1,0 +1,2 @@
+D:\VB .Net Project\BookuID\Booku Backup\bin\Release\net8.0-windows\win-x64\publish\Booku Backup.pdb
+D:\VB .Net Project\BookuID\Booku Backup\bin\Release\net8.0-windows\win-x64\publish\Booku Backup.exe

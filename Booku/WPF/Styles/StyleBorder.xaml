@@ -1,0 +1,38 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Border Dasar -->
+    <Style x:Key="styleBorderDasar" TargetType="Border">
+        <Setter Property="BorderBrush" Value="Gray" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+
+    <!-- Border - Label NOTA -->
+    <Style x:Key="styleBorderLabelNota" BasedOn="{StaticResource styleBorderDasar}" TargetType="Border" >
+        <Setter Property="BorderBrush" Value="Gray" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="0 0 15 0" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Width" Value="237" />
+    </Style>
+
+    <!-- Border - Header - Separator Tombol -->
+    <Style x:Key="styleBorderHeaderSeparatorTombol" BasedOn="{StaticResource styleBorderDasar}" TargetType="Border" >
+        <Setter Property="BorderBrush" Value="LightGray" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="3 0 12 0" />
+        <Setter Property="Width" Value="1" />
+    </Style>
+
+    <!-- Border - Header - Separator Filter -->
+    <Style x:Key="styleBorderHeaderSeparatorFilter" BasedOn="{StaticResource styleBorderDasar}" TargetType="Border" >
+        <Setter Property="BorderBrush" Value="LightGray" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Margin" Value="3 9 12 -1" />
+        <Setter Property="Width" Value="1" />
+    </Style>
+
+</ResourceDictionary>

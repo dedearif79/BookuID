@@ -1,0 +1,107 @@
+﻿<Window x:Class="wpfWin_JurnalVoucher"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Jurnal Voucher"
+        Width="Auto"
+        Height="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogHorizontal}" >
+
+            <ScrollViewer   Style="{StaticResource styleScrollViewerFormDialogVertikal}" Name="scv_Kiri">
+                <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+                    <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="144"/>
+                            <ColumnDefinition Width="190"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nomor"        />
+                        <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Jenis Jurnal"/>
+                        <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Tanggal Jurnal"/>
+                        <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Referensi"      />
+                        <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Tanggal Invoice"    />
+                        <TextBlock  Grid.Row="5"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nomor Invoice"/>
+                        <TextBlock  Grid.Row="6"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nomor Faktur Pajak"   Name="lbl_NomorFaktur"/>
+                        <TextBlock  Grid.Row="7"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Lawan Transaksi"/>
+                        <TextBlock  Grid.Row="8"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nama Barang/Jasa"/>
+                        <TextBlock  Grid.Row="9"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Uraian Transaksi"/>
+                        <TextBlock  Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="User Entry"/>
+                        <TextBlock  Grid.Row="11" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="User Approve"         Name="lbl_NamaUserApprove"/>
+
+                        <TextBox        Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorJV" />
+                        <TextBox        Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_JenisJurnal" />
+                        <TextBox        Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_TanggalJurnal" />
+                        <TextBox        Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_Referensi" />
+                        <TextBox        Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_TanggalInvoice" />
+                        <TextBox        Grid.Row="5"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorInvoice" />
+                        <TextBox        Grid.Row="6"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorFakturPajak" />
+                        <TextBox        Grid.Row="7"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_LawanTransaksi" />
+                        <RichTextBox    Grid.Row="8"  Grid.Column="1"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_NamaProduk" />
+                        <RichTextBox    Grid.Row="9"  Grid.Column="1"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_UraianTransaksi" />
+                        <TextBox        Grid.Row="10"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"        Name="txt_NamaUserEntry" />
+                        <TextBox        Grid.Row="11"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"        Name="txt_NamaUserApprove" />
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Width="1" Background="Black" Opacity=".2" Margin="0 27" Name="pnl_Pemisah" />
+
+            <ScrollViewer   Style="{StaticResource styleScrollViewerFormDialogVertikal}" Name="scv_Kanan">
+                <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Name="pnl_Kanan" >
+
+                    <StackPanel Style="{StaticResource stylePanelDataGridView}"  >
+                        <DataGrid Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="555" MinHeight="33" />
+                    </StackPanel>
+
+                    <DockPanel  Margin="0 15 0 0">
+                        <TextBlock  Text="Status Balance"   TextAlignment="Center"  FontSize="15"   Name="lbl_StatusBalance"    FontWeight="DemiBold"/>
+                    </DockPanel>
+
+                </StackPanel>
+            </ScrollViewer>
+
+        </StackPanel>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"     Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogCetak}"     Name="btn_Cetak"/>
+            <Button Style="{StaticResource styleButtonFormDialogSetujui}"   Name="btn_Setujui"/>
+            <Button Style="{StaticResource styleButtonFormDialogBatal}"     Name="btn_Batal" />
+        </StackPanel>
+    </StackPanel>
+
+</Window>

@@ -1,0 +1,53 @@
+﻿<Window x:Class="MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku_Installer"
+        Title="Booku Installer"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+
+
+    </Window.Resources>
+
+    <StackPanel   >
+
+        <StackPanel Margin="15"  >
+
+
+            <Grid   >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="444"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock      Grid.Row="0"  Grid.Column="0"   Name="lbl_01"       HorizontalAlignment="Center"    Text="Baris 01" />
+                <TextBlock      Grid.Row="1"  Grid.Column="0"   Name="lbl_02"       HorizontalAlignment="Center"    Text="Baris 02" />
+                <ProgressBar    Grid.Row="2"  Grid.Column="0"   Height="33"         Margin="0 15 0 0"   Name="pgb_Progress" />
+                <TextBlock      Grid.Row="3"  Grid.Column="0"   Text="Progress"     Name="lbl_Progress"/>
+            </Grid>
+
+        </StackPanel>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Margin="15"   Name="pnl_TombolForm">
+            <Button Width="Auto"  Height="33" Content="Lanjutkan >>" Name="btn_Lanjutkan"   Padding="21 0"    HorizontalAlignment="Right" />
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

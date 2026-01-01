@@ -1,0 +1,2 @@
+D:\VB .Net Project\BookuID\Booku Encrypter\bin\Release\net8.0-windows\win-x64\publish\Booku Encrypter.pdb
+D:\VB .Net Project\BookuID\Booku Encrypter\bin\Release\net8.0-windows\win-x64\publish\Booku Encrypter.exe
