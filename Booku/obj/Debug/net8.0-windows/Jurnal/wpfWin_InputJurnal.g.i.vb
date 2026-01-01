@@ -246,7 +246,7 @@ Partial Public Class wpfWin_InputJurnal
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/jurnal/wpfwin_inputjurnal.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/jurnal/wpfwin_inputjurnal.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Jurnal\wpfWin_InputJurnal.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

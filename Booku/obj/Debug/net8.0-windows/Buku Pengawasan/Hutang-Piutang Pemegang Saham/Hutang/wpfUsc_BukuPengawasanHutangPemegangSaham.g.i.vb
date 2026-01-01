@@ -449,8 +449,8 @@ Partial Public Class wpfUsc_BukuPengawasanHutangPemegangSaham
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/hutang-piutang%20pemegang%20saham/hutang/wpfus"& _ 
-                "c_bukupengawasanhutangpemegangsaham.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/hutang-piutang%20pemegang%20saham/hut"& _ 
+                "ang/wpfusc_bukupengawasanhutangpemegangsaham.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Buku Pengawasan\Hutang-Piutang Pemegang Saham\Hutang\wpfUsc_BukuPengawasanHutangPemegangSaham.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

@@ -953,8 +953,8 @@ Partial Public Class wpfWin_InputInvoicePembelian
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/pembelian%20-%20penjualan/pembelian/5%20-%20invoice%20pembelian/"& _ 
-                "wpfwin_inputinvoicepembelian.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/pembelian%20-%20penjualan/pembelian/5%20-%20invoice%20p"& _ 
+                "embelian/wpfwin_inputinvoicepembelian.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\wpfWin_InputInvoicePembelian.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

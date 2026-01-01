@@ -232,8 +232,8 @@ Partial Public Class wpfWin_InputKetetapanPajak
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/hutang%20pajak/11%20-%20ketetapan%20pajak/wpfw"& _ 
-                "in_inputketetapanpajak.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/hutang%20pajak/11%20-%20ketetapan%20p"& _ 
+                "ajak/wpfwin_inputketetapanpajak.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\wpfWin_InputKetetapanPajak.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

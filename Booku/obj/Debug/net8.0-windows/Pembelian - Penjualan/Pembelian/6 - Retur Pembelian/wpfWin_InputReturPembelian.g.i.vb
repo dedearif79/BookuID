@@ -358,8 +358,8 @@ Partial Public Class wpfWin_InputReturPembelian
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/pembelian%20-%20penjualan/pembelian/6%20-%20retur%20pembelian/wp"& _ 
-                "fwin_inputreturpembelian.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/pembelian%20-%20penjualan/pembelian/6%20-%20retur%20pem"& _ 
+                "belian/wpfwin_inputreturpembelian.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfWin_InputReturPembelian.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

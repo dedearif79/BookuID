@@ -246,8 +246,8 @@ Partial Public Class wpfUsc_POPembelian
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/pembelian%20-%20penjualan/pembelian/2%20-%20po%20pembelian/wpfus"& _ 
-                "c_popembelian.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/pembelian%20-%20penjualan/pembelian/2%20-%20po%20pembel"& _ 
+                "ian/wpfusc_popembelian.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Pembelian - Penjualan\Pembelian\2 - PO Pembelian\wpfUsc_POPembelian.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

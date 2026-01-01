@@ -113,7 +113,7 @@ Partial Public Class wpfWin_StartUp
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/00_start_up/wpfwin_startup.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/00_start_up/wpfwin_startup.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\00_START_UP\wpfWin_StartUp.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

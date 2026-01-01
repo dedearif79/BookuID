@@ -414,8 +414,8 @@ Partial Public Class wpfUsc_DaftarPenyusutanAssetTetap
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/manajemen%20asset/daftar%20penyusutan%20asset%20tetap/wpfusc_daf"& _ 
-                "tarpenyusutanassettetap.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/manajemen%20asset/daftar%20penyusutan%20asset%20tetap/w"& _ 
+                "pfusc_daftarpenyusutanassettetap.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfUsc_DaftarPenyusutanAssetTetap.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

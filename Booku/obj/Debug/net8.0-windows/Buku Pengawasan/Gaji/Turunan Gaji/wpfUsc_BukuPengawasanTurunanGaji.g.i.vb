@@ -456,8 +456,8 @@ Partial Public Class wpfUsc_BukuPengawasanTurunanGaji
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/gaji/turunan%20gaji/wpfusc_bukupengawasanturun"& _ 
-                "angaji.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/gaji/turunan%20gaji/wpfusc_bukupengaw"& _ 
+                "asanturunangaji.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Buku Pengawasan\Gaji\Turunan Gaji\wpfUsc_BukuPengawasanTurunanGaji.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

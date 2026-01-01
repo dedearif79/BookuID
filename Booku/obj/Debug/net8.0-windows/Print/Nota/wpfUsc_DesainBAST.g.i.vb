@@ -169,7 +169,7 @@ Partial Public Class wpfUsc_DesainBAST
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/print/nota/wpfusc_desainbast.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/print/nota/wpfusc_desainbast.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Print\Nota\wpfUsc_DesainBAST.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

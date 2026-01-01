@@ -85,7 +85,7 @@ Partial Public Class wpfWin_Loading
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/progress/wpfwin_loading.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/progress/wpfwin_loading.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Progress\wpfWin_Loading.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

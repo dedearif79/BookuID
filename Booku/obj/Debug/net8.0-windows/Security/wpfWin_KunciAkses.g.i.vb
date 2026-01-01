@@ -92,7 +92,7 @@ Partial Public Class wpfWin_KunciAkses
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/security/wpfwin_kunciakses.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/security/wpfwin_kunciakses.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Security\wpfWin_KunciAkses.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

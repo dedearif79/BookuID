@@ -246,8 +246,8 @@ Partial Public Class wpfWin_InputHutangPiutangPihakKetiga
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/hutang-piutang%20pihak%20ketiga/wpfwin_inputhu"& _ 
-                "tangpiutangpihakketiga.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/hutang-piutang%20pihak%20ketiga/wpfwi"& _ 
+                "n_inputhutangpiutangpihakketiga.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Buku Pengawasan\Hutang-Piutang Pihak Ketiga\wpfWin_InputHutangPiutangPihakKetiga.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

@@ -57,8 +57,8 @@ Partial Public Class wpfUsc_ReturPembelian
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/pembelian%20-%20penjualan/pembelian/6%20-%20retur%20pembelian/wp"& _ 
-                "fusc_returpembelian.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/pembelian%20-%20penjualan/pembelian/6%20-%20retur%20pem"& _ 
+                "belian/wpfusc_returpembelian.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfUsc_ReturPembelian.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

@@ -57,8 +57,8 @@ Partial Public Class wpfWin_PenerbitInstaller
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/app%20developer/manajemen%20aplikasi/wpfwin_penerbitinstaller.xa"& _ 
-                "ml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/app%20developer/manajemen%20aplikasi/wpfwin_penerbitins"& _ 
+                "taller.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\App Developer\Manajemen Aplikasi\wpfWin_PenerbitInstaller.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

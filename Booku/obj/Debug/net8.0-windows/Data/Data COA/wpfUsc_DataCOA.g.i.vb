@@ -330,7 +330,7 @@ Partial Public Class wpfUsc_DataCOA
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/data/data%20coa/wpfusc_datacoa.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/data/data%20coa/wpfusc_datacoa.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Data\Data COA\wpfUsc_DataCOA.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

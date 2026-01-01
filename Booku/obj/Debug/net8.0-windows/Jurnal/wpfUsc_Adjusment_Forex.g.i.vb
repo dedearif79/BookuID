@@ -134,7 +134,7 @@ Partial Public Class wpfUsc_JurnalAdjusment_Forex
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/jurnal/wpfusc_adjusment_forex.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/jurnal/wpfusc_adjusment_forex.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Jurnal\wpfUsc_Adjusment_Forex.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

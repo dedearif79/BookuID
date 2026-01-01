@@ -225,8 +225,8 @@ Partial Public Class wpfWin_InputAmortisasiBiaya
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/manajemen%20asset/daftar%20amortisasi%20biaya/wpfwin_inputamorti"& _ 
-                "sasibiaya.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/manajemen%20asset/daftar%20amortisasi%20biaya/wpfwin_in"& _ 
+                "putamortisasibiaya.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Manajemen Asset\Daftar Amortisasi Biaya\wpfWin_InputAmortisasiBiaya.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

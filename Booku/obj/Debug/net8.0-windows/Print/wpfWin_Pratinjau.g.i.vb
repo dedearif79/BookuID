@@ -85,7 +85,7 @@ Partial Public Class wpfWin_Pratinjau
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/print/wpfwin_pratinjau.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/print/wpfwin_pratinjau.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Print\wpfWin_Pratinjau.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

@@ -1,0 +1,677 @@
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win-x86\native\WebView2Loader.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win-x64\native\WebView2Loader.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win-arm64\native\WebView2Loader.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Booku.exe
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Booku.deps.json
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Booku.runtimeconfig.json
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Booku.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Booku.pdb
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\BouncyCastle.Cryptography.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\ClosedXML.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\ClosedXML.Parser.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\DocumentFormat.OpenXml.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\DocumentFormat.OpenXml.Framework.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\ExcelNumberFormat.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Google.Protobuf.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\HtmlAgilityPack.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\K4os.Compression.LZ4.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\K4os.Compression.LZ4.Streams.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\K4os.Hash.xxHash.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\MySql.Data.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\RBush.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\SixLabors.Fonts.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\System.Configuration.ConfigurationManager.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\System.Data.Odbc.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\System.Data.OleDb.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\System.Diagnostics.EventLog.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\System.Diagnostics.PerformanceCounter.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\System.IO.Packaging.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\System.IO.Pipelines.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\System.Security.Cryptography.ProtectedData.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\System.Text.Encodings.Web.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\System.Text.Json.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\ZstdSharp.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win-x64\native\comerr64.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win-x64\native\gssapi64.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win-x64\native\k5sprt64.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win-x64\native\krb5_64.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win-x64\native\krbcc64.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\unix\lib\net8.0\System.Data.Odbc.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Data.Odbc.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Data.OleDb.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.Messages.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.EventLog.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\win\lib\net8.0\System.Diagnostics.PerformanceCounter.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\runtimes\browser\lib\net8.0\System.Text.Encodings.Web.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\bcomm.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Microsoft.Web.WebView2.Core.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Microsoft.Web.WebView2.WinForms.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Microsoft.Web.WebView2.Wpf.dll
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\bcomm.pdb
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Microsoft.Web.WebView2.Core.xml
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Microsoft.Web.WebView2.WinForms.xml
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Microsoft.Web.WebView2.Wpf.xml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.vbproj.AssemblyReference.cache
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Interop.Microsoft.Office.Interop.Excel.dll
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.vbproj.ResolveComReference.cache
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleAplikasi.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleBorder.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleButton.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleCheckBox.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleComboBox.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleDataGrid.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleDatePicker.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleGrid.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleGroupBox.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleLabel.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleLainnya.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StylePanel.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleRadioButton.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleScrollViewer.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleTextBlock.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleUserControl.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleWindow.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\00_START_UP\wpfWin_StartUp.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Manajemen Aplikasi\wpfUsc_ManajemenAplikasi.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Manajemen Aplikasi\wpfWin_PenerbitInstaller.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Manajemen Aplikasi\wpfWin_PenerbitUpdater.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Manajemen Klien\wpfUsc_ManajemenClient.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Tab\wpfUsc_TabPokok.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Backup Data\wpfWin_BackupData.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Backup Data\wpfWin_KloningData.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Backup Data\wpfWin_PulihkanData.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Besar\wpfUsc_BukuBesar.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Besar\wpfWin_BukuBesarPembantu.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Deposit Operasional\wpfUsc_BukuPengawasanDepositOperasional.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Deposit Operasional\wpfWin_InputDepositOperasional.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Deposit Operasional\wpfWin_InputProduk_DepositOperasional.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Gaji\Turunan Gaji\wpfUsc_BukuPengawasanTurunanGaji.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Gaji\wpfUsc_BukuPengawasanGaji.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Gaji\wpfWin_InputGaji.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Bank-Leasing\wpfUsc_BukuPengawasanHutangBankLeasing.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Bank-Leasing\wpfWin_InputHutangBankLeasing.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\wpfUsc_BukuPengawasanHutangPPhPasal21.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\wpfWin_InputHutangPPhPasal21_GajiDanPesangon.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\02 - PPh Pasal 22\Impor\wpfUsc_BukuPengawasanHutangPPhPasal22_Impor.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\02 - PPh Pasal 22\Lokal\wpfUsc_BukuPengawasanHutangPPhPasal22_Lokal.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\03 - PPh Pasal 23\wpfUsc_BukuPengawasanHutangPPhPasal23.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\04 - PPh Pasal 4 (2)\wpfUsc_BukuPengawasanHutangPPhPasal42.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\05 - PPh Pasal 25\wpfUsc_BukuPengawasanHutangPPhPasal25.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\05 - PPh Pasal 25\wpfWin_InputHutangPPhPasal25.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\06 - PPh Pasal 26\wpfUsc_BukuPengawasanHutangPPhPasal26.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\10 - PPN\wpfUsc_BukuPengawasanPelaporanPPN.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\wpfUsc_BukuPengawasanKetetapanPajak.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\wpfWin_InputKetetapanPajak.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\12 - Pajak Impor\wpfUsc_BukuPengawasanPajakImpor.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\wpfWin_BayarPajakDengan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\wpfWin_InputHutangPajak.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\wpfWin_InputLaporPajak.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Afiliasi\Hutang\wpfUsc_BukuPengawasanHutangAfiliasi.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Afiliasi\Piutang\wpfUsc_BukuPengawasanPiutangAfiliasi.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Afiliasi\wpfWin_InputHutangPiutangAfiliasi.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Dividen\Hutang\wpfUsc_BukuPengawasanHutangDividen.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Dividen\Piutang\wpfUsc_BukuPengawasanPiutangDividen.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Dividen\wpfWin_InputHutangPiutangDividen.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Karyawan\Hutang\wpfUsc_BukuPengawasanHutangKaryawan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Karyawan\Piutang\wpfUsc_BukuPengawasanPiutangKaryawan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Karyawan\wpfWin_InputHutangPiutangKaryawan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pemegang Saham\Hutang\wpfUsc_BukuPengawasanHutangPemegangSaham.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pemegang Saham\Piutang\wpfUsc_BukuPengawasanPiutangPemegangSaham.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pemegang Saham\wpfWin_InputHutangPiutangPemegangSaham.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pihak Ketiga\Hutang\wpfUsc_BukuPengawasanHutangPihakKetiga.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pihak Ketiga\Piutang\wpfUsc_BukuPengawasanPiutangPihakKetiga.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pihak Ketiga\wpfWin_InputHutangPiutangPihakKetiga.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Usaha\Hutang\wpfUsc_BukuPengawasanHutangUsaha.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Usaha\Piutang\wpfUsc_BukuPengawasanPiutangUsaha.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Pemindahbukuan\wpfUsc_BukuPengawasanPemindahbukuan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Pemindahbukuan\wpfWin_InputPemindahbukuan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Penerimaan Bank-Cash\wpfUsc_BukuPengawasanBuktiPenerimaanBankCash.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Penerimaan Bank-Cash\wpfWin_InputBuktiPenerimaan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\Bundel Pengajuan\wpfUsc_BundelPengajuanPengeluaranBankCash.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\Bundel Pengajuan\wpfWin_InputBundelPengajuanPengeluaranBankCash.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\wpfUsc_BukuPengawasanBuktiPengeluaranBankCash.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\wpfWin_InputBuktiPengeluaran.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\wpfWin_InputJumlahBankCashInOut.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penjualan Eceran\wpfUsc_BukuPengawasanPenjualanEceran.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penjualan Eceran\wpfWin_InputPenjualanEceran.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Daftar Pemegang Saham\wpfUsc_DaftarPemegangSaham.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Daftar Pemegang Saham\wpfWin_DaftarSaham.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data COA\wpfUsc_DataCOA.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data COA\wpfWin_InputCOA.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Mitra\wpfUsc_DataLawanTransaksi.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Mitra\wpfWin_InputLawanTransaksi.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Project\wpfUsc_DataProject.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data User\wpfWin_Login.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Kurs\wpfUsc_Kurs.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Kurs\wpfUsc_ManajemenKurs.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Kurs\wpfWin_UpdateKurs_Bulanan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Kurs\wpfWin_UpdateKurs_Harian.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Dialog Pilihan\wpfWin_MetodeInputBayar.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Dialog Pilihan\wpfWin_PilihJurnalAdjusment.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\File\wpfUsc_CompanyProfile.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Host Aplikasi\wpfUsc_HostWhatsApp.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Host Aplikasi\wpfwin_WhatsApp.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfUsc_Adjusment.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfUsc_Adjusment_Forex.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfUsc_Adjusment_HPP.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfUsc_JurnalUmum.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_ImportJurnal.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_InputJurnal.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_InputJurnalAdjusmentForex.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_JurnalVoucher.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanHPP.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanLabaRugi.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanLabaRugi_Bulanan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanLabaRugi_Tahunan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanNeraca.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanNeracaLajur.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanNeraca_Bulanan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanNeraca_Tahunan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanTrialBalance.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Amortisasi Biaya\wpfUsc_Adjusment_Amortisasi.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Amortisasi Biaya\wpfUsc_DaftarAmortisasiBiaya.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Amortisasi Biaya\wpfWin_InputAmortisasiBiaya.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfUsc_Adjusment_PenyusutanAsset.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfUsc_DaftarPenyusutanAssetTetap.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfWin_InputDataAsset.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\wpfUsc_BukuPembelian.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\2 - PO Pembelian\wpfUsc_POPembelian.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\2 - PO Pembelian\wpfWin_InputPOPembelian.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\3 - Surat Jalan\wpfUsc_SuratJalanPembelian.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\3 - Surat Jalan\wpfWin_InputSuratJalanPembelian.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\4 - BAST\wpfUsc_BASTPembelian.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\4 - BAST\wpfWin_InputBASTPembelian.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\wpfUsc_InvoicePembelian.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\wpfWin_InputInvoicePembelian.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfUsc_ReturPembelian.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfWin_InputReturPembelian.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\wpfUsc_BukuPenjualan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\wpfUsc_POPenjualan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\wpfWin_InputPOPenjualan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfUsc_SuratJalanPenjualan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfWin_InputSuratJalanPenjualan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\4 - BAST\wpfUsc_BASTPenjualan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\4 - BAST\wpfWin_InputBASTPenjualan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfUsc_InvoicePenjualan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfWin_InputInvoicePenjualan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\wpfUsc_ReturPenjualan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\wpfWin_InputReturPenjualan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_InputProduk_Nota.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\BankCash\wpfUsc_DesainBuktiPengeluaran.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\BankCash\wpfUsc_DesainBundelanPengajuanPengeluaran.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Jurnal Voucher\wpfUsc_DesainJurnalVoucher.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainBAST.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainInvoice.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainNotaDebet.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainNotaRetur.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainPO.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainSuratJalan.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\wpfUsc_DesainFooter.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\wpfUsc_DesainHeader.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\wpfWin_Pratinjau.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Progress\wpfUsc_Loading.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Progress\wpfWin_Loading.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Progress\wpfWin_ProgresExport_EXCEL.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Security\wpfWin_KunciAkses.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Stock Opname\wpfUsc_StockOpname.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Stock Opname\wpfWin_InputStockOpname.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Tahun Buku\wpfUsc_TutupBuku.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Transaksi\wpfWin_InputTransaksi.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Update\wpfWin_Updater.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Web Browser\wpfUsc_WebBrowser.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Application.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku_Content.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku_MarkupCompile.cache
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku_MarkupCompile.lref
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Application.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\00_START_UP\wpfWin_StartUp.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Manajemen Aplikasi\wpfUsc_ManajemenAplikasi.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Manajemen Aplikasi\wpfWin_PenerbitInstaller.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Manajemen Aplikasi\wpfWin_PenerbitUpdater.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Manajemen Klien\wpfUsc_ManajemenClient.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Tab\wpfUsc_TabPokok.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Backup Data\wpfWin_BackupData.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Backup Data\wpfWin_KloningData.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Backup Data\wpfWin_PulihkanData.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Besar\wpfUsc_BukuBesar.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Besar\wpfWin_BukuBesarPembantu.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Deposit Operasional\wpfUsc_BukuPengawasanDepositOperasional.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Deposit Operasional\wpfWin_InputDepositOperasional.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Deposit Operasional\wpfWin_InputProduk_DepositOperasional.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Gaji\Turunan Gaji\wpfUsc_BukuPengawasanTurunanGaji.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Gaji\wpfUsc_BukuPengawasanGaji.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Gaji\wpfWin_InputGaji.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Bank-Leasing\wpfUsc_BukuPengawasanHutangBankLeasing.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Bank-Leasing\wpfWin_InputHutangBankLeasing.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\wpfUsc_BukuPengawasanHutangPPhPasal21.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\wpfWin_InputHutangPPhPasal21_GajiDanPesangon.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\02 - PPh Pasal 22\Impor\wpfUsc_BukuPengawasanHutangPPhPasal22_Impor.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\02 - PPh Pasal 22\Lokal\wpfUsc_BukuPengawasanHutangPPhPasal22_Lokal.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\03 - PPh Pasal 23\wpfUsc_BukuPengawasanHutangPPhPasal23.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\04 - PPh Pasal 4 (2)\wpfUsc_BukuPengawasanHutangPPhPasal42.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\05 - PPh Pasal 25\wpfUsc_BukuPengawasanHutangPPhPasal25.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\05 - PPh Pasal 25\wpfWin_InputHutangPPhPasal25.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\06 - PPh Pasal 26\wpfUsc_BukuPengawasanHutangPPhPasal26.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\10 - PPN\wpfUsc_BukuPengawasanPelaporanPPN.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\wpfUsc_BukuPengawasanKetetapanPajak.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\wpfWin_InputKetetapanPajak.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\12 - Pajak Impor\wpfUsc_BukuPengawasanPajakImpor.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\wpfWin_BayarPajakDengan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\wpfWin_InputHutangPajak.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\wpfWin_InputLaporPajak.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Afiliasi\Hutang\wpfUsc_BukuPengawasanHutangAfiliasi.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Afiliasi\Piutang\wpfUsc_BukuPengawasanPiutangAfiliasi.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Afiliasi\wpfWin_InputHutangPiutangAfiliasi.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Dividen\Hutang\wpfUsc_BukuPengawasanHutangDividen.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Dividen\Piutang\wpfUsc_BukuPengawasanPiutangDividen.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Dividen\wpfWin_InputHutangPiutangDividen.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Karyawan\Hutang\wpfUsc_BukuPengawasanHutangKaryawan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Karyawan\Piutang\wpfUsc_BukuPengawasanPiutangKaryawan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Karyawan\wpfWin_InputHutangPiutangKaryawan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pemegang Saham\Hutang\wpfUsc_BukuPengawasanHutangPemegangSaham.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pemegang Saham\Piutang\wpfUsc_BukuPengawasanPiutangPemegangSaham.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pemegang Saham\wpfWin_InputHutangPiutangPemegangSaham.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pihak Ketiga\Hutang\wpfUsc_BukuPengawasanHutangPihakKetiga.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pihak Ketiga\Piutang\wpfUsc_BukuPengawasanPiutangPihakKetiga.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pihak Ketiga\wpfWin_InputHutangPiutangPihakKetiga.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Usaha\Hutang\wpfUsc_BukuPengawasanHutangUsaha.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Usaha\Piutang\wpfUsc_BukuPengawasanPiutangUsaha.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Pemindahbukuan\wpfUsc_BukuPengawasanPemindahbukuan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Pemindahbukuan\wpfWin_InputPemindahbukuan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Penerimaan Bank-Cash\wpfUsc_BukuPengawasanBuktiPenerimaanBankCash.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Penerimaan Bank-Cash\wpfWin_InputBuktiPenerimaan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\Bundel Pengajuan\wpfUsc_BundelPengajuanPengeluaranBankCash.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\Bundel Pengajuan\wpfWin_InputBundelPengajuanPengeluaranBankCash.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\wpfUsc_BukuPengawasanBuktiPengeluaranBankCash.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\wpfWin_InputBuktiPengeluaran.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\wpfWin_InputJumlahBankCashInOut.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penjualan Eceran\wpfUsc_BukuPengawasanPenjualanEceran.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penjualan Eceran\wpfWin_InputPenjualanEceran.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Daftar Pemegang Saham\wpfUsc_DaftarPemegangSaham.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Daftar Pemegang Saham\wpfWin_DaftarSaham.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data COA\wpfUsc_DataCOA.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data COA\wpfWin_InputCOA.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Mitra\wpfUsc_DataLawanTransaksi.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Mitra\wpfWin_InputLawanTransaksi.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Project\wpfUsc_DataProject.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data User\wpfWin_Login.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Kurs\wpfUsc_Kurs.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Kurs\wpfUsc_ManajemenKurs.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Kurs\wpfWin_UpdateKurs_Bulanan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Kurs\wpfWin_UpdateKurs_Harian.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Dialog Pilihan\wpfWin_MetodeInputBayar.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Dialog Pilihan\wpfWin_PilihJurnalAdjusment.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\File\wpfUsc_CompanyProfile.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Host Aplikasi\wpfUsc_HostWhatsApp.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Host Aplikasi\wpfwin_WhatsApp.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfUsc_Adjusment.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfUsc_Adjusment_Forex.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfUsc_Adjusment_HPP.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfUsc_JurnalUmum.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_ImportJurnal.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_InputJurnal.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_InputJurnalAdjusmentForex.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_JurnalVoucher.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanHPP.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanLabaRugi.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanLabaRugi_Bulanan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanLabaRugi_Tahunan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanNeraca.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanNeracaLajur.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanNeraca_Bulanan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanNeraca_Tahunan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanTrialBalance.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Amortisasi Biaya\wpfUsc_Adjusment_Amortisasi.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Amortisasi Biaya\wpfUsc_DaftarAmortisasiBiaya.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Amortisasi Biaya\wpfWin_InputAmortisasiBiaya.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfUsc_Adjusment_PenyusutanAsset.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfUsc_DaftarPenyusutanAssetTetap.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfWin_InputDataAsset.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\wpfUsc_BukuPembelian.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\2 - PO Pembelian\wpfUsc_POPembelian.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\2 - PO Pembelian\wpfWin_InputPOPembelian.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\3 - Surat Jalan\wpfUsc_SuratJalanPembelian.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\3 - Surat Jalan\wpfWin_InputSuratJalanPembelian.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\4 - BAST\wpfUsc_BASTPembelian.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\4 - BAST\wpfWin_InputBASTPembelian.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\wpfUsc_InvoicePembelian.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\wpfWin_InputInvoicePembelian.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfUsc_ReturPembelian.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfWin_InputReturPembelian.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\wpfUsc_BukuPenjualan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\wpfUsc_POPenjualan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\wpfWin_InputPOPenjualan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfUsc_SuratJalanPenjualan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfWin_InputSuratJalanPenjualan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\4 - BAST\wpfUsc_BASTPenjualan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\4 - BAST\wpfWin_InputBASTPenjualan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfUsc_InvoicePenjualan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfWin_InputInvoicePenjualan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\wpfUsc_ReturPenjualan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\wpfWin_InputReturPenjualan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_InputProduk_Nota.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\BankCash\wpfUsc_DesainBuktiPengeluaran.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\BankCash\wpfUsc_DesainBundelanPengajuanPengeluaran.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Jurnal Voucher\wpfUsc_DesainJurnalVoucher.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainBAST.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainInvoice.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainNotaDebet.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainNotaRetur.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainPO.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainSuratJalan.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\wpfUsc_DesainFooter.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\wpfUsc_DesainHeader.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Print\wpfWin_Pratinjau.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Progress\wpfUsc_Loading.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Progress\wpfWin_Loading.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Progress\wpfWin_ProgresExport_EXCEL.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Security\wpfWin_KunciAkses.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Stock Opname\wpfUsc_StockOpname.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Stock Opname\wpfWin_InputStockOpname.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Tahun Buku\wpfUsc_TutupBuku.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Transaksi\wpfWin_InputTransaksi.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Update\wpfWin_Updater.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Web Browser\wpfUsc_WebBrowser.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleRichTextBox.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\WPF\Styles\StyleTextBox.baml
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.g.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BOOKU.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_DataPerangkatApp.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputProdukApp.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_TryApp.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ManajemenAplikasi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ManajemenClient.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_TabPokok.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_phpMyAdmin.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BackupDatabase.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuBankGaransi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputBankGaransi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuBesar.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuBesar_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanAktivaLainnya.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputAktivaLainnya.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuBank.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuCashAdvance.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuKas.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPettyCash.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanBuktiPotongPPh_Paid.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanBuktiPotongPPh_Prepaid.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputBuktiPotongPPh.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanDepositOperasional.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputDepositOperasional.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanDepositOperasional_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanGaji.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputGaji.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangBPJSKesehatan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangBPJSKetenagakerjaan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangKoperasiKaryawan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangSerikat.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputTagihanTurunanGaji.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputPembayaranGaji.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanGaji_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangBank.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangLeasing.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputJadwalAngsuranHutangBankLeasing.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputPembayaranHutangBankLeasing.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputHutangBankLeasing.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanHutangBankLeasing_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangPPhPasal21.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputHutangPPhPasal21_Gaji.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputHutangPPhPasal21_JasaOP.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanHutangPPhPasal21_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangPPhPasal22_Impor.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangPPhPasal22_Lokal.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangPPhPasal23.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputHutangPPhPasal23.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanHutangPPhPasal23.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangPPhPasal42.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputHutangPPhPasal42.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanHutangPPhPasal42_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangPPhPasal25.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputHutangPPhPasal25.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanHutangPPhPasal25_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangPPhPasal26.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputHutangPPhPasal26.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanHutangPPhPasal26_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPelaporanPPN.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputLaporPPN.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanKetetapanPajak.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputKetetapanPajak.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanKetetapanPajak_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPajakImpor.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_DetailPembayaranPajak.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputPembayaranHutangPajak.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputHutangPiutangAfiliasi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputPembayaranAfiliasi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangAfiliasi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangAfiliasi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanHutangAfiliasi_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanPiutangAfiliasi_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangDividen.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangDividen.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPembantuHutangKaryawan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangKaryawan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanHutangKaryawan_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPembantuPiutangKaryawan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangKaryawan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanPiutangKaryawan_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputHutangPiutangKaryawan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPembantuHutangPemegangSaham.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangPemegangSaham.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanHutangPemegangSaham_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangPemegangSaham.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanPiutangPemegangSaham_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputHutangPiutangPemegangSaham.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputHutangPiutangPihakKetiga.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputJadwalAngsuranPihakKetiga.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputPembayaranPihakKetiga.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangPihakKetiga.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangPihakKetiga.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanHutangPihakKetiga_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanPiutangPihakKetiga_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputPembayaranHutangUsaha.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BBHU.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangUsaha.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangUsaha_Afiliasi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangUsaha_Impor_AUD.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangUsaha_Impor_CNY.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangUsaha_Impor_EUR.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangUsaha_Impor_GBP.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangUsaha_Impor_JPY.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangUsaha_Impor_SGD.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangUsaha_Impor_USD.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanHutangUsaha_NonAfiliasi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_DPHU.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputSaldoAwalHutangUsaha.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_SaldoAwalHutangUsaha.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X2_frm_BukuPengawasanHutangUsaha_X2.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_BukuPengawasanHutangUsaha_BAK.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangUsaha.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangUsaha_Afiliasi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangUsaha_Ekspor_AUD.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangUsaha_Ekspor_CNY.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangUsaha_Ekspor_EUR.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangUsaha_Ekspor_GBP.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangUsaha_Ekspor_JPY.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangUsaha_Ekspor_SGD.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangUsaha_Ekspor_USD.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPiutangUsaha_NonAfiliasi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanPiutangUsaha_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPemindahbukuan_BAK.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputPemindahbukuan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanPemindahbukuan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanBuktiPenerimaanBankCash.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BundelPengajuanPengeluaranBankCash.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPengawasanBuktiPengeluaranBankCash.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputJumlah.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BukuPengawasanBuktiPengeluaranBankCash_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_InputBuktiPengeluaran_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPenjualanEceran.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_DaftarPemegangSaham.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_DataCOA.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputCOA.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ListCOA.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_DataCOA_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_DataLawanTransaksi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_DataMitra.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputMitra.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ListMitra.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_DataProject.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputDataProject.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_DataProject_BAK.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Kurs.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ManajemenKurs.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_DataPemegangSaham.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputDataPemegangSaham.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_ListDataPemegangSaham_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_CeklisBulan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Pengaturan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Adjusment_Forex.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Adjusment_HPP.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputJurnal.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_JurnalAdjusment.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_JurnalUmum.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ProgressImportJurnal.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_JurnalUmum_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_JurnalVoucher_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_LaporanAktivitasTransaksi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_LaporanHPP.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_LaporanLabaRugi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_LaporanLabaRugi_Bulanan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_LaporanLabaRugi_Tahunan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_LaporanNeraca.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_LaporanNeracaLajur.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_LaporanNeraca_Bulanan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_LaporanNeraca_Tahunan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_LaporanTrialBalance.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_Laporan_LabaRugi_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_Laporan_Neraca_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_Laporan_TrialBalance_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Adjusment_Amortisasi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_DaftarAmortisasiBiaya.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_InputAmortisasiBiaya_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_DaftarAmortisasiBiaya_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuDisposalAssetTetap.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Adjusment_PenyusutanAsset.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_DaftarPenyusutanAssetTetap.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ProgressImportDataAsset.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_DaftarPenyusutanAssetTetap_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_InputDataAsset_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_PostingJurnal_DataAsset.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.ops_PilihJurnal_DataAsset.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Baru.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Help.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Tentang.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.Resources.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_DorongInvoiceKeJurnal.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputProduk_Nota.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputSJBASTManual.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ListInvoice.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ListPO.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ListSJBAST.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_PilihJenisProdukInduk.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BahanJurnalPembelian.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPembelian.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPembelian_Impor.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPembelian_lokal.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputPembelian.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Input_POPembelian.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPembelian_Impor_Barang.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPembelian_Impor_Jasa.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPembelian_Impor_Semua.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPembelian_Lokal_Barang.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPembelian_Lokal_BarangDanJasa.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPembelian_Lokal_Jasa.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPembelian_Lokal_JasaKonstruksi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPembelian_Lokal_Semua.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Input_SuratJalanPembelian.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_SuratJalanPembelian.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BASTPembelian.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Input_BASTPembelian.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePembelian_DenganPO_Impor_Rutin.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePembelian_DenganPO_Impor_Termin.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePembelian_DenganPO_Lokal_Rutin.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePembelian_DenganPO_Lokal_Termin.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Input_InvoicePembelian.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePembelian.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePembelian_TanpaPO_Impor_Barang.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePembelian_TanpaPO_Impor_Jasa.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePembelian_TanpaPO_Lokal_Barang.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePembelian_TanpaPO_Lokal_BarangDanJasa.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePembelian_TanpaPO_Lokal_Jasa.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePembelian_TanpaPO_Lokal_JasaKonstruksi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Input_ReturPembelian.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ReturPembelian.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BASTPembelian_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_POPembelian_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_SuratJalanPembelian_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPenjualan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPenjualan_Ekspor.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BukuPenjualan_lokal.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Input_POPenjualan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPenjualan_Ekspor.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPenjualan_Lokal_Barang.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPenjualan_Lokal_BarangDanJasa.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPenjualan_Lokal_Jasa.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPenjualan_Lokal_JasaKonstruksi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_POPenjualan_Lokal_Semua.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Input_SuratJalanPenjualan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_SuratJalanPenjualan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BASTPenjualan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Input_BASTPenjualan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePenjualan_DenganPO_Ekspor_Rutin.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePenjualan_DenganPO_Ekspor_Termin.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePenjualan_DenganPO_Lokal_Rutin.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePenjualan_DenganPO_Lokal_Termin.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Input_InvoicePenjualan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePenjualan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePenjualan_Asset.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePenjualan_TanpaPO_Ekspor.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePenjualan_TanpaPO_Lokal_Barang.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePenjualan_TanpaPO_Lokal_BarangdanJasa.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePenjualan_TanpaPO_Lokal_Jasa.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InvoicePenjualan_TanpaPO_Lokal_JasaKonstruksi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Input_ReturPenjualan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ReturPenjualan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_BASTPenjualan_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_POPenjualan_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_SuratJalanPenjualan_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Cetak.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Loading.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ProgressExport_CSV.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ProgressExport_EXCEL.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_ProgressLoadingData.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Registrasi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_RegistrasiPerangkat.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Registrasi_IsiDataCompany.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_Registrasi_IsiDataUser.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BahanBaku.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BahanPenolong.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BarangDalamProses_CekFisik.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BarangDalamProses_TarikanData.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BarangJadi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputStockOpname.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_StockOpname.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_BuatDatabaseBukuBaru.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_GantiTahunBuku.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_TutupBuku.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.X_frm_TutupBuku_X.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_TemplateInputan.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_TemplateModul.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputTransaksi.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.frm_InputTransaksiDirect.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.dlg_UpdateTersedia.resources
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.vbproj.GenerateResource.cache
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.GeneratedMSBuildEditorConfig.editorconfig
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.AssemblyInfoInputs.cache
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.AssemblyInfo.vb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.vbproj.CoreCompileInputs.cache
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.sourcelink.json
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.vbproj.Up2Date
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.dll
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\refint\Booku.dll
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.pdb
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\Booku.genruntimeconfig.cache
+D:\VB .Net Project\BookuID\Booku\obj\Debug\net8.0-windows\ref\Booku.dll

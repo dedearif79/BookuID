@@ -274,8 +274,8 @@ Partial Public Class wpfUsc_BukuPembelian
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/pembelian%20-%20penjualan/pembelian/1%20-%20buku%20pembelian/wpf"& _ 
-                "usc_bukupembelian.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/pembelian%20-%20penjualan/pembelian/1%20-%20buku%20pemb"& _ 
+                "elian/wpfusc_bukupembelian.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\wpfUsc_BukuPembelian.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

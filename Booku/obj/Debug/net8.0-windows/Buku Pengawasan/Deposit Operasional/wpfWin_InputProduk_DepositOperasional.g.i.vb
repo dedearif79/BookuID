@@ -127,8 +127,8 @@ Partial Public Class wpfWin_InputProduk_DepositOperasional
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/deposit%20operasional/wpfwin_inputproduk_depos"& _ 
-                "itoperasional.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/deposit%20operasional/wpfwin_inputpro"& _ 
+                "duk_depositoperasional.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Buku Pengawasan\Deposit Operasional\wpfWin_InputProduk_DepositOperasional.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

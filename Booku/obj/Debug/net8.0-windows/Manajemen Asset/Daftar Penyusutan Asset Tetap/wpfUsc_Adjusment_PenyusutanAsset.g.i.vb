@@ -218,8 +218,8 @@ Partial Public Class wpfUsc_Adjusment_PenyusutanAsset
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/manajemen%20asset/daftar%20penyusutan%20asset%20tetap/wpfusc_adj"& _ 
-                "usment_penyusutanasset.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/manajemen%20asset/daftar%20penyusutan%20asset%20tetap/w"& _ 
+                "pfusc_adjusment_penyusutanasset.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfUsc_Adjusment_PenyusutanAsset.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

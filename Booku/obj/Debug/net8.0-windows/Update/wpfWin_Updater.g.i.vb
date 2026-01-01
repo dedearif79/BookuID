@@ -106,7 +106,7 @@ Partial Public Class wpfWin_Updater
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/update/wpfwin_updater.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/update/wpfwin_updater.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Update\wpfWin_Updater.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

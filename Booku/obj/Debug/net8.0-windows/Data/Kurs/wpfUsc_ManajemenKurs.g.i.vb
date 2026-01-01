@@ -246,7 +246,7 @@ Partial Public Class wpfUsc_ManajemenKurs
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/data/kurs/wpfusc_manajemenkurs.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/data/kurs/wpfusc_manajemenkurs.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Data\Kurs\wpfUsc_ManajemenKurs.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

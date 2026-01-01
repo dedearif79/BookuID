@@ -330,7 +330,8 @@ Partial Public Class wpfUsc_ManajemenClient
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/app%20developer/manajemen%20klien/wpfusc_manajemenclient.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/app%20developer/manajemen%20klien/wpfusc_manajemenclien"& _ 
+                "t.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\App Developer\Manajemen Klien\wpfUsc_ManajemenClient.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

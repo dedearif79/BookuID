@@ -92,7 +92,7 @@ Partial Public Class wpfWin_MetodeInputBayar
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/dialog%20pilihan/wpfwin_metodeinputbayar.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/dialog%20pilihan/wpfwin_metodeinputbayar.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Dialog Pilihan\wpfWin_MetodeInputBayar.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

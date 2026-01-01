@@ -148,7 +148,7 @@ Partial Public Class wpfWin_InputStockOpname
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/stock%20opname/wpfwin_inputstockopname.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/stock%20opname/wpfwin_inputstockopname.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Stock Opname\wpfWin_InputStockOpname.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

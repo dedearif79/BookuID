@@ -267,7 +267,8 @@ Partial Public Class wpfUsc_DaftarPemegangSaham
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/data/daftar%20pemegang%20saham/wpfusc_daftarpemegangsaham.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/data/daftar%20pemegang%20saham/wpfusc_daftarpemegangsah"& _ 
+                "am.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Data\Daftar Pemegang Saham\wpfUsc_DaftarPemegangSaham.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

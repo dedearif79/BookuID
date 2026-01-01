@@ -274,8 +274,8 @@ Partial Public Class wpfWin_InputJumlahBankCashInOut
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/penerimaan-pengeluaran/wpfwin_inputjumlahbankc"& _ 
-                "ashinout.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/penerimaan-pengeluaran/wpfwin_inputju"& _ 
+                "mlahbankcashinout.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Buku Pengawasan\Penerimaan-Pengeluaran\wpfWin_InputJumlahBankCashInOut.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

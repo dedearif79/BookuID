@@ -253,8 +253,8 @@ Partial Public Class wpfUsc_BukuPengawasanHutangDividen
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/hutang-piutang%20dividen/hutang/wpfusc_bukupen"& _ 
-                "gawasanhutangdividen.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/hutang-piutang%20dividen/hutang/wpfus"& _ 
+                "c_bukupengawasanhutangdividen.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Buku Pengawasan\Hutang-Piutang Dividen\Hutang\wpfUsc_BukuPengawasanHutangDividen.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

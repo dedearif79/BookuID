@@ -260,8 +260,8 @@ Partial Public Class wpfWin_InputSuratJalanPembelian
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/pembelian%20-%20penjualan/pembelian/3%20-%20surat%20jalan/wpfwin"& _ 
-                "_inputsuratjalanpembelian.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/pembelian%20-%20penjualan/pembelian/3%20-%20surat%20jal"& _ 
+                "an/wpfwin_inputsuratjalanpembelian.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Pembelian - Penjualan\Pembelian\3 - Surat Jalan\wpfWin_InputSuratJalanPembelian.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

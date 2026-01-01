@@ -267,8 +267,8 @@ Partial Public Class wpfWin_InputBASTPembelian
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/pembelian%20-%20penjualan/pembelian/4%20-%20bast/wpfwin_inputbas"& _ 
-                "tpembelian.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/pembelian%20-%20penjualan/pembelian/4%20-%20bast/wpfwin"& _ 
+                "_inputbastpembelian.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Pembelian - Penjualan\Pembelian\4 - BAST\wpfWin_InputBASTPembelian.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

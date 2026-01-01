@@ -120,7 +120,7 @@ Partial Public Class wpfUsc_LaporanLabaRugi_Bulanan
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/laporan/wpfusc_laporanlabarugi_bulanan.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/laporan/wpfusc_laporanlabarugi_bulanan.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Laporan\wpfUsc_LaporanLabaRugi_Bulanan.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

@@ -57,8 +57,8 @@ Partial Public Class wpfUsc_BukuPengawasanHutangPPhPasal22_Lokal
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/hutang%20pajak/02%20-%20pph%20pasal%2022/lokal"& _ 
-                "/wpfusc_bukupengawasanhutangpphpasal22_lokal.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/hutang%20pajak/02%20-%20pph%20pasal%2"& _ 
+                "022/lokal/wpfusc_bukupengawasanhutangpphpasal22_lokal.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\..\Buku Pengawasan\Hutang Pajak\02 - PPh Pasal 22\Lokal\wpfUsc_BukuPengawasanHutangPPhPasal22_Lokal.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

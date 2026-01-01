@@ -379,8 +379,8 @@ Partial Public Class wpfUsc_DaftarAmortisasiBiaya
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/manajemen%20asset/daftar%20amortisasi%20biaya/wpfusc_daftaramort"& _ 
-                "isasibiaya.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/manajemen%20asset/daftar%20amortisasi%20biaya/wpfusc_da"& _ 
+                "ftaramortisasibiaya.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Manajemen Asset\Daftar Amortisasi Biaya\wpfUsc_DaftarAmortisasiBiaya.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

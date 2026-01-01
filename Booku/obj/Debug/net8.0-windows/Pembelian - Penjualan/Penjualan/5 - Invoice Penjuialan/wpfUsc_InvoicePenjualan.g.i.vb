@@ -309,8 +309,8 @@ Partial Public Class wpfUsc_InvoicePenjualan
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/pembelian%20-%20penjualan/penjualan/5%20-%20invoice%20penjuialan"& _ 
-                "/wpfusc_invoicepenjualan.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/pembelian%20-%20penjualan/penjualan/5%20-%20invoice%20p"& _ 
+                "enjuialan/wpfusc_invoicepenjualan.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfUsc_InvoicePenjualan.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

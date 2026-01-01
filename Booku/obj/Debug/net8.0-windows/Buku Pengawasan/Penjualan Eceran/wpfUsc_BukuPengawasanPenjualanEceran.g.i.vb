@@ -281,8 +281,8 @@ Partial Public Class wpfUsc_BukuPenjualanEceran
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/penjualan%20eceran/wpfusc_bukupengawasanpenjua"& _ 
-                "laneceran.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/penjualan%20eceran/wpfusc_bukupengawa"& _ 
+                "sanpenjualaneceran.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Buku Pengawasan\Penjualan Eceran\wpfUsc_BukuPengawasanPenjualanEceran.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

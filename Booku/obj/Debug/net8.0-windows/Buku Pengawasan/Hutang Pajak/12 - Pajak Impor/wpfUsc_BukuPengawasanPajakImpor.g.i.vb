@@ -505,8 +505,8 @@ Partial Public Class wpfUsc_BukuPengawasanPajakImpor
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/hutang%20pajak/12%20-%20pajak%20impor/wpfusc_b"& _ 
-                "ukupengawasanpajakimpor.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/hutang%20pajak/12%20-%20pajak%20impor"& _ 
+                "/wpfusc_bukupengawasanpajakimpor.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Buku Pengawasan\Hutang Pajak\12 - Pajak Impor\wpfUsc_BukuPengawasanPajakImpor.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

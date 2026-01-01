@@ -673,7 +673,7 @@ Partial Public Class wpfWin_InputGaji
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/gaji/wpfwin_inputgaji.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/gaji/wpfwin_inputgaji.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Buku Pengawasan\Gaji\wpfWin_InputGaji.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

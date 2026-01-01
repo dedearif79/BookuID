@@ -99,7 +99,7 @@ Partial Public Class wpfWin_BackupData
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/backup%20data/wpfwin_backupdata.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/backup%20data/wpfwin_backupdata.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Backup Data\wpfWin_BackupData.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

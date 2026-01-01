@@ -64,7 +64,7 @@ Partial Public Class wpfwin_WhatsApp
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/host%20aplikasi/wpfwin_whatsapp.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/host%20aplikasi/wpfwin_whatsapp.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Host Aplikasi\wpfwin_WhatsApp.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

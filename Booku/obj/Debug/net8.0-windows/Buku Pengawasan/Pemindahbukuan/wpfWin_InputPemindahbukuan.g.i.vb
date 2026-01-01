@@ -260,8 +260,8 @@ Partial Public Class wpfWin_InputPemindahbukuan
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/pemindahbukuan/wpfwin_inputpemindahbukuan.xaml"& _ 
-                "", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/pemindahbukuan/wpfwin_inputpemindahbu"& _ 
+                "kuan.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Buku Pengawasan\Pemindahbukuan\wpfWin_InputPemindahbukuan.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

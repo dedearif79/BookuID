@@ -113,7 +113,7 @@ Partial Public Class wpfUsc_DataProject
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/data/data%20project/wpfusc_dataproject.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/data/data%20project/wpfusc_dataproject.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Data\Data Project\wpfUsc_DataProject.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

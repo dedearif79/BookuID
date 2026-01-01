@@ -85,7 +85,7 @@ Partial Public Class wpfUsc_Loading
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/progress/wpfusc_loading.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/progress/wpfusc_loading.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Progress\wpfUsc_Loading.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

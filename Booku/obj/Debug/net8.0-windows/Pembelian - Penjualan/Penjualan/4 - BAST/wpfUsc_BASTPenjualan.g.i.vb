@@ -225,8 +225,8 @@ Partial Public Class wpfUsc_BASTPenjualan
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/pembelian%20-%20penjualan/penjualan/4%20-%20bast/wpfusc_bastpenj"& _ 
-                "ualan.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/pembelian%20-%20penjualan/penjualan/4%20-%20bast/wpfusc"& _ 
+                "_bastpenjualan.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Pembelian - Penjualan\Penjualan\4 - BAST\wpfUsc_BASTPenjualan.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

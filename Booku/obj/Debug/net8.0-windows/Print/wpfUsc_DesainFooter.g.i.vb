@@ -57,7 +57,7 @@ Partial Public Class wpfUsc_DesainFooter
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/print/wpfusc_desainfooter.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/print/wpfusc_desainfooter.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Print\wpfUsc_DesainFooter.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

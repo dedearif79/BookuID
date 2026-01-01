@@ -190,8 +190,8 @@ Partial Public Class wpfUsc_BukuPengawasanBuktiPenerimaanBankCash
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/penerimaan-pengeluaran/bukti%20penerimaan%20ba"& _ 
-                "nk-cash/wpfusc_bukupengawasanbuktipenerimaanbankcash.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/penerimaan-pengeluaran/bukti%20peneri"& _ 
+                "maan%20bank-cash/wpfusc_bukupengawasanbuktipenerimaanbankcash.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Penerimaan Bank-Cash\wpfUsc_BukuPengawasanBuktiPenerimaanBankCash.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

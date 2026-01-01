@@ -162,7 +162,7 @@ Partial Public Class wpfWin_InputCOA
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/data/data%20coa/wpfwin_inputcoa.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/data/data%20coa/wpfwin_inputcoa.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Data\Data COA\wpfWin_InputCOA.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

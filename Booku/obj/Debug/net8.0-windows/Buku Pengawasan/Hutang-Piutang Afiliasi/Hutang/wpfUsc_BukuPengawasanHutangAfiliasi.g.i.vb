@@ -421,8 +421,8 @@ Partial Public Class wpfUsc_BukuPengawasanHutangAfiliasi
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/hutang-piutang%20afiliasi/hutang/wpfusc_bukupe"& _ 
-                "ngawasanhutangafiliasi.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/hutang-piutang%20afiliasi/hutang/wpfu"& _ 
+                "sc_bukupengawasanhutangafiliasi.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\..\Buku Pengawasan\Hutang-Piutang Afiliasi\Hutang\wpfUsc_BukuPengawasanHutangAfiliasi.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

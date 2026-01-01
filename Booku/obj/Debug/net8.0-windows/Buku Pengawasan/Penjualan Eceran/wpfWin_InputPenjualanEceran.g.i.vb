@@ -113,8 +113,8 @@ Partial Public Class wpfWin_InputPenjualanEceran
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20pengawasan/penjualan%20eceran/wpfwin_inputpenjualaneceran"& _ 
-                ".xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20pengawasan/penjualan%20eceran/wpfwin_inputpenjua"& _ 
+                "laneceran.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Buku Pengawasan\Penjualan Eceran\wpfWin_InputPenjualanEceran.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

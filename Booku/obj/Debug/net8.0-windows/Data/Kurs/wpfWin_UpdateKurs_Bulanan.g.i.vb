@@ -267,7 +267,7 @@ Partial Public Class wpfWin_UpdateKurs_Bulanan
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/data/kurs/wpfwin_updatekurs_bulanan.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/data/kurs/wpfwin_updatekurs_bulanan.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\..\Data\Kurs\wpfWin_UpdateKurs_Bulanan.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

@@ -61,7 +61,7 @@ Namespace Booku
             Me.StartupUri = New System.Uri("", System.UriKind.Relative)
             
             #End ExternalSource
-            Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/application.xaml", System.UriKind.Relative)
+            Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/application.xaml", System.UriKind.Relative)
             
             #ExternalSource("..\..\..\Application.xaml",1)
             System.Windows.Application.LoadComponent(Me, resourceLocater)

@@ -337,7 +337,7 @@ Partial Public Class wpfUsc_CompanyProfile
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/file/wpfusc_companyprofile.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/file/wpfusc_companyprofile.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\File\wpfUsc_CompanyProfile.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)

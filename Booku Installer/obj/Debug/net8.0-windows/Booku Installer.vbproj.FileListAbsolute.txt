@@ -1,0 +1,5 @@
+D:\VB .Net Project\BookuID\Booku Installer\obj\Debug\net8.0-windows\Booku Installer.vbproj.AssemblyReference.cache
+D:\VB .Net Project\BookuID\Booku Installer\obj\Debug\net8.0-windows\wpfWin_StartUp.g.vb
+D:\VB .Net Project\BookuID\Booku Installer\obj\Debug\net8.0-windows\Application.g.vb
+D:\VB .Net Project\BookuID\Booku Installer\obj\Debug\net8.0-windows\Booku Installer_MarkupCompile.cache
+D:\VB .Net Project\BookuID\Booku Installer\obj\Debug\net8.0-windows\Booku Installer_MarkupCompile.lref

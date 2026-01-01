@@ -134,7 +134,7 @@ Partial Public Class wpfWin_BukuBesarPembantu
             Return
         End If
         _contentLoaded = true
-        Dim resourceLocater As System.Uri = New System.Uri("/Booku;component/buku%20besar/wpfwin_bukubesarpembantu.xaml", System.UriKind.Relative)
+        Dim resourceLocater As System.Uri = New System.Uri("/Booku;V1.0.0.0;component/buku%20besar/wpfwin_bukubesarpembantu.xaml", System.UriKind.Relative)
         
         #ExternalSource("..\..\..\..\Buku Besar\wpfWin_BukuBesarPembantu.xaml",1)
         System.Windows.Application.LoadComponent(Me, resourceLocater)
