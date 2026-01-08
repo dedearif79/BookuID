@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -18,53 +18,53 @@ Public Class wpfUsc_InvoicePenjualan
     Public MetodePembayaran
 
     'Variabel Tabel :
-    Dim Index_BarisTabel
-    Dim NomorUrut
-    Dim JenisInvoice
-    Dim JenisProduk
-    Dim AngkaInvoice
-    Dim NomorInvoice_Sebelumnya
-    Dim NomorInvoice
-    Dim NomorPenjualan
-    Dim NP
-    Dim TanggalInvoice
-    Dim TahunInvoice As Integer
-    Dim TanggalPembetulan
-    Dim Tanggallapor
-    Dim JatuhTempo
-    Dim NomorSJBAST
-    Dim TanggalSJBAST
-    Dim TanggalDiterima
-    Dim NomorPO
-    Dim TanggalPO
-    Dim KodeProject
-    Dim KodeCustomer
-    Dim NamaCustomer
-    Dim KodeMataUang
-    Dim Kurs As Decimal
-    Dim JumlahHarga As Int64
-    Dim JumlahHarga_Asing As Decimal
-    Dim DiskonRp As Int64
-    Dim DiskonAsing As Decimal
-    Dim BasisPerhitunganTermin As String
-    Dim ProsentaseTermin_String
-    Dim DasarPengenaanPajak
-    Dim NomorFakturPajak
-    Dim JenisPPN
-    Dim PPN
-    Dim PPhDipotong
-    Dim TagihanKotor As Int64
-    Dim TagihanKotor_Asing As Decimal
-    Dim BiayaLainnya As Int64
-    Dim BiayaLainnya_Asing As Decimal
-    Dim TotalTagihan As Int64
-    Dim TotalTagihan_Asing As Decimal
-    Dim ReturDPP
-    Dim ReturPPN
-    Dim Retur
-    Dim InvoicePenjualanAsset
-    Dim Catatan
-    Dim NomorJV
+    Public Index_BarisTabel
+    Public NomorUrut
+    Public JenisInvoice
+    Public JenisProduk
+    Public AngkaInvoice
+    Public NomorInvoice_Sebelumnya
+    Public NomorInvoice
+    Public NomorPenjualan
+    Public NP
+    Public TanggalInvoice
+    Public TahunInvoice As Integer
+    Public TanggalPembetulan
+    Public Tanggallapor
+    Public JatuhTempo
+    Public NomorSJBAST
+    Public TanggalSJBAST
+    Public TanggalDiterima
+    Public NomorPO
+    Public TanggalPO
+    Public KodeProject
+    Public KodeCustomer
+    Public NamaCustomer
+    Public KodeMataUang
+    Public Kurs As Decimal
+    Public JumlahHarga As Int64
+    Public JumlahHarga_Asing As Decimal
+    Public DiskonRp As Int64
+    Public DiskonAsing As Decimal
+    Public BasisPerhitunganTermin As String
+    Public ProsentaseTermin_String
+    Public DasarPengenaanPajak
+    Public NomorFakturPajak
+    Public JenisPPN
+    Public PPN
+    Public PPhDipotong
+    Public TagihanKotor As Int64
+    Public TagihanKotor_Asing As Decimal
+    Public BiayaLainnya As Int64
+    Public BiayaLainnya_Asing As Decimal
+    Public TotalTagihan As Int64
+    Public TotalTagihan_Asing As Decimal
+    Public ReturDPP
+    Public ReturPPN
+    Public Retur
+    Public InvoicePenjualanAsset
+    Public Catatan
+    Public NomorJV
 
     'Variabel Rekap :
     Dim Rekap_JumlahHarga
@@ -581,15 +581,27 @@ Public Class wpfUsc_InvoicePenjualan
 
 
     Private Sub btn_Input_Click(sender As Object, e As RoutedEventArgs) Handles btn_Input.Click
-        win_InputInvoicePenjualan = New wpfWin_InputInvoicePenjualan
-        win_InputInvoicePenjualan.ResetForm()
-        win_InputInvoicePenjualan.FungsiForm = FungsiForm_TAMBAH
-        win_InputInvoicePenjualan.DestinasiPenjualan = DestinasiPenjualan
-        win_InputInvoicePenjualan.JenisProduk_Induk = JenisProduk_Menu
-        win_InputInvoicePenjualan.InvoiceDenganPO = InvoiceDenganPO
-        If Not Pilih_KodeCustomer = Pilihan_Semua Then win_InputInvoicePenjualan.txt_KodeCustomer.Text = Pilih_KodeCustomer
-        win_InputInvoicePenjualan.MetodePembayaran = MetodePembayaran
-        win_InputInvoicePenjualan.ShowDialog()
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then
+            win_InputInvoicePenjualan_Alt = New wpfWin_InputInvoicePenjualan_Alt
+            win_InputInvoicePenjualan_Alt.ResetForm()
+            win_InputInvoicePenjualan_Alt.FungsiForm = FungsiForm_TAMBAH
+            win_InputInvoicePenjualan_Alt.DestinasiPenjualan = DestinasiPenjualan
+            win_InputInvoicePenjualan_Alt.JenisProduk_Induk = JenisProduk_Menu
+            win_InputInvoicePenjualan_Alt.InvoiceDenganPO = InvoiceDenganPO
+            If Not Pilih_KodeCustomer = Pilihan_Semua Then win_InputInvoicePenjualan_Alt.txt_KodeCustomer.Text = Pilih_KodeCustomer
+            win_InputInvoicePenjualan_Alt.MetodePembayaran = MetodePembayaran
+            win_InputInvoicePenjualan_Alt.ShowDialog()
+        Else
+            win_InputInvoicePenjualan = New wpfWin_InputInvoicePenjualan
+            win_InputInvoicePenjualan.ResetForm()
+            win_InputInvoicePenjualan.FungsiForm = FungsiForm_TAMBAH
+            win_InputInvoicePenjualan.DestinasiPenjualan = DestinasiPenjualan
+            win_InputInvoicePenjualan.JenisProduk_Induk = JenisProduk_Menu
+            win_InputInvoicePenjualan.InvoiceDenganPO = InvoiceDenganPO
+            If Not Pilih_KodeCustomer = Pilihan_Semua Then win_InputInvoicePenjualan.txt_KodeCustomer.Text = Pilih_KodeCustomer
+            win_InputInvoicePenjualan.MetodePembayaran = MetodePembayaran
+            win_InputInvoicePenjualan.ShowDialog()
+        End If
     End Sub
 
 
@@ -617,50 +629,96 @@ Public Class wpfUsc_InvoicePenjualan
         End If
         AksesDatabase_Transaksi(Tutup)
 
-        win_InputInvoicePenjualan = New wpfWin_InputInvoicePenjualan
-        win_InputInvoicePenjualan.ResetForm()
-        win_InputInvoicePenjualan.FungsiForm = FungsiForm_EDIT
-        If BisaDiedit = False Then win_InputInvoicePenjualan.FungsiForm = FungsiForm_LIHAT
-        win_InputInvoicePenjualan.DestinasiPenjualan = DestinasiPenjualan
-        win_InputInvoicePenjualan.InvoiceDenganPO = InvoiceDenganPO
-        win_InputInvoicePenjualan.MetodePembayaran = MetodePembayaran
-        IsiValueForm_InvoicePenjualan()
-        win_InputInvoicePenjualan.ShowDialog()
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then
+            win_InputInvoicePenjualan_Alt = New wpfWin_InputInvoicePenjualan_Alt
+            win_InputInvoicePenjualan_Alt.ResetForm()
+            win_InputInvoicePenjualan_Alt.FungsiForm = FungsiForm_EDIT
+            If BisaDiedit = False Then win_InputInvoicePenjualan_Alt.FungsiForm = FungsiForm_LIHAT
+            win_InputInvoicePenjualan_Alt.DestinasiPenjualan = DestinasiPenjualan
+            win_InputInvoicePenjualan_Alt.InvoiceDenganPO = InvoiceDenganPO
+            win_InputInvoicePenjualan_Alt.MetodePembayaran = MetodePembayaran
+            IsiValueForm_InvoicePenjualan()
+            win_InputInvoicePenjualan_Alt.ShowDialog()
+        Else
+            win_InputInvoicePenjualan = New wpfWin_InputInvoicePenjualan
+            win_InputInvoicePenjualan.ResetForm()
+            win_InputInvoicePenjualan.FungsiForm = FungsiForm_EDIT
+            If BisaDiedit = False Then win_InputInvoicePenjualan.FungsiForm = FungsiForm_LIHAT
+            win_InputInvoicePenjualan.DestinasiPenjualan = DestinasiPenjualan
+            win_InputInvoicePenjualan.InvoiceDenganPO = InvoiceDenganPO
+            win_InputInvoicePenjualan.MetodePembayaran = MetodePembayaran
+            IsiValueForm_InvoicePenjualan()
+            win_InputInvoicePenjualan.ShowDialog()
+        End If
 
     End Sub
     Sub IsiValueForm_InvoicePenjualan()
         ProsesIsiValueForm = True
-        win_InputInvoicePenjualan.AngkaInvoice = AngkaInvoice_Terseleksi
-        win_InputInvoicePenjualan.JenisProduk_Induk = JenisProduk_Terseleksi
-        win_InputInvoicePenjualan.txt_NomorInvoice.Text = NomorInvoice_Terseleksi
-        win_InputInvoicePenjualan.NomorPenjualan = NomorPenjualan_Terseleksi
-        If AmbilTeksKanan(JatuhTempo_Terseleksi, 2) = "ri" Then
-            win_InputInvoicePenjualan.txt_JumlahHariJatuhTempo.Text = AmbilAngka(JatuhTempo_Terseleksi)
-            win_InputInvoicePenjualan.dtp_TanggalJatuhTempo.Text = Kosongan
-            win_InputInvoicePenjualan.rdb_JumlahHariJatuhTempo.IsChecked = True
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then
+            win_InputInvoicePenjualan_Alt.AngkaInvoice = AngkaInvoice_Terseleksi
+            win_InputInvoicePenjualan_Alt.JenisProduk_Induk = JenisProduk_Terseleksi
+            win_InputInvoicePenjualan_Alt.txt_NomorInvoice.Text = NomorInvoice_Terseleksi
+            win_InputInvoicePenjualan_Alt.NomorPenjualan = NomorPenjualan_Terseleksi
+            If AmbilTeksKanan(JatuhTempo_Terseleksi, 2) = "ri" Then
+                win_InputInvoicePenjualan_Alt.txt_JumlahHariJatuhTempo.Text = AmbilAngka(JatuhTempo_Terseleksi)
+                win_InputInvoicePenjualan_Alt.dtp_TanggalJatuhTempo.Text = Kosongan
+                win_InputInvoicePenjualan_Alt.rdb_JumlahHariJatuhTempo.IsChecked = True
+            Else
+                win_InputInvoicePenjualan_Alt.txt_JumlahHariJatuhTempo.Text = Kosongan
+                win_InputInvoicePenjualan_Alt.dtp_TanggalJatuhTempo.SelectedDate = TanggalFormatWPF(JatuhTempo_Terseleksi)
+                win_InputInvoicePenjualan_Alt.rdb_TanggalJatuhTempo.IsChecked = True
+            End If
+            win_InputInvoicePenjualan_Alt.cmb_JenisInvoice.SelectedValue = JenisInvoice_Terseleksi
+            win_InputInvoicePenjualan_Alt.txt_KodeCustomer.Text = KodeCustomer_Terseleksi
+            win_InputInvoicePenjualan_Alt.txt_NamaCustomer.Text = NamaCustomer_Terseleksi
+            win_InputInvoicePenjualan_Alt.txt_JumlahNota.Text = JumlahHarga_Terseleksi
+            win_InputInvoicePenjualan_Alt.ReturDPP = ReturDPP_Terseleksi
+            win_InputInvoicePenjualan_Alt.ReturPPN = ReturPPN_Terseleksi
+            IsiValueElemenRichTextBox(win_InputInvoicePenjualan_Alt.txt_Catatan, Catatan_Terseleksi)
+            win_InputInvoicePenjualan_Alt.NomorJV = NomorJV_Terseleksi
+            win_InputInvoicePenjualan_Alt.NomorFakturPajak = NomorFakturPajak_Terseleksi
+            win_InputInvoicePenjualan_Alt.NP = NP_Terseleksi
+            If NP_Terseleksi = "N" Then
+                win_InputInvoicePenjualan_Alt.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalInvoice_Terseleksi)
+            Else
+                win_InputInvoicePenjualan_Alt.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalPembetulan_Terseleksi)
+                win_InputInvoicePenjualan_Alt.TanggalInvoice = TanggalInvoice_Terseleksi
+            End If
+            win_InputInvoicePenjualan_Alt.IsiTabelProduk()
+            win_InputInvoicePenjualan_Alt.IsiTabelSJBAST()
         Else
-            win_InputInvoicePenjualan.txt_JumlahHariJatuhTempo.Text = Kosongan
-            win_InputInvoicePenjualan.dtp_TanggalJatuhTempo.SelectedDate = TanggalFormatWPF(JatuhTempo_Terseleksi)
-            win_InputInvoicePenjualan.rdb_TanggalJatuhTempo.IsChecked = True
+            win_InputInvoicePenjualan.AngkaInvoice = AngkaInvoice_Terseleksi
+            win_InputInvoicePenjualan.JenisProduk_Induk = JenisProduk_Terseleksi
+            win_InputInvoicePenjualan.txt_NomorInvoice.Text = NomorInvoice_Terseleksi
+            win_InputInvoicePenjualan.NomorPenjualan = NomorPenjualan_Terseleksi
+            If AmbilTeksKanan(JatuhTempo_Terseleksi, 2) = "ri" Then
+                win_InputInvoicePenjualan.txt_JumlahHariJatuhTempo.Text = AmbilAngka(JatuhTempo_Terseleksi)
+                win_InputInvoicePenjualan.dtp_TanggalJatuhTempo.Text = Kosongan
+                win_InputInvoicePenjualan.rdb_JumlahHariJatuhTempo.IsChecked = True
+            Else
+                win_InputInvoicePenjualan.txt_JumlahHariJatuhTempo.Text = Kosongan
+                win_InputInvoicePenjualan.dtp_TanggalJatuhTempo.SelectedDate = TanggalFormatWPF(JatuhTempo_Terseleksi)
+                win_InputInvoicePenjualan.rdb_TanggalJatuhTempo.IsChecked = True
+            End If
+            win_InputInvoicePenjualan.cmb_JenisInvoice.SelectedValue = JenisInvoice_Terseleksi
+            win_InputInvoicePenjualan.txt_KodeCustomer.Text = KodeCustomer_Terseleksi
+            win_InputInvoicePenjualan.txt_NamaCustomer.Text = NamaCustomer_Terseleksi
+            win_InputInvoicePenjualan.txt_JumlahNota.Text = JumlahHarga_Terseleksi
+            win_InputInvoicePenjualan.ReturDPP = ReturDPP_Terseleksi
+            win_InputInvoicePenjualan.ReturPPN = ReturPPN_Terseleksi
+            IsiValueElemenRichTextBox(win_InputInvoicePenjualan.txt_Catatan, Catatan_Terseleksi)
+            win_InputInvoicePenjualan.NomorJV = NomorJV_Terseleksi
+            win_InputInvoicePenjualan.NomorFakturPajak = NomorFakturPajak_Terseleksi
+            win_InputInvoicePenjualan.NP = NP_Terseleksi
+            If NP_Terseleksi = "N" Then
+                win_InputInvoicePenjualan.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalInvoice_Terseleksi)
+            Else
+                win_InputInvoicePenjualan.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalPembetulan_Terseleksi)
+                win_InputInvoicePenjualan.TanggalInvoice = TanggalInvoice_Terseleksi
+            End If
+            win_InputInvoicePenjualan.IsiTabelProduk()
+            win_InputInvoicePenjualan.IsiTabelSJBAST()
         End If
-        win_InputInvoicePenjualan.cmb_JenisInvoice.SelectedValue = JenisInvoice_Terseleksi
-        win_InputInvoicePenjualan.txt_KodeCustomer.Text = KodeCustomer_Terseleksi
-        win_InputInvoicePenjualan.txt_NamaCustomer.Text = NamaCustomer_Terseleksi
-        win_InputInvoicePenjualan.txt_JumlahNota.Text = JumlahHarga_Terseleksi
-        win_InputInvoicePenjualan.ReturDPP = ReturDPP_Terseleksi
-        win_InputInvoicePenjualan.ReturPPN = ReturPPN_Terseleksi
-        IsiValueElemenRichTextBox(win_InputInvoicePenjualan.txt_Catatan, Catatan_Terseleksi)
-        win_InputInvoicePenjualan.NomorJV = NomorJV_Terseleksi
-        win_InputInvoicePenjualan.NomorFakturPajak = NomorFakturPajak_Terseleksi
-        win_InputInvoicePenjualan.NP = NP_Terseleksi
-        If NP_Terseleksi = "N" Then
-            win_InputInvoicePenjualan.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalInvoice_Terseleksi)
-        Else
-            win_InputInvoicePenjualan.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalPembetulan_Terseleksi)
-            win_InputInvoicePenjualan.TanggalInvoice = TanggalInvoice_Terseleksi
-        End If
-        win_InputInvoicePenjualan.IsiTabelProduk()
-        win_InputInvoicePenjualan.IsiTabelSJBAST()
         ProsesIsiValueForm = False
     End Sub
 
@@ -709,14 +767,14 @@ Public Class wpfUsc_InvoicePenjualan
 
 
     Private Sub btn_LihatInvoice_Click(sender As Object, e As RoutedEventArgs) Handles btn_LihatInvoice.Click
-        win_InputInvoicePenjualan = New wpfWin_InputInvoicePenjualan
-        win_InputInvoicePenjualan.ResetForm()
-        win_InputInvoicePenjualan.FungsiForm = FungsiForm_LIHAT
-        win_InputInvoicePenjualan.DestinasiPenjualan = DestinasiPenjualan
-        win_InputInvoicePenjualan.InvoiceDenganPO = InvoiceDenganPO
-        win_InputInvoicePenjualan.MetodePembayaran = MetodePembayaran
+        win_InputInvoicePenjualan_Alt = New wpfWin_InputInvoicePenjualan_Alt
+        win_InputInvoicePenjualan_Alt.ResetForm()
+        win_InputInvoicePenjualan_Alt.FungsiForm = FungsiForm_LIHAT
+        win_InputInvoicePenjualan_Alt.DestinasiPenjualan = DestinasiPenjualan
+        win_InputInvoicePenjualan_Alt.InvoiceDenganPO = InvoiceDenganPO
+        win_InputInvoicePenjualan_Alt.MetodePembayaran = MetodePembayaran
         IsiValueForm_InvoicePenjualan()
-        win_InputInvoicePenjualan.ShowDialog()
+        win_InputInvoicePenjualan_Alt.ShowDialog()
     End Sub
 
 
@@ -1054,6 +1112,90 @@ Public Class wpfUsc_InvoicePenjualan
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
         StatusAktif = False
+    End Sub
+
+    Public NomorInvoiceLama As String
+
+    Sub UpdateBaris()
+        If TahunInvoice <> TahunBukuAktif Then Return
+        For Each row As DataRow In datatabelUtama.Rows
+            If row("Nomor_Invoice").ToString() = NomorInvoiceLama Then
+                ' Simpan nilai lama untuk update rekap
+                Dim JumlahHarga_Lama As Int64 = AmbilAngka(row("Jumlah_Harga"))
+                Dim JumlahHarga_Asing_Lama As Decimal = AmbilAngka_Asing(row("Jumlah_Harga_Asing"))
+                Dim DiskonRp_Lama As Int64 = AmbilAngka(row("Diskon_Rp"))
+                Dim DiskonAsing_Lama As Decimal = AmbilAngka_Asing(row("Diskon_Asing"))
+                Dim DasarPengenaanPajak_Lama As Int64 = AmbilAngka(row("Dasar_Pengenaan_Pajak"))
+                Dim PPN_Lama As Int64 = AmbilAngka(row("PPN_"))
+                Dim PPhDipotong_Lama As Int64 = AmbilAngka(row("PPh_Dipotong"))
+                Dim TagihanKotor_Lama As Int64 = AmbilAngka(row("Tagihan_Kotor"))
+                Dim TagihanKotor_Asing_Lama As Decimal = AmbilAngka_Asing(row("Tagihan_Kotor_Asing"))
+                Dim BiayaLainnya_Lama As Int64 = AmbilAngka(row("Biaya_Lainnya"))
+                Dim BiayaLainnya_Asing_Lama As Decimal = AmbilAngka_Asing(row("Biaya_Lainnya_Asing"))
+                Dim TotalTagihan_Lama As Int64 = AmbilAngka(row("Total_Tagihan"))
+                Dim TotalTagihan_Asing_Lama As Decimal = AmbilAngka_Asing(row("Total_Tagihan_Asing"))
+                Dim Retur_Lama As Int64 = AmbilAngka(row("Retur_"))
+
+                ' Update kolom-kolom
+                row("Jenis_Invoice") = JenisInvoice
+                row("Jenis_Produk") = JenisProduk
+                row("Angka_Invoice") = AngkaInvoice
+                row("Nomor_Invoice") = NomorInvoice
+                row("Nomor_Penjualan") = NomorPenjualan
+                row("N_P") = NP
+                row("Tanggal_Invoice") = TanggalInvoice
+                row("Tanggal_Pembetulan") = TanggalPembetulan
+                row("Tanggal_Lapor") = Tanggallapor
+                row("Jatuh_Tempo") = JatuhTempo
+                row("Nomor_SJ_BAST") = NomorSJBAST
+                row("Tanggal_SJ_BAST") = TanggalSJBAST
+                row("Nomor_PO") = NomorPO
+                row("Tanggal_PO") = TanggalPO
+                row("Kode_Project") = KodeProject
+                row("Kode_Customer") = KodeCustomer
+                row("Nama_Customer") = NamaCustomer
+                row("Kode_Mata_Uang") = KodeMataUang
+                row("Jumlah_Harga") = JumlahHarga
+                row("Jumlah_Harga_Asing") = JumlahHarga_Asing
+                row("Diskon_Rp") = DiskonRp
+                row("Diskon_Asing") = DiskonAsing
+                row("Prosentase_Termin") = ProsentaseTermin_String
+                row("Dasar_Pengenaan_Pajak") = DasarPengenaanPajak
+                row("Nomor_Faktur_Pajak") = NomorFakturPajak
+                row("Jenis_PPN") = JenisPPN
+                row("PPN_") = PPN
+                row("Tagihan_Kotor") = TagihanKotor
+                row("Tagihan_Kotor_Asing") = TagihanKotor_Asing
+                row("PPh_Dipotong") = PPhDipotong
+                row("Biaya_Lainnya") = BiayaLainnya
+                row("Biaya_Lainnya_Asing") = BiayaLainnya_Asing
+                row("Total_Tagihan") = TotalTagihan
+                row("Total_Tagihan_Asing") = TotalTagihan_Asing
+                row("Retur_DPP") = ReturDPP
+                row("Retur_PPN") = ReturPPN
+                row("Retur_") = Retur
+                row("Catatan_") = Catatan
+                row("Nomor_JV") = NomorJV
+
+                ' Update rekap (selisih nilai baru - nilai lama)
+                Rekap_JumlahHarga += (JumlahHarga - JumlahHarga_Lama)
+                Rekap_JumlahHarga_Asing += (JumlahHarga_Asing - JumlahHarga_Asing_Lama)
+                Rekap_DiskonRp += (DiskonRp - DiskonRp_Lama)
+                Rekap_DiskonAsing += (DiskonAsing - DiskonAsing_Lama)
+                Rekap_DasarPengenaanPajak += (DasarPengenaanPajak - DasarPengenaanPajak_Lama)
+                Rekap_PPN += (PPN - PPN_Lama)
+                Rekap_PPhDipotong += (PPhDipotong - PPhDipotong_Lama)
+                Rekap_TagihanKotor += (TagihanKotor - TagihanKotor_Lama)
+                Rekap_TagihanKotor_Asing += (TagihanKotor_Asing - TagihanKotor_Asing_Lama)
+                Rekap_BiayaLainnya += (BiayaLainnya - BiayaLainnya_Lama)
+                Rekap_BiayaLainnya_Asing += (BiayaLainnya_Asing - BiayaLainnya_Asing_Lama)
+                Rekap_TotalTagihan += (TotalTagihan - TotalTagihan_Lama)
+                Rekap_TotalTagihan_Asing += (TotalTagihan_Asing - TotalTagihan_Asing_Lama)
+                Rekap_Retur += (Retur - Retur_Lama)
+
+                Exit For
+            End If
+        Next
     End Sub
 
 End Class

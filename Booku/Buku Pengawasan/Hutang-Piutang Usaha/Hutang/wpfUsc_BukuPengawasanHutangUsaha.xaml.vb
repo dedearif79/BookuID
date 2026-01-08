@@ -18,76 +18,78 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
     Public JenisRelasi_Induk
     Public COAHutang
 
-    Dim QueryTampilan
-    Dim QueryTampilanHutangTahunLalu As String
-    Dim QueryTampilanHutangTahunAktif As String
+    Public QueryTampilan
+    Public QueryTampilanHutangTahunLalu As String
+    Public QueryTampilanHutangTahunAktif As String
 
-    Dim BarisIndex
+    Public BarisIndex
 
     'Variabel Tabel :
-    Dim NomorUrut
-    Dim JenisRelasi
-    Dim NomorBPHU
-    Dim NomorPembelian
-    Dim JenisInvoice
-    Dim JenisProduk
-    Dim AngkaInvoice
-    Dim AngkaInvoice_Sebelumnya
-    Dim NomorInvoice
-    Dim NomorFakturPajak
-    Dim TanggalInvoice
-    Dim MasaJatuhTempo
-    Dim NomorSJBAST
-    Dim TanggalSJBAST
-    Dim TanggalDiterima
-    Dim NomorPO
-    Dim TanggalPO
-    Dim KodeProject
-    Dim NamaProduk
-    Dim KodeSupplier
-    Dim NamaSupplier
-    Dim Kurs As Decimal
-    Dim JumlahHarga
-    Dim DiskonRp
-    Dim DasarPengenaanPajak
-    Dim JenisPPN
-    Dim PPN
-    Dim JenisPPh
-    Dim PPhTerutang
-    Dim PPhDitanggung
-    Dim PPhDipotong
-    Dim TagihanBruto
-    Dim BiayaTransportasi
-    Dim BiayaMaterai
-    Dim Retur
-    Dim TagihanNetto
-    Dim JumlahHutangUsaha
-    Dim SisaHutangUsaha
-    Dim KeteranganJatuhTempo
-    Dim TanggalBayar_Arr
-    Dim SisaTagihan
-    Dim JumlahBayarTagihan
-    Dim JumlahBayarTagihan_TahunLalu
-    Dim JumlahBayarTagihan_TahunBukuAktif
-    Dim JumlahBayarHutangUsaha
-    Dim JumlahBayarHutangUsaha_TahunLalu
-    Dim JumlahBayarHutangUsaha_TahunBukuAktif
-    Dim LOS
-    Dim Referensi
-    Dim Catatan
-    Dim NomorJV_Pembelian
+    Public NomorUrut
+    Public JenisRelasi
+    Public NomorBPHU
+    Public NomorPembelian
+    Public JenisInvoice
+    Public JenisProduk
+    Public AngkaInvoice
+    Public AngkaInvoice_Sebelumnya
+    Public NomorInvoice
+    Public NomorFakturPajak
+    Public TanggalInvoice
+    Public MasaJatuhTempo
+    Public NomorSJBAST
+    Public TanggalSJBAST
+    Public TanggalDiterima
+    Public NomorPO
+    Public TanggalPO
+    Public KodeProject
+    Public NamaProduk
+    Public KodeSupplier
+    Public NamaSupplier
+    Public Kurs As Decimal
+    Public JumlahHarga
+    Public DiskonRp
+    Public DasarPengenaanPajak
+    Public JenisPPN
+    Public PPN
+    Public JenisPPh
+    Public PPhTerutang
+    Public PPhDitanggung
+    Public PPhDipotong
+    Public TagihanBruto
+    Public BiayaTransportasi
+    Public BiayaMaterai
+    Public Retur
+    Public TagihanNetto
+    Public JumlahHutangUsaha
+    Public SisaHutangUsaha
+    Public KeteranganJatuhTempo
+    Public TanggalBayar_Arr
+    Public SisaTagihan
+    Public JumlahBayarTagihan
+    Public JumlahBayarTagihan_TahunLalu
+    Public JumlahBayarTagihan_TahunBukuAktif
+    Public JumlahBayarHutangUsaha
+    Public JumlahBayarHutangUsaha_TahunLalu
+    Public JumlahBayarHutangUsaha_TahunBukuAktif
+    Public LOS
+    Public Referensi
+    Public Catatan
+    Public NomorJV_Pembelian
 
-    Dim Total_SisaHutangUsaha As Int64
-    Dim TotalTabel As Int64
+    Public Total_SisaHutangUsaha As Int64
+    Public TotalTabel As Int64
 
     'Asing
-    Dim JumlahHarga_Asing As Decimal
-    Dim DiskonAsing As Decimal
-    Dim JumlahHutang_Asing As Decimal
-    Dim SisaHutang_Asing As Decimal
-    Dim SisaHutang_Asing_IDR As Int64
-    Dim JumlahBayar_Asing As Decimal
-    Dim BiayaBiaya_Asing As Decimal
+    Public JumlahHarga_Asing As Decimal
+    Public DiskonAsing As Decimal
+    Public JumlahHutang_Asing As Decimal
+    Public SisaHutang_Asing As Decimal
+    Public SisaHutang_Asing_IDR As Int64
+    Public JumlahBayar_Asing As Decimal
+    Public BiayaBiaya_Asing As Decimal
+
+    Public NomorInvoiceLama As String
 
     'Variabel Data Terseleksi :
     Dim NomorUrut_Terseleksi
@@ -815,6 +817,94 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
         End If
         BarisIndex += 1
         Terabas()
+        UpdateTampilanRekap()
+    End Sub
+
+    Sub UpdateBaris()
+        For Each row As DataRow In datatabelUtama.Rows
+            If row("Nomor_Invoice").ToString() = NomorInvoiceLama Then
+                'Simpan nilai lama untuk update rekap
+                Dim SisaHutangUsaha_Lama As Int64 = AmbilAngka(row("Sisa_Hutang_Usaha"))
+                Dim SisaHutang_Asing_IDR_Lama As Int64 = AmbilAngka(row("Sisa_Hutang_Asing_IDR"))
+                Dim JumlahHutangUsaha_Lama As Int64 = AmbilAngka(row("Jumlah_Hutang_Usaha"))
+                Dim JumlahBayarHutangUsaha_TahunLalu_Lama As Int64 = JumlahBayarHutangUsaha_TahunLalu
+
+                'Update kolom-kolom
+                row("Jenis_Relasi") = JenisRelasi
+                row("Nomor_BPHU") = NomorBPHU
+                row("Nomor_Pembelian") = NomorPembelian
+                row("Jenis_Invoice") = JenisInvoice
+                row("Jenis_Produk") = JenisProduk
+                row("Angka_Invoice") = AngkaInvoice
+                row("Nomor_Invoice") = NomorInvoice
+                row("Nomor_Faktur_Pajak") = NomorFakturPajak
+                row("Tanggal_Invoice") = TanggalInvoice
+                row("Masa_Jatuh_Tempo") = MasaJatuhTempo
+                row("Nomor_SJ_BAST") = NomorSJBAST
+                row("Tanggal_SJ_BAST") = TanggalSJBAST
+                row("Nomor_PO") = NomorPO
+                row("Tanggal_PO") = TanggalPO
+                row("Kode_Project") = KodeProject
+                row("Nama_Produk") = NamaProduk
+                row("Kode_Supplier") = KodeSupplier
+                row("Nama_Supplier") = NamaSupplier
+                row("Jumlah_Harga") = JumlahHarga
+                row("Jumlah_Harga_Asing") = JumlahHarga_Asing
+                row("Diskon_Rp") = DiskonRp
+                row("Diskon_Asing") = DiskonAsing
+                row("Dasar_Pengenaan_Pajak") = DasarPengenaanPajak
+                row("Jenis_PPN") = JenisPPN
+                row("PPN_") = PPN
+                row("Biaya_Transportasi") = BiayaTransportasi
+                row("Biaya_Materai") = BiayaMaterai
+                row("Biaya_Biaya_Asing") = BiayaBiaya_Asing
+                row("Tagihan_Bruto") = TagihanBruto
+                row("Jumlah_Hutang_Asing") = JumlahHutang_Asing
+                row("Retur_") = Retur
+                row("Jumlah_Hutang_Usaha") = JumlahHutangUsaha
+                row("Sisa_Hutang_Usaha") = SisaHutangUsaha
+                row("Jenis_PPh") = JenisPPh
+                row("PPh_Terutang") = PPhTerutang
+                row("PPh_Ditanggung") = PPhDitanggung
+                row("PPh_Dipotong") = PPhDipotong
+                row("Tagihan_Netto") = TagihanNetto
+                row("Keterangan_Jatuh_Tempo") = KeteranganJatuhTempo
+                row("Tanggal_Bayar_Arr") = TanggalBayar_Arr
+                row("Jumlah_Bayar") = JumlahBayarTagihan
+                row("Jumlah_Bayar_Asing") = JumlahBayar_Asing
+                row("Sisa_Tagihan") = SisaTagihan
+                row("Sisa_Hutang_Asing") = SisaHutang_Asing
+                row("Sisa_Hutang_Asing_IDR") = SisaHutang_Asing_IDR
+                row("L_O_S") = LOS
+                row("Referensi_") = Referensi
+                row("Catatan_") = Catatan
+                row("Nomor_JV_Pembelian") = NomorJV_Pembelian
+
+                'Update rekap (selisih nilai baru - nilai lama)
+                If PembelianLokal Then Total_SisaHutangUsaha += (SisaHutangUsaha - SisaHutangUsaha_Lama)
+                If PembelianImpor Then Total_SisaHutangUsaha += (SisaHutang_Asing_IDR - SisaHutang_Asing_IDR_Lama)
+                If QueryTampilan = QueryTampilanHutangTahunLalu Then
+                    SaldoAwal_BerdasarkanList += ((JumlahHutangUsaha - JumlahBayarHutangUsaha_TahunLalu) - (JumlahHutangUsaha_Lama - JumlahBayarHutangUsaha_TahunLalu_Lama))
+                End If
+
+                UpdateTampilanRekap()
+                Exit For
+            End If
+        Next
+    End Sub
+
+    Sub UpdateTampilanRekap()
+        TotalTabel = Total_SisaHutangUsaha
+        Select Case JenisTahunBuku
+            Case JenisTahunBuku_LAMPAU
+                SaldoAkhir_BerdasarkanList = Total_SisaHutangUsaha
+                txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
+                txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
+            Case JenisTahunBuku_NORMAL
+                txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
+                txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
+                txt_TotalTabel.Text = TotalTabel
+        End Select
     End Sub
 
     Sub BersihkanSeleksi()

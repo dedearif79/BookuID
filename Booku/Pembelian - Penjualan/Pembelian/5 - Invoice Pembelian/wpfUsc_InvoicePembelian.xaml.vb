@@ -15,66 +15,68 @@ Public Class wpfUsc_InvoicePembelian
     Public InvoiceDenganPO As Boolean
 
     'Variabel Tabel :
-    Dim Index_BarisTabel
-    Dim NomorUrut
-    Dim JenisInvoice
-    Dim JenisProduk
-    Dim AngkaInvoice
-    Dim NomorInvoice_Sebelumnya
-    Dim NomorInvoice
-    Dim NomorPembelian
-    Dim NP
-    Dim TanggalInvoice
-    Dim TahunInvoice As Integer
-    Dim TanggalPembetulan
-    Dim Tanggallapor
-    Dim JatuhTempo
-    Dim NomorSJBAST
-    Dim TanggalSJBAST
-    Dim TanggalDiterima
-    Dim NomorPO
-    Dim TanggalPO
-    Dim NamaProduk
-    Dim KodeProject
-    Dim KodeSupplier
-    Dim NamaSupplier
-    Dim KodeMataUang
-    Dim Kurs As Decimal
-    Dim JumlahHarga
-    Dim DiskonRp
-    Dim BasisPerhitunganTermin As String
-    Dim ProsentaseTermin_String
-    Dim DasarPengenaanPajak
-    Dim NomorFakturPajak
-    Dim JenisPPN
-    Dim PPN
-    Dim PPhDipotong
-    Dim TagihanKotor
-    Dim TotalTagihan
-    Dim ReturDPP
-    Dim ReturPPN
-    Dim Retur
-    Dim Catatan
-    Dim NomorJV
+    Public Index_BarisTabel
+    Public NomorUrut
+    Public JenisInvoice
+    Public JenisProduk
+    Public AngkaInvoice
+    Public NomorInvoice_Sebelumnya
+    Public NomorInvoice
+    Public NomorPembelian
+    Public NP
+    Public TanggalInvoice
+    Public TahunInvoice As Integer
+    Public TanggalPembetulan
+    Public Tanggallapor
+    Public JatuhTempo
+    Public NomorSJBAST
+    Public TanggalSJBAST
+    Public TanggalDiterima
+    Public NomorPO
+    Public TanggalPO
+    Public NamaProduk
+    Public KodeProject
+    Public KodeSupplier
+    Public NamaSupplier
+    Public KodeMataUang
+    Public Kurs As Decimal
+    Public JumlahHarga
+    Public DiskonRp
+    Public BasisPerhitunganTermin As String
+    Public ProsentaseTermin_String
+    Public DasarPengenaanPajak
+    Public NomorFakturPajak
+    Public JenisPPN
+    Public PPN
+    Public PPhDipotong
+    Public TagihanKotor
+    Public TotalTagihan
+    Public ReturDPP
+    Public ReturPPN
+    Public Retur
+    Public Catatan
+    Public NomorJV
 
     'Asing
-    Dim JumlahHarga_Asing As Decimal
-    Dim DiskonAsing As Decimal
-    Dim TotalTagihan_Asing As Decimal
+    Public JumlahHarga_Asing As Decimal
+    Public DiskonAsing As Decimal
+    Public TotalTagihan_Asing As Decimal
 
     'Variabel Rekap :
-    Dim Rekap_JumlahHarga
-    Dim Rekap_DiskonRp
-    Dim Rekap_DasarPengenaanPajak
-    Dim Rekap_PPN
-    Dim Rekap_PPhDipotong
-    Dim Rekap_Retur
-    Dim Rekap_TagihanKotor
-    Dim Rekap_TotalTagihan
+    Public Rekap_JumlahHarga
+    Public Rekap_DiskonRp
+    Public Rekap_DasarPengenaanPajak
+    Public Rekap_PPN
+    Public Rekap_PPhDipotong
+    Public Rekap_Retur
+    Public Rekap_TagihanKotor
+    Public Rekap_TotalTagihan
     'Asing :
-    Dim Rekap_JumlahHarga_Asing As Decimal
-    Dim Rekap_Diskon_Asing As Decimal
-    Dim Rekap_TotalTagihan_Asing As Decimal
+    Public Rekap_JumlahHarga_Asing As Decimal
+    Public Rekap_Diskon_Asing As Decimal
+    Public Rekap_TotalTagihan_Asing As Decimal
+
+    Public NomorInvoiceLama As String
 
     'Variabel Data Terseleksi :
     Dim Baris_Terseleksi
@@ -458,6 +460,80 @@ Public Class wpfUsc_InvoicePembelian
         Rekap_Diskon_Asing += DiskonAsing
         Rekap_TotalTagihan_Asing += TotalTagihan_Asing
         Index_BarisTabel += 1
+    End Sub
+
+    Sub UpdateBaris()
+        If TahunInvoice <> TahunBukuAktif Then Return
+        For Each row As DataRow In datatabelUtama.Rows
+            If row("Nomor_Invoice").ToString() = NomorInvoiceLama Then
+                'Simpan nilai lama untuk update rekap
+                Dim JumlahHarga_Lama As Int64 = AmbilAngka(row("Jumlah_Harga"))
+                Dim JumlahHarga_Asing_Lama As Decimal = AmbilAngka_Asing(row("Jumlah_Harga_Asing"))
+                Dim DiskonRp_Lama As Int64 = AmbilAngka(row("Diskon_Rp"))
+                Dim DiskonAsing_Lama As Decimal = AmbilAngka_Asing(row("Diskon_Asing"))
+                Dim DasarPengenaanPajak_Lama As Int64 = AmbilAngka(row("Dasar_Pengenaan_Pajak"))
+                Dim PPN_Lama As Int64 = AmbilAngka(row("PPN_"))
+                Dim PPhDipotong_Lama As Int64 = AmbilAngka(row("PPh_Dipotong"))
+                Dim TagihanKotor_Lama As Int64 = AmbilAngka(row("Tagihan_Kotor"))
+                Dim TotalTagihan_Lama As Int64 = AmbilAngka(row("Total_Tagihan"))
+                Dim TotalTagihan_Asing_Lama As Decimal = AmbilAngka_Asing(row("Total_Tagihan_Asing"))
+                Dim Retur_Lama As Int64 = AmbilAngka(row("Retur_"))
+
+                'Update kolom-kolom
+                row("Jenis_Invoice") = JenisInvoice
+                row("Jenis_Produk") = JenisProduk
+                row("Angka_Invoice") = AngkaInvoice
+                row("Nomor_Invoice") = NomorInvoice
+                row("Nomor_Pembelian") = NomorPembelian
+                row("N_P") = NP
+                row("Tanggal_Invoice") = TanggalInvoice
+                row("Tanggal_Pembetulan") = TanggalPembetulan
+                row("Tanggal_Lapor") = Tanggallapor
+                row("Jatuh_Tempo") = JatuhTempo
+                row("Nomor_SJ_BAST") = NomorSJBAST
+                row("Tanggal_SJ_BAST") = TanggalSJBAST
+                row("Nomor_PO") = NomorPO
+                row("Tanggal_PO") = TanggalPO
+                row("Nama_Produk") = NamaProduk
+                row("Kode_Project") = KodeProject
+                row("Kode_Supplier") = KodeSupplier
+                row("Nama_Supplier") = NamaSupplier
+                row("Kode_Mata_Uang") = KodeMataUang
+                row("Jumlah_Harga") = JumlahHarga
+                row("Jumlah_Harga_Asing") = JumlahHarga_Asing
+                row("Diskon_Rp") = DiskonRp
+                row("Diskon_Asing") = DiskonAsing
+                row("Prosentase_Termin") = ProsentaseTermin_String
+                row("Dasar_Pengenaan_Pajak") = DasarPengenaanPajak
+                row("Nomor_Faktur_Pajak") = NomorFakturPajak
+                row("Jenis_PPN") = JenisPPN
+                row("PPN_") = PPN
+                row("Tagihan_Kotor") = TagihanKotor
+                row("PPh_Dipotong") = PPhDipotong
+                row("Total_Tagihan") = TotalTagihan
+                row("Total_Tagihan_Asing") = TotalTagihan_Asing
+                row("Retur_DPP") = ReturDPP
+                row("Retur_PPN") = ReturPPN
+                row("Retur_") = Retur
+                row("Catatan_") = Catatan
+                row("Nomor_JV") = NomorJV
+
+                'Update rekap (selisih nilai baru - nilai lama)
+                Rekap_JumlahHarga += (JumlahHarga - JumlahHarga_Lama)
+                Rekap_JumlahHarga_Asing += (JumlahHarga_Asing - JumlahHarga_Asing_Lama)
+                Rekap_DiskonRp += (DiskonRp - DiskonRp_Lama)
+                Rekap_Diskon_Asing += (DiskonAsing - DiskonAsing_Lama)
+                Rekap_DasarPengenaanPajak += (DasarPengenaanPajak - DasarPengenaanPajak_Lama)
+                Rekap_PPN += (PPN - PPN_Lama)
+                Rekap_PPhDipotong += (PPhDipotong - PPhDipotong_Lama)
+                Rekap_TagihanKotor += (TagihanKotor - TagihanKotor_Lama)
+                Rekap_TotalTagihan += (TotalTagihan - TotalTagihan_Lama)
+                Rekap_TotalTagihan_Asing += (TotalTagihan_Asing - TotalTagihan_Asing_Lama)
+                Rekap_Retur += (Retur - Retur_Lama)
+
+                Exit For
+            End If
+        Next
     End Sub
 
     Sub BersihkanSeleksi()

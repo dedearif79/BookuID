@@ -1176,6 +1176,9 @@
     <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Tanpa PO\frm_InvoicePenjualan_TanpaPO_Lokal_JasaKonstruksi.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfWin_InputInvoicePenjualan_Alt.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pembelian - Penjualan\Penjualan\X-Trash\X_frm_SuratJalanPenjualan_X.vb">
       <SubType>Form</SubType>
     </Compile>

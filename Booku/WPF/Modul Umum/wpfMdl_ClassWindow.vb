@@ -1,4 +1,4 @@
-﻿Module wpfMdl_ClassWindow
+Module wpfMdl_ClassWindow
 
     '═══════════════════════════════════════════════════════════════════════════
     ' STARTUP & LOGIN
@@ -94,6 +94,7 @@
     Public win_InputSuratJalanPenjualan As New wpfWin_InputSuratJalanPenjualan
     Public win_InputBASTPenjualan As New wpfWin_InputBASTPenjualan
     Public win_InputInvoicePenjualan As New wpfWin_InputInvoicePenjualan
+    Public win_InputInvoicePenjualan_Alt As New wpfWin_InputInvoicePenjualan_Alt
     Public win_InputReturPenjualan As New wpfWin_InputReturPenjualan
     Public win_InputPenjualanEceran As New wpfWin_InputPenjualanEceran
 

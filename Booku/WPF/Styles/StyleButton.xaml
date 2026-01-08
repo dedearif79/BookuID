@@ -1,4 +1,4 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!--Button Dasar-->
@@ -370,6 +370,11 @@
     <!--Button Form Dialog - Simpan -->
     <Style x:Key="styleButtonFormDialogSimpan" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
         <Setter Property="Content" Value="Simpan"/>
+    </Style>
+
+    <!--Button Form Dialog - Hitung -->
+    <Style x:Key="styleButtonFormDialogHitung" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+        <Setter Property="Content" Value="Hitung"/>
     </Style>
 
     <!--Button Form Dialog - Simpan Perubahan -->

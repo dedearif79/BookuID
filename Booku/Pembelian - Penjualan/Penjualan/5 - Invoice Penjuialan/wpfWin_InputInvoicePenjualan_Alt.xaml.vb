@@ -5,7 +5,8 @@ Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
 
-Public Class wpfWin_InputInvoicePenjualan
+Public Class wpfWin_InputInvoicePenjualan_Alt
+
 
     Public JudulForm
     Public FungsiForm

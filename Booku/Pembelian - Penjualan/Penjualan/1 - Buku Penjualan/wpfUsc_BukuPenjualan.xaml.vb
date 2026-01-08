@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -16,49 +16,49 @@ Public Class wpfUsc_BukuPenjualan
     Dim QueryTampilan
 
     'Variabel Kolom Tabel :
-    Dim Index_BarisTabel
-    Dim NomorUrut
-    Dim NomorPenjualan
-    Dim JenisInvoice
-    Dim JenisProduk
-    Dim AngkaInvoice
-    Dim NomorInvoice_Sebelumnya
-    Dim NomorInvoice
-    Dim NomorFakturPajak
-    Dim NP
-    Dim TanggalInvoice
-    Dim TahunInvoice As Integer
-    Dim TanggalPembetulan
-    Dim MasaJatuhTempo
-    Dim NomorSJBAST
-    Dim TanggalSJBAST
-    Dim TanggalDiterima
-    Dim NomorPO
-    Dim TanggalPO
-    Dim KodeProject
-    Dim KodeCustomer
-    Dim NamaCustomer
-    Dim KodeMataUang
-    Dim Kurs As Decimal
-    Dim JumlahHarga
-    Dim JumlahHarga_Asing As Decimal
-    Dim DiskonRp
-    Dim DiskonAsing As Decimal
-    Dim DasarPengenaanPajak
-    Dim JenisPPN
-    Dim PerlakuanPPN
-    Dim PPN
-    Dim PPhDipotong
-    Dim TagihanBruto
-    Dim TagihanBruto_Asing As Decimal
-    Dim BiayaLainnya
-    Dim BiayaLainnya_Asing As Decimal
-    Dim Retur
-    Dim TagihanNetto
-    Dim KeteranganJatuhTempo
-    Dim KodeFP
-    Dim Catatan
-    Dim NomorJV
+    Public Index_BarisTabel
+    Public NomorUrut
+    Public NomorPenjualan
+    Public JenisInvoice
+    Public JenisProduk
+    Public AngkaInvoice
+    Public NomorInvoice_Sebelumnya
+    Public NomorInvoice
+    Public NomorFakturPajak
+    Public NP
+    Public TanggalInvoice
+    Public TahunInvoice As Integer
+    Public TanggalPembetulan
+    Public MasaJatuhTempo
+    Public NomorSJBAST
+    Public TanggalSJBAST
+    Public TanggalDiterima
+    Public NomorPO
+    Public TanggalPO
+    Public KodeProject
+    Public KodeCustomer
+    Public NamaCustomer
+    Public KodeMataUang
+    Public Kurs As Decimal
+    Public JumlahHarga
+    Public JumlahHarga_Asing As Decimal
+    Public DiskonRp
+    Public DiskonAsing As Decimal
+    Public DasarPengenaanPajak
+    Public JenisPPN
+    Public PerlakuanPPN
+    Public PPN
+    Public PPhDipotong
+    Public TagihanBruto
+    Public TagihanBruto_Asing As Decimal
+    Public BiayaLainnya
+    Public BiayaLainnya_Asing As Decimal
+    Public Retur
+    Public TagihanNetto
+    Public KeteranganJatuhTempo
+    Public KodeFP
+    Public Catatan
+    Public NomorJV
 
     'Variabel Rekap :
     Dim Rekap_JumlahHarga
@@ -923,6 +923,86 @@ Public Class wpfUsc_BukuPenjualan
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
         StatusAktif = False
+    End Sub
+
+    Public NomorInvoiceLama As String
+
+    Sub UpdateBaris()
+        If TahunInvoice <> TahunBukuAktif Then Return
+        For Each row As DataRow In datatabelUtama.Rows
+            If row("Nomor_Invoice").ToString() = NomorInvoiceLama Then
+                ' Simpan nilai lama untuk update rekap
+                Dim JumlahHarga_Lama As Int64 = AmbilAngka(row("Jumlah_Harga"))
+                Dim JumlahHarga_Asing_Lama As Decimal = AmbilAngka_Asing(row("Jumlah_Harga_Asing"))
+                Dim DiskonRp_Lama As Int64 = AmbilAngka(row("Diskon_Rp"))
+                Dim DiskonAsing_Lama As Decimal = AmbilAngka_Asing(row("Diskon_Asing"))
+                Dim DasarPengenaanPajak_Lama As Int64 = AmbilAngka(row("Dasar_Pengenaan_Pajak"))
+                Dim PPN_Lama As Int64 = AmbilAngka(row("PPN_"))
+                Dim PPhDipotong_Lama As Int64 = AmbilAngka(row("PPh_Dipotong"))
+                Dim BiayaLainnya_Lama As Int64 = AmbilAngka(row("Biaya_Lainnya"))
+                Dim BiayaLainnya_Asing_Lama As Decimal = AmbilAngka_Asing(row("Biaya_Lainnya_Asing"))
+                Dim TagihanBruto_Lama As Int64 = AmbilAngka(row("Tagihan_Bruto"))
+                Dim TagihanBruto_Asing_Lama As Decimal = AmbilAngka_Asing(row("Tagihan_Bruto_Asing"))
+                Dim Retur_Lama As Int64 = AmbilAngka(row("Retur_"))
+                Dim TagihanNetto_Lama As Int64 = AmbilAngka(row("Tagihan_Netto"))
+
+                ' Update kolom-kolom
+                row("Nomor_Penjualan") = NomorPenjualan
+                row("Jenis_Invoice") = JenisInvoice
+                row("Jenis_Produk") = JenisProduk
+                row("Angka_Invoice") = AngkaInvoice
+                row("Nomor_Invoice") = NomorInvoice
+                row("N_P") = NP
+                row("Nomor_Faktur_Pajak") = NomorFakturPajak
+                row("Tanggal_Invoice") = TanggalInvoice
+                row("Tanggal_Pembetulan") = TanggalPembetulan
+                row("Kode_Customer") = KodeCustomer
+                row("Nama_Customer") = NamaCustomer
+                row("Kode_Mata_Uang") = KodeMataUang
+                row("Jumlah_Harga") = JumlahHarga
+                row("Jumlah_Harga_Asing") = JumlahHarga_Asing
+                row("Diskon_Rp") = DiskonRp
+                row("Diskon_Asing") = DiskonAsing
+                row("Dasar_Pengenaan_Pajak") = DasarPengenaanPajak
+                row("Jenis_PPN") = JenisPPN
+                row("Perlakuan_PPN") = PerlakuanPPN
+                row("PPN_") = PPN
+                row("PPh_Dipotong") = PPhDipotong
+                row("Biaya_Lainnya") = BiayaLainnya
+                row("Biaya_Lainnya_Asing") = BiayaLainnya_Asing
+                row("Tagihan_Bruto") = TagihanBruto
+                row("Tagihan_Bruto_Asing") = TagihanBruto_Asing
+                row("Retur_") = Retur
+                row("Tagihan_Netto") = TagihanNetto
+                row("Nomor_SJ_BAST") = NomorSJBAST
+                row("Tanggal_SJ_BAST") = TanggalSJBAST
+                row("Nomor_PO") = NomorPO
+                row("Tanggal_PO") = TanggalPO
+                row("Kode_Project") = KodeProject
+                row("Masa_Jatuh_Tempo") = MasaJatuhTempo
+                row("Keterangan_Jatuh_Tempo") = KeteranganJatuhTempo
+                row("Kode_FP") = KodeFP
+                row("Catatan_") = Catatan
+                row("Nomor_JV") = NomorJV
+
+                ' Update rekap (selisih nilai baru - nilai lama)
+                Rekap_JumlahHarga += (JumlahHarga - JumlahHarga_Lama)
+                Rekap_JumlahHarga_Asing += (JumlahHarga_Asing - JumlahHarga_Asing_Lama)
+                Rekap_DiskonRp += (DiskonRp - DiskonRp_Lama)
+                Rekap_DiskonAsing += (DiskonAsing - DiskonAsing_Lama)
+                Rekap_DasarPengenaanPajak += (DasarPengenaanPajak - DasarPengenaanPajak_Lama)
+                Rekap_PPN += (PPN - PPN_Lama)
+                Rekap_PPhDipotong += (PPhDipotong - PPhDipotong_Lama)
+                Rekap_BiayaLainnya += (BiayaLainnya - BiayaLainnya_Lama)
+                Rekap_BiayaLainnya_Asing += (BiayaLainnya_Asing - BiayaLainnya_Asing_Lama)
+                Rekap_TagihanBruto += (TagihanBruto - TagihanBruto_Lama)
+                Rekap_TagihanBruto_Asing += (TagihanBruto_Asing - TagihanBruto_Asing_Lama)
+                Rekap_Retur += (Retur - Retur_Lama)
+                Rekap_TagihanNetto += (TagihanNetto - TagihanNetto_Lama)
+
+                Exit For
+            End If
+        Next
     End Sub
 
 End Class
