@@ -1,0 +1,55 @@
+<?xml version='1.0'?>
+<Obfuscator>
+  <!-- Path settings -->
+  <Var name="InPath" value="." />
+  <Var name="OutPath" value=".\Obfuscated" />
+
+  <!-- Obfuscation options -->
+  <Var name="KeepPublicApi" value="false" />
+  <Var name="HidePrivateApi" value="true" />
+  <Var name="HideStrings" value="true" />
+  <Var name="UseUnicodeNames" value="true" />
+  <Var name="RenameProperties" value="true" />
+  <Var name="RenameEvents" value="true" />
+  <Var name="RenameFields" value="true" />
+  <Var name="RegenerateDebugInfo" value="false" />
+
+  <!-- Main assembly to obfuscate -->
+  <Module file="$(InPath)\Booku.dll">
+    <!-- Skip WPF/WinForms related namespaces that use reflection -->
+    <SkipNamespace name="Booku.My" />
+
+    <!-- Skip types that are used in XAML -->
+    <SkipType name="*Window*" skipProperties="true" skipMethods="false" skipFields="false" />
+    <SkipType name="*UserControl*" skipProperties="true" skipMethods="false" skipFields="false" />
+    <SkipType name="*ViewModel*" skipProperties="true" skipMethods="false" skipFields="false" />
+    <SkipType name="*Converter*" skipProperties="true" skipMethods="true" skipFields="false" />
+
+    <!-- Skip properties with specific patterns (XAML bindings) -->
+    <SkipProperty type="*" name="*Property" />
+    <SkipProperty type="*" name="*Command" />
+
+    <!-- Skip event handlers referenced in XAML -->
+    <SkipMethod type="*" name="*_Click" />
+    <SkipMethod type="*" name="*_Loaded" />
+    <SkipMethod type="*" name="*_Changed" />
+    <SkipMethod type="*" name="*_SelectionChanged" />
+    <SkipMethod type="*" name="*_TextChanged" />
+    <SkipMethod type="*" name="*_KeyDown" />
+    <SkipMethod type="*" name="*_KeyUp" />
+    <SkipMethod type="*" name="*_MouseDown" />
+    <SkipMethod type="*" name="*_MouseUp" />
+    <SkipMethod type="*" name="*_Closing" />
+    <SkipMethod type="*" name="*_Closed" />
+    <SkipMethod type="*" name="*_Initialized" />
+    <SkipMethod type="*" name="*_ContentRendered" />
+    <SkipMethod type="*" name="*_GotFocus" />
+    <SkipMethod type="*" name="*_LostFocus" />
+  </Module>
+
+  <!-- Booku Library -->
+  <Module file="$(InPath)\bcomm.dll">
+    <!-- Keep public API for library -->
+    <SkipNamespace name="bcomm" skipTypes="false" skipMethods="false" skipProperties="true" skipFields="false" />
+  </Module>
+</Obfuscator>

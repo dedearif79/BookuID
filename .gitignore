@@ -1,0 +1,22 @@
+.vs
+
+Booku/00 SUPPORT/
+
+Booku/obj/
+Booku Assistant/obj/
+Booku Backup/obj/
+Booku Encrypter/obj/
+Booku Installer/obj/
+Booku Library/obj/
+Booku Uninstaller/obj/
+Booku Updater/obj/
+
+Booku/bin/
+Booku/bin/Release/Final/
+Booku Assistant/bin/
+Booku Backup/bin/
+Booku Encrypter/bin/
+Booku Installer/bin/
+Booku Library/bin/
+Booku Uninstaller/bin/
+Booku Updater/bin/

@@ -1,0 +1,117 @@
+﻿<UserControl x:Class="wpfUsc_BundelPengajuanPengeluaranBankCash"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Booku"
+             mc:Ignorable="d" 
+>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel Style="{StaticResource stylePanelFormHalaman}">
+        <StackPanel Style="{StaticResource stylePanelFormHalamanHeader}">
+            <StackPanel Style="{StaticResource stylePanelFormHalamanTittle}" >
+                <TextBlock Style="{StaticResource styleTextBlockFormHalamanJudul}" Name="lbl_JudulForm">Judul Form</TextBlock>
+            </StackPanel>
+            <!-- Baris Tombol :-->
+            <StackPanel Style="{StaticResource stylePanelFormHalamanTombolHorizontal}"  Name="pnl_TombolForm">
+                <Button Style="{StaticResource styleButtonFormHalamanRefresh}"          Name="btn_Refresh" />
+                <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
+                <Button Style="{StaticResource styleButtonFormHalamanCrudInput}"        Name="btn_Input" />
+                <Button Style="{StaticResource styleButtonFormHalamanCrudEdit}"         Name="btn_Edit" />
+                <Button Style="{StaticResource styleButtonFormHalamanCrudHapus}"        Name="btn_Hapus" />
+                <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
+                <Button Style="{StaticResource styleButtonFormHalamanCetak}"            Name="btn_Cetak" /> 
+                <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
+                <Button Style="{StaticResource styleButtonFormHalamanExport}"           Name="btn_Export" />
+            </StackPanel>
+            <!-- Baris Filter Data :-->
+            <!--<StackPanel Style="{StaticResource stylePanelFormHalamanFilterData}" Name="pnl_FilterData" >
+                <TextBlock Style="{StaticResource styleTextBlockFormHalaman}">Filter Data 1 :</TextBlock>
+                <TextBox Width="100"   Margin="6 3" Name="txt_Filter1" ></TextBox>
+                <TextBlock Style="{StaticResource styleTextBlockFormHalaman}">Filter Data 2 :</TextBlock>
+                <ComboBox Width="123"  Margin="6 3"  ></ComboBox>
+                <TextBlock Style="{StaticResource styleTextBlockFormHalaman}">Filter Data 3 :</TextBlock>
+                <ComboBox Width="210"  Margin="6 3"  ></ComboBox>
+            </StackPanel>-->
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource stylePanelFormHalamanFooter}"></StackPanel>
+        <DockPanel Width="Auto" Height="Auto" Name="pnl_Konten" >
+
+            <Grid DockPanel.Dock="Top" VerticalAlignment="Stretch" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="0"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0" Style="{StaticResource stylePanelFormHalamanSidebarKiri}" CanVerticallyScroll="True" Height="99" Grid.RowSpan="2" >
+                </StackPanel>
+                <GridSplitter Grid.Column="0" Grid.RowSpan="2" Width="3"/>
+                <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" Name="pnl_Bundel" VerticalAlignment="Stretch" HorizontalAlignment="Left" >
+                    <StackPanel Style="{StaticResource stylePanelDataGridView}" >
+                        <DataGrid Name="datagridBundel" Style="{StaticResource StyleDataGridModul}" MinWidth="444" MinHeight="33"/>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="2" Style="{StaticResource stylePanelFormHalamanKonten}" Name="pnl_Pengajuan" CanVerticallyScroll="False" >
+                    <StackPanel HorizontalAlignment="Left" >
+                        <DataGrid Name="datagridPengajuan" Style="{StaticResource StyleDataGridModul}" MinWidth="555" MinHeight="33" />
+                        <DockPanel  HorizontalAlignment="Stretch" >
+                            <Grid HorizontalAlignment="Left" Margin="0 15 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="123"/>
+                                    <ColumnDefinition Width="111"/>
+                                    <ColumnDefinition Width="99"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <TextBlock  Grid.Row="0"    Grid.Column="0" Style="{StaticResource styleTextBlockFormHalaman}"  Name="lbl_TotalPengajuan"       Text="Total Pengajuan"/>
+                                <TextBlock  Grid.Row="1"    Grid.Column="0" Style="{StaticResource styleTextBlockFormHalaman}"  Name="lbl_TotalDisetujui"       Text="Total Disetujui"/>
+                                <TextBlock  Grid.Row="2"    Grid.Column="0" Style="{StaticResource styleTextBlockFormHalaman}"  Name="lbl_TotalCashAdvance"     Text="Total Cash Advance"/>
+                                <TextBox    Grid.Row="0"    Grid.Column="1" Style="{StaticResource styleTextBoxFormHalaman}"    Name="txt_TotalPengajuan"/>
+                                <TextBox    Grid.Row="1"    Grid.Column="1" Style="{StaticResource styleTextBoxFormHalaman}"    Name="txt_TotalDisetujui"/>
+                                <TextBox    Grid.Row="2"    Grid.Column="1" Style="{StaticResource styleTextBoxFormHalaman}"    Name="txt_TotalCashAdvance"/>
+                                <Button     Grid.Row="2"    Grid.Column="2" Margin=" 9 3" Content="Ajukan >>"                   Name="btn_PengajuanCashAdvance"/>
+                            </Grid>
+                            <Grid HorizontalAlignment="Right" Margin="0 15 0 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="81"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Button     Grid.Row="0"    Grid.Column="5" Margin=" 0 3" Content="Update"  Name="btn_UpdatePengajuan"/>
+                                <Button     Grid.Row="1"    Grid.Column="5" Margin=" 0 3" Content="Tolak"   Name="btn_TolakPengajuan"/>
+                            </Grid>
+                        </DockPanel>
+                    </StackPanel>
+                </StackPanel>
+                <GridSplitter Grid.Column="1" Grid.RowSpan="2" Width="3"/>
+                <StackPanel Grid.Row="0" Grid.Column="3" Style="{StaticResource stylePanelFormHalamanSidebarKanan}" Background="Gray" CanVerticallyScroll="True" Height="99" Grid.RowSpan="2" >
+                </StackPanel>
+                <StackPanel Grid.Row="1" Grid.Column="1" Background="Transparent" >
+                </StackPanel>
+            </Grid>
+
+        </DockPanel>
+    </DockPanel>
+
+</UserControl>

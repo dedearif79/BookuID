@@ -1,0 +1,78 @@
+<Window x:Class="wpfWin_InputUser"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Input Data User"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+            <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Username"/>
+                <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Password"/>
+                <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Nama Lengkap"/>
+                <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Jabatan"/>
+                <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Cluster"/>
+                <TextBlock  Grid.Row="5"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Status Aktif"/>
+
+                <TextBox        Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_Username" />
+                <PasswordBox    Grid.Row="1"  Grid.Column="1"   Name="txt_Password" Margin="0,3,0,3" />
+                <TextBox        Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaLengkap" />
+                <ComboBox       Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_Jabatan" Width="120" HorizontalAlignment="Left"/>
+
+                <StackPanel     Grid.Row="4"  Grid.Column="1"   Orientation="Horizontal" Margin="0,3,0,3">
+                    <CheckBox   Name="chk_ClusterFinance"       Content="Finance"    Margin="0,0,15,0" VerticalAlignment="Center"/>
+                    <CheckBox   Name="chk_ClusterAccounting"    Content="Accounting" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <ComboBox       Grid.Row="5"  Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_StatusAktif" Width="80" HorizontalAlignment="Left"/>
+
+            </Grid>
+
+        </StackPanel>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"   Name="pnl_TombolForm">
+            <Button Name="btn_Reset"  Content="Reset"  Width="72" Margin="0,0,6,0" />
+            <Button Style="{StaticResource styleButtonFormDialogSimpan}"  Name="btn_Simpan" RenderTransformOrigin="0.5,0.5" />
+            <Button Style="{StaticResource styleButtonFormDialogBatal}"   Name="btn_Batal" />
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

@@ -1,0 +1,15 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- CheckBox Dasar -->
+    <Style x:Key="styleCheckBoxDasar" TargetType="CheckBox">
+        <Setter Property="Opacity" Value="1" ></Setter>
+    </Style>
+
+    <!-- CheckBox Form Dialog -->
+    <Style x:Key="styleCheckBoxFormDialog" BasedOn="{StaticResource styleCheckBoxDasar}" TargetType="CheckBox">
+        <Setter Property="Margin" Value="0 7" ></Setter>
+    </Style>
+
+
+</ResourceDictionary>

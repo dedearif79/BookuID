@@ -1,0 +1,18 @@
+
+ * ▐▛███▜▌ *   Claude Code v2.0.76
+* ▝▜█████▛▘ *  Opus 4.5 · Claude Max
+ *  ▘▘ ▝▝  *   /mnt/d/vb .net project/BookuID
+══════════════════ Conversation compacted · ctrl+o for history ═════════════════
+
+> /compact 
+  ⎿  Compacted (ctrl+o to see full summary)
+  ⎿ Read Booku/App Developer/Manajemen Aplikasi/wpfWin_PenerbitUpdater.xaml.vb 
+    (236 lines)
+  ⎿ Read Booku/App Developer/Manajemen Aplikasi/wpfWin_PenerbitUpdater.xaml (82 
+    lines)
+
+  ⎿  Referenced file Booku Library/mdlPub_ModulUmum.vb
+  ⎿  Read Booku Backup/wpfWin_Progress.xaml.vb (169 lines)
+
+
+

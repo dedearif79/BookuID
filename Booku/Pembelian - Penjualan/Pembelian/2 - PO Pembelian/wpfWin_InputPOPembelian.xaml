@@ -1,0 +1,252 @@
+﻿<Window x:Class="wpfWin_InputPOPembelian"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Input PO Pembelian"
+        Width="Auto"
+        Height="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogHorizontal}" >
+
+            <ScrollViewer   Style="{StaticResource styleScrollViewerFormDialogVertikal}" Name="scv_Kiri">
+                <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+                    <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="144"/>
+                            <ColumnDefinition Width="190"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nomor PO"/>
+                        <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Tanggal PO"/>
+                        <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Term of Payment"/>
+                        <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Pembuat PO"/>
+                        <TextBlock  Grid.Row="5"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Kode Supplier"/>
+                        <TextBlock  Grid.Row="6"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nama Supplier"/>
+                        <TextBlock  Grid.Row="7"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="PIC"/>
+                        <TextBlock  Grid.Row="8"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Alamat"/>
+                        <TextBlock  Grid.Row="9"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Attention"/>
+                        <TextBlock  Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Jenis Jasa"                   Name="lbl_JenisJasa"/>
+                        <TextBlock  Grid.Row="11" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Jenis PPN"                    Name="lbl_JenisPPN"/>
+                        <TextBlock  Grid.Row="12" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Perlakuan PPN"                Name="lbl_PerlakuanPPN"/>
+                        <TextBlock  Grid.Row="13" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Kode Mata Uang"               Name="lbl_KodeMataUang"/>
+                        <TextBlock  Grid.Row="14" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Jatuh Tempo Penyelesaian"     Name="lbl_JumlahHariJangkaWaktuPenyelesaian"/>
+                        <TextBlock  Grid.Row="16" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Metode Pembayaran"/>
+                        <TextBlock  Grid.Row="17" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Basis Perhitungan Termin"     Name="lbl_BasisPerhitunganTermin"/>
+                        <StackPanel Grid.Row="18" Grid.Column="0"   Style="{StaticResource stylePanelFormDialogKolom}"  >
+                            <TextBlock                              Style="{StaticResource styleTextBlockFormDialog}"       Text="Uang Muka   "                 Name="lbl_UangMuka"/>
+                            <TextBox                                Style="{StaticResource styleTextBoxFormDialogPersen}"                                       Name="txt_UangMuka_Persen"/>
+                            <TextBlock                              Style="{StaticResource styleTextBlockFormDialog}"       Text=" %"                           Name="lbl_PersenUangMuka"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="19" Grid.Column="0"   Style="{StaticResource stylePanelFormDialogKolom}"  >
+                            <TextBlock                              Style="{StaticResource styleTextBlockFormDialog}"       Text="Termin 1        "             Name="lbl_Termin1"/>
+                            <TextBox                                Style="{StaticResource styleTextBoxFormDialogPersen}"                                       Name="txt_Termin1_Persen"/>
+                            <TextBlock                              Style="{StaticResource styleTextBlockFormDialog}"       Text=" %"                           Name="lbl_PersenTermin1"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="20" Grid.Column="0"   Style="{StaticResource stylePanelFormDialogKolom}"  >
+                            <TextBlock                              Style="{StaticResource styleTextBlockFormDialog}"       Text="Termin 2        "             Name="lbl_Termin2"/>
+                            <TextBox                                Style="{StaticResource styleTextBoxFormDialogPersen}"                                       Name="txt_Termin2_Persen"/>
+                            <TextBlock                              Style="{StaticResource styleTextBlockFormDialog}"       Text=" %"                           Name="lbl_PersenTermin2"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="21" Grid.Column="0"   Style="{StaticResource stylePanelFormDialogKolom}"  >
+                            <TextBlock                              Style="{StaticResource styleTextBlockFormDialog}"       Text="Pelunasan      "              Name="lbl_Pelunasan"/>
+                            <TextBox                                Style="{StaticResource styleTextBoxFormDialogPersen}"                                       Name="txt_Pelunasan_Persen"/>
+                            <TextBlock                              Style="{StaticResource styleTextBlockFormDialog}"       Text=" %"                           Name="lbl_PersenPelunasan"/>
+                        </StackPanel>
+                        <TextBlock  Grid.Row="22" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Catatan :"    Margin="0 9 0 3"/>
+                        <TextBlock  Grid.Row="24" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Kontrol"                  Name="lbl_Kontrol" />
+
+                        <TextBox        Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"             Name="txt_NomorPO" />
+                        <DatePicker     Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleDatePickerFormDialog}"          Name="dtp_TanggalPO" />
+                        <StackPanel     Grid.Row="2"  Grid.Column="1"   Style="{StaticResource stylePanelFormDialogKolom}"  >
+                            <TextBox                                    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_TermOfPayment" Width="45" HorizontalAlignment="Left" />
+                            <Label                                      Style="{StaticResource styleLabelFormDialog}"               Content="Hari"/>
+                        </StackPanel>
+                        <TextBox        Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_KeteranganToP" />
+                        <TextBox        Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_PembuatPO" />
+                        <StackPanel     Grid.Row="5"  Grid.Column="1"   Style="{StaticResource stylePanelFormDialogKolom}"  >
+                            <TextBox    Width="99"                      Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_KodeSupplier" />
+                            <Button                                     Style="{StaticResource styleButtonFormDialogPilih}"     Name="btn_PilihMitra"/>
+                        </StackPanel>
+                        <TextBox        Grid.Row="6"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaSupplier" />
+                        <TextBox        Grid.Row="7"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_PICSupplier" />
+                        <TextBox        Grid.Row="8"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_AlamatSupplier" />
+                        <TextBox        Grid.Row="9"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_Attention" />
+                        <ComboBox       Grid.Row="10" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_JenisJasa" />
+                        <ComboBox       Grid.Row="11" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_JenisPPN" />
+                        <ComboBox       Grid.Row="12" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_PerlakuanPPN" />
+                        <ComboBox       Grid.Row="13" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_KodeMataUang" Width="63"  HorizontalAlignment="Left"  />
+                        <!--<TextBox        Grid.Row="13" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_KodeMataUang" Width="45"  HorizontalAlignment="Left"  MaxLength="3" CharacterCasing="Upper"/>-->
+                        <StackPanel     Grid.Row="14" Grid.Column="1"   Style="{StaticResource stylePanelFormDialogKolom}"  >
+                            <RadioButton    GroupName="JatuhTempo"      Style="{StaticResource styleRadioButtonFormDialog}"     Name="rdb_JumlahHariJangkaWaktuPenyelesaian" />
+                            <TextBox                                    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_JumlahHariJangkaWaktuPenyelesaian" Width="45" HorizontalAlignment="Left" />
+                            <Label                                      Style="{StaticResource styleLabelFormDialog}"           Content="Hari"/>
+                        </StackPanel>
+                        <StackPanel     Grid.Row="15" Grid.Column="1"   Style="{StaticResource stylePanelFormDialogKolom}"      Margin="0 0 0 3">
+                            <RadioButton    GroupName="JatuhTempo"      Style="{StaticResource styleRadioButtonFormDialog}"     Name="rdb_TanggalJangkaWaktuPenyelesaian" />
+                            <DatePicker                                 Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalJangkaWaktuPenyelesaian" />
+                        </StackPanel>
+                        <ComboBox       Grid.Row="16" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_MetodePembayaran" />
+                        <ComboBox       Grid.Row="17" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_BasisPerhitunganTermin" />
+                        <TextBox        Grid.Row="18" Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_UangMuka_Rp" />
+                        <TextBox        Grid.Row="19" Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_Termin1_Rp" />
+                        <TextBox        Grid.Row="20" Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_Termin2_Rp" />
+                        <TextBox        Grid.Row="21" Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_Pelunasan_Rp" />
+                        <TextBox        Grid.Row="18" Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"   Name="txt_UangMuka_Asing" />
+                        <TextBox        Grid.Row="19" Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"   Name="txt_Termin1_Asing" />
+                        <TextBox        Grid.Row="20" Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"   Name="txt_Termin2_Asing" />
+                        <TextBox        Grid.Row="21" Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlusReadOnly}"   Name="txt_Pelunasan_Asing" />
+                        <RichTextBox    Grid.Row="23" Grid.Column="0"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Catatan" Grid.ColumnSpan="2" Width="Auto"  />
+                        <ComboBox       Grid.Row="24" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_Kontrol"  Width="81"  HorizontalAlignment="Left" />
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Width="1" Background="Black" Opacity=".2" Margin="0 27" Name="pnl_Pemisah" />
+
+            <ScrollViewer   Style="{StaticResource styleScrollViewerFormDialogVertikal}" Name="scv_Kanan">
+                <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Name="pnl_Kanan" >
+
+                    <StackPanel Style="{StaticResource stylePanelDataGridView}"  >
+                        <DataGrid Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="555" MinHeight="33"  />
+                        <!--<DataGrid Name="datagridTotal" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="555" MinHeight="21"  />-->
+                    </StackPanel>
+
+                    <DockPanel  Margin="0 9 0 0">
+
+                        <StackPanel Orientation="Horizontal"    Margin="0"    HorizontalAlignment="Left" VerticalAlignment="Top" >
+                            <Button Style="{StaticResource styleButtonFormDialogPlus}"      Name="btn_Tambahkan" />
+                            <Button Style="{StaticResource styleButtonFormDialogMinus}"     Name="btn_Perbaiki" Content="e" />
+                            <Button Style="{StaticResource styleButtonFormDialogMinus}"     Name="btn_Singkirkan" />
+                        </StackPanel>
+
+                        <Grid   Width="Auto" HorizontalAlignment="Right"    Name="grd_KolomPerhitungan">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="180"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="111"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition  Height="Auto"   Name="row_Jumlah"/>
+                                <RowDefinition  Height="Auto"   Name="row_Diskon"/>
+                                <RowDefinition  Height="Auto"   Name="row_DPPBarang"/>
+                                <RowDefinition  Height="Auto"   Name="row_DPPJasa"/>
+                                <RowDefinition  Height="Auto"   Name="row_DPP"/>
+                                <RowDefinition  Height="Auto"   Name="row_PPN"/>
+                                <RowDefinition  Height="Auto"   Name="row_TotalTagihanKotor"/>
+                                <RowDefinition  Height="Auto"   Name="row_PPhTerutang"/>
+                                <RowDefinition  Height="Auto"   Name="row_PPhDitanggung"/>
+                                <RowDefinition  Height="Auto"   Name="row_PPhDipotong"/>
+                                <RowDefinition  Height="Auto"   Name="row_OngkosKirin"/>
+                                <RowDefinition  Height="Auto"   Name="row_TotalTagihan"/>
+                            </Grid.RowDefinitions>
+
+                            <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Jumlah"           Name="lbl_JumlahNota"/>
+                            <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Discount"         Name="lbl_Diskon"/>
+                            <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="DPP Barang"       Name="lbl_DPPBarang"/>
+                            <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="DPP Jasa"         Name="lbl_DPPJasa"/>
+                            <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Dasar Pengenaan Pajak"    Name="lbl_DPP"    />
+                            <TextBlock  Grid.Row="5"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="PPN"              Name="lbl_PPN"  />
+                            <TextBlock  Grid.Row="6"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Total Tagihan Kotor"  Name="lbl_TotalTagihan_Kotor" />
+                            <StackPanel Grid.Row="7"  Grid.Column="0"   Style="{StaticResource stylePanelFormDialogKolom}"  >
+                                <TextBlock                              Style="{StaticResource styleTextBlockFormDialog}"   Text="PPh"              Name="lbl_PPh"/>
+                                <ComboBox                               Style="{StaticResource styleComboBoxFormDialog}"    Width="81"              Name="cmb_JenisPPh"     Margin="9 0 0 0"/>
+                                <ComboBox                               Style="{StaticResource styleComboBoxFormDialog}"    Width="52"              Name="cmb_KodeSetoran"  Margin="9 0 0 0"/>
+                            </StackPanel>
+                            <TextBlock  Grid.Row="8"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="PPh Ditanggung"   Name="lbl_PPhDitanggung"/>
+                            <TextBlock  Grid.Row="9"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="PPh Dipotong"     Name="lbl_PPhDipotong"/>
+                            <TextBlock  Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Ongkos Kirim"     Name="lbl_BiayaTransportasiPembelian"/>
+                            <TextBlock  Grid.Row="11" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Total Tagihan" />
+
+                            <TextBox    Grid.Row="0"  Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_JumlahNota" />
+                            <TextBox    Grid.Row="0"  Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlusReadOnly}"   Name="txt_JumlahNota_Asing" />
+                            <TextBox    Grid.Row="1"  Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_Diskon_Rp" />
+                            <TextBox    Grid.Row="2"  Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_DPPBarang" />
+                            <TextBox    Grid.Row="3"  Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_DPPJasa" />
+                            <TextBox    Grid.Row="4"  Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_DasarPengenaanPajak" />
+                            <TextBox    Grid.Row="4"  Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_DasarPengenaanPajak_11Per12" />
+                            <TextBox    Grid.Row="5"  Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_PPN" />
+                            <TextBox    Grid.Row="6"  Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_TotalTagihan_Kotor"   />
+                            <TextBox    Grid.Row="7"  Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_PPhTerutang" />
+                            <TextBox    Grid.Row="8"  Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_PPhDitanggung" />
+                            <TextBox    Grid.Row="9"  Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_PPhDipotong" />
+                            <TextBox    Grid.Row="10" Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_BiayaTransportasiPembelian" />
+                            <TextBox    Grid.Row="11" Grid.Column="3"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"        Name="txt_TotalTagihan" />
+
+                            <TextBox    Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogPersen}"   Name="txt_Diskon_Persen" />
+                            <TextBox    Grid.Row="5"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogPersen}"   Name="txt_TarifPPN"             />
+                            <TextBox    Grid.Row="5"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogPersen}"   Name="txt_TarifPPN_11Per12"   />
+                            <TextBox    Grid.Row="7"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogPersen}"   Name="txt_TarifPPh" />
+
+
+                            <!--<TextBlock  Grid.Row="1"  Grid.Column="2"   Style="{StaticResource styleTextBlockFormDialog}"   Text=" %   "/>-->
+                            <TextBlock  Grid.Row="1"  Grid.Column="2"   Style="{StaticResource styleTextBlockFormDialog}"   Text=" %   "    Name='lbl_PersenDiskon'/>
+                            <TextBlock  Grid.Row="5"  Grid.Column="2"   Style="{StaticResource styleTextBlockFormDialog}"   Text=" %   "    Name="lbl_PersenPPN"/>
+                            <TextBlock  Grid.Row="7"  Grid.Column="2"   Style="{StaticResource styleTextBlockFormDialog}"   Text=" %   "    Name="lbl_PersenPPh"/>
+
+                        </Grid>
+
+                    </DockPanel>
+
+
+                </StackPanel>
+            </ScrollViewer>
+
+        </StackPanel>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"     Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogSimpan}"    Name="btn_Simpan"/>
+            <Button Style="{StaticResource styleButtonFormDialogBatal}"     Name="btn_Batal" />
+        </StackPanel>
+    </StackPanel>
+
+</Window>

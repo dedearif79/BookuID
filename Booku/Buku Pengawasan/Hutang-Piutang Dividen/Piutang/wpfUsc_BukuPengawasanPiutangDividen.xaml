@@ -1,0 +1,112 @@
+﻿<UserControl x:Class="wpfUsc_BukuPengawasanPiutangDividen"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Booku"
+             mc:Ignorable="d" 
+>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel Style="{StaticResource stylePanelFormHalaman}">
+        <StackPanel Style="{StaticResource stylePanelFormHalamanHeader}">
+            <StackPanel Style="{StaticResource stylePanelFormHalamanTittle}" >
+                <TextBlock Style="{StaticResource styleTextBlockFormHalamanJudul}" Name="lbl_JudulForm" Text="Buku Pengawasan Piutang Dividen" />
+            </StackPanel>
+            <!-- Baris Tombol :-->
+            <StackPanel Style="{StaticResource stylePanelFormHalamanTombolHorizontal}"  Name="pnl_TombolForm">
+                <Button Style="{StaticResource styleButtonFormHalamanRefresh}"          Name="btn_Refresh" />
+                <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
+                <Button Style="{StaticResource styleButtonFormHalamanLihatJurnal}"      Name="btn_LihatJurnal"  />
+                <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
+                <Button Style="{StaticResource styleButtonFormHalamanCrudInput}"        Name="btn_Input" />
+                <Button Style="{StaticResource styleButtonFormHalamanCrudEdit}"         Name="btn_Edit" />
+                <Button Style="{StaticResource styleButtonFormHalamanCrudHapus}"        Name="btn_Hapus" />
+                <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
+                <Button Style="{StaticResource styleButtonFormHalamanCair}"             Name="btn_Cair" />
+                <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
+                <Button Style="{StaticResource styleButtonFormHalamanExport }"          Name="btn_Export" />
+            </StackPanel>
+            <!-- Baris Filter Data :-->
+            <!--<StackPanel Style="{StaticResource stylePanelFormHalamanFilterData}" Name="pnl_FilterData" >
+                <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Kategori :"/>
+                <ComboBox Width="132"  Margin="6 3" Name="cmb_Kategori" />
+                <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Peruntukan:"/>
+                <ComboBox Width="234"  Margin="6 3" Name="cmb_Peruntukan" />
+            </StackPanel>-->
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource stylePanelFormHalamanFooter}"></StackPanel>
+        <DockPanel Width="Auto" Height="Auto" Name="pnl_Konten" >
+
+            <Grid DockPanel.Dock="Top" VerticalAlignment="Stretch" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0"         Name="SidebarKiri"/>
+                    <ColumnDefinition Width="100*"      Name="BarUtama"/>
+                    <ColumnDefinition Width="Auto"      Name="SidebarKanan" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0" Style="{StaticResource stylePanelFormHalamanSidebarKiri}" CanVerticallyScroll="True" Height="99" Grid.RowSpan="2" Name="pnl_SidebarKiri" >
+                </StackPanel>
+
+                <GridSplitter Grid.Column="0" Grid.RowSpan="2" Width="3" />
+
+                <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" VerticalAlignment="Stretch">
+
+                    <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
+                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="666" MinHeight="33" VerticalAlignment="Stretch" />
+                    </StackPanel>
+
+                </StackPanel>
+
+                <StackPanel Grid.Row="0" Grid.Column="3" Style="{StaticResource stylePanelFormHalamanSidebarKanan}" Height="Auto" Grid.RowSpan="2" Name="pnl_SidebarKanan" >
+
+                    <Grid DockPanel.Dock="Top" Margin="15 " Name="DataPembayaran" HorizontalAlignment="Left" >
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="99" />
+                            <ColumnDefinition Width="87" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="1" Grid.Column="0"   Style="{StaticResource stylePanelDataGridView}" Name="pnl_DataGridBayar" Margin="0 6 0 3" Grid.ColumnSpan="3" >
+                            <DataGrid Name="datagridBayar" Style="{StaticResource StyleDataGridModul}" MinWidth="286" MinHeight="33" HorizontalAlignment="Right" />
+                        </StackPanel>
+
+                        <TextBlock  Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleTextBlockFormDialog}"       Name="lbl_PiutangDividen">Piutang Dividen</TextBlock>
+                        <TextBlock  Grid.Row="2" Grid.Column="1"    Style="{StaticResource styleTextBlockFormDialog}"       Name="lbl_TotalBayar">Total Bayar</TextBlock>
+                        <TextBlock  Grid.Row="3" Grid.Column="1"    Style="{StaticResource styleTextBlockFormDialog}"       Name="lbl_SisaPiutang">Sisa Piutang</TextBlock>
+                        <TextBlock  Grid.Row="4" Grid.Column="1"    Style="{StaticResource styleTextBlockFormDialog}"       Name="lbl_KeteranganLunas">Keterangan</TextBlock>
+
+                        <TextBox    Grid.Row="0"  Grid.Column="2"   Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_PiutangDividen" />
+                        <TextBox    Grid.Row="2"  Grid.Column="2"   Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_TotalBayar" />
+                        <TextBox    Grid.Row="3"  Grid.Column="2"   Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_SisaPiutang" />
+                        <TextBox    Grid.Row="4"  Grid.Column="2"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_KeteranganLunas" />
+
+                    </Grid>
+
+                </StackPanel>
+            </Grid>
+
+        </DockPanel>
+    </DockPanel>
+
+</UserControl>

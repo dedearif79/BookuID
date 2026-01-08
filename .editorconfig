@@ -1,0 +1,26 @@
+# EditorConfig untuk BookuID
+# https://editorconfig.org
+
+root = true
+
+[*]
+indent_style = space
+indent_size = 4
+end_of_line = crlf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.{vb,cs}]
+# Menonaktifkan naming rule violation messages
+# Karena codebase menggunakan konvensi penamaan Indonesia dengan underscore (btn_Edit_Click, dll)
+dotnet_diagnostic.IDE1006.severity = none
+
+# Menonaktifkan spelling warnings
+# Karena codebase menggunakan bahasa Indonesia (Bersihkan, Jurnal, Transaksi, dll)
+dotnet_diagnostic.VSSpell001.severity = none
+dotnet_diagnostic.VSSpell002.severity = none
+dotnet_diagnostic.CA1704.severity = none
+dotnet_diagnostic.CA1707.severity = none
+dotnet_diagnostic.CA1709.severity = none
+spelling_exclusion_path = spelling.dic

@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <!-- Style DataGrid Dasar-->
+    <Style x:Key="StyleDataGridDasar" TargetType="DataGrid">
+        <!--<Setter Property="CanUserAddRows" Value="False"/>
+        <Setter Property="CanUserDeleteRows" Value="False"/>
+        <Setter Property="CanUserReorderColumns" Value="False"/>
+        <Setter Property="CanUserResizeColumns" Value="True"/>
+        <Setter Property="CanUserResizeRows" Value="False"/>
+        <Setter Property="CanUserSortColumns" Value="False"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="AutoGenerateColumns" Value="False"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="Background" Value="Gray"/>-->
+    </Style>
+
+    <!-- Style DataGrid Modul -->
+    <Style x:Key="StyleDataGridModul" TargetType="DataGrid" BasedOn="{StaticResource StyleDataGridDasar}">
+        <!--<Setter Property="AlternatingRowBackground" Value="LightCyan"/>-->
+    </Style>
+
+    <!-- Style DataGrid Form Dialog -->
+    <Style x:Key="StyleDataGridFormDialog" TargetType="DataGrid" BasedOn="{StaticResource StyleDataGridDasar}">
+        <!--<Setter Property="AlternatingRowBackground" Value="LightCyan"/>-->
+    </Style>
+
+    <!-- Style DataGrid NOTA -->
+    <Style x:Key="StyleDataGridNOTA" TargetType="DataGrid" BasedOn="{StaticResource StyleDataGridDasar}">
+        <!--<Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled" />-->
+    </Style>
+
+</ResourceDictionary>

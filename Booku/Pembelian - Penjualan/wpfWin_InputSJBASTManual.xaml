@@ -1,0 +1,56 @@
+<Window x:Class="wpfWin_InputSJBASTManual"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Input Surat Jalan / BAST"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+            <!--Nomor SJ/BAST-->
+            <StackPanel Margin="0 0 0 9">
+                <TextBlock  Style="{StaticResource styleTextBlockFormDialog}"   Text="Nomor SJ/BAST :"  Name="lbl_Nomor" />
+                <TextBox    Style="{StaticResource styleTextBoxFormDialog}"     Name="txt_NomorSJBAST" Width="200" HorizontalAlignment="Left" />
+            </StackPanel>
+
+            <!--Tanggal SJ/BAST-->
+            <StackPanel Margin="0 0 0 9">
+                <TextBlock  Style="{StaticResource styleTextBlockFormDialog}"   Text="Tanggal SJ/BAST :"  Name="lbl_Tanggal" />
+                <DatePicker Style="{StaticResource styleDatePickerFormDialog}"  Name="dtp_TanggalSJBAST" Width="120" HorizontalAlignment="Left" />
+            </StackPanel>
+
+            <!--Tanggal Diterima-->
+            <StackPanel Margin="0 0 0 9">
+                <TextBlock  Style="{StaticResource styleTextBlockFormDialog}"   Text="Tanggal Diterima :"  Name="lbl_TanggalDiterima" />
+                <DatePicker Style="{StaticResource styleDatePickerFormDialog}"  Name="dtp_TanggalDiterima" Width="120" HorizontalAlignment="Left" IsEnabled="False" />
+            </StackPanel>
+
+        </StackPanel>
+
+        <!--Tombol :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"     Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogTutup}"     Name="btn_Batal"       Content="Batal" />
+            <Button Style="{StaticResource styleButtonFormDialogTutup}"     Name="btn_Tambahkan"   Content="Tambahkan >>" />
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

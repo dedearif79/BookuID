@@ -1,0 +1,91 @@
+<Window x:Class="wpfWin_InputAktivaLainnya"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Input Aktiva Lain-lain"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+            <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nomor BPAL</TextBlock>
+                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nomor Bukti</TextBlock>
+                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Tanggal Bukti</TextBlock>
+                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Kode Lawan Transaksi</TextBlock>
+                <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nama Lawan Transaksi</TextBlock>
+                <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Uraian Transaksi</TextBlock>
+                <TextBlock  Grid.Row="6" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Kode Akun</TextBlock>
+                <TextBlock  Grid.Row="7" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nama Akun</TextBlock>
+                <TextBlock  Grid.Row="8" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Jumlah Transaksi</TextBlock>
+                <TextBlock  Grid.Row="9" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Keterangan :</TextBlock>
+
+                <TextBox        Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorBPAL"/>
+                <TextBox        Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorBukti"/>
+                <DatePicker     Grid.Row="2" Grid.Column="1"    Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalBukti" />
+                <StackPanel     Grid.Row="3" Grid.Column="1"    Style="{StaticResource stylePanelFormDialogKolom}"  >
+                    <TextBox    Width="99"                      Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_KodeLawanTransaksi"/>
+                    <Button                                     Style="{StaticResource styleButtonFormDialogPilih}"     Name="btn_PilihMitra"/>
+                </StackPanel>
+                <TextBox        Grid.Row="4" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaLawanTransaksi" />
+                <RichTextBox    Grid.Row="5" Grid.Column="1"    Style="{StaticResource styleRichTextBoxFormDialog}"   Height="54"  Name="txt_UraianTransaksi" />
+                <StackPanel     Grid.Row="6" Grid.Column="1"    Style="{StaticResource stylePanelFormDialogKolom}"  >
+                    <TextBox    Width="80"  CharacterCasing="Upper"  Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_COADebet"/>
+                    <Button                                     Style="{StaticResource styleButtonFormDialogPilih}"         Name="btn_PilihCOADebet"/>
+                </StackPanel>
+                <TextBox        Grid.Row="7" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"             Name="txt_NamaAkun" />
+                <TextBox        Grid.Row="8" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_JumlahTransaksi" />
+                <RichTextBox    Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleRichTextBoxFormDialog}"         Name="txt_Keterangan" Grid.ColumnSpan="2" />
+
+            </Grid>
+
+        </StackPanel>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"   Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogSimpan}"  Name="btn_Simpan"></Button>
+            <Button Style="{StaticResource styleButtonFormDialogBatal}"   Name="btn_Batal" ></Button>
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

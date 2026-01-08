@@ -1,0 +1,117 @@
+<Window x:Class="wpfWin_InputJadwalAngsuranAfiliasi"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Input Jadwal Angsuran Afiliasi"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+            <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="130"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Angsuran Ke</TextBlock>
+                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Jatuh Tempo</TextBlock>
+                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Pokok</TextBlock>
+                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Bunga/Bagi Hasil</TextBlock>
+
+                <TextBox        Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"             Name="txt_AngsuranKe" MaxLength="2" Width="40" HorizontalAlignment="Left"/>
+                <DatePicker     Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleDatePickerFormDialog}"          Name="dtp_TanggalJatuhTempo" />
+                <TextBox        Grid.Row="2" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_Pokok" />
+                <TextBox        Grid.Row="3" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_BagiHasil" />
+
+            </Grid>
+
+            <!-- GroupBox Biaya PPh -->
+            <GroupBox Style="{StaticResource styleGroupBoxFormDialogBank}" Name="grb_BiayaPPh" Header="Biaya PPh :" >
+
+                <Grid Style="{StaticResource styleGridFormDialogBank}" >
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="130"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" >Tarif PPh</TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" >Jumlah PPh</TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" >Ditanggung</TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" >Dipotong</TextBlock>
+
+                    <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormDialogKolom}" >
+                        <TextBox Style="{StaticResource styleTextBoxFormDialogPersen}" Name="txt_TarifPPh" Width="40" />
+                        <TextBlock Style="{StaticResource styleTextBlockFormDialog}" Text=" %"/>
+                    </StackPanel>
+                    <TextBox        Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_JumlahPPh"/>
+                    <TextBox        Grid.Row="2" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_PPhDitanggung"/>
+                    <TextBox        Grid.Row="3" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_PPhDipotong"/>
+
+                </Grid>
+
+            </GroupBox>
+
+            <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="130"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Jumlah Dibayarkan</TextBlock>
+                <TextBox    Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_JumlahDibayarkan"/>
+
+            </Grid>
+
+        </StackPanel>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"   Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogSimpan}"  Name="btn_Simpan"></Button>
+            <Button Style="{StaticResource styleButtonFormDialogBatal}"   Name="btn_Batal" ></Button>
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

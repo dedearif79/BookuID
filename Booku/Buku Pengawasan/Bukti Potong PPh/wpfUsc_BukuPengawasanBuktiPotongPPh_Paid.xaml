@@ -1,0 +1,83 @@
+<UserControl x:Class="wpfUsc_BukuPengawasanBuktiPotongPPh_Paid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Booku"
+             mc:Ignorable="d"
+>
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel Style="{StaticResource stylePanelFormHalaman}"   Name="pnl_Halaman">
+        <StackPanel Style="{StaticResource stylePanelFormHalamanHeader}">
+            <Grid    DockPanel.Dock="Top"   HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"  Name="HeaderKiri"/>
+                    <ColumnDefinition Width="100*"  Name="HeaderTengah" />
+                    <ColumnDefinition Width="Auto"   Name="HeaderKanan"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <!-- Header Kiri :-->
+                <StackPanel Grid.Row="0"  Grid.Column="0"   Style="{StaticResource stylePanelFormHalamanHeaderKiri}">
+                    <StackPanel Style="{StaticResource stylePanelFormHalamanTittle}" >
+                        <TextBlock Style="{StaticResource styleTextBlockFormHalamanJudul}" Name="lbl_JudulForm" Text="Buku Pengawasan Bukti Potong PPh (Paid)" />
+                    </StackPanel>
+                    <!-- Baris Filter Data :-->
+                    <StackPanel Style="{StaticResource stylePanelFormHalamanFilterData}" Name="pnl_FilterData" >
+                        <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Sumber Data :"/>
+                        <ComboBox Width="150"  Margin="6 3" Name="cmb_SumberData" />
+                        <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Jenis PPh :" Margin="12 3 0 3"/>
+                        <ComboBox Width="90"  Margin="6 3" Name="cmb_JenisPPh" />
+                        <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Bukti Potong :" Margin="12 3 0 3"/>
+                        <ComboBox Width="141"  Margin="6 3" Name="cmb_BuktiPotong" />
+                    </StackPanel>
+                    <!-- Baris Tombol :-->
+                    <StackPanel Style="{StaticResource stylePanelFormHalamanTombolHorizontal}"  Name="pnl_TombolForm">
+                        <Button Style="{StaticResource styleButtonFormHalamanRefresh}"          Name="btn_Refresh" />
+                        <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}"       Name="brd_LihatJurnal" />
+                        <Button Style="{StaticResource styleButtonFormHalamanLihatJurnal}"      Name="btn_LihatJurnal"  />
+                        <StackPanel Name="pnl_CRUD" Orientation="Horizontal">
+                            <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
+                            <Button Style="{StaticResource styleButtonFormHalamanCrudInput}"        Name="btn_Input" />
+                            <Button Style="{StaticResource styleButtonFormHalamanCrudEdit}"         Name="btn_Edit" />
+                            <Button Style="{StaticResource styleButtonFormHalamanCrudHapus}"        Name="btn_Hapus" />
+                        </StackPanel>
+                        <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
+                        <Button Style="{StaticResource styleButtonFormHalamanExport }"              Name="btn_Export" />
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+
+        <DockPanel Width="Auto" Height="Auto" Name="pnl_Konten" >
+
+            <Grid DockPanel.Dock="Top" VerticalAlignment="Stretch" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="100*"      Name="BarUtama"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0" Style="{StaticResource stylePanelFormHalamanKonten}" VerticalAlignment="Stretch" >
+
+                    <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
+                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="666" MinHeight="33" VerticalAlignment="Stretch" />
+                    </StackPanel>
+
+                </StackPanel>
+
+            </Grid>
+
+        </DockPanel>
+    </DockPanel>
+
+</UserControl>

@@ -1,0 +1,128 @@
+﻿<Window x:Class="wpfWin_InputPemindahbukuan"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Input Pemindahbukuan"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+
+            <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="240"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Nomor Pemindahbukuan"   Name="lbl_NomorBPPB" />
+                <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Tanggal Pemindahbukuan" Name="lbl_TanggalBPPB"/>
+                <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Laba/Rugi Selisih Kurs"     Name="lbl_LabaRugiSelisihKurs" />
+                <TextBlock  Grid.Row="5"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Penanggungjawab" />
+                <TextBlock  Grid.Row="6"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Uraian Transaksi :" />
+
+                <TextBox        Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"             Name="txt_NomorBPPB"    Width="144"     HorizontalAlignment="Left"/>
+                <DatePicker     Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleDatePickerFormDialog}"          Name="dtp_TanggalBPPB" />
+                <TextBox        Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_LabaRugiSelisihKurs" HorizontalAlignment="Left"  Width="123" />
+                <TextBox        Grid.Row="5"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"             Name="txt_Penanggungjawab" />
+                <RichTextBox    Grid.Row="7"  Grid.Column="0"   Style="{StaticResource styleRichTextBoxFormDialog}"         Name="txt_UraianTransaksi" Grid.ColumnSpan="2" />
+
+                <!-- Kredit : -->
+                <GroupBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Header="Kredit :"   Padding="5 3 5 -12">
+                    <Grid Style="{StaticResource styleGridFormDialog}" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="139"/>
+                            <ColumnDefinition Width="229"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Dari Buku" />
+                        <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Kurs BI"                Name="lbl_KursBI_Kredit" />
+                        <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Kurs Bank"              Name="lbl_KursBank_Kredit" />
+                        <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah Kredit"          Name="lbl_JumlahKredit"/>
+                        <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah Kredit (IDR)"    Name="lbl_JumlahKreditIDR"/>
+                        <ComboBox   Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"                Name="cmb_DariBuku" Height="24" Margin="0,2,0,0" VerticalAlignment="Top" />
+                        <TextBox    Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"   Name="txt_KursBI_Kredit"    HorizontalAlignment="Left"  Width="123" />
+                        <TextBox    Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"   Name="txt_KursBank_Kredit"  HorizontalAlignment="Left"  Width="123" />
+                        <TextBox    Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"        Name="txt_JumlahKredit"     HorizontalAlignment="Left"  Width="123" />
+                        <TextBox    Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"        Name="txt_JumlahKreditIDR"   HorizontalAlignment="Left"  Width="123" />
+                    </Grid>
+                </GroupBox>
+
+                <!-- Debet : -->
+                <GroupBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="Debet :"   Padding="5 3 5 -12">
+                    <Grid Style="{StaticResource styleGridFormDialog}" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="139"/>
+                            <ColumnDefinition Width="229"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Ke Buku" />
+                        <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Kurs BI"                Name="lbl_KursBI_Debet" />
+                        <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Kurs Bank"              Name="lbl_KursBank_Debet" />
+                        <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah Debet"           Name="lbl_JumlahDebet"/>
+                        <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah Debet (IDR)"     Name="lbl_JumlahDebetIDR"/>
+                        <ComboBox   Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"                Name="cmb_KeBuku" Height="24" Margin="0,2,0,0" VerticalAlignment="Top" />
+                        <TextBox    Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"   Name="txt_KursBI_Debet"     HorizontalAlignment="Left"  Width="123" />
+                        <TextBox    Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"   Name="txt_KursBank_Debet"   HorizontalAlignment="Left"  Width="123" />
+                        <TextBox    Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"        Name="txt_JumlahDebet"      HorizontalAlignment="Left"  Width="123" />
+                        <TextBox    Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"        Name="txt_JumlahDebetIDR"   HorizontalAlignment="Left"  Width="123" />
+                    </Grid>
+                </GroupBox>
+
+            </Grid>
+
+        </StackPanel>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"   Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogSimpan}"  Name="btn_Simpan"></Button>
+            <Button Style="{StaticResource styleButtonFormDialogBatal}"   Name="btn_Batal" ></Button>
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

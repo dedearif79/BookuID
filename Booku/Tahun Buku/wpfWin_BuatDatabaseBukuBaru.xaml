@@ -1,0 +1,63 @@
+<Window x:Class="wpfWin_BuatDatabaseBukuBaru"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Buat Database Buku Baru"
+        Height="260"
+        Width="350"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="ToolWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <StackPanel VerticalAlignment="Top">
+
+            <!-- Header -->
+            <TextBlock Text="BUAT DATABASE :"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,20"/>
+
+            <!-- Tahun Buku -->
+            <Grid Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="70"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Tahun Buku :" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
+                <TextBox Grid.Column="1" Name="txt_TahunBuku" Style="{StaticResource styleTextBoxFormDialogAngkaPlus }" MaxLength="4"/>
+            </Grid>
+
+            <!-- Jenis -->
+            <Grid Margin="0,0,0,25">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="100"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Jenis :" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
+                <ComboBox Grid.Column="1" Name="cmb_JenisTahunBuku" Height="23" VerticalContentAlignment="Center"/>
+            </Grid>
+
+            <!-- Tombol Buat Database -->
+            <Button Name="btn_BuatDatabase"
+                    Content="Buat Database"
+                    Width="130"
+                    Height="35"
+                    HorizontalAlignment="Center"/>
+
+        </StackPanel>
+    </Grid>
+
+</Window>

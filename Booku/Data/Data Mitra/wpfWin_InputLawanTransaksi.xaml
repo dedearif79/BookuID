@@ -1,0 +1,106 @@
+﻿<Window x:Class="wpfWin_InputLawanTransaksi"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Input Lawan Transaksi"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+
+            <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="210"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kode Lawan Transaksi"/>
+                <TextBlock  Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Setelah disimpan, Kode Lawan Transaksi tidak dapat diedit." FontSize="8"  Margin="0 0 0 9" Foreground="Red" />
+                <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Nama Lawan Transaksi"/>
+                <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kategori"/>
+                <TextBlock  Grid.Row="12" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="NPWP"/>
+                <TextBlock  Grid.Row="13" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Jenis WP"/>
+                <TextBlock  Grid.Row="14" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Lokasi WP"/>
+                <TextBlock  Grid.Row="15" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Alamat"/>
+                <TextBlock  Grid.Row="16" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Email"/>
+                <TextBlock  Grid.Row="17" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="PIC"/>
+                <TextBlock  Grid.Row="18" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Rekening Bank"/>
+                <TextBlock  Grid.Row="19" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Atas Nama"/>
+
+                <TextBox        Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogKapital}"  Name="txt_KodeLawanTransaksi"       Width="99"  HorizontalAlignment="Left"/>
+                <TextBox        Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaLawanTransaksi" />
+                <CheckBox       Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_UMKM"                     Content="UMKM" />
+                <CheckBox       Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_PemegangSaham"            Content="Pemegang Saham" />
+                <CheckBox       Grid.Row="5"  Grid.Column="1"   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_Afiliasi"                 Content="Afiliasi" />
+                <CheckBox       Grid.Row="6"  Grid.Column="1"   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_Supplier"                 Content="Supplier" />
+                <CheckBox       Grid.Row="7"  Grid.Column="1"   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_Customer"                 Content="Customer" />
+                <CheckBox       Grid.Row="8"  Grid.Column="1"   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_PKP"                      Content="PKP" />
+                <CheckBox       Grid.Row="9"  Grid.Column="1"   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_PemotongPPh"              Content="Pemotong PPh" />
+                <CheckBox       Grid.Row="10" Grid.Column="1"   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_PJK"                      Content="Perusahaan Jasa Konstruksi" />
+                <CheckBox       Grid.Row="11" Grid.Column="1"   Style="{StaticResource styleCheckBoxFormDialog}"        Name="chk_Keuangan"                 Content="Lembaga Keuangan"  />
+                <TextBox        Grid.Row="12" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NPWP" />
+                <ComboBox       Grid.Row="13" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_JenisWP"/>
+                <ComboBox       Grid.Row="14" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_LokasiWP"/>
+                <RichTextBox    Grid.Row="15" Grid.Column="1"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Alamat" />
+                <TextBox        Grid.Row="16" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_Email" />
+                <TextBox        Grid.Row="17" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_PIC" />
+                <TextBox        Grid.Row="18" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_RekeningBank" />
+                <TextBox        Grid.Row="19" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_AtasNama" />
+
+            </Grid>
+
+        </StackPanel>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"   Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogSimpan}"  Name="btn_Simpan" RenderTransformOrigin="0.5,0.5" />
+            <Button Style="{StaticResource styleButtonFormDialogBatal}"   Name="btn_Batal" />
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

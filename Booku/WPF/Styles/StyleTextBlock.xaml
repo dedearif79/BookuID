@@ -1,0 +1,59 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- TextBlock Dasar -->
+    <Style x:Key="styleTextBlockDasar" TargetType="TextBlock">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Opacity" Value="1" />
+    </Style>
+
+    <!-- TextBlock Form Halaman -->
+    <Style x:Key="styleTextBlockFormHalaman" TargetType="TextBlock"             BasedOn="{StaticResource styleTextBlockDasar}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0 5" />
+    </Style>
+
+    <!-- TextBlock Form Halaman - Footer -->
+    <Style x:Key="styleTextBlockFormHalamanFooter" TargetType="TextBlock"       BasedOn="{StaticResource styleTextBlockFormHalaman}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="15 6" />
+    </Style>
+
+    <!-- TextBlock Form Halaman - Judul -->
+    <Style x:Key="styleTextBlockFormHalamanJudul" TargetType="TextBlock"        BasedOn="{StaticResource styleTextBlockFormHalaman}">   
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0 9" />
+        <Setter Property="FontSize" Value="21" />
+        <Setter Property="FontWeight" Value="DemiBold" />
+    </Style>
+
+    <!-- TextBlock Form Dialog -->
+    <Style x:Key="styleTextBlockFormDialog" TargetType="TextBlock"              BasedOn="{StaticResource styleTextBlockDasar}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0 6" />
+    </Style>
+
+    <!-- TextBlock Form Dialog - Judul -->
+    <Style x:Key="styleTextBlockFormDialogJudul" TargetType="TextBlock"         BasedOn="{StaticResource styleTextBlockFormDialog}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0 5" />
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="FontWeight" Value="DemiBold" />
+    </Style>
+
+    <!-- TextBlock- Title Nota -->
+    <Style x:Key="styleTextBlockTitleNota" TargetType="TextBlock"               BasedOn="{StaticResource styleTextBlockDasar}">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0 7" />
+        <Setter Property="FontSize" Value="27" />
+        <Setter Property="FontWeight" Value="Bold" />
+        <Setter Property="Foreground" Value="Black" />
+    </Style>
+
+</ResourceDictionary>

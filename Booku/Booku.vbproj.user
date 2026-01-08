@@ -1,0 +1,1767 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ApplicationDefinition Update="Application.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="00_START_UP\frm_BOOKU.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="00_START_UP\wpfWin_StartUp.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="App Developer\frm_DataPerangkatApp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="App Developer\frm_DataProdukApp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="App Developer\frm_DataVoucherApp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="App Developer\Manajemen Aplikasi\frm_ManajemenAplikasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="App Developer\Manajemen Klien\frm_ManajemenClient.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="App Developer\frm_TryApp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="App Developer\Manajemen Aplikasi\wpfUsc_ManajemenAplikasi.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="App Developer\Manajemen Klien\wpfUsc_ManajemenClient.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="App Developer\Manajemen Aplikasi\wpfWin_PenerbitInstaller.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="App Developer\Manajemen Aplikasi\wpfWin_PenerbitUpdater.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="App Developer\Tab\frm_TabPokok.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="App Developer\Tab\wpfUsc_TabPokok.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="App Developer\X_frm_DataPerangkatApp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="App Developer\X_frm_DataProdukApp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="App Developer\X_frm_InputProdukApp.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="App IT\phpMyAdmin\frm_phpMyAdmin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Backup Data\frm_BackupDatabase.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Backup Data\wpfWin_BackupData.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Backup Data\wpfWin_KloningData.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Backup Data\wpfWin_PulihkanData.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Bank Garansi\frm_BukuBankGaransi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Bank Garansi\frm_InputBankGaransi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Besar\frm_BukuBesar.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Besar\wpfUsc_BukuBesar.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Besar\wpfWin_BukuBesarPembantu.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Besar\X_frm_BukuBesar_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Aktiva Lainnya\frm_BukuPengawasanAktivaLainnya.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Aktiva Lainnya\X_frm_BukuPengawasanAktivaLainnya.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Aktiva Lainnya\X_frm_InputAktivaLainnya.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\BankCash\frm_BukuBank.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\BankCash\frm_BukuCashAdvance.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\BankCash\frm_BukuKas.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\BankCash\frm_BukuPettyCash.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Bukti Potong PPh\X_frm_BukuPengawasanBuktiPotongPPh_Paid.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Bukti Potong PPh\X_frm_BukuPengawasanBuktiPotongPPh_Prepaid.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Bukti Potong PPh\X_frm_InputBuktiPotongPPh.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\02 - PPh Pasal 22\Impor\frm_BukuPengawasanHutangPPhPasal22_Impor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\02 - PPh Pasal 22\Lokal\frm_BukuPengawasanHutangPPhPasal22_Lokal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\02 - PPh Pasal 22\Lokal\wpfUsc_BukuPengawasanHutangPPhPasal22_Lokal.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\10 - PPN\frm_BukuPengawasanPelaporanPPN.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\10 - PPN\X_frm_BukuPengawasanPelaporanPPN.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\12 - Pajak Impor\frm_BukuPengawasanPajakImpor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\12 - Pajak Impor\wpfUsc_BukuPengawasanPajakImpor.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Afiliasi\X_frm_InputJadwalAngsuranAfiliasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\X_frm_InputJadwalAngsuranPihakKetiga.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_BukuPengawasanHutangUsaha_Impor_AUD.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_BukuPengawasanHutangUsaha_Impor_CNY.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_BukuPengawasanHutangUsaha_Impor_EUR.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_BukuPengawasanHutangUsaha_Impor_GBP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_BukuPengawasanHutangUsaha_Impor_JPY.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_BukuPengawasanHutangUsaha_Impor_SGD.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\frm_BukuPengawasanPiutangUsaha_Ekspor_AUD.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\frm_BukuPengawasanPiutangUsaha_Ekspor_CNY.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\frm_BukuPengawasanPiutangUsaha_Ekspor_EUR.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\frm_BukuPengawasanPiutangUsaha_Ekspor_GBP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\frm_BukuPengawasanPiutangUsaha_Ekspor_JPY.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\frm_BukuPengawasanPiutangUsaha_Ekspor_SGD.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\frm_BukuPengawasanPiutangUsaha_Ekspor_USD.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Pemindahbukuan\frm_BukuPengawasanPemindahbukuan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Pemindahbukuan\wpfUsc_BukuPengawasanPemindahbukuan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Penerimaan Bank-Cash\wpfUsc_BukuPengawasanBuktiPenerimaanBankCash.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Penerimaan Bank-Cash\wpfWin_InputBuktiPenerimaan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\Bundel Pengajuan\wpfWin_InputBundelPengajuanPengeluaranBankCash.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\Bundel Pengajuan\frm_BundelPengajuanPengeluaranBankCash.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\frm_BukuPengawasanBuktiPengeluaranBankCash.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\wpfUsc_BukuPengawasanBuktiPengeluaranBankCash.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\X_Trash\X_frm_BukuPengawasanBuktiPengeluaranBankCash_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\X_Trash\X_frm_InputBuktiPengeluaran_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\frm_InputJumlah.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\Bundel Pengajuan\wpfUsc_BundelPengajuanPengeluaranBankCash.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\wpfWin_InputBuktiPengeluaran.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Bukti Potong PPh\frm_BukuPengawasanBuktiPotongPPh_Paid.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Bukti Potong PPh\frm_BukuPengawasanBuktiPotongPPh_Prepaid.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Deposit Operasional\frm_BukuPengawasanDepositOperasional.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Deposit Operasional\wpfUsc_BukuPengawasanDepositOperasional.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Deposit Operasional\wpfWin_InputProduk_DepositOperasional.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Deposit Operasional\X_frm_BukuPengawasanDepositOperasional_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Deposit Operasional\frm_InputDepositOperasional.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Deposit Operasional\wpfWin_InputDepositOperasional.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\frm_BukuPengawasanGaji.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\wpfWin_InputGaji.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\X_Trash\X_frm_BukuPengawasanGaji_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\frm_InputGaji.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\wpfUsc_BukuPengawasanGaji.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\X_Trash\frm_InputPembayaranGaji.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\Turunan Gaji\frm_BukuPengawasanHutangBPJSKesehatan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\Turunan Gaji\frm_BukuPengawasanHutangBPJSKetenagakerjaan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\Turunan Gaji\frm_BukuPengawasanHutangKoperasiKaryawan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\Turunan Gaji\frm_BukuPengawasanHutangSerikat.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\Turunan Gaji\frm_InputTagihanTurunanGaji.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\Turunan Gaji\wpfUsc_BukuPengawasanTurunanGaji.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Gaji\Turunan Gaji\X_Trash\X_InputPembayaranBpjs_BAK.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Bank-Leasing\frm_BukuPengawasanHutangBank.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Bank-Leasing\frm_BukuPengawasanHutangLeasing.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Bank-Leasing\wpfUsc_BukuPengawasanHutangBankLeasing.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Bank-Leasing\X_Trash\X_frm_BukuPengawasanHutangBankLeasing_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Bank-Leasing\X_Trash\frm_InputHutangBankLeasing.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Bank-Leasing\frm_InputJadwalAngsuranHutangBankLeasing.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Bank-Leasing\frm_InputPembayaranHutangBankLeasing.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Bank-Leasing\wpfWin_InputHutangBankLeasing.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\frm_BukuPengawasanHutangPPhPasal21.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\wpfWin_InputHutangPPhPasal21_GajiDanPesangon.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\X_Trash\X_frm_BukuPengawasanHutangPPhPasal21_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\X_Trash\frm_InputHutangPPhPasal21_Gaji.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\X_Trash\frm_InputHutangPPhPasal21_JasaOP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\wpfUsc_BukuPengawasanHutangPPhPasal21.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\02 - PPh Pasal 22\Impor\wpfUsc_BukuPengawasanHutangPPhPasal22_Impor.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\03 - PPh Pasal 23\frm_BukuPengawasanHutangPPhPasal23.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\03 - PPh Pasal 23\X_Trash\frm_InputHutangPPhPasal23.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\03 - PPh Pasal 23\wpfUsc_BukuPengawasanHutangPPhPasal23.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\03 - PPh Pasal 23\X_Trash\X_frm_BukuPengawasanHutangPPhPasal23.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\04 - PPh Pasal 4 %282%29\frm_BukuPengawasanHutangPPhPasal42.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\04 - PPh Pasal 4 %282%29\wpfUsc_BukuPengawasanHutangPPhPasal42.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\04 - PPh Pasal 4 (2)\X_Trash\X_frm_BukuPengawasanHutangPPhPasal42_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\04 - PPh Pasal 4 (2)\X_Trash\frm_InputHutangPPhPasal42.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\05 - PPh Pasal 25\frm_BukuPengawasanHutangPPhPasal25.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\05 - PPh Pasal 25\wpfWin_InputHutangPPhPasal25.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\05 - PPh Pasal 25\X_Trash\X_frm_BukuPengawasanHutangPPhPasal25_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\05 - PPh Pasal 25\X_Trash\frm_InputHutangPPhPasal25.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\05 - PPh Pasal 25\wpfUsc_BukuPengawasanHutangPPhPasal25.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\06 - PPh Pasal 26\frm_BukuPengawasanHutangPPhPasal26.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\06 - PPh Pasal 26\X_frm_BukuPengawasanHutangPPhPasal26_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\06 - PPh Pasal 26\frm_InputHutangPPhPasal26.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\06 - PPh Pasal 26\wpfUsc_BukuPengawasanHutangPPhPasal26.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\10 - PPN\frm_InputLaporPPN.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\frm_BukuPengawasanKetetapanPajak.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\wpfWin_InputKetetapanPajak.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\X_Trash\X_frm_BukuPengawasanKetetapanPajak_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\X_Trash\frm_InputKetetapanPajak.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\wpfUsc_BukuPengawasanKetetapanPajak.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\frm_DetailPembayaranPajak.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\frm_InputPembayaranHutangPajak.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\wpfWin_InputHutangPajak.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\wpfWin_InputLaporPajak.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang Pajak\wpfWin_BayarPajakDengan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Afiliasi\frm_InputHutangPiutangAfiliasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Afiliasi\frm_InputPembayaranAfiliasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Afiliasi\Hutang\frm_BukuPengawasanHutangAfiliasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Afiliasi\Hutang\wpfUsc_BukuPengawasanHutangAfiliasi.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Afiliasi\Piutang\frm_BukuPengawasanPiutangAfiliasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Afiliasi\X_Trash\X_frm_BukuPengawasanPiutangAfiliasi_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Afiliasi\Piutang\wpfUsc_BukuPengawasanPiutangAfiliasi.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Afiliasi\wpfWin_InputHutangPiutangAfiliasi.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Afiliasi\X_Trash\X_frm_BukuPengawasanHutangAfiliasi_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Dividen\Hutang\frm_BukuPengawasanHutangDividen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Dividen\Hutang\wpfUsc_BukuPengawasanHutangDividen.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Dividen\Piutang\frm_BukuPengawasanPiutangDividen.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Dividen\Piutang\wpfUsc_BukuPengawasanPiutangDividen.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Dividen\wpfWin_InputHutangPiutangDividen.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Karyawan\X_Trash\frm_InputHutangPiutangKaryawan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Karyawan\X_Trash\frm_InputPembayaranHutangPiutangKaryawan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Karyawan\Hutang\frm_BukuPembantuHutangKaryawan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Karyawan\Hutang\frm_BukuPengawasanHutangKaryawan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Karyawan\Hutang\wpfUsc_BukuPengawasanHutangKaryawan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Karyawan\Hutang\X_Trash\X_frm_BukuPengawasanHutangKaryawan_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Karyawan\Piutang\frm_BukuPembantuPiutangKaryawan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Karyawan\Piutang\frm_BukuPengawasanPiutangKaryawan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Karyawan\Piutang\X_Trash\X_frm_BukuPengawasanPiutangKaryawan_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Karyawan\Piutang\wpfUsc_BukuPengawasanPiutangKaryawan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Karyawan\wpfWin_InputHutangPiutangKaryawan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\X_Trash\frm_InputHutangPiutangPemegangSaham.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\X_Trash\frm_InputPembayaranHutangPiutangPemegangSaham.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\Hutang\frm_BukuPembantuHutangPemegangSaham.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\Hutang\frm_BukuPengawasanHutangPemegangSaham.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\Hutang\wpfUsc_BukuPengawasanHutangPemegangSaham.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\Hutang\X_Trash\X_frm_BukuPengawasanHutangPemegangSaham_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\Piutang\frm_BukuPembantuPiutangPemegangSaham.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\Piutang\frm_BukuPengawasanPiutangPemegangSaham.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\Piutang\X_Trash\X_frm_BukuPengawasanPiutangPemegangSaham_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\Piutang\wpfUsc_BukuPengawasanPiutangPemegangSaham.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\wpfWin_InputHutangPiutangPemegangSaham.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\frm_InputHutangPiutangPihakKetiga.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\frm_InputPembayaranPihakKetiga.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\Hutang\frm_BukuPengawasanHutangPihakKetiga.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\Piutang\frm_BukuPengawasanPiutangPihakKetiga.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\X_Trash\X_frm_BukuPengawasanHutangPihakKetiga_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\Hutang\wpfUsc_BukuPengawasanHutangPihakKetiga.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\X_Trash\X_frm_BukuPengawasanPiutangPihakKetiga_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\Piutang\wpfUsc_BukuPengawasanPiutangPihakKetiga.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\wpfWin_InputHutangPiutangPihakKetiga.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\frm_InputPembayaranHutangUsaha.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_BBHU.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_BukuPengawasanHutangUsaha.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_BukuPengawasanHutangUsaha_Afiliasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_BukuPengawasanHutangUsaha_Impor_USD.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_BukuPengawasanHutangUsaha_NonAfiliasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_DetailBayar.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\frm_DPHU.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\X_Trash\Saldo Awal Hutang Usaha\frm_InputSaldoAwalHutangUsaha.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\X_Trash\Saldo Awal Hutang Usaha\frm_SaldoAwalHutangUsaha.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\wpfUsc_BukuPengawasanHutangUsaha.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\X_Trash\X2_frm_BukuPengawasanHutangUsaha_X2.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\X_Trash\X_BukuPengawasanHutangUsaha_BAK.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\frm_BukuPengawasanPiutangUsaha.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\frm_BukuPengawasanPiutangUsaha_Afiliasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\frm_BukuPengawasanPiutangUsaha_NonAfiliasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\X_Trash\X_frm_BukuPengawasanPiutangUsaha_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\frm_PilihJurnal_Penjualan_Retur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\wpfUsc_BukuPengawasanPiutangUsaha.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Pemindahbukuan\BAK\frm_BukuPengawasanPemindahbukuan_BAK.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Pemindahbukuan\BAK\frm_InputPemindahbukuan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Pemindahbukuan\wpfWin_InputPemindahbukuan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\wpfWin_InputJumlahBankCashInOut.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penjualan Eceran\frm_BukuPengawasanPenjualanEceran.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penjualan Eceran\wpfUsc_BukuPengawasanPenjualanEceran.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penjualan Eceran\wpfWin_InputPenjualanEceran.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Daftar Pemegang Saham\wpfUsc_DaftarPemegangSaham.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Daftar Pemegang Saham\wpfWin_DaftarSaham.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Data COA\frm_DataCOA.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data COA\frm_InputCOA.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data COA\frm_ProgressImportDataCOA.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data COA\frm_TautanCOA.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data COA\wpfUsc_DataCOA.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Data COA\wpfWin_InputCOA.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Data COA\X_frm_DataCOA_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data COA\X_frm_ListCOA.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data Karyawan\frm_DataKaryawan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data Karyawan\frm_InputDataKaryawan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data Karyawan\frm_ListDataKaryawan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data Mitra\frm_DataLawanTransaksi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data Mitra\frm_DataMitra.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data Mitra\frm_InputMitra.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data Mitra\frm_ListMitra.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data Mitra\wpfUsc_DataLawanTransaksi.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Data Mitra\wpfWin_InputLawanTransaksi.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Data Project\X_frm_InputDataProject.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data User\wpfWin_Login.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Data User\X_frm_GantiPassword.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data User\X_frm_InputUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Kurs\frm_ManajemenKurs.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Kurs\wpfUsc_Kurs.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Kurs\wpfUsc_ManajemenKurs.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Kurs\wpfWin_UpdateKurs_Bulanan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Kurs\wpfWin_UpdateKurs_Harian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\X_Trash\Data Pemegang Saham\frm_DataPemegangSaham.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\X_Trash\Data Pemegang Saham\frm_InputDataPemegangSaham.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\X_Trash\Data Pemegang Saham\X_frm_ListDataPemegangSaham_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data Project\frm_DataProject.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data Project\wpfUsc_DataProject.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Data Project\frm_ListDataProject.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data Project\X_Trash\X_frm_DataProject_BAK.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Data User\frm_DataUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Daftar Pemegang Saham\frm_DaftarPemegangSaham.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Dialog Pilihan\wpfWin_MetodeInputBayar.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Dialog Pilihan\wpfWin_PilihJurnalAdjusment.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Dialog Pilihan\X_frm_CeklisBulan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Penerimaan Bank-Cash\frm_BukuPengawasanBuktiPenerimaanBankCash.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Data\Kurs\frm_Kurs.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="File\wpfUsc_CompanyProfile.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="File\X_frm_Pengaturan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Host Aplikasi\wpfUsc_HostWhatsApp.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Host Aplikasi\wpfwin_WhatsApp.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Jurnal\frm_InputJurnal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Jurnal\frm_InputJurnalPerTransaksi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Jurnal\frm_JurnalAdjusment.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Jurnal\frm_Adjusment_HPP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Jurnal\frm_Adjusment_Forex.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Jurnal\frm_JurnalUmum.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Jurnal\wpfUsc_Adjusment.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Jurnal\wpfUsc_Adjusment_HPP.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Jurnal\wpfUsc_Adjusment_Forex.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Jurnal\wpfUsc_JurnalUmum.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Jurnal\wpfWin_ImportJurnal.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Jurnal\wpfWin_InputJurnalAdjusmentForex.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Jurnal\X_Trash\X_frm_JurnalUmum_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Jurnal\wpfWin_InputJurnal.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Jurnal\X_Trash\X_frm_JurnalVoucher_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Jurnal\frm_ProgressImportJurnal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Jurnal\frm_VerifikasiDataJurnal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Jurnal\wpfWin_JurnalVoucher.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Laporan\frm_LaporanAktivitasTransaksi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\frm_LaporanHPP.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\frm_LaporanLabaRugi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\frm_LaporanLabaRugi_Bulanan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\frm_LaporanLabaRugi_Tahunan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\frm_LaporanNeraca.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\frm_LaporanNeracaLajur.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\frm_LaporanNeraca_Bulanan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\frm_LaporanNeraca_Tahunan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\frm_LaporanTrialBalance.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\wpfUsc_LaporanHPP.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Laporan\wpfUsc_LaporanLabaRugi_Bulanan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Laporan\wpfUsc_LaporanLabaRugi_Tahunan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Laporan\wpfUsc_LaporanNeracaLajur.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Laporan\wpfUsc_LaporanNeraca_Bulanan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Laporan\wpfUsc_LaporanNeraca_Tahunan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Laporan\X_Trash\X_frm_Laporan_LabaRugi_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\X_Trash\X_frm_Laporan_Neraca_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\X_Trash\X_frm_Laporan_TrialBalance_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Laporan\wpfUsc_LaporanLabaRugi.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Laporan\wpfUsc_LaporanTrialBalance.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Amortisasi Biaya\frm_Adjusment_Amortisasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Amortisasi Biaya\frm_DaftarAmortisasiBiaya.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Amortisasi Biaya\wpfUsc_Adjusment_Amortisasi.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Amortisasi Biaya\wpfUsc_DaftarAmortisasiBiaya.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Amortisasi Biaya\wpfWin_InputAmortisasiBiaya.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Amortisasi Biaya\X_Trash\X_frm_DaftarAmortisasiBiaya_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Amortisasi Biaya\X_frm_InputAmortisasiBiaya_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\Buku Disposal Asset Tetap\X_frm_BukuDisposalAssetTetap.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\Buku Disposal Asset Tetap\X_frm_InputDisposalAssetTetap.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\frm_Adjusment_PenyusutanAsset.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\frm_DaftarPenyusutanAssetTetap.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfUsc_DaftarPenyusutanAssetTetap.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfUsc_Adjusment_PenyusutanAsset.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfWin_InputDataAsset.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\X_frm_JualAsset.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\X_frm_ProgressImportDataAsset.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\X_Trash\X_frm_InputDataAsset_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\frm_PostingJurnal_DataAsset.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\ops_PilihJurnal_DataAsset.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\Buku Disposal Asset Tetap\frm_BukuDisposalAssetTetap.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\X_Trash\X_frm_DaftarPenyusutanAssetTetap_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\frm_KodeDivisi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Menu Tambahan\frm_Help.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Menu Tambahan\frm_Tentang.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\frm_InputProduk_Nota.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\frm_InputProduk_SJBAST.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\frm_PilihJenisProdukInduk.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\frm_BahanJurnalPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\frm_BukuPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\frm_BukuPembelian_Impor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\frm_BukuPembelian_Lokal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\frm_InputPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\wpfUsc_BukuPembelian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\2 - PO Pembelian\frm_Input_POPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\2 - PO Pembelian\frm_POPembelian_Impor_Barang.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\2 - PO Pembelian\frm_POPembelian_Impor_Jasa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\2 - PO Pembelian\frm_POPembelian_Impor_Semua.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\3 - Surat Jalan\frm_SuratJalanPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\4 - BAST\frm_BASTPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\frm_InvoicePembelian_TanpaPO_Impor_Barang.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\frm_InvoicePembelian_TanpaPO_Impor_Jasa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\X-Trash\X_frm_POPembelian_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\2 - PO Pembelian\frm_POPembelian_Lokal_Barang.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\2 - PO Pembelian\frm_POPembelian_Lokal_BarangDanJasa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\2 - PO Pembelian\frm_POPembelian_Lokal_Jasa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\2 - PO Pembelian\frm_POPembelian_Lokal_JasaKonstruksi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\2 - PO Pembelian\frm_POPembelian_Lokal_Semua.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\2 - PO Pembelian\wpfUsc_POPembelian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\2 - PO Pembelian\wpfWin_InputPOPembelian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\3 - Surat Jalan\frm_Input_SuratJalanPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\X-Trash\X_frm_SuratJalanPembelian_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\3 - Surat Jalan\wpfUsc_SuratJalanPembelian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\3 - Surat Jalan\wpfWin_InputSuratJalanPembelian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\X-Trash\X_frm_BASTPembelian_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\4 - BAST\frm_Input_BASTPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\4 - BAST\wpfUsc_BASTPembelian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\4 - BAST\wpfWin_InputBASTPembelian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\frm_Input_InvoicePembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\frm_InvoicePembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\frm_InvoicePembelian_DenganPO_Lokal_Rutin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\frm_InvoicePembelian_DenganPO_Lokal_Termin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\frm_InvoicePembelian_TanpaPO_Lokal_Barang.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\frm_InvoicePembelian_TanpaPO_Lokal_BarangDanJasa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\frm_InvoicePembelian_TanpaPO_Lokal_Jasa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\frm_InvoicePembelian_TanpaPO_Lokal_JasaKonstruksi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\wpfUsc_InvoicePembelian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\wpfWin_InputInvoicePembelian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\frm_Input_ReturPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\frm_ReturPembelian.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfUsc_ReturPembelian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfWin_InputReturPembelian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\frm_BukuPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\frm_BukuPenjualanAsset.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\frm_BukuPenjualan_Ekspor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\frm_BukuPenjualan_Lokal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\wpfUsc_BukuPenjualan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\frm_Input_POPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\frm_POPenjualan_Ekspor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\frm_POPenjualan_Lokal_Barang.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\frm_POPenjualan_Lokal_BarangDanJasa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\frm_POPenjualan_Lokal_Jasa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\frm_POPenjualan_Lokal_JasaKonstruksi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\frm_POPenjualan_Lokal_Semua.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\wpfUsc_POPenjualan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\wpfWin_InputPOPenjualan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\3 - Surat Jalan\frm_Input_SuratJalanPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\3 - Surat Jalan\frm_SuratJalanPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\4 - BAST\frm_BASTPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\frm_InvoicePembelian_DenganPO_Impor_Rutin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\frm_InvoicePembelian_DenganPO_Impor_Termin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Dengan PO\frm_InvoicePenjualan_DenganPO_Ekspor_Rutin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Dengan PO\frm_InvoicePenjualan_DenganPO_Ekspor_Termin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Tanpa PO\frm_InvoicePenjualan_TanpaPO_Ekspor.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Tanpa PO\frm_InvoicePenjualan_TanpaPO_Lokal_Barang.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Tanpa PO\frm_InvoicePenjualan_TanpaPO_Lokal_BarangDanJasa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Tanpa PO\frm_InvoicePenjualan_TanpaPO_Lokal_Jasa.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Tanpa PO\frm_InvoicePenjualan_TanpaPO_Lokal_JasaKonstruksi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\X-Trash\X_frm_SuratJalanPenjualan_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfUsc_SuratJalanPenjualan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfWin_InputSuratJalanPenjualan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\X-Trash\X_frm_BASTPenjualan_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\4 - BAST\frm_Input_BASTPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\4 - BAST\wpfUsc_BASTPenjualan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\4 - BAST\wpfWin_InputBASTPenjualan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\frm_Input_InvoicePenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\frm_InvoicePenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Tanpa PO\frm_InvoicePenjualan_Asset.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Dengan PO\frm_InvoicePenjualan_DenganPO_Lokal_Rutin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Dengan PO\frm_InvoicePenjualan_DenganPO_Lokal_Termin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfUsc_InvoicePenjualan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfWin_InputInvoicePenjualan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\frm_Input_ReturPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\frm_ReturPenjualan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\wpfUsc_ReturPenjualan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\wpfWin_InputReturPenjualan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\X-Trash\X_frm_POPenjualan_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\wpfWin_InputProduk_Nota.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\X_frm_DorongInvoiceKeJurnal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\X_frm_InputSJBASTManual.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\X_frm_ListInvoice.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\X_frm_ListPO.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\X_frm_ListSJBAST.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Pendukung\X_frm_PilihBulan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Print\BankCash\wpfUsc_DesainBuktiPengeluaran.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Print\frm_Cetak.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Print\Jurnal Voucher\wpfUsc_DesainJurnalVoucher.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Print\Nota\wpfUsc_DesainBAST.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Print\BankCash\wpfUsc_DesainBundelanPengajuanPengeluaran.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Print\Nota\wpfUsc_DesainNotaDebet.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Print\Nota\wpfUsc_DesainNotaRetur.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Print\wpfUsc_DesainFooter.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Print\wpfUsc_DesainHeader.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Print\Nota\wpfUsc_DesainInvoice.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Print\Nota\wpfUsc_DesainPO.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Print\Nota\wpfUsc_DesainSuratJalan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Print\wpfWin_Pratinjau.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Progress\frm_Loading.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Progress\frm_ProgressExport_CSV.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Progress\frm_ProgressExport_EXCEL.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Progress\frm_ProgressIsiTabelSaldoAwal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Progress\frm_ProgressLoadingData.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Progress\wpfUsc_Loading.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Progress\wpfWin_Loading.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Progress\wpfWin_ProgresExport_EXCEL.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Registrasi\frm_RegistrasiPerangkat.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Registrasi\X_frm_Registrasi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Registrasi\X_frm_Registrasi_IsiDataCompany.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Registrasi\X_frm_Registrasi_IsiDataUser.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Security\wpfWin_KunciAkses.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Stock Opname\frm_BahanBaku.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Stock Opname\frm_BahanPenolong.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Stock Opname\frm_BarangDalamProses_CekFisik.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Stock Opname\frm_BarangDalamProses_TarikanData.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Stock Opname\frm_BarangJadi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Stock Opname\wpfWin_InputStockOpname.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Stock Opname\X_Trash\frm_InputStockOpname.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Stock Opname\wpfUsc_StockOpname.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Stock Opname\X_Trash\frm_StockOpname.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Tahun Buku\frm_TutupBuku.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Tahun Buku\wpfUsc_TutupBuku.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Tahun Buku\X_frm_BuatDatabaseBukuBaru.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Tahun Buku\X_frm_GantiTahunBuku.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Tahun Buku\X_Trash\X_frm_TutupBuku_X.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Menu Tambahan\frm_Baru.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Template\frm_TemplateBukuPembantu.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Template\frm_TemplateInputan.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Template\frm_TemplateModul.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Transaksi\frm_InputTransaksi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Transaksi\frm_InputTransaksiDirect.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Transaksi\frm_ListLawanTransaksi.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Transaksi\wpfWin_InputTransaksi.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Update\dlg_UpdateTersedia.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Update\wpfWin_Updater.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Web Browser\wpfUsc_WebBrowser.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="WPF\Styles\Class Tombol\cls_TombolUtama.vb">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="00_START_UP\wpfWin_StartUp.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="App Developer\Manajemen Aplikasi\wpfUsc_ManajemenAplikasi.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="App Developer\Manajemen Klien\wpfUsc_ManajemenClient.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="App Developer\Manajemen Aplikasi\wpfWin_PenerbitInstaller.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="App Developer\Manajemen Aplikasi\wpfWin_PenerbitUpdater.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Besar\wpfUsc_BukuBesar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Besar\wpfWin_BukuBesarPembantu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Penerimaan Bank-Cash\wpfUsc_BukuPengawasanBuktiPenerimaanBankCash.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Penerimaan Bank-Cash\wpfWin_InputBuktiPenerimaan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\Bundel Pengajuan\wpfWin_InputBundelPengajuanPengeluaranBankCash.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\Bundel Pengajuan\wpfUsc_BundelPengajuanPengeluaranBankCash.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\wpfUsc_BukuPengawasanBuktiPengeluaranBankCash.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\wpfWin_InputBuktiPengeluaran.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Deposit Operasional\wpfUsc_BukuPengawasanDepositOperasional.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Deposit Operasional\wpfWin_InputDepositOperasional.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Deposit Operasional\wpfWin_InputProduk_DepositOperasional.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Gaji\Turunan Gaji\wpfUsc_BukuPengawasanTurunanGaji.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Gaji\wpfWin_InputGaji.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Gaji\wpfUsc_BukuPengawasanGaji.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Bank-Leasing\wpfUsc_BukuPengawasanHutangBankLeasing.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Bank-Leasing\wpfWin_InputHutangBankLeasing.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\wpfUsc_BukuPengawasanHutangPPhPasal21.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\wpfWin_InputHutangPPhPasal21_GajiDanPesangon.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Pajak\03 - PPh Pasal 23\wpfUsc_BukuPengawasanHutangPPhPasal23.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Pajak\04 - PPh Pasal 4 %282%29\wpfUsc_BukuPengawasanHutangPPhPasal42.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Pajak\05 - PPh Pasal 25\wpfUsc_BukuPengawasanHutangPPhPasal25.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Pajak\06 - PPh Pasal 26\wpfUsc_BukuPengawasanHutangPPhPasal26.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\wpfUsc_BukuPengawasanKetetapanPajak.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\wpfWin_InputKetetapanPajak.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Pajak\wpfWin_InputHutangPajak.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Pajak\wpfWin_InputLaporPajak.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang Pajak\wpfWin_BayarPajakDengan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Afiliasi\Hutang\wpfUsc_BukuPengawasanHutangAfiliasi.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Afiliasi\Piutang\wpfUsc_BukuPengawasanPiutangAfiliasi.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Afiliasi\wpfWin_InputHutangPiutangAfiliasi.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Dividen\Hutang\wpfUsc_BukuPengawasanHutangDividen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Dividen\Piutang\wpfUsc_BukuPengawasanPiutangDividen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Dividen\wpfWin_InputHutangPiutangDividen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Karyawan\Hutang\wpfUsc_BukuPengawasanHutangKaryawan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Karyawan\Piutang\wpfUsc_BukuPengawasanPiutangKaryawan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Karyawan\wpfWin_InputHutangPiutangKaryawan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\Hutang\wpfUsc_BukuPengawasanHutangPemegangSaham.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\Piutang\wpfUsc_BukuPengawasanPiutangPemegangSaham.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Pemegang Saham\wpfWin_InputHutangPiutangPemegangSaham.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\Hutang\wpfUsc_BukuPengawasanHutangPihakKetiga.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\Piutang\wpfUsc_BukuPengawasanPiutangPihakKetiga.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\wpfWin_InputHutangPiutangPihakKetiga.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Usaha\Hutang\wpfUsc_BukuPengawasanHutangUsaha.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\wpfUsc_BukuPengawasanPiutangUsaha.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Penjualan Eceran\wpfUsc_BukuPengawasanPenjualanEceran.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Buku Pengawasan\Penjualan Eceran\wpfWin_InputPenjualanEceran.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Data\Daftar Pemegang Saham\wpfUsc_DaftarPemegangSaham.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Data\Data COA\wpfUsc_DataCOA.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Data\Data COA\wpfWin_InputCOA.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Data\Data Mitra\wpfUsc_DataLawanTransaksi.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Data\Data Mitra\wpfWin_InputLawanTransaksi.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Data\Data Project\wpfUsc_DataProject.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Data\Data User\wpfWin_Login.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="File\wpfUsc_CompanyProfile.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Jurnal\wpfUsc_JurnalUmum.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Jurnal\wpfWin_ImportJurnal.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Jurnal\wpfWin_InputJurnal.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Jurnal\wpfWin_JurnalVoucher.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Laporan\wpfUsc_LaporanLabaRugi.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Laporan\wpfUsc_LaporanNeraca.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Laporan\wpfUsc_LaporanTrialBalance.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Manajemen Asset\Daftar Amortisasi Biaya\wpfUsc_DaftarAmortisasiBiaya.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfUsc_DaftarPenyusutanAssetTetap.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfWin_InputDataAsset.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\wpfUsc_BukuPembelian.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Pembelian\2 - PO Pembelian\wpfWin_InputPOPembelian.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Pembelian\3 - Surat Jalan\wpfWin_InputSuratJalanPembelian.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Pembelian\4 - BAST\wpfWin_InputBASTPembelian.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\wpfUsc_InvoicePembelian.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\wpfWin_InputInvoicePembelian.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfWin_InputReturPembelian.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\wpfUsc_BukuPenjualan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\wpfWin_InputPOPenjualan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfWin_InputSuratJalanPenjualan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Penjualan\4 - BAST\wpfWin_InputBASTPenjualan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfUsc_InvoicePenjualan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfWin_InputInvoicePenjualan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\wpfWin_InputReturPenjualan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Pembelian - Penjualan\wpfWin_InputProduk_Nota.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print\BankCash\wpfUsc_DesainBuktiPengeluaran.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print\Jurnal Voucher\wpfUsc_DesainJurnalVoucher.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print\Nota\wpfUsc_DesainBAST.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print\BankCash\wpfUsc_DesainBundelanPengajuanPengeluaran.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print\Nota\wpfUsc_DesainNotaDebet.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print\Nota\wpfUsc_DesainNotaRetur.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print\wpfUsc_DesainFooter.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print\wpfUsc_DesainHeader.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print\Nota\wpfUsc_DesainInvoice.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print\Nota\wpfUsc_DesainPO.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print\Nota\wpfUsc_DesainSuratJalan.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Print\wpfWin_Pratinjau.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Progress\wpfWin_ProgresExport_EXCEL.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Stock Opname\wpfUsc_StockOpname.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Stock Opname\wpfWin_InputStockOpname.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Tahun Buku\wpfUsc_TutupBuku.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Transaksi\wpfWin_InputTransaksi.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Update\wpfWin_Updater.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleBorder.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleCheckBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleComboBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleDataGrid.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleGroupBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleLabel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StylePanel.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleRadioButton.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleRichTextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleScrollViewer.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleTextBlock.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleTextBox.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleUserControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WPF\Styles\StyleWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

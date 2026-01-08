@@ -1,0 +1,52 @@
+<Window x:Class="wpfWin_DorongInvoiceKeJurnal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Dorong Invoice Ke Jurnal"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+            <StackPanel Orientation="Vertical" Margin="10" HorizontalAlignment="Center">
+                <TextBlock Name="lbl_SilakanIsiNomorFaktur"
+                           Style="{StaticResource styleTextBlockFormDialog}"
+                           Text="Silakan isi Nomor Faktur Pajak :"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,10"/>
+                <TextBox Name="txt_NomorFakturPajak"
+                         Style="{StaticResource styleTextBoxFormDialog}"
+                         Width="250"
+                         HorizontalAlignment="Center"/>
+            </StackPanel>
+
+        </StackPanel>
+
+        <!--Tombol :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}" Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogBatal}" Name="btn_Batal" />
+            <Button Name="btn_DorongKeJurnal" Content="Dorong Ke Jurnal" Width="120" Margin="6,0,0,0" />
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

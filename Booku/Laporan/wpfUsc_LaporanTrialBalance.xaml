@@ -1,0 +1,78 @@
+﻿<UserControl x:Class="wpfUsc_LaporanTrialBalance"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Booku"
+             mc:Ignorable="d" 
+>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel Style="{StaticResource stylePanelFormHalaman}"   Name="pnl_Halaman">
+        <StackPanel Style="{StaticResource stylePanelFormHalamanHeader}">
+            <StackPanel Style="{StaticResource stylePanelFormHalamanTittle}" >
+                <TextBlock Style="{StaticResource styleTextBlockFormHalamanJudul}" Name="lbl_JudulForm" Text="Trial Balance" />
+            </StackPanel>
+            <!-- Baris Tombol :-->
+            <StackPanel Style="{StaticResource stylePanelFormHalamanTombolHorizontal}"  Name="pnl_TombolForm">
+                <Button Style="{StaticResource styleButtonFormHalamanProses}"           Name="btn_Proses"/>
+                <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
+                <Button Style="{StaticResource styleButtonFormHalamanExport}"           Name="btn_Export" />
+            </StackPanel>
+            <!-- Baris Filter Data :-->
+            <!--<StackPanel Style="{StaticResource stylePanelFormHalamanFilterData}" Name="pnl_FilterData" >
+                <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Kategori :"/>
+                <ComboBox Width="132"  Margin="6 3" Name="cmb_Kategori" />
+                <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Peruntukan:"/>
+                <ComboBox Width="234"  Margin="6 3" Name="cmb_Peruntukan" />
+            </StackPanel>-->
+        </StackPanel>
+
+        <!-- Footer : -->
+        <StackPanel Style="{StaticResource stylePanelFormHalamanFooter}"    HorizontalAlignment="Stretch" >
+            <DockPanel  Width="Auto" HorizontalAlignment="Stretch"  Name="pnl_Footer"    >
+                <StackPanel Orientation="Horizontal"                Name="pnl_Progress"   HorizontalAlignment="Left">
+                    <TextBlock      Style="{StaticResource styleTextBlockFormHalamanFooter}"    Text="Progress : "  Name="lbl_Progress"   />
+                    <ProgressBar    Width="333"    Name="pgb_Progress" Margin="0 5"/>
+                    <TextBlock      Style="{StaticResource styleTextBlockFormHalamanFooter}"    Text="Info Progress"  Name="lbl_ProgressInfo"   />
+                </StackPanel>
+            </DockPanel>
+        </StackPanel>
+
+        <StackPanel Style="{StaticResource stylePanelFormHalamanFooter}"></StackPanel>
+        <DockPanel Width="Auto" Height="Auto" Name="pnl_Konten" >
+
+            <Grid DockPanel.Dock="Top" VerticalAlignment="Stretch" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0"/>
+                    <ColumnDefinition Width="100*"/>
+                    <ColumnDefinition Width="0"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0" Grid.Column="0" Style="{StaticResource stylePanelFormHalamanSidebarKiri}" CanVerticallyScroll="True" Height="99" Grid.RowSpan="2" >
+                </StackPanel>
+                <GridSplitter Grid.Column="0" Grid.RowSpan="2" Width="3" />
+                <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" VerticalAlignment="Stretch">
+                    <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
+                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch" />
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="3" Style="{StaticResource stylePanelFormHalamanSidebarKanan}" Background="Gray" CanVerticallyScroll="True" Height="99" Grid.RowSpan="2" >
+                </StackPanel>
+            </Grid>
+
+        </DockPanel>
+    </DockPanel>
+
+</UserControl>

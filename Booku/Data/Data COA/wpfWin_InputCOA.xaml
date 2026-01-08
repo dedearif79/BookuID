@@ -1,0 +1,82 @@
+﻿<Window x:Class="wpfWin_InputCOA"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Input Data COA"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+
+            <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="111"/>
+                    <ColumnDefinition Width="450"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kode Akun" />
+                <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Nama Akun"/>
+                <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Debet/Kredit" />
+                <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kode Mata Uang" />
+                <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs"                 Name="lbl_Kurs" />
+                <TextBlock  Grid.Row="5"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Saldo Awal"           Name="lbl_SaldoAwal"/>
+                <TextBlock  Grid.Row="6"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Saldo Awal (IDR)"     Name="lbl_SaldoAwal_IDR"/>
+                <TextBlock  Grid.Row="7"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Uraian" />
+                <TextBlock  Grid.Row="8"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Visibilitas" />
+
+                <TextBox        Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"                 Name="txt_COA"              Width="99"  HorizontalAlignment="Left"/>
+                <TextBox        Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"                 Name="txt_NamaAkun" />
+                <ComboBox       Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"                Name="cmb_DebetKredit"      Width="99"  HorizontalAlignment="Left"/>
+                <ComboBox       Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"                Name="cmb_KodeMataUang"     Width="63"  HorizontalAlignment="Left"  />
+                <TextBox        Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlusReadOnly}"   Name="txt_Kurs"             Width="150" HorizontalAlignment="Left" MaxLength="9" />
+                <TextBox        Grid.Row="5"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparate}"    Name="txt_SaldoAwal"        Width="150" HorizontalAlignment="Left"  />
+                <TextBox        Grid.Row="6"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparate}"    Name="txt_SaldoAwal_IDR"    Width="150" HorizontalAlignment="Left"/>
+                <TextBox        Grid.Row="7"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"                 Name="txt_Uraian"/>
+                <ComboBox       Grid.Row="8"  Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"                Name="cmb_Visibilitas"      Width="72" HorizontalAlignment="Left"/>
+
+            </Grid>
+
+        </StackPanel>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"     Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogSimpan}"    Name="btn_Simpan" />
+            <Button Style="{StaticResource styleButtonFormDialogBatal}"     Name="btn_Batal" />
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

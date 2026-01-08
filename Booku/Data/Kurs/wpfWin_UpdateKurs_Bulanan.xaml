@@ -1,0 +1,112 @@
+﻿<Window x:Class="wpfWin_UpdateKurs_Bulanan"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Kurs"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+
+            <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="135"/>
+                    <ColumnDefinition Width="99"/>
+                    <ColumnDefinition Width="69"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kode Mata Uang"/>
+                <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir Tahun Lalu"/>
+                <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir Januari"/>
+                <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir Februari"/>
+                <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir Maret"/>
+                <TextBlock  Grid.Row="5"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir April"/>
+                <TextBlock  Grid.Row="6"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir Mei"/>
+                <TextBlock  Grid.Row="7"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir Juni"/>
+                <TextBlock  Grid.Row="8"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir Juli"/>
+                <TextBlock  Grid.Row="9"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir Agustus"/>
+                <TextBlock  Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir September"/>
+                <TextBlock  Grid.Row="11" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir Oktober"/>
+                <TextBlock  Grid.Row="12" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir Nopember"/>
+                <TextBlock  Grid.Row="13" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kurs Akhir Desember"/>
+
+                <TextBox        Grid.Row="00" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"                             Name="txt_KodeMataUang" Width="45"  HorizontalAlignment="Left"  />
+                <TextBox        Grid.Row="01" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirTahunLalu"  />
+                <TextBox        Grid.Row="02" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirJanuari"  />
+                <TextBox        Grid.Row="03" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirFebruari"  />
+                <TextBox        Grid.Row="04" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirMaret"  />
+                <TextBox        Grid.Row="05" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirApril"  />
+                <TextBox        Grid.Row="06" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirMei"  />
+                <TextBox        Grid.Row="07" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirJuni"  />
+                <TextBox        Grid.Row="08" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirJuli"  />
+                <TextBox        Grid.Row="09" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirAgustus"  />
+                <TextBox        Grid.Row="10" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirSeptember"  />
+                <TextBox        Grid.Row="11" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirOktober"  />
+                <TextBox        Grid.Row="12" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirNopember"  />
+                <TextBox        Grid.Row="13" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"               Name="txt_KursAkhirDesember"  />
+
+                <Button         Grid.Row="01" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirTahunLalu"    />
+                <Button         Grid.Row="02" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirJanuari"    />
+                <Button         Grid.Row="03" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirFebruari"    />
+                <Button         Grid.Row="04" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirMaret"    />
+                <Button         Grid.Row="05" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirApril"    />
+                <Button         Grid.Row="06" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirMei"    />
+                <Button         Grid.Row="07" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirJuni"    />
+                <Button         Grid.Row="08" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirJuli"    />
+                <Button         Grid.Row="09" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirAgustus"    />
+                <Button         Grid.Row="10" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirSeptember"    />
+                <Button         Grid.Row="11" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirOktober"    />
+                <Button         Grid.Row="12" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirNopember"    />
+                <Button         Grid.Row="13" Grid.Column="2"   Content="Update"    Margin="4"   Name="btn_UpdateKursAkhirDesember"    />
+
+            </Grid>
+
+        </StackPanel>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"     Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogSimpan}"    Name="btn_Simpan" />
+            <Button Style="{StaticResource styleButtonFormDialogBatal}"     Name="btn_Batal" />
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

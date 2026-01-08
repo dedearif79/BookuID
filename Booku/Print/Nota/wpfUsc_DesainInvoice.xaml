@@ -1,0 +1,224 @@
+﻿<UserControl x:Class="wpfUsc_DesainInvoice"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Booku"
+             mc:Ignorable="d" 
+>
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <DockPanel Background="White" Width="742" Height="Auto" >
+
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+
+            <TextBlock  Style="{StaticResource styleTextBlockTitleNota }"   Text="Invoice"></TextBlock>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" >
+
+                <Border Style="{StaticResource styleBorderLabelNota}" >
+
+                    <Grid >
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock  Grid.Row="0" Grid.Column="0"    Text="Nomor" />
+                        <TextBlock  Grid.Row="1" Grid.Column="0"    Text="Tanggal" />
+                        <TextBlock  Grid.Row="2" Grid.Column="0"    Text="Kode Proyek" />
+
+                        <TextBlock  Grid.Row="0" Grid.Column="1"    Text="  :  " />
+                        <TextBlock  Grid.Row="1" Grid.Column="1"    Text="  :  " />
+                        <TextBlock  Grid.Row="2" Grid.Column="1"    Text="  :  " />
+
+                        <TextBlock  Grid.Row="0" Grid.Column="2"    Text="Nomor Invoice"    TextWrapping="Wrap"    Name="lbl_NomorInvoice"/>
+                        <TextBlock  Grid.Row="1" Grid.Column="2"    Text="01-01-1900"       TextWrapping="Wrap"    Name="lbl_TanggalInvoice"/>
+                        <TextBlock  Grid.Row="2" Grid.Column="2"    Text="Kode Proyek"      TextWrapping="Wrap"    Name="lbl_KodeProject"/>
+
+                    </Grid>
+
+                </Border>
+
+                <Border Style="{StaticResource styleBorderLabelNota}" >
+
+                    <Grid >
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock  Grid.Row="0" Grid.Column="0"    Text="Nomor SJ/BAST" />
+                        <TextBlock  Grid.Row="1" Grid.Column="0"    Text="Tgl. SJ/BAST" />
+                        <TextBlock  Grid.Row="2" Grid.Column="0"    Text="Tgl. Jatuh Tempo" />
+
+                        <TextBlock  Grid.Row="0" Grid.Column="1"    Text="  :  " />
+                        <TextBlock  Grid.Row="1" Grid.Column="1"    Text="  :  " />
+                        <TextBlock  Grid.Row="2" Grid.Column="1"    Text="  :  " />
+
+                        <TextBlock  Grid.Row="0" Grid.Column="2"    Text="01-01-1900"  TextWrapping="Wrap"    Name="lbl_NomorSJBAST"/>
+                        <TextBlock  Grid.Row="1" Grid.Column="2"    Text="01-01-1900"  TextWrapping="Wrap"    Name="lbl_TanggalSJBAST"/>
+                        <TextBlock  Grid.Row="2" Grid.Column="2"    Text="01-01-1900"  TextWrapping="Wrap"    Name="lbl_TanggalJatuhTempo"/>
+
+                    </Grid>
+
+                </Border>
+
+                <!-- Kepada : -->
+                <Border Style="{StaticResource styleBorderLabelNota}" >
+
+                    <Grid >
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions >
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock  Grid.Row="0" Grid.Column="0"    Text="Kepada" />
+                        <TextBlock  Grid.Row="1" Grid.Column="0"    Text="PT. CUSTOMER"     TextWrapping="Wrap"    Name="lbl_NamaCustomer" FontWeight="Bold" />
+                        <TextBlock  Grid.Row="2" Grid.Column="0"    Text="Alamat Customer"  TextWrapping="Wrap"    Name="lbl_AlamatCustomer" />
+
+                    </Grid>
+
+                </Border>
+
+            </StackPanel>
+
+            <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" Margin="0 7 0 0">
+                <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridNOTA}" MinWidth="742" MinHeight="55" />
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0 7 0 0" >
+
+                <Border BorderBrush="Black" BorderThickness="0.5"   Margin="0 0 15 0" >
+
+                    <StackPanel Background="Transparent" Width="480" >
+                        <TextBlock Text="Notes :" Padding="5" FontWeight="Bold" TextDecorations="Underline"  />
+                        <TextBlock Name="lbl_Notes" Padding="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" TextWrapping="Wrap"
+                               Text="Teks ini sengaja dibikin panjang untuk melihat efek wrap saat jumlah teks melebihi ukuran lebar panel. Jadi, teks ini jangan dihapus ya. Biarkan saja begini apa adanya. Ok." />
+                    </StackPanel>
+
+                </Border>
+
+                <Grid Width="246" HorizontalAlignment="Right" >
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100*" />
+                        <ColumnDefinition Width="099" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock  Grid.Row="0"  Grid.Column="0"    Padding="2"     Text="Jumlah"                   Name="lbl_Jumlah"   />
+                    <TextBlock  Grid.Row="1"  Grid.Column="0"    Padding="2"     Text="Diskon"                   Name="lbl_Diskon"/>
+                    <TextBlock  Grid.Row="2"  Grid.Column="0"    Padding="2"     Text="Uang Muka + Termin"       Name="lbl_UangMukaPlusTermin"/>
+                    <TextBlock  Grid.Row="3"  Grid.Column="0"    Padding="2"     Text="Termin"                   Name="lbl_Termin"/>
+                    <TextBlock  Grid.Row="4"  Grid.Column="0"    Padding="2"     Text="Dasar Pengenaan Pajak"    Name="lbl_DasarPengenaanPajak"/>
+                    <TextBlock  Grid.Row="5"  Grid.Column="0"    Padding="2"     Text="PPN"                      Name="lbl_PPN"/>
+                    <TextBlock  Grid.Row="6"  Grid.Column="0"    Padding="2"     Text="PPh Terutang"             Name="lbl_PPhTerutang"/>
+                    <TextBlock  Grid.Row="7"  Grid.Column="0"    Padding="2"     Text="PPh Ditanggung"           Name="lbl_PPhDitanggung"/>
+                    <TextBlock  Grid.Row="8"  Grid.Column="0"    Padding="2"     Text="PPh Dipotong"             Name="lbl_PPhDipotong"/>
+                    <TextBlock  Grid.Row="9"  Grid.Column="0"    Padding="2"     Text="Ongkos Kirim"             Name="lbl_OngkosKirim"/>
+                    <TextBlock  Grid.Row="10" Grid.Column="0"    Padding="2"     Text="Total Tagihan"            Name="lbl_TotalTagihan"/>
+
+                    <TextBox  Grid.Row="0"  Grid.Column="1" Style="{StaticResource styleTextBoxFormNotaAngka}"   Name="txt_JumlahHargaKeseluruhan"   />
+                    <TextBox  Grid.Row="1"  Grid.Column="1" Style="{StaticResource styleTextBoxFormNotaAngka}"   Name="txt_Diskon"   />
+                    <TextBox  Grid.Row="2"  Grid.Column="1" Style="{StaticResource styleTextBoxFormNotaAngka}"   Name="txt_UangMukaPlusTermin"   />
+                    <TextBox  Grid.Row="3"  Grid.Column="1" Style="{StaticResource styleTextBoxFormNotaAngka}"   Name="txt_Termin"   />
+                    <TextBox  Grid.Row="4"  Grid.Column="1" Style="{StaticResource styleTextBoxFormNotaAngka}"   Name="txt_DasarPengenaanPajak"   />
+                    <TextBox  Grid.Row="5"  Grid.Column="1" Style="{StaticResource styleTextBoxFormNotaAngka}"   Name="txt_PPN"   />
+                    <TextBox  Grid.Row="6"  Grid.Column="1" Style="{StaticResource styleTextBoxFormNotaAngka}"   Name="txt_PPhTerutang"   />
+                    <TextBox  Grid.Row="7"  Grid.Column="1" Style="{StaticResource styleTextBoxFormNotaAngka}"   Name="txt_PPhDitanggung"   />
+                    <TextBox  Grid.Row="8"  Grid.Column="1" Style="{StaticResource styleTextBoxFormNotaAngka}"   Name="txt_PPhDipotong"   />
+                    <TextBox  Grid.Row="9"  Grid.Column="1" Style="{StaticResource styleTextBoxFormNotaAngka}"   Name="txt_OngkosKirim"   />
+                    <TextBox  Grid.Row="10" Grid.Column="1" Style="{StaticResource styleTextBoxFormNotaAngka}"   Name="txt_TotalTagihan"   />
+
+                </Grid>
+
+            </StackPanel>
+
+            <DockPanel HorizontalAlignment="Stretch" Margin="0 7 0 0" Background="Transparent" >
+                <Border BorderBrush="Black" BorderThickness="0.5">
+                    <TextBlock Name="lbl_TotalTagihanTerbilang" TextWrapping="Wrap" TextAlignment="Right"
+                           Padding="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontStyle="Italic" 
+                           Text="Teks ini sengaja dibikin panjang untuk melihat efek wrap saat jumlah teks melebihi ukuran lebar panel. Jadi, teks ini jangan dihapus ya. Biarkan saja begini apa adanya. Ok."
+                           />
+                </Border>
+            </DockPanel>
+
+            <!-- Tanda Tangan :-->
+            <DockPanel HorizontalAlignment="Stretch" Margin="0 7 0 0" Background="Transparent" >
+
+                <Grid Margin="0 7" >
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100*" />
+                        <ColumnDefinition Width="21" />
+                        <ColumnDefinition Width="100*" />
+                        <ColumnDefinition Width="21" />
+                        <ColumnDefinition Width="100*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions >
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="51" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock  Grid.Row="0" Grid.Column="0"    HorizontalAlignment="Center"  Text="User"           Name="lbl_User"/>
+                    <TextBlock  Grid.Row="0" Grid.Column="2"    HorizontalAlignment="Center"  Text="Manager"        Name="lbl_Manager"/>
+                    <TextBlock  Grid.Row="0" Grid.Column="4"    HorizontalAlignment="Center"  Text="Direktur"       Name="lbl_Direktur"/>
+
+                    <TextBlock  Grid.Row="2" Grid.Column="0"    HorizontalAlignment="Center"  Text="Nama User"      Name="lbl_NamaUser"/>
+                    <TextBlock  Grid.Row="2" Grid.Column="2"    HorizontalAlignment="Center"  Text="Nama Manager"   Name="lbl_NamaManager"/>
+                    <TextBlock  Grid.Row="2" Grid.Column="4"    HorizontalAlignment="Center"  Text="Nama Direktur"  Name="lbl_NamaDirektur"/>
+
+                </Grid>
+
+            </DockPanel>
+
+        </StackPanel>
+
+    </DockPanel>
+    
+</UserControl>

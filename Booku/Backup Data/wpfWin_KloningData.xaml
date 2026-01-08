@@ -1,0 +1,64 @@
+﻿<Window x:Class="wpfWin_KloningData"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Kloning Data"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+
+            <Grid Style="{StaticResource styleGridFormDialog}"  Margin="0" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="555"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="17"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+
+                <TextBox        Grid.Row="0"  Grid.Column="0"   x:Name="txt_IDClient"   Width="99" HorizontalAlignment="Left"   MaxLength="8" />
+
+                <ProgressBar    Grid.Row="2"  Grid.Column="0"   Height="27" Name="pgb_Progress"        />
+
+                <TextBlock      Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   HorizontalAlignment="Center"    VerticalAlignment="Center"  Text="100 %"    Name="lbl_Progress" />
+                
+
+            </Grid>
+
+        </StackPanel>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"     Name="pnl_TombolForm"   >
+            <Button Style="{StaticResource styleButtonFormDialogKloning}"   Name="btn_Kloning" />
+            <Button Style="{StaticResource styleButtonFormDialogTutup}"     Name="btn_Tutup" />
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>
