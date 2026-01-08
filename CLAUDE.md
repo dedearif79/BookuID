@@ -2,22 +2,39 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Bahasa
+
+Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
+
 ## Build Commands
 
 ```bash
-# Build entire solution
-dotnet build BookuID.sln
+# Build entire solution (menggunakan MSBuild Visual Studio karena COM Reference)
+"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe" "/mnt/d/vb .net project/BookuID/BookuID.sln" -t:Build -verbosity:minimal
 
 # Build specific project
-dotnet build "Booku/Booku.vbproj"
-dotnet build "Booku Library/Booku Library.vbproj"
+"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe" "/mnt/d/vb .net project/BookuID/Booku/Booku.vbproj" -t:Build -verbosity:minimal
 
-# Build for release (single file executable)
-dotnet publish "Booku/Booku.vbproj" -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true
+# Alternative dengan dotnet (tanpa COM Reference support)
+dotnet build BookuID.sln
+dotnet build "Booku/Booku.vbproj"
 
 # Clean build artifacts
 dotnet clean BookuID.sln
 ```
+
+### Release Publishing (dengan Obfuscation)
+
+```powershell
+# Dari Windows PowerShell, jalankan script publish-release
+cd "D:\vb .net project\BookuID\Booku"
+.\publish-release.ps1
+
+# Skip obfuscation (untuk testing cepat)
+.\publish-release.ps1 -SkipObfuscation
+```
+
+Output: `Booku/bin/Release/Final/Booku.exe` (single-file executable, self-contained)
 
 ## Project Overview
 
@@ -25,16 +42,18 @@ BookuID adalah aplikasi akuntansi enterprise berbasis VB.NET dengan arsitektur h
 
 ### Solution Structure (8 Projects)
 
-| Project | Deskripsi | Dependencies |
-|---------|-----------|--------------|
-| **Booku** | Aplikasi utama | Booku Library |
-| **Booku Library** | Shared library (namespace: `bcomm`) | - |
-| **Booku Installer** | Installer + XAMPP setup | Booku Library |
-| **Booku Updater** | Update utility | Booku Library |
-| **Booku Backup** | Backup/restore/kloning | Booku Library |
-| **Booku Encrypter** | Enkripsi utility | Booku Library |
-| **Booku Assistant** | Supporting utility | Booku Uninstaller |
-| **Booku Uninstaller** | Uninstaller | Booku Library |
+| Project | Deskripsi | Namespace |
+|---------|-----------|-----------|
+| **Booku** | Aplikasi utama | Booku |
+| **Booku Library** | Shared library | bcomm |
+| **Booku Installer** | Installer + XAMPP setup | Booku_Installer |
+| **Booku Updater** | Update utility | Booku_Updater |
+| **Booku Backup** | Backup/restore/kloning | Booku_Backup |
+| **Booku Encrypter** | Enkripsi utility | Booku_Encrypter |
+| **Booku Assistant** | Supporting utility | Booku_Assistant |
+| **Booku Uninstaller** | Uninstaller | Booku_Uninstaller |
+
+Semua project bergantung pada **Booku Library** kecuali Booku Assistant (bergantung pada Booku Uninstaller).
 
 ## Architecture
 
@@ -42,20 +61,21 @@ BookuID adalah aplikasi akuntansi enterprise berbasis VB.NET dengan arsitektur h
 
 Aplikasi menggunakan WinForms sebagai container utama dengan WPF untuk UI modern:
 
-1. **Entry Point**: `frm_BOOKU` (WinForms) di `/Booku/00_START_UP/`
+1. **Entry Point**: `frm_BOOKU` (WinForms MDI Container) di `/Booku/00_START_UP/`
 2. **Startup Window**: `wpfWin_StartUp` (WPF) diluncurkan saat inisialisasi
 3. **User Controls**: WPF UserControls di-host dalam WinForms via `System.Windows.Forms.Integration`
 4. **Exception Handling**: 4 handler terpisah (WinForms ThreadException, AppDomain UnhandledException, Task UnobservedTaskException, WPF DispatcherUnhandledException)
 
-### File Naming Convention (Prefix)
+### File Naming Convention
 
 | Prefix | Tipe | Contoh |
 |--------|------|--------|
-| `frm_` | WinForms Form | `frm_BOOKU.vb`, `frm_BukuBesar.vb` |
+| `frm_` | WinForms Form | `frm_BOOKU.vb` |
 | `wpfWin_` | WPF Window | `wpfWin_StartUp.xaml` |
 | `wpfUsc_` | WPF UserControl | `wpfUsc_BukuBesar.xaml` |
 | `mdl_` | VB Module | `mdl_PublicSub.vb` |
 | `cls_` | Class | `cls_DecimalConverter.vb` |
+| `X_` | **Deprecated** | `X_frm_LaporanLama.vb` |
 
 ### Core Modules (`/Booku/Modul Umum/`)
 
@@ -74,7 +94,7 @@ Aplikasi menggunakan WinForms sebagai container utama dengan WPF untuk UI modern
 
 ### WPF Styling System (`/Booku/WPF/Styles/`)
 
-`StyleAplikasi.xaml` adalah master styles, dengan component-specific styles untuk Button, DataGrid, TextBox, ComboBox, dll.
+`StyleAplikasi.xaml` adalah master styles dengan component-specific styles untuk Button, DataGrid, TextBox, ComboBox, dll.
 
 ### Database Architecture
 
@@ -87,7 +107,7 @@ Aplikasi menggunakan WinForms sebagai container utama dengan WPF untuk UI modern
 
 ## Code Conventions
 
-1. **Bahasa Indonesia**: Gunakan bahasa Indonesia untuk semua penamaan (variabel, fungsi, class, module)
+1. **Bahasa Indonesia**: Gunakan bahasa Indonesia untuk semua penamaan
    - "Jurnal" bukan "Journal"
    - "BukuBesar" bukan "GeneralLedger"
    - "Pembelian" bukan "Purchase"
@@ -96,24 +116,25 @@ Aplikasi menggunakan WinForms sebagai container utama dengan WPF untuk UI modern
 
 3. **Single Instance**: Aplikasi menggunakan Mutex untuk mencegah multiple instance
 
-4. **Deprecated Code (Dead Code)**: Ada beberapa file, folder, function, sub, class, module dan lainnya di codebase yang sudah deprecated. Ciri-cirinya (tidak mutlak):
-   - File atau folder yang diawali dengan prefix `X_` (contoh: `X_frm_LaporanLama.vb`, `X_Modul Lama/`)
-   - Sub atau function yang sudah tidak dipanggil lagi di tempat lain dalam codebase
+4. **Deprecated Code**: File/folder dengan prefix `X_` adalah kode yang sudah deprecated dan tidak boleh digunakan
+
+5. **Git Commit**: Setiap perubahan kode akan di-commit secara mandiri oleh programmer. Claude tidak perlu menawarkan untuk meng-commit setiap perubahan
 
 ## Feature Modules (`/Booku/`)
-
-Fitur-fitur terorganisir dalam folder terpisah:
 
 - **Akuntansi**: `Buku Besar`, `Jurnal`, `Laporan`
 - **Transaksi**: `Pembelian - Penjualan`, `Transaksi`, `Manajemen Asset`
 - **Data Master**: `Data/` (COA, Karyawan, Mitra, User, Project, Kurs)
-- **Buku Pengawasan**: Deposit Operasional, Gaji, Hutang Bank-Leasing, Hutang Pajak, PPh Pasal 29
+- **Buku Pengawasan**: Deposit Operasional, Gaji, Hutang Bank-Leasing, Hutang Pajak
 - **Admin**: `App Admin`, `App Developer`, `App IT`, `Security`, `Registrasi`
 
 ## Key Dependencies
 
-- `MySql.Data` - MySQL connectivity
-- `ClosedXML` - Excel handling
-- `Microsoft.Web.WebView2` - Web content embedding
-- `Newtonsoft.Json` - JSON processing
-- `HtmlAgilityPack` - HTML parsing
+| Package | Kegunaan |
+|---------|----------|
+| MySql.Data | MySQL connectivity |
+| ClosedXML | Excel handling |
+| Microsoft.Web.WebView2 | Web content embedding |
+| Newtonsoft.Json | JSON processing |
+| HtmlAgilityPack | HTML parsing |
+| Obfuscar | Code obfuscation (Release build) |
