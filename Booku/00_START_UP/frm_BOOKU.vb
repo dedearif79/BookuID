@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.IO
 Imports MySql.Data.MySqlClient
 Imports System.Windows
@@ -20,6 +20,24 @@ Public Class frm_BOOKU
         'Start Up
         win_Startup = New wpfWin_StartUp
         win_Startup.ShowDialog()
+
+        'Lakukan Update Value tbl_infoaplikasi yang ada di lokal, dengan value-value yang ada di server
+        UpdateInfoAplikasi()
+
+        'Pengisian Value dari Variabel-variabel Penting di Awal :
+        DataAwalLoadingAplikasi()
+
+
+        'Posisi Default Hak Akses User :
+        StatusMenuPosisiLogout()
+
+
+        'Cek Versi dan Apdet Aplikasi :
+        CekVersiDanApdetAplikasi()
+
+
+        'Cek Status Registrasi Perangkat :
+        CekStatusRegistrasiPerangkat()
 
         '=====================================================
         ' BRANCHING: Pilih Mode Aplikasi untuk PC Developer
@@ -49,25 +67,6 @@ Public Class frm_BOOKU
 
         pnl_Notifikasi.Visible = False
         VisibilitasNotifikasi = False
-
-        'Lakukan Update Value tbl_infoaplikasi yang ada di lokal, dengan value-value yang ada di server
-        UpdateInfoAplikasi()
-
-
-        'Pengisian Value dari Variabel-variabel Penting di Awal :
-        DataAwalLoadingAplikasi()
-
-
-        'Posisi Default Hak Akses User :
-        StatusMenuPosisiLogout()
-
-
-        'Cek Versi dan Apdet Aplikasi :
-        CekVersiDanApdetAplikasi()
-
-
-        'Cek Status Registrasi Perangkat :
-        CekStatusRegistrasiPerangkat()
 
         Style_HalamanModul(Me)
 

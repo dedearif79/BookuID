@@ -27,179 +27,470 @@
     <DockPanel LastChildFill="True">
 
         <!-- Menu Bar -->
-        <Menu DockPanel.Dock="Top" Background="#1976D2" Foreground="White" Padding="5">
+        <Menu DockPanel.Dock="Top" Style="{StaticResource styleMenuBarAplikasi}">
 
-            <!-- File -->
-            <MenuItem Header="_File" Foreground="White">
-                <MenuItem Header="_Pengaturan" Name="mnu_Pengaturan"/>
-                <Separator/>
-                <MenuItem Header="_Database">
-                    <MenuItem Header="_Cadangkan" Name="mnu_Database_Cadangkan"/>
-                    <MenuItem Header="_Pulihkan" Name="mnu_Database_Pulihkan"/>
-                    <MenuItem Header="_Kloning" Name="mnu_Database_Kloning"/>
+            <!-- 1. File -->
+            <MenuItem Header="_File" Name="mnu_File" Foreground="White">
+                <MenuItem Header="Pengaturan" Name="mnu_Pengaturan"/>
+                <MenuItem Header="Database" Name="mnu_Database">
+                    <MenuItem Header="Cadangkan" Name="mnu_Database_Cadangkan"/>
+                    <MenuItem Header="Pulihkan" Name="mnu_Database_Pulihkan"/>
+                    <MenuItem Header="Kloning" Name="mnu_Database_Kloning"/>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Kembali ke Mode _Classic" Name="mnu_KembaliKeClassic"/>
+                <MenuItem Header="Kembali ke Mode Classic" Name="mnu_KembaliKeClassic"/>
                 <Separator/>
-                <MenuItem Header="_Keluar" Name="mnu_Keluar"/>
+                <MenuItem Header="Keluar" Name="mnu_Keluar"/>
             </MenuItem>
 
-            <!-- Data -->
-            <MenuItem Header="_Data" Foreground="White">
-                <MenuItem Header="Company _Profile" Name="mnu_CompanyProfile"/>
-                <Separator/>
-                <MenuItem Header="Data _User" Name="mnu_DataUser"/>
-                <MenuItem Header="Data _COA" Name="mnu_DataCOA"/>
-                <MenuItem Header="Data _Mitra" Name="mnu_DataMitra"/>
-                <MenuItem Header="Data _Lawan Transaksi" Name="mnu_DataLawanTransaksi"/>
-                <MenuItem Header="Data _Karyawan" Name="mnu_DataKaryawan"/>
-                <MenuItem Header="Data _Pemegang Saham" Name="mnu_DataPemegangSaham"/>
-                <MenuItem Header="Data Pro_ject" Name="mnu_DataProject"/>
-                <Separator/>
-                <MenuItem Header="_Tahun Buku">
-                    <MenuItem Header="_Buat Buku Baru" Name="mnu_BuatBukuBaru"/>
-                    <MenuItem Header="_Ganti Tahun Buku" Name="mnu_GantiTahunBuku"/>
-                    <MenuItem Header="_Tutup Buku" Name="mnu_TutupBuku"/>
-                </MenuItem>
-                <MenuItem Header="_Kurs" Name="mnu_Kurs"/>
-            </MenuItem>
-
-            <!-- Transaksi -->
-            <MenuItem Header="_Transaksi" Foreground="White">
-                <MenuItem Header="_Perekaman Data">
-                    <MenuItem Header="Input _Pembelian" Name="mnu_InputPembelian"/>
-                    <MenuItem Header="Input Pen_jualan" Name="mnu_InputPenjualan"/>
-                    <MenuItem Header="Input _Retur Pembelian" Name="mnu_InputReturPembelian"/>
-                    <MenuItem Header="Input Retur Penjua_lan" Name="mnu_InputReturPenjualan"/>
-                </MenuItem>
-                <MenuItem Header="_Adjusment">
-                    <MenuItem Header="Biaya _Penyusutan Asset" Name="mnu_Adjusment_Penyusutan"/>
-                    <MenuItem Header="Biaya _Amortisasi" Name="mnu_Adjusment_Amortisasi"/>
-                    <MenuItem Header="Selisih _Kurs" Name="mnu_Adjusment_SelisihKurs"/>
-                    <MenuItem Header="_HPP" Name="mnu_Adjusment_HPP"/>
-                </MenuItem>
-                <MenuItem Header="Pe_mindahbukuan" Name="mnu_Pemindahbukuan"/>
-            </MenuItem>
-
-            <!-- Pembelian -->
-            <MenuItem Header="Pem_belian" Foreground="White">
-                <MenuItem Header="_PO Pembelian">
-                    <MenuItem Header="_Lokal">
-                        <MenuItem Header="_Barang" Name="mnu_POPembelian_Lokal_Barang"/>
-                        <MenuItem Header="_Jasa" Name="mnu_POPembelian_Lokal_Jasa"/>
-                        <MenuItem Header="Barang &amp; _Jasa" Name="mnu_POPembelian_Lokal_BarangDanJasa"/>
-                        <MenuItem Header="Jasa _Konstruksi" Name="mnu_POPembelian_Lokal_JasaKonstruksi"/>
-                        <MenuItem Header="_Semua" Name="mnu_POPembelian_Semua"/>
+            <!-- 2. Data -->
+            <MenuItem Header="_Data" Name="mnu_Data" Foreground="White">
+                <MenuItem Header="Company Profile" Name="mnu_CompanyProfile"/>
+                <MenuItem Header="Data Awal" Name="mnu_DataAwal">
+                    <MenuItem Header="Hutang" Name="mnu_DataAwal_Hutang">
+                        <MenuItem Header="Hutang Usaha" Name="mnu_DataAwal_HutangUsaha">
+                            <MenuItem Header="Non Afiliasi" Name="mnu_DataAwal_HutangUsaha_NonAfiliasi"/>
+                            <MenuItem Header="Afiliasi" Name="mnu_DataAwal_HutangUsaha_Afiliasi"/>
+                            <MenuItem Header="Impor" Name="mnu_DataAwal_HutangUsaha_Impor">
+                                <MenuItem Header="USD" Name="mnu_DataAwal_HutangUsaha_Impor_USD"/>
+                                <MenuItem Header="AUD" Name="mnu_DataAwal_HutangUsaha_Impor_AUD"/>
+                                <MenuItem Header="JPY" Name="mnu_DataAwal_HutangUsaha_Impor_JPY"/>
+                                <MenuItem Header="CNY" Name="mnu_DataAwal_HutangUsaha_Impor_CNY"/>
+                                <MenuItem Header="EUR" Name="mnu_DataAwal_HutangUsaha_Impor_EUR"/>
+                                <MenuItem Header="SGD" Name="mnu_DataAwal_HutangUsaha_Impor_SGD"/>
+                                <MenuItem Header="GBP" Name="mnu_DataAwal_HutangUsaha_Impor_GBP"/>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="Hutang Bank" Name="mnu_DataAwal_HutangBank"/>
+                        <MenuItem Header="Hutang Leasing" Name="mnu_DataAwal_HutangLeasing"/>
+                        <MenuItem Header="Hutang Pihak Ketiga" Name="mnu_DataAwal_HutangPihakKetiga"/>
+                        <MenuItem Header="Hutang Afiliasi" Name="mnu_DataAwal_HutangAfiliasi"/>
+                        <MenuItem Header="Hutang Karyawan" Name="mnu_DataAwal_HutangKaryawan"/>
+                        <MenuItem Header="Hutang Pemegang Saham" Name="mnu_DataAwal_HutangPemegangSaham"/>
+                        <MenuItem Header="Hutang Pajak" Name="mnu_DataAwal_HutangPajak">
+                            <MenuItem Header="PPh Pasal 21" Name="mnu_DataAwal_HutangPPhPasal21"/>
+                            <MenuItem Header="PPh Pasal 23" Name="mnu_DataAwal_HutangPPhPasal23"/>
+                            <MenuItem Header="PPh Pasal 4 (2)" Name="mnu_DataAwal_HutangPPhPasal42"/>
+                            <MenuItem Header="PPh Pasal 25" Name="mnu_DataAwal_HutangPPhPasal25"/>
+                            <MenuItem Header="PPh Pasal 26" Name="mnu_DataAwal_HutangPPhPasal26"/>
+                            <MenuItem Header="PPh Pasal 29" Name="mnu_DataAwal_HutangPPhPasal29"/>
+                            <MenuItem Header="PPN" Name="mnu_DataAwal_HutangPPN"/>
+                            <MenuItem Header="Ketetapan Pajak" Name="mnu_DataAwal_HutangKetetapanPajak"/>
+                        </MenuItem>
+                        <MenuItem Header="Gaji" Name="mnu_DataAwal_Gaji">
+                            <MenuItem Header="Gaji" Name="mnu_DataAwal_HutangGaji"/>
+                            <MenuItem Header="BPJS Kesehatan" Name="mnu_DataAwal_HutangBPJSKesehatan"/>
+                            <MenuItem Header="BPJS Ketenagakerjaan" Name="mnu_DataAwal_HutangBPJSKetenagakerjaan"/>
+                            <MenuItem Header="Hutang Koperasi Karyawan" Name="mnu_DataAwal_HutangKoperasiKaryawan"/>
+                            <MenuItem Header="Hutang Serikat" Name="mnu_DataAwal_HutangSerikat"/>
+                        </MenuItem>
                     </MenuItem>
-                    <MenuItem Header="_Impor">
-                        <MenuItem Header="_Barang" Name="mnu_POPembelian_Impor_Barang"/>
-                        <MenuItem Header="_Jasa" Name="mnu_POPembelian_Impor_Jasa"/>
-                        <MenuItem Header="_Semua" Name="mnu_POPembelian_Impor_Semua"/>
+                    <MenuItem Header="Piutang" Name="mnu_DataAwal_Piutang">
+                        <MenuItem Header="Piutang Usaha" Name="mnu_DataAwal_PiutangUsaha">
+                            <MenuItem Header="Non Afiliasi" Name="mnu_DataAwal_PiutangUsaha_NonAfiliasi"/>
+                            <MenuItem Header="Afiliasi" Name="mnu_DataAwal_PiutangUsaha_Afiliasi"/>
+                            <MenuItem Header="Ekspor" Name="mnu_DataAwal_PiutangUsaha_Ekspor">
+                                <MenuItem Header="USD" Name="mnu_DataAwal_PiutangUsaha_Ekspor_USD"/>
+                                <MenuItem Header="AUD" Name="mnu_DataAwal_PiutangUsaha_Ekspor_AUD"/>
+                                <MenuItem Header="JPY" Name="mnu_DataAwal_PiutangUsaha_Ekspor_JPY"/>
+                                <MenuItem Header="CNY" Name="mnu_DataAwal_PiutangUsaha_Ekspor_CNY"/>
+                                <MenuItem Header="EUR" Name="mnu_DataAwal_PiutangUsaha_Ekspor_EUR"/>
+                                <MenuItem Header="SGD" Name="mnu_DataAwal_PiutangUsaha_Ekspor_SGD"/>
+                                <MenuItem Header="GBP" Name="mnu_DataAwal_PiutangUsaha_Ekspor_GBP"/>
+                            </MenuItem>
+                        </MenuItem>
+                        <MenuItem Header="Piutang Pihak Ketiga" Name="mnu_DataAwal_PiutangPihakKetiga"/>
+                        <MenuItem Header="Piutang Afiliasi" Name="mnu_DataAwal_PiutangAfiliasi"/>
+                        <MenuItem Header="Piutang Karyawan" Name="mnu_DataAwal_PiutangKaryawan"/>
+                        <MenuItem Header="Piutang Pemegang Saham" Name="mnu_DataAwal_PiutangPemegangSaham"/>
+                        <MenuItem Header="Deposit Operasional" Name="mnu_DataAwal_DepositOperasional"/>
                     </MenuItem>
-                </MenuItem>
-                <MenuItem Header="_Surat Jalan" Name="mnu_SuratJalanPembelian"/>
-                <MenuItem Header="_BAST" Name="mnu_BASTPembelian"/>
-                <MenuItem Header="_Invoice Pembelian" Name="mnu_InvoicePembelian"/>
-                <Separator/>
-                <MenuItem Header="Buku _Pembelian">
-                    <MenuItem Header="_Lokal" Name="mnu_BukuPembelian_Lokal"/>
-                    <MenuItem Header="_Impor" Name="mnu_BukuPembelian_Impor"/>
-                </MenuItem>
-                <MenuItem Header="_Retur Pembelian" Name="mnu_ReturPembelian"/>
-            </MenuItem>
-
-            <!-- Penjualan -->
-            <MenuItem Header="Pen_jualan" Foreground="White">
-                <MenuItem Header="_PO Penjualan">
-                    <MenuItem Header="_Lokal">
-                        <MenuItem Header="_Barang" Name="mnu_POPenjualan_Lokal_Barang"/>
-                        <MenuItem Header="_Jasa" Name="mnu_POPenjualan_Lokal_Jasa"/>
-                        <MenuItem Header="Barang &amp; _Jasa" Name="mnu_POPenjualan_Lokal_BarangDanJasa"/>
-                        <MenuItem Header="Jasa _Konstruksi" Name="mnu_POPenjualan_Lokal_JasaKonstruksi"/>
-                        <MenuItem Header="_Semua" Name="mnu_POPenjualan_Lokal_Semua"/>
-                    </MenuItem>
-                    <MenuItem Header="_Ekspor" Name="mnu_POPenjualan_Ekspor"/>
-                </MenuItem>
-                <MenuItem Header="_Surat Jalan" Name="mnu_SuratJalanPenjualan"/>
-                <MenuItem Header="_BAST" Name="mnu_BASTPenjualan"/>
-                <MenuItem Header="_Invoice Penjualan" Name="mnu_InvoicePenjualan"/>
-                <Separator/>
-                <MenuItem Header="Buku _Penjualan">
-                    <MenuItem Header="_Lokal" Name="mnu_BukuPenjualan_Lokal"/>
-                    <MenuItem Header="_Ekspor" Name="mnu_BukuPenjualan_Ekspor"/>
-                </MenuItem>
-                <MenuItem Header="Penjualan _Eceran" Name="mnu_BukuPenjualanEceran"/>
-                <MenuItem Header="_Retur Penjualan" Name="mnu_ReturPenjualan"/>
-            </MenuItem>
-
-            <!-- Buku Pengawasan -->
-            <MenuItem Header="Buku _Pengawasan" Foreground="White">
-                <MenuItem Header="Bank &amp; _Cash">
-                    <MenuItem Header="_Bank" Name="mnu_BukuBank"/>
-                    <MenuItem Header="_Kas" Name="mnu_BukuKas"/>
-                    <MenuItem Header="_Petty Cash" Name="mnu_BukuPettyCash"/>
-                    <MenuItem Header="Cash _Advance" Name="mnu_BukuCashAdvance"/>
-                    <MenuItem Header="Bank _Garansi" Name="mnu_BukuBankGaransi"/>
-                </MenuItem>
-                <MenuItem Header="_Gaji" Name="mnu_BukuPengawasanGaji"/>
-                <MenuItem Header="_Hutang" Name="mnu_BukuPengawasanHutang"/>
-                <MenuItem Header="_Piutang" Name="mnu_BukuPengawasanPiutang"/>
-                <MenuItem Header="_Pajak" Name="mnu_BukuPengawasanPajak"/>
-            </MenuItem>
-
-            <!-- Akuntansi -->
-            <MenuItem Header="_Akuntansi" Foreground="White">
-                <MenuItem Header="_Jurnal">
-                    <MenuItem Header="Jurnal _Umum" Name="mnu_JurnalUmum"/>
-                    <MenuItem Header="Jurnal _Adjusment" Name="mnu_JurnalAdjusment"/>
-                </MenuItem>
-                <MenuItem Header="_Buku Besar" Name="mnu_BukuBesar"/>
-                <Separator/>
-                <MenuItem Header="_Laporan">
-                    <MenuItem Header="_Trial Balance" Name="mnu_TrialBalance"/>
-                    <MenuItem Header="_Neraca Lajur" Name="mnu_NeracaLajur"/>
-                    <MenuItem Header="_HPP" Name="mnu_LaporanHPP"/>
-                    <MenuItem Header="_Laba Rugi">
-                        <MenuItem Header="_Bulanan" Name="mnu_LabaRugi_Bulanan"/>
-                        <MenuItem Header="_Tahunan" Name="mnu_LabaRugi_Tahunan"/>
-                    </MenuItem>
-                    <MenuItem Header="_Neraca">
-                        <MenuItem Header="_Bulanan" Name="mnu_Neraca_Bulanan"/>
-                        <MenuItem Header="_Tahunan" Name="mnu_Neraca_Tahunan"/>
+                    <MenuItem Header="Asset" Name="mnu_DataAwal_Asset">
+                        <MenuItem Header="Amortisasi Biaya" Name="mnu_DataAwal_AmortisasiBiaya"/>
+                        <MenuItem Header="Asset Tetap" Name="mnu_DataAwal_AssetTetap"/>
                     </MenuItem>
                 </MenuItem>
+                <Separator/>
+                <MenuItem Header="Data User" Name="mnu_DataUser"/>
+                <MenuItem Header="Data COA" Name="mnu_DataCOA"/>
+                <MenuItem Header="Data Lawan Transaksi" Name="mnu_DataLawanTransaksi"/>
+                <MenuItem Header="Data Karyawan" Name="mnu_DataKaryawan"/>
+                <MenuItem Header="Daftar Pemegang Saham" Name="mnu_DaftarPemegangSaham"/>
+                <MenuItem Header="Data Project" Name="mnu_DataProject"/>
+                <Separator/>
+                <MenuItem Header="Tahun Buku" Name="mnu_TahunBuku">
+                    <MenuItem Header="Buat Buku Baru" Name="mnu_BuatBukuBaru"/>
+                    <MenuItem Header="Ganti Tahun Buku" Name="mnu_GantiTahunBuku"/>
+                    <MenuItem Header="Tutup Buku" Name="mnu_TutupBuku"/>
+                </MenuItem>
+                <MenuItem Header="Kurs" Name="mnu_Kurs"/>
             </MenuItem>
 
-            <!-- Manajemen Asset -->
-            <MenuItem Header="_Asset" Foreground="White">
-                <MenuItem Header="Daftar _Penyusutan Asset Tetap" Name="mnu_DaftarPenyusutanAssetTetap"/>
-                <MenuItem Header="Daftar _Amortisasi Biaya" Name="mnu_DaftarAmortisasiBiaya"/>
-                <MenuItem Header="Buku Penjualan _Asset" Name="mnu_BukuPenjualanAsset"/>
-                <MenuItem Header="Buku _Disposal Asset" Name="mnu_BukuDisposalAsset"/>
+            <!-- 3. Transaksi -->
+            <MenuItem Header="_Transaksi" Name="mnu_Transaksi" Foreground="White">
+                <MenuItem Header="Perekaman Data" Name="mnu_PerekamanData">
+                    <MenuItem Header="Pembelian" Name="mnu_InputPembelian"/>
+                    <MenuItem Header="Penjualan" Name="mnu_InputPenjualan"/>
+                    <MenuItem Header="Retur Pembelian" Name="mnu_InputReturPembelian"/>
+                    <MenuItem Header="Retur Penjualan" Name="mnu_InputReturPenjualan"/>
+                    <MenuItem Header="Pencatatan Transaksi Bank Otomatis" Name="mnu_PencatatanTransaksiBankOtomatis">
+                        <MenuItem Header="Penghasilan Bunga" Name="mnu_PenghasilanBunga"/>
+                        <MenuItem Header="PPh Atas Bunga" Name="mnu_PPhAtasBunga"/>
+                        <MenuItem Header="Biaya Administrasi" Name="mnu_BiayaAdministrasi"/>
+                    </MenuItem>
+                    <MenuItem Header="Perekaman Data Lainnya" Name="mnu_PerekamanDataLainnya"/>
+                </MenuItem>
+                <MenuItem Header="Transaksi IN" Name="mnu_TransaksiIN"/>
+                <MenuItem Header="Transaksi OUT" Name="mnu_TransaksiOUT"/>
+                <MenuItem Header="Adjusment" Name="mnu_Adjusment">
+                    <MenuItem Header="Biaya Penyusutan Asset" Name="mnu_Adjusment_BiayaPenyusutanAsset"/>
+                    <MenuItem Header="Biaya Amortisasi Sewa/Biaya Dibayar di Muka" Name="mnu_Adjusment_BiayaAmortisasiSewaBiayaDibayarDiMuka"/>
+                    <MenuItem Header="Penghapusan Piutang" Name="mnu_Adjusment_PenghapusanPiutang"/>
+                    <MenuItem Header="Selisih Kurs" Name="mnu_Adjusment_SelisihKurs"/>
+                    <MenuItem Header="Selisih Pencatatan" Name="mnu_Adjusment_SelisihPencatatan"/>
+                    <MenuItem Header="Adjusment Lainnya" Name="mnu_AdjusmentLainnya"/>
+                </MenuItem>
+                <MenuItem Header="Pemindahbukuan" Name="mnu_Pemindahbukuan"/>
+            </MenuItem>
+
+            <!-- 4. Pembelian -->
+            <MenuItem Header="Pem_belian" Name="mnu_Pembelian" Foreground="White">
+                <MenuItem Header="PO Pembelian" Name="mnu_PO_Pembelian">
+                    <MenuItem Header="Lokal" Name="mnu_PO_Pembelian_Lokal">
+                        <MenuItem Header="Barang" Name="mnu_POPembelian_Lokal_Barang"/>
+                        <MenuItem Header="Jasa" Name="mnu_POPembelian_Lokal_Jasa"/>
+                        <MenuItem Header="Barang dan Jasa" Name="mnu_POPembelian_Lokal_BarangDanJasa"/>
+                        <MenuItem Header="Jasa Konstruksi" Name="mnu_POPembelian_Lokal_JasaKonstruksi"/>
+                        <MenuItem Header="Semua" Name="mnu_POPembelian_Semua"/>
+                    </MenuItem>
+                    <MenuItem Header="Impor" Name="mnu_PO_Pembelian_Impor">
+                        <MenuItem Header="Barang" Name="mnu_PO_Pembelian_Impor_Barang"/>
+                        <MenuItem Header="Jasa" Name="mnu_PO_Pembelian_Impor_Jasa"/>
+                        <MenuItem Header="Semua" Name="mnu_PO_Pembelian_Impor_Semua"/>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Surat Jalan" Name="mnu_SuratJalanPembelian"/>
+                <MenuItem Header="BAST" Name="mnu_BASTPembelian"/>
+                <MenuItem Header="Invoice Pembelian" Name="mnu_InvoicePembelian">
+                    <MenuItem Header="Dengan PO" Name="mnu_InvoicePembelian_DenganPO">
+                        <MenuItem Header="Lokal" Name="mnu_InvoicePembelian_DenganPO_Lokal">
+                            <MenuItem Header="Rutin" Name="mnu_InvoicePembelian_DenganPO_Lokal_Rutin"/>
+                            <MenuItem Header="Termin" Name="mnu_InvoicePembelian_DenganPO_Lokal_Termin"/>
+                        </MenuItem>
+                        <MenuItem Header="Impor" Name="mnu_InvoicePembelian_DenganPO_Impor">
+                            <MenuItem Header="Rutin" Name="mnu_InvoicePembelian_DenganPO_Impor_Rutin"/>
+                            <MenuItem Header="Termin" Name="mnu_InvoicePembelian_DenganPO_Impor_Termin"/>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Tanpa PO" Name="mnu_InvoicePembelian_TanpaPO">
+                        <MenuItem Header="Lokal" Name="mnu_InvoicePembelian_TanpaPO_Lokal">
+                            <MenuItem Header="Barang" Name="mnu_InvoicePembelian_TanpaPO_Lokal_Barang"/>
+                            <MenuItem Header="Jasa" Name="mnu_InvoicePembelian_TanpaPO_Lokal_Jasa"/>
+                            <MenuItem Header="Barang dan Jasa" Name="mnu_InvoicePembelian_TanpaPO_Lokal_BarangDanJasa"/>
+                            <MenuItem Header="Jasa Konstruksi" Name="mnu_InvoicePembelian_TanpaPO_Lokal_JasaKonstruksi"/>
+                        </MenuItem>
+                        <MenuItem Header="Impor" Name="mnu_InvoicePembelian_TanpaPO_Impor">
+                            <MenuItem Header="Barang" Name="mnu_InvoicePembelian_TanpaPO_Impor_Barang"/>
+                            <MenuItem Header="Jasa" Name="mnu_InvoicePembelian_TanpaPO_Impor_Jasa"/>
+                        </MenuItem>
+                        <MenuItem Header="Lokal MUA" Name="mnu_InvoicePembelian_TanpaPO_LokalMUA"/>
+                    </MenuItem>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Buku Pembelian" Name="mnu_BukuPembelian">
+                    <MenuItem Header="Lokal" Name="mnu_BukuPembelian_Lokal"/>
+                    <MenuItem Header="Impor" Name="mnu_BukuPembelian_Impor"/>
+                </MenuItem>
+                <MenuItem Header="Retur Pembelian" Name="mnu_ReturPembelian"/>
+            </MenuItem>
+
+            <!-- 5. Penjualan -->
+            <MenuItem Header="Pen_jualan" Name="mnu_Penjualan" Foreground="White">
+                <MenuItem Header="PO Penjualan" Name="mnu_BukuPengawasanPOPenjualan">
+                    <MenuItem Header="Lokal" Name="mnu_POPenjualan_Lokal">
+                        <MenuItem Header="Barang" Name="mnu_POPenjualan_Lokal_Barang"/>
+                        <MenuItem Header="Jasa" Name="mnu_POPenjualan_Lokal_Jasa"/>
+                        <MenuItem Header="Barang dan Jasa" Name="mnu_POPenjualan_Lokal_BarangDanJasa"/>
+                        <MenuItem Header="Jasa Konstruksi" Name="mnu_POPenjualan_Lokal_JasaKonstruksi"/>
+                        <MenuItem Header="Semua" Name="mnu_POPenjualan_Lokal_Semua"/>
+                    </MenuItem>
+                    <MenuItem Header="Ekspor" Name="mnu_POPenjualan_Ekspor"/>
+                </MenuItem>
+                <MenuItem Header="Surat Jalan" Name="mnu_SuratJalanPenjualan"/>
+                <MenuItem Header="BAST" Name="mnu_BASTPenjualan"/>
+                <MenuItem Header="Invoice Penjualan" Name="mnu_InvoicePenjualan">
+                    <MenuItem Header="Dengan PO" Name="mnu_InvoicePenjualan_DenganPO">
+                        <MenuItem Header="Lokal" Name="mnu_InvoicePenjualan_DenganPO_Lokal">
+                            <MenuItem Header="Rutin" Name="mnu_InvoicePenjualan_DenganPO_Lokal_Rutin"/>
+                            <MenuItem Header="Termin" Name="mnu_InvoicePenjualan_DenganPO_Lokal_Termin"/>
+                        </MenuItem>
+                        <MenuItem Header="Ekspor" Name="mnu_InvoicePenjualan_DenganPO_Ekspor">
+                            <MenuItem Header="Rutin" Name="mnu_InvoicePenjualan_DenganPO_Ekspor_Rutin"/>
+                            <MenuItem Header="Termin" Name="mnu_InvoicePenjualan_DenganPO_Ekspor_Termin"/>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Tanpa PO" Name="mnu_InvoicePenjualan_TanpaPO">
+                        <MenuItem Header="Lokal" Name="mnu_InvoicePenjualan_TanpaPO_Lokal">
+                            <MenuItem Header="Barang" Name="mnu_InvoicePenjualan_TanpaPO_Lokal_Barang"/>
+                            <MenuItem Header="Jasa" Name="mnu_InvoicePenjualan_TanpaPO_Lokal_Jasa"/>
+                            <MenuItem Header="Barang dan Jasa" Name="mnu_InvoicePenjualan_TanpaPO_Lokal_BarangDanJasa"/>
+                            <MenuItem Header="Jasa Konstruksi" Name="mnu_InvoicePenjualan_TanpaPO_Lokal_JasaKonstruksi"/>
+                        </MenuItem>
+                        <MenuItem Header="Ekspor" Name="mnu_InvoicePenjualan_TanpaPO_Ekspor"/>
+                        <MenuItem Header="Asset" Name="mnu_InvoicePenjualan_TanpaPO_Asset"/>
+                    </MenuItem>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Buku Penjualan" Name="mnu_BukuPenjualan">
+                    <MenuItem Header="Lokal" Name="mnu_BukuPenjualan_Lokal"/>
+                    <MenuItem Header="Ekspor" Name="mnu_BukuPenjualan_Ekspor"/>
+                </MenuItem>
+                <MenuItem Header="Penjualan Eceran" Name="mnu_BukuPenjualanEceran"/>
+                <MenuItem Header="Retur Penjualan" Name="mnu_BukuPengawasanReturPenjualan"/>
+            </MenuItem>
+
+            <!-- 6. Buku Pengawasan -->
+            <MenuItem Header="Buku _Pengawasan" Name="mnu_BukuPengawasan" Foreground="White">
+                <MenuItem Header="Bank &amp; Cash" Name="mnu_BukuBankCash">
+                    <MenuItem Header="Bank" Name="mnu_BukuBank"/>
+                    <MenuItem Header="Kas" Name="mnu_BukuKas"/>
+                    <MenuItem Header="Petty Cash" Name="mnu_BukuPettyCash"/>
+                    <MenuItem Header="Cash Advance" Name="mnu_BukuCashAdvance"/>
+                    <MenuItem Header="Bank Garansi" Name="mnu_BukuBankGaransi"/>
+                </MenuItem>
+                <MenuItem Header="Gaji" Name="mnu_BukuPengawasanGaji_Induk">
+                    <MenuItem Header="Buku Gaji" Name="mnu_BukuPengawasanGaji"/>
+                    <MenuItem Header="Hutang BPJS Kesehatan" Name="mnu_BukuPengawasanHutangBPJSKesehatan"/>
+                    <MenuItem Header="Hutang BPJS Ketenagakerjaan" Name="mnu_BukuPengawasanHutangBPJSKetenagakerjaan"/>
+                    <MenuItem Header="Hutang Koperasi Karyawan" Name="mnu_BukuPengawasanHutangKoperasiKaryawan"/>
+                    <MenuItem Header="Hutang Serikat" Name="mnu_BukuPengawasanHutangSerikat"/>
+                </MenuItem>
+                <MenuItem Header="Hutang" Name="mnu_BukuPengawasanHutang">
+                    <MenuItem Header="Hutang Usaha" Name="mnu_BukuPengawasanHutangUsaha">
+                        <MenuItem Header="Lokal" Name="mnu_BukuPengawasanHutangUsaha_Lokal">
+                            <MenuItem Header="Non Afiliasi" Name="mnu_BukuPengawasanHutangUsaha_NonAfiliasi"/>
+                            <MenuItem Header="Afiliasi" Name="mnu_BukuPengawasanHutangUsaha_Afiliasi"/>
+                            <MenuItem Header="Semua" Name="mnu_BukuPengawasanHutangUsaha_Semua"/>
+                        </MenuItem>
+                        <MenuItem Header="Impor" Name="mnu_BukuPengawasanHutangUsaha_Impor">
+                            <MenuItem Header="USD" Name="mnu_BukuPengawasanHutangUsaha_Impor_USD"/>
+                            <MenuItem Header="AUD" Name="mnu_BukuPengawasanHutangUsaha_Impor_AUD"/>
+                            <MenuItem Header="JPY" Name="mnu_BukuPengawasanHutangUsaha_Impor_JPY"/>
+                            <MenuItem Header="CNY" Name="mnu_BukuPengawasanHutangUsaha_Impor_CNY"/>
+                            <MenuItem Header="EUR" Name="mnu_BukuPengawasanHutangUsaha_Impor_EUR"/>
+                            <MenuItem Header="SGD" Name="mnu_BukuPengawasanHutangUsaha_Impor_SGD"/>
+                            <MenuItem Header="GBP" Name="mnu_BukuPengawasanHutangUsaha_Impor_GBP"/>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Hutang Bank" Name="mnu_BukuPengawasanHutangBank"/>
+                    <MenuItem Header="Hutang Leasing" Name="mnu_BukuPengawasanHutangLeasing"/>
+                    <MenuItem Header="Hutang Pihak Ketiga" Name="mnu_BukuPengawasanHutangPihakKetiga"/>
+                    <MenuItem Header="Hutang Afiliasi" Name="mnu_BukuPengawasanHutangAfiliasi"/>
+                    <MenuItem Header="Hutang Karyawan" Name="mnu_BukuPengawasanHutangKaryawan"/>
+                    <MenuItem Header="Hutang Pemegang Saham" Name="mnu_BukuPengawasanHutangPemegangSaham"/>
+                    <MenuItem Header="Hutang Dividen" Name="mnu_BukuPengawasanHutangDividen"/>
+                    <MenuItem Header="Hutang Lainnya" Name="mnu_BukuPengawasanHutangLainnya"/>
+                </MenuItem>
+                <MenuItem Header="Piutang" Name="mnu_BukuPengawasanPiutang">
+                    <MenuItem Header="Piutang Usaha" Name="mnu_BukuPengawasanPiutangUsaha">
+                        <MenuItem Header="Lokal" Name="mnu_BukuPengawasanPiutangUsaha_Lokal">
+                            <MenuItem Header="Non Afiliasi" Name="mnu_BukuPengawasanPiutangUsaha_NonAfiliasi"/>
+                            <MenuItem Header="Afiliasi" Name="mnu_BukuPengawasanPiutangUsaha_Afiliasi"/>
+                            <MenuItem Header="Semua" Name="mnu_BukuPengawasanPiutangUsaha_Semua"/>
+                        </MenuItem>
+                        <MenuItem Header="Ekspor" Name="mnu_BukuPengawasanPiutangUsaha_Ekspor">
+                            <MenuItem Header="USD" Name="mnu_BukuPengawasanPiutangUsaha_Ekspor_USD"/>
+                            <MenuItem Header="AUD" Name="mnu_BukuPengawasanPiutangUsaha_Ekspor_AUD"/>
+                            <MenuItem Header="JPY" Name="mnu_BukuPengawasanPiutangUsaha_Ekspor_JPY"/>
+                            <MenuItem Header="CNY" Name="mnu_BukuPengawasanPiutangUsaha_Ekspor_CNY"/>
+                            <MenuItem Header="EUR" Name="mnu_BukuPengawasanPiutangUsaha_Ekspor_EUR"/>
+                            <MenuItem Header="SGD" Name="mnu_BukuPengawasanPiutangUsaha_Ekspor_SGD"/>
+                            <MenuItem Header="GBP" Name="mnu_BukuPengawasanPiutangUsaha_Ekspor_GBP"/>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Piutang Pihak Ketiga" Name="mnu_BukuPengawasanPiutangPihakKetiga"/>
+                    <MenuItem Header="Piutang Afiliasi" Name="mnu_BukuPengawasanPiutangAfiliasi"/>
+                    <MenuItem Header="Piutang Karyawan" Name="mnu_BukuPengawasanPiutangKaryawan"/>
+                    <MenuItem Header="Piutang Pemegang Saham" Name="mnu_BukuPengawasanPiutangPemegangSaham"/>
+                    <MenuItem Header="Deposit Operasional" Name="mnu_BukuPengawasanDepositOperasional"/>
+                    <MenuItem Header="Piutang Dividen" Name="mnu_BukuPengawasanPiutangDividen"/>
+                    <MenuItem Header="Piutang Lainnya" Name="mnu_BukuPengawasanPiutangLainnya"/>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Bukti Penerimaan Bank/Cash" Name="mnu_BukuPengawasanBuktiPenerimaanBankCash"/>
+                <MenuItem Header="Bukti Pengeluaran Bank/Cash" Name="mnu_BukuPengawasanBuktiPengeluaranBankCash"/>
+                <MenuItem Header="Pemindabukuan" Name="mnu_BukuPengawasanPemindabukuan"/>
+                <MenuItem Header="Aktiva Lainnya" Name="mnu_BukuPengawasanAktivaLainnya"/>
+            </MenuItem>
+
+            <!-- 7. Pengajuan (BARU) -->
+            <MenuItem Header="Pen_gajuan" Name="mnu_Pengajuan" Foreground="White">
+                <MenuItem Header="Pembayaran Pembelian Tunai" Name="mnu_PengajuanPembayaranPembelianTunai"/>
+                <MenuItem Header="Pembayaran Hutang Usaha" Name="mnu_PengajuanPembayaranHutangUsaha"/>
+                <MenuItem Header="Pembayaran Hutang Pajak" Name="mnu_PengajuanPembayaranHutangPajak"/>
+                <MenuItem Header="Pembayaran Hutang Bank" Name="mnu_PengajuanPembayaranHutangBank"/>
+                <MenuItem Header="Pembayaran Hutang Leasing" Name="mnu_PengajuanPembayaranHutangLeasing"/>
+                <MenuItem Header="Pembayaran Hutang Afiliasi" Name="mnu_PengajuanPembayaranHutangAfiliasi"/>
+                <MenuItem Header="Pembayaran Hutang Lainnya" Name="mnu_PengajuanPembayaranHutangLainnya"/>
+                <MenuItem Header="Pembayaran Kasbon" Name="mnu_PengajuanPembayaranKasbon"/>
+                <MenuItem Header="Pembayaran Investasi" Name="mnu_PengajuanPembayaranInvestasi"/>
+                <MenuItem Header="Pemindahbukuan" Name="mnu_PengajuanPemindahbukuan"/>
+                <MenuItem Header="Pengajuan Lainnya" Name="mnu_PengajuanLainnya"/>
+                <MenuItem Header="Pengajuan PO" Name="mnu_PengajuanPO"/>
+            </MenuItem>
+
+            <!-- 8. Stock Opname (BARU) -->
+            <MenuItem Header="_Stock Opname" Name="mnu_StockOpname" Foreground="White">
+                <MenuItem Header="Bahan Penolong" Name="mnu_StockOpname_BahanPenolong"/>
+                <MenuItem Header="Bahan Baku" Name="mnu_StockOpname_BahanBaku"/>
+                <MenuItem Header="Barang Dalam Proses" Name="mnu_StockOpname_BarangDalamProses">
+                    <MenuItem Header="Cek Fisik" Name="mnu_StockOpname_BarangDalamProses_CekFisik"/>
+                    <MenuItem Header="Tarikan Data" Name="mnu_StockOpname_BarangDalamProses_TarikanData"/>
+                </MenuItem>
+                <MenuItem Header="Barang Jadi" Name="mnu_StockOpname_BarangJadi"/>
+            </MenuItem>
+
+            <!-- 9. Akuntansi -->
+            <MenuItem Header="_Akuntansi" Name="mnu_Akuntansi" Foreground="White">
+                <MenuItem Header="Jurnal" Name="mnu_Jurnal">
+                    <MenuItem Header="Jurnal Umum" Name="mnu_JurnalUmum"/>
+                    <MenuItem Header="Jurnal Adjusment" Name="mnu_JurnalAdjusment">
+                        <MenuItem Header="Penyusutan" Name="mnu_JurnalAdjusment_Penyusutan"/>
+                        <MenuItem Header="Amortisasi" Name="mnu_JurnalAdjusment_Amortisasi"/>
+                        <MenuItem Header="Forex" Name="mnu_JurnalAdjusment_Forex"/>
+                        <MenuItem Header="HPP" Name="mnu_JurnalAdjusment_HPP"/>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="Buku Besar" Name="mnu_BukuBesar"/>
+                <Separator/>
+                <MenuItem Header="Laporan" Name="mnu_Laporan">
+                    <MenuItem Header="Neraca Lajur" Name="mnu_NeracaLajur"/>
+                    <MenuItem Header="Laporan Keuangan" Name="mnu_LaporanKeuangan">
+                        <MenuItem Header="Laporan HPP" Name="mnu_LaporanHPP"/>
+                        <MenuItem Header="Laba Rugi" Name="mnu_LabaRugi">
+                            <MenuItem Header="Bulanan" Name="mnu_LabaRugi_Bulanan"/>
+                            <MenuItem Header="Tahunan" Name="mnu_LabaRugi_Tahunan"/>
+                        </MenuItem>
+                        <MenuItem Header="Neraca" Name="mnu_Neraca">
+                            <MenuItem Header="Bulanan" Name="mnu_Neraca_Bulanan"/>
+                            <MenuItem Header="Tahunan" Name="mnu_Neraca_Tahunan"/>
+                        </MenuItem>
+                    </MenuItem>
+                    <MenuItem Header="Laporan Aktivitas Transaksi" Name="mnu_LaporanAktivitasTransaksi"/>
+                </MenuItem>
+            </MenuItem>
+
+            <!-- 10. Manajemen Asset -->
+            <MenuItem Header="Manajemen _Asset" Name="mnu_ManajemenAsset" Foreground="White">
+                <MenuItem Header="Manajemen Amortisasi" Name="mnu_ManajemenAmortisasi">
+                    <MenuItem Header="Amortisasi Biaya" Name="mnu_ManajemenAmortisasiBiaya"/>
+                    <MenuItem Header="Amortisasi Asset Tidak Berwujud" Name="mnu_ManajemenAmortisasiAssetTidakBerwujud"/>
+                </MenuItem>
+                <MenuItem Header="Manajemen Asset Tetap" Name="mnu_ManajemenAssetTetap">
+                    <MenuItem Header="Daftar Penyusutan Asset Tetap" Name="mnu_DaftarPenyusutanAssetTetap"/>
+                    <MenuItem Header="Buku Penjualan Asset Tetap" Name="mnu_BukuPenjualanAssetTetap"/>
+                    <MenuItem Header="Buku Disposal Asset Tetap" Name="mnu_BukuDisposalAssetTetap"/>
+                </MenuItem>
+            </MenuItem>
+
+            <!-- 11. Pajak (BARU) -->
+            <MenuItem Header="Pa_jak" Name="mnu_Pajak" Foreground="White">
+                <MenuItem Header="Profil Pajak Perusahaan" Name="mnu_ProfilPajakPerusahaan"/>
+                <MenuItem Header="Perhitungan Pajak Bulanan" Name="mnu_PerhitunganPajakPajakBulanan"/>
+                <MenuItem Header="Hutang Pajak" Name="mnu_BukuPengawasanHutangPajak">
+                    <MenuItem Header="PPh Pasal 21" Name="mnu_BukuPengawasanHutangPPhPasal21"/>
+                    <MenuItem Header="PPh Pasal 22" Name="mnu_BukuPengawasanHutangPPhPasal22">
+                        <MenuItem Header="Lokal" Name="mnu_BukuPengawasanHutangPPhPasal22_Lokal"/>
+                        <MenuItem Header="Impor" Name="mnu_BukuPengawasanHutangPPhPasal22_Impor"/>
+                    </MenuItem>
+                    <MenuItem Header="PPh Pasal 23" Name="mnu_BukuPengawasanHutangPPhPasal23"/>
+                    <MenuItem Header="PPh Pasal 4 (2)" Name="mnu_BukuPengawasanHutangPPhPasal42"/>
+                    <MenuItem Header="PPh Pasal 25" Name="mnu_BukuPengawasanHutangPPhPasal25"/>
+                    <MenuItem Header="PPh Pasal 26" Name="mnu_BukuPengawasanHutangPPhPasal26"/>
+                    <MenuItem Header="PPh Pasal 29" Name="mnu_BukuPengawasanHutangPPhPasal29"/>
+                    <MenuItem Header="PPN" Name="mnu_PPN"/>
+                    <MenuItem Header="Ketetapan Pajak" Name="mnu_KetetapanPajak"/>
+                    <MenuItem Header="Pajak Impor" Name="mnu_PajakImpor"/>
+                </MenuItem>
+                <MenuItem Header="Input Dokumen Perpajakan" Name="mnu_InputDokumenPerpajakan">
+                    <MenuItem Header="Input Bukti PBk" Name="mnu_InputBuktiPBk"/>
+                    <MenuItem Header="Input Ketetapan Pajak" Name="mnu_InputKetetapanPajak"/>
+                </MenuItem>
+                <MenuItem Header="Perhitungan Equalisasi Pajak Tahunan" Name="mnu_PerhitunganEqualisasiPajakPajakTahunan"/>
+                <MenuItem Header="Bukti Potong PPh (Paid)" Name="mnu_BukuPengawasanBuktiPotongPPh_Paid"/>
+                <MenuItem Header="Bukti Potong PPh (Prepaid)" Name="mnu_BukuPengawasanBuktiPotongPPh_Prepaid"/>
+            </MenuItem>
+
+            <!-- 12. User (BARU) -->
+            <MenuItem Header="_User" Name="mnu_User" Foreground="White">
+                <MenuItem Header="Switch User" Name="mnu_SwitchUser"/>
+                <MenuItem Header="Ganti Password" Name="mnu_GantiPassword"/>
+                <MenuItem Header="Ganti Peran" Name="mnu_GantiPeran">
+                    <MenuItem Header="Operator" Name="mnu_PeranOperator"/>
+                    <MenuItem Header="Manager" Name="mnu_PeranManager"/>
+                    <MenuItem Header="Direktur" Name="mnu_PeranDirektur"/>
+                    <MenuItem Header="Tim IT" Name="mnu_PeranTimIT"/>
+                    <MenuItem Header="App Developer" Name="mnu_PeranAppDeveloper"/>
+                </MenuItem>
+                <MenuItem Header="Log" Name="mnu_Log"/>
+            </MenuItem>
+
+            <!-- 13. Jendela (BARU) -->
+            <MenuItem Header="_Jendela" Name="mnu_Jendela" Foreground="White">
+                <MenuItem Header="Tutup Semua" Name="mnu_Jendela_TutupSemua"/>
+            </MenuItem>
+
+            <!-- 14. Tentang (BARU) -->
+            <MenuItem Header="Te_ntang" Name="mnu_Tentang" Foreground="White"/>
+
+            <!-- 15. Help (BARU) -->
+            <MenuItem Header="_Help" Name="mnu_Help" Foreground="White"/>
+
+            <!-- 16. Registrasi (BARU) -->
+            <MenuItem Header="_Registrasi" Name="mnu_Registrasi" Foreground="White"/>
+
+            <!-- 17. Notifikasi (BARU) -->
+            <MenuItem Header="N_otifikasi" Name="mnu_Notifikasi" Foreground="White"/>
+
+            <!-- 18. Technical Support (BARU) -->
+            <MenuItem Header="Technical _Support" Name="mnu_TechnicalSupport" Foreground="White">
+                <MenuItem Header="phpMyAdmin" Name="mnu_PhpMyAdmin"/>
+            </MenuItem>
+
+            <!-- 19. App Developer (BARU) -->
+            <MenuItem Header="App _Developer" Name="mnu_AppDeveloper" Foreground="White">
+                <MenuItem Header="Manajemen Aplikasi" Name="mnu_ManajemenAplikasi"/>
+                <MenuItem Header="Manajemen Client" Name="mnu_ManajemenClient"/>
+                <MenuItem Header="Manajemen Kurs" Name="mnu_ManajemenKurs"/>
+                <MenuItem Header="Data Produk" Name="mnu_DataProduk"/>
+                <MenuItem Header="Data Perangkat" Name="mnu_DataPerangkat"/>
+                <MenuItem Header="Data Voucher" Name="mnu_DataVoucher"/>
+                <MenuItem Header="Tab Pokok" Name="mnu_TabPokok"/>
+                <MenuItem Header="Try App" Name="mnu_TryApp"/>
             </MenuItem>
 
         </Menu>
 
         <!-- Status Bar -->
-        <StatusBar DockPanel.Dock="Bottom" Background="#E3F2FD" Height="28">
-            <StatusBarItem>
-                <TextBlock Name="lbl_StatusCompany" Text="Company: -" FontSize="11"/>
+        <StatusBar DockPanel.Dock="Bottom" Style="{StaticResource styleStatusBarAplikasi}">
+            <StatusBarItem Style="{StaticResource styleStatusBarItemInfo}">
+                <TextBlock Name="lbl_StatusCompany" Text="Company: -" Style="{StaticResource styleStatusBarText}"/>
             </StatusBarItem>
-            <Separator/>
-            <StatusBarItem>
-                <TextBlock Name="lbl_StatusTahunBuku" Text="Tahun Buku: -" FontSize="11"/>
+            <Separator Style="{StaticResource styleStatusBarSeparator}"/>
+            <StatusBarItem Style="{StaticResource styleStatusBarItemInfo}">
+                <TextBlock Name="lbl_StatusTahunBuku" Text="Tahun Buku: -" Style="{StaticResource styleStatusBarText}"/>
             </StatusBarItem>
-            <Separator/>
-            <StatusBarItem>
-                <TextBlock Name="lbl_StatusUser" Text="User: -" FontSize="11"/>
+            <Separator Style="{StaticResource styleStatusBarSeparator}"/>
+            <StatusBarItem Style="{StaticResource styleStatusBarItemInfo}">
+                <TextBlock Name="lbl_StatusUser" Text="User: -" Style="{StaticResource styleStatusBarText}"/>
             </StatusBarItem>
-            <StatusBarItem HorizontalAlignment="Right">
-                <TextBlock Text="Mode Modern (WPF Shell)" FontSize="11" Foreground="#1976D2" FontWeight="SemiBold"/>
+            <StatusBarItem Style="{StaticResource styleStatusBarItemRight}">
+                <TextBlock Text="Mode Modern (WPF Shell)" Style="{StaticResource styleStatusBarTextAccent}"/>
             </StatusBarItem>
         </StatusBar>
 
         <!-- Main Content Area with TabControl -->
-        <TabControl Name="tab_MainContent" Background="#FAFAFA">
+        <TabControl Name="tab_MainContent" Style="{StaticResource styleTabControlMainContent}">
 
             <!-- Welcome Tab -->
             <TabItem Header="Beranda" IsSelected="True">
@@ -208,7 +499,7 @@
                         <TextBlock Text="BOOKU"
                                    FontSize="48"
                                    FontWeight="Bold"
-                                   Foreground="#1976D2"
+                                   Foreground="#388E3C"
                                    HorizontalAlignment="Center"/>
                         <TextBlock Text="Sistem Akuntansi Terpadu"
                                    FontSize="18"

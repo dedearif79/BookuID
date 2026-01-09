@@ -22,14 +22,14 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Border BorderBrush="#2196F3" BorderThickness="2" CornerRadius="8" Background="White" Padding="30">
+    <Border BorderBrush="#388E3C" BorderThickness="2" CornerRadius="8" Background="White" Padding="30">
         <StackPanel>
 
             <!-- Header -->
             <TextBlock Text="BOOKU - Pilih Mode Aplikasi"
                        FontSize="18"
                        FontWeight="Bold"
-                       Foreground="#1976D2"
+                       Foreground="#388E3C"
                        HorizontalAlignment="Center"
                        Margin="0 0 0 10"/>
 
@@ -74,8 +74,8 @@
                         Width="180"
                         Height="120"
                         Margin="10"
-                        Background="#E3F2FD"
-                        BorderBrush="#2196F3"
+                        Background="#E8F5E9"
+                        BorderBrush="#388E3C"
                         BorderThickness="2"
                         Cursor="Hand">
                     <StackPanel VerticalAlignment="Center">
@@ -83,16 +83,16 @@
                                    FontFamily="Segoe MDL2 Assets"
                                    FontSize="36"
                                    HorizontalAlignment="Center"
-                                   Foreground="#1976D2"/>
+                                   Foreground="#388E3C"/>
                         <TextBlock Text="Mode Modern"
                                    FontSize="14"
                                    FontWeight="SemiBold"
                                    HorizontalAlignment="Center"
                                    Margin="0 8 0 0"
-                                   Foreground="#1976D2"/>
+                                   Foreground="#388E3C"/>
                         <TextBlock Text="(WPF Shell)"
                                    FontSize="10"
-                                   Foreground="#1976D2"
+                                   Foreground="#388E3C"
                                    HorizontalAlignment="Center"/>
                     </StackPanel>
                 </Button>

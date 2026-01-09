@@ -1,0 +1,169 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ===== WARNA TEMA MENU (BOOKU Green Branding) ===== -->
+    <SolidColorBrush x:Key="MenuBarBackground" Color="#388E3C"/>
+    <SolidColorBrush x:Key="MenuBarForeground" Color="White"/>
+    <SolidColorBrush x:Key="MenuItemHoverBackground" Color="#2E7D32"/>
+    <SolidColorBrush x:Key="MenuItemPressedBackground" Color="#1B5E20"/>
+    <SolidColorBrush x:Key="SubMenuBackground" Color="White"/>
+    <SolidColorBrush x:Key="SubMenuForeground" Color="#333333"/>
+    <SolidColorBrush x:Key="SubMenuHoverBackground" Color="#E8F5E9"/>
+    <SolidColorBrush x:Key="SubMenuBorderBrush" Color="#A5D6A7"/>
+
+    <!-- ===== MENU UTAMA (Menu Bar) ===== -->
+    <Style x:Key="styleMenuDasar" TargetType="Menu">
+        <Setter Property="Background" Value="{StaticResource MenuBarBackground}"/>
+        <Setter Property="Foreground" Value="{StaticResource MenuBarForeground}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <!-- Menu Bar Aplikasi (untuk main window) -->
+    <Style x:Key="styleMenuBarAplikasi" BasedOn="{StaticResource styleMenuDasar}" TargetType="Menu">
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="DockPanel.Dock" Value="Top"/>
+    </Style>
+
+    <!-- ===== MENU ITEM TOP LEVEL (di Menu Bar) ===== -->
+    <Style x:Key="styleMenuItemDasar" TargetType="MenuItem">
+        <Setter Property="Foreground" Value="{StaticResource MenuBarForeground}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="10,8"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+                    <Border x:Name="Border"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Padding="{TemplateBinding Padding}">
+                        <Grid>
+                            <ContentPresenter ContentSource="Header"
+                                              RecognizesAccessKey="True"
+                                              VerticalAlignment="Center"/>
+                            <Popup x:Name="PART_Popup"
+                                   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Placement="Bottom"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   PopupAnimation="Fade">
+                                <Border Background="{StaticResource SubMenuBackground}"
+                                        BorderBrush="{StaticResource SubMenuBorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="0"
+                                        Padding="0">
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource MenuItemHoverBackground}"/>
+                        </Trigger>
+                        <Trigger Property="IsSubmenuOpen" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource MenuItemPressedBackground}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Menu Item Top Level untuk Aplikasi Shell -->
+    <Style x:Key="styleMenuItemTopLevel" BasedOn="{StaticResource styleMenuItemDasar}" TargetType="MenuItem">
+        <Setter Property="Padding" Value="12,8"/>
+    </Style>
+
+    <!-- ===== SUB MENU ITEM (dropdown items) ===== -->
+    <Style x:Key="styleSubMenuItemDasar" TargetType="MenuItem">
+        <Setter Property="Foreground" Value="{StaticResource SubMenuForeground}"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Padding" Value="25,8,20,8"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="MenuItem">
+                    <Border x:Name="Border"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Padding="{TemplateBinding Padding}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Icon"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Arrow"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Icon placeholder -->
+                            <ContentPresenter x:Name="Icon"
+                                              Grid.Column="0"
+                                              ContentSource="Icon"
+                                              VerticalAlignment="Center"
+                                              Width="16"
+                                              Height="16"
+                                              Margin="0,0,8,0"/>
+
+                            <!-- Header text -->
+                            <ContentPresenter Grid.Column="1"
+                                              ContentSource="Header"
+                                              RecognizesAccessKey="True"
+                                              VerticalAlignment="Center"/>
+
+                            <!-- Arrow untuk submenu -->
+                            <Path x:Name="Arrow"
+                                  Grid.Column="2"
+                                  Data="M0,0 L4,4 L0,8 Z"
+                                  Fill="{StaticResource SubMenuForeground}"
+                                  VerticalAlignment="Center"
+                                  Margin="10,0,0,0"
+                                  Visibility="Collapsed"/>
+
+                            <!-- Submenu Popup -->
+                            <Popup x:Name="PART_Popup"
+                                   IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                   Placement="Right"
+                                   HorizontalOffset="0"
+                                   VerticalOffset="-1"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   PopupAnimation="Fade">
+                                <Border Background="{StaticResource SubMenuBackground}"
+                                        BorderBrush="{StaticResource SubMenuBorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="0"
+                                        Padding="0">
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle"/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsHighlighted" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource SubMenuHoverBackground}"/>
+                        </Trigger>
+                        <Trigger Property="HasItems" Value="True">
+                            <Setter TargetName="Arrow" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="Gray"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Sub Menu Item standar -->
+    <Style x:Key="styleSubMenuItem" BasedOn="{StaticResource styleSubMenuItemDasar}" TargetType="MenuItem">
+    </Style>
+
+    <!-- ===== SEPARATOR MENU ===== -->
+    <Style x:Key="styleMenuSeparator" TargetType="Separator">
+        <Setter Property="Height" Value="1"/>
+        <Setter Property="Margin" Value="5,4"/>
+        <Setter Property="Background" Value="#E0E0E0"/>
+    </Style>
+
+</ResourceDictionary>

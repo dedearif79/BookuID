@@ -20,6 +20,9 @@
         <ResourceDictionary Source="StyleDataGrid.xaml" />
         <ResourceDictionary Source="StyleBorder.xaml" />
         <ResourceDictionary Source="StyleLainnya.xaml" />
+        <ResourceDictionary Source="StyleMenu.xaml" />
+        <ResourceDictionary Source="StyleTabControl.xaml" />
+        <ResourceDictionary Source="StyleStatusBar.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

@@ -1,0 +1,17 @@
+
+ ▐▛███▜▌   Claude Code v2.1.2
+▝▜█████▛▘  Opus 4.5 · Claude Max
+  ▘▘ ▝▝    /mnt/d/vb .net project/BookuID
+══════════════════ Conversation compacted · ctrl+o for history ═════════════════
+
+❯ /compact 
+  ⎿  Compacted (ctrl+o to see full summary)
+  ⎿  Read Booku/00_START_UP/wpfWin_BOOKU.xaml.vb (283 lines)
+  ⎿  Referenced file Booku/00_START_UP/frm_BOOKU.vb
+  ⎿  Referenced file Booku/Modul Umum/mdl_VariabelUmum.vb
+  ⎿  Read Booku/00_START_UP/wpfWin_BOOKU.xaml (232 lines)
+  ⎿  Read Booku/00_START_UP/wpfWin_PilihModeAplikasi.xaml.vb (71 lines)
+  ⎿  Plan file referenced (~/.claude/plans/vast-sparking-crab.md)
+
+
+
