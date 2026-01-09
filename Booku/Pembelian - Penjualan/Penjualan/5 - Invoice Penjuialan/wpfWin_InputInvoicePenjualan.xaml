@@ -1,4 +1,4 @@
-﻿<Window x:Class="wpfWin_InputInvoicePenjualan"
+<Window x:Class="wpfWin_InputInvoicePenjualan"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -262,6 +262,7 @@
 
         <!--Tombol CRUD :-->
         <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"     Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogHitung}"    Name="btn_Hitung"/>
             <Button Style="{StaticResource styleButtonFormDialogSimpan}"    Name="btn_Simpan"/>
             <Button Style="{StaticResource styleButtonFormDialogBatal}"     Name="btn_Batal" />
         </StackPanel>

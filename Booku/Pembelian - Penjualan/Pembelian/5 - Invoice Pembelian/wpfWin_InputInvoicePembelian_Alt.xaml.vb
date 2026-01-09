@@ -282,7 +282,6 @@ Public Class wpfWin_InputInvoicePembelian_Alt
 
         If FungsiForm = FungsiForm_LIHAT Then
             JudulForm = "Invoice Pembelian - " & JenisProduk_Induk
-            btn_Simpan.IsEnabled = False
             btn_Batal.Content = teks_Tutup
         End If
 
@@ -462,6 +461,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
                 LogikaTampilanPPN()
                 EksekusiKodeLogikaPPN = False
             End If
+            Perhitungan()
         End If
 
         If MetodePembayaran = MetodePembayaran_Normal Or TahapTermin = TahapTermin_Pelunasan Then
@@ -568,7 +568,8 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         txt_BiayaMaterai.Text = Kosongan
         txt_OngkosKirim.Text = Kosongan
         txt_JumlahHutangUsaha.Text = Kosongan
-        btn_Simpan.IsEnabled = True
+        KetersediaanTombolHitung(False)
+        KetersediaanTombolSimpan(False)
         btn_Batal.Content = teks_Batal
         ReturDPP = 0
         ReturPPN = 0
@@ -1058,7 +1059,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         If Ada = False Then AdaPPh = False
         If Not PerusahaanSebagaiPemotongPPh Then AdaPPh = False
         If InvoiceDenganPO Then
-            Perhitungan()
+            'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
             Return '(Jika Invoice menggunakan PO, maka value-value dibawah sudah diisi dari SJ/BAST)
         End If
         If AdaPPh = True Then
@@ -1068,7 +1069,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             IsiValueComboBypassTerkunci(cmb_KodeSetoran, KodeSetoran_Non)
             txt_TarifPPh.Text = Kosongan
         End If
-        Perhitungan()
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
     End Sub
 
     Sub PenentuanJenisPPhDanKodeSetoranDanTarifPPh()
@@ -1272,7 +1273,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
     Sub Kosongkan_TabelProduk()
         datatabelUtama.Rows.Clear()
         JumlahProduk = 0
-        Perhitungan()
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
         KosongkanKolomPerhitungan()
     End Sub
     Sub Kosongkan_TabelSJBAST()
@@ -1297,7 +1298,25 @@ Public Class wpfWin_InputInvoicePembelian_Alt
 
     Sub KondisiFormSetelahPerubahan()
         If ProsesLoadingForm = True Or ProsesResetForm = True Or ProsesIsiValueForm = True Then Return
+        grd_KolomPerhitungan.Visibility = Visibility.Collapsed
         BersihkanSeleksi_TabelProduk()
+        KetersediaanTombolHitung(True)
+    End Sub
+    Sub KetersediaanTombolHitung(Tersedia As Boolean)
+        btn_Hitung.IsEnabled = False
+        If Tersedia Then
+            If FungsiForm = FungsiForm_TAMBAH Or FungsiForm = FungsiForm_EDIT Then
+                KetersediaanTombolSimpan(False)
+                btn_Hitung.IsEnabled = True
+            End If
+        End If
+    End Sub
+
+    Sub KetersediaanTombolSimpan(Tersedia As Boolean)
+        btn_Simpan.IsEnabled = False
+        If Tersedia Then
+            If FungsiForm = FungsiForm_TAMBAH Or FungsiForm = FungsiForm_EDIT Then btn_Simpan.IsEnabled = True
+        End If
     End Sub
 
     Sub LogikaCOAKredit_UntukNonTunai()
@@ -1535,11 +1554,15 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             JumlahHutangUsaha_Asing = TotalTagihan_Kotor_Asing
         End If
 
-        If PerlakuanPPN = Kosongan And JenisPPN <> JenisPPN_NonPPN Then
+        'If PerlakuanPPN = Kosongan And JenisPPN <> JenisPPN_NonPPN Then
+        If PerlakuanPPN = Kosongan And (JenisPPN <> JenisPPN_NonPPN Or JenisPPN <> Kosongan) Then
+            txt_TarifPPN.Text = Kosongan
             txt_PPN.Text = Kosongan
-            txt_TotalTagihan_Kotor.Text = Kosongan
-            txt_TotalTagihan.Text = Kosongan
-            txt_JumlahHutangUsaha.Text = Kosongan
+            If PembelianLokal Then
+                txt_TotalTagihan_Kotor.Text = TotalTagihan_Kotor
+                txt_TotalTagihan.Text = TotalTagihan
+                txt_JumlahHutangUsaha.Text = JumlahHutangUsaha
+            End If
         Else
             If PembelianLokal Then
                 txt_PPN.Text = PPN
@@ -1600,6 +1623,9 @@ Public Class wpfWin_InputInvoicePembelian_Alt
 
         'EksekusiKodeLogikaPPN = True 'Ini harus paling ujung, dan tidak boleh dihapus.
         EksekusiKodeSubPerhitungan = True
+
+        grd_KolomPerhitungan.Visibility = Visibility.Visible
+
     End Sub
 
     Sub Algoritma_OngkosKirim()
@@ -1834,6 +1860,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         LogikaAsalPembelian()
         If MetodePembayaran = MetodePembayaran_Normal Then VisibilitasTabelSJBAST(True)
         If MetodePembayaran = MetodePembayaran_Termin Then VisibilitasTabelSJBAST(False)
+        KondisiFormSetelahPerubahan()
     End Sub
     Private Sub btn_PilihSupplier_Click(sender As Object, e As RoutedEventArgs) Handles btn_PilihMitra.Click
         If ((MetodePembayaran = MetodePembayaran_Termin Or Not InvoiceDenganPO) And dtp_TanggalInvoice.Text = Kosongan) _
@@ -2030,6 +2057,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
 
     Private Sub txt_NomorPO_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_NomorPO.TextChanged
         NomorPOProduk = txt_NomorPO.Text
+        KondisiFormSetelahPerubahan()
     End Sub
 
     Private Sub btn_PilihPO_Click(sender As Object, e As RoutedEventArgs) Handles btn_PilihPO.Click
@@ -2401,6 +2429,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
                 KontenCombo_JenisPPN()
             End If
         End If
+        KondisiFormSetelahPerubahan()
     End Sub
 
 
@@ -2416,6 +2445,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         KontenCombo_PPNDikreditkan()
         KondisiFormSetelahPerubahan()
         LogikaAdaPPh(True)
+        KondisiFormSetelahPerubahan()
     End Sub
 
 
@@ -2437,16 +2467,19 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             dtp_TanggalSKB.Visibility = Visibility.Collapsed
         End If
         LogikaAdaPPh(True)
-        Perhitungan()
+        KondisiFormSetelahPerubahan()
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
     End Sub
 
     Private Sub cmb_PPNDikreditkan_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cmb_PPNDikreditkan.SelectionChanged
         PPNDikreditkan = cmb_PPNDikreditkan.SelectedValue
         KontenCombo_PilihanPPN()
+        KondisiFormSetelahPerubahan()
     End Sub
 
     Private Sub cmb_PilihanPPN_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cmb_PilihanPPN.SelectionChanged
         PilihanPPN = cmb_PilihanPPN.SelectedValue
+        KondisiFormSetelahPerubahan()
     End Sub
 
 
@@ -2485,10 +2518,12 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             Diskon_Per_Item_Asing.Header = "Diskon" & Enter1Baris & "(" & KodeMataUang & ")"
             Total_Harga_Asing.Header = "Total" & Enter1Baris & "(" & KodeMataUang & ")"
         End If
+        KondisiFormSetelahPerubahan()
     End Sub
 
     Private Sub txt_Kurs_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Kurs.TextChanged
         Kurs = AmbilAngka_Desimal(txt_Kurs.Text)
+        KondisiFormSetelahPerubahan()
     End Sub
 
     Private Sub txt_TotalTagihanIDR_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_TotalTagihanIDR.TextChanged
@@ -2503,10 +2538,12 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             KunciTanggalBulanDanTahun_TidakBolehKurangDari_WPF(dtp_TanggalSerahTerima, dtp_TanggalInvoice.SelectedDate.Value.Day, dtp_TanggalInvoice.SelectedDate.Value.Month, dtp_TanggalInvoice.SelectedDate.Value.Year)
             TanggalSerahTerima = dtp_TanggalSerahTerima.SelectedDate
         End If
+        KondisiFormSetelahPerubahan()
     End Sub
 
     Private Sub cmb_Loko_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cmb_Loko.SelectionChanged
         Loko = cmb_Loko.SelectedValue
+        KondisiFormSetelahPerubahan()
     End Sub
 
     Private Sub rdb_JumlahHariJatuhTempo_Checked(sender As Object, e As RoutedEventArgs) Handles rdb_JumlahHariJatuhTempo.Checked
@@ -2580,7 +2617,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         Reset_grb_Bank()
         KosongkanItemCombo(cmb_SaranaPembayaran)
         LogikaCOAKredit_UntukNonTunai()
-        Perhitungan()
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
         VisibilitasKolomJumlahHutangUsaha(True)
     End Sub
 
@@ -2634,6 +2671,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         '    Reset_grb_Bank()
         'End If
         '(Untuk saat ini, Sarana Pembayaran Bank dinonaktifkan).
+        KondisiFormSetelahPerubahan()
     End Sub
 
 
@@ -2674,14 +2712,17 @@ Public Class wpfWin_InputInvoicePembelian_Alt
     Private Sub cmb_DitanggungOleh_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cmb_DitanggungOleh.SelectionChanged
         DitanggungOleh = cmb_DitanggungOleh.SelectedValue
         If ProsesLoadingForm = False And ProsesIsiValueForm = False Then Perhitungan_ValueBank()
+        KondisiFormSetelahPerubahan()
     End Sub
 
     Private Sub txt_JumlahTransfer_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_JumlahTransfer.TextChanged
         JumlahTransfer = Ambilangka_MultiCurrency(LokasiWP, txt_JumlahTransfer)
+        KondisiFormSetelahPerubahan()
     End Sub
 
     Private Sub txt_TotalBank_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_TotalBank.TextChanged
         TotalBank = Ambilangka_MultiCurrency(LokasiWP, txt_TotalBank)
+        KondisiFormSetelahPerubahan()
     End Sub
 
 
@@ -2708,6 +2749,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         CekNomorSJBAST()
         BersihkanSeleksi_TabelProduk()
         BersihkanSeleksi_TabelSJBAST()
+        KondisiFormSetelahPerubahan()
 
     End Sub
 
@@ -2889,7 +2931,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         '                     "Kode Setoran : " & KodeSetoran)
         txt_TarifPPN.Text = TarifPPNManual
         EksekusiKodeLogikaPPN = False
-        Perhitungan()
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
     End Sub
 
     Private Sub btn_SingkirkanSJBAST_Click(sender As Object, e As RoutedEventArgs) Handles btn_SingkirkanSJBAST.Click
@@ -2920,7 +2962,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             btn_TambahSJBAST.IsEnabled = True
         End If
         CekNomorSJBAST()
-        Perhitungan()
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
         If MetodePembayaran = MetodePembayaran_Termin Then
             PesanPeringatan("Anda mengahapus Surat Jalan/BAST." & Enter2Baris & "Nomor PO dibatalkan.")
             VisibilitasTabelSJBAST(False)
@@ -2928,6 +2970,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             KosongkanKolomPerhitungan()
         End If
         BarisTotalTabel()
+        KondisiFormSetelahPerubahan()
     End Sub
 
     Dim NomorSJBAST_Aktif
@@ -3204,7 +3247,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         win_InputProduk_Nota.TanggalSJBAST = TanggalSJBAST_Aktif
         win_InputProduk_Nota.TanggalDiterimaSJBAST = TanggalDiterimaSJBAST_Aktif
         win_InputProduk_Nota.ShowDialog()
-        Perhitungan()
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
         BersihkanSeleksi_TabelProduk()
     End Sub
 
@@ -3259,7 +3302,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
                 Next
             End If
         End If
-        Perhitungan()
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
         KondisiFormSetelahPerubahan()
     End Sub
 
@@ -3273,7 +3316,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             i += 1
             row("Nomor_Urut") = i
         Next
-        Perhitungan()
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
         KondisiFormSetelahPerubahan()
         BarisTotalTabel()
     End Sub
@@ -3288,7 +3331,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
     Private Sub txt_Diskon_Persen_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Diskon_Persen.TextChanged
         TextBoxFormatPersen_WPF(txt_Diskon_Persen, Diskon_Persen)
         KondisiFormSetelahPerubahan()
-        Perhitungan()
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
     End Sub
     Private Sub txt_Diskon_Persen_PreviewTextInput(sender As Object, e As TextCompositionEventArgs) Handles txt_Diskon_Persen.PreviewTextInput
     End Sub
@@ -3302,7 +3345,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
     Private Sub txt_UangMukaPlusTermin_Persen_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_UangMukaPlusTermin_Persen.TextChanged
         TextBoxFormatPersen_WPF(txt_UangMukaPlusTermin_Persen, UangMukaPlusTermin_Persen)
         KondisiFormSetelahPerubahan()
-        Perhitungan()
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
     End Sub
     Private Sub txt_UangMukaPlusTermin_Persen_PreviewTextInput(sender As Object, e As TextCompositionEventArgs) Handles txt_UangMukaPlusTermin_Persen.PreviewTextInput
     End Sub
@@ -3316,7 +3359,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
     Private Sub txt_Termin_Persen_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Termin_Persen.TextChanged
         TextBoxFormatPersen_WPF(txt_Termin_Persen, Termin_Persen)
         KondisiFormSetelahPerubahan()
-        If BasisPerhitunganTermin = BasisPerhitunganTermin_Prosentase Then Perhitungan()
+        'If BasisPerhitunganTermin = BasisPerhitunganTermin_Prosentase Then Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
     End Sub
     Private Sub txt_Termin_Persen_PreviewTextInput(sender As Object, e As TextCompositionEventArgs) Handles txt_Termin_Persen.PreviewTextInput
     End Sub
@@ -3331,34 +3374,40 @@ Public Class wpfWin_InputInvoicePembelian_Alt
     Private Sub txt_Insurance_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Insurance.TextChanged
         If PembelianImpor Then Insurance = AmbilAngka_Asing(txt_Insurance.Text)
         EksekusiKodeLogikaPPN = False
-        Perhitungan()
+        KetersediaanTombolHitung(True)
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
     End Sub
 
 
     Private Sub txt_Freight_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Freight.TextChanged
         If PembelianImpor Then Freight = AmbilAngka_Asing(txt_Freight.Text)
         EksekusiKodeLogikaPPN = False
-        Perhitungan()
+        KetersediaanTombolHitung(True)
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
     End Sub
 
 
     Private Sub txt_BeaMasuk_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_BeaMasuk.TextChanged
         If PembelianImpor Then BeaMasuk = AmbilAngka_Asing(txt_BeaMasuk.Text)
+        KetersediaanTombolHitung(True)
     End Sub
 
 
     Private Sub txt_KursKMK_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_KursKMK.TextChanged
         If PembelianImpor Then KursKMK = AmbilAngka_Asing(txt_KursKMK.Text)
+        KetersediaanTombolHitung(True)
     End Sub
 
 
     Private Sub txt_DPPBarang_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_DPPBarang.TextChanged
         DPPBarang = AmbilAngka(txt_DPPBarang.Text)
+        KetersediaanTombolHitung(True)
     End Sub
 
 
     Private Sub txt_DPPJasa_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_DPPJasa.TextChanged
         DPPJasa = AmbilAngka(txt_DPPJasa.Text)
+        KetersediaanTombolHitung(True)
     End Sub
 
 
@@ -3366,8 +3415,9 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         DPP = AmbilAngka(txt_DasarPengenaanPajak.Text)
         If AsalPembelian = AsalPembelian_Impor Then
             EksekusiKodeLogikaPPN = False
-            Perhitungan()
+            'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
         End If
+        KetersediaanTombolHitung(True)
     End Sub
     Private Sub txt_DasarPengenaanPajak_11Per12_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_DasarPengenaanPajak_11Per12.TextChanged
     End Sub
@@ -3385,6 +3435,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             Perhitungan_DenganTarifPPN_Manual()
         End If
         TextBoxFormatPersen_WPF(txt_TarifPPN, TarifPPN)
+        KetersediaanTombolHitung(True)
     End Sub
     Private Sub txt_TarifPPN_PreviewTextInput(sender As Object, e As TextCompositionEventArgs) Handles txt_TarifPPN.PreviewTextInput
         EksekusiKodeLogikaPPN = False
@@ -3395,6 +3446,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
     Private Sub txt_TarifPPN_LostFocus(sender As Object, e As RoutedEventArgs) Handles txt_TarifPPN.LostFocus
         EksekusiKodeLogikaPPN = False
         Perhitungan_DenganTarifPPN_Manual()
+        KetersediaanTombolHitung(True)
     End Sub
     Sub Perhitungan_DenganTarifPPN_Manual()
         If TarifPPN = 12 Then
@@ -3406,7 +3458,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         Else
             txt_PPN.Text = Convert.ToInt64(DPP * Persen(TarifPPN))
             txt_DasarPengenaanPajak_11Per12.Text = DPP
-            Perhitungan()
+            'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
         End If
         'EksekusiKodeLogikaPPN = True
     End Sub
@@ -3419,6 +3471,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         txt_TarifPPN_11Per12.Text = Kosongan
         txt_DasarPengenaanPajak_11Per12.Visibility = Visibility.Collapsed
         txt_DasarPengenaanPajak.Visibility = Visibility.Visible
+        KetersediaanTombolHitung(True)
     End Sub
     Private Sub txt_TarifPPN_11Per12_PreviewKeyDown(sender As Object, e As KeyEventArgs) Handles txt_TarifPPN_11Per12.PreviewKeyDown
         EksekusiKodeLogikaPPN = False
@@ -3427,6 +3480,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
 
     Private Sub txt_PPN_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_PPN.TextChanged
         PPN = AmbilAngka(txt_PPN.Text)
+        KetersediaanTombolHitung(True)
     End Sub
 
 
@@ -3443,10 +3497,12 @@ Public Class wpfWin_InputInvoicePembelian_Alt
                 PesanUntukProgrammer("Pilihan ini harus dikonsultasikan dengan pihak terkait.")
             End If
         End If
+        KetersediaanTombolHitung(True)
     End Sub
 
     Private Sub cmb_KodeSetoran_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cmb_KodeSetoran.SelectionChanged
         KodeSetoran = cmb_KodeSetoran.SelectedValue
+        KetersediaanTombolHitung(True)
     End Sub
 
 
@@ -3475,8 +3531,8 @@ Public Class wpfWin_InputInvoicePembelian_Alt
                 End If
             End If
         End If
-        KondisiFormSetelahPerubahan()
-        Perhitungan()
+        KetersediaanTombolHitung(True)
+        'Perhitungan() 'Dinonaktifkan - Konsep On-Demand Calculation (Gunakan tombol Hitung)
     End Sub
     Private Sub txt_TarifPPh_PreviewTextInput(sender As Object, e As TextCompositionEventArgs) Handles txt_TarifPPh.PreviewTextInput
     End Sub
@@ -3496,13 +3552,13 @@ Public Class wpfWin_InputInvoicePembelian_Alt
     Private Sub txt_PPhDitanggung_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_PPhDitanggung.TextChanged
         EksekusiKodeLogikaPPN = False
         PPhDitanggung = AmbilAngka(txt_PPhDitanggung.Text)
-        PerhitunganFinal()
         If PPhDipotong < 0 Then
             txt_PPhDitanggung.Text = 0
             txt_PPhDitanggung.Focus()
             MsgBox("Silakan isi kolom 'PPh Ditanggung' dengan benar!")
             Return
         End If
+        KetersediaanTombolHitung(True)
     End Sub
 
 
@@ -3514,14 +3570,14 @@ Public Class wpfWin_InputInvoicePembelian_Alt
     Private Sub txt_OngkosKirim_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_OngkosKirim.TextChanged
         EksekusiKodeLogikaPPN = False
         If PembelianLokal Then OngkosKirim = AmbilAngka(txt_OngkosKirim.Text)
-        PerhitunganFinal()
+        KetersediaanTombolHitung(True)
     End Sub
 
 
     Private Sub txt_BiayaMaterai_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_BiayaMaterai.TextChanged
         EksekusiKodeLogikaPPN = False
         If PembelianLokal Then BiayaMaterai = AmbilAngka(txt_BiayaMaterai.Text)
-        PerhitunganFinal()
+        KetersediaanTombolHitung(True)
     End Sub
 
 
@@ -3573,6 +3629,13 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         End If
         TabelSusunBarisJurnal_JumlahDebet = 0   'Ini jangan dihapus...! Soalnya ini ByReff dan berfungsi untuk mereset (0) Jumlah Debet pada perhitungan selanjutnya
 
+    End Sub
+
+
+    Private Sub btn_Hitung_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hitung.Click
+        Perhitungan()
+        KetersediaanTombolHitung(False)
+        KetersediaanTombolSimpan(True)
     End Sub
 
 
@@ -4263,9 +4326,9 @@ Public Class wpfWin_InputInvoicePembelian_Alt
                 If PilihanPPN = PilihanPPN_Dikapitalisasi Then TotalHargaPerItem += (TotalHargaPerItem * Persen(TarifPPN))
                 If AsalPembelian = AsalPembelian_Lokal Then
                     If JenisPPN = JenisPPN_Include Then
-                        TabelSusunNBarisJurnal_JumlahDebet += CInt(Math.Round((HitungDPPUntukPPNInclude(TotalHargaPerItem, TarifPPN) + OngkosKirimAsset_PerItem)))
+                        TabelSusunNBarisJurnal_JumlahDebet += CDec(Math.Round((HitungDPPUntukPPNInclude(TotalHargaPerItem, TarifPPN) + OngkosKirimAsset_PerItem)))
                     Else
-                        TabelSusunNBarisJurnal_JumlahDebet += CInt(Math.Round(TotalHargaPerItem + OngkosKirimAsset_PerItem))
+                        TabelSusunNBarisJurnal_JumlahDebet += CDec(Math.Round(TotalHargaPerItem + OngkosKirimAsset_PerItem))
                     End If
                 End If
                 If AsalPembelian = AsalPembelian_Impor Then TabelSusunNBarisJurnal_JumlahDebet += (TotalHargaPerItem_Asing + OngkosKirimAsset_PerItem_Asing)

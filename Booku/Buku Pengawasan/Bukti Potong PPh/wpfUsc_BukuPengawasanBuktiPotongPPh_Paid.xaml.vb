@@ -497,8 +497,6 @@ Public Class wpfUsc_BukuPengawasanBuktiPotongPPh_Paid
     End Sub
 
 
-    Dim win_InputBuktiPotongPPh As wpfWin_InputBuktiPotongPPh
-
     Private Sub btn_Input_Click(sender As Object, e As RoutedEventArgs) Handles btn_Input.Click
 
         win_InputBuktiPotongPPh = New wpfWin_InputBuktiPotongPPh()

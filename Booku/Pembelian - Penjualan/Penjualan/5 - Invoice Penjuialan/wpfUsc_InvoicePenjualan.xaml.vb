@@ -767,14 +767,25 @@ Public Class wpfUsc_InvoicePenjualan
 
 
     Private Sub btn_LihatInvoice_Click(sender As Object, e As RoutedEventArgs) Handles btn_LihatInvoice.Click
-        win_InputInvoicePenjualan_Alt = New wpfWin_InputInvoicePenjualan_Alt
-        win_InputInvoicePenjualan_Alt.ResetForm()
-        win_InputInvoicePenjualan_Alt.FungsiForm = FungsiForm_LIHAT
-        win_InputInvoicePenjualan_Alt.DestinasiPenjualan = DestinasiPenjualan
-        win_InputInvoicePenjualan_Alt.InvoiceDenganPO = InvoiceDenganPO
-        win_InputInvoicePenjualan_Alt.MetodePembayaran = MetodePembayaran
-        IsiValueForm_InvoicePenjualan()
-        win_InputInvoicePenjualan_Alt.ShowDialog()
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then
+            win_InputInvoicePenjualan_Alt = New wpfWin_InputInvoicePenjualan_Alt
+            win_InputInvoicePenjualan_Alt.ResetForm()
+            win_InputInvoicePenjualan_Alt.FungsiForm = FungsiForm_LIHAT
+            win_InputInvoicePenjualan_Alt.DestinasiPenjualan = DestinasiPenjualan
+            win_InputInvoicePenjualan_Alt.InvoiceDenganPO = InvoiceDenganPO
+            win_InputInvoicePenjualan_Alt.MetodePembayaran = MetodePembayaran
+            IsiValueForm_InvoicePenjualan()
+            win_InputInvoicePenjualan_Alt.ShowDialog()
+        Else
+            win_InputInvoicePenjualan = New wpfWin_InputInvoicePenjualan
+            win_InputInvoicePenjualan.ResetForm()
+            win_InputInvoicePenjualan.FungsiForm = FungsiForm_LIHAT
+            win_InputInvoicePenjualan.DestinasiPenjualan = DestinasiPenjualan
+            win_InputInvoicePenjualan.InvoiceDenganPO = InvoiceDenganPO
+            win_InputInvoicePenjualan.MetodePembayaran = MetodePembayaran
+            IsiValueForm_InvoicePenjualan()
+            win_InputInvoicePenjualan.ShowDialog()
+        End If
     End Sub
 
 

@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -623,16 +623,29 @@ Public Class wpfUsc_InvoicePembelian
 
 
     Private Sub btn_Input_Click(sender As Object, e As RoutedEventArgs) Handles btn_Input.Click
-        win_InputInvoicePembelian = New wpfWin_InputInvoicePembelian
-        win_InputInvoicePembelian.ResetForm()
-        win_InputInvoicePembelian.FungsiForm = FungsiForm_TAMBAH
-        win_InputInvoicePembelian.AsalPembelian = AsalPembelian
-        win_InputInvoicePembelian.JenisProduk_Induk = JenisProduk_Menu
-        win_InputInvoicePembelian.InvoiceDenganPO = InvoiceDenganPO
-        If Not Pilih_KodeSupplier = Pilihan_Semua Then win_InputInvoicePembelian.txt_KodeSupplier.Text = Pilih_KodeSupplier
-        win_InputInvoicePembelian.MetodePembayaran = MetodePembayaran
-        win_InputInvoicePembelian.ShowDialog()
-        If win_InputInvoicePembelian.BukaFormPengajuanPengeluaranBankCash Then BukaFormPengajuanPengeluaranBankCash()
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then
+            win_InputInvoicePembelian_Alt = New wpfWin_InputInvoicePembelian_Alt
+            win_InputInvoicePembelian_Alt.ResetForm()
+            win_InputInvoicePembelian_Alt.FungsiForm = FungsiForm_TAMBAH
+            win_InputInvoicePembelian_Alt.AsalPembelian = AsalPembelian
+            win_InputInvoicePembelian_Alt.JenisProduk_Induk = JenisProduk_Menu
+            win_InputInvoicePembelian_Alt.InvoiceDenganPO = InvoiceDenganPO
+            If Not Pilih_KodeSupplier = Pilihan_Semua Then win_InputInvoicePembelian_Alt.txt_KodeSupplier.Text = Pilih_KodeSupplier
+            win_InputInvoicePembelian_Alt.MetodePembayaran = MetodePembayaran
+            win_InputInvoicePembelian_Alt.ShowDialog()
+            If win_InputInvoicePembelian_Alt.BukaFormPengajuanPengeluaranBankCash Then BukaFormPengajuanPengeluaranBankCash()
+        Else
+            win_InputInvoicePembelian = New wpfWin_InputInvoicePembelian
+            win_InputInvoicePembelian.ResetForm()
+            win_InputInvoicePembelian.FungsiForm = FungsiForm_TAMBAH
+            win_InputInvoicePembelian.AsalPembelian = AsalPembelian
+            win_InputInvoicePembelian.JenisProduk_Induk = JenisProduk_Menu
+            win_InputInvoicePembelian.InvoiceDenganPO = InvoiceDenganPO
+            If Not Pilih_KodeSupplier = Pilihan_Semua Then win_InputInvoicePembelian.txt_KodeSupplier.Text = Pilih_KodeSupplier
+            win_InputInvoicePembelian.MetodePembayaran = MetodePembayaran
+            win_InputInvoicePembelian.ShowDialog()
+            If win_InputInvoicePembelian.BukaFormPengajuanPengeluaranBankCash Then BukaFormPengajuanPengeluaranBankCash()
+        End If
     End Sub
 
 
@@ -655,70 +668,130 @@ Public Class wpfUsc_InvoicePembelian
         End If
         AksesDatabase_Transaksi(Tutup)
 
-        win_InputInvoicePembelian = New wpfWin_InputInvoicePembelian
-        win_InputInvoicePembelian.ResetForm()
-        win_InputInvoicePembelian.FungsiForm = FungsiForm_EDIT
-        If BisaDiedit = False Then win_InputInvoicePembelian.FungsiForm = FungsiForm_LIHAT
-        win_InputInvoicePembelian.AsalPembelian = AsalPembelian
-        win_InputInvoicePembelian.InvoiceDenganPO = InvoiceDenganPO
-        win_InputInvoicePembelian.MetodePembayaran = MetodePembayaran
-        IsiValueForm_InvoicePembelian()
-        win_InputInvoicePembelian.ShowDialog()
-        If win_InputInvoicePembelian.BukaFormPengajuanPengeluaranBankCash Then BukaFormPengajuanPengeluaranBankCash()
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then
+            win_InputInvoicePembelian_Alt = New wpfWin_InputInvoicePembelian_Alt
+            win_InputInvoicePembelian_Alt.ResetForm()
+            win_InputInvoicePembelian_Alt.FungsiForm = FungsiForm_EDIT
+            If BisaDiedit = False Then win_InputInvoicePembelian_Alt.FungsiForm = FungsiForm_LIHAT
+            win_InputInvoicePembelian_Alt.AsalPembelian = AsalPembelian
+            win_InputInvoicePembelian_Alt.InvoiceDenganPO = InvoiceDenganPO
+            win_InputInvoicePembelian_Alt.MetodePembayaran = MetodePembayaran
+            IsiValueForm_InvoicePembelian()
+            win_InputInvoicePembelian_Alt.ShowDialog()
+            If win_InputInvoicePembelian_Alt.BukaFormPengajuanPengeluaranBankCash Then BukaFormPengajuanPengeluaranBankCash()
+        Else
+            win_InputInvoicePembelian = New wpfWin_InputInvoicePembelian
+            win_InputInvoicePembelian.ResetForm()
+            win_InputInvoicePembelian.FungsiForm = FungsiForm_EDIT
+            If BisaDiedit = False Then win_InputInvoicePembelian.FungsiForm = FungsiForm_LIHAT
+            win_InputInvoicePembelian.AsalPembelian = AsalPembelian
+            win_InputInvoicePembelian.InvoiceDenganPO = InvoiceDenganPO
+            win_InputInvoicePembelian.MetodePembayaran = MetodePembayaran
+            IsiValueForm_InvoicePembelian()
+            win_InputInvoicePembelian.ShowDialog()
+            If win_InputInvoicePembelian.BukaFormPengajuanPengeluaranBankCash Then BukaFormPengajuanPengeluaranBankCash()
+        End If
+
     End Sub
     Sub BukaFormPengajuanPengeluaranBankCash()
-        Dim win_InputBuktiPengeluaran As New wpfWin_InputBuktiPengeluaran
+        win_InputBuktiPengeluaran = New wpfWin_InputBuktiPengeluaran
         win_InputBuktiPengeluaran.ResetForm()
         ProsesIsiValueForm = True
         win_InputBuktiPengeluaran.FungsiForm = FungsiForm_TAMBAH
-        win_InputBuktiPengeluaran.dtp_TanggalKK.SelectedDate = win_InputInvoicePembelian.dtp_TanggalDiterimaInvoice.SelectedDate
         win_InputBuktiPengeluaran.cmb_Kategori.IsEnabled = False
         win_InputBuktiPengeluaran.cmb_Kategori.SelectedValue = Kategori_PembayaranHutang
         win_InputBuktiPengeluaran.cmb_Peruntukan.IsEnabled = False
-        If MitraSebagaiAfiliasi(win_InputInvoicePembelian.KodeSupplier) = True Then
-            win_InputBuktiPengeluaran.cmb_Peruntukan.SelectedValue = Peruntukan_PembayaranHutangUsaha_Afiliasi
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then
+            win_InputBuktiPengeluaran.dtp_TanggalKK.SelectedDate = win_InputInvoicePembelian_Alt.dtp_TanggalDiterimaInvoice.SelectedDate
+            If MitraSebagaiAfiliasi(win_InputInvoicePembelian_Alt.KodeSupplier) = True Then
+                win_InputBuktiPengeluaran.cmb_Peruntukan.SelectedValue = Peruntukan_PembayaranHutangUsaha_Afiliasi
+            Else
+                win_InputBuktiPengeluaran.cmb_Peruntukan.SelectedValue = Peruntukan_PembayaranHutangUsaha_NonAfiliasi
+            End If
+            win_InputBuktiPengeluaran.NomorBP = KonversiNomorPembelianKeNomorBPHU(KonversiNomorInvoiceKeNomorPembelian(win_InputInvoicePembelian_Alt.NomorInvoice))
+            win_InputBuktiPengeluaran.txt_KodeLawanTransaksi.Text = win_InputInvoicePembelian_Alt.KodeSupplier
+            IsiValueComboBypassTerkunci(win_InputBuktiPengeluaran.cmb_SaranaPembayaran, win_InputInvoicePembelian_Alt.SaranaPembayaran)
         Else
-            win_InputBuktiPengeluaran.cmb_Peruntukan.SelectedValue = Peruntukan_PembayaranHutangUsaha_NonAfiliasi
+            win_InputBuktiPengeluaran.dtp_TanggalKK.SelectedDate = win_InputInvoicePembelian.dtp_TanggalDiterimaInvoice.SelectedDate
+            If MitraSebagaiAfiliasi(win_InputInvoicePembelian.KodeSupplier) = True Then
+                win_InputBuktiPengeluaran.cmb_Peruntukan.SelectedValue = Peruntukan_PembayaranHutangUsaha_Afiliasi
+            Else
+                win_InputBuktiPengeluaran.cmb_Peruntukan.SelectedValue = Peruntukan_PembayaranHutangUsaha_NonAfiliasi
+            End If
+            win_InputBuktiPengeluaran.NomorBP = KonversiNomorPembelianKeNomorBPHU(KonversiNomorInvoiceKeNomorPembelian(win_InputInvoicePembelian.NomorInvoice))
+            win_InputBuktiPengeluaran.txt_KodeLawanTransaksi.Text = win_InputInvoicePembelian.KodeSupplier
+            IsiValueComboBypassTerkunci(win_InputBuktiPengeluaran.cmb_SaranaPembayaran, win_InputInvoicePembelian.SaranaPembayaran)
         End If
-        win_InputBuktiPengeluaran.NomorBP = KonversiNomorPembelianKeNomorBPHU(KonversiNomorInvoiceKeNomorPembelian(win_InputInvoicePembelian.NomorInvoice))
-        win_InputBuktiPengeluaran.txt_KodeLawanTransaksi.Text = win_InputInvoicePembelian.KodeSupplier
-        IsiValueComboBypassTerkunci(win_InputBuktiPengeluaran.cmb_SaranaPembayaran, win_InputInvoicePembelian.SaranaPembayaran)
         ProsesIsiValueForm = False
         win_InputBuktiPengeluaran.ShowDialog()
     End Sub
     Sub IsiValueForm_InvoicePembelian()
         ProsesIsiValueForm = True
-        win_InputInvoicePembelian.AngkaInvoice = AngkaInvoice_Terseleksi
-        win_InputInvoicePembelian.JenisProduk_Induk = JenisProduk_Terseleksi
-        win_InputInvoicePembelian.txt_NomorInvoice.Text = NomorInvoice_Terseleksi
-        win_InputInvoicePembelian.NomorPembelian = NomorPembelian_Terseleksi
-        If AmbilTeksKanan(JatuhTempo_Terseleksi, 2) = "ri" Then
-            win_InputInvoicePembelian.txt_JumlahHariJatuhTempo.Text = AmbilAngka(JatuhTempo_Terseleksi)
-            win_InputInvoicePembelian.dtp_TanggalJatuhTempo.Text = Kosongan
-            win_InputInvoicePembelian.rdb_JumlahHariJatuhTempo.IsChecked = True
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then
+            win_InputInvoicePembelian_Alt.AngkaInvoice = AngkaInvoice_Terseleksi
+            win_InputInvoicePembelian_Alt.JenisProduk_Induk = JenisProduk_Terseleksi
+            win_InputInvoicePembelian_Alt.txt_NomorInvoice.Text = NomorInvoice_Terseleksi
+            win_InputInvoicePembelian_Alt.NomorPembelian = NomorPembelian_Terseleksi
+            If AmbilTeksKanan(JatuhTempo_Terseleksi, 2) = "ri" Then
+                win_InputInvoicePembelian_Alt.txt_JumlahHariJatuhTempo.Text = AmbilAngka(JatuhTempo_Terseleksi)
+                win_InputInvoicePembelian_Alt.dtp_TanggalJatuhTempo.Text = Kosongan
+                win_InputInvoicePembelian_Alt.rdb_JumlahHariJatuhTempo.IsChecked = True
+            Else
+                win_InputInvoicePembelian_Alt.txt_JumlahHariJatuhTempo.Text = Kosongan
+                win_InputInvoicePembelian_Alt.dtp_TanggalJatuhTempo.SelectedDate = TanggalFormatWPF(JatuhTempo_Terseleksi)
+                win_InputInvoicePembelian_Alt.rdb_TanggalJatuhTempo.IsChecked = True
+            End If
+            win_InputInvoicePembelian_Alt.cmb_JenisInvoice.SelectedValue = JenisInvoice_Terseleksi
+            win_InputInvoicePembelian_Alt.txt_KodeSupplier.Text = KodeSupplier_Terseleksi
+            win_InputInvoicePembelian_Alt.txt_NamaSupplier.Text = NamaSupplier_Terseleksi
+            win_InputInvoicePembelian_Alt.txt_JumlahNota.Text = JumlahHarga_Terseleksi
+            win_InputInvoicePembelian_Alt.ReturDPP = ReturDPP_Terseleksi
+            win_InputInvoicePembelian_Alt.ReturPPN = ReturPPN_Terseleksi
+            IsiValueElemenRichTextBox(win_InputInvoicePembelian_Alt.txt_Catatan, Catatan_Terseleksi)
+            win_InputInvoicePembelian_Alt.NomorJV = NomorJV_Terseleksi
+            win_InputInvoicePembelian_Alt.NomorFakturPajak = NomorFakturPajak_Terseleksi
+            win_InputInvoicePembelian_Alt.NP = NP_Terseleksi
+            If NP_Terseleksi = "N" Then
+                win_InputInvoicePembelian_Alt.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalInvoice_Terseleksi)
+            Else
+                win_InputInvoicePembelian_Alt.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalPembetulan_Terseleksi)
+                win_InputInvoicePembelian_Alt.TanggalInvoice = TanggalInvoice_Terseleksi
+            End If
+            win_InputInvoicePembelian_Alt.IsiTabelProduk()
+            win_InputInvoicePembelian_Alt.IsiTabelSJBAST()
         Else
-            win_InputInvoicePembelian.txt_JumlahHariJatuhTempo.Text = Kosongan
-            win_InputInvoicePembelian.dtp_TanggalJatuhTempo.SelectedDate = TanggalFormatWPF(JatuhTempo_Terseleksi)
-            win_InputInvoicePembelian.rdb_TanggalJatuhTempo.IsChecked = True
+            win_InputInvoicePembelian.AngkaInvoice = AngkaInvoice_Terseleksi
+            win_InputInvoicePembelian.JenisProduk_Induk = JenisProduk_Terseleksi
+            win_InputInvoicePembelian.txt_NomorInvoice.Text = NomorInvoice_Terseleksi
+            win_InputInvoicePembelian.NomorPembelian = NomorPembelian_Terseleksi
+            If AmbilTeksKanan(JatuhTempo_Terseleksi, 2) = "ri" Then
+                win_InputInvoicePembelian.txt_JumlahHariJatuhTempo.Text = AmbilAngka(JatuhTempo_Terseleksi)
+                win_InputInvoicePembelian.dtp_TanggalJatuhTempo.Text = Kosongan
+                win_InputInvoicePembelian.rdb_JumlahHariJatuhTempo.IsChecked = True
+            Else
+                win_InputInvoicePembelian.txt_JumlahHariJatuhTempo.Text = Kosongan
+                win_InputInvoicePembelian.dtp_TanggalJatuhTempo.SelectedDate = TanggalFormatWPF(JatuhTempo_Terseleksi)
+                win_InputInvoicePembelian.rdb_TanggalJatuhTempo.IsChecked = True
+            End If
+            win_InputInvoicePembelian.cmb_JenisInvoice.SelectedValue = JenisInvoice_Terseleksi
+            win_InputInvoicePembelian.txt_KodeSupplier.Text = KodeSupplier_Terseleksi
+            win_InputInvoicePembelian.txt_NamaSupplier.Text = NamaSupplier_Terseleksi
+            win_InputInvoicePembelian.txt_JumlahNota.Text = JumlahHarga_Terseleksi
+            win_InputInvoicePembelian.ReturDPP = ReturDPP_Terseleksi
+            win_InputInvoicePembelian.ReturPPN = ReturPPN_Terseleksi
+            IsiValueElemenRichTextBox(win_InputInvoicePembelian.txt_Catatan, Catatan_Terseleksi)
+            win_InputInvoicePembelian.NomorJV = NomorJV_Terseleksi
+            win_InputInvoicePembelian.NomorFakturPajak = NomorFakturPajak_Terseleksi
+            win_InputInvoicePembelian.NP = NP_Terseleksi
+            If NP_Terseleksi = "N" Then
+                win_InputInvoicePembelian.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalInvoice_Terseleksi)
+            Else
+                win_InputInvoicePembelian.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalPembetulan_Terseleksi)
+                win_InputInvoicePembelian.TanggalInvoice = TanggalInvoice_Terseleksi
+            End If
+            win_InputInvoicePembelian.IsiTabelProduk()
+            win_InputInvoicePembelian.IsiTabelSJBAST()
         End If
-        win_InputInvoicePembelian.cmb_JenisInvoice.SelectedValue = JenisInvoice_Terseleksi
-        win_InputInvoicePembelian.txt_KodeSupplier.Text = KodeSupplier_Terseleksi
-        win_InputInvoicePembelian.txt_NamaSupplier.Text = NamaSupplier_Terseleksi
-        win_InputInvoicePembelian.txt_JumlahNota.Text = JumlahHarga_Terseleksi
-        win_InputInvoicePembelian.ReturDPP = ReturDPP_Terseleksi
-        win_InputInvoicePembelian.ReturPPN = ReturPPN_Terseleksi
-        IsiValueElemenRichTextBox(win_InputInvoicePembelian.txt_Catatan, Catatan_Terseleksi)
-        win_InputInvoicePembelian.NomorJV = NomorJV_Terseleksi
-        win_InputInvoicePembelian.NomorFakturPajak = NomorFakturPajak_Terseleksi
-        win_InputInvoicePembelian.NP = NP_Terseleksi
-        If NP_Terseleksi = "N" Then
-            win_InputInvoicePembelian.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalInvoice_Terseleksi)
-        Else
-            win_InputInvoicePembelian.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalPembetulan_Terseleksi)
-            win_InputInvoicePembelian.TanggalInvoice = TanggalInvoice_Terseleksi
-        End If
-        win_InputInvoicePembelian.IsiTabelProduk()
-        win_InputInvoicePembelian.IsiTabelSJBAST()
         ProsesIsiValueForm = False
     End Sub
 
@@ -766,14 +839,25 @@ Public Class wpfUsc_InvoicePembelian
 
 
     Private Sub btn_LihatInvoice_Click(sender As Object, e As RoutedEventArgs) Handles btn_LihatInvoice.Click
-        win_InputInvoicePembelian = New wpfWin_InputInvoicePembelian
-        win_InputInvoicePembelian.ResetForm()
-        win_InputInvoicePembelian.FungsiForm = FungsiForm_LIHAT
-        win_InputInvoicePembelian.AsalPembelian = AsalPembelian
-        win_InputInvoicePembelian.InvoiceDenganPO = InvoiceDenganPO
-        win_InputInvoicePembelian.MetodePembayaran = MetodePembayaran
-        IsiValueForm_InvoicePembelian()
-        win_InputInvoicePembelian.ShowDialog()
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then
+            win_InputInvoicePembelian_Alt = New wpfWin_InputInvoicePembelian_Alt
+            win_InputInvoicePembelian_Alt.ResetForm()
+            win_InputInvoicePembelian_Alt.FungsiForm = FungsiForm_LIHAT
+            win_InputInvoicePembelian_Alt.AsalPembelian = AsalPembelian
+            win_InputInvoicePembelian_Alt.InvoiceDenganPO = InvoiceDenganPO
+            win_InputInvoicePembelian_Alt.MetodePembayaran = MetodePembayaran
+            IsiValueForm_InvoicePembelian()
+            win_InputInvoicePembelian_Alt.ShowDialog()
+        Else
+            win_InputInvoicePembelian = New wpfWin_InputInvoicePembelian
+            win_InputInvoicePembelian.ResetForm()
+            win_InputInvoicePembelian.FungsiForm = FungsiForm_LIHAT
+            win_InputInvoicePembelian.AsalPembelian = AsalPembelian
+            win_InputInvoicePembelian.InvoiceDenganPO = InvoiceDenganPO
+            win_InputInvoicePembelian.MetodePembayaran = MetodePembayaran
+            IsiValueForm_InvoicePembelian()
+            win_InputInvoicePembelian.ShowDialog()
+        End If
     End Sub
 
 

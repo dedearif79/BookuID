@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -646,7 +646,7 @@ Public Class wpfUsc_BukuPengawasanHutangPemegangSaham
             Return
         End If
 
-        Dim win_InputBuktiPengeluaran As New wpfWin_InputBuktiPengeluaran
+        win_InputBuktiPengeluaran = New wpfWin_InputBuktiPengeluaran
         win_InputBuktiPengeluaran.ResetForm()
         ProsesIsiValueForm = True
         win_InputBuktiPengeluaran.FungsiForm = FungsiForm_TAMBAH

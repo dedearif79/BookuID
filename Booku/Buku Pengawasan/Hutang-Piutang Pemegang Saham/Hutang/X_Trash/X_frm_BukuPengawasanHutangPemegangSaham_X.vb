@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 
 Public Class X_frm_BukuPengawasanHutangPemegangSaham_X
@@ -147,7 +147,7 @@ Public Class X_frm_BukuPengawasanHutangPemegangSaham_X
 
     Private Sub btn_Tambah_Click(sender As Object, e As EventArgs) Handles btn_Tambah.Click
 
-        Dim win_InputHutangPiutangPemegangSaham As New wpfWin_InputHutangPiutangPemegangSaham
+        win_InputHutangPiutangPemegangSaham = New wpfWin_InputHutangPiutangPemegangSaham
         win_InputHutangPiutangPemegangSaham.ResetForm()
         win_InputHutangPiutangPemegangSaham.HutangPiutang = hp_Hutang
         win_InputHutangPiutangPemegangSaham.FungsiForm = FungsiForm_TAMBAH

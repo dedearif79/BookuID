@@ -85,6 +85,7 @@ Module wpfMdl_ClassWindow
     Public win_InputSuratJalanPembelian As New wpfWin_InputSuratJalanPembelian
     Public win_InputBASTPembelian As New wpfWin_InputBASTPembelian
     Public win_InputInvoicePembelian As New wpfWin_InputInvoicePembelian
+    Public win_InputInvoicePembelian_Alt As New wpfWin_InputInvoicePembelian_Alt
     Public win_InputReturPembelian As New wpfWin_InputReturPembelian
 
     '═══════════════════════════════════════════════════════════════════════════
@@ -153,6 +154,7 @@ Module wpfMdl_ClassWindow
     Public win_InputKetetapanPajak As New wpfWin_InputKetetapanPajak
     Public win_InputLaporPajak As New wpfWin_InputLaporPajak
     Public win_BayarPajakDengan As New wpfWin_BayarPajakDengan
+    Public win_InputBuktiPotongPPh As wpfWin_InputBuktiPotongPPh
 
     '═══════════════════════════════════════════════════════════════════════════
     ' BUKU PENGAWASAN - GAJI
