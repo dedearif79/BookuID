@@ -1,0 +1,231 @@
+<Window x:Class="wpfWin_BOOKU"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+        xmlns:wfi="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="BOOKU - Sistem Akuntansi Terpadu (Mode Modern)"
+        Height="768"
+        Width="1200"
+        MinHeight="600"
+        MinWidth="800"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized"
+        >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <DockPanel LastChildFill="True">
+
+        <!-- Menu Bar -->
+        <Menu DockPanel.Dock="Top" Background="#1976D2" Foreground="White" Padding="5">
+
+            <!-- File -->
+            <MenuItem Header="_File" Foreground="White">
+                <MenuItem Header="_Pengaturan" Name="mnu_Pengaturan"/>
+                <Separator/>
+                <MenuItem Header="_Database">
+                    <MenuItem Header="_Cadangkan" Name="mnu_Database_Cadangkan"/>
+                    <MenuItem Header="_Pulihkan" Name="mnu_Database_Pulihkan"/>
+                    <MenuItem Header="_Kloning" Name="mnu_Database_Kloning"/>
+                </MenuItem>
+                <Separator/>
+                <MenuItem Header="Kembali ke Mode _Classic" Name="mnu_KembaliKeClassic"/>
+                <Separator/>
+                <MenuItem Header="_Keluar" Name="mnu_Keluar"/>
+            </MenuItem>
+
+            <!-- Data -->
+            <MenuItem Header="_Data" Foreground="White">
+                <MenuItem Header="Company _Profile" Name="mnu_CompanyProfile"/>
+                <Separator/>
+                <MenuItem Header="Data _User" Name="mnu_DataUser"/>
+                <MenuItem Header="Data _COA" Name="mnu_DataCOA"/>
+                <MenuItem Header="Data _Mitra" Name="mnu_DataMitra"/>
+                <MenuItem Header="Data _Lawan Transaksi" Name="mnu_DataLawanTransaksi"/>
+                <MenuItem Header="Data _Karyawan" Name="mnu_DataKaryawan"/>
+                <MenuItem Header="Data _Pemegang Saham" Name="mnu_DataPemegangSaham"/>
+                <MenuItem Header="Data Pro_ject" Name="mnu_DataProject"/>
+                <Separator/>
+                <MenuItem Header="_Tahun Buku">
+                    <MenuItem Header="_Buat Buku Baru" Name="mnu_BuatBukuBaru"/>
+                    <MenuItem Header="_Ganti Tahun Buku" Name="mnu_GantiTahunBuku"/>
+                    <MenuItem Header="_Tutup Buku" Name="mnu_TutupBuku"/>
+                </MenuItem>
+                <MenuItem Header="_Kurs" Name="mnu_Kurs"/>
+            </MenuItem>
+
+            <!-- Transaksi -->
+            <MenuItem Header="_Transaksi" Foreground="White">
+                <MenuItem Header="_Perekaman Data">
+                    <MenuItem Header="Input _Pembelian" Name="mnu_InputPembelian"/>
+                    <MenuItem Header="Input Pen_jualan" Name="mnu_InputPenjualan"/>
+                    <MenuItem Header="Input _Retur Pembelian" Name="mnu_InputReturPembelian"/>
+                    <MenuItem Header="Input Retur Penjua_lan" Name="mnu_InputReturPenjualan"/>
+                </MenuItem>
+                <MenuItem Header="_Adjusment">
+                    <MenuItem Header="Biaya _Penyusutan Asset" Name="mnu_Adjusment_Penyusutan"/>
+                    <MenuItem Header="Biaya _Amortisasi" Name="mnu_Adjusment_Amortisasi"/>
+                    <MenuItem Header="Selisih _Kurs" Name="mnu_Adjusment_SelisihKurs"/>
+                    <MenuItem Header="_HPP" Name="mnu_Adjusment_HPP"/>
+                </MenuItem>
+                <MenuItem Header="Pe_mindahbukuan" Name="mnu_Pemindahbukuan"/>
+            </MenuItem>
+
+            <!-- Pembelian -->
+            <MenuItem Header="Pem_belian" Foreground="White">
+                <MenuItem Header="_PO Pembelian">
+                    <MenuItem Header="_Lokal">
+                        <MenuItem Header="_Barang" Name="mnu_POPembelian_Lokal_Barang"/>
+                        <MenuItem Header="_Jasa" Name="mnu_POPembelian_Lokal_Jasa"/>
+                        <MenuItem Header="Barang &amp; _Jasa" Name="mnu_POPembelian_Lokal_BarangDanJasa"/>
+                        <MenuItem Header="Jasa _Konstruksi" Name="mnu_POPembelian_Lokal_JasaKonstruksi"/>
+                        <MenuItem Header="_Semua" Name="mnu_POPembelian_Semua"/>
+                    </MenuItem>
+                    <MenuItem Header="_Impor">
+                        <MenuItem Header="_Barang" Name="mnu_POPembelian_Impor_Barang"/>
+                        <MenuItem Header="_Jasa" Name="mnu_POPembelian_Impor_Jasa"/>
+                        <MenuItem Header="_Semua" Name="mnu_POPembelian_Impor_Semua"/>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem Header="_Surat Jalan" Name="mnu_SuratJalanPembelian"/>
+                <MenuItem Header="_BAST" Name="mnu_BASTPembelian"/>
+                <MenuItem Header="_Invoice Pembelian" Name="mnu_InvoicePembelian"/>
+                <Separator/>
+                <MenuItem Header="Buku _Pembelian">
+                    <MenuItem Header="_Lokal" Name="mnu_BukuPembelian_Lokal"/>
+                    <MenuItem Header="_Impor" Name="mnu_BukuPembelian_Impor"/>
+                </MenuItem>
+                <MenuItem Header="_Retur Pembelian" Name="mnu_ReturPembelian"/>
+            </MenuItem>
+
+            <!-- Penjualan -->
+            <MenuItem Header="Pen_jualan" Foreground="White">
+                <MenuItem Header="_PO Penjualan">
+                    <MenuItem Header="_Lokal">
+                        <MenuItem Header="_Barang" Name="mnu_POPenjualan_Lokal_Barang"/>
+                        <MenuItem Header="_Jasa" Name="mnu_POPenjualan_Lokal_Jasa"/>
+                        <MenuItem Header="Barang &amp; _Jasa" Name="mnu_POPenjualan_Lokal_BarangDanJasa"/>
+                        <MenuItem Header="Jasa _Konstruksi" Name="mnu_POPenjualan_Lokal_JasaKonstruksi"/>
+                        <MenuItem Header="_Semua" Name="mnu_POPenjualan_Lokal_Semua"/>
+                    </MenuItem>
+                    <MenuItem Header="_Ekspor" Name="mnu_POPenjualan_Ekspor"/>
+                </MenuItem>
+                <MenuItem Header="_Surat Jalan" Name="mnu_SuratJalanPenjualan"/>
+                <MenuItem Header="_BAST" Name="mnu_BASTPenjualan"/>
+                <MenuItem Header="_Invoice Penjualan" Name="mnu_InvoicePenjualan"/>
+                <Separator/>
+                <MenuItem Header="Buku _Penjualan">
+                    <MenuItem Header="_Lokal" Name="mnu_BukuPenjualan_Lokal"/>
+                    <MenuItem Header="_Ekspor" Name="mnu_BukuPenjualan_Ekspor"/>
+                </MenuItem>
+                <MenuItem Header="Penjualan _Eceran" Name="mnu_BukuPenjualanEceran"/>
+                <MenuItem Header="_Retur Penjualan" Name="mnu_ReturPenjualan"/>
+            </MenuItem>
+
+            <!-- Buku Pengawasan -->
+            <MenuItem Header="Buku _Pengawasan" Foreground="White">
+                <MenuItem Header="Bank &amp; _Cash">
+                    <MenuItem Header="_Bank" Name="mnu_BukuBank"/>
+                    <MenuItem Header="_Kas" Name="mnu_BukuKas"/>
+                    <MenuItem Header="_Petty Cash" Name="mnu_BukuPettyCash"/>
+                    <MenuItem Header="Cash _Advance" Name="mnu_BukuCashAdvance"/>
+                    <MenuItem Header="Bank _Garansi" Name="mnu_BukuBankGaransi"/>
+                </MenuItem>
+                <MenuItem Header="_Gaji" Name="mnu_BukuPengawasanGaji"/>
+                <MenuItem Header="_Hutang" Name="mnu_BukuPengawasanHutang"/>
+                <MenuItem Header="_Piutang" Name="mnu_BukuPengawasanPiutang"/>
+                <MenuItem Header="_Pajak" Name="mnu_BukuPengawasanPajak"/>
+            </MenuItem>
+
+            <!-- Akuntansi -->
+            <MenuItem Header="_Akuntansi" Foreground="White">
+                <MenuItem Header="_Jurnal">
+                    <MenuItem Header="Jurnal _Umum" Name="mnu_JurnalUmum"/>
+                    <MenuItem Header="Jurnal _Adjusment" Name="mnu_JurnalAdjusment"/>
+                </MenuItem>
+                <MenuItem Header="_Buku Besar" Name="mnu_BukuBesar"/>
+                <Separator/>
+                <MenuItem Header="_Laporan">
+                    <MenuItem Header="_Trial Balance" Name="mnu_TrialBalance"/>
+                    <MenuItem Header="_Neraca Lajur" Name="mnu_NeracaLajur"/>
+                    <MenuItem Header="_HPP" Name="mnu_LaporanHPP"/>
+                    <MenuItem Header="_Laba Rugi">
+                        <MenuItem Header="_Bulanan" Name="mnu_LabaRugi_Bulanan"/>
+                        <MenuItem Header="_Tahunan" Name="mnu_LabaRugi_Tahunan"/>
+                    </MenuItem>
+                    <MenuItem Header="_Neraca">
+                        <MenuItem Header="_Bulanan" Name="mnu_Neraca_Bulanan"/>
+                        <MenuItem Header="_Tahunan" Name="mnu_Neraca_Tahunan"/>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
+
+            <!-- Manajemen Asset -->
+            <MenuItem Header="_Asset" Foreground="White">
+                <MenuItem Header="Daftar _Penyusutan Asset Tetap" Name="mnu_DaftarPenyusutanAssetTetap"/>
+                <MenuItem Header="Daftar _Amortisasi Biaya" Name="mnu_DaftarAmortisasiBiaya"/>
+                <MenuItem Header="Buku Penjualan _Asset" Name="mnu_BukuPenjualanAsset"/>
+                <MenuItem Header="Buku _Disposal Asset" Name="mnu_BukuDisposalAsset"/>
+            </MenuItem>
+
+        </Menu>
+
+        <!-- Status Bar -->
+        <StatusBar DockPanel.Dock="Bottom" Background="#E3F2FD" Height="28">
+            <StatusBarItem>
+                <TextBlock Name="lbl_StatusCompany" Text="Company: -" FontSize="11"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock Name="lbl_StatusTahunBuku" Text="Tahun Buku: -" FontSize="11"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem>
+                <TextBlock Name="lbl_StatusUser" Text="User: -" FontSize="11"/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock Text="Mode Modern (WPF Shell)" FontSize="11" Foreground="#1976D2" FontWeight="SemiBold"/>
+            </StatusBarItem>
+        </StatusBar>
+
+        <!-- Main Content Area with TabControl -->
+        <TabControl Name="tab_MainContent" Background="#FAFAFA">
+
+            <!-- Welcome Tab -->
+            <TabItem Header="Beranda" IsSelected="True">
+                <Grid Background="White">
+                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <TextBlock Text="BOOKU"
+                                   FontSize="48"
+                                   FontWeight="Bold"
+                                   Foreground="#1976D2"
+                                   HorizontalAlignment="Center"/>
+                        <TextBlock Text="Sistem Akuntansi Terpadu"
+                                   FontSize="18"
+                                   Foreground="#757575"
+                                   HorizontalAlignment="Center"
+                                   Margin="0 10 0 0"/>
+                        <TextBlock Text="Mode Modern (WPF Shell) - Versi Development"
+                                   FontSize="12"
+                                   Foreground="#9E9E9E"
+                                   HorizontalAlignment="Center"
+                                   Margin="0 30 0 0"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+    </DockPanel>
+
+</Window>

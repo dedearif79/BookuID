@@ -65,6 +65,8 @@ Module mdl_VariabelUmum
     Public AppInstall As Date = "01/01/1990"
     Public AppExpire As Date = "01/01/1900"
     Public ID_CPU As String
+    Public ID_CPU_Developer As String = "BFEBFBFF000906A3" ' ID CPU PC Developer
+    Public ModusAplikasi As String = "CLASSIC" ' CLASSIC = WinForms MDI, MODERN = WPF Shell
     Public ID_Customer As String
     Public ID_Customer_Kosongan As String = "00000000"
     Public NomorSeriProduk As String

@@ -21,6 +21,32 @@ Public Class frm_BOOKU
         win_Startup = New wpfWin_StartUp
         win_Startup.ShowDialog()
 
+        '=====================================================
+        ' BRANCHING: Pilih Mode Aplikasi untuk PC Developer
+        '=====================================================
+        If ID_CPU = ID_CPU_Developer Then
+            ' PC Developer: Tampilkan dialog pilihan mode
+            Dim dialogPilihMode As New wpfWin_PilihModeAplikasi
+            dialogPilihMode.ShowDialog()
+
+            If dialogPilihMode.ModeModernDipilih Then
+                ' User memilih Mode Modern (WPF Shell)
+                ModusAplikasi = "MODERN"
+
+                ' Buka WPF Shell dan tutup form WinForms ini
+                Dim wpfShell As New wpfWin_BOOKU
+                wpfShell.Show()
+
+                ' Sembunyikan frm_BOOKU (tidak di-close agar exception handlers tetap aktif)
+                Me.Hide()
+                Me.WindowState = FormWindowState.Minimized
+                Me.ShowInTaskbar = False
+
+                Return ' Hentikan loading frm_BOOKU selanjutnya
+            End If
+        End If
+        '=====================================================
+
         pnl_Notifikasi.Visible = False
         VisibilitasNotifikasi = False
 
