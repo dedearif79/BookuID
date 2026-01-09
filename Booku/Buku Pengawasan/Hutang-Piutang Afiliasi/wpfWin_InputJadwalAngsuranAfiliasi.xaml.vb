@@ -206,7 +206,7 @@ Public Class wpfWin_InputJadwalAngsuranAfiliasi
     Private Sub txt_PPhDitanggung_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_PPhDitanggung.TextChanged
         PPhDitanggung = AmbilAngka(txt_PPhDitanggung.Text)
         If PPhDitanggung > JumlahPPh Then
-            PesanPeringatan("Silakan isi kolom 'PPh Pasal 23 Ditanggung' dengan benar..!")
+            PesanPeringatan("Silakan isi kolom 'PPh Pasal 23 Ditanggung' dengan benar.")
             txt_PPhDitanggung.Text = Kosongan
             txt_PPhDitanggung.Focus()
             Return
@@ -259,7 +259,7 @@ Public Class wpfWin_InputJadwalAngsuranAfiliasi
         End If
 
         If PPhDitanggung > JumlahPPh Then
-            PesanPeringatan("Silakan isi kolom 'PPh Ditanggung' dengan benar..!")
+            PesanPeringatan("Silakan isi kolom 'PPh Ditanggung' dengan benar.")
             txt_PPhDitanggung.Focus()
             Return
         End If

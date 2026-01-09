@@ -1829,8 +1829,7 @@ Public Class wpfWin_InputBuktiPengeluaran
         SingkirkanData()
     End Sub
     Sub SingkirkanData()
-        Pilihan = MessageBox.Show("Yakin akan menyingkirkan item terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menyingkirkan item terpilih?") Then Return
         NomorUrutInvoice = 0
         If PembayaranTerjadwal Then
             Do While 1 = 1
@@ -1857,8 +1856,7 @@ Public Class wpfWin_InputBuktiPengeluaran
     End Sub
 
     Private Sub btn_Tolak_Click(sender As Object, e As RoutedEventArgs) Handles btn_Tolak.Click
-        Pilihan = MessageBox.Show("Yakin akan menolak item terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menolak item terpilih?") Then Return
         If PembayaranTerjadwal Then
             Dim i = BarisTerseleksi
             Do While i <= JumlahInvoice
@@ -2130,9 +2128,8 @@ Public Class wpfWin_InputBuktiPengeluaran
 
 
     Private Sub btn_Cetak_Click_1(sender As Object, e As RoutedEventArgs) Handles btn_Cetak.Click
-        Pilihan = MessageBox.Show("Saat proses pratinjau/pencetakan, sistem akan menyimpan data secara otomatis." & Enter2Baris &
-                                  "Lanjutkan..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Saat proses pratinjau/pencetakan, sistem akan menyimpan data secara otomatis." & Enter2Baris &
+                               "Lanjutkan?") Then Return
         SimpanData()
         ProsesCetak()
     End Sub

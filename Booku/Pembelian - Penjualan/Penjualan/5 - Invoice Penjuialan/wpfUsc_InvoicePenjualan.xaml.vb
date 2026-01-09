@@ -608,7 +608,7 @@ Public Class wpfUsc_InvoicePenjualan
     Private Sub btn_Edit_Click(sender As Object, e As RoutedEventArgs) Handles btn_Edit.Click
 
         If InvoicePenjualanAsset_Terseleksi = 1 Then
-            MsgBox("Sementara ini, sistem belum menyediakan fitur Edit untuk Invoice Penjualan Asset.")
+            Pesan_Informasi("Sementara ini, sistem belum menyediakan fitur Edit untuk Invoice Penjualan Asset.")
             Return
         End If
 
@@ -621,7 +621,7 @@ Public Class wpfUsc_InvoicePenjualan
         dr_ExecuteReader()
         dr.Read()
         If dr.HasRows Then
-            MsgBox("Invoice ini tidak dapat diedit karena sudah ada data pencairan..!" & Enter2Baris &
+            Pesan_Peringatan("Invoice ini tidak dapat diedit karena sudah ada data pencairan." & Enter2Baris &
                    "Jika ingin mengeditnya, silakan hapus terlebih dahulu data pencairan terkait Invoice ini.")
             BisaDiedit = False
         Else
@@ -732,14 +732,13 @@ Public Class wpfUsc_InvoicePenjualan
         dr_ExecuteReader()
         dr.Read()
         If dr.HasRows Then
-            MsgBox("Invoice ini tidak dapat dihapus karena sudah ada data pencairan..!" & Enter2Baris &
+            Pesan_Peringatan("Invoice ini tidak dapat dihapus karena sudah ada data pencairan." & Enter2Baris &
                    "Jika ingin menghapusnya, silakan hapus terlebih dahulu data pencairan terkait Invoice ini.")
             Return
         End If
         AksesDatabase_Transaksi(Tutup)
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_Transaksi(Buka)
 
@@ -791,7 +790,7 @@ Public Class wpfUsc_InvoicePenjualan
 
     Private Sub btn_LihatJurnal_Click(sender As Object, e As RoutedEventArgs) Handles btn_LihatJurnal.Click
         If NomorJV_Terseleksi = 0 Then
-            MsgBox("Invoice ini belum didorong ke Jurnal.")
+            Pesan_Informasi("Invoice ini belum didorong ke Jurnal.")
             Return
         End If
         LihatJurnal(NomorJV_Terseleksi)
@@ -823,7 +822,7 @@ Public Class wpfUsc_InvoicePenjualan
         End If
         AksesDatabase_Transaksi(Tutup)
         If Invoice_SudahDibetulkan = True Then
-            MsgBox("Invoice ini sudah pernah dibetulkan." & Enter2Baris & "Silakan pilih pembetulan yang terakhir terkait invoice ini.")
+            Pesan_Peringatan("Invoice ini sudah pernah dibetulkan." & Enter2Baris & "Silakan pilih pembetulan yang terakhir terkait invoice ini.")
             Return
         End If
 

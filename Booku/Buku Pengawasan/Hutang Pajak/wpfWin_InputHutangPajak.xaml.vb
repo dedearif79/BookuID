@@ -303,12 +303,12 @@ Public Class wpfWin_InputHutangPajak
             If usc_BukuPengawasanHutangPPhPasal25.StatusAktif Then usc_BukuPengawasanHutangPPhPasal25.TampilkanData()
             If usc_BukuPengawasanHutangPPhPasal26.StatusAktif Then usc_BukuPengawasanHutangPPhPasal26.TampilkanData()
             If usc_BukuPengawasanHutangPPhPasal42.StatusAktif Then usc_BukuPengawasanHutangPPhPasal42.TampilkanData()
-            If FungsiForm = FungsiForm_TAMBAH Then MsgBox("Data BERHASIL Disimpan.")
-            If FungsiForm = FungsiForm_EDIT Then MsgBox("Data BERHASIL Diedit.")
+            If FungsiForm = FungsiForm_TAMBAH Then Pesan_Sukses("Data berhasil disimpan.")
+            If FungsiForm = FungsiForm_EDIT Then Pesan_Sukses("Data berhasil diedit.")
             Me.Close()
         Else
-            If FungsiForm = FungsiForm_TAMBAH Then MsgBox("Data GAGAL Disimpan!" & Enter2Baris & teks_SilakanCobaLagi_Database)
-            If FungsiForm = FungsiForm_EDIT Then MsgBox("Data GAGAL Diedit!" & Enter2Baris & teks_SilakanCobaLagi_Database)
+            If FungsiForm = FungsiForm_TAMBAH Then Pesan_Peringatan("Data gagal disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
+            If FungsiForm = FungsiForm_EDIT Then Pesan_Peringatan("Data gagal diedit." & Enter2Baris & teks_SilakanCobaLagi_Database)
         End If
 
     End Sub

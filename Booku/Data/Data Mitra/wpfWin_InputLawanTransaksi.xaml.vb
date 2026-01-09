@@ -205,7 +205,7 @@ Public Class wpfWin_InputLawanTransaksi
             dr.Read()
             If dr.HasRows Then
                 Dim NamaMitra = dr.Item("Nama_Mitra")
-                MsgBox("Kode '" & KodeLawanTransaksi & "' sudah terdaftar" & Enter1Baris & "untuk " & NamaMitra & "." & Enter2Baris & "Silakan masukkan kode yang lain.")
+                Pesan_Peringatan("Kode '" & KodeLawanTransaksi & "' sudah terdaftar" & Enter1Baris & "untuk " & NamaMitra & "." & Enter2Baris & "Silakan masukkan kode yang lain.")
                 txt_KodeLawanTransaksi.Text = Kosongan
                 txt_KodeLawanTransaksi.Focus()
                 AksesDatabase_General(Tutup)

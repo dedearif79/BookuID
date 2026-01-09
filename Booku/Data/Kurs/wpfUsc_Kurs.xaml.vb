@@ -221,10 +221,7 @@ Public Class wpfUsc_Kurs
 
     Private Sub btn_Upload_Click(sender As Object, e As RoutedEventArgs) Handles btn_Upload.Click
 
-        Pilihan = MessageBox.Show("Yakin akan Data Kurs?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then
-            Return
-        End If
+        If Not TanyaKonfirmasi("Yakin ingin mengunggah Data Kurs?") Then Return
 
         BukaDatabasePublic()
         If Not StatusKoneksiDatabasePublic Then
@@ -293,10 +290,10 @@ Public Class wpfUsc_Kurs
 
             Next
 
-            MessageBox.Show("Import selesai!")
+            Pesan_Sukses("Import selesai.")
 
         Catch ex As Exception
-            MessageBox.Show("Gagal import: " & ex.Message)
+            Pesan_Gagal("Gagal import: " & ex.Message)
         Finally
             If xlWorkbook IsNot Nothing Then xlWorkbook.Close(False)
             xlApp.Quit()
@@ -310,10 +307,7 @@ Public Class wpfUsc_Kurs
 
     Private Sub btn_Tambah_Click(sender As Object, e As RoutedEventArgs) Handles btn_Tambah.Click
 
-        Pilihan = MessageBox.Show("Yakin akan Data Kurs Tahun " & TahunKursTerakhir + 1 & "?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then
-            Return
-        End If
+        If Not TanyaKonfirmasi("Yakin ingin menambahkan Data Kurs Tahun " & TahunKursTerakhir + 1 & "?") Then Return
 
         BukaDatabasePublic()
         If Not StatusKoneksiDatabasePublic Then

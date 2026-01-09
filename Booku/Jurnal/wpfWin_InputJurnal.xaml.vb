@@ -416,7 +416,7 @@ Public Class wpfWin_InputJurnal
     Private Sub btn_Edit_Click(sender As Object, e As RoutedEventArgs) Handles btn_Edit.Click
 
         If (BarisTerseleksi < 0) Or (BarisTerseleksi >= JumlahBarisJurnal) Then
-            MsgBox("Tidak ada baris terseleksi.")
+            Pesan_Peringatan("Tidak ada baris terseleksi.")
             Return
         End If
 
@@ -463,7 +463,7 @@ Public Class wpfWin_InputJurnal
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
         If (BarisTerseleksi < 0) Or (BarisTerseleksi >= JumlahBarisJurnal) Then
-            MsgBox("Tidak ada baris terseleksi.")
+            Pesan_Peringatan("Tidak ada baris terseleksi.")
             Return
         End If
 
@@ -540,13 +540,13 @@ Public Class wpfWin_InputJurnal
         End If
 
         If TotalDebet <> TotalKredit Then
-            MsgBox("Jurnal tidak dapat diposting karena ADA SELISIH." &
+            Pesan_Peringatan("Jurnal tidak dapat diposting karena ADA SELISIH." &
                    Enter2Baris & "Silakan dikoreksi kembali.")
             Return
         End If
 
         If cmb_JenisJurnal.Text = Nothing Then
-            MsgBox("Silakan tentukan 'Jenis Jurnal'.")
+            Pesan_Peringatan("Silakan tentukan 'Jenis Jurnal'.")
             cmb_JenisJurnal.Focus()
             Return
         End If
@@ -557,8 +557,7 @@ Public Class wpfWin_InputJurnal
             Return
         End If
 
-        Pilihan = MessageBox.Show("Yakin data sudah benar..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin data sudah benar?") Then Return
 
         'Jika form berfungsi untuk mengedit, maka hapus data sebelumnya :
         If FungsiForm = FungsiForm_EDIT Then
@@ -614,19 +613,18 @@ Public Class wpfWin_InputJurnal
 
         If jur_StatusPenyimpananJurnal_PerBaris = True Then
             JurnalTersimpan = True
-            MsgBox("Jurnal BERHASIL disimpan.")
+            Pesan_Sukses("Jurnal berhasil disimpan.")
             Me.Close()
         Else
             JurnalTersimpan = False
-            MsgBox("Jurnal GAGAL disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
+            Pesan_Gagal("Jurnal gagal disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
         End If
 
     End Sub
 
 
     Private Sub btn_Reset_Click(sender As Object, e As RoutedEventArgs) Handles btn_Reset.Click
-        Pilihan = MessageBox.Show("Yakin akan me-reset..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin me-reset?") Then Return
         ResetForm()
     End Sub
 

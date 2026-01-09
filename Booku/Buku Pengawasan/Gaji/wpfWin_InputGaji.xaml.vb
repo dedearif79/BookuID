@@ -417,8 +417,7 @@ Public Class wpfWin_InputGaji
 
         If JumlahPesangon > 50000000 Then
             If FungsiForm = FungsiForm_TAMBAH Then
-                Pilihan = MessageBox.Show("Apakah ada PPh untuk Pesangon..?", "Perhatian..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbYes Then
+                If TanyaKonfirmasi("Apakah ada PPh untuk Pesangon?") Then
                     AdaPPhPesangon = True
                     grb_Pesangon.IsEnabled = True
                 Else
@@ -990,7 +989,7 @@ Public Class wpfWin_InputGaji
 
 
         If cmb_Bulan.Text = Kosongan Then
-            MsgBox("Silakan pilih 'Bulan'")
+            Pesan_Peringatan("Silakan pilih 'Bulan'.")
             cmb_Bulan.Focus()
             Return
         End If
@@ -1000,20 +999,20 @@ Public Class wpfWin_InputGaji
         End If
 
         If PilihanPPh_Rutin = Kosongan Then
-            MsgBox("Silakan tentukan Pilihan PPh Rutin : " & Enter1Baris &
+            Pesan_Peringatan("Silakan tentukan Pilihan PPh Rutin : " & Enter1Baris &
                    "- PPh Dipotong/Ditunjang, atau " & Enter1Baris &
                    "- PPh Ditanggung")
             Return
         End If
 
         If PilihanPPh_Rutin = PilihanPPh_PPhDipotongDitunjang And PotonganHutangPPhPasal21Rutin = 0 Then
-            MsgBox("Silakan isi kolom Hutang PPh Pasal 21 - Rutin..!")
+            Pesan_Peringatan("Silakan isi kolom Hutang PPh Pasal 21 - Rutin.")
             txt_PotonganHutangPPhPasal21Rutin.Focus()
             Return
         End If
 
         If PilihanPPh_Rutin = PilihanPPh_PPhDitanggung And PPhDitanggungRutin = 0 Then
-            MsgBox("Silakan isi kolom Jumlah PPh Ditanggung - Rutin..!")
+            Pesan_Peringatan("Silakan isi kolom Jumlah PPh Ditanggung - Rutin.")
             txt_PPhDitanggungRutin.Focus()
             Return
         End If
@@ -1021,20 +1020,20 @@ Public Class wpfWin_InputGaji
         If AdaPPhPesangon = True Then
 
             If PilihanPPh_Pesangon = Kosongan Then
-                MsgBox("Silakan tentukan Pilihan PPh Pesangon : " & Enter1Baris &
+                Pesan_Peringatan("Silakan tentukan Pilihan PPh Pesangon : " & Enter1Baris &
                        "- PPh Dipotong/Ditunjang, atau " & Enter1Baris &
                        "- PPh Ditanggung")
                 Return
             End If
 
             If PilihanPPh_Pesangon = PilihanPPh_PPhDipotongDitunjang And PotonganHutangPPhPasal21Pesangon = 0 Then
-                MsgBox("Silakan isi kolom Hutang PPh Pasal 21 - Pesangon..!")
+                Pesan_Peringatan("Silakan isi kolom Hutang PPh Pasal 21 - Pesangon.")
                 txt_PotonganHutangPPhPasal21Pesangon.Focus()
                 Return
             End If
 
             If PilihanPPh_Pesangon = PilihanPPh_PPhDitanggung And PPhDitanggungPesangon = 0 Then
-                MsgBox("Silakan isi kolom Jumlah PPh Ditanggung - Pesangon..!")
+                Pesan_Peringatan("Silakan isi kolom Jumlah PPh Ditanggung - Pesangon.")
                 txt_PPhDitanggungPesangon.Focus()
                 Return
             End If
@@ -1042,18 +1041,21 @@ Public Class wpfWin_InputGaji
         End If
 
         If JumlahGajiBagianProduksi + JumlahGajiBagianAdministrasi = 0 And JumlahGajiDibayarkan <> 0 Then
-            MsgBox("Silakan isi form dengan benar.")
+            Pesan_Peringatan("Silakan isi form dengan benar.")
             Return
         End If
 
         If JumlahGajiDibayarkan < 0 Then
-            MsgBox("Silakan isi form dengan benar.")
+            Pesan_Peringatan("Silakan isi form dengan benar.")
             Return
         End If
 
-        If FungsiForm = FungsiForm_TAMBAH Then Pilihan = MessageBox.Show(teks_DataAkanDisimpanDiBukuPengawasanDanJurnal, "Perhatian..!", MessageBoxButtons.YesNo)
-        If FungsiForm = FungsiForm_EDIT Then Pilihan = MessageBox.Show(teks_PerubahanDataAkanBerpengaruhPadaJurnal, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If FungsiForm = FungsiForm_TAMBAH Then
+            If Not TanyaKonfirmasi(teks_DataAkanDisimpanDiBukuPengawasanDanJurnal) Then Return
+        End If
+        If FungsiForm = FungsiForm_EDIT Then
+            If Not TanyaKonfirmasi(teks_PerubahanDataAkanBerpengaruhPadaJurnal) Then Return
+        End If
 
         Dim QueryPenyimpananPengeditan = Nothing
 
@@ -1262,7 +1264,7 @@ Public Class wpfWin_InputGaji
         If StatusSuntingDatabase = True Then
             If usc_BukuPengawasanHutangPPhPasal21.StatusAktif Then usc_BukuPengawasanHutangPPhPasal21.TampilkanData()
             If FungsiForm = FungsiForm_TAMBAH Then
-                MsgBox("Data BERHASIL disimpan.")
+                Pesan_Sukses("Data berhasil disimpan.")
                 If usc_BukuPengawasanHutangBPJSKesehatan.StatusAktif Then usc_BukuPengawasanHutangBPJSKesehatan.TampilkanData()
                 If usc_BukuPengawasanHutangBPJSKetenagakerjaan.StatusAktif Then usc_BukuPengawasanHutangBPJSKetenagakerjaan.TampilkanData()
                 If usc_BukuPengawasanHutangKoperasiKaryawan.StatusAktif Then usc_BukuPengawasanHutangKoperasiKaryawan.TampilkanData()
@@ -1271,20 +1273,19 @@ Public Class wpfWin_InputGaji
                 Me.Close()
             End If
             If FungsiForm = FungsiForm_EDIT Then
-                MsgBox("Data BERHASIL diedit.")
+                Pesan_Sukses("Data berhasil diedit.")
                 Me.Close()
             End If
         Else
-            If FungsiForm = FungsiForm_TAMBAH Then MsgBox("Data GAGAL disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
-            If FungsiForm = FungsiForm_EDIT Then MsgBox("Data GAGAL diedit." & Enter2Baris & teks_SilakanCobaLagi_Database)
+            If FungsiForm = FungsiForm_TAMBAH Then Pesan_Gagal("Data gagal disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
+            If FungsiForm = FungsiForm_EDIT Then Pesan_Gagal("Data gagal diedit." & Enter2Baris & teks_SilakanCobaLagi_Database)
         End If
 
     End Sub
 
 
     Private Sub btn_Reset_Click(sender As Object, e As RoutedEventArgs) Handles btn_Reset.Click
-        Pilihan = MessageBox.Show("Yakin akan me-reset form..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin me-reset form?") Then Return
         ResetForm()
     End Sub
 

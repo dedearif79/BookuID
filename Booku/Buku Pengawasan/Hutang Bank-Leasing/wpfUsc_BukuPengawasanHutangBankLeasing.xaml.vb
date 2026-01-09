@@ -341,7 +341,7 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
 
     Private Sub btn_LihatJurnalPencairan_Click(sender As Object, e As RoutedEventArgs) Handles btn_LihatJurnalPencairan.Click
         If NomorJV_Pencairan_Terseleksi = 0 Then
-            MsgBox("Belum ada pencairan.")
+            Pesan_Informasi("Belum ada pencairan.")
             Return
         End If
         LihatJurnal(NomorJV_Pencairan_Terseleksi)
@@ -360,7 +360,7 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
     Private Sub btn_EditHutang_Click(sender As Object, e As RoutedEventArgs) Handles btn_EditHutang.Click
 
         If JumlahAngsuran_Terseleksi > 0 Or NomorJV_Pencairan_Terseleksi > 0 Then
-            MsgBox("'Data Hutang' ini sudah tidak dapat diedit..!")
+            Pesan_Peringatan("'Data Hutang' ini sudah tidak dapat diedit.")
             Return
         End If
 
@@ -389,12 +389,11 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
     Private Sub btn_HapusHutang_Click(sender As Object, e As RoutedEventArgs) Handles btn_HapusHutang.Click
 
         If jumlahbarisJadwalAngsuran > 0 Or NomorJV_Pencairan_Terseleksi > 0 Then
-            MsgBox("'Data Hutang' ini sudah tidak dapat dihapus..!")
+            Pesan_Peringatan("'Data Hutang' ini sudah tidak dapat dihapus.")
             Return
         End If
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_Transaksi(Buka)
         cmd = New OdbcCommand(" DELETE FROM " & TabelPengawasan &
@@ -617,7 +616,7 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             If TanggalPencairan_Terseleksi = TanggalKosong Then
-                MsgBox("Data terpilih belum diposting. Tidak dapat menginput jadwal..!")
+                Pesan_Peringatan("Data terpilih belum diposting. Tidak dapat menginput jadwal.")
                 Return
             End If
         End If
@@ -625,7 +624,7 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
         BersihkanSeluruhCeklis()
 
         If jadwal_SudahLengkap = True Then
-            MsgBox("Jadwal sudah lengkap..!" & Enter2Baris & "Anda sudah tidak dapat menginput 'Jadwal Angsuran' pada hutang ini.")
+            Pesan_Informasi("Jadwal sudah lengkap." & Enter2Baris & "Anda sudah tidak dapat menginput 'Jadwal Angsuran' pada hutang ini.")
             Return
         End If
 
@@ -687,8 +686,7 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
         End If
         AksesDatabase_Transaksi(Tutup)
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_Transaksi(Buka)
         cmd = New OdbcCommand(" DELETE FROM " & TabelAngsuran &
@@ -710,7 +708,7 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             If TanggalPencairan_Terseleksi = TanggalKosong Then
-                MsgBox("Silakan lengkapi terlebih dahulu 'Data Pencairan'.")
+                Pesan_Peringatan("Silakan lengkapi terlebih dahulu 'Data Pencairan'.")
                 Return
             End If
         End If

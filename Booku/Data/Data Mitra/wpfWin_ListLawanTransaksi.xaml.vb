@@ -261,33 +261,27 @@ Public Class wpfWin_ListLawanTransaksi
         Dim SebagaiCustomer = AmbilAngka(AmbilValueCellTeksBerpotensiDBNull_RowView(rowviewUtama, "Customer_"))
 
         If PilihJenisLawanTransaksi = Mitra_Supplier And SebagaiSupplier = 0 Then
-            Dim PilihEditMitra = MessageBox.Show(NamaMitraTerseleksi & " belum tercatat sebagai SUPPLIER di database." & Enter2Baris & "Ingin mengedit data " & NamaMitraTerseleksi & "..?", "Perhatian..!", MessageBoxButton.YesNo)
-            If PilihEditMitra = MessageBoxResult.Yes Then
+            If TanyaKonfirmasi(NamaMitraTerseleksi & " belum tercatat sebagai SUPPLIER di database." & Enter2Baris & "Ingin mengedit data " & NamaMitraTerseleksi & "?") Then
                 win_InputLawanTransaksi = New wpfWin_InputLawanTransaksi
                 win_InputLawanTransaksi.ResetForm()
                 win_InputLawanTransaksi.FungsiForm = FungsiForm_EDIT
                 win_InputLawanTransaksi.txt_KodeLawanTransaksi.Text = KodeMitraTerseleksi
                 win_InputLawanTransaksi.ShowDialog()
                 RefreshTampilanData()
-                Return
-            Else
-                Return
             End If
+            Return
         End If
 
         If PilihJenisLawanTransaksi = Mitra_Customer And SebagaiCustomer = 0 Then
-            Dim PilihEditMitra = MessageBox.Show(NamaMitraTerseleksi & " belum tercatat sebagai CUSTOMER di database." & Enter2Baris & "Ingin mengedit data " & NamaMitraTerseleksi & "..?", "Perhatian..!", MessageBoxButton.YesNo)
-            If PilihEditMitra = MessageBoxResult.Yes Then
+            If TanyaKonfirmasi(NamaMitraTerseleksi & " belum tercatat sebagai CUSTOMER di database." & Enter2Baris & "Ingin mengedit data " & NamaMitraTerseleksi & "?") Then
                 win_InputLawanTransaksi = New wpfWin_InputLawanTransaksi
                 win_InputLawanTransaksi.ResetForm()
                 win_InputLawanTransaksi.FungsiForm = FungsiForm_EDIT
                 win_InputLawanTransaksi.txt_KodeLawanTransaksi.Text = KodeMitraTerseleksi
                 win_InputLawanTransaksi.ShowDialog()
                 RefreshTampilanData()
-                Return
-            Else
-                Return
             End If
+            Return
         End If
 
         txt_CariMitra.Text = Kosongan

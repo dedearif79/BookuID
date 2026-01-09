@@ -554,18 +554,15 @@ Public Class wpfUsc_JurnalUmum
 
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
-        'Yakin akan menghapus..????
-        Dim Pesan As String = "Yakin akan menghapus data nomor " & NomorJV_Terseleksi & "..?"
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data nomor " & NomorJV_Terseleksi & "?") Then Return
 
         HapusJurnal_BerdasarkanNomorJV(AngkaNomorJV_Terseleksi)
 
         If StatusSuntingDatabase = True Then
             TampilkanData()
-            PesanPemberitahuan("Jurnal terpilih BERHASIL dihapus.")
+            Pesan_Sukses("Jurnal terpilih berhasil dihapus.")
         Else
-            PesanPeringatan("Jurnal terpilih GAGAL dihapus." & teks_SilakanCobaLagi_Database)
+            Pesan_Gagal("Jurnal terpilih gagal dihapus." & teks_SilakanCobaLagi_Database)
         End If
 
     End Sub
@@ -573,10 +570,8 @@ Public Class wpfUsc_JurnalUmum
 
     Private Sub btn_Import_Click(sender As Object, e As RoutedEventArgs) Handles btn_Import.Click
 
-        Pilihan = MessageBox.Show("Fitur ini hanya digunakan untuk mengimport Data Jurnal yang berdiri sendiri dan tidak berkaitan dengan Data Finance yang ada disini." & Enter2Baris &
-                                  "Lanjutkan import..?",
-                                  "PERHATIAN..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Fitur ini hanya digunakan untuk mengimport Data Jurnal yang berdiri sendiri dan tidak berkaitan dengan Data Finance yang ada disini." & Enter2Baris &
+                                  "Lanjutkan import?") Then Return
 
         StatusImportJurnal = True
 
@@ -584,7 +579,7 @@ Public Class wpfUsc_JurnalUmum
         win_ImportJurnal.ResetForm()
         win_ImportJurnal.ShowDialog()
         If StatusPosting = "BATAL" Then
-            MsgBox("Proses posting telah dibatalkan seluruhnya pada event ini.")
+            Pesan_Informasi("Proses posting telah dibatalkan seluruhnya pada event ini.")
         End If
 
         StatusImportJurnal = False

@@ -236,7 +236,7 @@ Public Class wpfWin_InputHutangPiutangPihakKetiga
     Private Sub txt_SaldoAwal_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_SaldoAwal.TextChanged
         SaldoAwal = AmbilAngka(txt_SaldoAwal.Text)
         If JenisTahunBuku = JenisTahunBuku_LAMPAU And SaldoAwal > JumlahPinjaman Then
-            MsgBox("Silakan isi kolom 'Saldo' dengan benar.")
+            Pesan_Peringatan("Silakan isi kolom 'Saldo' dengan benar.")
             txt_SaldoAwal.Text = Kosongan
             txt_SaldoAwal.Focus()
             Return
@@ -458,20 +458,20 @@ Public Class wpfWin_InputHutangPiutangPihakKetiga
         End If
 
         If KodeLawanTransaksi = Kosongan Then
-            If HutangPiutang = hp_Hutang Then MsgBox("Silakan isi kolom 'Kreditur'.")
-            If HutangPiutang = hp_Piutang Then MsgBox("Silakan isi kolom 'Debitur'.")
+            If HutangPiutang = hp_Hutang Then Pesan_Peringatan("Silakan isi kolom 'Kreditur'.")
+            If HutangPiutang = hp_Piutang Then Pesan_Peringatan("Silakan isi kolom 'Debitur'.")
             txt_KodeLawanTransaksi.Focus()
             Return
         End If
 
         If JumlahPinjaman = 0 Then
-            MsgBox("Silakan isi kolom 'Jumlah Pinjaman'.")
+            Pesan_Peringatan("Silakan isi kolom 'Jumlah Pinjaman'.")
             txt_JumlahPinjaman.Focus()
             Return
         End If
 
         If SaldoAwal = 0 Then
-            MsgBox("Silakan isi kolom 'Saldo Awal'.")
+            Pesan_Peringatan("Silakan isi kolom 'Saldo Awal'.")
             txt_SaldoAwal.Focus()
             Return
         End If
@@ -488,14 +488,14 @@ Public Class wpfWin_InputHutangPiutangPihakKetiga
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             If HutangPiutang = hp_Hutang And SaranaPembayaran = Kosongan Then
-                MsgBox("Silakan pilih 'Sarana Pencairan'.")
+                Pesan_Peringatan("Silakan pilih 'Sarana Pencairan'.")
                 cmb_SaranaPembayaran.Focus()
                 Return
             End If
         End If
 
         If BiayaAdministrasiBank > 0 And DitanggungOleh = Kosongan Then
-            MsgBox("Silakan pilih 'Ditanggung Oleh'.")
+            Pesan_Peringatan("Silakan pilih 'Ditanggung Oleh'.")
             cmb_DitanggungOleh.Focus()
             Return
         End If

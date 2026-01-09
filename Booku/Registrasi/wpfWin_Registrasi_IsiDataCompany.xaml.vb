@@ -70,74 +70,74 @@ Public Class wpfWin_Registrasi_IsiDataCompany
     Private Sub btn_Lanjutkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Lanjutkan.Click
 
         If txt_NamaPerusahaan.Text = Kosongan Then
-            MsgBox("Silakan ini kolom 'Nama Perusahaan'")
+            Pesan_Peringatan("Silakan isi kolom 'Nama Perusahaan'.")
             txt_NamaPerusahaan.Focus()
             Return
         End If
 
         If txt_NamaDirektur.Text = Kosongan Then
-            MsgBox("Silakan ini kolom 'Nama Direktur'")
+            Pesan_Peringatan("Silakan isi kolom 'Nama Direktur'.")
             txt_NamaDirektur.Focus()
             Return
         End If
 
         If txt_NPWP.Text = Kosongan Then
-            MsgBox("Silakan ini kolom 'NPWP'")
+            Pesan_Peringatan("Silakan isi kolom 'NPWP'.")
             txt_NPWP.Focus()
             Return
         End If
 
         If cmb_JenisUsahaPerusahaan.SelectedValue = Kosongan Then
-            MsgBox("Silakan pilih 'Jenis Usaha'")
+            Pesan_Peringatan("Silakan pilih 'Jenis Usaha'.")
             cmb_JenisUsahaPerusahaan.Focus()
             Return
         End If
 
         If cmb_JenisWPPerusahaan.SelectedValue = Kosongan Then
-            MsgBox("Silakan pilih 'Jenis WP'")
+            Pesan_Peringatan("Silakan pilih 'Jenis WP'.")
             cmb_JenisWPPerusahaan.Focus()
             Return
         End If
 
         If txt_AlamatPerusahaan.Text = Kosongan Then
-            MsgBox("Silakan ini kolom 'Alamat'")
+            Pesan_Peringatan("Silakan isi kolom 'Alamat'.")
             txt_AlamatPerusahaan.Focus()
             Return
         End If
 
         If txt_EmailPerusahaan.Text = Kosongan Then
-            MsgBox("Silakan ini kolom 'Email'")
+            Pesan_Peringatan("Silakan isi kolom 'Email'.")
             txt_EmailPerusahaan.Focus()
             Return
         End If
 
         If txt_PIC.Text = Kosongan Then
-            MsgBox("Silakan ini kolom 'PIC'")
+            Pesan_Peringatan("Silakan isi kolom 'PIC'.")
             txt_PIC.Focus()
             Return
         End If
 
         If cmb_SistemApproval.SelectedValue = Kosongan Then
-            MsgBox("Silakan pilih 'Sistem Approval'")
+            Pesan_Peringatan("Silakan pilih 'Sistem Approval'.")
             cmb_SistemApproval.Focus()
             Return
         End If
 
         If CStr(cmb_SistemApproval.SelectedValue) = "YA" Then
-            MsgBox("Mohon maaf. Untuk fitur 'Sistem Approval' sementara ini belum bisa digunakan." & Enter2Baris & "Silakan pilih 'TIDAK'.")
+            Pesan_Informasi("Mohon maaf, untuk fitur 'Sistem Approval' sementara ini belum bisa digunakan." & Enter2Baris & "Silakan pilih 'TIDAK'.")
             cmb_SistemApproval.Focus()
             Return
         End If
 
         If cmb_SistemCOA.SelectedValue = Kosongan Then
-            MsgBox("Silakan pilih Sistem COA yang akan digunakan.")
+            Pesan_Peringatan("Silakan pilih Sistem COA yang akan digunakan.")
             cmb_SistemCOA.Focus()
             Return
         End If
 
         If CStr(cmb_SistemCOA.SelectedValue) = SistemCOA_Customize Then
-            MsgBox("Mohon maaf. Sistem COA 'Customize' saat ini belum memungkinkan." & Enter2Baris &
-                   "Silakan pilih Sistem COA '" & SistemCOA_StandarAplikasi & "'. ")
+            Pesan_Informasi("Mohon maaf, Sistem COA 'Customize' saat ini belum memungkinkan." & Enter2Baris &
+                   "Silakan pilih Sistem COA '" & SistemCOA_StandarAplikasi & "'.")
             cmb_SistemCOA.Focus()
             Return
         End If

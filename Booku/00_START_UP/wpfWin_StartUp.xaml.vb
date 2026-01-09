@@ -219,31 +219,31 @@ Public Class wpfWin_StartUp
         End If
         AksesDatabase_General(Tutup)
         If ValidasiDekripsiTanggal = False Then
-            MsgBox(teks_SistemTerkunci_HubungiDeveloper)
+            Pesan_Gagal(teks_SistemTerkunci_HubungiDeveloper)
             End
         End If
         If AppExpire < Today Then
-            MsgBox("Masa pakai Aplikasi sudah kadaluarsa." & Enter2Baris & "Silakan isi voucher atau hubungi Developer untuk memperpanjang masa pemakaian.")
+            Pesan_Peringatan("Masa pakai aplikasi sudah kedaluwarsa." & Enter2Baris & "Silakan isi voucher atau hubungi Developer untuk memperpanjang masa pemakaian.")
             End
         End If
         If NomorSeriProduk = NomorSeriProduk_Kosongan Then
             Dim Pesan As String = "Aplikasi belum teregistrasi secara online." & Enter2Baris &
             "Lanjutkan registrasi online?"
-            Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-            If Pilihan = vbYes Then RegistrasiSusulan()
+            If TanyaKonfirmasi(Pesan) Then RegistrasiSusulan()
             If AppInstall = Today.AddDays(7) Then
                 Pesan = "Batas waktu untuk registrasi online sudah habis." & Enter2Baris &
                     "Lanjutkan registrasi online untuk mengaktifkan aplikasi?"
-                Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbYes Then RegistrasiSusulan()
-                If Pilihan = vbYes Then End
+                If TanyaKonfirmasi(Pesan) Then
+                    RegistrasiSusulan()
+                    End
+                End If
             End If
         End If
 
     End Sub
 
     Sub RegistrasiSusulan()
-        PesanPeringatan("Ceritanya ini sedang Registrasi Online..!")
+        Pesan_Informasi("Sedang melakukan registrasi online.")
     End Sub
 
     Sub ProgressKoneksiDatabasePublic()

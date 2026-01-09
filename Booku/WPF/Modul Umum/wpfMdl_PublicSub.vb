@@ -486,7 +486,7 @@ Module wpfMdl_PublicSub
         End If
         If FormatValid = False Then
             teks.Text = Kosongan
-            PesanPeringatan("Silakan isi kolom dengan benar..!")
+            PesanPeringatan("Silakan isi kolom dengan benar.")
             teks.Focus()
         End If
         teks.CaretIndex = teks.Text.Length ' Menempatkan kursor kembali ke posisi terakhir

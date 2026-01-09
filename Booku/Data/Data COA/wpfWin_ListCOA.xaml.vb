@@ -258,9 +258,8 @@ Public Class wpfWin_ListCOA
 
         If VisibilitasTerseleksi = Keterangan_TIDAK_ Then
 
-            Pilihan = MessageBox.Show("Dengan memilih Akun ini berarti Anda setuju untuk mengubah Visibilitas-nya menjadi 'Terlihat'." & Enter2Baris &
-                                      "Lanjutkan..?", "Perhatian..!", MessageBoxButton.YesNo)
-            If Pilihan = vbNo Then
+            If Not TanyaKonfirmasi("Dengan memilih Akun ini berarti Anda setuju untuk mengubah Visibilitas-nya menjadi 'Terlihat'." & Enter2Baris &
+                                      "Lanjutkan?") Then
                 COATerseleksi = Kosongan
                 NamaAkunTerseleksi = Kosongan
                 Return

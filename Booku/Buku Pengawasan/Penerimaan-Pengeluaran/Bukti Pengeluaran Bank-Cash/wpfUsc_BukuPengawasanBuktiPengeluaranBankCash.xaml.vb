@@ -397,8 +397,7 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
 
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_General(Buka)
         AksesDatabase_Transaksi(Buka)
@@ -542,23 +541,19 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
                 AksesDatabase_Transaksi(Tutup)
                 If StatusSuntingDatabase = True Then TampilkanData()
             Case Status_Dicetak
-                Pilihan = MessageBox.Show("Data sudah pernah dicetak." & Enter2Baris & "Ingin mencetak ulang..?", "Perhatian..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbNo Then Return
+                If Not TanyaKonfirmasi("Data sudah pernah dicetak." & Enter2Baris & "Ingin mencetak ulang?") Then Return
                 ProsesCetak()
             Case Status_Dibundel
                 'PesanPemberitahuan("Data sudah dibundel..!" & "Jika ingin mencetaknya, silakan lepas data terlebih dahulu dari bundelan.")
-                Pilihan = MessageBox.Show("Data sudah pernah dicetak." & Enter2Baris & "Ingin mencetak ulang..?", "Perhatian..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbNo Then Return
+                If Not TanyaKonfirmasi("Data sudah pernah dicetak." & Enter2Baris & "Ingin mencetak ulang?") Then Return
                 ProsesCetak()
             Case Status_Disetujui
                 'PesanPemberitahuan("Data sudah disetujui, dan tidak perlu dicetak lagi.")
-                Pilihan = MessageBox.Show("Data sudah pernah dicetak." & Enter2Baris & "Ingin mencetak ulang..?", "Perhatian..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbNo Then Return
+                If Not TanyaKonfirmasi("Data sudah pernah dicetak." & Enter2Baris & "Ingin mencetak ulang?") Then Return
                 ProsesCetak()
             Case Status_Dibayar
                 'PesanPemberitahuan("Data sudah diposting ke Jurnal, dan tidak perlu dicetak lagi.")
-                Pilihan = MessageBox.Show("Data sudah pernah dicetak." & Enter2Baris & "Ingin mencetak ulang..?", "Perhatian..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbNo Then Return
+                If Not TanyaKonfirmasi("Data sudah pernah dicetak." & Enter2Baris & "Ingin mencetak ulang?") Then Return
                 ProsesCetak()
         End Select
     End Sub
@@ -570,8 +565,8 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
     Private Sub btn_Posting_Click(sender As Object, e As RoutedEventArgs) Handles btn_Posting.Click
 
         If Not (StatusPengajuan_Terseleksi = Status_Disetujui Or StatusPengajuan_Terseleksi = Status_Dibayar) Then
-            PesanPeringatan("Data tidak dapat diposting ke Jurnal karena belum disetujui." & Enter2Baris &
-                            "Silakan setujui terlebih dahulu..!")
+            Pesan_Peringatan("Data tidak dapat diposting ke Jurnal karena belum disetujui." & Enter2Baris &
+                             "Silakan setujui terlebih dahulu.")
             Return
         End If
 
@@ -584,8 +579,8 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
             Dim JumlahDisetujui = dr.Item("Jumlah_Bayar")
             AksesDatabase_Transaksi(Tutup)
             If JumlahDisetujui > SaldoAkhirCOA(KodeTautanCOA_CashAdvance) Then
-                PesanPeringatan("Saldo " & AmbilValue_NamaAkun(KodeTautanCOA_CashAdvance) & " tidak mencukupi..!" & Enter2Baris &
-                                "Silakan posting terlebih dahulu pemindahbukuan untuk akun " & AmbilValue_NamaAkun(KodeTautanCOA_CashAdvance) & ".")
+                Pesan_Peringatan("Saldo " & AmbilValue_NamaAkun(KodeTautanCOA_CashAdvance) & " tidak mencukupi." & Enter2Baris &
+                                 "Silakan posting terlebih dahulu pemindahbukuan untuk akun " & AmbilValue_NamaAkun(KodeTautanCOA_CashAdvance) & ".")
                 Return
             End If
         End If

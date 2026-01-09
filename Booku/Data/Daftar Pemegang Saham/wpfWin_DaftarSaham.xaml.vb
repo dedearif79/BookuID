@@ -78,9 +78,8 @@ Public Class wpfWin_DaftarSaham
         Dim Pesan As String =
             "Silakan periksa angka dengan seksama!" & Enter2Baris &
             "Setelah diterbitkan, data saham tidak dapat diedit dan dihapus." & Enter2Baris &
-            "Lanjutkan proses?"
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+            "Lanjutkan?"
+        If Not TanyaKonfirmasi(Pesan) Then Return
 
         AksesDatabase_General(Buka)
         cmd = New OdbcCommand(" INSERT INTO tbl_DaftarSaham " &

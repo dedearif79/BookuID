@@ -173,7 +173,7 @@ Public Class wpfWin_UpdateKurs_Harian
             If dtp_Tanggal.SelectedDate.HasValue Then tgl = dtp_Tanggal.SelectedDate.Value.Date
             Await IsiKurs6MataUangAsync(tgl)
         Catch ex As Exception
-            MessageBox.Show(ex.Message)
+            Pesan_Gagal(ex.Message)
         End Try
 
     End Sub

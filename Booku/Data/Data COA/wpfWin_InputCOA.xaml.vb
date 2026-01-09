@@ -141,7 +141,7 @@ Public Class wpfWin_InputCOA
                 If dr.HasRows Then KodeCOATersedia = False
                 AksesDatabase_General(Tutup)
                 If KodeCOATersedia = False Then
-                    MsgBox("Kode COA " & COA & " sudah ada..!" & Enter2Baris &
+                    Pesan_Peringatan("Kode COA " & COA & " sudah ada." & Enter2Baris &
                        "Silakan masukkan 'Kode COA' yang lain.")
                     txt_COA.Text = Kosongan
                     txt_COA.Focus()
@@ -228,31 +228,31 @@ Public Class wpfWin_InputCOA
 
         'Validasi Form :
         If COA = Kosongan Then
-            MsgBox("Silakan isi kolom 'Kode Akun'")
+            Pesan_Peringatan("Silakan isi kolom 'Kode Akun'.")
             txt_COA.Focus()
             Return
         End If
 
         If PanjangTeks(COA) <> JumlahDigitCOA Then
-            MsgBox("Jumlah Digit COA harus 5.")
+            Pesan_Peringatan("Jumlah Digit COA harus 5.")
             txt_COA.Focus()
             Return
         End If
 
         If AmbilAngka(COA) >= 90000 Then
-            MsgBox("Angka 9 tidak diperkenankan sebagai digit awal COA.")
+            Pesan_Peringatan("Angka 9 tidak diperkenankan sebagai digit awal COA.")
             txt_COA.Focus()
             Return
         End If
 
         If NamaAkun = Kosongan Then
-            MsgBox("Silakan isi kolom 'Nama Akun'")
+            Pesan_Peringatan("Silakan isi kolom 'Nama Akun'.")
             txt_NamaAkun.Focus()
             Return
         End If
 
         If DK = Kosongan Then
-            MsgBox("Silakan pilih 'Debet/Kredit'")
+            Pesan_Peringatan("Silakan pilih 'Debet/Kredit'.")
             cmb_DebetKredit.Focus()
             Return
         End If
@@ -386,12 +386,12 @@ Public Class wpfWin_InputCOA
         End If
         If ProsesSuntingDatabase = True Then
             If FungsiForm = FungsiForm_TAMBAH Then
-                MsgBox("Data COA BERHASIL disimpan.")
+                Pesan_Sukses("Data COA berhasil disimpan.")
                 ResetForm()
                 FungsiForm = FungsiForm_TAMBAH
             End If
             If FungsiForm = FungsiForm_EDIT Then
-                MsgBox("Data COA BERHASIL diedit.")
+                Pesan_Sukses("Data COA berhasil diedit.")
                 Select Case JalurMasuk
                     Case Halaman_DATACOA
                         usc_DataCOA.rowviewUtama("COA_") = COA
@@ -416,10 +416,10 @@ Public Class wpfWin_InputCOA
                 cmd = New OdbcCommand(" DELETE FROM tbl_COA WHERE COA = '" & COA & "' ", KoneksiDatabaseGeneral)
                 cmd.ExecuteNonQuery()
                 AksesDatabase_General(Tutup)
-                MsgBox("Data COA GAGAL disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
+                Pesan_Gagal("Data COA gagal disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
             End If
             If FungsiForm = FungsiForm_EDIT Then
-                MsgBox("Data COA GAGAL diedit." & Enter2Baris & teks_SilakanCobaLagi_Database)
+                Pesan_Gagal("Data COA gagal diedit." & Enter2Baris & teks_SilakanCobaLagi_Database)
                 'Jika penyimpanan gagal, tidak perlu revisi value Saldo Awal di tbl_COA, karena dengan sendirinya value tersebut akan ter-update sesuai value dari tbl_SaldoAwalCOA di databse transaksi secara otomatis saat masuk Tahun Buku.
             End If
         End If

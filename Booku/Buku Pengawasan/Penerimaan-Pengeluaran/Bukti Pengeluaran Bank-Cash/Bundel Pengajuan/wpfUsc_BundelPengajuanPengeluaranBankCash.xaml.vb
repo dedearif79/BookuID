@@ -274,9 +274,8 @@ Public Class wpfUsc_BundelPengajuanPengeluaranBankCash
 
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
-        Pilihan = MessageBox.Show("Dengan menghapus bundelan, data pengajuan terkait masih tetap ada dan berubah kembali menjadi 'Open'." & Enter2Baris &
-                                  "Lanjutkan hapus bundelan..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Dengan menghapus bundelan, data pengajuan terkait masih tetap ada dan berubah kembali menjadi 'Open'." & Enter2Baris &
+                               "Lanjutkan hapus bundelan?") Then Return
 
         AksesDatabase_Transaksi(Buka)
 
@@ -294,11 +293,11 @@ Public Class wpfUsc_BundelPengajuanPengeluaranBankCash
         AksesDatabase_Transaksi(Tutup)
 
         If StatusSuntingDatabase = True Then
-            PesanSukses("Bundelan berhasil dihapus, dan data pengajuan dikembalikan statusnya menjadi 'Open'.")
+            Pesan_Sukses("Bundelan berhasil dihapus, dan data pengajuan dikembalikan statusnya menjadi 'Open'.")
             TampilkanData_Bundel()
             X_frm_BukuPengawasanBuktiPengeluaranBankCash_X.TampilkanData()
         Else
-            PesanError("Bundelan gagal dihapus..!" & Enter2Baris & teks_SilakanCobaLagi_Database)
+            Pesan_Peringatan("Bundelan gagal dihapus." & Enter2Baris & teks_SilakanCobaLagi_Database)
         End If
 
 
@@ -469,8 +468,7 @@ Public Class wpfUsc_BundelPengajuanPengeluaranBankCash
     End Sub
 
     Private Sub btn_Tolak_Click(sender As Object, e As RoutedEventArgs) Handles btn_TolakPengajuan.Click
-        Pilihan = MessageBox.Show("Yakin akan menolak pengajuan terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menolak pengajuan terpilih?") Then Return
 
         AksesDatabase_Transaksi(Buka)
         cmdEDIT = New OdbcCommand(" UPDATE tbl_BuktiPengeluaran SET " &
@@ -483,7 +481,7 @@ Public Class wpfUsc_BundelPengajuanPengeluaranBankCash
         AksesDatabase_Transaksi(Tutup)
 
         If StatusSuntingDatabase = True Then
-            PesanSukses("Pengajuan terpilih telah DITOLAK.")
+            Pesan_Sukses("Pengajuan terpilih telah ditolak.")
             TampilkanData_Pengajuan()
         Else
             pesan_DataTerpilihGagalDiperbarui()

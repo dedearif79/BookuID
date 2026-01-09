@@ -1752,8 +1752,7 @@ Public Class wpfWin_InputBuktiPenerimaan
         SingkirkanData()
     End Sub
     Sub SingkirkanData()
-        Pilihan = MessageBox.Show("Yakin akan menyingkirkan item terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menyingkirkan item terpilih?") Then Return
         NomorUrutInvoice = 0
         If PembayaranTerjadwal Then
             Do While 1 = 1

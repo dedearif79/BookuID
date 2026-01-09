@@ -175,11 +175,7 @@ Public Class wpfUsc_DataUser
             JenisEksekusi = "mengaktifkan"
         End If
 
-        Dim Konfirmasi = MessageBox.Show("Yakin akan " & JenisEksekusi & " user '" & NamaLengkap_Terseleksi & "'?",
-                                         "Perhatian..!",
-                                         MessageBoxButton.YesNo,
-                                         MessageBoxImage.Question)
-        If Konfirmasi = MessageBoxResult.No Then Return
+        If Not TanyaKonfirmasi("Yakin ingin " & JenisEksekusi & " user '" & NamaLengkap_Terseleksi & "'?") Then Return
 
         AksesDatabase_General(Buka)
         cmd = New OdbcCommand(" UPDATE tbl_User SET Status_Aktif = '" & StatusAktifEdit & "' WHERE Username = '" & Username_Terseleksi & "' ", KoneksiDatabaseGeneral)

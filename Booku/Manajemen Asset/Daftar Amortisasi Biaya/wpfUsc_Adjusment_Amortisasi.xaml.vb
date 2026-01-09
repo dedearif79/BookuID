@@ -847,10 +847,9 @@ Public Class wpfUsc_Adjusment_Amortisasi
 
         Dim Pesan As String =
             "Pastikan data amortisasi (jika ada) sudah terposting seluruhnya sampai bulan " & BulanTerceklis_Akhir & " " &
-            "sebelum posting jurnal...!!!" & Enter2Baris &
-            "Lanjutkan posting..?"
-        Pilihan = MessageBox.Show(Pesan, "PERHATIAN..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+            "sebelum posting jurnal." & Enter2Baris &
+            "Lanjutkan posting?"
+        If Not TanyaKonfirmasi(Pesan) Then Return
 
         'SembunyikanSemuaKolomTabel()
         TampilkanData()
@@ -981,7 +980,7 @@ Public Class wpfUsc_Adjusment_Amortisasi
                 If jur_StatusPenyimpananJurnal_Lengkap = True Then
                     JumlahJurnalTerposting = JumlahJurnalTerposting + 1
                 Else
-                    MsgBox("Ups... Terjadi kesalahan pada proses penyimpanan..!")
+                    Pesan_Gagal("Terjadi kesalahan pada proses penyimpanan.")
                     Exit Do
                 End If
             End If
@@ -1001,17 +1000,17 @@ Public Class wpfUsc_Adjusment_Amortisasi
 
         If jur_StatusPenyimpananJurnal_PerBaris = True Then
             If JumlahJurnalTerposting = 1 Then
-                MsgBox("'Jurnal Amortisasi' Akun '" & NamaAkunBiaya_Terseleksi &
-                       "' Bulan " & BulanTerceklis_Awal & " BERHASIL diposting.")
+                Pesan_Sukses("'Jurnal Amortisasi' Akun '" & NamaAkunBiaya_Terseleksi &
+                       "' Bulan " & BulanTerceklis_Awal & " berhasil diposting.")
             Else
-                MsgBox("'Jurnal Amortisasi' Akun '" & NamaAkunBiaya_Terseleksi &
-                       "' BERHASIL diposting untuk Bulan " & BulanTerceklis_Awal & " - " & BulanTerceklis_Akhir & ".")
+                Pesan_Sukses("'Jurnal Amortisasi' Akun '" & NamaAkunBiaya_Terseleksi &
+                       "' berhasil diposting untuk Bulan " & BulanTerceklis_Awal & " - " & BulanTerceklis_Akhir & ".")
             End If
         Else
             If JumlahJurnalTerposting > 0 Then
-                MsgBox("'Jurnal Amortisasi' Akun '" & NamaAkunBiaya_Terseleksi & "' hanya terposting sebagian." & Enter2Baris & teks_SilakanUlangiLagi_Database)
+                Pesan_Peringatan("'Jurnal Amortisasi' Akun '" & NamaAkunBiaya_Terseleksi & "' hanya terposting sebagian." & Enter2Baris & teks_SilakanUlangiLagi_Database)
             Else
-                MsgBox("'Jurnal Amortisasi' Akun '" & NamaAkunBiaya_Terseleksi & "' GAGAL diposting." & Enter2Baris & teks_SilakanUlangiLagi_Database)
+                Pesan_Gagal("'Jurnal Amortisasi' Akun '" & NamaAkunBiaya_Terseleksi & "' gagal diposting." & Enter2Baris & teks_SilakanUlangiLagi_Database)
             End If
         End If
 

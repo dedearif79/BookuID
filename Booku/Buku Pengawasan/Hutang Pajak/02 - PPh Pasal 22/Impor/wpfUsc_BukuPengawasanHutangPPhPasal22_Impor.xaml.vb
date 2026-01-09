@@ -371,7 +371,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal22_Impor
         If NomorJV_Pembayaran_Terseleksi > 0 Then
             LihatJurnal(NomorJV_Pembayaran_Terseleksi)
         Else
-            MsgBox("Data terpilih BELUM masuk JURNAL.")
+            Pesan_Informasi("Data terpilih belum masuk jurnal.")
             Return
         End If
     End Sub
@@ -460,12 +460,9 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal22_Impor
 
     Private Sub btn_HapusSPT_Click(sender As Object, e As RoutedEventArgs) Handles btn_HapusSPT.Click
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus laporan terpilih..?" & Enter2Baris &
+        If Not TanyaKonfirmasi("Yakin ingin menghapus laporan terpilih?" & Enter2Baris &
                                   "Catatan :" & Enter1Baris &
-                                  "Data invoice tidak akan terhapus pada event ini.",
-                                  "Perhatian..!", MessageBoxButtons.YesNo)
-
-        If Pilihan = vbNo Then Return
+                                  "Data invoice tidak akan terhapus pada event ini.") Then Return
 
         AksesDatabase_Transaksi(Buka)
         cmd = New OdbcCommand(" DELETE FROM tbl_PengawasanPelaporanPajak " &

@@ -232,7 +232,7 @@ Public Class wpfUsc_BASTPembelian
         AlgoritmaBisaDikorek(NomorBAST_Terseleksi, BisaDiedit)
 
         If BisaDiedit = False Then
-            MsgBox("BAST ini sudah tidak dapat diedit." & Enter2Baris &
+            Pesan_Peringatan("BAST ini sudah tidak dapat diedit." & Enter2Baris &
                    "Jika ingin mengeditnya, silakan hapus terlebih dahulu data BAST ini yang tersimpan di Invoice.")
         End If
 
@@ -276,13 +276,12 @@ Public Class wpfUsc_BASTPembelian
         AlgoritmaBisaDikorek(NomorBAST_Terseleksi, BisaDihapus)
 
         If BisaDihapus = False Then
-            MsgBox("BAST ini sudah tidak dapat dihapus." & Enter2Baris &
-                   "Jika ingin mengahapusnya, silakan hapus terlebih dahulu data BAST ini yang tersimpan di Invoice.")
+            Pesan_Peringatan("BAST ini sudah tidak dapat dihapus." & Enter2Baris &
+                   "Jika ingin menghapusnya, silakan hapus terlebih dahulu data BAST ini yang tersimpan di Invoice.")
             Return
         End If
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_Transaksi(Buka)
 

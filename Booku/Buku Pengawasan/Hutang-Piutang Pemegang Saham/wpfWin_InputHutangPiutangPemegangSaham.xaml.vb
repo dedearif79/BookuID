@@ -413,34 +413,34 @@ Public Class wpfWin_InputHutangPiutangPemegangSaham
         End If
 
         If KodeLawanTransaksi = Kosongan Then
-            If HutangPiutang = hp_Hutang Then MsgBox("Silakan isi kolom 'Kreditur'.")
-            If HutangPiutang = hp_Piutang Then MsgBox("Silakan isi kolom 'Debitur'.")
+            If HutangPiutang = hp_Hutang Then Pesan_Peringatan("Silakan isi kolom 'Kreditur'.")
+            If HutangPiutang = hp_Piutang Then Pesan_Peringatan("Silakan isi kolom 'Debitur'.")
             txt_KodeLawanTransaksi.Focus()
             Return
         End If
 
         If JumlahPinjaman = 0 Then
-            MsgBox("Silakan isi kolom 'Jumlah Pinjaman'.")
+            Pesan_Peringatan("Silakan isi kolom 'Jumlah Pinjaman'.")
             txt_JumlahPinjaman.Focus()
             Return
         End If
 
         If txt_SaldoAwal.Text = Kosongan Then '(Sudah benar pakai txt_SaldoAwal, bukan SaldoAwal)
-            MsgBox("Silakan isi kolom 'Saldo Awal'.")
+            Pesan_Peringatan("Silakan isi kolom 'Saldo Awal'.")
             txt_SaldoAwal.Focus()
             Return
         End If
 
         If cmb_SaranaPembayaran.Visibility = Visibility.Visible Then
             If HutangPiutang = hp_Hutang And SaranaPembayaran = Kosongan Then
-                MsgBox("Silakan pilih 'Sarana Pembayaran'.")
+                Pesan_Peringatan("Silakan pilih 'Sarana Pembayaran'.")
                 cmb_SaranaPembayaran.Focus()
                 Return
             End If
         End If
 
         If BiayaAdministrasiBank > 0 And DitanggungOleh = Kosongan Then
-            MsgBox("Silakan pilih 'Ditanggung Oleh'.")
+            Pesan_Peringatan("Silakan pilih 'Ditanggung Oleh'.")
             cmb_DitanggungOleh.Focus()
             Return
         End If

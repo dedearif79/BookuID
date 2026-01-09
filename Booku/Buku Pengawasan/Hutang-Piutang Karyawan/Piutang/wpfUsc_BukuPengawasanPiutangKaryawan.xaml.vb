@@ -378,7 +378,7 @@ Public Class wpfUsc_BukuPengawasanPiutangKaryawan
         ElseIf NomorJV_Pembayaran_Terseleksi > 0 Then
             LihatJurnal(NomorJV_Pembayaran_Terseleksi)
         Else
-            MsgBox("Data terpilih BELUM masuk JURNAL.")
+            Pesan_Informasi("Data terpilih belum masuk jurnal.")
             Return
         End If
     End Sub
@@ -394,7 +394,7 @@ Public Class wpfUsc_BukuPengawasanPiutangKaryawan
     Private Sub btn_Edit_Click(sender As Object, e As RoutedEventArgs) Handles btn_Edit.Click
 
         If NomorJV_Terseleksi > 0 Then
-            MsgBox("Data terpilih sudah diposting. Tidak dapat diedit/hapus..!")
+            Pesan_Peringatan("Data terpilih sudah diposting. Tidak dapat diedit/hapus.")
             Return
         End If
 
@@ -420,17 +420,16 @@ Public Class wpfUsc_BukuPengawasanPiutangKaryawan
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
         If JumlahAngsuran_Terseleksi > 0 Then
-            MsgBox("Data terpilih sudah ada pembayaran. Tidak dapat dihapus..!")
+            Pesan_Peringatan("Data terpilih sudah ada pembayaran. Tidak dapat dihapus.")
             Return
         End If
 
         If NomorJV_Terseleksi > 0 Then
-            MsgBox("Data terpilih sudah diposting. Tidak dapat diedit/hapus..!")
+            Pesan_Peringatan("Data terpilih sudah diposting. Tidak dapat diedit/hapus.")
             Return
         End If
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_Transaksi(Buka)
 
@@ -630,19 +629,19 @@ Public Class wpfUsc_BukuPengawasanPiutangKaryawan
         If JenisTahunBuku = JenisTahunBuku_NORMAL And TermasukPiutangTahunIni_Terseleksi Then
 
             If NomorJV_Terseleksi = 0 Then
-                MsgBox("Data terpilih belum diposting. Tidak dapat menginput pencairan..!")
+                Pesan_Peringatan("Data terpilih belum diposting. Tidak dapat menginput pencairan.")
                 Return
             End If
 
         End If
 
         If BarisTerseleksi < 0 Then
-            MsgBox("Tidak ada baris data terseleksi.")
+            Pesan_Peringatan("Tidak ada baris data terseleksi.")
             Return
         End If
 
         If SaldoAkhirPerBaris_Terseleksi <= 0 Then
-            MsgBox("Data terpilih sudah LUNAS.")
+            Pesan_Informasi("Data terpilih sudah lunas.")
             Return
         End If
 

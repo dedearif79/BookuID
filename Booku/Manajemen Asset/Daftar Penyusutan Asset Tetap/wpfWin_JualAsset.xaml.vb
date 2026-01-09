@@ -129,9 +129,9 @@ Public Class wpfWin_JualAsset
         If dtp_TanggalTransaksi.SelectedDate Is Nothing Then Return
         Dim BulanInputan = dtp_TanggalTransaksi.SelectedDate.Value.Month
         If ProsesResetForm = False And BulanInputan <> BulanDijual_Angka Then
-            MsgBox("Tanggal Transaksi dikunci hanya untuk bulan '" & KonversiAngkaKeBulanString(BulanDijual_Angka) & "'." & Enter2Baris &
-                   "Silahkan Jurnal Penyusutan terlebih dahulu sebelum transaksi Penjualan Asset, " &
-                   "atau hubungi Costumer Service.")
+            Pesan_Peringatan("Tanggal Transaksi dikunci hanya untuk bulan '" & KonversiAngkaKeBulanString(BulanDijual_Angka) & "'." & Enter2Baris &
+                   "Silakan Jurnal Penyusutan terlebih dahulu sebelum transaksi Penjualan Asset, " &
+                   "atau hubungi Customer Service.")
             Return
         End If
         TanggalTransaksi = dtp_TanggalTransaksi.SelectedDate.Value
@@ -216,13 +216,13 @@ Public Class wpfWin_JualAsset
         HPP = NilaiSisaBuku
 
         If KelompokHarta <> KelompokHarta_Tanah And COA_AkumulasiPenyusutan = Kosongan Then
-            MsgBox("Silakan pilih Kode Akun untuk 'Akumulasi Penyusutan'.")
+            Pesan_Peringatan("Silakan pilih Kode Akun untuk 'Akumulasi Penyusutan'.")
             txt_COA_AkumulasiPenyusutan.Focus()
             Return
         End If
 
         If HargaSatuan = 0 Then
-            MsgBox("Silakan isi kolom 'Harga'.")
+            Pesan_Peringatan("Silakan isi kolom 'Harga'.")
             txt_HargaProduk.Focus()
             Return
         End If
@@ -326,11 +326,11 @@ Public Class wpfWin_JualAsset
         End If
 
         If StatusSuntingDatabase = True Then
-            MsgBox("Data Asset BERHASIL diperbarui.")
+            Pesan_Sukses("Data Asset berhasil diperbarui.")
             If usc_DaftarPenyusutanAssetTetap.StatusAktif Then usc_DaftarPenyusutanAssetTetap.RefreshTampilanData()
             PesanUntukProgrammer("NANTI DIBIKINKAN CODING OPSI UNTUK MENCETAK INVOICE, DISINI....!!!!!!")
         Else
-            PesanUntukProgrammer("Data Asset GAGAL diperbarui.")
+            PesanUntukProgrammer("Data Asset gagal diperbarui.")
         End If
 
         'Pilihan = MessageBox.Show("Apakah Anda ingin mencetaknya..?", "Perhatian..!", MessageBoxButtons.YesNo)

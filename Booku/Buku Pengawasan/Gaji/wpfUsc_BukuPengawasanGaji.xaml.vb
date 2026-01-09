@@ -1096,8 +1096,7 @@ Public Class wpfUsc_BukuPengawasanGaji
             Return
         End If
 
-        Pilihan = MessageBox.Show("Dengan menghapus data terpilih, maka Jurnal yang terkait dengannya akan dihapus pula." & Enter2Baris & "Yakin akan menghapus..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Dengan menghapus data terpilih, maka Jurnal yang terkait dengannya akan dihapus pula." & Enter2Baris & "Yakin ingin menghapus?") Then Return
 
         TrialBalance_Mentahkan()
 
@@ -1116,7 +1115,7 @@ Public Class wpfUsc_BukuPengawasanGaji
         TampilkanData()
         If usc_BukuPengawasanHutangPPhPasal21.StatusAktif Then usc_BukuPengawasanHutangPPhPasal21.TampilkanData()
 
-        MsgBox("Data terpilih BERHASIL dihapus.")
+        Pesan_Sukses("Data terpilih berhasil dihapus.")
 
     End Sub
 
@@ -1127,7 +1126,7 @@ Public Class wpfUsc_BukuPengawasanGaji
         ElseIf NomorJV_Pembayaran_Terseleksi > 0 Then
             LihatJurnal(NomorJV_Pembayaran_Terseleksi)
         Else
-            MsgBox("Data terpilih BELUM masuk JURNAL.")
+            Pesan_Informasi("Data terpilih belum masuk jurnal.")
             Return
         End If
     End Sub
@@ -1491,7 +1490,7 @@ Public Class wpfUsc_BukuPengawasanGaji
     Private Sub btn_InputBayar_Click(sender As Object, e As RoutedEventArgs) Handles btn_InputBayar.Click
 
         If SisaPembayaran_Terseleksi <= 0 Then
-            MsgBox("Gaji Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
+            Pesan_Informasi("Gaji Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
             Return
         End If
 

@@ -383,9 +383,9 @@ Public Class wpfWin_InputJumlahBankCashInOut
 
     Private Sub btn_OK_Click(sender As Object, e As RoutedEventArgs) Handles btn_OK.Click
         If JumlahInputan = 0 Then
-            PesanPeringatan("Silakan input angka dengan benar..!")
+            PesanPeringatan("Silakan input angka dengan benar.")
         ElseIf JumlahInputan > SisaTagihan Then
-            PesanPeringatan("Silakan input angka dengan benar..!")
+            PesanPeringatan("Silakan input angka dengan benar.")
         Else
             Proses = True
             Close()

@@ -592,8 +592,7 @@ Public Class wpfWin_InputSuratJalanPenjualan
     End Sub
 
     Private Sub btn_Singkirkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Singkirkan.Click
-        Pilihan = MessageBox.Show("Yakin akan menyingkirkan item terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menyingkirkan item terpilih?") Then Return
         rowviewUtama.Delete()
         Dim i = 0
         For Each row As DataRow In datatabelUtama.Rows
@@ -614,18 +613,18 @@ Public Class wpfWin_InputSuratJalanPenjualan
         End If
 
         If JumlahPO = 0 Then
-            MsgBox("Silakan input 'PO'.")
+            Pesan_Peringatan("Silakan input 'PO'.")
             btn_TambahPO.Focus()
             Return
         End If
 
         If JumlahProduk = 0 Then
-            MsgBox("Silakan tambahkan data 'Barang/Jasa'.")
+            Pesan_Peringatan("Silakan tambahkan data 'Barang/Jasa'.")
             Return
         End If
 
         If KodeCustomer = Nothing Then
-            MsgBox("silakan isi data 'Customer'.")
+            Pesan_Peringatan("Silakan isi data 'Customer'.")
             Return
         End If
 

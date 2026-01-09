@@ -209,7 +209,7 @@ Public Class wpfWin_InputInvoicePenjualan
                     frm_PilihJenisProdukInduk.ShowDialog()
                     JenisProduk_Induk = frm_PilihJenisProdukInduk.JenisProduk_Induk
                     If JenisProduk_Induk = Kosongan Then
-                        MsgBox("Silakan pilih Jenis Produk..!")
+                        Pesan_Peringatan("Silakan pilih Jenis Produk!")
                     End If
                 Loop
             End If
@@ -1336,7 +1336,7 @@ Public Class wpfWin_InputInvoicePenjualan
             And ProsesResetForm = False _
             Then
             Kosongkan_TabelSJBAST()
-            MsgBox("Daftar Surat Jalan / BAST telah dikosongkan." & Enter2Baris & "Silakan isi kembali.")
+            Pesan_Informasi("Daftar Surat Jalan / BAST telah dikosongkan." & Enter2Baris & "Silakan isi kembali.")
             btn_TambahSJBAST.Focus()
         End If
         KunciTanggalInvoice = False
@@ -2238,7 +2238,7 @@ Public Class wpfWin_InputInvoicePenjualan
         Next
         If JumlahBarisSJBAST > 0 Then
             If win_ListSJBAST.NomorPO_Terseleksi <> datatabelSJBAST.Rows(0)("Nomor_PO").ToString() Then
-                MsgBox("Nomor Surat Jalan / BAST yang berbeda PO tidak dapat ditambahkan ke dalam daftar..!")
+                Pesan_Peringatan("Nomor Surat Jalan / BAST yang berbeda PO tidak dapat ditambahkan ke dalam daftar!")
                 Return
             End If
         End If
@@ -2526,12 +2526,12 @@ Public Class wpfWin_InputInvoicePenjualan
             End If
         End If
         If PerusahaanSebagaiPKP And JenisPPN = Kosongan Then
-            MsgBox("Silakan pilih 'Jenis PPN' terlebih dahulu.")
+            Pesan_Peringatan("Silakan pilih 'Jenis PPN' terlebih dahulu.")
             cmb_JenisPPN.Focus()
             Return
         End If
         If JenisPPN <> JenisPPN_NonPPN And PerlakuanPPN = Kosongan Then
-            MsgBox("Silakan pilih 'Perlakuan PPN' terlebih dahulu.")
+            Pesan_Peringatan("Silakan pilih 'Perlakuan PPN' terlebih dahulu.")
             cmb_PerlakuanPPN.Focus()
             Return
         End If
@@ -2610,8 +2610,7 @@ Public Class wpfWin_InputInvoicePenjualan
 
 
     Private Sub btn_Singkirkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Singkirkan.Click
-        Pilihan = MessageBox.Show("Yakin akan menyingkirkan item terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menyingkirkan item terpilih?") Then Return
         rowviewUtama.Delete()
         Dim i = 0
         For Each row As DataRow In datatabelUtama.Rows
@@ -2774,7 +2773,7 @@ Public Class wpfWin_InputInvoicePenjualan
     Private Sub txt_TarifPPh_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_TarifPPh.TextChanged
         TextBoxFormatPersen_WPF(txt_TarifPPh, TarifPPh)
         If TarifPPh > 100 Then
-            MsgBox("Silakan isi kolom 'Diskon' dengan benar.")
+            Pesan_Peringatan("Silakan isi kolom 'Diskon' dengan benar.")
             txt_TarifPPh.Text = Kosongan
             txt_TarifPPh.Focus()
             Return
@@ -2799,7 +2798,7 @@ Public Class wpfWin_InputInvoicePenjualan
         If PPhDipotong < 0 Then
             txt_PPhDitanggung.Text = 0
             txt_PPhDitanggung.Focus()
-            MsgBox("Silakan isi kolom 'PPh Ditanggung' dengan benar!")
+            Pesan_Peringatan("Silakan isi kolom 'PPh Ditanggung' dengan benar!")
             Return
         End If
         KetersediaanTombolHitung(True)
@@ -2886,7 +2885,7 @@ Public Class wpfWin_InputInvoicePenjualan
 
         If datagridSJBAST.Visibility = Visibility.Visible Then
             If JumlahBarisSJBAST = 0 And InvoiceDenganPO Then
-                MsgBox("Silakan input 'Surat Jalan / BAST'.")
+                Pesan_Peringatan("Silakan input 'Surat Jalan / BAST'.")
                 btn_TambahSJBAST.Focus()
                 Return
             End If
@@ -2901,13 +2900,13 @@ Public Class wpfWin_InputInvoicePenjualan
         End If
 
         If JenisPPN = Kosongan Then
-            MsgBox("Silakan pilih 'Jenis PPN'.")
+            Pesan_Peringatan("Silakan pilih 'Jenis PPN'.")
             cmb_JenisPPN.Focus()
             Return
         End If
 
         If JenisPPN <> JenisPPN_NonPPN And PerlakuanPPN = Kosongan Then
-            MsgBox("Silakan pilih 'Perlakuan PPN'.")
+            Pesan_Peringatan("Silakan pilih 'Perlakuan PPN'.")
             cmb_PerlakuanPPN.Focus()
             Return
         End If
@@ -2923,19 +2922,19 @@ Public Class wpfWin_InputInvoicePenjualan
         End If
 
         If JumlahProduk = 0 Then
-            MsgBox("Silakan tambahkan data 'Barang/Jasa'.")
+            Pesan_Peringatan("Silakan tambahkan data 'Barang/Jasa'.")
             btn_Tambahkan.Focus()
             Return
         End If
 
         If AdaPPh Or cmb_JenisPPh.Visibility = Visibility.Visible Then
             If cmb_JenisPPh.Text = Kosongan Then
-                MsgBox("Silakan pilih 'Jenis PPh'.")
+                Pesan_Peringatan("Silakan pilih 'Jenis PPh'.")
                 cmb_JenisPPh.Focus()
                 Return
             End If
             If TarifPPh = 0 Then
-                MsgBox("Silakan isi 'Tarif PPh'.")
+                Pesan_Peringatan("Silakan isi 'Tarif PPh'.")
                 txt_TarifPPh.Focus()
                 Return
             End If
@@ -2983,19 +2982,19 @@ Public Class wpfWin_InputInvoicePenjualan
         If JenisTahunBuku = JenisTahunBuku_LAMPAU Then AdaPenyimpananjurnal = False
 
         If KodeCustomer = Nothing Then
-            MsgBox("silakan isi data 'Customer'.")
+            Pesan_Peringatan("Silakan isi data 'Customer'.")
             Return
         End If
 
         If rdb_JumlahHariJatuhTempo.IsChecked = False And rdb_TanggalJatuhTempo.IsChecked = False Then
-            MsgBox("Silakan isi kolom 'Jatuh Tempo'.")
+            Pesan_Peringatan("Silakan isi kolom 'Jatuh Tempo'.")
             rdb_JumlahHariJatuhTempo.IsChecked = True
             Return
         End If
 
         If rdb_JumlahHariJatuhTempo.IsChecked = True Then
             If JumlahHariJatuhTempo = 0 Then
-                MsgBox("Silakan isi kolom 'Jumlah Hari'.")
+                Pesan_Peringatan("Silakan isi kolom 'Jumlah Hari'.")
                 txt_JumlahHariJatuhTempo.Focus()
                 Return
             End If
@@ -3511,8 +3510,7 @@ Public Class wpfWin_InputInvoicePenjualan
             If JualAsset = True Then
                 win_JualAsset.NomorPenjualanAsset = NomorPenjualan
             Else
-                Pilihan = MessageBox.Show("Apakah Anda ingin mencetaknya..?", "Perhatian..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbYes Then Cetak(JenisFormCetak_Invoice, NomorInvoice, True, False)
+                If TanyaKonfirmasi("Apakah Anda ingin mencetaknya?") Then Cetak(JenisFormCetak_Invoice, NomorInvoice, True, False)
             End If
             ResetForm()
             PenyimpananInvoicePenjualan = True

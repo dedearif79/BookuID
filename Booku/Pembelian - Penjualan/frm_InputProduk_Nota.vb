@@ -332,7 +332,7 @@ Public Class frm_InputProduk_Nota
             DiskonPerItem_Persen = txt_DiskonPerItem_Persen.Text
         End If
         If DiskonPerItem_Persen > 100 Then
-            MsgBox("Silakan isi kolom 'Diskon' dengan benar.")
+            Pesan_Peringatan("Silakan isi kolom 'Diskon' dengan benar.")
             txt_DiskonPerItem_Persen.Text = Kosongan
             txt_DiskonPerItem_Persen.Focus()
             Return
@@ -408,25 +408,25 @@ Public Class frm_InputProduk_Nota
     Private Sub btn_Tambahkan_Click(sender As Object, e As EventArgs) Handles btn_Tambahkan.Click
 
         If JenisProduk_PerItem = Kosongan Then
-            MsgBox("Silakan pilih 'Jenis Produk'.")
+            Pesan_Peringatan("Silakan pilih 'Jenis Produk'.")
             cmb_JenisProduk.Focus()
             Return
         End If
 
         If NamaProduk = Kosongan Then
-            MsgBox("Silakan isi kolom 'Nama Barang/Jasa'.")
+            Pesan_Peringatan("Silakan isi kolom 'Nama Barang/Jasa'.")
             txt_NamaProduk.Focus()
             Return
         End If
 
         If JumlahProduk = 0 Then
-            MsgBox("Silakan isi kolom 'Jumlah'.")
+            Pesan_Peringatan("Silakan isi kolom 'Jumlah'.")
             txt_JumlahProduk.Focus()
             Return
         End If
 
         If HargaSatuan = 0 Then
-            MsgBox("Silakan isi kolom 'Harga Satuan'.")
+            Pesan_Peringatan("Silakan isi kolom 'Harga Satuan'.")
             txt_HargaSatuan.Focus()
             Return
         End If

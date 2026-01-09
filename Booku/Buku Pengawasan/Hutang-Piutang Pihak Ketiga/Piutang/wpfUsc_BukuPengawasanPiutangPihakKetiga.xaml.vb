@@ -331,7 +331,7 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
     Private Sub btn_EditPiutang_Click(sender As Object, e As RoutedEventArgs) Handles btn_EditPiutang.Click
 
         If JumlahAngsuran_Terseleksi > 0 Or NomorJV_Terseleksi > 0 Then
-            MsgBox("'Data Piutang' ini sudah tidak dapat diedit..!")
+            Pesan_Peringatan("'Data Piutang' ini sudah tidak dapat diedit.")
             Return
         End If
 
@@ -360,12 +360,11 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
     Private Sub btn_HapusPiutang_Click(sender As Object, e As RoutedEventArgs) Handles btn_HapusPiutang.Click
 
         If jumlahbarisJadwalAngsuran > 0 Or NomorJV_Terseleksi > 0 Then
-            MsgBox("'Data Piutang' ini sudah tidak dapat dihapus..!")
+            Pesan_Peringatan("'Data Piutang' ini sudah tidak dapat dihapus.")
             Return
         End If
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_Transaksi(Buka)
         cmd = New OdbcCommand(" DELETE FROM tbl_PengawasanPiutangPihakKetiga " &
@@ -566,7 +565,7 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             If TermasukPiutangTahunIni_Terseleksi Then
                 If NomorJV_Terseleksi = 0 Then
-                    MsgBox("Data terpilih belum diposting. Tidak dapat menginput jadwal..!")
+                    Pesan_Peringatan("Data terpilih belum diposting. Tidak dapat menginput jadwal.")
                     Return
                 End If
             End If
@@ -575,7 +574,7 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
         BersihkanSeluruhCeklis()
 
         If jadwal_SudahLengkap = True Then
-            MsgBox("Jadwal sudah lengkap..!" & Enter2Baris & "Anda sudah tidak dapat menginput 'Jadwal Angsuran' pada Piutang ini.")
+            Pesan_Informasi("Jadwal sudah lengkap." & Enter2Baris & "Anda sudah tidak dapat menginput 'Jadwal Angsuran' pada Piutang ini.")
             Return
         End If
 
@@ -639,8 +638,7 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
         End If
         AksesDatabase_Transaksi(Tutup)
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_Transaksi(Buka)
         cmd = New OdbcCommand(" DELETE FROM tbl_JadwalAngsuranPiutangPihakKetiga " &

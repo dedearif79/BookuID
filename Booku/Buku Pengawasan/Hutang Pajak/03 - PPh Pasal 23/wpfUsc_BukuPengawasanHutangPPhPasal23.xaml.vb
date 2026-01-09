@@ -1359,7 +1359,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
         If NomorJV_Pembayaran_Terseleksi > 0 Then
             LihatJurnal(NomorJV_Pembayaran_Terseleksi)
         Else
-            MsgBox("Data terpilih BELUM masuk JURNAL.")
+            Pesan_Informasi("Data terpilih belum masuk jurnal.")
             Return
         End If
     End Sub
@@ -1401,8 +1401,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
 
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         TrialBalance_Mentahkan()
 
@@ -1438,7 +1437,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
     Sub InputBayar_DenganBankCash()
 
         If SisaHutang_Terseleksi <= 0 Then
-            MsgBox("Hutang Pajak Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
+            Pesan_Informasi("Hutang Pajak Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
             Return
         End If
 
@@ -1450,7 +1449,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
         Select Case True
             Case rdb_KodeSetoran_100.IsChecked
                 If SisaHutang100_Terseleksi <= 0 Then
-                    MsgBox("Hutang " & JenisPajak & " Kode-100 Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
+                    Pesan_Informasi("Hutang " & JenisPajak & " Kode-100 Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
                     Return
                 End If
                 JumlahTagihan = PPh100_Terseleksi
@@ -1459,7 +1458,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
                 KodeSetoran = KodeSetoran_100
             Case rdb_KodeSetoran_101.IsChecked
                 If SisaHutang101_Terseleksi <= 0 Then
-                    MsgBox("Hutang " & JenisPajak & " Kode-101 Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
+                    Pesan_Informasi("Hutang " & JenisPajak & " Kode-101 Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
                     Return
                 End If
                 JumlahTagihan = PPh101_Terseleksi
@@ -1468,7 +1467,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
                 KodeSetoran = KodeSetoran_101
             Case rdb_KodeSetoran_102.IsChecked
                 If SisaHutang102_Terseleksi <= 0 Then
-                    MsgBox("Hutang " & JenisPajak & " Kode-102 Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
+                    Pesan_Informasi("Hutang " & JenisPajak & " Kode-102 Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
                     Return
                 End If
                 JumlahTagihan = PPh102_Terseleksi
@@ -1477,7 +1476,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
                 KodeSetoran = KodeSetoran_102
             Case rdb_KodeSetoran_103.IsChecked
                 If SisaHutang103_Terseleksi <= 0 Then
-                    MsgBox("Hutang " & JenisPajak & " Kode-103 Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
+                    Pesan_Informasi("Hutang " & JenisPajak & " Kode-103 Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
                     Return
                 End If
                 JumlahTagihan = PPh103_Terseleksi
@@ -1486,7 +1485,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
                 KodeSetoran = KodeSetoran_103
             Case rdb_KodeSetoran_104.IsChecked
                 If SisaHutang104_Terseleksi <= 0 Then
-                    MsgBox("Hutang " & JenisPajak & " Kode-104 Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
+                    Pesan_Informasi("Hutang " & JenisPajak & " Kode-104 Bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
                     Return
                 End If
                 JumlahTagihan = PPh104_Terseleksi
@@ -1792,12 +1791,9 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
 
     Private Sub btn_HapusSPT_Click(sender As Object, e As RoutedEventArgs) Handles btn_HapusSPT.Click
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus laporan terpilih..?" & Enter2Baris &
+        If Not TanyaKonfirmasi("Yakin ingin menghapus laporan terpilih?" & Enter2Baris &
                                   "Catatan :" & Enter1Baris &
-                                  "Data invoice tidak akan terhapus pada event ini.",
-                                  "Perhatian..!", MessageBoxButtons.YesNo)
-
-        If Pilihan = vbNo Then Return
+                                  "Data invoice tidak akan terhapus pada event ini.") Then Return
 
         AksesDatabase_Transaksi(Buka)
         cmd = New OdbcCommand(" DELETE FROM tbl_PengawasanPelaporanPajak " &

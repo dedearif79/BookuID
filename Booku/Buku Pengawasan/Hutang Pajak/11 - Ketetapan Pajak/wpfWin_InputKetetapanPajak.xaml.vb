@@ -160,8 +160,8 @@ Public Class wpfWin_InputKetetapanPajak
         End If
 
         If LanjutkanPenomoran = False Then
-            MsgBox("Kombinasi Nomor, Kode Jenis Pajak dan Tahun Ketetapan sudah ada." & Enter2Baris &
-                   "Silakan isi kolom-kolom tersebut dengan data yang lain..!")
+            Pesan_Peringatan("Kombinasi Nomor, Kode Jenis Pajak dan Tahun Ketetapan sudah ada." & Enter2Baris &
+                   "Silakan isi kolom-kolom tersebut dengan data yang lain.")
             txt_Nomor.Text = Kosongan
             txt_KodeJenisPajak.Text = Kosongan
             txt_TahunPajak_Inputan.Text = Kosongan
@@ -243,7 +243,7 @@ Public Class wpfWin_InputKetetapanPajak
                 Else
                     txt_KodeJenisPajak.Text = Kosongan
                     txt_JenisPajak.Text = Kosongan
-                    MsgBox("'Kode Jenis Pajak' tidak terdaftar di sistem." & Enter2Baris & "Silakan input kode yang sesuai.")
+                    Pesan_Peringatan("'Kode Jenis Pajak' tidak terdaftar di sistem." & Enter2Baris & "Silakan input kode yang sesuai.")
                     txt_KodeJenisPajak.Focus()
                 End If
                 AksesDatabase_General(Tutup)
@@ -284,7 +284,7 @@ Public Class wpfWin_InputKetetapanPajak
     Private Sub txt_TahunPajak_Inputan_LostFocus(sender As Object, e As RoutedEventArgs) Handles txt_TahunPajak_Inputan.LostFocus
         Dim JumlahKarakterTahunPajak As Integer = Microsoft.VisualBasic.Len(TahunPajak_Inputan.ToString)
         If JumlahKarakterTahunPajak <> 4 Then
-            MsgBox("Silakan isi kolom 'Tahun Pajak' dengan benar..!")
+            Pesan_Peringatan("Silakan isi kolom 'Tahun Pajak' dengan benar.")
             txt_TahunPajak_Inputan.Focus()
             Return
         End If
@@ -384,49 +384,49 @@ Public Class wpfWin_InputKetetapanPajak
     Private Sub btn_Simpan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Simpan.Click
 
         If Nomor = Kosongan Then
-            MsgBox("Silakan isi kolom 'Nomor'.")
+            Pesan_Peringatan("Silakan isi kolom 'Nomor'.")
             txt_Nomor.Focus()
             Return
         End If
 
         If KodeJenisPajak = Kosongan Then
-            MsgBox("Silakan isi kolom 'Kode Jenis Pajak'.")
+            Pesan_Peringatan("Silakan isi kolom 'Kode Jenis Pajak'.")
             txt_KodeJenisPajak.Focus()
             Return
         End If
 
         If MasaPajak_Awal = Kosongan Then
-            MsgBox("Silakan pilih 'Masa Pajak'.")
+            Pesan_Peringatan("Silakan pilih 'Masa Pajak'.")
             cmb_MasaPajak_Awal.Focus()
             Return
         End If
 
         If MasaPajak_Akhir = Kosongan Then
-            MsgBox("Silakan pilih 'Masa Pajak'.")
+            Pesan_Peringatan("Silakan pilih 'Masa Pajak'.")
             cmb_MasaPajak_Akhir.Focus()
             Return
         End If
 
         If TahunPajak_Inputan = 0 Then
-            MsgBox("Silakan isi kolom 'Tahun Pajak'.")
+            Pesan_Peringatan("Silakan isi kolom 'Tahun Pajak'.")
             txt_TahunPajak_Inputan.Focus()
             Return
         End If
 
         If PokokPajak + Sanksi = 0 Then
-            MsgBox("Silakan isi kolom 'Pokok Pajak' dan/atau kolom 'Sanksi'.")
+            Pesan_Peringatan("Silakan isi kolom 'Pokok Pajak' dan/atau kolom 'Sanksi'.")
             txt_PokokPajak.Focus()
             Return
         End If
 
         If PokokPajak > 0 And KodeAkun_PokokPajak = Kosongan Then
-            MsgBox("Silakan pilih 'Kode Akun' untuk Pokok Pajak.")
+            Pesan_Peringatan("Silakan pilih 'Kode Akun' untuk Pokok Pajak.")
             txt_KodeAkun_PokokPajak.Focus()
             Return
         End If
 
         If JumlahKetetapan = 0 Then
-            MsgBox("Silakan isi kolom 'Jumlah Ketetapan'.")
+            Pesan_Peringatan("Silakan isi kolom 'Jumlah Ketetapan'.")
             txt_JumlahKetetapan.Focus()
             Return
         End If

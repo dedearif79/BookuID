@@ -475,7 +475,7 @@ Public Class wpfWin_GantiTahunBuku
                     dr = cmd.ExecuteReader
                     ProsesGantiTahun = True
                 Catch ex As Exception
-                    MsgBox("Kesalahan Teknis : GTB-009")
+                    Pesan_Gagal("Kesalahan Teknis: GTB-009")
                     ProsesGantiTahun = False
                 End Try
                 If ProsesGantiTahun = True Then
@@ -549,13 +549,13 @@ Public Class wpfWin_GantiTahunBuku
 
 
         If ProsesGantiTahun = True Then
-            If FungsiForm <> FungsiForm_EksekusiSub_PROSESGANTITAHUNBUKU Then PesanSukses("Anda memasuki Tahun Buku " & TahunBukuAktif & ".")
+            If FungsiForm <> FungsiForm_EksekusiSub_PROSESGANTITAHUNBUKU Then Pesan_Sukses("Anda memasuki Tahun Buku " & TahunBukuAktif & ".")
             Notifikasi_AwalMasukTahunBuku()
             UpdateInfoBulanBukuAktif()
             UpdateDataKursAkhirBulan()
             TesKoneksiDatabaseTransaksiYangBaru()
         Else
-            MsgBox("Mohon maaf, Anda dikeluarkan dari LOGIN karena ada kesalahan teknis" _
+            Pesan_Gagal("Mohon maaf, Anda dikeluarkan dari LOGIN karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             LoginGagal()
             Return

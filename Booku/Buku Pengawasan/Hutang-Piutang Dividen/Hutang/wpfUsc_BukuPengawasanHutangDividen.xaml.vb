@@ -210,7 +210,7 @@ Public Class wpfUsc_BukuPengawasanHutangDividen
         ElseIf NomorJV_Pembayaran_Terseleksi > 0 Then
             LihatJurnal(NomorJV_Pembayaran_Terseleksi)
         Else
-            MsgBox("Data terpilih BELUM masuk JURNAL.")
+            Pesan_Informasi("Data terpilih belum masuk jurnal.")
             Return
         End If
     End Sub
@@ -248,8 +248,7 @@ Public Class wpfUsc_BukuPengawasanHutangDividen
 
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_Transaksi(Buka)
         cmdHAPUS = New OdbcCommand(" DELETE FROM tbl_PengawasanHutangDividen " &
@@ -271,7 +270,7 @@ Public Class wpfUsc_BukuPengawasanHutangDividen
     Private Sub btn_Bayar_Click(sender As Object, e As RoutedEventArgs) Handles btn_Bayar.Click
 
         If SisaHutang_Terseleksi <= 0 Then
-            MsgBox("Data terpilih sudah LUNAS.")
+            Pesan_Informasi("Data terpilih sudah lunas.")
             Return
         End If
 

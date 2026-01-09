@@ -246,7 +246,7 @@ Public Class wpfUsc_SuratJalanPenjualan
         AlgoritmaBisaDikorek(NomorSJ_Terseleksi, BisaDiedit)
 
         If BisaDiedit = False Then
-            MsgBox("Surat Jalan ini sudah tidak dapat diedit." & Enter2Baris &
+            Pesan_Peringatan("Surat Jalan ini sudah tidak dapat diedit." & Enter2Baris &
                    "Jika ingin mengeditnya, silakan hapus terlebih dahulu data Surat Jalan ini yang tersimpan di Invoice.")
         End If
 
@@ -292,13 +292,12 @@ Public Class wpfUsc_SuratJalanPenjualan
         AlgoritmaBisaDikorek(NomorSJ_Terseleksi, BisaDihapus)
 
         If BisaDihapus = False Then
-            MsgBox("Surat Jalan ini sudah tidak dapat dihapus." & Enter2Baris &
-                   "Jika ingin mengahapusnya, silakan hapus terlebih dahulu data Surat Jalan ini yang tersimpan di Invoice.")
+            Pesan_Peringatan("Surat Jalan ini sudah tidak dapat dihapus." & Enter2Baris &
+                   "Jika ingin menghapusnya, silakan hapus terlebih dahulu data Surat Jalan ini yang tersimpan di Invoice.")
             Return
         End If
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_Transaksi(Buka)
 

@@ -464,7 +464,7 @@ Public Class wpfWin_InputReturPembelian
         For Each row As DataRow In datatabelInvoice.Rows  '(Cegah Input Invoice lebih dari satu kali)
             TelusurInvoice = row("Nomor_Invoice")
             If TelusurInvoice = NomorInvoice Then
-                MsgBox("Nomor Invoice ini sudah ditambahkan..!")
+                Pesan_Peringatan("Nomor Invoice ini sudah ditambahkan!")
                 Return
             End If
         Next
@@ -519,7 +519,7 @@ Public Class wpfWin_InputReturPembelian
             If datatabelInvoice.Rows.Count > 0 Then
                 'dgv_Invoice.Rows.RemoveAt(dgv_Invoice.RowCount - 1)
                 'BersihkanSeleksi_TabelProduk()
-                MsgBox("Tidak ada produk yang bisa ditambahkan pada Invoice ini.")
+                Pesan_Informasi("Tidak ada produk yang bisa ditambahkan pada Invoice ini.")
             End If
         Else
             datatabelInvoice.Rows.Add(NomorInvoice, TanggalInvoice, KodeProjectProduk)        '<-- Penambahan Baris Invoice
@@ -724,8 +724,7 @@ Public Class wpfWin_InputReturPembelian
 
 
     Private Sub btn_Singkirkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Singkirkan.Click
-        Pilihan = MessageBox.Show("Yakin akan menyingkirkan item terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menyingkirkan item terpilih?") Then Return
         rowviewUtama.Delete()
         Dim i = 0
         For Each row As DataRow In datatabelUtama.Rows
@@ -810,19 +809,19 @@ Public Class wpfWin_InputReturPembelian
         End If
 
         If NomorRetur = Kosongan Then
-            MsgBox("Silakan isi kolom 'Nomor Retur'.")
+            Pesan_Peringatan("Silakan isi kolom 'Nomor Retur'.")
             txt_NomorRetur.Focus()
             Return
         End If
 
         If JumlahBaris = 0 Then
-            MsgBox("Silakan tambahkan data 'Barang/Jasa'.")
+            Pesan_Peringatan("Silakan tambahkan data 'Barang/Jasa'.")
             btn_TambahInvoice.Focus()
             Return
         End If
 
         If KodeSupplier = Nothing Then
-            MsgBox("silakan isi data 'Supplier'.")
+            Pesan_Peringatan("Silakan isi data 'Supplier'.")
             Return
         End If
 

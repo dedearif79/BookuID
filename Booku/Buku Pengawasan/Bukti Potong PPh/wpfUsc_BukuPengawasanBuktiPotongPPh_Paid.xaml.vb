@@ -539,8 +539,7 @@ Public Class wpfUsc_BukuPengawasanBuktiPotongPPh_Paid
 
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data 'Bukti Potong' pada baris terpilih?", "Perhatian..!", MessageBoxButton.YesNo)
-        If Pilihan = MessageBoxResult.No Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data 'Bukti Potong' pada baris terpilih?") Then Return
 
         Dim QueryAwal = Kosongan
         Dim QueryAkhir = Kosongan

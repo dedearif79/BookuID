@@ -178,13 +178,13 @@ Public Class wpfWin_InputHutangPPhPasal25
         TrialBalance_Mentahkan()
 
         If MasaPajak = Kosongan Then
-            MsgBox("Silakan pilih 'Masa Pajak'.")
+            Pesan_Peringatan("Silakan pilih 'Masa Pajak'.")
             cmb_MasaPajak.Focus()
             Return
         End If
 
         If JumlahTerutang = 0 Then
-            MsgBox("Silakan isi kolom 'Jumlah Terutang'.")
+            Pesan_Peringatan("Silakan isi kolom 'Jumlah Terutang'.")
             txt_JumlahTerutang.Text = Kosongan
             txt_JumlahTerutang.Focus()
             Return
@@ -194,15 +194,13 @@ Public Class wpfWin_InputHutangPPhPasal25
             SistemPenomoranOtomatis_NomorJV()
             NomorJV = jur_NomorJV
             If JenisTahunBuku = JenisTahunBuku_NORMAL Then
-                Pilihan = MessageBox.Show(teks_DataAkanDisimpanDiBukuPengawasanDanJurnal, "Perhatian..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbNo Then Return
+                If Not TanyaKonfirmasi(teks_DataAkanDisimpanDiBukuPengawasanDanJurnal) Then Return
             End If
         End If
 
         If FungsiForm = FungsiForm_EDIT Then
             If JenisTahunBuku = JenisTahunBuku_NORMAL Then
-                Pilihan = MessageBox.Show(teks_PerubahanDataAkanBerpengaruhPadaJurnal, "Perhatian..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbNo Then Return
+                If Not TanyaKonfirmasi(teks_PerubahanDataAkanBerpengaruhPadaJurnal) Then Return
             End If
         End If
 
@@ -296,12 +294,12 @@ Public Class wpfWin_InputHutangPPhPasal25
 
         If StatusSuntingDatabase = True Then
             ResetForm()
-            If FungsiForm = FungsiForm_TAMBAH Then MsgBox("Data BERHASIL disimpan.")
-            If FungsiForm = FungsiForm_EDIT Then MsgBox("Data BERHASIL diedit.")
+            If FungsiForm = FungsiForm_TAMBAH Then Pesan_Sukses("Data berhasil disimpan.")
+            If FungsiForm = FungsiForm_EDIT Then Pesan_Sukses("Data berhasil diedit.")
             If usc_BukuPengawasanHutangPPhPasal25.StatusAktif Then usc_BukuPengawasanHutangPPhPasal25.RefreshTampilanData()
             Me.Close()
         Else
-            MsgBox("Data GAGAL disimpan..!" & Enter2Baris & teks_SilakanCobaLagi_Database)
+            Pesan_Peringatan("Data gagal disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
         End If
 
     End Sub

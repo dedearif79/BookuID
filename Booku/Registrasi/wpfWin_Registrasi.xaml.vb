@@ -66,7 +66,7 @@ Public Class wpfWin_Registrasi
                     txt_JumlahPerangkat.Text = JumlahPerangkat_Reg
                     btn_CekKetersediaan.IsEnabled = False
                     RegistrasiOnline = True
-                    MsgBox("Selamat. Nomor Seri Produk tersedia." & Enter2Baris & "Silakan lengkapi data perusahaan.")
+                    Pesan_Sukses("Nomor Seri Produk tersedia." & Enter2Baris & "Silakan lengkapi data perusahaan.")
                     win_Registrasi_IsiDataCompany = New wpfWin_Registrasi_IsiDataCompany
                     win_Registrasi_IsiDataCompany.ShowDialog()
                     win_Registrasi_IsiDataUser = New wpfWin_Registrasi_IsiDataUser
@@ -74,11 +74,11 @@ Public Class wpfWin_Registrasi
                     btn_Kirim.IsEnabled = True
                     btn_Kirim.Focus()
                 Else
-                    MsgBox("Nomor Seri Produk tidak tersedia.")
+                    Pesan_Peringatan("Nomor Seri Produk tidak tersedia.")
                     btn_Kirim.IsEnabled = False
                 End If
             Else
-                MsgBox("Nomor Seri Produk tidak tersedia.")
+                Pesan_Peringatan("Nomor Seri Produk tidak tersedia.")
                 btn_Kirim.IsEnabled = False
             End If
         Else
@@ -93,9 +93,8 @@ Public Class wpfWin_Registrasi
         Dim Pesan As String = "Aplikasi tidak dapat terhubung ke server. Akan tetapi Anda masih bisa melakukan registrasi secara offline." & Enter2Baris &
             "Registrasi online dapat dilakukan menyusul setelah aplikasi dapat terhubung kembali ke server." & Enter2Baris &
             "Lanjutkan registrasi offline?"
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButton.YesNo)
-        If Pilihan = MessageBoxResult.No Then Return
-        PesanPeringatan("Fitur registrasi offline belum tersedia.")
+        If Not TanyaKonfirmasi(Pesan) Then Return
+        Pesan_Informasi("Fitur registrasi offline belum tersedia.")
         Return
         txt_NomorSeriProduk.Text = NomorSeriProduk_Kosongan
         ID_Customer_Reg = ID_Customer_Kosongan
@@ -119,7 +118,7 @@ Public Class wpfWin_Registrasi
         PengulanganRegistrasi += 1
         If PengulanganRegistrasi >= 3 Then
             PengulanganRegistrasi = 0
-            MsgBox("Coba atur ulang konfigurasi koneksi database." & Enter2Baris & "Jika Anda mengalami kesulitan, silakan hubungi Tim IT.")
+            Pesan_Peringatan("Coba atur ulang konfigurasi koneksi database." & Enter2Baris & "Jika Anda mengalami kesulitan, silakan hubungi Tim IT.")
             PengaturanKoneksi()
             If StatusKoneksiTesKoneksiDbSAT = False Then
                 Return
@@ -140,7 +139,7 @@ Public Class wpfWin_Registrasi
 
         'Isi Data Perusahaan
         If HasilPembuatanDatabaseGeneral = True Then
-            MsgBox("Pembuatan Kerangka Database 'General' Berhasil.")
+            Pesan_Sukses("Pembuatan kerangka database berhasil.")
             AksesDatabase_General(Buka)
             Dim QueryIsiTabel
             ExpireSaatRegistrasi = Microsoft.VisualBasic.Left(Today, 10)
@@ -175,14 +174,14 @@ Public Class wpfWin_Registrasi
             Try
                 cmd.ExecuteNonQuery()
                 HasilPembuatanDatabaseGeneral = True
-                MsgBox("Pengisian Data 'Profil Perusahaan' Berhasil.")
+                Pesan_Sukses("Pengisian data profil perusahaan berhasil.")
             Catch ex As Exception
                 HasilPembuatanDatabaseGeneral = False
-                MsgBox("Pengisian Data 'Profil Perusahaan' Gagal.")
+                Pesan_Gagal("Pengisian data profil perusahaan gagal.")
             End Try
             AksesDatabase_General(Tutup)
         Else
-            MsgBox("Pembuatan Database 'Perusahaan' Gagal.")
+            Pesan_Gagal("Pembuatan database perusahaan gagal.")
         End If
 
         'Isi Data SC (Kode Khusus)
@@ -206,14 +205,14 @@ Public Class wpfWin_Registrasi
             Try
                 cmd.ExecuteNonQuery()
                 HasilPembuatanDatabaseGeneral = True
-                MsgBox("Pengisian Data 'Pendukung' Berhasil.")
+                Pesan_Sukses("Pengisian data pendukung berhasil.")
             Catch ex As Exception
                 HasilPembuatanDatabaseGeneral = False
-                MsgBox("Pengisian Data 'Pendukung' Gagal.")
+                Pesan_Gagal("Pengisian data pendukung gagal.")
             End Try
             AksesDatabase_General(Tutup)
         Else
-            MsgBox("Pembuatan Database 'Perusahaan' Gagal.")
+            Pesan_Gagal("Pembuatan database perusahaan gagal.")
         End If
 
         'Isi Data User Perdana (Super User)
@@ -228,10 +227,10 @@ Public Class wpfWin_Registrasi
             Try
                 cmd.ExecuteNonQuery()
                 HasilPembuatanDatabaseGeneral = True
-                MsgBox("Pengisian Data 'User Perdana' Berhasil.")
+                Pesan_Sukses("Pengisian data user perdana berhasil.")
             Catch ex As Exception
                 HasilPembuatanDatabaseGeneral = False
-                MsgBox("Pengisian Data 'User Perdana' Gagal.")
+                Pesan_Gagal("Pengisian data user perdana gagal.")
             End Try
             AksesDatabase_General(Tutup)
         End If
@@ -273,10 +272,10 @@ Public Class wpfWin_Registrasi
                 VersiBooku_SisiDatabase = VersiBooku_SisiPublic
                 ApdetBooku_SisiDatabase = ApdetBooku_SisiPublic
                 HasilPembuatanDatabaseGeneral = True
-                MsgBox("Pengisian Data 'Info Aplikasi' Berhasil.")
+                Pesan_Sukses("Pengisian data info aplikasi berhasil.")
             Catch ex As Exception
                 HasilPembuatanDatabaseGeneral = False
-                MsgBox("Pengisian Data 'Info Aplikasi' Gagal.")
+                Pesan_Gagal("Pengisian data info aplikasi gagal.")
             End Try
             AksesDatabase_General(Tutup)
         End If
@@ -320,10 +319,10 @@ Public Class wpfWin_Registrasi
                 Try
                     cmdPublic.ExecuteNonQuery()
                     ProsesRegistrasiPerusahaan = True
-                    MsgBox("Pengisian Data 'Client' Berhasil.")
+                    Pesan_Sukses("Pengisian data client berhasil.")
                 Catch ex As Exception
                     ProsesRegistrasiPerusahaan = False
-                    MsgBox("Pengisian Data 'Client' Gagal.")
+                    Pesan_Gagal("Pengisian data client gagal.")
                 End Try
                 TutupDatabasePublic()
             Else
@@ -363,10 +362,10 @@ Public Class wpfWin_Registrasi
                 Try
                     cmdPublic.ExecuteNonQuery()
                     ProsesRegistrasiPerusahaan = True
-                    MsgBox("ID Komputer Berhasil Didaftarkan.")
+                    Pesan_Sukses("ID komputer berhasil didaftarkan.")
                 Catch ex As Exception
                     ProsesRegistrasiPerusahaan = False
-                    MsgBox("ID Komputer Gagal Didaftarkan.")
+                    Pesan_Gagal("ID komputer gagal didaftarkan.")
                 End Try
                 TutupDatabasePublic()
             Else
@@ -494,7 +493,7 @@ Public Class wpfWin_Registrasi
             End If
 
             'Pesan Gagal
-            MsgBox("Registrasi Gagal..!" & Enter2Baris & teks_SilakanCobaLagi_Internet)
+            Pesan_Gagal("Registrasi gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
             btn_CekKetersediaan.IsEnabled = True
             btn_Batal.Content = "Batal"
 

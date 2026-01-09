@@ -660,7 +660,7 @@ Public Class wpfUsc_InvoicePembelian
         dr_ExecuteReader()
         dr.Read()
         If dr.HasRows Then
-            MsgBox("Invoice ini tidak dapat diedit karena sudah ada data pembayaran..!" & Enter2Baris &
+            Pesan_Peringatan("Invoice ini tidak dapat diedit karena sudah ada data pembayaran." & Enter2Baris &
                    "Jika ingin mengeditnya, silakan hapus terlebih dahulu data pembayaran terkait Invoice ini.")
             BisaDiedit = False
         Else
@@ -805,14 +805,13 @@ Public Class wpfUsc_InvoicePembelian
         dr_ExecuteReader()
         dr.Read()
         If dr.HasRows Then
-            MsgBox("Invoice ini tidak dapat dihapus karena sudah ada data pembayaran..!" & Enter2Baris &
+            Pesan_Peringatan("Invoice ini tidak dapat dihapus karena sudah ada data pembayaran." & Enter2Baris &
                    "Jika ingin menghapusnya, silakan hapus terlebih dahulu data pembayaran terkait Invoice ini.")
             Return
         End If
         AksesDatabase_Transaksi(Tutup)
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         'Hapus data-data terkait :
         BukaDatabaseTransaksiGeneral() '----------------------------------------
@@ -863,7 +862,7 @@ Public Class wpfUsc_InvoicePembelian
 
     Private Sub btn_LihatJurnal_Click(sender As Object, e As RoutedEventArgs) Handles btn_LihatJurnal.Click
         If NomorJV_Terseleksi = 0 Then
-            MsgBox("Invoice ini belum didorong ke Jurnal.")
+            Pesan_Informasi("Invoice ini belum didorong ke Jurnal.")
             Return
         End If
         LihatJurnal(NomorJV_Terseleksi)
@@ -895,7 +894,7 @@ Public Class wpfUsc_InvoicePembelian
         End If
         AksesDatabase_Transaksi(Tutup)
         If Invoice_SudahDibetulkan = True Then
-            MsgBox("Invoice ini sudah pernah dibetulkan." & Enter2Baris & "Silakan pilih pembetulan yang terakhir terkait invoice ini.")
+            Pesan_Peringatan("Invoice ini sudah pernah dibetulkan." & Enter2Baris & "Silakan pilih pembetulan yang terakhir terkait invoice ini.")
             Return
         End If
 

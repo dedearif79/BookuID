@@ -195,9 +195,9 @@ Public Class frm_BOOKU
         Try
             DataVersiDanApdetAplikasi = File.ReadLines(FilePathVersiDanApdetAplikasi)
         Catch ex As Exception
-            MsgBox("SISTEM TERKUNCI..!!!" & Enter2Baris &
-                   "File " & NamaFileVersiDanApdetAplikasi & " terkorupsi." & Enter2Baris &
-                   "Silakan hubungi Developer Aplikasi untuk mengatasi masalah ini.")
+            Pesan_Gagal("Sistem terkunci." & Enter2Baris &
+                   "File " & NamaFileVersiDanApdetAplikasi & " rusak." & Enter2Baris &
+                   "Silakan hubungi Developer untuk mengatasi masalah ini.")
             End
         End Try
         Dim i = 0
@@ -209,9 +209,9 @@ Public Class frm_BOOKU
 
         If VersiBooku_SisiAplikasi = teks_DekripsiTeksGagal _
             Or ApdetBooku_SisiAplikasi = teks_DekripsiTeksGagal Then
-            MsgBox("SISTEM TERKUNCI..!!!" & Enter2Baris &
-                   "File " & NamaFileVersiDanApdetAplikasi & " terkorupsi." & Enter2Baris &
-                   "Silakan hubungi Developer Aplikasi untuk mengatasi masalah ini.")
+            Pesan_Gagal("Sistem terkunci." & Enter2Baris &
+                   "File " & NamaFileVersiDanApdetAplikasi & " rusak." & Enter2Baris &
+                   "Silakan hubungi Developer untuk mengatasi masalah ini.")
             End
         End If
 
@@ -222,7 +222,7 @@ Public Class frm_BOOKU
                 win_Updater = New wpfWin_Updater
                 win_Updater.ShowDialog()
                 If ProsesUpdate_Aplikasi = False Then
-                    PesanPeringatan("Ups..! Prose update gagal..!" & Enter2Baris &
+                    Pesan_Peringatan("Proses update gagal." & Enter2Baris &
                                     "Aplikasi tetap dijalankan dengan versi yang belum diperbarui.")
                     HapusFolder(FolderTempUpdater)
                 End If
@@ -282,7 +282,7 @@ Public Class frm_BOOKU
             BukaFormLogin()
         Else
             'Halaman Registrasi
-            MsgBox("Perangkat Anda belum terdaftar untuk menggunakan aplikasi ini." & Enter2Baris & "Silakan mendaftar terlebih dahulu.")
+            Pesan_Informasi("Perangkat Anda belum terdaftar untuk menggunakan aplikasi ini." & Enter2Baris & "Silakan mendaftar terlebih dahulu.")
             BukaDatabasePublic()
             cmdPublic = New MySqlCommand(" SELECT * FROM tbl_customer WHERE Nomor_Seri_Produk = '" & NomorSeriProduk & "' ", KoneksiDatabasePublic)
             drPublic = cmdPublic.ExecuteReader
@@ -295,7 +295,7 @@ Public Class frm_BOOKU
                     ProsesRegistrasiPerangkat = True
                 Catch ex As Exception
                     ProsesRegistrasiPerangkat = False
-                    MsgBox("Registrasi Perangkat Gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
+                    Pesan_Gagal("Registrasi perangkat gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
                 End Try
             End If
             TutupDatabasePublic()
@@ -308,7 +308,7 @@ Public Class frm_BOOKU
                 frm_RegistrasiPerangkat.ShowDialog()
             End If
             If ProsesRegistrasiPerangkat = True Then
-                MsgBox("Selamat..!" & Enter2Baris & "Proses registrasi perangkat berhasil.")
+                Pesan_Sukses("Proses registrasi perangkat berhasil.")
                 BukaFormLogin()
             Else
                 End
@@ -343,11 +343,11 @@ Public Class frm_BOOKU
                         Else
                             win_GantiTahunBuku = New wpfWin_GantiTahunBuku
                             win_GantiTahunBuku.FungsiForm = FungsiForm_EksekusiSub_PROSESGANTITAHUNBUKU
-                            BeginInvoke(Sub() MsgBox("Anda memasuki Tahun Buku " & TahunBukuAktif & "."))
+                            BeginInvoke(Sub() Pesan_Informasi("Anda memasuki Tahun Buku " & TahunBukuAktif & "."))
                             win_GantiTahunBuku.ShowDialog()
                         End If
                     Else
-                        MsgBox("Anda belum memiliki Database Transaksi untuk dikelola." _
+                        Pesan_Informasi("Anda belum memiliki Database Transaksi untuk dikelola." _
                                & Enter2Baris & "Silakan buat database terlebih dahulu yang akan dipandu oleh aplikasi ini.")
                         win_BuatDatabaseBukuBaru = New wpfWin_BuatDatabaseBukuBaru
                         win_BuatDatabaseBukuBaru.ResetForm()
@@ -361,7 +361,7 @@ Public Class frm_BOOKU
                 End If
                 If TahunBukuAktif = Nothing Then
                     LoginGagal() 'Ini penting, untuk mencegah user masuk log/applikasi tanpa memilih Tahun Buku.
-                    MsgBox("Login dibatalkan karena Anda tidak memilih Tahun Buku untuk dikelola.")
+                    Pesan_Peringatan("Login dibatalkan karena Anda tidak memilih Tahun Buku untuk dikelola.")
                 Else
                     Me.Text = JudulAplikasi
                 End If
@@ -376,7 +376,7 @@ Public Class frm_BOOKU
     End Sub
 
     Sub MenuIniMasihDalamPengembangan()
-        MsgBox("Mohon maaf. Menu ini masih dalam pengembangan.")
+        Pesan_Informasi("Menu ini masih dalam pengembangan.")
     End Sub
 
 
@@ -405,8 +405,7 @@ Public Class frm_BOOKU
     'Cadangkan Database :
     Private Sub mnu_Database_Cadangkan_Click(sender As Object, e As EventArgs) Handles mnu_Database_Cadangkan.Click
         Dim PesanPertanyaan As String = "Anda akan melakukan pencadangan database."
-        Pilihan = MessageBox.Show(PesanPertanyaan & Enter2Baris & "Lanjutkan proses..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi(PesanPertanyaan & Enter2Baris & "Lanjutkan?") Then Return
         win_BackupData = New wpfWin_BackupData
         win_BackupData.ResetForm()
         win_BackupData.ShowDialog()

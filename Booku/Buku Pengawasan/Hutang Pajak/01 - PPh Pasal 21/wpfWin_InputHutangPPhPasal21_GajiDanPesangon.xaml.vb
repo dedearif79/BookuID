@@ -760,11 +760,11 @@ Public Class wpfWin_InputHutangPPhPasal21_GajiDanPesangon
         AksesDatabase_Transaksi(Tutup)
 
         If StatusSuntingDatabase = True Then
-            MsgBox("Data BERHASIL disimpan.")
+            Pesan_Sukses("Data berhasil disimpan.")
             If usc_BukuPengawasanHutangPPhPasal21.StatusAktif Then usc_BukuPengawasanHutangPPhPasal21.TampilkanData()
             Me.Close()
         Else
-            MsgBox("Data GAGAL disimpan." & teks_SilakanCobaLagi_Database)
+            Pesan_Peringatan("Data gagal disimpan." & teks_SilakanCobaLagi_Database)
         End If
 
     End Sub

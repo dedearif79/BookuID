@@ -227,7 +227,7 @@ Public Class wpfWin_InputHutangPiutangAfiliasi
     Private Sub txt_SaldoAwal_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_SaldoAwal.TextChanged
         SaldoAwal = AmbilAngka(txt_SaldoAwal.Text)
         If JenisTahunBuku = JenisTahunBuku_LAMPAU And SaldoAwal > JumlahPinjaman Then
-            MsgBox("Silakan isi kolom 'Saldo' dengan benar.")
+            Pesan_Peringatan("Silakan isi kolom 'Saldo' dengan benar.")
             txt_SaldoAwal.Text = Kosongan
             txt_SaldoAwal.Focus()
             Return
@@ -480,7 +480,7 @@ Public Class wpfWin_InputHutangPiutangAfiliasi
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             If HutangPiutang = hp_Hutang And SaranaPembayaran = Kosongan Then
-                MsgBox("Silakan pilih 'Sarana Pencairan'.")
+                Pesan_Peringatan("Silakan pilih 'Sarana Pencairan'.")
                 cmb_SaranaPembayaran.Focus()
                 Return
             End If

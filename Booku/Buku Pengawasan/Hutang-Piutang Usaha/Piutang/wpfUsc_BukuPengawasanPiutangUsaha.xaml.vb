@@ -1045,7 +1045,7 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
         ElseIf NomorJV_Pembayaran_Terseleksi > 0 Then
             LihatJurnal(NomorJV_Pembayaran_Terseleksi)
         Else
-            MsgBox("Data terpilih BELUM masuk JURNAL.")
+            Pesan_Informasi("Data terpilih belum masuk jurnal.")
             Return
         End If
 
@@ -1120,8 +1120,7 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
 
     Private Sub btn_HapusPiutang_Click(sender As Object, e As RoutedEventArgs) Handles btn_HapusPiutang.Click
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         If JenisTahunBuku = JenisTahunBuku_LAMPAU Then
             HapusDataPenjualan_BerdasarkanNomorInvoice(NomorInvoice_Terseleksi)
@@ -1364,12 +1363,12 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
         'End If
 
         If BarisTerseleksi < 0 Then
-            MsgBox("Tidak ada baris data terseleksi.")
+            Pesan_Peringatan("Tidak ada baris data terseleksi.")
             Return
         End If
 
         'If SisaPiutangUsaha_Terseleksi <= 0 Then
-        '    MsgBox("Data terpilih sudah LUNAS.")
+        '    Pesan_Informasi("Data terpilih sudah lunas.")
         '    Return
         'End If
         PesanUntukProgrammer("Logika LUNAS perbaiki...!!!")

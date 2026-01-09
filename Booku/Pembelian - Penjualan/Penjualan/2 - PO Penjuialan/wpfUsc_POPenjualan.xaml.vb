@@ -418,7 +418,7 @@ Public Class wpfUsc_POPenjualan
     Private Sub btn_Input_Click(sender As Object, e As RoutedEventArgs) Handles btn_Input.Click
 
         If JenisProduk_Menu = JenisProduk_Semua Then
-            MsgBox("Silakan tentukan 'Jenis Produk' terlebih dahulu.")
+            Pesan_Peringatan("Silakan tentukan 'Jenis Produk' terlebih dahulu.")
             cmb_JenisProduk_Induk.Focus()
             Return
         End If
@@ -438,7 +438,7 @@ Public Class wpfUsc_POPenjualan
 
         If Kontrol_Terseleksi <> Status_Open Then
             BisaDiedit = False
-            MsgBox("PO ini sudah tidak dapat diedit." & Enter2Baris &
+            Pesan_Peringatan("PO ini sudah tidak dapat diedit." & Enter2Baris &
                    "Jika ingin mengeditnya, silakan hapus terlebih dahulu data PO ini yang tersimpan di Surat Jalan/BAST dan/atau Invoice.")
         Else
             BisaDiedit = True
@@ -515,13 +515,12 @@ Public Class wpfUsc_POPenjualan
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
         If Kontrol_Terseleksi <> Status_Open Then
-            MsgBox("PO ini sudah tidak dapat dihapus." & Enter2Baris &
-                   "Jika ingin mengahapusnya, silakan hapus terlebih dahulu data PO ini yang tersimpan di Surat Jalan/BAST dan/atau Invoice.")
+            Pesan_Peringatan("PO ini sudah tidak dapat dihapus." & Enter2Baris &
+                   "Jika ingin menghapusnya, silakan hapus terlebih dahulu data PO ini yang tersimpan di Surat Jalan/BAST dan/atau Invoice.")
             Return
         End If
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_Transaksi(Buka)
         cmdHAPUS = New OdbcCommand(" DELETE FROM tbl_Penjualan_PO " &

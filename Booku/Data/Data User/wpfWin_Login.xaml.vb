@@ -114,7 +114,7 @@ Public Class wpfWin_Login
                 frm_BOOKU.mnu_PeranTimIT.Enabled = True
                 frm_BOOKU.mnu_PeranAppDeveloper.Enabled = True
                 frm_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif & "  |  " & JabatanUserAktif & "  -->  " & JabatanUser_Direktur & "  |  " & KeteranganCluster
-                If SistemApprovalPerusahaan = True Then MsgBox("Anda login sebagai DIREKTUR.")
+                If SistemApprovalPerusahaan = True Then Pesan_Informasi("Anda login sebagai DIREKTUR.")
             End If
             If JabatanUserAktif = JabatanUser_TimIT Then
                 frm_BOOKU.mnu_PeranTimIT.Visible = True
@@ -148,7 +148,7 @@ Public Class wpfWin_Login
         PengulanganLogin = PengulanganLogin + 1
         If PengulanganLogin >= 7 Then
             StatusLogin = False
-            MsgBox("Login Gagal..!")
+            Pesan_Gagal("Login gagal.")
             End
         End If
     End Sub
@@ -165,7 +165,7 @@ Public Class wpfWin_Login
         Password = Nothing
 
         If UsernameInput = Nothing Then
-            MsgBox("Ketikkan Username..!")
+            Pesan_Peringatan("Ketikkan Username.")
             BatasPengulanganLogin()
             txt_UsernameInput.Focus()
             Return
@@ -178,7 +178,7 @@ Public Class wpfWin_Login
             dr.Read()
             If dr.HasRows Or UsernameInput = UsernameAppDeveloper Or UsernameInput = UsernameTimIT Then
                 If PasswordInput = Nothing Then
-                    MsgBox("Ketikkan Password..!")
+                    Pesan_Peringatan("Ketikkan Password.")
                     txt_PasswordInput.Focus()
                     AksesDatabase_General(Tutup)
                     BatasPengulanganLogin()
@@ -195,7 +195,7 @@ Public Class wpfWin_Login
                     StatusAktifUser = dr.Item("Status_Aktif")
                     AksesDatabase_General(Tutup)
                     If StatusAktifUser <> 1 Then
-                        MsgBox("Mohon maaf... Status kepenggunaan Anda di aplikasi ini sudah tidak aktif." & Enter2Baris & "Silakan ajukan kembali keaktifan dari status kepenggunaan Anda.")
+                        Pesan_Peringatan("Mohon maaf, status kepenggunaan Anda di aplikasi ini sudah tidak aktif." & Enter2Baris & "Silakan ajukan kembali keaktifan dari status kepenggunaan Anda.")
                         ResetForm()
                         Return
                     End If
@@ -221,7 +221,7 @@ Public Class wpfWin_Login
                     StatusAktifUser = 1
                 End If
             Else
-                MsgBox("Username tidak ditemukan..!")
+                Pesan_Peringatan("Username tidak ditemukan.")
                 txt_UsernameInput.Clear()
                 txt_PasswordInput.Clear()
                 txt_UsernameInput.Focus()
@@ -232,7 +232,7 @@ Public Class wpfWin_Login
         Else 'Jika belum ada koneksi Database General :
             If UsernameInput = UsernameAppDeveloper Or UsernameInput = UsernameTimIT Then
                 If PasswordInput = Nothing Then
-                    MsgBox("Ketikkan Password..!")
+                    Pesan_Peringatan("Ketikkan Password.")
                     txt_PasswordInput.Focus()
                     AksesDatabase_General(Tutup)
                     BatasPengulanganLogin()
@@ -259,7 +259,7 @@ Public Class wpfWin_Login
                     StatusAktifUser = 1
                 End If
             Else
-                MsgBox("Username tidak ditemukan..!" & Enter2Baris & "Atau kemungkinan DATABASE belum terkoneksi.")
+                Pesan_Peringatan("Username tidak ditemukan." & Enter2Baris & "Atau kemungkinan DATABASE belum terkoneksi.")
                 txt_UsernameInput.Clear()
                 txt_PasswordInput.Clear()
                 txt_UsernameInput.Focus()
@@ -270,7 +270,7 @@ Public Class wpfWin_Login
         End If
 
         If PasswordInput <> Password Then
-            MsgBox("Password salah..!" & Enter2Baris & "Lupa password..? Silakan hubungi Super User atau Developer Aplikasi.")
+            Pesan_Peringatan("Password salah." & Enter2Baris & "Lupa password? Silakan hubungi Super User atau Developer Aplikasi.")
             txt_PasswordInput.Clear()
             txt_PasswordInput.Focus()
             BatasPengulanganLogin()

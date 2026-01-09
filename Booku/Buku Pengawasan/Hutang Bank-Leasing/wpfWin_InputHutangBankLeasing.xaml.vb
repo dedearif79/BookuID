@@ -287,13 +287,13 @@ Public Class wpfWin_InputHutangBankLeasing
         End If
 
         If KodeKreditur = Kosongan Then
-            MsgBox("Silakan isi kolom 'Kreditur'.")
+            Pesan_Peringatan("Silakan isi kolom 'Kreditur'.")
             txt_KodeKreditur.Focus()
             Return
         End If
 
         If JumlahPinjaman = 0 Then
-            MsgBox("Silakan isi kolom 'Jumlah Pinjaman'.")
+            Pesan_Peringatan("Silakan isi kolom 'Jumlah Pinjaman'.")
             txt_JumlahPinjaman.Focus()
             Return
         End If
@@ -305,7 +305,7 @@ Public Class wpfWin_InputHutangBankLeasing
         End If
 
         If NomorKontrak = Kosongan Then
-            MsgBox("Silakan isi kolom 'Nomor Kontrak'.")
+            Pesan_Peringatan("Silakan isi kolom 'Nomor Kontrak'.")
             txt_NomorKontrak.Focus()
             Return
         End If
@@ -315,7 +315,7 @@ Public Class wpfWin_InputHutangBankLeasing
             If JenisTahunBuku = JenisTahunBuku_NORMAL Then
 
                 If BankPencairan = Kosongan Then
-                    MsgBox("Silakan pilih 'Bank' untuk pencairan.")
+                    Pesan_Peringatan("Silakan pilih 'Bank' untuk pencairan.")
                     cmb_BankPencairan.Focus()
                     Return
                 End If

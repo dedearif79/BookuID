@@ -257,14 +257,13 @@ Public Class wpfUsc_BukuPengawasanPemindahbukuan
 
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
-        Pilihan = MessageBox.Show("Data terpilih akan dihapus dari Tabel ini dan Tabel Jurnal." & Enter2Baris &
-                                "Yakin akan menghapus..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Data terpilih akan dihapus dari Tabel ini dan Tabel Jurnal." & Enter2Baris &
+                                "Yakin ingin menghapus?") Then Return
 
 
         AksesDatabase_Transaksi(Buka)
         If StatusKoneksiDatabaseTransaksi = False Then
-            MsgBox("Data terpilih GAGAL dihapus. " & Enter2Baris & teks_SilakanCobaLagi_Database)
+            Pesan_Gagal("Data terpilih gagal dihapus. " & Enter2Baris & teks_SilakanCobaLagi_Database)
             Return
         End If
 
@@ -278,7 +277,7 @@ Public Class wpfUsc_BukuPengawasanPemindahbukuan
 
         TampilkanData()
 
-        MsgBox("Data terpilih berhasil DIHAPUS dari Tabel ini dan Tabel Jurnal.")
+        Pesan_Sukses("Data terpilih berhasil dihapus dari Tabel ini dan Tabel Jurnal.")
 
     End Sub
 

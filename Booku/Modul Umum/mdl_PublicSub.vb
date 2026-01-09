@@ -2779,20 +2779,20 @@ Public Module mdl_PublicSub
 
     'Fitur Dalam Pengembangan
     Public Sub FiturDalamPengembangan()
-        MsgBox("Mohon maaf." & Enter2Baris & "Menu/Fitur ini masih dalam tahap pengembangan.")
+        MsgBox("Mohon maaf, menu/fitur ini masih dalam tahap pengembangan.")
     End Sub
 
     'Fitur Belum Bisa Digunakan
     Public Sub FiturBelumBisaDigunakan()
-        MsgBox("Mohon maaf." & Enter2Baris & "Menu/Fitur ini belum bisa digunakan.")
+        MsgBox("Mohon maaf, menu/fitur ini belum dapat digunakan.")
     End Sub
 
     Public Sub MenuDalamPerbaikan()
-        MsgBox("Mohon maaf." & Enter2Baris & "Menu ini sedang dalam perbaikan.")
+        MsgBox("Mohon maaf, menu ini sedang dalam perbaikan.")
     End Sub
 
     Public Sub FiturDalamPerbaikan()
-        MsgBox("Mohon maaf." & Enter2Baris & "Fitur ini sedang dalam perbaikan.")
+        MsgBox("Mohon maaf, fitur ini sedang dalam perbaikan.")
     End Sub
 
     Public Sub KelolaDataPembayaranDiBukuPengawasanPenerimaan()
@@ -3526,44 +3526,38 @@ Public Module mdl_PublicSub
 
 
     Public Sub PesanUmum(ByVal IsiPesan As String)
-        MsgBox(IsiPesan)
+        Pesan_Informasi(IsiPesan)
     End Sub
 
     Public Sub PesanPeringatan(ByVal IsiPesan As String)
-        MsgBox(IsiPesan)
+        Pesan_Peringatan(IsiPesan)
     End Sub
 
     Public Sub PesanPemberitahuan(ByVal IsiPesan As String)
-        MsgBox(IsiPesan)
+        Pesan_Informasi(IsiPesan)
     End Sub
 
     Public Sub PesanSukses(ByVal IsiPesan As String)
-        MsgBox(IsiPesan)
+        Pesan_Sukses(IsiPesan)
     End Sub
 
     Public Sub PesanError(ByVal IsiPesan As String)
-        MsgBox(IsiPesan)
+        Pesan_Gagal(IsiPesan)
     End Sub
 
     Public Sub PesanUntukProgrammer(ByVal IsiPesan As String)
         If LevelUserAktif >= LevelUser_81_TimIT Then
-            MsgBox("Pesan untuk PROGRAMMER :" & Enter2Baris & IsiPesan)
+            Pesan_Peringatan("Pesan untuk Programmer:" & Enter2Baris & IsiPesan)
         End If
     End Sub
 
     Public Sub PeringatanKeras()
-        PesanUntukProgrammer("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" & Enter1Baris &
-                             "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" & Enter1Baris &
-                             "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" & Enter1Baris &
-                             "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" & Enter1Baris &
-                             "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" & Enter1Baris &
-                             "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" & Enter1Baris &
-                             "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        PesanUntukProgrammer("Peringatan keras untuk Programmer!")
     End Sub
 
     Public Sub PesanKhususPCDeveloper(ByVal IsiPesan As String)
         If ID_CPU = "BFEBFBFF000906A3" Then
-            MsgBox("Pesan Khusus di PC Developer :" & Enter2Baris & IsiPesan)
+            Pesan_Informasi("Pesan Khusus di PC Developer:" & Enter2Baris & IsiPesan)
         End If
     End Sub
 
@@ -3576,27 +3570,27 @@ Public Module mdl_PublicSub
 
     Sub Notifikasi_AwalMasukTahunBuku()
 
-        'Notifikasi Expire Sertifikat Elektronik (SE) :
+        'Notifikasi Expire Sertifikat Elektronik (SE)
         Dim SelisihHariExpireSE As Int64 = DateDiff("d", TanggalIni_Date, TanggalExpireSEPerusahaan)
         If SelisihHariExpireSE <= 0 Then
-            PesanPeringatan("Tanggal Expire Sertifikat Elektronik sudah habis..!." & Enter2Baris &
-                            "Segera perbarui..!")
+            PesanPeringatan("Sertifikat Elektronik sudah kedaluwarsa." & Enter2Baris &
+                            "Segera perbarui.")
             BukaPengaturanCompanyProfile()
         ElseIf SelisihHariExpireSE <= 15 Then
-            PesanPemberitahuan("Tanggal Expire Sertifikat Elektronik tinggal " & SelisihHariExpireSE & " hari lagi." & Enter2Baris &
-                               "Segera perbarui..!")
+            PesanPemberitahuan("Sertifikat Elektronik akan kedaluwarsa dalam " & SelisihHariExpireSE & " hari." & Enter2Baris &
+                               "Segera perbarui.")
             BukaPengaturanCompanyProfile()
         End If
 
-        'Notifikasi Expire Sertifikat Badan Usaha (SBU) :
+        'Notifikasi Expire Sertifikat Badan Usaha (SBU)
         Dim SelisihHariExpireSBU As Int64 = DateDiff("d", TanggalIni_Date, TanggalExpireSBUPerusahaan)
         If SelisihHariExpireSBU <= 0 Then
-            PesanPeringatan("Tanggal Expire Sertifikat Badan Usaha (SBU) sudah habis..!." & Enter2Baris &
-                            "Segera perbarui..!")
+            PesanPeringatan("Sertifikat Badan Usaha (SBU) sudah kedaluwarsa." & Enter2Baris &
+                            "Segera perbarui.")
             BukaPengaturanCompanyProfile()
         ElseIf SelisihHariExpireSBU <= 60 Then
-            PesanPemberitahuan("Tanggal Expire Sertifikat Badan Usaha (SBU) tinggal " & SelisihHariExpireSBU & " hari lagi." & Enter2Baris &
-                               "Segera perbarui..!")
+            PesanPemberitahuan("Sertifikat Badan Usaha (SBU) akan kedaluwarsa dalam " & SelisihHariExpireSBU & " hari." & Enter2Baris &
+                               "Segera perbarui.")
             BukaPengaturanCompanyProfile()
         End If
 

@@ -33,8 +33,7 @@ Public Class wpfUsc_ManajemenKurs
             PesanPeringatan("Tidak ada baris yang akan di-upload.")
             Return
         End If
-        Pilihan = MessageBox.Show("Lanjutkan proses upload Data Kurs?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Lanjutkan proses upload Data Kurs?") Then Return
         KetersediaanMenuHalaman(pnl_Halaman, False)
         Terabas()
         Dim Tanggal As String
@@ -109,7 +108,7 @@ Public Class wpfUsc_ManajemenKurs
             datatabelUtama.AcceptChanges()
 
         Catch ex As Exception
-            MessageBox.Show(ex.Message, "Kurs Transaksi BI", MessageBoxButton.OK, MessageBoxImage.Warning)
+            Pesan_Peringatan(ex.Message)
         Finally
             btn_Filter.IsEnabled = True
         End Try

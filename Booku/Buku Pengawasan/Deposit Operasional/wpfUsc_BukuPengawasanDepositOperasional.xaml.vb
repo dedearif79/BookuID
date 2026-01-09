@@ -332,7 +332,7 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
     Private Sub btn_Edit_Click(sender As Object, e As RoutedEventArgs) Handles btn_Edit.Click
 
         If JumlahTalangan_Terseleksi > 0 Then
-            PesanPeringatan("Sudah ada pembayaran terkait data ini. Data tidak dapat dihapus/edit")
+            Pesan_Peringatan("Sudah ada pembayaran terkait data ini. Data tidak dapat dihapus/edit.")
             Return
         End If
 
@@ -357,12 +357,11 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
         If JumlahTalangan_Terseleksi > 0 Then
-            PesanPeringatan("Sudah ada pembayaran terkait data ini. Data tidak dapat dihapus/edit")
+            Pesan_Peringatan("Sudah ada pembayaran terkait data ini. Data tidak dapat dihapus/edit.")
             Return
         End If
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_Transaksi(Buka)
 
@@ -553,7 +552,7 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
 
     Private Sub btn_InputBayar_Click(sender As Object, e As RoutedEventArgs) Handles btn_InputBayar.Click
         If SisaTalangan_Terseleksi <= 0 Then
-            PesanPemberitahuan("Data Talangan ini sudah dibayar semua.")
+            Pesan_Informasi("Data Talangan ini sudah dibayar semua.")
             Return
         End If
         win_InputBuktiPengeluaran = New wpfWin_InputBuktiPengeluaran
@@ -578,14 +577,13 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
 
     Private Sub btn_HapusBayar_Click(sender As Object, e As RoutedEventArgs) Handles btn_HapusBayar.Click
         If JenisTahunBuku = JenisTahunBuku_LAMPAU Then
-            Pilihan = MessageBox.Show("Yakin akan menghapus data pembayaran terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-            If Pilihan = vbNo Then Return
+            If Not TanyaKonfirmasi("Yakin ingin menghapus data pembayaran terpilih?") Then Return
             HapusDataPengeluaran_BerdasarkanNomorID(NomorIdBayar_Terseleksi)
             If StatusSuntingDatabase Then
-                PesanPemberitahuan("Data pembayaran berhasil dihapus")
+                Pesan_Sukses("Data pembayaran berhasil dihapus.")
                 TampilkanData()
             Else
-                PesanPemberitahuan("Data pembayaran gagal dihapus")
+                Pesan_Peringatan("Data pembayaran gagal dihapus.")
             End If
         Else
             FiturBelumBisaDigunakan()
@@ -682,11 +680,11 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
 
     Private Sub btn_InputCair_Click(sender As Object, e As RoutedEventArgs) Handles btn_InputCair.Click
         If JumlahTalangan_Terseleksi <= 0 Then
-            PesanPemberitahuan("Silakan isi data pembayaran talangan terlebih dahulu.")
+            Pesan_Informasi("Silakan isi data pembayaran talangan terlebih dahulu.")
             Return
         End If
         If JumlahOutstanding_Terseleksi <= 0 Then
-            PesanPemberitahuan("Data Reimburse ini sudah dicairkan semua.")
+            Pesan_Informasi("Data Reimburse ini sudah dicairkan semua.")
             Return
         End If
         win_InputBuktiPenerimaan = New wpfWin_InputBuktiPenerimaan

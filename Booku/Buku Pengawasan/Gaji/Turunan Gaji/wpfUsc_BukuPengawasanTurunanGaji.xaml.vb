@@ -433,9 +433,8 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
 
         Dim Pesan As String =
             "Anda akan menambahkan Tabel Tagihan " & TahunTelusurDataBaru & "." & Enter1Baris &
-            "Lanjutkan proses..?"
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+            "Lanjutkan proses?"
+        If Not TanyaKonfirmasi(Pesan) Then Return
 
         Dim NomorID = AmbilNomorIdTerakhir(DatabaseTransaksi, TabelPengawasan)
         Dim NomorUrut = 0
@@ -464,9 +463,9 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
             KontenComboTahunTelusurData(False)
             GantiTahunTelusurData_ManualPaksa(TahunTelusurDataTerlama)
             Terabas()
-            PesanPemberitahuan("Tabel Tagihan Tahun " & TahunTelusurDataBaru & " BERHASIL ditambahkan.")
+            Pesan_Sukses("Tabel Tagihan Tahun " & TahunTelusurDataBaru & " berhasil ditambahkan.")
         Else
-            PesanPeringatan("Tabel Tagihan Tahun " & TahunTelusurDataBaru & " GAGAL ditambahkan." & Enter2Baris &
+            Pesan_Peringatan("Tabel Tagihan Tahun " & TahunTelusurDataBaru & " gagal ditambahkan." & Enter2Baris &
             teks_SilakanCobaLagi_Database)
         End If
 
@@ -476,8 +475,8 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
     Private Sub btn_HapusTahun_Click(sender As Object, e As RoutedEventArgs) Handles btn_HapusTahun.Click
 
         If TahunTelusurDataTerlama = TahunBukuAktif Then
-            PesanPeringatan("Tabel Tagihan Tahun " & TahunTelusurDataTerlama & " tidak dapat dihapus." & Enter1Baris &
-                            "Namun Anda dapat mengosongkannya.")
+            Pesan_Peringatan("Tabel Tagihan Tahun " & TahunTelusurDataTerlama & " tidak dapat dihapus." & Enter1Baris &
+                             "Namun Anda dapat mengosongkannya.")
             Return
         End If
 
@@ -486,9 +485,8 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
 
         Dim Pesan As String =
             "Anda akan menghapus tabel dan seluruh data Tagihan Tahun " & TahunTelusurDataYangDihapus & "." & Enter1Baris &
-            "Lanjutkan proses..?"
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+            "Lanjutkan proses?"
+        If Not TanyaKonfirmasi(Pesan) Then Return
 
         AksesDatabase_Transaksi(Buka)
         cmd = New OdbcCommand(
@@ -502,9 +500,9 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
             KontenComboTahunTelusurData(False)
             GantiTahunTelusurData_ManualPaksa(TahunTelusurDataAsal)
             Terabas()
-            PesanPemberitahuan("Tabel Tagihan Tahun " & TahunTelusurDataYangDihapus & " BERHASIL dihapus.")
+            Pesan_Sukses("Tabel Tagihan Tahun " & TahunTelusurDataYangDihapus & " berhasil dihapus.")
         Else
-            PesanPeringatan("Tabel Tagihan Tahun " & TahunTelusurDataYangDihapus & " GAGAL dihapus." & Enter2Baris &
+            Pesan_Peringatan("Tabel Tagihan Tahun " & TahunTelusurDataYangDihapus & " gagal dihapus." & Enter2Baris &
             teks_SilakanCobaLagi_Database)
         End If
 
@@ -741,7 +739,7 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
     Private Sub btn_InputBayar_Click(sender As Object, e As RoutedEventArgs) Handles btn_InputBayar.Click
 
         If SisaPembayaran_Terseleksi <= 0 Then
-            MsgBox("Tagihan BPJS Kesehatan bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
+            Pesan_Informasi("Tagihan BPJS Kesehatan bulan " & Bulan_Terseleksi & " sudah dibayar seluruhnya.")
             Return
         End If
 
@@ -752,9 +750,8 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
             Pesan =
                 "Ada selisih sebesar Rp. " & Selisih_Terseleksi & ",-" & Enter2Baris &
                 "Untuk bisa menginput pembayaran pada tagihan ini, silakan perbaiki terlebih dahulu data di Buku Pengawasan Gaji sehingga nilai selisih menjadi nol." & Enter2Baris &
-                "Lanjutkan proses..?"
-            Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-            If Pilihan = vbNo Then Return
+                "Lanjutkan proses?"
+            If Not TanyaKonfirmasi(Pesan) Then Return
             PenyesuaianSelisih()
             If StatusSuntingDatabase = False Then Return
         End If
@@ -764,9 +761,8 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
             Pesan =
                 "Ada selisih sebesar Rp. " & Selisih_Terseleksi & ",-" & Enter2Baris &
                 "Untuk bisa menginput pembayaran pada tagihan ini, silakan perbaiki terlebih dahulu data di Buku Pengawasan Gaji sehingga nilai selisih menjadi nol." & Enter2Baris &
-                "Lanjutkan proses..?"
-            Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-            If Pilihan = vbNo Then Return
+                "Lanjutkan proses?"
+            If Not TanyaKonfirmasi(Pesan) Then Return
             PenyesuaianSelisih()
             If frm_InputJurnal.JurnalTersimpan = False Then Return
         End If

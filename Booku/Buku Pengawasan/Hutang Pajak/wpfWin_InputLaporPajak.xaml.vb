@@ -215,7 +215,7 @@ Public Class wpfWin_InputLaporPajak
 
         Dim TanggalLapor_Date As Date = TanggalLapor
         If TanggalLapor_Date < TanggalPelunasan_Date Then
-            PesanPeringatan("'Tanggal Lapor' kurang dari 'Tanggal Pelunasan Pajak'." & Enter2Baris & "Silakan isi 'Tanggal Lapor' dengan benar..!")
+            PesanPeringatan("'Tanggal Lapor' kurang dari 'Tanggal Pelunasan Pajak'." & Enter2Baris & "Silakan isi 'Tanggal Lapor' dengan benar.")
             dtp_TanggalLapor.Focus()
             Return
         End If

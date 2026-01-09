@@ -304,8 +304,7 @@ Public Class wpfUsc_DataCOA
             Return
         End If
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
         AksesDatabase_General(Buka)
         cmdHAPUS = New OdbcCommand(" DELETE FROM tbl_COA WHERE COA = '" & COATerseleksi & "' ", KoneksiDatabaseGeneral)
@@ -339,7 +338,7 @@ Public Class wpfUsc_DataCOA
         Return
         frm_ProgressImportDataCOA.ShowDialog()
         If StatusPosting = "BATAL" Then
-            MsgBox("Proses posting telah dibatalkan seluruhnya pada event ini.")
+            Pesan_Informasi("Proses posting telah dibatalkan seluruhnya pada event ini.")
         End If
     End Sub
 

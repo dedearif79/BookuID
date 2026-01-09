@@ -98,13 +98,13 @@ Public Class frm_InputProduk_SJBAST
     Private Sub btn_Tambahkan_Click(sender As Object, e As EventArgs) Handles btn_Tambahkan.Click
 
         If NamaProduk = Kosongan Then
-            MsgBox("Silakan isi kolom 'Nama Barang/Jasa'.")
+            Pesan_Peringatan("Silakan isi kolom 'Nama Barang/Jasa'.")
             txt_NamaProduk.Focus()
             Return
         End If
 
         If JumlahProduk = 0 Then
-            MsgBox("Silakan isi kolom 'Jumlah'.")
+            Pesan_Peringatan("Silakan isi kolom 'Jumlah'.")
             txt_JumlahProduk.Focus()
             Return
         End If
@@ -113,7 +113,7 @@ Public Class frm_InputProduk_SJBAST
             Dim Dieksekusi As String = Kosongan
             If JalurMasuk = Form_INPUTSURATJALANPENJUALAN Then Dieksekusi = "dikirim"
             If JalurMasuk = Form_INPUTBASTPENJUALAN Then Dieksekusi = "dikerjakan"
-            MsgBox("Terkait produk ini, jumlah maksimal yang boleh diisi adalah " & JumlahProduk_Maksimal & " " & SatuanProduk &
+            Pesan_Peringatan("Terkait produk ini, jumlah maksimal yang boleh diisi adalah " & JumlahProduk_Maksimal & " " & SatuanProduk &
                    ", sesuai dengan apa yang sudah tercatat di PO dan yang sudah " & Dieksekusi & ".")
             txt_JumlahProduk.Focus()
             Return
