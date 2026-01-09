@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -280,10 +280,10 @@ Public Class wpfUsc_LaporanTrialBalance
                     MsgBox("Silakan periksa data dengan teliti sebelum melakukan 'Tutup Buku'")
                     TutupHalaman()
                 Case Halaman_LAPORANLABARUGI
-                    X_frm_Laporan_LabaRugi_X.TampilkanData()
+                    'X_frm_Laporan_LabaRugi_X.TampilkanData()
                     TutupHalaman()
                 Case Halaman_LAPORANNERACA
-                    X_frm_Laporan_Neraca_X.TampilkanData()
+                    'X_frm_Laporan_Neraca_X.TampilkanData()
                     TutupHalaman()
                 Case Else
                     TutupHalaman()

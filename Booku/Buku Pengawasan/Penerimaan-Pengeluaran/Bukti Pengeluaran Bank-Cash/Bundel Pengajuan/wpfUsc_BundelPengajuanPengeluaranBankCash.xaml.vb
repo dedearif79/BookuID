@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -295,7 +295,7 @@ Public Class wpfUsc_BundelPengajuanPengeluaranBankCash
         If StatusSuntingDatabase = True Then
             Pesan_Sukses("Bundelan berhasil dihapus, dan data pengajuan dikembalikan statusnya menjadi 'Open'.")
             TampilkanData_Bundel()
-            X_frm_BukuPengawasanBuktiPengeluaranBankCash_X.TampilkanData()
+            If usc_BukuPengawasanBuktiPenerimaanBankCash.StatusAktif Then usc_BukuPengawasanBuktiPenerimaanBankCash.TampilkanData()
         Else
             Pesan_Peringatan("Bundelan gagal dihapus." & Enter2Baris & teks_SilakanCobaLagi_Database)
         End If

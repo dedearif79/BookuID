@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 
 Public Class frm_Input_ReturPenjualan
@@ -526,21 +526,22 @@ Public Class frm_Input_ReturPenjualan
 
     Private Sub btn_TambahInvoice_Click(sender As Object, e As EventArgs) Handles btn_TambahInvoice.Click
 
-        frm_ListInvoice.ResetForm()
-        frm_ListInvoice.BersihkanSeleksi()
-        frm_ListInvoice.FungsiForm = frm_ListInvoice.FungsiForm_InvoicePenjualan
-        frm_ListInvoice.cmb_Mitra.Text = NamaCustomer
-        frm_ListInvoice.lbl_FilterMitra.Enabled = False
-        frm_ListInvoice.cmb_Mitra.Enabled = False
-        frm_ListInvoice.JenisPPN = JenisPPN
-        frm_ListInvoice.PerlakuanPPN = PerlakuanPPN
-        frm_ListInvoice.JalurMasuk = Form_INPUTINVOICEPENJUALAN
-        frm_ListInvoice.PilihYangSudahDijurnal = True
-        frm_ListInvoice.ShowDialog()                                             '<---- Buka Form List Invoice
-        NomorInvoice = frm_ListInvoice.NomorInvoice_Terseleksi
+        win_ListInvoice = New wpfWin_ListInvoice
+        win_ListInvoice.ResetForm()
+        win_ListInvoice.BersihkanSeleksi()
+        win_ListInvoice.FungsiForm = win_ListInvoice.FungsiForm_InvoicePenjualan
+        win_ListInvoice.cmb_Mitra.Text = NamaCustomer
+        win_ListInvoice.lbl_FilterMitra.IsEnabled = False
+        win_ListInvoice.cmb_Mitra.IsEnabled = False
+        win_ListInvoice.JenisPPN = JenisPPN
+        win_ListInvoice.PerlakuanPPN = PerlakuanPPN
+        win_ListInvoice.JalurMasuk = Form_INPUTINVOICEPENJUALAN
+        win_ListInvoice.PilihYangSudahDijurnal = True
+        win_ListInvoice.ShowDialog()                                             '<---- Buka Form List Invoice
+        NomorInvoice = win_ListInvoice.NomorInvoice_Terseleksi
         If NomorInvoice = Kosongan Then Return
-        TanggalInvoice = frm_ListInvoice.TanggalInvoice_Terseleksi
-        KodeProjectProduk = frm_ListInvoice.KodeProject_Terseleksi
+        TanggalInvoice = win_ListInvoice.TanggalInvoice_Terseleksi
+        KodeProjectProduk = win_ListInvoice.KodeProject_Terseleksi
         Dim TelusurInvoice = Kosongan
         'Cegah Input Invoice lebih dari satu kali :
         For Each row As DataGridViewRow In dgv_Invoice.Rows
