@@ -450,7 +450,7 @@ Public Class wpfWin_GantiTahunBuku
         End If
 
         'Update Saldo Awal COA :
-        If ProsesGantiTahun = True Then
+        If ProsesGantiTahun Then
             If TahunBukuAktif = TahunBukuTerakhirDibuka Then
                 AksesDatabase_General(Buka)
                 cmd = New OdbcCommand(" SELECT * FROM tbl_InfoData WHERE Tahun_Buku = '" & TahunBukuAktif & " ' ", KoneksiDatabaseGeneral)
@@ -463,41 +463,27 @@ Public Class wpfWin_GantiTahunBuku
                 End If
                 AksesDatabase_General(Tutup)
             Else
-                TrialBalance_Mentahkan()
-                AksesDatabase_General(Buka)
                 Dim cmdUPDATE As OdbcCommand
-                Dim cmdSALDO As OdbcCommand
-                Dim drSALDO As OdbcDataReader
-                Dim SaldoAwal As Int64
-                Dim KodeAkun_Terindeks
-                Try
-                    cmd = New OdbcCommand(" SELECT * FROM tbl_COA ", KoneksiDatabaseGeneral)
-                    dr = cmd.ExecuteReader
-                    ProsesGantiTahun = True
-                Catch ex As Exception
-                    Pesan_Gagal("Kesalahan Teknis: GTB-009")
-                    ProsesGantiTahun = False
-                End Try
-                If ProsesGantiTahun = True Then
-                    Do While dr.Read
-                        KodeAkun_Terindeks = dr.Item("COA")
-                        AksesDatabase_Transaksi(Buka)
-                        Try
-                            cmdSALDO = New OdbcCommand(" SELECT * FROM tbl_SaldoAwalCOA WHERE COA = '" & KodeAkun_Terindeks & "' ", KoneksiDatabaseTransaksi)
-                            drSALDO = cmdSALDO.ExecuteReader
-                            drSALDO.Read()
-                            SaldoAwal = drSALDO.Item("Saldo_Awal")
-                            AksesDatabase_Transaksi(Tutup)
-                            cmdUPDATE = New OdbcCommand(" UPDATE tbl_COA SET Saldo_Awal = '" & SaldoAwal & "' WHERE COA = '" & KodeAkun_Terindeks & "'", KoneksiDatabaseGeneral)
-                            cmdUPDATE.ExecuteNonQuery()
-                            ProsesGantiTahun = True
-                        Catch ex As Exception
-                            ProsesGantiTahun = False
-                            Exit Do
-                        End Try
-                    Loop
-                End If
+                Dim COA As String
+                Dim Saldo As Decimal
+                AksesDatabase_Transaksi(Buka)
+                AksesDatabase_General(Buka)
+                cmd = New OdbcCommand(" SELECT * FROM tbl_SaldoAwalCOA ", KoneksiDatabaseTransaksi)
+                dr_ExecuteReader()
+                Do While dr.Read
+                    COA = dr.Item("COA")
+                    Saldo = dr.Item("Saldo_Awal")
+                    cmdUPDATE = New OdbcCommand(" UPDATE tbl_COA SET Saldo_Awal = '" & Saldo & "' WHERE COA = '" & COA & "'", KoneksiDatabaseGeneral)
+                    Try
+                        cmdUPDATE.ExecuteNonQuery()
+                        ProsesGantiTahun = True
+                    Catch ex As Exception
+                        ProsesGantiTahun = False
+                        Exit Do
+                    End Try
+                Loop
                 AksesDatabase_General(Tutup)
+                AksesDatabase_Transaksi(Tutup)
             End If
         End If
 

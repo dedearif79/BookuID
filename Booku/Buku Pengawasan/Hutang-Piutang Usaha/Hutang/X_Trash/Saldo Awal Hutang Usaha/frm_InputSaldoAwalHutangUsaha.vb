@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 
 Public Class frm_InputSaldoAwalHutangUsaha
@@ -101,7 +101,7 @@ Public Class frm_InputSaldoAwalHutangUsaha
             Return
         End If
 
-        TrialBalance_Mentahkan() 'Mentahkan data dari awal lebih baik.
+        'TrialBalance_Mentahkan() 'Mentahkan data dari awal lebih baik.
 
         Dim NomorPembelian = txt_NomorPembelian.Text
         Dim Referensi = txt_Referensi.Text

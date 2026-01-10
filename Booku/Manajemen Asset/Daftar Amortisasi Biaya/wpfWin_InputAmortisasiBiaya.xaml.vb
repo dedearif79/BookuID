@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
@@ -380,7 +380,7 @@ Public Class wpfWin_InputAmortisasiBiaya
             Return
         End If
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         If FungsiForm = FungsiForm_TAMBAH Then
             AksesDatabase_General(Buka)

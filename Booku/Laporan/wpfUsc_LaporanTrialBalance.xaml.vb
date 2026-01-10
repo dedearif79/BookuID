@@ -247,7 +247,7 @@ Public Class wpfUsc_LaporanTrialBalance
         Proses = True
         TrialBalanceDone = False
         LoopingTrialBalance = True
-        TrialBalance_Mentahkan() 'Mentahkan dulu data, karena khawatir proses berhenti di tengah jalan.
+        'TrialBalance_Mentahkan() 'Mentahkan dulu data, karena khawatir proses berhenti di tengah jalan.
         AksesDatabase_General(Buka)
         If StatusKoneksiDatabaseGeneral = False Then Return
         Try

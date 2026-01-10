@@ -58,7 +58,7 @@ Public Class wpfWin_ProgressImportDataAsset
 
         StyleWindowDialogWPF_TanpaTombolX(Me)
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         win_InputDataAsset = New wpfWin_InputDataAsset
 

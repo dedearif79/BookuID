@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -1288,7 +1288,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal21
 
         If Not TanyaKonfirmasi("Yakin ingin menghapus data terpilih?") Then Return
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         AksesDatabase_Transaksi(Buka)
 

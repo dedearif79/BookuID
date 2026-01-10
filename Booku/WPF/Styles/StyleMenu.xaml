@@ -2,12 +2,15 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- ===== WARNA TEMA MENU (BOOKU Green Branding) ===== -->
-    <SolidColorBrush x:Key="MenuBarBackground" Color="#388E3C"/>
-    <SolidColorBrush x:Key="MenuBarForeground" Color="White"/>
-    <SolidColorBrush x:Key="MenuItemHoverBackground" Color="#2E7D32"/>
-    <SolidColorBrush x:Key="MenuItemPressedBackground" Color="#1B5E20"/>
+    <!-- Menu Bar (Top Level) - sama dengan SubMenu -->
+    <SolidColorBrush x:Key="MenuBarBackground" Color="White"/>
+    <SolidColorBrush x:Key="MenuBarForeground" Color="#388E3C"/>
+    <SolidColorBrush x:Key="MenuBarBorderBrush" Color="#E0E0E0"/>
+    <SolidColorBrush x:Key="MenuItemHoverBackground" Color="#E8F5E9"/>
+    <SolidColorBrush x:Key="MenuItemPressedBackground" Color="#C8E6C9"/>
+    <!-- Sub Menu (Dropdown) -->
     <SolidColorBrush x:Key="SubMenuBackground" Color="White"/>
-    <SolidColorBrush x:Key="SubMenuForeground" Color="#333333"/>
+    <SolidColorBrush x:Key="SubMenuForeground" Color="#388E3C"/>
     <SolidColorBrush x:Key="SubMenuHoverBackground" Color="#E8F5E9"/>
     <SolidColorBrush x:Key="SubMenuBorderBrush" Color="#A5D6A7"/>
 
@@ -17,7 +20,7 @@
         <Setter Property="Foreground" Value="{StaticResource MenuBarForeground}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
-        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Padding" Value="5,4"/>
     </Style>
 
     <!-- Menu Bar Aplikasi (untuk main window) -->
@@ -25,6 +28,8 @@
         <Setter Property="Height" Value="Auto"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="DockPanel.Dock" Value="Top"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MenuBarBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="0,0,0,1"/>
     </Style>
 
     <!-- ===== MENU ITEM TOP LEVEL (di Menu Bar) ===== -->
@@ -74,7 +79,7 @@
 
     <!-- Menu Item Top Level untuk Aplikasi Shell -->
     <Style x:Key="styleMenuItemTopLevel" BasedOn="{StaticResource styleMenuItemDasar}" TargetType="MenuItem">
-        <Setter Property="Padding" Value="12,8"/>
+        <Setter Property="Padding" Value="12,10"/>
     </Style>
 
     <!-- ===== SUB MENU ITEM (dropdown items) ===== -->

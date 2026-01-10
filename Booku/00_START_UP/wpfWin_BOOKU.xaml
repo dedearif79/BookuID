@@ -30,7 +30,7 @@
         <Menu DockPanel.Dock="Top" Style="{StaticResource styleMenuBarAplikasi}">
 
             <!-- 1. File -->
-            <MenuItem Header="_File" Name="mnu_File" Foreground="White">
+            <MenuItem Header="_File" Name="mnu_File">
                 <MenuItem Header="Pengaturan" Name="mnu_Pengaturan"/>
                 <MenuItem Header="Database" Name="mnu_Database">
                     <MenuItem Header="Cadangkan" Name="mnu_Database_Cadangkan"/>
@@ -44,7 +44,7 @@
             </MenuItem>
 
             <!-- 2. Data -->
-            <MenuItem Header="_Data" Name="mnu_Data" Foreground="White">
+            <MenuItem Header="_Data" Name="mnu_Data">
                 <MenuItem Header="Company Profile" Name="mnu_CompanyProfile"/>
                 <MenuItem Header="Data Awal" Name="mnu_DataAwal">
                     <MenuItem Header="Hutang" Name="mnu_DataAwal_Hutang">
@@ -127,7 +127,7 @@
             </MenuItem>
 
             <!-- 3. Transaksi -->
-            <MenuItem Header="_Transaksi" Name="mnu_Transaksi" Foreground="White">
+            <MenuItem Header="_Transaksi" Name="mnu_Transaksi">
                 <MenuItem Header="Perekaman Data" Name="mnu_PerekamanData">
                     <MenuItem Header="Pembelian" Name="mnu_InputPembelian"/>
                     <MenuItem Header="Penjualan" Name="mnu_InputPenjualan"/>
@@ -154,7 +154,7 @@
             </MenuItem>
 
             <!-- 4. Pembelian -->
-            <MenuItem Header="Pem_belian" Name="mnu_Pembelian" Foreground="White">
+            <MenuItem Header="Pem_belian" Name="mnu_Pembelian">
                 <MenuItem Header="PO Pembelian" Name="mnu_PO_Pembelian">
                     <MenuItem Header="Lokal" Name="mnu_PO_Pembelian_Lokal">
                         <MenuItem Header="Barang" Name="mnu_POPembelian_Lokal_Barang"/>
@@ -205,7 +205,7 @@
             </MenuItem>
 
             <!-- 5. Penjualan -->
-            <MenuItem Header="Pen_jualan" Name="mnu_Penjualan" Foreground="White">
+            <MenuItem Header="Pen_jualan" Name="mnu_Penjualan">
                 <MenuItem Header="PO Penjualan" Name="mnu_BukuPengawasanPOPenjualan">
                     <MenuItem Header="Lokal" Name="mnu_POPenjualan_Lokal">
                         <MenuItem Header="Barang" Name="mnu_POPenjualan_Lokal_Barang"/>
@@ -250,7 +250,7 @@
             </MenuItem>
 
             <!-- 6. Buku Pengawasan -->
-            <MenuItem Header="Buku _Pengawasan" Name="mnu_BukuPengawasan" Foreground="White">
+            <MenuItem Header="Buku _Pengawasan" Name="mnu_BukuPengawasan">
                 <MenuItem Header="Bank &amp; Cash" Name="mnu_BukuBankCash">
                     <MenuItem Header="Bank" Name="mnu_BukuBank"/>
                     <MenuItem Header="Kas" Name="mnu_BukuKas"/>
@@ -324,7 +324,7 @@
             </MenuItem>
 
             <!-- 7. Pengajuan (BARU) -->
-            <MenuItem Header="Pen_gajuan" Name="mnu_Pengajuan" Foreground="White">
+            <MenuItem Header="Pen_gajuan" Name="mnu_Pengajuan">
                 <MenuItem Header="Pembayaran Pembelian Tunai" Name="mnu_PengajuanPembayaranPembelianTunai"/>
                 <MenuItem Header="Pembayaran Hutang Usaha" Name="mnu_PengajuanPembayaranHutangUsaha"/>
                 <MenuItem Header="Pembayaran Hutang Pajak" Name="mnu_PengajuanPembayaranHutangPajak"/>
@@ -340,7 +340,7 @@
             </MenuItem>
 
             <!-- 8. Stock Opname (BARU) -->
-            <MenuItem Header="_Stock Opname" Name="mnu_StockOpname" Foreground="White">
+            <MenuItem Header="_Stock Opname" Name="mnu_StockOpname">
                 <MenuItem Header="Bahan Penolong" Name="mnu_StockOpname_BahanPenolong"/>
                 <MenuItem Header="Bahan Baku" Name="mnu_StockOpname_BahanBaku"/>
                 <MenuItem Header="Barang Dalam Proses" Name="mnu_StockOpname_BarangDalamProses">
@@ -351,7 +351,7 @@
             </MenuItem>
 
             <!-- 9. Akuntansi -->
-            <MenuItem Header="_Akuntansi" Name="mnu_Akuntansi" Foreground="White">
+            <MenuItem Header="_Akuntansi" Name="mnu_Akuntansi">
                 <MenuItem Header="Jurnal" Name="mnu_Jurnal">
                     <MenuItem Header="Jurnal Umum" Name="mnu_JurnalUmum"/>
                     <MenuItem Header="Jurnal Adjusment" Name="mnu_JurnalAdjusment">
@@ -365,6 +365,7 @@
                 <Separator/>
                 <MenuItem Header="Laporan" Name="mnu_Laporan">
                     <MenuItem Header="Neraca Lajur" Name="mnu_NeracaLajur"/>
+                    <MenuItem Header="Trial Balance" Name="mnu_TrialBalance" Visibility="Collapsed"/>
                     <MenuItem Header="Laporan Keuangan" Name="mnu_LaporanKeuangan">
                         <MenuItem Header="Laporan HPP" Name="mnu_LaporanHPP"/>
                         <MenuItem Header="Laba Rugi" Name="mnu_LabaRugi">
@@ -381,7 +382,7 @@
             </MenuItem>
 
             <!-- 10. Manajemen Asset -->
-            <MenuItem Header="Manajemen _Asset" Name="mnu_ManajemenAsset" Foreground="White">
+            <MenuItem Header="Manajemen _Asset" Name="mnu_ManajemenAsset">
                 <MenuItem Header="Manajemen Amortisasi" Name="mnu_ManajemenAmortisasi">
                     <MenuItem Header="Amortisasi Biaya" Name="mnu_ManajemenAmortisasiBiaya"/>
                     <MenuItem Header="Amortisasi Asset Tidak Berwujud" Name="mnu_ManajemenAmortisasiAssetTidakBerwujud"/>
@@ -394,7 +395,7 @@
             </MenuItem>
 
             <!-- 11. Pajak (BARU) -->
-            <MenuItem Header="Pa_jak" Name="mnu_Pajak" Foreground="White">
+            <MenuItem Header="Pa_jak" Name="mnu_Pajak">
                 <MenuItem Header="Profil Pajak Perusahaan" Name="mnu_ProfilPajakPerusahaan"/>
                 <MenuItem Header="Perhitungan Pajak Bulanan" Name="mnu_PerhitunganPajakPajakBulanan"/>
                 <MenuItem Header="Hutang Pajak" Name="mnu_BukuPengawasanHutangPajak">
@@ -422,7 +423,7 @@
             </MenuItem>
 
             <!-- 12. User (BARU) -->
-            <MenuItem Header="_User" Name="mnu_User" Foreground="White">
+            <MenuItem Header="_User" Name="mnu_User">
                 <MenuItem Header="Switch User" Name="mnu_SwitchUser"/>
                 <MenuItem Header="Ganti Password" Name="mnu_GantiPassword"/>
                 <MenuItem Header="Ganti Peran" Name="mnu_GantiPeran">
@@ -436,29 +437,29 @@
             </MenuItem>
 
             <!-- 13. Jendela (BARU) -->
-            <MenuItem Header="_Jendela" Name="mnu_Jendela" Foreground="White">
+            <MenuItem Header="_Jendela" Name="mnu_Jendela">
                 <MenuItem Header="Tutup Semua" Name="mnu_Jendela_TutupSemua"/>
             </MenuItem>
 
             <!-- 14. Tentang (BARU) -->
-            <MenuItem Header="Te_ntang" Name="mnu_Tentang" Foreground="White"/>
+            <MenuItem Header="Te_ntang" Name="mnu_Tentang"/>
 
             <!-- 15. Help (BARU) -->
-            <MenuItem Header="_Help" Name="mnu_Help" Foreground="White"/>
+            <MenuItem Header="_Help" Name="mnu_Help"/>
 
             <!-- 16. Registrasi (BARU) -->
-            <MenuItem Header="_Registrasi" Name="mnu_Registrasi" Foreground="White"/>
+            <MenuItem Header="_Registrasi" Name="mnu_Registrasi"/>
 
             <!-- 17. Notifikasi (BARU) -->
-            <MenuItem Header="N_otifikasi" Name="mnu_Notifikasi" Foreground="White"/>
+            <MenuItem Header="N_otifikasi" Name="mnu_Notifikasi"/>
 
             <!-- 18. Technical Support (BARU) -->
-            <MenuItem Header="Technical _Support" Name="mnu_TechnicalSupport" Foreground="White">
+            <MenuItem Header="Technical _Support" Name="mnu_TechnicalSupport">
                 <MenuItem Header="phpMyAdmin" Name="mnu_PhpMyAdmin"/>
             </MenuItem>
 
             <!-- 19. App Developer (BARU) -->
-            <MenuItem Header="App _Developer" Name="mnu_AppDeveloper" Foreground="White">
+            <MenuItem Header="App _Developer" Name="mnu_AppDeveloper">
                 <MenuItem Header="Manajemen Aplikasi" Name="mnu_ManajemenAplikasi"/>
                 <MenuItem Header="Manajemen Client" Name="mnu_ManajemenClient"/>
                 <MenuItem Header="Manajemen Kurs" Name="mnu_ManajemenKurs"/>

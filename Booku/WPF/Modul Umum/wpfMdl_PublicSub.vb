@@ -84,6 +84,7 @@ Module wpfMdl_PublicSub
 
     Sub KetersediaanHalamanUtama(Tersedia As Boolean)
         frm_BOOKU.Enabled = Tersedia
+        win_BOOKU.IsEnabled = Tersedia
     End Sub
 
     Sub KetersediaanMenuUtama(Tersedia As Boolean)
@@ -110,11 +111,23 @@ Module wpfMdl_PublicSub
             End If
             win_Loading = New wpfWin_Loading
 
-            ' Set owner ke form utama agar loading mengikuti posisi dan z-order aplikasi
-            Dim helper = New System.Windows.Interop.WindowInteropHelper(win_Loading)
-            helper.Owner = frm_BOOKU.Handle
+            ' Set owner dan posisi tengah secara manual
+            Dim helper = New Interop.WindowInteropHelper(win_Loading)
+            If ModusAplikasi = "CLASSIC" Then
+                helper.Owner = frm_BOOKU.Handle
+                ' Hitung posisi tengah dari frm_BOOKU
+                win_Loading.WindowStartupLocation = WindowStartupLocation.Manual
+                win_Loading.Left = frm_BOOKU.Left + (frm_BOOKU.Width - win_Loading.Width) / 2
+                win_Loading.Top = frm_BOOKU.Top + (frm_BOOKU.Height - win_Loading.Height) / 2
+            Else
+                Dim ownerHelper = New Interop.WindowInteropHelper(win_BOOKU)
+                helper.Owner = ownerHelper.Handle
+                ' Hitung posisi tengah dari win_BOOKU
+                win_Loading.WindowStartupLocation = WindowStartupLocation.Manual
+                win_Loading.Left = win_BOOKU.Left + (win_BOOKU.Width - win_Loading.Width) / 2
+                win_Loading.Top = win_BOOKU.Top + (win_BOOKU.Height - win_Loading.Height) / 2
+            End If
 
-            win_Loading.WindowStartupLocation = WindowStartupLocation.CenterOwner
             win_Loading.Topmost = False
             win_Loading.Show()
         Catch ex As Exception

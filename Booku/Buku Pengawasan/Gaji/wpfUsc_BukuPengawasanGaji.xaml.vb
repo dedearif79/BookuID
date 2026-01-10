@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -1098,7 +1098,7 @@ Public Class wpfUsc_BukuPengawasanGaji
 
         If Not TanyaKonfirmasi("Dengan menghapus data terpilih, maka Jurnal yang terkait dengannya akan dihapus pula." & Enter2Baris & "Yakin ingin menghapus?") Then Return
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         AksesDatabase_Transaksi(Buka)
 

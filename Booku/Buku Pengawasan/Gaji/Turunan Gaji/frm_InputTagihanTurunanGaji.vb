@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 
 Public Class frm_InputTagihanTurunanGaji
@@ -74,7 +74,7 @@ Public Class frm_InputTagihanTurunanGaji
 
         Keterangan = txt_Keterangan.Text
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         If JumlahTagihan = 0 Then Keterangan = Nothing
 

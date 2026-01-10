@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.ComponentModel
 Imports System.Data.OleDb
 Imports System.Data.Odbc
@@ -38,7 +38,7 @@ Public Class frm_ProgressImportDataCOA
 
     Private Sub frm_ProgressImportDataCOA_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         Me.Text = "Proses..."
         Me.Height = 142

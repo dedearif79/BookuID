@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports bcomm
 
 
@@ -1039,7 +1039,7 @@ Public Class X2_frm_BukuPengawasanHutangUsaha_X2
                                   "Yakin akan menghapus..?", "Perhatian..!", MessageBoxButtons.YesNo)
         If Pilihan = vbNo Then Return
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         AksesDatabase_Transaksi(Buka)
 

@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Input
@@ -65,34 +65,48 @@ Public Class wpfWin_Login
 
         frm_BOOKU.mnu_AppDeveloper.Visible = False
 
+        win_BOOKU = New wpfWin_BOOKU
+        win_BOOKU.mnu_AppDeveloper.Visibility = Visibility.Collapsed
+
         Select Case LevelUserAktif
             Case LevelUser_01_Operator
                 frm_BOOKU.StatusMenuLevel_1_Operator()
+                win_BOOKU.StatusMenuLevel_1_Operator()
             Case LevelUser_02_Manager
                 frm_BOOKU.StatusMenuLevel_2_Manager()
+                win_BOOKU.StatusMenuLevel_2_Manager()
             Case LevelUser_03_Direktur
                 frm_BOOKU.StatusMenuLevel_3_Direktur()
+                win_BOOKU.StatusMenuLevel_3_Direktur()
             Case levelUser_04_GeneralUser
                 frm_BOOKU.StatusMenuLevel_4_GeneralUser()
+                win_BOOKU.StatusMenuLevel_4_GeneralUser()
             Case LevelUser_09_SuperUser
                 frm_BOOKU.StatusMenuLevel_9_SuperUser()
+                win_BOOKU.StatusMenuLevel_9_SuperUser()
             Case LevelUser_81_TimIT
                 frm_BOOKU.StatusMenuLevel_81_TimIT()
+                win_BOOKU.StatusMenuLevel_81_TimIT()
             Case LevelUser_99_AppDeveloper
                 frm_BOOKU.StatusMenuLevel_99_AppDeveloper()
-                frm_BOOKU.mnu_AppDeveloper.Visible = True
+                win_BOOKU.StatusMenuLevel_99_AppDeveloper()
         End Select
+
+        PesanUntukProgrammer("Status Login : " & StatusLogin & Enter2Baris &
+                             "Level User : " & LevelUserAktif)
 
         If LevelUserAktif >= LevelUser_09_SuperUser Then
             frm_BOOKU.mnu_DataUser.Enabled = True
+            win_BOOKU.mnu_DataUser.IsEnabled = True
         Else
             frm_BOOKU.mnu_DataUser.Enabled = False
+            win_BOOKU.mnu_DataUser.IsEnabled = False
         End If
 
         KeteranganCluster = Nothing
         If ClusterFinance = 1 Then KeteranganCluster = KeteranganCluster & "Finance  -  "
         If ClusterAccounting = 1 Then KeteranganCluster = KeteranganCluster & "Accounting  -  "
-        KeteranganCluster = Microsoft.VisualBasic.StrReverse(Microsoft.VisualBasic.Mid(Microsoft.VisualBasic.StrReverse(KeteranganCluster), 6))
+        KeteranganCluster = StrReverse(Mid(StrReverse(KeteranganCluster), 6))
 
         frm_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif & "  |  " & JabatanUserAktif & "  |  " & KeteranganCluster
         frm_BOOKU.mnu_GantiPeran.Visible = False
@@ -139,13 +153,60 @@ Public Class wpfWin_Login
 
         If SistemApprovalPerusahaan = False Then frm_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif
 
+        'win_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif & "  |  " & JabatanUserAktif & "  |  " & KeteranganCluster
+        win_BOOKU.mnu_GantiPeran.Visibility = Visibility.Collapsed
+        win_BOOKU.mnu_PeranTimIT.Visibility = Visibility.Collapsed
+        win_BOOKU.mnu_PeranAppDeveloper.Visibility = Visibility.Collapsed
+        If JabatanUserAktif = JabatanUser_AppDeveloper _
+            Or JabatanUserAktif = JabatanUser_TimIT _
+            Or JabatanUserAktif = JabatanUser_SuperUser _
+            Or JabatanUserAktif = JabatanUser_GeneralUser _
+            Then
+            If SistemApprovalPerusahaan = True Then win_BOOKU.mnu_GantiPeran.Visibility = Visibility.Visible
+            If JabatanUserAktif = JabatanUser_SuperUser _
+                Or JabatanUserAktif = JabatanUser_GeneralUser _
+                Then
+                LevelUserAktif = LevelUser_03_Direktur
+                win_BOOKU.mnu_PeranOperator.IsEnabled = True
+                win_BOOKU.mnu_PeranManager.IsEnabled = True
+                win_BOOKU.mnu_PeranDirektur.IsEnabled = False
+                win_BOOKU.mnu_PeranTimIT.IsEnabled = True
+                win_BOOKU.mnu_PeranAppDeveloper.IsEnabled = True
+                'win_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif & "  |  " & JabatanUserAktif & "  -->  " & JabatanUser_Direktur & "  |  " & KeteranganCluster
+                If SistemApprovalPerusahaan = True Then Pesan_Informasi("Anda login sebagai DIREKTUR.")
+            End If
+            If JabatanUserAktif = JabatanUser_TimIT Then
+                win_BOOKU.mnu_PeranTimIT.Visibility = Visibility.Visible
+                win_BOOKU.mnu_PeranOperator.IsEnabled = True
+                win_BOOKU.mnu_PeranManager.IsEnabled = True
+                win_BOOKU.mnu_PeranDirektur.IsEnabled = True
+                win_BOOKU.mnu_PeranTimIT.IsEnabled = False
+                win_BOOKU.mnu_PeranAppDeveloper.IsEnabled = True
+                'win_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif & "  |  " & JabatanUserAktif & "  -->  " & JabatanUser_TimIT & "  |  " & KeteranganCluster
+            End If
+            If JabatanUserAktif = JabatanUser_AppDeveloper Then
+                win_BOOKU.mnu_PeranTimIT.Visibility = Visibility.Visible
+                win_BOOKU.mnu_PeranAppDeveloper.Visibility = Visibility.Visible
+                win_BOOKU.mnu_PeranOperator.IsEnabled = True
+                win_BOOKU.mnu_PeranManager.IsEnabled = True
+                win_BOOKU.mnu_PeranDirektur.IsEnabled = True
+                win_BOOKU.mnu_PeranTimIT.IsEnabled = True
+                win_BOOKU.mnu_PeranAppDeveloper.IsEnabled = False
+                'win_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif & "  |  " & JabatanUserAktif & "  -->  " & JabatanUser_AppDeveloper & "  |  " & KeteranganCluster
+            End If
+        End If
+
+        'If SistemApprovalPerusahaan = False Then win_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif
+
+
+
         txt_UsernameInput.Focus()
         Me.Close()
 
     End Sub
 
     Sub BatasPengulanganLogin()
-        PengulanganLogin = PengulanganLogin + 1
+        PengulanganLogin += 1
         If PengulanganLogin >= 7 Then
             StatusLogin = False
             Pesan_Gagal("Login gagal.")
@@ -269,14 +330,15 @@ Public Class wpfWin_Login
             End If
         End If
 
-        If PasswordInput <> Password Then
+        If PasswordInput = Password Then
+            LoginSukses()
+            Return
+        Else
             Pesan_Peringatan("Password salah." & Enter2Baris & "Lupa password? Silakan hubungi Super User atau Developer Aplikasi.")
             txt_PasswordInput.Clear()
             txt_PasswordInput.Focus()
             BatasPengulanganLogin()
             Return
-        Else '( Jika Password Input = Password Data )
-            LoginSukses()
         End If
 
     End Sub

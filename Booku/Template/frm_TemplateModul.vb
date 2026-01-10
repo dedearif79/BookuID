@@ -1,4 +1,4 @@
-﻿Imports System.Data.OleDb
+Imports System.Data.OleDb
 Imports System.Data.Odbc
 
 Public Class frm_TemplateModul
@@ -52,13 +52,13 @@ Public Class frm_TemplateModul
     Private Sub btn_Tambah_Click(sender As Object, e As EventArgs) Handles btn_Tambah.Click
         FiturBelumBisaDigunakan()
 
-        TrialBalance_Mentahkan() 'Sub Ini kirim ke form INPUT
+        'TrialBalance_Mentahkan() 'Sub Ini kirim ke form INPUT
     End Sub
 
     Private Sub btn_Edit_Click(sender As Object, e As EventArgs) Handles btn_Edit.Click
         FiturBelumBisaDigunakan()
 
-        TrialBalance_Mentahkan() 'Sub ini kirim ke form EDIT
+        'TrialBalance_Mentahkan() 'Sub ini kirim ke form EDIT
     End Sub
 
     Private Sub btn_Hapus_Click(sender As Object, e As EventArgs) Handles btn_Hapus.Click
@@ -67,7 +67,7 @@ Public Class frm_TemplateModul
         Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
         If Pilihan = vbNo Then Return
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
     End Sub
 
     Private Sub DataTabelUtama_CellContentClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataTabelUtama.CellContentClick

@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 
 Public Class frm_InputPembelian
@@ -2228,7 +2228,7 @@ Public Class frm_InputPembelian
             StatusLunas = Nothing
         End If
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         Dim QueryPenyimpanan = Nothing
 

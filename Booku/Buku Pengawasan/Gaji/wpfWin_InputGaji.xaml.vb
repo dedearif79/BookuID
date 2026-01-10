@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
@@ -1059,7 +1059,7 @@ Public Class wpfWin_InputGaji
 
         Dim QueryPenyimpananPengeditan = Nothing
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         StatusSuntingDatabase = False 'Wajib Default False. Jangan dihapus...!!!
 

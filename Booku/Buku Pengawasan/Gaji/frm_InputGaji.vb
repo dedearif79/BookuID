@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 
 Public Class frm_InputGaji
@@ -1444,7 +1444,7 @@ Public Class frm_InputGaji
 
         Dim QueryPenyimpananPengeditan = Nothing
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         StatusSuntingDatabase = False 'Wajib Default False. Jangan dihapus...!!!
 

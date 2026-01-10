@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Input
@@ -565,7 +565,7 @@ Public Class wpfWin_InputHutangPPhPasal21_GajiDanPesangon
 
     Private Sub btn_Simpan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Simpan.Click
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         AksesDatabase_Transaksi(Buka)
 

@@ -52,13 +52,13 @@ Public Class frm_BOOKU
                 ModusAplikasi = "MODERN"
 
                 ' Buka WPF Shell dan tutup form WinForms ini
-                Dim wpfShell As New wpfWin_BOOKU
-                wpfShell.Show()
+                win_BOOKU.Show()
 
                 ' Sembunyikan frm_BOOKU (tidak di-close agar exception handlers tetap aktif)
                 Me.Hide()
                 Me.WindowState = FormWindowState.Minimized
                 Me.ShowInTaskbar = False
+                Me.Visible = False
 
                 Return ' Hentikan loading frm_BOOKU selanjutnya
             End If
@@ -342,63 +342,63 @@ Public Class frm_BOOKU
 
     End Sub
 
-    Sub BukaFormLogin()
+    'Sub BukaFormLogin()
 
-        win_Login = New wpfWin_Login
-        win_Login.ResetForm()
-        win_Login.ShowDialog()
+    '    win_Login = New wpfWin_Login
+    '    win_Login.ResetForm()
+    '    win_Login.ShowDialog()
 
-        If StatusLogin = True Then
+    '    If StatusLogin = True Then
 
-            'Form Masuk Tahun Buku :
-            AksesDatabase_General(Buka)
-            If StatusKoneksiDatabaseGeneral = True Then
-                If TahunBukuAktif = Nothing Then
-                    cmd = New OdbcCommand(" SELECT * FROM tbl_InfoData ORDER BY Tahun_Buku ", KoneksiDatabaseGeneral)
-                    dr = cmd.ExecuteReader
-                    Do While dr.Read 'Loop ini untuk mengambil value Tahun Buku yang paling akhir.
-                        TahunBukuBaru = dr.Item("Tahun_Buku")
-                    Loop
-                    If dr.HasRows Then
-                        AksesDatabase_General(Tutup)
-                        If LevelUserAktif >= LevelUser_81_TimIT Then 'Hanya User Level IT ke atas yang bisa gonta-ganti Tahun Buku.
-                            win_GantiTahunBuku = New wpfWin_GantiTahunBuku
-                            win_GantiTahunBuku.FungsiForm = FungsiForm_MASUKTAHUNBUKU
-                            win_GantiTahunBuku.ShowDialog()
-                        Else
-                            win_GantiTahunBuku = New wpfWin_GantiTahunBuku
-                            win_GantiTahunBuku.FungsiForm = FungsiForm_EksekusiSub_PROSESGANTITAHUNBUKU
-                            BeginInvoke(Sub() Pesan_Informasi("Anda memasuki Tahun Buku " & TahunBukuAktif & "."))
-                            win_GantiTahunBuku.ShowDialog()
-                        End If
-                    Else
-                        Pesan_Informasi("Anda belum memiliki Database Transaksi untuk dikelola." _
-                               & Enter2Baris & "Silakan buat database terlebih dahulu yang akan dipandu oleh aplikasi ini.")
-                        win_BuatDatabaseBukuBaru = New wpfWin_BuatDatabaseBukuBaru
-                        win_BuatDatabaseBukuBaru.ResetForm()
-                        win_BuatDatabaseBukuBaru.txt_TahunBuku.IsEnabled = False
-                        win_BuatDatabaseBukuBaru.cmb_JenisTahunBuku.IsEnabled = False
-                        win_BuatDatabaseBukuBaru.txt_TahunBuku.Text = TahunCutOff
-                        win_BuatDatabaseBukuBaru.cmb_JenisTahunBuku.SelectedValue = JenisTahunBuku_LAMPAU
-                        win_BuatDatabaseBukuBaru.ShowDialog()
-                        AksesDatabase_General(Tutup)
-                    End If
-                End If
-                If TahunBukuAktif = Nothing Then
-                    LoginGagal() 'Ini penting, untuk mencegah user masuk log/applikasi tanpa memilih Tahun Buku.
-                    Pesan_Peringatan("Login dibatalkan karena Anda tidak memilih Tahun Buku untuk dikelola.")
-                Else
-                    Me.Text = JudulAplikasi
-                End If
-            Else
-                LoginGagal()
-            End If
-            AksesDatabase_General(Tutup)
-        Else
-            LoginGagal()
-        End If
+    '        'Form Masuk Tahun Buku :
+    '        AksesDatabase_General(Buka)
+    '        If StatusKoneksiDatabaseGeneral = True Then
+    '            If TahunBukuAktif = Nothing Then
+    '                cmd = New OdbcCommand(" SELECT * FROM tbl_InfoData ORDER BY Tahun_Buku ", KoneksiDatabaseGeneral)
+    '                dr = cmd.ExecuteReader
+    '                Do While dr.Read 'Loop ini untuk mengambil value Tahun Buku yang paling akhir.
+    '                    TahunBukuBaru = dr.Item("Tahun_Buku")
+    '                Loop
+    '                If dr.HasRows Then
+    '                    AksesDatabase_General(Tutup)
+    '                    If LevelUserAktif >= LevelUser_81_TimIT Then 'Hanya User Level IT ke atas yang bisa gonta-ganti Tahun Buku.
+    '                        win_GantiTahunBuku = New wpfWin_GantiTahunBuku
+    '                        win_GantiTahunBuku.FungsiForm = FungsiForm_MASUKTAHUNBUKU
+    '                        win_GantiTahunBuku.ShowDialog()
+    '                    Else
+    '                        win_GantiTahunBuku = New wpfWin_GantiTahunBuku
+    '                        win_GantiTahunBuku.FungsiForm = FungsiForm_EksekusiSub_PROSESGANTITAHUNBUKU
+    '                        BeginInvoke(Sub() Pesan_Informasi("Anda memasuki Tahun Buku " & TahunBukuAktif & "."))
+    '                        win_GantiTahunBuku.ShowDialog()
+    '                    End If
+    '                Else
+    '                    Pesan_Informasi("Anda belum memiliki Database Transaksi untuk dikelola." _
+    '                           & Enter2Baris & "Silakan buat database terlebih dahulu yang akan dipandu oleh aplikasi ini.")
+    '                    win_BuatDatabaseBukuBaru = New wpfWin_BuatDatabaseBukuBaru
+    '                    win_BuatDatabaseBukuBaru.ResetForm()
+    '                    win_BuatDatabaseBukuBaru.txt_TahunBuku.IsEnabled = False
+    '                    win_BuatDatabaseBukuBaru.cmb_JenisTahunBuku.IsEnabled = False
+    '                    win_BuatDatabaseBukuBaru.txt_TahunBuku.Text = TahunCutOff
+    '                    win_BuatDatabaseBukuBaru.cmb_JenisTahunBuku.SelectedValue = JenisTahunBuku_LAMPAU
+    '                    win_BuatDatabaseBukuBaru.ShowDialog()
+    '                    AksesDatabase_General(Tutup)
+    '                End If
+    '            End If
+    '            If TahunBukuAktif = Nothing Then
+    '                LoginGagal() 'Ini penting, untuk mencegah user masuk log/applikasi tanpa memilih Tahun Buku.
+    '                Pesan_Peringatan("Login dibatalkan karena Anda tidak memilih Tahun Buku untuk dikelola.")
+    '            Else
+    '                Me.Text = JudulAplikasi
+    '            End If
+    '        Else
+    '            LoginGagal()
+    '        End If
+    '        AksesDatabase_General(Tutup)
+    '    Else
+    '        LoginGagal()
+    '    End If
 
-    End Sub
+    'End Sub
 
     Sub MenuIniMasihDalamPengembangan()
         Pesan_Informasi("Menu ini masih dalam pengembangan.")
@@ -2702,6 +2702,7 @@ Public Class frm_BOOKU
         mnu_PengajuanPO.Text = "Persetujuan PO"
         mnu_BuatBukuBaru.Enabled = True
         mnu_GantiTahunBuku.Enabled = True
+        mnu_AppDeveloper.Visible = True
     End Sub
 
     Private Sub mnu_Registrasi_Click(sender As Object, e As EventArgs) Handles mnu_Registrasi.Click
@@ -2936,7 +2937,6 @@ Public Class frm_BOOKU
     Private Sub mnu_TechnicalSupport_Click(sender As Object, e As EventArgs) Handles mnu_TechnicalSupport.Click
 
     End Sub
-
 
 
 

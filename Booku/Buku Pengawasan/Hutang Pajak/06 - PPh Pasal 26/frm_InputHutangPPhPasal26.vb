@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 
 Public Class frm_InputHutangPPhPasal26
@@ -142,7 +142,7 @@ Public Class frm_InputHutangPPhPasal26
 
     Private Sub btn_Simpan_Click(sender As Object, e As EventArgs) Handles btn_Simpan.Click
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         ProsesPenyimpanan = True
 

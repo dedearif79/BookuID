@@ -1,4 +1,4 @@
-﻿Imports System.Data.OleDb
+Imports System.Data.OleDb
 Imports System.Data.Odbc
 Imports System.IO
 Imports MySql.Data.MySqlClient
@@ -1004,7 +1004,7 @@ Module mdl_KoneksiDatabase
             TransactionRollback_Transaksi()
             Return
         End If
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
         Try
             Transaction_Transaksi.Commit()
             StatusSuntingDatabase = True

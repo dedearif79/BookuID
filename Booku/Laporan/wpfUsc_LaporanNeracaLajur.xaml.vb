@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -495,7 +495,7 @@ Public Class wpfUsc_LaporanNeracaLajur
         Proses = True
         ProsesDone = False
         LoopingTrialBalance = True
-        TrialBalance_Mentahkan() 'Mentahkan dulu data, karena khawatir proses berhenti di tengah jalan.
+        'TrialBalance_Mentahkan() 'Mentahkan dulu data, karena khawatir proses berhenti di tengah jalan.
         AksesDatabase_General(Buka)
         If StatusKoneksiDatabaseGeneral = False Then Return
         Try

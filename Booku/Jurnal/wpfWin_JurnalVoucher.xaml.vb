@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
@@ -254,7 +254,7 @@ Public Class wpfWin_JurnalVoucher
         'Dim PilihSetujui = MessageBox.Show("Data yang Anda setujui tidak akan bisa diedit lagi." & Enter2Baris & "Yakin akan menyetujui..?", "Perhatian..!", MessageBoxButtons.YesNo)
 
         'If PilihSetujui = vbYes Then
-        '    TrialBalance_Mentahkan() 'PENTING...!!!
+        '    'TrialBalance_Mentahkan() 'PENTING...!!!
         '    Dim Baris = 0
         '    Dim NomorID
         '    Dim COA

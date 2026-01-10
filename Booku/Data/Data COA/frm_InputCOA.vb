@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 
 Public Class frm_InputCOA
@@ -197,7 +197,7 @@ Public Class frm_InputCOA
             Return
         End If
 
-        TrialBalance_Mentahkan() 'Mentahkan data dari awal lebih baik (Sebelum proses tambah COA maupun proses edit COA)
+        'TrialBalance_Mentahkan() 'Mentahkan data dari awal lebih baik (Sebelum proses tambah COA maupun proses edit COA)
 
         'Jika Bermaksud Menambah Data COA Baru :
         If FungsiForm = FungsiForm_TAMBAH Then

@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Input
@@ -414,7 +414,7 @@ Public Class wpfWin_InputDataAsset
 
         Dim KelompokHarta_Angka = KonversiKelompokHartaKeAngka(KelompokHarta)
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         If FungsiForm = FungsiForm_TAMBAH Then
 

@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Input
@@ -175,7 +175,7 @@ Public Class wpfWin_InputHutangPPhPasal25
 
     Private Sub btn_Simpan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Simpan.Click
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         If MasaPajak = Kosongan Then
             Pesan_Peringatan("Silakan pilih 'Masa Pajak'.")
@@ -206,7 +206,7 @@ Public Class wpfWin_InputHutangPPhPasal25
 
         StatusSuntingDatabase = False
 
-        TrialBalance_Mentahkan()
+        'TrialBalance_Mentahkan()
 
         'Simpan Data Hutang ke Tabel : tbl_HutangPPhPasal25
         If FungsiForm = FungsiForm_TAMBAH Then
