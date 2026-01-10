@@ -178,8 +178,8 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_DataKaryawan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataKaryawan.Click
-        ' wpfUsc_DataKaryawan belum ada, gunakan fallback ke WinForms
-        BukaFormDalamTab(New frm_DataKaryawan(), "Data Karyawan")
+        usc_DataKaryawan = New wpfUsc_DataKaryawan
+        BukaUserControlDalamTab(usc_DataKaryawan, "Data Karyawan")
     End Sub
 
     Private Sub mnu_DataProject_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataProject.Click
@@ -325,7 +325,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_DaftarPemegangSaham_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DaftarPemegangSaham.Click
-        BukaFormDalamTab(New frm_DaftarPemegangSaham(), "Daftar Pemegang Saham")
+        Dim JudulForm = "Daftar Pemegang Saham"
+        usc_DaftarPemegangSaham = New wpfUsc_DaftarPemegangSaham
+        BukaUserControlDalamTab(usc_DaftarPemegangSaham, JudulForm)
     End Sub
 
     ' ============================================================
@@ -823,8 +825,10 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_TutupBuku_Click(sender As Object, e As RoutedEventArgs) Handles mnu_TutupBuku.Click
+        Dim JudulForm = "Tutup Buku"
+        usc_TutupBuku = New wpfUsc_TutupBuku
         usc_TutupBuku.ResetForm()
-        BukaFormDalamTab(frm_TutupBuku, "Tutup Buku")
+        BukaUserControlDalamTab(usc_TutupBuku, JudulForm)
     End Sub
 
     ' ============================================================
@@ -1438,7 +1442,8 @@ Public Class wpfWin_BOOKU
 
     Private Sub mnu_BukuBankGaransi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuBankGaransi.Click
         Dim JudulForm = "Buku Bank Garansi"
-        BukaFormDalamTab(frm_BukuBankGaransi, JudulForm)
+        usc_BukuBankGaransi = New wpfUsc_BukuBankGaransi
+        BukaUserControlDalamTab(usc_BukuBankGaransi, JudulForm)
     End Sub
 
     ' ============================================================
@@ -1967,6 +1972,9 @@ Public Class wpfWin_BOOKU
     ' AKUNTANSI - JURNAL ADJUSMENT
     ' ============================================================
     Private Sub mnu_JurnalAdjusment_Penyusutan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_JurnalAdjusment_Penyusutan.Click
+        BukaHalamanAdjusmentPenyusutanAsset()
+    End Sub
+    Sub BukaHalamanAdjusmentPenyusutanAsset()
         Dim JudulForm = "Adjusment Penyusutan Asset"
         usc_Adjusment_PenyusutanAsset = New wpfUsc_Adjusment_PenyusutanAsset
         BukaUserControlDalamTab(usc_Adjusment_PenyusutanAsset, JudulForm)

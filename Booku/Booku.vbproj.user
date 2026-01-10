@@ -66,9 +66,6 @@
     <Compile Update="Bank Garansi\frm_BukuBankGaransi.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Bank Garansi\frm_InputBankGaransi.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Buku Besar\frm_BukuBesar.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -537,12 +534,6 @@
     <Compile Update="Data\Data Karyawan\frm_DataKaryawan.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Data\Data Karyawan\frm_InputDataKaryawan.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Data\Data Karyawan\frm_ListDataKaryawan.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Data\Data Mitra\frm_DataLawanTransaksi.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -578,12 +569,6 @@
     </Compile>
     <Compile Update="Data\Kurs\wpfWin_UpdateKurs_Harian.xaml.vb">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Data\X_Trash\Data Pemegang Saham\frm_DataPemegangSaham.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Data\X_Trash\Data Pemegang Saham\frm_InputDataPemegangSaham.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Data\Data Project\frm_DataProject.vb">
       <SubType>Form</SubType>

@@ -2973,7 +2973,6 @@ Public Module mdl_PublicSub
         frm_DataMitra.Close()
         frm_DataKaryawan.Close()
         frm_DaftarPemegangSaham.Close()
-        frm_DataPemegangSaham.Close()
         frm_DataProject.Close()
         frm_Kurs.Close()
         frm_DPHU.Close()

@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -2088,7 +2088,11 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
     End Sub
 
     Private Sub btn_Adjusment_Click(sender As Object, e As RoutedEventArgs) Handles btn_Adjusment.Click
-        frm_BOOKU.BukaHalamanAdjusmentPenyusutanAsset()
+        If ModusAplikasi = "CLASSIC" Then
+            frm_BOOKU.BukaHalamanAdjusmentPenyusutanAsset()
+        Else
+            win_BOOKU.BukaHalamanAdjusmentPenyusutanAsset()
+        End If
     End Sub
 
 

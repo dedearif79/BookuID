@@ -1605,10 +1605,10 @@ Public Class wpfWin_InputBuktiPenerimaan
             Case Peruntukan_PencairanPiutangDividen
                 BukaFormListLawanTransaksi(txt_KodeLawanTransaksi, txt_NamaLawanTransaksi, Pilihan_Semua, Pilihan_Semua, Pilihan_Ya, Pilihan_Semua, Pilihan_Tidak)
             Case Peruntukan_PencairanPiutangKaryawan
-                frm_ListDataKaryawan.ResetForm()
-                If txt_KodeLawanTransaksi.Text <> Kosongan Then frm_ListDataKaryawan.NomorIDKaryawan_Terseleksi = txt_KodeLawanTransaksi.Text
-                frm_ListDataKaryawan.ShowDialog()
-                txt_KodeLawanTransaksi.Text = frm_ListDataKaryawan.NomorIDKaryawan_Terseleksi
+                win_ListDataKaryawan.ResetForm()
+                If txt_KodeLawanTransaksi.Text <> Kosongan Then win_ListDataKaryawan.NomorIDKaryawan_Terseleksi = txt_KodeLawanTransaksi.Text
+                win_ListDataKaryawan.ShowDialog()
+                txt_KodeLawanTransaksi.Text = win_ListDataKaryawan.NomorIDKaryawan_Terseleksi
             Case Peruntukan_PencairanPiutangLainnya
                 PesanUntukProgrammer("Belum ada Koding untuk pilihan ini...!")
             '----------------
@@ -1626,10 +1626,10 @@ Public Class wpfWin_InputBuktiPenerimaan
             Case Peruntukan_HutangPihakKetiga
                 BukaFormListLawanTransaksi(txt_KodeLawanTransaksi, txt_NamaLawanTransaksi, Pilihan_Semua, Pilihan_Semua, Pilihan_Semua, Pilihan_Tidak, Pilihan_Tidak)
             Case Peruntukan_HutangKaryawan
-                frm_ListDataKaryawan.ResetForm()
-                If txt_KodeLawanTransaksi.Text <> Kosongan Then frm_ListDataKaryawan.NIK_Terseleksi = txt_KodeLawanTransaksi.Text
-                frm_ListDataKaryawan.ShowDialog()
-                txt_KodeLawanTransaksi.Text = frm_ListDataKaryawan.NomorIDKaryawan_Terseleksi
+                win_ListDataKaryawan.ResetForm()
+                If txt_KodeLawanTransaksi.Text <> Kosongan Then win_ListDataKaryawan.NIK_Terseleksi = txt_KodeLawanTransaksi.Text
+                win_ListDataKaryawan.ShowDialog()
+                txt_KodeLawanTransaksi.Text = win_ListDataKaryawan.NomorIDKaryawan_Terseleksi
             Case Peruntukan_HutangLancarLainnya
                 PesanUntukProgrammer("Belum ada Coding untuk Pilihan ini...!")
             Case Peruntukan_HutangLeasing

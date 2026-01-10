@@ -72,8 +72,8 @@
 
         <!--Tombol :-->
         <StackPanel Style="{StaticResource stylePanelFormDialogTombol}" Name="pnl_TombolForm">
-            <Button Style="{StaticResource styleButtonFormDialogBatal}" Name="btn_Batal" />
             <Button Style="{StaticResource styleButtonFormDialogSimpan}" Name="btn_Simpan" />
+            <Button Style="{StaticResource styleButtonFormDialogBatal}" Name="btn_Batal" />
         </StackPanel>
 
     </StackPanel>

@@ -46,7 +46,7 @@
 
         <!--Tombol :-->
         <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"     Name="pnl_TombolForm">
-            <Button Style="{StaticResource styleButtonFormDialogTutup}"     Name="btn_Pilih"    Content="Pilih" />
+            <Button Style="{StaticResource styleButtonFormDialogPilih}"     Name="btn_Pilih" />
             <Button Style="{StaticResource styleButtonFormDialogTutup}"     Name="btn_Tutup" />
         </StackPanel>
 

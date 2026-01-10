@@ -48,16 +48,16 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nomor BPAL</TextBlock>
-                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nomor Bukti</TextBlock>
-                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Tanggal Bukti</TextBlock>
-                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Kode Lawan Transaksi</TextBlock>
-                <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nama Lawan Transaksi</TextBlock>
-                <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Uraian Transaksi</TextBlock>
-                <TextBlock  Grid.Row="6" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Kode Akun</TextBlock>
-                <TextBlock  Grid.Row="7" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nama Akun</TextBlock>
-                <TextBlock  Grid.Row="8" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Jumlah Transaksi</TextBlock>
-                <TextBlock  Grid.Row="9" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Keterangan :</TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Nomor BPAL" />
+                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Nomor Bukti" />
+                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Tanggal Bukti" />
+                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Kode Lawan Transaksi" />
+                <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Nama Lawan Transaksi" />
+                <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Uraian Transaksi" />
+                <TextBlock  Grid.Row="6" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Kode Akun" />
+                <TextBlock  Grid.Row="7" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Nama Akun" />
+                <TextBlock  Grid.Row="8" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah Transaksi" />
+                <TextBlock  Grid.Row="9" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Keterangan :" />
 
                 <TextBox        Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorBPAL"/>
                 <TextBox        Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorBukti"/>

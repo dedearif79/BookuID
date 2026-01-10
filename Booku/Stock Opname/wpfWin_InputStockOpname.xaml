@@ -48,15 +48,15 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Tanggal Pengecekan</TextBlock>
-                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nama Barang</TextBlock>
-                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Jumlah Barang</TextBlock>
-                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Satuan</TextBlock>
-                <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Harga Satuan</TextBlock>
-                <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Jumlah Harga</TextBlock>
-                <TextBlock  Grid.Row="6" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_Asal" >Asal</TextBlock>
-                <TextBlock  Grid.Row="7" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Lokasi</TextBlock>
-                <TextBlock  Grid.Row="8" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" >Keterangan :</TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Tanggal Pengecekan" />
+                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Nama Barang" />
+                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah Barang" />
+                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Satuan" />
+                <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Harga Satuan" />
+                <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah Harga" />
+                <TextBlock  Grid.Row="6" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_Asal" Text="Asal" />
+                <TextBlock  Grid.Row="7" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Lokasi" />
+                <TextBlock  Grid.Row="8" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Keterangan :" />
 
                 <DatePicker     Grid.Row="0"  Grid.Column="1"    Style="{StaticResource styleDatePickerFormDialog}"     Name="dtp_TanggalPengecekan" />
                 <TextBox        Grid.Row="1"  Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"        Name="txt_NamaBarang"/>

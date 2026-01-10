@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 
 Public Class frm_InputHutangPiutangKaryawan
@@ -158,17 +158,17 @@ Public Class frm_InputHutangPiutangKaryawan
     End Sub
 
     Private Sub btn_PilihIDKaryawan_Click(sender As Object, e As EventArgs) Handles btn_PilihIDKaryawan.Click
-        If NomorIDKaryawan = Kosongan Then
-            frm_ListDataKaryawan.ResetForm()
-        Else
-            frm_ListDataKaryawan.NomorIDKaryawan_Terseleksi = NomorIDKaryawan
-            frm_ListDataKaryawan.NamaKaryawan_Terseleksi = NamaKaryawan
-            frm_ListDataKaryawan.Jabatan_Terseleksi = Jabatan
-        End If
-        frm_ListDataKaryawan.ShowDialog()
-        txt_NomorIDKaryawan.Text = frm_ListDataKaryawan.NomorIDKaryawan_Terseleksi
-        txt_NamaKaryawan.Text = frm_ListDataKaryawan.NamaKaryawan_Terseleksi
-        txt_Jabatan.Text = frm_ListDataKaryawan.Jabatan_Terseleksi
+        'If NomorIDKaryawan = Kosongan Then
+        '    X_frm_ListDataKaryawan.ResetForm()
+        'Else
+        '    X_frm_ListDataKaryawan.NomorIDKaryawan_Terseleksi = NomorIDKaryawan
+        '    X_frm_ListDataKaryawan.NamaKaryawan_Terseleksi = NamaKaryawan
+        '    X_frm_ListDataKaryawan.Jabatan_Terseleksi = Jabatan
+        'End If
+        'X_frm_ListDataKaryawan.ShowDialog()
+        'txt_NomorIDKaryawan.Text = X_frm_ListDataKaryawan.NomorIDKaryawan_Terseleksi
+        'txt_NamaKaryawan.Text = X_frm_ListDataKaryawan.NamaKaryawan_Terseleksi
+        'txt_Jabatan.Text = X_frm_ListDataKaryawan.Jabatan_Terseleksi
     End Sub
 
     Private Sub txt_NamaKaryawan_TextChanged(sender As Object, e As EventArgs) Handles txt_NamaKaryawan.TextChanged

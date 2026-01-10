@@ -56,6 +56,17 @@ Module wpfMdl_ClassWindow
     Public win_InputDataProject As New wpfWin_InputDataProject
 
     '═══════════════════════════════════════════════════════════════════════════
+    ' DATA MASTER - KARYAWAN
+    '═══════════════════════════════════════════════════════════════════════════
+    Public win_InputDataKaryawan As New wpfWin_InputDataKaryawan
+    Public win_ListDataKaryawan As New wpfWin_ListDataKaryawan
+
+    '═══════════════════════════════════════════════════════════════════════════
+    ' BANK GARANSI
+    '═══════════════════════════════════════════════════════════════════════════
+    Public win_InputBankGaransi As New wpfWin_InputBankGaransi
+
+    '═══════════════════════════════════════════════════════════════════════════
     ' DATA MASTER - KURS
     '═══════════════════════════════════════════════════════════════════════════
     Public win_UpdateKurs_Bulanan As New wpfWin_UpdateKurs_Bulanan

@@ -1759,10 +1759,10 @@ Public Class wpfWin_InputBuktiPengeluaran
             Case Peruntukan_PembayaranHutangPemegangSaham
                 BukaFormListLawanTransaksi(txt_KodeLawanTransaksi, txt_NamaLawanTransaksi, Pilihan_Semua, Pilihan_Semua, Pilihan_Ya, Pilihan_Semua, Pilihan_Tidak)
             Case Peruntukan_PembayaranHutangKaryawan
-                frm_ListDataKaryawan.ResetForm()
-                If txt_KodeLawanTransaksi.Text <> Kosongan Then frm_ListDataKaryawan.NomorIDKaryawan_Terseleksi = txt_KodeLawanTransaksi.Text
-                frm_ListDataKaryawan.ShowDialog()
-                txt_KodeLawanTransaksi.Text = frm_ListDataKaryawan.NomorIDKaryawan_Terseleksi
+                win_ListDataKaryawan.ResetForm()
+                If txt_KodeLawanTransaksi.Text <> Kosongan Then win_ListDataKaryawan.NomorIDKaryawan_Terseleksi = txt_KodeLawanTransaksi.Text
+                win_ListDataKaryawan.ShowDialog()
+                txt_KodeLawanTransaksi.Text = win_ListDataKaryawan.NomorIDKaryawan_Terseleksi
             Case Peruntukan_PembayaranHutangBank
                 BukaFormListLawanTransaksi(txt_KodeLawanTransaksi, txt_NamaLawanTransaksi, Mitra_Supplier, Pilihan_Semua, Pilihan_Semua, Pilihan_Semua, Pilihan_Ya)
             Case Peruntukan_PembayaranHutangLeasing
@@ -1777,10 +1777,10 @@ Public Class wpfWin_InputBuktiPengeluaran
             Case Peruntukan_PiutangPemegangSaham
                 BukaFormListLawanTransaksi(txt_KodeLawanTransaksi, txt_NamaLawanTransaksi, Pilihan_Semua, Pilihan_Semua, Pilihan_Ya, Pilihan_Semua, Pilihan_Tidak)
             Case Peruntukan_PiutangKaryawan
-                frm_ListDataKaryawan.ResetForm()
-                If txt_KodeLawanTransaksi.Text <> Kosongan Then frm_ListDataKaryawan.NIK_Terseleksi = txt_KodeLawanTransaksi.Text
-                frm_ListDataKaryawan.ShowDialog()
-                txt_KodeLawanTransaksi.Text = frm_ListDataKaryawan.NomorIDKaryawan_Terseleksi
+                win_ListDataKaryawan.ResetForm()
+                If txt_KodeLawanTransaksi.Text <> Kosongan Then win_ListDataKaryawan.NIK_Terseleksi = txt_KodeLawanTransaksi.Text
+                win_ListDataKaryawan.ShowDialog()
+                txt_KodeLawanTransaksi.Text = win_ListDataKaryawan.NomorIDKaryawan_Terseleksi
             Case Peruntukan_PiutangPihakKetiga
                 BukaFormListLawanTransaksi(txt_KodeLawanTransaksi, txt_NamaLawanTransaksi, Pilihan_Semua, Pilihan_Semua, Pilihan_Semua, Pilihan_Tidak, Pilihan_Tidak)
             Case Peruntukan_PiutangAfiliasi

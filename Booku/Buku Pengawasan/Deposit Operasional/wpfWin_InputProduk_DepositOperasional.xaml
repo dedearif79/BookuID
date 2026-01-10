@@ -47,12 +47,12 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Kode Akun</TextBlock>
-                    <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nama Akun</TextBlock>
-                    <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nama Barang/Jasa</TextBlock>
-                    <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nomor Referensi</TextBlock>
-                    <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Tanggal Referensi</TextBlock>
-                    <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Jumlah</TextBlock>
+                    <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Kode Akun" />
+                    <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Nama Akun" />
+                    <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Nama Barang/Jasa" />
+                    <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Nomor Referensi" />
+                    <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Tanggal Referensi" />
+                    <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah" />
 
                     <StackPanel     Grid.Row="0"    Grid.Column="1"     Style="{StaticResource stylePanelFormDialogKolom}"  >
                         <TextBox    Width="99"                          Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_KodeAkun" />

@@ -60,7 +60,7 @@
                         <TextBlock  Grid.Row="7"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nomor Faktur Pajak"       Name="lbl_NomorFaktur" />
                         <TextBlock  Grid.Row="8"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Kode Lawan Transaksi" />
                         <TextBlock  Grid.Row="9"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Nama Lawan Transaksi" />
-                        <TextBlock  Grid.Row="10" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}"      Name="lbl_Kurs">Kurs</TextBlock>
+                        <TextBlock  Grid.Row="10" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}"      Name="lbl_Kurs" Text="Kurs" />
                         <TextBlock  Grid.Row="11" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"       Text="Uraian Transaksi :" />
 
                         <TextBox        Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorJV" />

@@ -1,12 +1,15 @@
-﻿Imports bcomm
-Imports System.Data.OleDb
+Imports bcomm
+Imports System.Windows
+Imports System.Windows.Controls
+Imports System.Windows.Input
 Imports System.Data.Odbc
 
-Public Class frm_InputBankGaransi
+
+Public Class wpfWin_InputBankGaransi
 
     Public JudulForm
     Public FungsiForm
-    Public JalurMasuk
+    Public ProsesSuntingDatabase As Boolean
 
     Public NomorID
     Dim NomorBPBG
@@ -21,7 +24,8 @@ Public Class frm_InputBankGaransi
     Dim Keterangan
     Public NomorJV_Transaksi
 
-    Private Sub form_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
         ProsesLoadingForm = True
 
@@ -36,26 +40,24 @@ Public Class frm_InputBankGaransi
 
         If FungsiForm = Kosongan Then PesanUntukProgrammer("Fungsi Form belum ditentukan...!!!")
 
-
-
-        Me.Text = JudulForm
+        Title = JudulForm
 
         ProsesLoadingForm = False
-
-        BeginInvoke(Sub() Style_FormInput(Me))
 
     End Sub
 
 
-    Sub ResetForm()
+    Public Sub ResetForm()
 
         ProsesResetForm = True
 
         FungsiForm = Kosongan
+        ProsesSuntingDatabase = False
 
         NomorID = 0
-        dtp_TanggalTransaksi.Value = Today
+        dtp_TanggalTransaksi.SelectedDate = Today
         txt_NomorBPBG.Text = Kosongan
+        txt_NomorKontrak.Text = Kosongan
         txt_NamaBank.Text = Kosongan
         txt_Keperluan.Text = Kosongan
         txt_KodeLawanTransaksi.Text = Kosongan
@@ -65,7 +67,6 @@ Public Class frm_InputBankGaransi
         txt_Keterangan.Text = Kosongan
 
         NomorJV_Transaksi = 0
-
 
         ProsesResetForm = False
 
@@ -81,43 +82,42 @@ Public Class frm_InputBankGaransi
     End Sub
 
 
-    Private Sub dtp_TanggalTransaksi_ValueChanged(sender As Object, e As EventArgs) Handles dtp_TanggalTransaksi.ValueChanged
-        KunciTahun_HarusSamaDenganTahunBukuAktif(dtp_TanggalTransaksi)
-        TanggalTransaksi = dtp_TanggalTransaksi.Value
+    Private Sub dtp_TanggalTransaksi_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs) Handles dtp_TanggalTransaksi.SelectedDateChanged
+        TanggalTransaksi = TanggalFormatTampilan(dtp_TanggalTransaksi.SelectedDate)
     End Sub
 
-    Private Sub txt_NomorBPBG_TextChanged(sender As Object, e As EventArgs) Handles txt_NomorBPBG.TextChanged
+
+    Private Sub txt_NomorBPBG_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_NomorBPBG.TextChanged
         NomorBPBG = txt_NomorBPBG.Text
     End Sub
-    Private Sub txt_NomorBPBG_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_NomorBPBG.KeyPress
-        KunciTotalInputan(sender, e)
-    End Sub
 
-    Private Sub txt_NomorKontrak_TextChanged(sender As Object, e As EventArgs) Handles txt_NomorKontrak.TextChanged
+
+    Private Sub txt_NomorKontrak_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_NomorKontrak.TextChanged
         NomorKontrak = txt_NomorKontrak.Text
     End Sub
 
-    Private Sub txt_NamaBank_TextChanged(sender As Object, e As EventArgs) Handles txt_NamaBank.TextChanged
+
+    Private Sub txt_NamaBank_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_NamaBank.TextChanged
         NamaBank = txt_NamaBank.Text
     End Sub
 
-    Private Sub txt_Keperluan_TextChanged(sender As Object, e As EventArgs) Handles txt_Keperluan.TextChanged
+
+    Private Sub txt_Keperluan_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Keperluan.TextChanged
         Keperluan = txt_Keperluan.Text
     End Sub
 
-    Private Sub txt_KodeLawanTransaksi_Click(sender As Object, e As EventArgs) Handles txt_KodeLawanTransaksi.Click
+
+    Private Sub txt_KodeLawanTransaksi_MouseLeftButtonUp(sender As Object, e As MouseButtonEventArgs) Handles txt_KodeLawanTransaksi.PreviewMouseLeftButtonUp
         btn_PilihMitra_Click(sender, e)
     End Sub
-    Private Sub txt_KodeLawanTransaksi_TextChanged(sender As Object, e As EventArgs) Handles txt_KodeLawanTransaksi.TextChanged
+
+    Private Sub txt_KodeLawanTransaksi_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_KodeLawanTransaksi.TextChanged
         KodeLawanTransaksi = txt_KodeLawanTransaksi.Text
         txt_NamaLawanTransaksi.Text = AmbilValue_NamaMitra(KodeLawanTransaksi)
     End Sub
-    Private Sub txt_KodeLawanTransaksi_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_KodeLawanTransaksi.KeyPress
-        KunciTotalInputan(sender, e)
-    End Sub
 
 
-    Private Sub btn_PilihMitra_Click(sender As Object, e As EventArgs) Handles btn_PilihMitra.Click
+    Private Sub btn_PilihMitra_Click(sender As Object, e As RoutedEventArgs) Handles btn_PilihMitra.Click
         win_ListLawanTransaksi = New wpfWin_ListLawanTransaksi
         win_ListLawanTransaksi.ResetForm()
         win_ListLawanTransaksi.PilihJenisLawanTransaksi = Pilihan_Semua
@@ -130,38 +130,30 @@ Public Class frm_InputBankGaransi
     End Sub
 
 
-    Private Sub txt_NamaLawanTransaksi_TextChanged(sender As Object, e As EventArgs) Handles txt_NamaLawanTransaksi.TextChanged
+    Private Sub txt_NamaLawanTransaksi_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_NamaLawanTransaksi.TextChanged
         NamaLawanTransaksi = txt_NamaLawanTransaksi.Text
     End Sub
-    Private Sub txt_NamaLawanTransaksi_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_NamaLawanTransaksi.KeyPress
-        KunciTotalInputan(sender, e)
-    End Sub
 
-    Private Sub txt_JumlahTransaksi_TextChanged(sender As Object, e As EventArgs) Handles txt_JumlahTransaksi.TextChanged
+
+    Private Sub txt_JumlahTransaksi_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_JumlahTransaksi.TextChanged
         JumlahTransaksi = AmbilAngka(txt_JumlahTransaksi.Text)
-        PemecahRibuanUntukTextBox(txt_JumlahTransaksi)
-    End Sub
-    Private Sub txt_JumlahTransaksi_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_JumlahTransaksi.KeyPress
-        HanyaBolehInputAngkaPlus(sender, e)
     End Sub
 
-    Private Sub txt_BiayaProvisi_TextChanged(sender As Object, e As EventArgs) Handles txt_BiayaProvisi.TextChanged
+
+    Private Sub txt_BiayaProvisi_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_BiayaProvisi.TextChanged
         BiayaProvisi = AmbilAngka(txt_BiayaProvisi.Text)
-        PemecahRibuanUntukTextBox(txt_BiayaProvisi)
-    End Sub
-    Private Sub txt_BiayaProvisi_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_BiayaProvisi.KeyPress
-        HanyaBolehInputAngkaPlus(sender, e)
     End Sub
 
-    Private Sub txt_Keterangan_TextChanged(sender As Object, e As EventArgs) Handles txt_Keterangan.TextChanged
+
+    Private Sub txt_Keterangan_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Keterangan.TextChanged
         Keterangan = txt_Keterangan.Text
     End Sub
 
 
+    Private Sub btn_Simpan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Simpan.Click
 
-    Private Sub btn_Simpan_Click(sender As Object, e As EventArgs) Handles btn_Simpan.Click
-
-        'Isi Ulang Value :
+        'Pengisian Ulang Beberapa Variabel :
+        TanggalTransaksi = TanggalFormatTampilan(dtp_TanggalTransaksi.SelectedDate)
         Keterangan = txt_Keterangan.Text
 
         'Validasi Form :
@@ -195,7 +187,7 @@ Public Class frm_InputBankGaransi
             Return
         End If
 
-
+        ProsesSuntingDatabase = False
 
         AksesDatabase_Transaksi(Buka)
 
@@ -218,7 +210,12 @@ Public Class frm_InputBankGaransi
                                   " '" & NomorJV_Transaksi & "', " &
                                   " '" & 0 & "', " &
                                   " '" & UserAktif & "' ) ", KoneksiDatabaseTransaksi)
-            cmd_ExecuteNonQuery()
+            Try
+                cmd.ExecuteNonQuery()
+                ProsesSuntingDatabase = True
+            Catch ex As Exception
+                ProsesSuntingDatabase = False
+            End Try
 
         End If
 
@@ -237,17 +234,21 @@ Public Class frm_InputBankGaransi
                                   " Nomor_JV_Transaksi      = '" & NomorJV_Transaksi & "', " &
                                   " User                    = '" & UserAktif & "' " &
                                   " WHERE Nomor_BPBG        = '" & NomorBPBG & "' ", KoneksiDatabaseTransaksi)
-            cmd_ExecuteNonQuery()
+            Try
+                cmd.ExecuteNonQuery()
+                ProsesSuntingDatabase = True
+            Catch ex As Exception
+                ProsesSuntingDatabase = False
+            End Try
 
         End If
 
         AksesDatabase_Transaksi(Tutup)
 
-
-        If StatusSuntingDatabase = True Then
+        If ProsesSuntingDatabase = True Then
             If FungsiForm = FungsiForm_TAMBAH Then pesan_DataBerhasilDisimpan()
             If FungsiForm = FungsiForm_EDIT Then pesan_DataTerpilihBerhasilDiperbarui()
-            frm_BukuBankGaransi.TampilkanData() 'Ini Harus Diganti dengan Modul Terkait.
+            If usc_BukuBankGaransi.StatusAktif Then usc_BukuBankGaransi.TampilkanData()
             Me.Close()
         Else
             If FungsiForm = FungsiForm_TAMBAH Then pesan_DataGagalDisimpan()
@@ -256,9 +257,18 @@ Public Class frm_InputBankGaransi
 
     End Sub
 
-    Private Sub btn_Batal_Click(sender As Object, e As EventArgs) Handles btn_Batal.Click
-        ResetForm()
+
+    Private Sub btn_Batal_Click(sender As Object, e As RoutedEventArgs) Handles btn_Batal.Click
         Me.Close()
+    End Sub
+
+
+    Sub New()
+        InitializeComponent()
+        StyleWindowDialogWPF_Dasar(Me)
+        txt_NomorKontrak.MaxLength = 99
+        txt_NamaBank.MaxLength = 99
+        txt_Keperluan.MaxLength = 99
     End Sub
 
 End Class

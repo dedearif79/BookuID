@@ -33,6 +33,11 @@
     Public usc_DataProject As New wpfUsc_DataProject
 
     '═══════════════════════════════════════════════════════════════════════════
+    ' DATA MASTER - KARYAWAN
+    '═══════════════════════════════════════════════════════════════════════════
+    Public usc_DataKaryawan As New wpfUsc_DataKaryawan
+
+    '═══════════════════════════════════════════════════════════════════════════
     ' DATA MASTER - KURS
     '═══════════════════════════════════════════════════════════════════════════
     Public usc_Kurs As New wpfUsc_Kurs
@@ -278,6 +283,11 @@
     ' MANAJEMEN ASSET - AMORTISASI
     '═══════════════════════════════════════════════════════════════════════════
     Public usc_DaftarAmortisasiBiaya As New wpfUsc_DaftarAmortisasiBiaya
+
+    '═══════════════════════════════════════════════════════════════════════════
+    ' BANK GARANSI
+    '═══════════════════════════════════════════════════════════════════════════
+    Public usc_BukuBankGaransi As New wpfUsc_BukuBankGaransi
 
     '═══════════════════════════════════════════════════════════════════════════
     ' STOCK OPNAME

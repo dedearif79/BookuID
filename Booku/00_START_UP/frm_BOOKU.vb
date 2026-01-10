@@ -722,9 +722,9 @@ Public Class frm_BOOKU
 
     'SUB MENU : DATA PEMEGANG SAHAM ---------------------------------------------------------------- (Ini nanti hapus saja...!!!)
     Private Sub mnu_DataPemegangSaham_Click(sender As Object, e As EventArgs) Handles mnu_DataPemegangSaham.Click
-        frm_DataPemegangSaham.MdiParent = Me
-        frm_DataPemegangSaham.Show()
-        frm_DataPemegangSaham.Focus()
+        'frm_DataPemegangSaham.MdiParent = Me
+        'frm_DataPemegangSaham.Show()
+        'frm_DataPemegangSaham.Focus()
     End Sub
 
     'SUB MENU : DATA PROJECT ----------------------------------------------------------------------

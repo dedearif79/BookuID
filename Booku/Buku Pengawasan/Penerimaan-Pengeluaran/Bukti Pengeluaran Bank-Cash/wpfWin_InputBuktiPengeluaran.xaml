@@ -54,22 +54,22 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Kategori</TextBlock>
-                    <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Peruntukan</TextBlock>
-                    <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_NomorKK">Nomor Bank Cash Out</TextBlock>
-                    <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Tanggal Bank Cash Out</TextBlock>
-                    <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Kode lawan Transaksi</TextBlock>
-                    <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nama Lawan Transaksi</TextBlock>
-                    <TextBlock  Grid.Row="6" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_Kurs">Kurs</TextBlock>
-                    <TextBlock  Grid.Row="7" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_Denda">Denda</TextBlock>
-                    <TextBlock  Grid.Row="8" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_KodePajak">Kode Pajak</TextBlock>
-                    <TextBlock  Grid.Row="9" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TotalPengajuan_MUA">Total Pengajuan (MUA)</TextBlock>
-                    <TextBlock  Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TotalPengajuan_IDR">Total Pengajuan (IDR)</TextBlock>
-                    <TextBlock  Grid.Row="11" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TotalDisetujui_MUA">Total Disetujui (MUA)</TextBlock>
-                    <TextBlock  Grid.Row="12" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TotalDisetujui_IDR">Total Disetujui (IDR)</TextBlock>
-                    <TextBlock  Grid.Row="13" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" >Sarana Pembayaran</TextBlock>
-                    <TextBlock  Grid.Row="15" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TanggalBayar">Tanggal Bayar</TextBlock>
-                    <TextBlock  Grid.Row="16" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" >Catatan :</TextBlock>
+                    <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Kategori" />
+                    <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Peruntukan" />
+                    <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_NomorKK" Text="Nomor Bank Cash Out" />
+                    <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Tanggal Bank Cash Out" />
+                    <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Kode lawan Transaksi" />
+                    <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Nama Lawan Transaksi" />
+                    <TextBlock  Grid.Row="6" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_Kurs" Text="Kurs" />
+                    <TextBlock  Grid.Row="7" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_Denda" Text="Denda" />
+                    <TextBlock  Grid.Row="8" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_KodePajak" Text="Kode Pajak" />
+                    <TextBlock  Grid.Row="9" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TotalPengajuan_MUA" Text="Total Pengajuan (MUA)" />
+                    <TextBlock  Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TotalPengajuan_IDR" Text="Total Pengajuan (IDR)" />
+                    <TextBlock  Grid.Row="11" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TotalDisetujui_MUA" Text="Total Disetujui (MUA)" />
+                    <TextBlock  Grid.Row="12" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TotalDisetujui_IDR" Text="Total Disetujui (IDR)" />
+                    <TextBlock  Grid.Row="13" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Sarana Pembayaran" />
+                    <TextBlock  Grid.Row="15" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TanggalBayar" Text="Tanggal Bayar" />
+                    <TextBlock  Grid.Row="16" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Catatan :" />
 
                     <ComboBox       Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_Kategori" Height="24" Margin="0,2,0,0" VerticalAlignment="Top" />
                     <ComboBox       Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_Peruntukan" Height="24" Margin="0,2,0,0" VerticalAlignment="Top" />
@@ -106,12 +106,12 @@
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_RekeningPenerima">Rekening Penerima</TextBlock>
-                            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_AtasNamaPenerima">Atas Nama</TextBlock>
-                            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_BiayaAdministrasiBank" >Biaya Administrasi</TextBlock>
-                            <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_DitanggungOleh">Ditanggung Oleh</TextBlock>
-                            <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_JumlahTransfer">Jumlah Transfer</TextBlock>
-                            <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TotalBank">Total Bank</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_RekeningPenerima" Text="Rekening Penerima" />
+                            <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_AtasNamaPenerima" Text="Atas Nama" />
+                            <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_BiayaAdministrasiBank" Text="Biaya Administrasi" />
+                            <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_DitanggungOleh" Text="Ditanggung Oleh" />
+                            <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_JumlahTransfer" Text="Jumlah Transfer" />
+                            <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TotalBank" Text="Total Bank" />
 
                             <TextBox        Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_RekeningPenerima"/>
                             <TextBox        Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_AtasNamaPenerima" />

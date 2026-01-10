@@ -1,12 +1,15 @@
-﻿Imports bcomm
+Imports bcomm
+Imports System.Windows
+Imports System.Windows.Controls
+Imports System.Windows.Input
 Imports System.Data.Odbc
 
-Public Class frm_InputDataKaryawan
 
+Public Class wpfWin_InputDataKaryawan
 
     Public JudulForm
     Public FungsiForm
-    Public JalurMasuk
+    Public ProsesSuntingDatabase As Boolean
 
     Dim NomorID_Tabel
     Dim TanggalRegistrasi
@@ -17,60 +20,53 @@ Public Class frm_InputDataKaryawan
     Dim RekeningBank
     Dim AtasNama
     Dim Catatan
-    Dim StatusAktif
+    Dim StatusAktifKaryawan
 
     Dim NomorIDSudahTerdaftar As Boolean
     Dim NIKSudahTerdaftar As Boolean
 
-    Private Sub form_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
         ProsesLoadingForm = True
 
         If FungsiForm = FungsiForm_TAMBAH Then
             JudulForm = "Input Data Karyawan"
-            txt_NomorIDKaryawan.Enabled = True
+            txt_NomorIDKaryawan.IsReadOnly = False
         End If
 
         If FungsiForm = FungsiForm_EDIT Then
             JudulForm = "Edit Data Karyawan"
-            txt_NomorIDKaryawan.Enabled = False
-
+            txt_NomorIDKaryawan.IsReadOnly = True
         End If
 
         If FungsiForm = Kosongan Then PesanUntukProgrammer("Fungsi Form belum ditentukan...!!!")
 
-
-
-
-        Me.Text = JudulForm
+        Title = JudulForm
 
         ProsesLoadingForm = False
 
     End Sub
 
 
-    Sub KontenCombo_Jabatan()
-        cmb_Jabatan.Items.Clear()
-        cmb_Jabatan.Text = Kosongan
-    End Sub
-
-    Sub ResetForm()
+    Public Sub ResetForm()
 
         ProsesResetForm = True
 
         FungsiForm = Kosongan
+        ProsesSuntingDatabase = False
 
         NomorID_Tabel = 0
-
+        dtp_TanggalRegistrasi.SelectedDate = Today
         txt_NomorIDKaryawan.Text = Kosongan
+        txt_NomorIDKaryawan.IsReadOnly = False
         txt_NIK.Text = Kosongan
-        dtp_TanggalRegistrasi.Value = Today
         txt_NamaKaryawan.Text = Kosongan
-        KontenCombo_Jabatan()
+        txt_Jabatan.Text = Kosongan
         txt_RekeningBank.Text = Kosongan
         txt_AtasNama.Text = Kosongan
         txt_Catatan.Text = Kosongan
-        chk_StatusAktif.Checked = True
+        chk_StatusAktif.IsChecked = True
 
         NomorIDSudahTerdaftar = False
         NIKSudahTerdaftar = False
@@ -80,10 +76,17 @@ Public Class frm_InputDataKaryawan
     End Sub
 
 
-    Private Sub txt_NomorIDKaryawan_TextChanged(sender As Object, e As EventArgs) Handles txt_NomorIDKaryawan.TextChanged
+
+    Private Sub dtp_TanggalRegistrasi_SelectedDateChanged(sender As Object, e As SelectionChangedEventArgs) Handles dtp_TanggalRegistrasi.SelectedDateChanged
+        TanggalRegistrasi = TanggalFormatTampilan(dtp_TanggalRegistrasi.SelectedDate)
+    End Sub
+
+
+    Private Sub txt_NomorIDKaryawan_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_NomorIDKaryawan.TextChanged
         NomorIDKaryawan = txt_NomorIDKaryawan.Text
     End Sub
-    Private Sub txt_NomorIDKaryawan_Leave(sender As Object, e As EventArgs) Handles txt_NomorIDKaryawan.Leave
+
+    Private Sub txt_NomorIDKaryawan_LostFocus(sender As Object, e As RoutedEventArgs) Handles txt_NomorIDKaryawan.LostFocus
         If FungsiForm = FungsiForm_TAMBAH And NomorIDKaryawan <> Kosongan Then
             AksesDatabase_General(Buka)
             cmd = New OdbcCommand(" SELECT Nomor_ID_Karyawan FROM tbl_DataKaryawan " &
@@ -98,7 +101,7 @@ Public Class frm_InputDataKaryawan
             End If
             AksesDatabase_General(Tutup)
             If NomorIDSudahTerdaftar = True Then
-                MsgBox("Nomor ID sudah pernah didaftarkan." & Enter2Baris &
+                PesanPeringatan("Nomor ID sudah pernah didaftarkan." & Enter2Baris &
                        "Silakan input nomor yang lain.")
                 txt_NomorIDKaryawan.Text = Kosongan
                 txt_NomorIDKaryawan.Focus()
@@ -107,10 +110,12 @@ Public Class frm_InputDataKaryawan
         End If
     End Sub
 
-    Private Sub txt_NIK_TextChanged(sender As Object, e As EventArgs) Handles txt_NIK.TextChanged
+
+    Private Sub txt_NIK_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_NIK.TextChanged
         NIK = txt_NIK.Text
     End Sub
-    Private Sub txt_NIK_Leave(sender As Object, e As EventArgs) Handles txt_NIK.Leave
+
+    Private Sub txt_NIK_LostFocus(sender As Object, e As RoutedEventArgs) Handles txt_NIK.LostFocus
         If NIK <> Kosongan Then
             AksesDatabase_General(Buka)
             cmd = New OdbcCommand(" SELECT Nomor_ID_Karyawan, NIK FROM tbl_DataKaryawan " &
@@ -130,7 +135,7 @@ Public Class frm_InputDataKaryawan
             End If
             AksesDatabase_General(Tutup)
             If NIKSudahTerdaftar = True Then
-                MsgBox("NIK sudah pernah didaftarkan untuk karyawan yang lain." & Enter2Baris &
+                PesanPeringatan("NIK sudah pernah didaftarkan untuk karyawan yang lain." & Enter2Baris &
                        "Silakan input NIK yang lain.")
                 txt_NIK.Text = Kosongan
                 txt_NIK.Focus()
@@ -139,69 +144,76 @@ Public Class frm_InputDataKaryawan
         End If
     End Sub
 
-    Private Sub dtp_TanggalRegistrasi_ValueChanged(sender As Object, e As EventArgs) Handles dtp_TanggalRegistrasi.ValueChanged
-        TanggalRegistrasi = TanggalFormatTampilan(dtp_TanggalRegistrasi.Value)
-    End Sub
 
-    Private Sub txt_NamaKaryawan_TextChanged(sender As Object, e As EventArgs) Handles txt_NamaKaryawan.TextChanged
+    Private Sub txt_NamaKaryawan_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_NamaKaryawan.TextChanged
         NamaKaryawan = txt_NamaKaryawan.Text
     End Sub
 
-    Private Sub cmb_Jabatan_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cmb_Jabatan.SelectedIndexChanged
-    End Sub
-    Private Sub cmb_Jabatan_TextChanged(sender As Object, e As EventArgs) Handles cmb_Jabatan.TextChanged
-        Jabatan = cmb_Jabatan.Text
+
+    Private Sub cmb_Jabatan_SelectionChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Jabatan.TextChanged
+        Jabatan = txt_Jabatan.Text
     End Sub
 
-    Private Sub txt_RekeningBank_TextChanged(sender As Object, e As EventArgs) Handles txt_RekeningBank.TextChanged
+
+    Private Sub txt_RekeningBank_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_RekeningBank.TextChanged
         RekeningBank = txt_RekeningBank.Text
     End Sub
 
 
-    Private Sub txt_AtasNama_TextChanged(sender As Object, e As EventArgs) Handles txt_AtasNama.TextChanged
+    Private Sub txt_AtasNama_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_AtasNama.TextChanged
         AtasNama = txt_AtasNama.Text
     End Sub
 
 
-    Private Sub txt_Catatan_TextChanged(sender As Object, e As EventArgs) Handles txt_Catatan.TextChanged
+    Private Sub txt_Catatan_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Catatan.TextChanged
         Catatan = txt_Catatan.Text
     End Sub
 
-    Private Sub chk_StatusAktif_CheckedChanged(sender As Object, e As EventArgs) Handles chk_StatusAktif.CheckedChanged
-        If chk_StatusAktif.Checked = True Then StatusAktif = 1
-        If chk_StatusAktif.Checked = False Then StatusAktif = 0
+
+    Private Sub chk_StatusAktif_Checked(sender As Object, e As RoutedEventArgs) Handles chk_StatusAktif.Checked
+        StatusAktifKaryawan = 1
     End Sub
-    Private Sub btn_Simpan_Click(sender As Object, e As EventArgs) Handles btn_Simpan.Click
+
+    Private Sub chk_StatusAktif_Unchecked(sender As Object, e As RoutedEventArgs) Handles chk_StatusAktif.Unchecked
+        StatusAktifKaryawan = 0
+    End Sub
+
+
+    Private Sub btn_Simpan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Simpan.Click
 
         'Pengisian Ulang Beberapa Variabel :
+        TanggalRegistrasi = TanggalFormatTampilan(dtp_TanggalRegistrasi.SelectedDate)
+        Jabatan = txt_Jabatan.Text
         Catatan = txt_Catatan.Text
 
         If NomorIDSudahTerdaftar = True Or NIKSudahTerdaftar = True Then Return
 
         'Validasi Kolom-kolom tertentu :
         If NomorIDKaryawan = Kosongan Then
-            MsgBox("Silakan isi kolom 'Nomor ID'.")
+            PesanPeringatan("Silakan isi kolom 'Nomor ID'.")
             txt_NomorIDKaryawan.Focus()
             Return
         End If
 
         If NIK = Kosongan Then
-            MsgBox("Silakan isi kolom 'NIK'.")
+            PesanPeringatan("Silakan isi kolom 'NIK'.")
             txt_NIK.Focus()
             Return
         End If
 
         If NamaKaryawan = Kosongan Then
-            MsgBox("Silakan isi kolom 'Nama Karyawan'.")
+            PesanPeringatan("Silakan isi kolom 'Nama Karyawan'.")
             txt_NamaKaryawan.Focus()
             Return
         End If
 
         If Jabatan = Kosongan Then
-            MsgBox("Silakan pilih 'Jabatan'.")
-            cmb_Jabatan.Focus()
+            PesanPeringatan("Silakan isi kolom 'Jabatan'.")
+            txt_Jabatan.Focus()
             Return
         End If
+
+        ProsesSuntingDatabase = False
 
         If FungsiForm = FungsiForm_TAMBAH Then
 
@@ -218,9 +230,14 @@ Public Class frm_InputDataKaryawan
                                   " '" & RekeningBank & "', " &
                                   " '" & AtasNama & "', " &
                                   " '" & Catatan & "', " &
-                                  " '" & StatusAktif & "' ) ",
+                                  " '" & StatusAktifKaryawan & "' ) ",
                                   KoneksiDatabaseGeneral)
-            cmd_ExecuteNonQuery()
+            Try
+                cmd.ExecuteNonQuery()
+                ProsesSuntingDatabase = True
+            Catch ex As Exception
+                ProsesSuntingDatabase = False
+            End Try
             AksesDatabase_General(Tutup)
 
         End If
@@ -236,19 +253,23 @@ Public Class frm_InputDataKaryawan
                                   " Rekening_Bank               = '" & RekeningBank & "', " &
                                   " Atas_Nama                   = '" & AtasNama & "', " &
                                   " Catatan                     = '" & Catatan & "', " &
-                                  " Status_Aktif                = '" & StatusAktif & "' " &
+                                  " Status_Aktif                = '" & StatusAktifKaryawan & "' " &
                                   " WHERE Nomor_ID_Karyawan     = '" & NomorIDKaryawan & "' ",
                                   KoneksiDatabaseGeneral)
-            cmd_ExecuteNonQuery()
+            Try
+                cmd.ExecuteNonQuery()
+                ProsesSuntingDatabase = True
+            Catch ex As Exception
+                ProsesSuntingDatabase = False
+            End Try
             AksesDatabase_General(Tutup)
 
         End If
 
-
-        If StatusSuntingDatabase = True Then
+        If ProsesSuntingDatabase = True Then
             If FungsiForm = FungsiForm_TAMBAH Then pesan_DataBerhasilDisimpan()
             If FungsiForm = FungsiForm_EDIT Then pesan_DataTerpilihBerhasilDiperbarui()
-            frm_DataKaryawan.TampilkanData()
+            If usc_DataKaryawan.StatusAktif Then usc_DataKaryawan.TampilkanData()
             Me.Close()
         Else
             If FungsiForm = FungsiForm_TAMBAH Then pesan_DataGagalDisimpan()
@@ -257,9 +278,20 @@ Public Class frm_InputDataKaryawan
 
     End Sub
 
-    Private Sub btn_Batal_Click(sender As Object, e As EventArgs) Handles btn_Batal.Click
-        ResetForm()
+
+    Private Sub btn_Batal_Click(sender As Object, e As RoutedEventArgs) Handles btn_Batal.Click
         Me.Close()
+    End Sub
+
+
+    Sub New()
+        InitializeComponent()
+        StyleWindowDialogWPF_Dasar(Me)
+        txt_NomorIDKaryawan.MaxLength = 99
+        txt_NIK.MaxLength = 99
+        txt_NamaKaryawan.MaxLength = 99
+        txt_RekeningBank.MaxLength = 99
+        txt_AtasNama.MaxLength = 99
     End Sub
 
 End Class

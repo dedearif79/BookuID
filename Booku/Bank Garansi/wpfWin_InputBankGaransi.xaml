@@ -1,0 +1,87 @@
+<Window x:Class="wpfWin_InputBankGaransi"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Input Bank Garansi"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+            <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="130"/>
+                    <ColumnDefinition Width="220"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Tanggal Transaksi"/>
+                <TextBlock  Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Nomor BPBG"/>
+                <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Nomor Kontrak"/>
+                <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Nama Bank"/>
+                <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Keperluan"/>
+                <TextBlock  Grid.Row="5"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kode Lawan Transaksi"/>
+                <TextBlock  Grid.Row="6"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Nama Lawan Transaksi"/>
+                <TextBlock  Grid.Row="7"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Jumlah Transaksi"/>
+                <TextBlock  Grid.Row="8"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Biaya Provisi"/>
+                <TextBlock  Grid.Row="9"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Keterangan"/>
+
+                <DatePicker Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleDatePickerFormDialog}"  Name="dtp_TanggalTransaksi" Width="100" HorizontalAlignment="Left" />
+                <TextBox    Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"     Name="txt_NomorBPBG" Width="120" HorizontalAlignment="Left" IsReadOnly="True" />
+                <TextBox    Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"     Name="txt_NomorKontrak" />
+                <TextBox    Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"     Name="txt_NamaBank" />
+                <TextBox    Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"     Name="txt_Keperluan" />
+                <StackPanel Grid.Row="5"  Grid.Column="1"   Style="{StaticResource stylePanelFormDialogKolom}" >
+                    <TextBox    Width="99"                  Style="{StaticResource styleTextBoxFormDialog}"     Name="txt_KodeLawanTransaksi" IsReadOnly="True" />
+                    <Button                                 Style="{StaticResource styleButtonFormDialogPilih}" Name="btn_PilihMitra" />
+                </StackPanel>
+                <TextBox    Grid.Row="6"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"     Name="txt_NamaLawanTransaksi" IsReadOnly="True" />
+                <TextBox    Grid.Row="7"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"     Name="txt_JumlahTransaksi" Width="120" HorizontalAlignment="Left" TextAlignment="Right" />
+                <TextBox    Grid.Row="8"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"     Name="txt_BiayaProvisi" Width="120" HorizontalAlignment="Left" TextAlignment="Right" />
+                <TextBox    Grid.Row="9"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"     Name="txt_Keterangan" Height="60" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" />
+
+            </Grid>
+
+        </StackPanel>
+
+        <!--Tombol :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"     Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogSimpan}"    Name="btn_Simpan" />
+            <Button Style="{StaticResource styleButtonFormDialogBatal}"     Name="btn_Batal" />
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

@@ -53,14 +53,14 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TanggalPersetujuan">Tanggal Persetujuan</TextBlock>
-                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_NomorBP" >Nomor BP</TextBlock>
-                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_KodeLawanTransaksi">Kode Kreditur</TextBlock>
-                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_NamaLawanTransaksi">Nama Kreditur</TextBlock>
-                <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_JumlahPinjaman">Jumlah Pinjaman</TextBlock>
-                <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_JatuhTempo">Jatuh Tempo</TextBlock>
-                <TextBlock  Grid.Row="6" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_Nomor_Kontrak">Nomor Kontrak</TextBlock>
-                <TextBlock  Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" >Keterangan :</TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TanggalPersetujuan" Text="Tanggal Persetujuan" />
+                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_NomorBP" Text="Nomor BP" />
+                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_KodeLawanTransaksi" Text="Kode Kreditur" />
+                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_NamaLawanTransaksi" Text="Nama Kreditur" />
+                <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_JumlahPinjaman" Text="Jumlah Pinjaman" />
+                <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_JatuhTempo" Text="Jatuh Tempo" />
+                <TextBlock  Grid.Row="6" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_Nomor_Kontrak" Text="Nomor Kontrak" />
+                <TextBlock  Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Keterangan :" />
 
                 <DatePicker     Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalPersetujuan" />
                 <TextBox        Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorBP"/>
@@ -89,11 +89,11 @@
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TanggalPencairan">Tanggal Pencairan</TextBlock>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_BankPencairan">Bank Pencairan</TextBlock>
-                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_BiayaAdministrasi">Biaya Administrasi</TextBlock>
-                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_BiayaNotaris">Biaya Notaris</TextBlock>
-                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_BiayaPPh">Biaya PPh</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TanggalPencairan" Text="Tanggal Pencairan" />
+                        <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_BankPencairan" Text="Bank Pencairan" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_BiayaAdministrasi" Text="Biaya Administrasi" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_BiayaNotaris" Text="Biaya Notaris" />
+                        <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_BiayaPPh" Text="Biaya PPh" />
 
                         <DatePicker     Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalPencairan" />
                         <ComboBox       Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_BankPencairan" />

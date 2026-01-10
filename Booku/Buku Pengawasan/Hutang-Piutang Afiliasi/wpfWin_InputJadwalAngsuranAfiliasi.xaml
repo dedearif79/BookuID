@@ -42,10 +42,10 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Angsuran Ke</TextBlock>
-                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Jatuh Tempo</TextBlock>
-                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Pokok</TextBlock>
-                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Bunga/Bagi Hasil</TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Angsuran Ke" />
+                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Jatuh Tempo" />
+                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Pokok" />
+                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Bunga/Bagi Hasil" />
 
                 <TextBox        Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"             Name="txt_AngsuranKe" MaxLength="2" Width="40" HorizontalAlignment="Left"/>
                 <DatePicker     Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleDatePickerFormDialog}"          Name="dtp_TanggalJatuhTempo" />
@@ -71,10 +71,10 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" >Tarif PPh</TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" >Jumlah PPh</TextBlock>
-                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" >Ditanggung</TextBlock>
-                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" >Dipotong</TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Tarif PPh" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah PPh" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Ditanggung" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Dipotong" />
 
                     <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormDialogKolom}" >
                         <TextBox Style="{StaticResource styleTextBoxFormDialogPersen}" Name="txt_TarifPPh" Width="40" />
@@ -99,7 +99,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Jumlah Dibayarkan</TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah Dibayarkan" />
                 <TextBox    Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_JumlahDibayarkan"/>
 
             </Grid>

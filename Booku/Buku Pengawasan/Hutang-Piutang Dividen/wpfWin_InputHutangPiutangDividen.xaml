@@ -51,19 +51,19 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Tanggal Akta Notaris</TextBlock>
-                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_NomorBP" >Nomor BP</TextBlock>
-                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Nomor Akta Notaris</TextBlock>
-                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_KodeLawanTransaksi">Kode Lawan Transaksi</TextBlock>
-                <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_NamaLawanTransaksi">Nama Lawan Transaksi</TextBlock>
-                <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Jumlah Dividen</TextBlock>
-                <TextBlock  Grid.Row="6" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" >Tarif PPh</TextBlock>
-                <TextBlock  Grid.Row="7" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_JumlahPPh">Jumlah PPh</TextBlock>
-                <TextBlock  Grid.Row="8" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_PPhDitanggung">PPh Ditanggung</TextBlock>
-                <TextBlock  Grid.Row="9" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_PPhDipotong">PPh Dipotong</TextBlock>
-                <TextBlock  Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_HutangPiutangDividen">Hutang/Piutang Dividen</TextBlock>
-                <TextBlock  Grid.Row="11" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" >Jatuh Tempo</TextBlock>
-                <TextBlock  Grid.Row="12" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" >Keterangan :</TextBlock>
+                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Tanggal Akta Notaris" />
+                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_NomorBP" Text="Nomor BP" />
+                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Nomor Akta Notaris" />
+                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_KodeLawanTransaksi" Text="Kode Lawan Transaksi" />
+                <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_NamaLawanTransaksi" Text="Nama Lawan Transaksi" />
+                <TextBlock  Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah Dividen" />
+                <TextBlock  Grid.Row="6" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Text="Tarif PPh" />
+                <TextBlock  Grid.Row="7" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_JumlahPPh" Text="Jumlah PPh" />
+                <TextBlock  Grid.Row="8" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_PPhDitanggung" Text="PPh Ditanggung" />
+                <TextBlock  Grid.Row="9" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_PPhDipotong" Text="PPh Dipotong" />
+                <TextBlock  Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_HutangPiutangDividen" Text="Hutang/Piutang Dividen" />
+                <TextBlock  Grid.Row="11" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Jatuh Tempo" />
+                <TextBlock  Grid.Row="12" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}" Text="Keterangan :" />
 
                 <DatePicker     Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalAktaNotaris" />
                 <TextBox        Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorBP"/>

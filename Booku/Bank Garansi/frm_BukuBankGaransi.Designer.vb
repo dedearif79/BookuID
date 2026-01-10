@@ -1,5 +1,5 @@
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
-Partial Class frm_DataKaryawan
+Partial Class frm_BukuBankGaransi
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -24,14 +24,14 @@ Partial Class frm_DataKaryawan
     Private Sub InitializeComponent()
         Me.SuspendLayout()
         '
-        'frm_DataKaryawan
+        'frm_BukuBankGaransi
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1304, 681)
-        Me.Name = "frm_DataKaryawan"
+        Me.ClientSize = New System.Drawing.Size(1521, 786)
+        Me.Name = "frm_BukuBankGaransi"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
-        Me.Text = "Data Karyawan"
+        Me.Text = "Buku Bank Garansi"
         Me.WindowState = System.Windows.Forms.FormWindowState.Maximized
         Me.ResumeLayout(False)
 

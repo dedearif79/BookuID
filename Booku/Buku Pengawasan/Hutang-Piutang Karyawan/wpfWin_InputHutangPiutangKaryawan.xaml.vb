@@ -192,13 +192,13 @@ Public Class wpfWin_InputHutangPiutangKaryawan
 
 
     Private Sub btn_PilihMitra_Click(sender As Object, e As RoutedEventArgs) Handles btn_PilihMitra.Click
-        frm_ListDataKaryawan.ResetForm()
+        win_ListDataKaryawan.ResetForm()
         If txt_KodeLawanTransaksi.Text <> Kosongan Then
-            frm_ListDataKaryawan.NomorIDKaryawan_Terseleksi = txt_KodeLawanTransaksi.Text
-            frm_ListDataKaryawan.NamaKaryawan_Terseleksi = txt_NamaLawanTransaksi.Text
+            win_ListDataKaryawan.NomorIDKaryawan_Terseleksi = txt_KodeLawanTransaksi.Text
+            win_ListDataKaryawan.NamaKaryawan_Terseleksi = txt_NamaLawanTransaksi.Text
         End If
-        frm_ListDataKaryawan.ShowDialog()
-        txt_KodeLawanTransaksi.Text = frm_ListDataKaryawan.NomorIDKaryawan_Terseleksi
+        win_ListDataKaryawan.ShowDialog()
+        txt_KodeLawanTransaksi.Text = win_ListDataKaryawan.NomorIDKaryawan_Terseleksi
     End Sub
 
 
