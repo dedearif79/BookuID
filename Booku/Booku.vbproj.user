@@ -569,9 +569,9 @@
     <Compile Update="Data\Data Project\frm_DataProject.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Data\Data Project\wpfUsc_DataProject.xaml.vb">
+    <DesignData Update="Data\Data Project\wpfUsc_DataProject.xaml.vb">
       <SubType>Code</SubType>
-    </Compile>
+    </DesignData>
     <Compile Update="Data\Data Project\frm_ListDataProject.vb">
       <SubType>Form</SubType>
     </Compile>

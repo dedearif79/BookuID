@@ -17,6 +17,13 @@ Public Class wpfWin_BOOKU
     ''' </summary>
     Public PaksaKeluarAplikasi As Boolean = False
 
+    Sub New()
+        InitializeComponent()
+
+        ' Inisialisasi DataTable Notifikasi
+        Buat_DataTabelNotifikasi()
+    End Sub
+
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
         UpdateStatusBar()
@@ -2133,15 +2140,6 @@ Public Class wpfWin_BOOKU
         win_Registrasi.ShowDialog()
     End Sub
 
-    Private Sub mnu_Notifikasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_Notifikasi.Click
-        Select Case VisibilitasNotifikasi
-            Case True
-                TutupPanelNotifikasi()
-            Case False
-                TampilkanPanelNotifikasi()
-        End Select
-    End Sub
-
     ' ============================================================
     ' TECHNICAL SUPPORT
     ' ============================================================
@@ -2384,6 +2382,9 @@ Public Class wpfWin_BOOKU
 #End Region
 
     Private Sub wpfWin_Closing(sender As Object, e As ComponentModel.CancelEventArgs) Handles Me.Closing
+
+        ProsesKeluarAplikasi = True
+
         ' Cek apakah perlu konfirmasi
         If PaksaKeluarAplikasi Then
             e.Cancel = False
@@ -2406,6 +2407,289 @@ Public Class wpfWin_BOOKU
         ' Karena ini adalah WPF Shell yang menggantikan frm_BOOKU,
         ' saat ditutup harus keluar dari aplikasi sepenuhnya
         Forms.Application.Exit()
+
     End Sub
+
+#Region "Panel Notifikasi"
+
+    ' === DATATABLE & DATAVIEW NOTIFIKASI ===
+    Public datatabelNotifikasi As DataTable
+    Public dataviewNotifikasi As DataView
+    Public rowviewNotifikasi As DataRowView
+    Public BarisNotifikasi_Terseleksi As Integer
+    Public JumlahBarisNotifikasi As Integer
+
+    ' === KOLOM DATAGRID NOTIFIKASI ===
+    Dim Kolom_NomorID As New DataGridTextColumn
+    Dim Kolom_JenisNotifikasi As New DataGridTextColumn
+    Dim Kolom_Waktu As New DataGridTextColumn
+    Dim Kolom_Konten As New DataGridTextColumn
+    Dim Kolom_HalamanTarget As New DataGridTextColumn
+    Dim Kolom_PesanEksekusi As New DataGridTextColumn
+    Dim Kolom_StatusDibaca As New DataGridTextColumn
+    Dim Kolom_StatusDieksekusi As New DataGridTextColumn
+
+    ' === VARIABEL TERSELEKSI ===
+    Public NomorIDNotifikasi_Terseleksi As Integer
+    Public KontenNotifikasi_Terseleksi As String
+    Public HalamanTargetNotifikasi_Terseleksi As String
+    Public PesanEksekusiNotifikasi_Terseleksi As String
+    Public StatusDibacaNotifikasi_Terseleksi As Integer
+    Public StatusDieksekusiNotifikasi_Terseleksi As Integer
+
+    ''' <summary>
+    ''' Membuat struktur DataTable untuk Notifikasi
+    ''' Dipanggil saat window di-load
+    ''' </summary>
+    Public Sub Buat_DataTabelNotifikasi()
+
+        datatabelNotifikasi = New DataTable
+
+        datatabelNotifikasi.Columns.Add("Nomor_ID", GetType(Integer))
+        datatabelNotifikasi.Columns.Add("Jenis_Notifikasi")
+        datatabelNotifikasi.Columns.Add("Waktu")
+        datatabelNotifikasi.Columns.Add("Konten")
+        datatabelNotifikasi.Columns.Add("Halaman_Target")
+        datatabelNotifikasi.Columns.Add("Pesan_Eksekusi")
+        datatabelNotifikasi.Columns.Add("Status_Dibaca", GetType(Integer))
+        datatabelNotifikasi.Columns.Add("Status_Dieksekusi", GetType(Integer))
+
+        StyleTabelUtama_WPF(datagridNotifikasi, datatabelNotifikasi, dataviewNotifikasi)
+
+        TambahkanKolomTextBoxDataGrid_WPF(datagridNotifikasi, Kolom_NomorID, "Nomor_ID", "ID", 40, FormatAngka, TengahTengah, KunciUrut, Tersembunyi)
+        TambahkanKolomTextBoxDataGrid_WPF(datagridNotifikasi, Kolom_JenisNotifikasi, "Jenis_Notifikasi", "Jenis", 60, FormatString, KiriTengah, KunciUrut, Tersembunyi)
+        TambahkanKolomTextBoxDataGrid_WPF(datagridNotifikasi, Kolom_Waktu, "Waktu", "Waktu", 80, FormatString, TengahTengah, KunciUrut, Tersembunyi)
+        TambahkanKolomTextBoxDataGrid_WPF(datagridNotifikasi, Kolom_Konten, "Konten", "Notifikasi", 300, FormatString, KiriTengah, KunciUrut, Terlihat)
+        TambahkanKolomTextBoxDataGrid_WPF(datagridNotifikasi, Kolom_HalamanTarget, "Halaman_Target", "Target", 80, FormatString, KiriTengah, KunciUrut, Tersembunyi)
+        TambahkanKolomTextBoxDataGrid_WPF(datagridNotifikasi, Kolom_PesanEksekusi, "Pesan_Eksekusi", "Pesan", 100, FormatString, KiriTengah, KunciUrut, Tersembunyi)
+        TambahkanKolomTextBoxDataGrid_WPF(datagridNotifikasi, Kolom_StatusDibaca, "Status_Dibaca", "Dibaca", 50, FormatAngka, TengahTengah, KunciUrut, Tersembunyi)
+        TambahkanKolomTextBoxDataGrid_WPF(datagridNotifikasi, Kolom_StatusDieksekusi, "Status_Dieksekusi", "Eksekusi", 50, FormatAngka, TengahTengah, KunciUrut, Tersembunyi)
+
+    End Sub
+
+    ''' <summary>
+    ''' Mengisi konten DataGrid Notifikasi dari database
+    ''' </summary>
+    Public Sub IsiKontenNotifikasi()
+
+        datatabelNotifikasi.Rows.Clear()
+
+        AksesDatabase_Transaksi(Buka)
+        If StatusKoneksiDatabase = False Then Return
+
+        cmd = New OdbcCommand(" SELECT * FROM tbl_Notifikasi " &
+                              " WHERE Status_Dibaca = 0 " &
+                              " OR Status_Dieksekusi = 0 ", KoneksiDatabaseTransaksi)
+        dr = cmd.ExecuteReader
+
+        Do While dr.Read
+            Dim NomorID As Integer = dr.Item("Nomor_ID")
+            Dim JenisNotifikasi As String = dr.Item("Jenis_Notifikasi").ToString()
+            Dim WaktuNotifikasi As String = dr.Item("Waktu").ToString()
+            Dim Notifikasi As String = dr.Item("Notifikasi").ToString()
+            Dim HalamanTarget As String = dr.Item("Halaman_Target").ToString()
+            Dim Pesan As String = If(IsDBNull(dr.Item("Pesan")), "", dr.Item("Pesan").ToString())
+            Dim StatusDibaca As Integer = dr.Item("Status_Dibaca")
+            Dim StatusDieksekusi As Integer = dr.Item("Status_Dieksekusi")
+
+            ' Format konten: Waktu + Notifikasi
+            Dim Konten As String = WaktuNotifikasi & " :" & vbCrLf & Notifikasi
+
+            datatabelNotifikasi.Rows.Add(NomorID, JenisNotifikasi, WaktuNotifikasi, Konten,
+                                         HalamanTarget, Pesan, StatusDibaca, StatusDieksekusi)
+        Loop
+
+        AksesDatabase_Transaksi(Tutup)
+
+        JumlahBarisNotifikasi = datatabelNotifikasi.Rows.Count
+
+        ' Clear selection
+        BersihkanSeleksiNotifikasi()
+
+    End Sub
+
+    ''' <summary>
+    ''' Membersihkan seleksi pada DataGrid Notifikasi
+    ''' </summary>
+    Sub BersihkanSeleksiNotifikasi()
+        datagridNotifikasi.SelectedIndex = -1
+        BarisNotifikasi_Terseleksi = -1
+        NomorIDNotifikasi_Terseleksi = 0
+        KontenNotifikasi_Terseleksi = Kosongan
+        HalamanTargetNotifikasi_Terseleksi = Kosongan
+        PesanEksekusiNotifikasi_Terseleksi = Kosongan
+        StatusDibacaNotifikasi_Terseleksi = 0
+        StatusDieksekusiNotifikasi_Terseleksi = 0
+    End Sub
+
+    ''' <summary>
+    ''' Menampilkan panel notifikasi
+    ''' </summary>
+    Public Sub TampilkanPanelNotifikasi()
+        pnl_Notifikasi.Visibility = Visibility.Visible
+        mnu_Notifikasi.Header = "Tutup"
+        IsiKontenNotifikasi()
+        VisibilitasNotifikasi = True
+    End Sub
+
+    ''' <summary>
+    ''' Menutup panel notifikasi
+    ''' </summary>
+    Public Sub TutupPanelNotifikasi()
+        pnl_Notifikasi.Visibility = Visibility.Collapsed
+        mnu_Notifikasi.Header = "N_otifikasi"
+        VisibilitasNotifikasi = False
+    End Sub
+
+    ''' <summary>
+    ''' Event handler untuk menu Notifikasi
+    ''' </summary>
+    Private Sub mnu_Notifikasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_Notifikasi.Click
+        Select Case VisibilitasNotifikasi
+            Case True
+                TutupPanelNotifikasi()
+            Case False
+                TampilkanPanelNotifikasi()
+        End Select
+    End Sub
+
+    ''' <summary>
+    ''' Event handler untuk tombol tutup panel notifikasi
+    ''' </summary>
+    Private Sub btn_TutupNotifikasi_Click(sender As Object, e As RoutedEventArgs) Handles btn_TutupNotifikasi.Click
+        TutupPanelNotifikasi()
+    End Sub
+
+    ''' <summary>
+    ''' Event handler saat baris notifikasi diklik
+    ''' </summary>
+    Private Sub datagridNotifikasi_SelectedCellsChanged(sender As Object, e As SelectedCellsChangedEventArgs) Handles datagridNotifikasi.SelectedCellsChanged
+
+        BarisNotifikasi_Terseleksi = datagridNotifikasi.SelectedIndex
+        If BarisNotifikasi_Terseleksi < 0 Then Return
+
+        rowviewNotifikasi = TryCast(datagridNotifikasi.SelectedItem, DataRowView)
+        If rowviewNotifikasi Is Nothing Then Return
+
+        ' Ambil data dari baris terseleksi
+        NomorIDNotifikasi_Terseleksi = CInt(rowviewNotifikasi("Nomor_ID"))
+        KontenNotifikasi_Terseleksi = rowviewNotifikasi("Konten").ToString()
+        HalamanTargetNotifikasi_Terseleksi = rowviewNotifikasi("Halaman_Target").ToString()
+        PesanEksekusiNotifikasi_Terseleksi = rowviewNotifikasi("Pesan_Eksekusi").ToString()
+        StatusDibacaNotifikasi_Terseleksi = CInt(rowviewNotifikasi("Status_Dibaca"))
+        StatusDieksekusiNotifikasi_Terseleksi = CInt(rowviewNotifikasi("Status_Dieksekusi"))
+
+        ' Navigasi ke halaman target
+        EksekusiNotifikasi()
+
+    End Sub
+
+    ''' <summary>
+    ''' Eksekusi notifikasi: navigasi ke halaman target dan update status
+    ''' </summary>
+    Private Sub EksekusiNotifikasi()
+
+        KeluarDariSemuaModul()
+
+        ' Navigasi berdasarkan halaman target
+        Select Case HalamanTargetNotifikasi_Terseleksi
+            Case Halaman_DATACOA
+                ' Buka modul Data COA
+                usc_DataCOA = New wpfUsc_DataCOA
+                BukaUserControlDalamTab(usc_DataCOA, "Data COA")
+
+            Case Halaman_BUKUPENGAWASANHUTANGUSAHANONAFILIASI
+                BukaModul_BukuPengawasanHutangUsaha_NonAfiliasi()
+
+            Case Halaman_BUKUPENGAWASANHUTANGUSAHAAFILIASI
+                BukaModul_BukuPengawasanHutangUsaha_Afiliasi()
+
+            Case Halaman_BUKUPENGAWASANPIUTANGUSAHANONAFILIASI
+                BukaModul_BukuPengawasanPiutangUsaha_NonAfiliasi()
+
+            Case Halaman_BUKUPENGAWASANPIUTANGUSAHAAFILIASI
+                BukaModul_BukuPengawasanPiutangUsaha_Afiliasi()
+
+            Case Halaman_BUKUPENGAWASANHUTANGPPHPASAL21
+                BukaModul_BukuPengawasanHutangPPhPasal21()
+
+            Case Halaman_BUKUPENGAWASANHUTANGPPHPASAL23
+                BukaModul_BukuPengawasanHutangPPhPasal23()
+
+            Case Halaman_BUKUPENGAWASANHUTANGPPHPASAL42
+                BukaModul_BukuPengawasanHutangPPhPasal42()
+
+            Case Halaman_BUKUPENGAWASANHUTANGPPHPASAL25
+                BukaModul_BukuPengawasanHutangPPhPasal25()
+
+            Case Halaman_BUKUPENGAWASANHUTANGPPHPASAL26
+                BukaModul_BukuPengawasanHutangPPhPasal26()
+
+            Case Halaman_BUKUPENGAWASANHUTANGKARYAWAN
+                BukaModul_BukuPengawasanHutangKaryawan()
+
+            Case Halaman_BUKUPENGAWASANPIUTANGKARYAWAN
+                BukaModul_BukuPengawasanPiutangKaryawan()
+
+            Case Halaman_BUKUPENGAWASANHUTANGPEMEGANGSAHAM
+                BukaModul_BukuPengawasanHutangPemegangSaham()
+
+            Case Halaman_BUKUPENGAWASANPIUTANGPEMEGANGSAHAM
+                BukaModul_BukuPengawasanPiutangPemegangSaham()
+
+            Case Halaman_BUKUPENGAWASANHUTANGBANK
+                BukaModul_BukuPengawasanHutangBank()
+
+            Case Halaman_BUKUPENGAWASANHUTANGLEASING
+                BukaModul_BukuPengawasanHutangLeasing()
+
+            Case Halaman_BUKUPENGAWASANHUTANGPIHAKKETIGA
+                BukaModul_BukuPengawasanHutangPihakKetiga()
+
+            Case Halaman_BUKUPENGAWASANPIUTANGPIHAKKETIGA
+                BukaModul_BukuPengawasanPiutangPihakKetiga()
+
+            Case Halaman_BUKUPENGAWASANHUTANGAFILIASI
+                BukaModul_BukuPengawasanHutangAfiliasi()
+
+            Case Halaman_BUKUPENGAWASANPIUTANGAFILIASI
+                BukaModul_BukuPengawasanPiutangAfiliasi()
+
+            Case Halaman_BUKUPENGAWASANDEPOSITOPERASIONAL
+                BukaModul_BukuPengawasanDepositOperasional()
+
+            Case Kosongan
+                ' Tidak ada eksekusi
+
+            Case Else
+                PesanUntukProgrammer("Halaman Target Belum Ditentukan: " & HalamanTargetNotifikasi_Terseleksi)
+        End Select
+
+        ' Tampilkan pesan eksekusi jika ada
+        If Not String.IsNullOrEmpty(PesanEksekusiNotifikasi_Terseleksi) Then
+            Pesan_Informasi(PesanEksekusiNotifikasi_Terseleksi)
+        End If
+
+        ' Update status dibaca
+        UpdateNotifikasi_Dibaca()
+
+        ' Refresh konten notifikasi
+        IsiKontenNotifikasi()
+
+    End Sub
+
+    ''' <summary>
+    ''' Update status notifikasi menjadi sudah dibaca
+    ''' </summary>
+    Private Sub UpdateNotifikasi_Dibaca()
+        AksesDatabase_Transaksi(Buka)
+        cmd = New OdbcCommand(" UPDATE tbl_Notifikasi SET " &
+                              " Status_Dibaca = 1 " &
+                              " WHERE Nomor_ID = " & NomorIDNotifikasi_Terseleksi, KoneksiDatabaseTransaksi)
+        cmd.ExecuteNonQuery()
+        AksesDatabase_Transaksi(Tutup)
+    End Sub
+
+#End Region
 
 End Class

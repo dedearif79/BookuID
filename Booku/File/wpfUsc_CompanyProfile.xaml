@@ -10,12 +10,11 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+                <ResourceDictionary Source="../WPF\Styles\StyleAplikasi.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
-    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+<StackPanel Style="{StaticResource stylePanelFormDialog}" >
 
         <Grid   Margin="27 15" HorizontalAlignment="Stretch">
 
@@ -163,3 +162,5 @@
     </StackPanel>
     
 </UserControl>
+
+

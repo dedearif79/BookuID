@@ -1,28 +1,28 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="StyleWindow.xaml" />
-        <ResourceDictionary Source="StyleUserControl.xaml" />
-        <ResourceDictionary Source="StyleScrollViewer.xaml" />
-        <ResourceDictionary Source="StylePanel.xaml" />
-        <ResourceDictionary Source="StyleGrid.xaml" />
-        <ResourceDictionary Source="StyleGroupBox.xaml" />
-        <ResourceDictionary Source="StyleButton.xaml" />
-        <ResourceDictionary Source="StyleLabel.xaml" />
-        <ResourceDictionary Source="StyleTextBlock.xaml" />
-        <ResourceDictionary Source="StyleTextBox.xaml" />
-        <ResourceDictionary Source="StyleRichTextBox.xaml" />
-        <ResourceDictionary Source="StyleDatePicker.xaml" />
-        <ResourceDictionary Source="StyleCheckBox.xaml" />
-        <ResourceDictionary Source="StyleRadioButton.xaml" />
-        <ResourceDictionary Source="StyleComboBox.xaml" />
-        <ResourceDictionary Source="StyleDataGrid.xaml" />
-        <ResourceDictionary Source="StyleBorder.xaml" />
-        <ResourceDictionary Source="StyleLainnya.xaml" />
-        <ResourceDictionary Source="StyleMenu.xaml" />
-        <ResourceDictionary Source="StyleTabControl.xaml" />
-        <ResourceDictionary Source="StyleStatusBar.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleWindow.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleUserControl.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleScrollViewer.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StylePanel.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleGrid.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleGroupBox.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleButton.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleLabel.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleTextBlock.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleTextBox.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleRichTextBox.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleDatePicker.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleCheckBox.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleRadioButton.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleComboBox.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleDataGrid.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleBorder.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleLainnya.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleMenu.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleTabControl.xaml" />
+        <ResourceDictionary Source="/WPF/Styles/StyleStatusBar.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

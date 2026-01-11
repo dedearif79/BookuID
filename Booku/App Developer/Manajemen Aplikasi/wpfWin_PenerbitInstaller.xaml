@@ -6,7 +6,16 @@
         xmlns:local="clr-namespace:Booku"
         mc:Ignorable="d"
         Title="wpfWin_PenerbitInstaller" Height="450" Width="800">
-    <Grid>
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../WPF\Styles\StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+<Grid>
         
     </Grid>
 </Window>
+

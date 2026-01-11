@@ -10,12 +10,11 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../WPF/Styles/StyleAplikasi.xaml" />
+                <ResourceDictionary Source="../../WPF\Styles\StyleAplikasi.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
-    <DockPanel Background="White" Width="742" Height="Auto" >
+<DockPanel Background="White" Width="742" Height="Auto" >
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
 
@@ -231,3 +230,5 @@
     </DockPanel>
 
 </UserControl>
+
+

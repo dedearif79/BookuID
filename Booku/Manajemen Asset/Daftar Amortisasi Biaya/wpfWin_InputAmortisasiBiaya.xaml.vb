@@ -458,6 +458,7 @@ Public Class wpfWin_InputAmortisasiBiaya
     End Sub
 
     Private Sub TutupForm(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.Closing
+        If ProsesKeluarAplikasi Then Return
         If Not EksekusiTutupForm Then
             Pilihan = MessageBox.Show("Yakin ingin menutup form ini?", "PERHATIAN..!", MessageBoxButtons.YesNo)
             If Pilihan = vbNo Then e.Cancel = True

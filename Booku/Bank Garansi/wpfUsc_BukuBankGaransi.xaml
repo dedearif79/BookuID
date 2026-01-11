@@ -1,4 +1,4 @@
-<UserControl x:Class="wpfUsc_BukuBankGaransi"
+﻿<UserControl x:Class="wpfUsc_BukuBankGaransi"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -10,12 +10,11 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+                <ResourceDictionary Source="../WPF\Styles\StyleAplikasi.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
-    <DockPanel Style="{StaticResource stylePanelFormHalaman}">
+<DockPanel Style="{StaticResource stylePanelFormHalaman}">
         <StackPanel Style="{StaticResource stylePanelFormHalamanHeader}">
             <StackPanel Style="{StaticResource stylePanelFormHalamanTittle}" >
                 <TextBlock Style="{StaticResource styleTextBlockFormHalamanJudul}" Name="lbl_JudulForm">Buku Bank Garansi</TextBlock>
@@ -69,3 +68,5 @@
 
 
 </UserControl>
+
+

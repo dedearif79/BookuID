@@ -1,4 +1,4 @@
-<Window x:Class="wpfWin_Registrasi_IsiDataUser"
+﻿<Window x:Class="wpfWin_Registrasi_IsiDataUser"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -15,12 +15,11 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+                <ResourceDictionary Source="../WPF\Styles\StyleAplikasi.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-
-    <Grid Margin="20">
+<Grid Margin="20">
         <StackPanel VerticalAlignment="Top">
             <!-- Header -->
             <TextBlock Text="Langkah Ketiga :"
@@ -78,3 +77,5 @@
         </StackPanel>
     </Grid>
 </Window>
+
+

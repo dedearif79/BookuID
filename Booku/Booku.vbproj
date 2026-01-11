@@ -121,10 +121,11 @@
     <Folder Include="WPF\Styles\Class Window\" />
   </ItemGroup>
 
-  <!-- X_Application.xaml: Dinonaktifkan karena kita menggunakan custom Sub Main di mdlWpf_Program.vb -->
-  <!-- Resources akan di-load secara manual di kode -->
+  <!-- Application.xaml: Digunakan untuk design-time support di Visual Studio -->
+  <!-- Kembali ke Page karena ApplicationDefinition selalu generate Main() -->
   <ItemGroup>
-    <None Include="X_Application.xaml" />
+    <ApplicationDefinition Remove="Application.xaml" />
+    <Page Include="Application.xaml" />
   </ItemGroup>
 
   <ItemGroup>

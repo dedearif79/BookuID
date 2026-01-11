@@ -6,15 +6,15 @@
              xmlns:local="clr-namespace:Booku"
              mc:Ignorable="d" 
 >
+
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../../WPF/Styles/StyleAplikasi.xaml" />
+                <ResourceDictionary Source="../../../WPF\Styles\StyleAplikasi.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
-    <DockPanel Style="{StaticResource stylePanelFormHalaman}"   Name="pnl_Halaman">
+<DockPanel Style="{StaticResource stylePanelFormHalaman}"   Name="pnl_Halaman">
         <StackPanel Style="{StaticResource stylePanelFormHalamanHeader}">
             <Grid    DockPanel.Dock="Top"   HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" >
                 <Grid.ColumnDefinitions>
@@ -281,3 +281,5 @@
     </DockPanel>
 
 </UserControl>
+
+

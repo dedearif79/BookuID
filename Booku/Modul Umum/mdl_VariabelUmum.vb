@@ -1513,5 +1513,6 @@ Module mdl_VariabelUmum
     'Simbol :
     Public _X_ = "X"
 
+    Public ProsesKeluarAplikasi As Boolean = False
 
 End Module

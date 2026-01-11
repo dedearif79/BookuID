@@ -16,12 +16,11 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+                <ResourceDictionary Source="../WPF\Styles\StyleAplikasi.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-
-    <StackPanel Style="{StaticResource stylePanelFormDialog}" Width="1200" Height="666" >
+<StackPanel Style="{StaticResource stylePanelFormDialog}" Width="1200" Height="666" >
 
         <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Height="666" >
 
@@ -70,3 +69,5 @@
     </StackPanel>
 
 </Window>
+
+

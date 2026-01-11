@@ -10,11 +10,11 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../WPF/Styles/StyleAplikasi.xaml" />
+                <ResourceDictionary Source="../../WPF\Styles\StyleAplikasi.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
+    
     <DockPanel Style="{StaticResource stylePanelFormHalaman}">
         <StackPanel Style="{StaticResource stylePanelFormHalamanHeader}">
             <StackPanel Style="{StaticResource stylePanelFormHalamanTittle}" >
@@ -68,3 +68,5 @@
 
 
 </UserControl>
+
+

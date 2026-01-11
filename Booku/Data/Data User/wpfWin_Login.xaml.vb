@@ -91,9 +91,6 @@ Public Class wpfWin_Login
                 win_BOOKU.StatusMenuLevel_99_AppDeveloper()
         End Select
 
-        PesanUntukProgrammer("Status Login : " & StatusLogin & Enter2Baris &
-                             "Level User : " & LevelUserAktif)
-
         If LevelUserAktif >= LevelUser_09_SuperUser Then
             frm_BOOKU.mnu_DataUser.Enabled = True
             win_BOOKU.mnu_DataUser.IsEnabled = True

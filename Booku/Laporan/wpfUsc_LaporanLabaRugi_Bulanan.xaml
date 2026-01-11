@@ -10,12 +10,11 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+                <ResourceDictionary Source="../WPF\Styles\StyleAplikasi.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
-    <DockPanel Style="{StaticResource stylePanelFormHalaman}" Name="pnl_Halaman" >
+<DockPanel Style="{StaticResource stylePanelFormHalaman}" Name="pnl_Halaman" >
         <StackPanel Style="{StaticResource stylePanelFormHalamanHeader}">
             <StackPanel Style="{StaticResource stylePanelFormHalamanTittle}" >
                 <TextBlock Style="{StaticResource styleTextBlockFormHalamanJudul}" Name="lbl_JudulForm" Text="Laporan Rugi-Laba Bulanan" />
@@ -69,3 +68,5 @@
     </DockPanel>
 
 </UserControl>
+
+

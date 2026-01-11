@@ -8,8 +8,16 @@
              mc:Ignorable="d" 
 >
 
-    <Grid   MinWidth="999"   MinHeight="333">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF\Styles\StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+<Grid   MinWidth="999"   MinHeight="333">
         <wv2:WebView2 Name="web_Browser" Source="" />
     </Grid>
 
 </UserControl>
+

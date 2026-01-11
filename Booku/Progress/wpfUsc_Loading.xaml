@@ -7,7 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="222" d:DesignWidth="333">
 
-    <Grid x:Name="Root" >
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF\Styles\StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+<Grid x:Name="Root" >
 
         <!-- OVERLAY LOADING (paling atas) -->
         <Grid x:Name="LoadingOverlay"
@@ -70,3 +77,4 @@
 
 
 </UserControl>
+

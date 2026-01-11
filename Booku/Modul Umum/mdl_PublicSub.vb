@@ -2981,15 +2981,31 @@ Public Module mdl_PublicSub
     End Sub
 
     Public Sub TampilkanPanelNotifikasi()
-        frm_BOOKU.pnl_Notifikasi.Visible = True
-        frm_BOOKU.mnu_Notifikasi.Text = "Tutup"
-        frm_BOOKU.IsiKontenNotifikasi()
+        If ModusAplikasi = "CLASSIC" Then
+            ' Mode Classic (WinForms)
+            frm_BOOKU.pnl_Notifikasi.Visible = True
+            frm_BOOKU.mnu_Notifikasi.Text = "Tutup"
+            frm_BOOKU.IsiKontenNotifikasi()
+        Else
+            ' Mode Modern (WPF)
+            If win_BOOKU IsNot Nothing Then
+                win_BOOKU.TampilkanPanelNotifikasi()
+            End If
+        End If
         VisibilitasNotifikasi = True
     End Sub
 
     Public Sub TutupPanelNotifikasi()
-        frm_BOOKU.pnl_Notifikasi.Visible = False
-        frm_BOOKU.mnu_Notifikasi.Text = "Notifikasi"
+        If ModusAplikasi = "CLASSIC" Then
+            ' Mode Classic (WinForms)
+            frm_BOOKU.pnl_Notifikasi.Visible = False
+            frm_BOOKU.mnu_Notifikasi.Text = "Notifikasi"
+        Else
+            ' Mode Modern (WPF)
+            If win_BOOKU IsNot Nothing Then
+                win_BOOKU.TutupPanelNotifikasi()
+            End If
+        End If
         VisibilitasNotifikasi = False
     End Sub
 

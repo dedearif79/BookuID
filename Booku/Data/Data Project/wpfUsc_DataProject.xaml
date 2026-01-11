@@ -4,18 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Booku"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
 >
 
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../../WPF/Styles/StyleAplikasi.xaml" />
+                <ResourceDictionary Source="../../WPF\Styles\StyleAplikasi.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-
-    <DockPanel Style="{StaticResource stylePanelFormHalaman}">
+<DockPanel Style="{StaticResource stylePanelFormHalaman}">
         <StackPanel Style="{StaticResource stylePanelFormHalamanHeader}">
             <StackPanel Style="{StaticResource stylePanelFormHalamanTittle}" >
                 <TextBlock Style="{StaticResource styleTextBlockFormHalamanJudul}" Name="lbl_JudulForm">Data Project</TextBlock>
@@ -72,3 +71,4 @@
     
 
 </UserControl>
+
