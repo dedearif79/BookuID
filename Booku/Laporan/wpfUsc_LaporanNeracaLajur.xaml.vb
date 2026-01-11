@@ -903,7 +903,7 @@ Public Class wpfUsc_LaporanNeracaLajur
                                 Or COA = KodeTautanCOA_BiayaPemakaianBahanPenolong _
                                 Or COA = KodeTautanCOA_BiayaOverheadPabrik _
                                 Or COA = KodeTautanCOA_BiayaProduksi _
-                                Or COA = kodetautancoa_Hargapokokproduksi _
+                                Or COA = KodeTautanCOA_HargaPokokProduksi _
                                 Then
                                 SaldoAkhirBulan_Simpan = AdjusmentKredit
                             End If

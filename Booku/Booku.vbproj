@@ -4,9 +4,9 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>Booku</RootNamespace>
-    <StartupObject>Booku.My.MyApplication</StartupObject>
+    <StartupObject>Sub Main</StartupObject>
     <UseWindowsForms>true</UseWindowsForms>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <UseWPF>True</UseWPF>
     <ApplicationIcon>BookuID.ico</ApplicationIcon>
   </PropertyGroup>
@@ -24,6 +24,7 @@
   <ItemGroup>
     <Compile Remove="App Admin\**" />
     <Compile Remove="Logger\**" />
+    <Compile Remove="My Project\Application.Designer.vb" />
     <EmbeddedResource Remove="App Admin\**" />
     <EmbeddedResource Remove="Logger\**" />
     <None Remove="App Admin\**" />
@@ -120,8 +121,10 @@
     <Folder Include="WPF\Styles\Class Window\" />
   </ItemGroup>
 
+  <!-- X_Application.xaml: Dinonaktifkan karena kita menggunakan custom Sub Main di mdlWpf_Program.vb -->
+  <!-- Resources akan di-load secara manual di kode -->
   <ItemGroup>
-    <Page Include="Application.xaml" />
+    <None Include="X_Application.xaml" />
   </ItemGroup>
 
   <ItemGroup>

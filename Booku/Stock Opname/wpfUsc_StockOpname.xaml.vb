@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -15,8 +15,6 @@ Public Class wpfUsc_StockOpname
 
     Public JenisStok_Menu As String
     Public JenisPengecekan_Menu
-
-    Public NamaFormHalaman As Form
 
     Dim NomorUrut
     Dim NomorID
@@ -145,7 +143,6 @@ Public Class wpfUsc_StockOpname
         End Select
 
         lbl_JudulForm.Text = JudulForm
-        NamaFormHalaman.Text = JudulForm
 
         KontenCombo_Bulan()
 

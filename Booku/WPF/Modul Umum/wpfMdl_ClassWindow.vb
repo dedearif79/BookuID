@@ -1,11 +1,13 @@
 Module wpfMdl_ClassWindow
 
-    Public win_BOOKU As New wpfWin_BOOKU
+    ' NOTE: win_BOOKU dan win_Startup TIDAK boleh As New karena akan membuat instance
+    ' sebelum Main() dijalankan. Inisialisasi dilakukan di mdlWpf_Program.Main()
+    Public win_BOOKU As wpfWin_BOOKU
+    Public win_Startup As wpfWin_StartUp
 
     '═══════════════════════════════════════════════════════════════════════════
     ' STARTUP & LOGIN
     '═══════════════════════════════════════════════════════════════════════════
-    Public win_Startup As New wpfWin_StartUp
     Public win_Login As New wpfWin_Login
     Public win_KunciAkses As New wpfWin_KunciAkses
 

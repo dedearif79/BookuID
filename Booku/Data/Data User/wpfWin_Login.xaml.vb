@@ -65,7 +65,6 @@ Public Class wpfWin_Login
 
         frm_BOOKU.mnu_AppDeveloper.Visible = False
 
-        win_BOOKU = New wpfWin_BOOKU
         win_BOOKU.mnu_AppDeveloper.Visibility = Visibility.Collapsed
 
         Select Case LevelUserAktif

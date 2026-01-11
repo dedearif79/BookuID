@@ -1,4 +1,4 @@
-﻿Imports System.Windows.Forms.Integration
+Imports System.Windows.Forms.Integration
 
 Public Class frm_BarangDalamProses_CekFisik
 
@@ -21,7 +21,6 @@ Public Class frm_BarangDalamProses_CekFisik
 
     Sub Inisialisasi()
         usc_BarangDalamProses_CekFisik = New wpfUsc_StockOpname
-        usc_BarangDalamProses_CekFisik.NamaFormHalaman = Me
         usc_BarangDalamProses_CekFisik.JenisStok_Menu = JenisStok_BarangDalamProses
         usc_BarangDalamProses_CekFisik.JenisPengecekan_Menu = usc_BarangDalamProses_CekFisik.JenisPengecekan_CekFisik
     End Sub

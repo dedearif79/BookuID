@@ -1,28 +1,159 @@
-﻿Option Explicit On
+Option Explicit On
 Option Strict On
 
+Imports System.IO
 Imports System.Threading
+Imports System.Threading.Tasks
+Imports System.Windows
+Imports System.Windows.Threading
+Imports Forms = System.Windows.Forms
+Imports bcomm
 
+''' <summary>
+''' Entry point utama aplikasi BOOKU dengan WPF Application.
+''' Menggabungkan fitur:
+''' - Single instance protection (Mutex)
+''' - Global exception handlers (AppDomain, Task, WPF Dispatcher)
+''' - Startup logic (login, data loading)
+''' - WPF Application lifecycle
+''' </summary>
 Public Module mdlWpf_Program
-
 
     Private MutexApp As Mutex
 
+    <STAThread>
     Sub Main()
-        Dim appName As String = "MyUniqueAppMutex"
+        ' 1. Single Instance Protection
+        Dim appName As String = "BookuSingleInstance"
         Dim createdNew As Boolean
-        MutexApp = New Mutex(True, appName, createdNew) 'Membuat Mutex untuk mencegah lebih dari satu instance berjalan
-        If Not createdNew Then 'Jika aplikasi sudah berjalan, fokuskan window yang ada lalu keluar
+        MutexApp = New Mutex(True, appName, createdNew)
+
+        If Not createdNew Then
+            ' Aplikasi sudah berjalan, fokuskan window yang ada lalu keluar
             FocusExistingApp()
             Return
         End If
-        ' Menjalankan aplikasi utama (WinForms)
-        Application.EnableVisualStyles()
-        Application.SetCompatibleTextRenderingDefault(False)
-        Application.Run(New frm_BOOKU())
-        MutexApp.ReleaseMutex() 'Melepaskan Mutex setelah aplikasi ditutup
+
+        ' 2. Setup Global Exception Handlers
+        AddHandler AppDomain.CurrentDomain.UnhandledException, AddressOf Domain_UnhandledException
+        AddHandler TaskScheduler.UnobservedTaskException, AddressOf Task_UnobservedTaskException
+
+        ' 3. Create WPF Application
+        Dim app As New Application()
+        AddHandler app.DispatcherUnhandledException, AddressOf Wpf_DispatcherUnhandledException
+        app.ShutdownMode = ShutdownMode.OnMainWindowClose
+
+        ' 4. Load Application Resources (StyleAplikasi.xaml)
+        Dim resourceDict As New ResourceDictionary()
+        resourceDict.Source = New Uri("pack://application:,,,/Booku;component/WPF/Styles/StyleAplikasi.xaml", UriKind.Absolute)
+        app.Resources.MergedDictionaries.Add(resourceDict)
+
+        ' =====================================================
+        ' 5. STARTUP LOGIC (sebelum main window ditampilkan)
+        ' =====================================================
+
+        ' Parameter Awal :
+        FilePathDataKoneksi = Path.Combine(FolderNotesApp, NamaFileDataKoneksi)
+        FilePathRegistrasiPerangkat = Path.Combine(FolderNotesApp, NamaFileRegistrasiPerangkat)
+        FilePathRegistrasiPerangkat_Backup = Path.Combine(FolderNotesApp, NamaFileRegistrasiPerangkat_Backup)
+        FilePathVersiDanApdetAplikasi = Path.Combine(FolderNotesApp, NamaFileVersiDanApdetAplikasi)
+
+        ' Standarisasi Settingan :
+        StandarisasiSetinganAplikasi()
+
+        ' Start Up (Login Dialog)
+        win_BOOKU = New wpfWin_BOOKU()
+        win_Startup = New wpfWin_StartUp
+        win_Startup.ShowDialog()
+
+        ' Update Info Aplikasi dari server
+        UpdateInfoAplikasi()
+
+        ' Pengisian Value dari Variabel-variabel Penting di Awal :
+        DataAwalLoadingAplikasi()
+
+        ' Cek Versi dan Apdet Aplikasi :
+        CekVersiDanApdetAplikasi()
+
+        ' Cek Status Registrasi Perangkat :
+        CekStatusRegistrasiPerangkat()
+
+        ' Set flag agar wpfWin_BOOKU tidak menjalankan startup lagi
+        StartupSudahDijalankan = True
+
+        ' =====================================================
+        ' 6. MODE SELECTION (Khusus Developer PC)
+        ' =====================================================
+        If ID_CPU = ID_CPU_Developer Then
+            Dim dialogPilihMode As New wpfWin_PilihModeAplikasi
+            dialogPilihMode.ShowDialog()
+
+            If Not dialogPilihMode.ModeModernDipilih Then
+                ' User memilih Mode Classic (WinForms)
+                ModusAplikasi = "CLASSIC"
+
+                ' Jalankan WinForms Application
+                Forms.Application.EnableVisualStyles()
+                Forms.Application.SetCompatibleTextRenderingDefault(False)
+                Forms.Application.Run(New frm_BOOKU())
+
+                MutexApp.ReleaseMutex()
+                Return
+            End If
+        End If
+
+        ' =====================================================
+        ' 7. Run WPF Application (Mode Modern)
+        ' =====================================================
+        app.Run(win_BOOKU)
+
+        ' 8. Cleanup
+        MutexApp.ReleaseMutex()
     End Sub
-    Private Sub FocusExistingApp() 'Fokus ke aplikasi yang sudah berjalan
+
+#Region "Exception Handlers"
+
+    Private Sub Domain_UnhandledException(sender As Object, e As UnhandledExceptionEventArgs)
+        ShowAndExit(TryCast(e.ExceptionObject, Exception), "AppDomain UnhandledException")
+    End Sub
+
+    Private Sub Task_UnobservedTaskException(sender As Object, e As UnobservedTaskExceptionEventArgs)
+        ShowAndExit(e.Exception, "Task UnobservedTaskException")
+        e.SetObserved()
+    End Sub
+
+    Private Sub Wpf_DispatcherUnhandledException(sender As Object, e As DispatcherUnhandledExceptionEventArgs)
+        ShowAndExit(e.Exception, "WPF DispatcherUnhandledException")
+        e.Handled = True
+    End Sub
+
+    Private Sub ShowAndExit(ex As Exception, source As String)
+        Dim logPath As String = ""
+        Try
+            logPath = mdl_Logger.WriteException(ex, source)
+        Catch
+        End Try
+
+        Try
+            MessageBox.Show(
+                "Maaf, terjadi kesalahan dan aplikasi harus berhenti." & Environment.NewLine &
+                If(logPath <> "", "Silakan kirim file log ini ke admin:" & Environment.NewLine & logPath,
+                                "Silakan cek folder Logs dan kirim file log terbaru ke admin."),
+                "BOOKU - Error",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error)
+        Catch
+        End Try
+
+        Environment.Exit(1)
+    End Sub
+
+#End Region
+
+#Region "Single Instance Helper"
+
+    Private Sub FocusExistingApp()
+        ' Fokus ke aplikasi yang sudah berjalan
         Dim proc As Process = Process.GetCurrentProcess()
         Dim processes As Process() = Process.GetProcessesByName(proc.ProcessName)
 
@@ -45,5 +176,7 @@ Public Module mdlWpf_Program
     End Function
 
     Private Const SW_RESTORE As Integer = 9
+
+#End Region
 
 End Module

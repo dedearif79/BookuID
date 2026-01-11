@@ -8,66 +8,8 @@ Public Class frm_BOOKU
 
     Private Sub frm_BOOKU_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        'Parameter Awal :
-        FilePathDataKoneksi = Path.Combine(FolderNotesApp, NamaFileDataKoneksi)
-        FilePathRegistrasiPerangkat = Path.Combine(FolderNotesApp, NamaFileRegistrasiPerangkat)
-        FilePathRegistrasiPerangkat_Backup = Path.Combine(FolderNotesApp, NamaFileRegistrasiPerangkat_Backup)
-        FilePathVersiDanApdetAplikasi = Path.Combine(FolderNotesApp, NamaFileVersiDanApdetAplikasi)
-
-        'Standarisasi Settingan :
-        StandarisasiSetinganAplikasi()
-
-        'Start Up
-        win_Startup = New wpfWin_StartUp
-        win_Startup.ShowDialog()
-
-        'Lakukan Update Value tbl_infoaplikasi yang ada di lokal, dengan value-value yang ada di server
-        UpdateInfoAplikasi()
-
-        'Pengisian Value dari Variabel-variabel Penting di Awal :
-        DataAwalLoadingAplikasi()
-
-
-        'Posisi Default Hak Akses User :
-        StatusMenuPosisiLogout()
-
-
-        'Cek Versi dan Apdet Aplikasi :
-        CekVersiDanApdetAplikasi()
-
-
-        'Cek Status Registrasi Perangkat :
-        CekStatusRegistrasiPerangkat()
-
-        '=====================================================
-        ' BRANCHING: Pilih Mode Aplikasi untuk PC Developer
-        '=====================================================
-        If ID_CPU = ID_CPU_Developer Then
-            ' PC Developer: Tampilkan dialog pilihan mode
-            Dim dialogPilihMode As New wpfWin_PilihModeAplikasi
-            dialogPilihMode.ShowDialog()
-
-            If dialogPilihMode.ModeModernDipilih Then
-                ' User memilih Mode Modern (WPF Shell)
-                ModusAplikasi = "MODERN"
-
-                ' Buka WPF Shell dan tutup form WinForms ini
-                win_BOOKU.Show()
-
-                ' Sembunyikan frm_BOOKU (tidak di-close agar exception handlers tetap aktif)
-                Me.Hide()
-                Me.WindowState = FormWindowState.Minimized
-                Me.ShowInTaskbar = False
-                Me.Visible = False
-
-                Return ' Hentikan loading frm_BOOKU selanjutnya
-            End If
-        End If
-        '=====================================================
-
         pnl_Notifikasi.Visible = False
         VisibilitasNotifikasi = False
-
         Style_HalamanModul(Me)
 
     End Sub
@@ -128,41 +70,6 @@ Public Class frm_BOOKU
         End Try
 
         Environment.Exit(1)
-    End Sub
-
-
-    Sub UpdateInfoAplikasi()
-
-        If AdaInfoUdate = True Then
-            AksesDatabase_General(Buka)
-            cmd = New OdbcCommand(" UPDATE tbl_infoaplikasi SET " &
-                                  " Nama_Aplikasi = '" & NamaAplikasi & "', " &
-                                  " Nomor_Hotline = '" & NomorHotLine & "', " &
-                                  " Website = '" & WebsiteAplikasi & "', " &
-                                  " Email = '" & EmailAplikasi & "' " _
-                                  , KoneksiDatabaseGeneral)
-            Try
-                cmd.ExecuteNonQuery()
-            Catch ex As Exception
-            End Try
-            AksesDatabase_General(Tutup)
-        Else
-            AksesDatabase_General(Buka)
-            Try
-                cmd = New OdbcCommand(" SELECT * FROM tbl_infoaplikasi ", KoneksiDatabaseGeneral)
-                dr = cmd.ExecuteReader
-                dr.Read()
-                NamaAplikasi = dr.Item("Nama_Aplikasi")
-                EmailAplikasi = dr.Item("Email")
-                NomorHotLine = dr.Item("Nomor_Hotline")
-                VersiBooku_SisiDatabase = DekripsiAngkaAES1(dr.Item("Versi_App"))
-                ApdetBooku_SisiDatabase = DekripsiAngkaAES1(dr.Item("Apdet_App"))
-                'Value dari variabel WebsiteAplikasi jangan ngambil dari sini. Sudah langsung ditanam sejak awal saat deklarasi variabel.
-            Catch ex As Exception
-            End Try
-            AksesDatabase_General(Tutup)
-        End If
-
     End Sub
 
     Sub CekVersiDanApdetAplikasi()
@@ -259,88 +166,6 @@ Public Class frm_BOOKU
 
     End Sub
 
-    Sub CekStatusRegistrasiPerangkat()
-
-        'Cek Status Registrasi (Verifikasi Tahap 1 : Dari sisi Perangkat )
-        StatusRegistrasiPerangkat = False
-        Try
-            DataRegistrasiPerangkat = IO.File.ReadLines(Path.Combine(FilePathRegistrasiPerangkat))
-            FileEksis = True
-        Catch ex As Exception
-            My.Computer.FileSystem.WriteAllText(Path.Combine(FilePathRegistrasiPerangkat), "", False)
-            FileEksis = False
-        End Try
-        Dim Terdaftar = Nothing
-        Dim ID_CPU_Tercatat = Nothing
-        If FileEksis = True Then
-            Dim i = 0
-            For Each Baris In DataRegistrasiPerangkat
-                i += 1
-                If i = 9 Then Terdaftar = DekripsiTeks(Baris)
-                If i = 17 Then ID_CPU_Tercatat = DekripsiTeks(Baris)
-            Next
-        End If
-        If Terdaftar = "TERDAFTAR" And ID_CPU = ID_CPU_Tercatat Then
-            StatusRegistrasiPerangkat = True
-        Else
-            StatusRegistrasiPerangkat = False
-        End If
-
-        'Cek Status Registrasi (Verifikasi Tahap 2 : Dari sisi Database General / tbl_perangkat )
-        If StatusRegistrasiPerangkat = True Then
-            StatusRegistrasiPerangkat = False 'Sengaja dibikin false lagi, untuk verifikasi tahap 2
-            Dim List_ID_Computer = Nothing
-            AksesDatabase_General(Buka)
-            cmd = New OdbcCommand(" SELECT * FROM tbl_perangkat ", KoneksiDatabaseGeneral)
-            dr = cmd.ExecuteReader
-            Do While dr.Read
-                List_ID_Computer = DekripsiTeks(dr.Item("Kode_Khusus")) 'Ini Sebenarnya untuk mengambil value ID_Komputer
-                If ID_CPU = List_ID_Computer Then
-                    StatusRegistrasiPerangkat = True
-                    Exit Do
-                End If
-            Loop
-            AksesDatabase_General(Tutup)
-        End If
-
-        If StatusRegistrasiPerangkat = True Then
-            BukaFormLogin()
-        Else
-            'Halaman Registrasi
-            Pesan_Informasi("Perangkat Anda belum terdaftar untuk menggunakan aplikasi ini." & Enter2Baris & "Silakan mendaftar terlebih dahulu.")
-            BukaDatabasePublic()
-            cmdPublic = New MySqlCommand(" SELECT * FROM tbl_customer WHERE Nomor_Seri_Produk = '" & NomorSeriProduk & "' ", KoneksiDatabasePublic)
-            drPublic = cmdPublic.ExecuteReader
-            drPublic.Read()
-            Dim JumlahPerangkat = 0
-            If drPublic.HasRows Then
-                Try
-                    ID_Customer = drPublic.Item("ID_Customer")
-                    JumlahPerangkat = drPublic.Item("Jumlah_Perangkat")
-                    ProsesRegistrasiPerangkat = True
-                Catch ex As Exception
-                    ProsesRegistrasiPerangkat = False
-                    Pesan_Gagal("Registrasi perangkat gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
-                End Try
-            End If
-            TutupDatabasePublic()
-            If ProsesRegistrasiPerangkat = True Then
-                frm_RegistrasiPerangkat.ResetForm()
-                frm_RegistrasiPerangkat.txt_NomorSeriProduk.Text = NomorSeriProduk
-                frm_RegistrasiPerangkat.txt_IDCustomer.Text = ID_Customer
-                frm_RegistrasiPerangkat.txt_JumlahPerangkat.Text = JumlahPerangkat
-                frm_RegistrasiPerangkat.txt_IDKomputer.Text = ID_CPU
-                frm_RegistrasiPerangkat.ShowDialog()
-            End If
-            If ProsesRegistrasiPerangkat = True Then
-                Pesan_Sukses("Proses registrasi perangkat berhasil.")
-                BukaFormLogin()
-            Else
-                End
-            End If
-        End If
-
-    End Sub
 
     'Sub BukaFormLogin()
 

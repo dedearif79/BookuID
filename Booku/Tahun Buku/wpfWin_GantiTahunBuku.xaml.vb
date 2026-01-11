@@ -519,6 +519,16 @@ Public Class wpfWin_GantiTahunBuku
             frm_BOOKU.mnu_Pengajuan.Enabled = False
             frm_BOOKU.mnu_Pajak.Enabled = False
             frm_BOOKU.mnu_DataAwal.Visible = True
+            win_BOOKU.mnu_BukuPengawasan.IsEnabled = False
+            win_BOOKU.mnu_Pembelian.IsEnabled = False
+            win_BOOKU.mnu_Penjualan.IsEnabled = False
+            win_BOOKU.mnu_Transaksi.IsEnabled = False
+            win_BOOKU.mnu_StockOpname.IsEnabled = False
+            win_BOOKU.mnu_Akuntansi.IsEnabled = False
+            win_BOOKU.mnu_ManajemenAsset.IsEnabled = False
+            win_BOOKU.mnu_Pengajuan.IsEnabled = False
+            win_BOOKU.mnu_Pajak.IsEnabled = False
+            win_BOOKU.mnu_DataAwal.Visibility = Visibility.Visible
         End If
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             frm_BOOKU.mnu_BukuPengawasan.Enabled = True
@@ -531,6 +541,16 @@ Public Class wpfWin_GantiTahunBuku
             frm_BOOKU.mnu_Pengajuan.Enabled = True
             frm_BOOKU.mnu_Pajak.Enabled = True
             frm_BOOKU.mnu_DataAwal.Visible = False
+            win_BOOKU.mnu_BukuPengawasan.IsEnabled = True
+            win_BOOKU.mnu_Pembelian.IsEnabled = True
+            win_BOOKU.mnu_Penjualan.IsEnabled = True
+            win_BOOKU.mnu_Transaksi.IsEnabled = True
+            win_BOOKU.mnu_StockOpname.IsEnabled = True
+            win_BOOKU.mnu_Akuntansi.IsEnabled = True
+            win_BOOKU.mnu_ManajemenAsset.IsEnabled = True
+            win_BOOKU.mnu_Pengajuan.IsEnabled = True
+            win_BOOKU.mnu_Pajak.IsEnabled = True
+            win_BOOKU.mnu_DataAwal.Visibility = Visibility.Collapsed
         End If
 
 

@@ -17,7 +17,8 @@
       "Bash(ls:*)",
       "Bash(grep:*)",
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku/Booku.vbproj\" -t:Build -verbosity:minimal)",
-      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku/Booku.vbproj\" /t:Build /verbosity:minimal)"
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku/Booku.vbproj\" /t:Build /verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\Booku\\\\Booku.vbproj\" -t:Clean -verbosity:minimal)"
     ]
   }
 }

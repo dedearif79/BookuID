@@ -4,6 +4,7 @@ Imports System.Windows.Controls
 Imports System.Windows.Forms.Integration
 Imports bcomm
 
+Imports System.IO
 ''' <summary>
 ''' WPF Application Shell untuk BOOKU (Mode Modern)
 ''' - Langsung membuka WPF UserControl jika tersedia
@@ -17,7 +18,9 @@ Public Class wpfWin_BOOKU
     Public PaksaKeluarAplikasi As Boolean = False
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+
         UpdateStatusBar()
+
     End Sub
 
     Public Sub UpdateStatusBar()
@@ -276,6 +279,9 @@ Public Class wpfWin_BOOKU
 
     ' === ASSET ===
     Private Sub mnu_DaftarPenyusutanAssetTetap_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DaftarPenyusutanAssetTetap.Click
+        BukaModul_DaftarPenyusutanAssetTetap()
+    End Sub
+    Sub BukaModul_DaftarPenyusutanAssetTetap()
         Dim JudulForm = "Daftar Penyusutan Asset Tetap"
         usc_DaftarPenyusutanAssetTetap = New wpfUsc_DaftarPenyusutanAssetTetap With {
             .JalurMasuk = Halaman_MENUUTAMA
@@ -284,6 +290,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_ManajemenAmortisasiBiaya_Click(sender As Object, e As RoutedEventArgs) Handles mnu_ManajemenAmortisasiBiaya.Click
+        BukaModul_DaftarAmortisasiBiaya()
+    End Sub
+    Sub BukaModul_DaftarAmortisasiBiaya()
         Dim JudulForm = "Daftar Amortisasi Biaya"
         usc_DaftarAmortisasiBiaya = New wpfUsc_DaftarAmortisasiBiaya
         BukaUserControlDalamTab(usc_DaftarAmortisasiBiaya, JudulForm)
@@ -341,227 +350,83 @@ Public Class wpfWin_BOOKU
     ' DATA - DATA AWAL HUTANG
     ' ============================================================
     Private Sub mnu_DataAwal_HutangUsaha_NonAfiliasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangUsaha_NonAfiliasi.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Usaha - Non Afiliasi"
-        usc_BukuPengawasanHutangUsaha_NonAfiliasi = New wpfUsc_BukuPengawasanHutangUsaha With {
-            .AsalPembelian = AsalPembelian_Lokal,
-            .KodeMataUang = KodeMataUang_IDR,
-            .JenisRelasi_Induk = JenisRelasi_NonAfiliasi
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangUsaha_NonAfiliasi, JudulForm)
+        BukaModul_BukuPengawasanHutangUsaha_NonAfiliasi()
     End Sub
 
     Private Sub mnu_DataAwal_HutangUsaha_Afiliasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangUsaha_Afiliasi.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Usaha - Afiliasi"
-        usc_BukuPengawasanHutangUsaha_Afiliasi = New wpfUsc_BukuPengawasanHutangUsaha With {
-            .AsalPembelian = AsalPembelian_Lokal,
-            .KodeMataUang = KodeMataUang_IDR,
-            .JenisRelasi_Induk = JenisRelasi_Afiliasi
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangUsaha_Afiliasi, JudulForm)
+        BukaModul_BukuPengawasanHutangUsaha_Afiliasi()
     End Sub
 
     Private Sub mnu_DataAwal_HutangUsaha_Impor_USD_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangUsaha_Impor_USD.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - " & KodeMataUang_USD
-        usc_BukuPengawasanHutangUsaha_Impor_USD = New wpfUsc_BukuPengawasanHutangUsaha With {
-            .AsalPembelian = AsalPembelian_Impor,
-            .KodeMataUang = KodeMataUang_USD,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangUsaha_Impor_USD, JudulForm)
+        BukaModul_BukuPengawasanHutangUsaha_Impor_USD()
     End Sub
 
     Private Sub mnu_DataAwal_HutangUsaha_Impor_AUD_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangUsaha_Impor_AUD.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - " & KodeMataUang_AUD
-        usc_BukuPengawasanHutangUsaha_Impor_AUD = New wpfUsc_BukuPengawasanHutangUsaha With {
-            .AsalPembelian = AsalPembelian_Impor,
-            .KodeMataUang = KodeMataUang_AUD,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangUsaha_Impor_AUD, JudulForm)
+        BukaModul_BukuPengawasanHutangUsaha_Impor_AUD()
     End Sub
 
     Private Sub mnu_DataAwal_HutangUsaha_Impor_JPY_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangUsaha_Impor_JPY.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - " & KodeMataUang_JPY
-        usc_BukuPengawasanHutangUsaha_Impor_JPY = New wpfUsc_BukuPengawasanHutangUsaha With {
-            .AsalPembelian = AsalPembelian_Impor,
-            .KodeMataUang = KodeMataUang_JPY,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangUsaha_Impor_JPY, JudulForm)
+        BukaModul_BukuPengawasanHutangUsaha_Impor_JPY()
     End Sub
 
     Private Sub mnu_DataAwal_HutangUsaha_Impor_CNY_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangUsaha_Impor_CNY.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - " & KodeMataUang_CNY
-        usc_BukuPengawasanHutangUsaha_Impor_CNY = New wpfUsc_BukuPengawasanHutangUsaha With {
-            .AsalPembelian = AsalPembelian_Impor,
-            .KodeMataUang = KodeMataUang_CNY,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangUsaha_Impor_CNY, JudulForm)
+        BukaModul_BukuPengawasanHutangUsaha_Impor_CNY()
     End Sub
 
     Private Sub mnu_DataAwal_HutangUsaha_Impor_EUR_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangUsaha_Impor_EUR.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - " & KodeMataUang_EUR
-        usc_BukuPengawasanHutangUsaha_Impor_EUR = New wpfUsc_BukuPengawasanHutangUsaha With {
-            .AsalPembelian = AsalPembelian_Impor,
-            .KodeMataUang = KodeMataUang_EUR,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangUsaha_Impor_EUR, JudulForm)
+        BukaModul_BukuPengawasanHutangUsaha_Impor_EUR()
     End Sub
 
     Private Sub mnu_DataAwal_HutangUsaha_Impor_SGD_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangUsaha_Impor_SGD.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - " & KodeMataUang_SGD
-        usc_BukuPengawasanHutangUsaha_Impor_SGD = New wpfUsc_BukuPengawasanHutangUsaha With {
-            .AsalPembelian = AsalPembelian_Impor,
-            .KodeMataUang = KodeMataUang_SGD,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangUsaha_Impor_SGD, JudulForm)
+        BukaModul_BukuPengawasanHutangUsaha_Impor_SGD()
     End Sub
 
     Private Sub mnu_DataAwal_HutangUsaha_Impor_GBP_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangUsaha_Impor_GBP.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - " & KodeMataUang_GBP
-        usc_BukuPengawasanHutangUsaha_Impor_GBP = New wpfUsc_BukuPengawasanHutangUsaha With {
-            .AsalPembelian = AsalPembelian_Impor,
-            .KodeMataUang = KodeMataUang_GBP,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangUsaha_Impor_GBP, JudulForm)
+        BukaModul_BukuPengawasanHutangUsaha_Impor_GBP()
     End Sub
 
     Private Sub mnu_DataAwal_HutangBank_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangBank.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Bank"
-        usc_BukuPengawasanHutangBank = New wpfUsc_BukuPengawasanHutangBankLeasing With {
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGBANK,
-            .BankLeasing = bl_Bank,
-            .JudulForm = JudulForm,
-            .COAHutang = KodeTautanCOA_HutangBank,
-            .TabelPengawasan = "tbl_PengawasanHutangBank",
-            .TabelAngsuran = "tbl_JadwalAngsuranHutangBank",
-            .KolomNomorBPH = "Nomor_BPHB"
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangBank, JudulForm)
+        BukaModul_BukuPengawasanHutangBank()
     End Sub
 
     Private Sub mnu_DataAwal_HutangLeasing_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangLeasing.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Leasing"
-        usc_BukuPengawasanHutangLeasing = New wpfUsc_BukuPengawasanHutangBankLeasing With {
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGLEASING,
-            .BankLeasing = bl_Leasing,
-            .JudulForm = JudulForm,
-            .COAHutang = KodeTautanCOA_HutangLeasing,
-            .TabelPengawasan = "tbl_PengawasanHutangLeasing",
-            .TabelAngsuran = "tbl_JadwalAngsuranHutangLeasing",
-            .KolomNomorBPH = "Nomor_BPHL"
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangLeasing, JudulForm)
+        BukaModul_BukuPengawasanHutangLeasing()
     End Sub
 
     Private Sub mnu_DataAwal_HutangPihakKetiga_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangPihakKetiga.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Pihak Ketiga"
-        usc_BukuPengawasanHutangPihakKetiga = New wpfUsc_BukuPengawasanHutangPihakKetiga With {
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGPIHAKKETIGA,
-            .JudulForm = JudulForm,
-            .COAHutang = KodeTautanCOA_HutangPihakKetiga
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangPihakKetiga, JudulForm)
+        BukaModul_BukuPengawasanHutangPihakKetiga()
     End Sub
 
     Private Sub mnu_DataAwal_HutangAfiliasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangAfiliasi.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Afiliasi"
-        usc_BukuPengawasanHutangAfiliasi = New wpfUsc_BukuPengawasanHutangAfiliasi With {
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGAFILIASI,
-            .JudulForm = JudulForm,
-            .COAHutang = KodeTautanCOA_HutangAfiliasi
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangAfiliasi, JudulForm)
+        BukaModul_BukuPengawasanHutangAfiliasi()
     End Sub
 
     Private Sub mnu_DataAwal_HutangKaryawan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangKaryawan.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Karyawan"
-        usc_BukuPengawasanHutangKaryawan = New wpfUsc_BukuPengawasanHutangKaryawan With {
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGKARYAWAN,
-            .COAHutang = KodeTautanCOA_HutangKaryawan
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangKaryawan, JudulForm)
+        BukaModul_BukuPengawasanHutangKaryawan()
     End Sub
 
     Private Sub mnu_DataAwal_HutangPemegangSaham_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangPemegangSaham.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Pemegang Saham"
-        usc_BukuPengawasanHutangPemegangSaham = New wpfUsc_BukuPengawasanHutangPemegangSaham With {
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGPEMEGANGSAHAM,
-            .COAHutang = KodeTautanCOA_HutangPemegangSaham
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangPemegangSaham, JudulForm)
+        BukaModul_BukuPengawasanHutangPemegangSaham()
     End Sub
 
     Private Sub mnu_DataAwal_HutangPPhPasal21_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangPPhPasal21.Click
-        Dim JudulForm = "Buku Pengawasan Hutang PPh Pasal 21"
-        usc_BukuPengawasanHutangPPhPasal21 = New wpfUsc_BukuPengawasanHutangPPhPasal21 With {
-            .JenisPajak = JenisPajak_PPhPasal21,
-            .AwalanBP = AwalanBPHP21,
-            .COAHutangPajak_100 = KodeTautanCOA_HutangPPhPasal21_100,
-            .COAHutangPajak_401 = KodeTautanCOA_HutangPPhPasal21_401,
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGPPHPASAL21
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangPPhPasal21, JudulForm)
+        BukaModul_BukuPengawasanHutangPPhPasal21()
     End Sub
 
     Private Sub mnu_DataAwal_HutangPPhPasal23_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangPPhPasal23.Click
-        Dim JudulForm = "Buku Pengawasan Hutang PPh Pasal 23"
-        usc_BukuPengawasanHutangPPhPasal23 = New wpfUsc_BukuPengawasanHutangPPhPasal23 With {
-            .JenisPajak = JenisPajak_PPhPasal23,
-            .AwalanBP = AwalanBPHP23,
-            .COAHutangPajak_100 = KodeTautanCOA_HutangPPhPasal23_100,
-            .COAHutangPajak_101 = KodeTautanCOA_HutangPPhPasal23_101,
-            .COAHutangPajak_102 = KodeTautanCOA_HutangPPhPasal23_102,
-            .COAHutangPajak_103 = KodeTautanCOA_HutangPPhPasal23_103,
-            .COAHutangPajak_104 = KodeTautanCOA_HutangPPhPasal23_104,
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGPPHPASAL23
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangPPhPasal23, JudulForm)
+        BukaModul_BukuPengawasanHutangPPhPasal23()
     End Sub
 
     Private Sub mnu_DataAwal_HutangPPhPasal42_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangPPhPasal42.Click
-        Dim JudulForm = "Buku Pengawasan Hutang PPh Pasal 4 (2)"
-        usc_BukuPengawasanHutangPPhPasal42 = New wpfUsc_BukuPengawasanHutangPPhPasal42 With {
-            .JenisPajak = JenisPajak_PPhPasal42,
-            .AwalanBP = AwalanBPHP42,
-            .COAHutangPajak_402 = KodeTautanCOA_HutangPPhPasal42_402,
-            .COAHutangPajak_403 = KodeTautanCOA_HutangPPhPasal42_403,
-            .COAHutangPajak_409 = KodeTautanCOA_HutangPPhPasal42_409,
-            .COAHutangPajak_419 = KodeTautanCOA_HutangPPhPasal42_419,
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGPPHPASAL42
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangPPhPasal42, JudulForm)
+        BukaModul_BukuPengawasanHutangPPhPasal42()
     End Sub
 
     Private Sub mnu_DataAwal_HutangPPhPasal25_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangPPhPasal25.Click
-        Dim JudulForm = "Buku Pengawasan Hutang PPh Pasal 25"
-        usc_BukuPengawasanHutangPPhPasal25 = New wpfUsc_BukuPengawasanHutangPPhPasal25 With {
-            .JenisPajak = JenisPajak_PPhPasal25,
-            .AwalanBP = AwalanBPHP25,
-            .COAHutangPajak = KodeTautanCOA_HutangPPhPasal25,
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGPPHPASAL25
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangPPhPasal25, JudulForm)
+        BukaModul_BukuPengawasanHutangPPhPasal25()
     End Sub
 
     Private Sub mnu_DataAwal_HutangPPhPasal26_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangPPhPasal26.Click
-        Dim JudulForm = "Buku Pengawasan Hutang PPh Pasal 26"
-        usc_BukuPengawasanHutangPPhPasal26 = New wpfUsc_BukuPengawasanHutangPPhPasal26 With {
-            .JenisPajak = JenisPajak_PPhPasal26,
-            .AwalanBP = AwalanBPHP26,
-            .COAHutangPajak_100 = KodeTautanCOA_HutangPPhPasal26_100,
-            .COAHutangPajak_101 = KodeTautanCOA_HutangPPhPasal26_101,
-            .COAHutangPajak_102 = KodeTautanCOA_HutangPPhPasal26_102,
-            .COAHutangPajak_103 = KodeTautanCOA_HutangPPhPasal26_103,
-            .COAHutangPajak_104 = KodeTautanCOA_HutangPPhPasal26_104,
-            .COAHutangPajak_105 = KodeTautanCOA_HutangPPhPasal26_105,
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGPPHPASAL26
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangPPhPasal26, JudulForm)
+        BukaModul_BukuPengawasanHutangPPhPasal26()
     End Sub
 
     Private Sub mnu_DataAwal_HutangPPhPasal29_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangPPhPasal29.Click
@@ -569,250 +434,101 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_DataAwal_HutangPPN_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangPPN.Click
-        Dim JudulForm = "Buku Pengawasan Pelaporan PPN"
-        usc_BukuPengawasanPelaporanPPN = New wpfUsc_BukuPengawasanPelaporanPPN With {
-            .JenisPajak = JenisPajak_PPN,
-            .AwalanBP = AwalanBPHPPN,
-            .COAHutangPajak = KodeTautanCOA_HutangPPN,
-            .NamaHalaman = Halaman_BUKUPENGAWASANPELAPORANPPN
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPelaporanPPN, JudulForm)
+        BukaModul_BukuPengawasanPelaporanPPN()
     End Sub
 
     Private Sub mnu_DataAwal_HutangKetetapanPajak_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangKetetapanPajak.Click
-        Dim JudulForm = "Buku Pengawasan Ketetapan Pajak"
-        usc_BukuPengawasanKetetapanPajak = New wpfUsc_BukuPengawasanKetetapanPajak With {
-            .JenisPajak = JenisPajak_KetetapanPajak,
-            .AwalanBP = AwalanBPKP,
-            .NamaHalaman = Halaman_BUKUPENGAWASANKETETAPANPAJAK,
-            .COAHutangPajak = KodeTautanCOA_HutangKetetapanPajak
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanKetetapanPajak, JudulForm)
+        BukaModul_BukuPengawasanKetetapanPajak()
     End Sub
 
     Private Sub mnu_DataAwal_HutangGaji_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangGaji.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Gaji"
-        usc_BukuPengawasanGaji = New wpfUsc_BukuPengawasanGaji With {
-            .NamaHalaman = Halaman_BUKUPENGAWASANGAJI,
-            .JudulForm = JudulForm,
-            .COAHutang = KodeTautanCOA_HutangGaji
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanGaji, JudulForm)
+        BukaModul_BukuPengawasanGaji()
     End Sub
 
     Private Sub mnu_DataAwal_HutangBPJSKesehatan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangBPJSKesehatan.Click
-        Dim JudulForm = "Buku Pengawasan Hutang BPJS Kesehatan"
-        usc_BukuPengawasanHutangBPJSKesehatan = New wpfUsc_BukuPengawasanTurunanGaji With {
-            .JudulForm = JudulForm,
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGBPJSKESEHATAN,
-            .COAHutang = KodeTautanCOA_HutangBpjsKesehatan,
-            .TabelPengawasan = "tbl_PengawasanHutangBpjsKesehatan",
-            .AwalanBPH = AwalanBPHKS,
-            .KolomPotongan = "Potongan_Hutang_BPJS_Kesehatan"
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangBPJSKesehatan, JudulForm)
+        BukaModul_BukuPengawasanHutangBPJSKesehatan()
     End Sub
 
     Private Sub mnu_DataAwal_HutangBPJSKetenagakerjaan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangBPJSKetenagakerjaan.Click
-        Dim JudulForm = "Buku Pengawasan Hutang BPJS Ketenagakerjaan"
-        usc_BukuPengawasanHutangBPJSKetenagakerjaan = New wpfUsc_BukuPengawasanTurunanGaji With {
-            .JudulForm = JudulForm,
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGBPJSKETENAGAKERJAAN,
-            .COAHutang = KodeTautanCOA_HutangBpjsKetenagakerjaan,
-            .TabelPengawasan = "tbl_PengawasanHutangBpjsKetenagakerjaan",
-            .AwalanBPH = AwalanBPHTK,
-            .KolomPotongan = "Potongan_Hutang_BPJS_Ketenagakerjaan"
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangBPJSKetenagakerjaan, JudulForm)
+        BukaModul_BukuPengawasanHutangBPJSKetenagakerjaan()
     End Sub
 
     Private Sub mnu_DataAwal_HutangKoperasiKaryawan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangKoperasiKaryawan.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Koperasi Karyawan"
-        usc_BukuPengawasanHutangKoperasiKaryawan = New wpfUsc_BukuPengawasanTurunanGaji With {
-            .JudulForm = JudulForm,
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGKOPERASIKARYAWAN,
-            .COAHutang = KodeTautanCOA_HutangKoperasiKaryawan,
-            .TabelPengawasan = "tbl_PengawasanHutangKoperasiKaryawan",
-            .AwalanBPH = AwalanBPHKK,
-            .KolomPotongan = "Potongan_Hutang_Koperasi"
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangKoperasiKaryawan, JudulForm)
+        BukaModul_BukuPengawasanHutangKoperasiKaryawan()
     End Sub
 
     Private Sub mnu_DataAwal_HutangSerikat_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_HutangSerikat.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Serikat"
-        usc_BukuPengawasanHutangSerikat = New wpfUsc_BukuPengawasanTurunanGaji With {
-            .JudulForm = JudulForm,
-            .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGSERIKAT,
-            .COAHutang = KodeTautanCOA_HutangSerikat,
-            .TabelPengawasan = "tbl_PengawasanHutangSerikat",
-            .AwalanBPH = AwalanBPHS,
-            .KolomPotongan = "Potongan_Hutang_Serikat"
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanHutangSerikat, JudulForm)
+        BukaModul_BukuPengawasanHutangSerikat()
     End Sub
 
     ' ============================================================
     ' DATA - DATA AWAL PIUTANG
     ' ============================================================
     Private Sub mnu_DataAwal_PiutangUsaha_NonAfiliasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangUsaha_NonAfiliasi.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Usaha - Non Afiliasi"
-        usc_BukuPengawasanPiutangUsaha_NonAfiliasi = New wpfUsc_BukuPengawasanPiutangUsaha With {
-            .DestinasiPenjualan = DestinasiPenjualan_Lokal,
-            .KodeMataUang = KodeMataUang_IDR,
-            .JenisRelasi_Induk = JenisRelasi_NonAfiliasi
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangUsaha_NonAfiliasi, JudulForm)
+        BukaModul_BukuPengawasanPiutangUsaha_NonAfiliasi()
     End Sub
 
     Private Sub mnu_DataAwal_PiutangUsaha_Afiliasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangUsaha_Afiliasi.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Usaha - Afiliasi"
-        usc_BukuPengawasanPiutangUsaha_Afiliasi = New wpfUsc_BukuPengawasanPiutangUsaha With {
-            .DestinasiPenjualan = DestinasiPenjualan_Lokal,
-            .KodeMataUang = KodeMataUang_IDR,
-            .JenisRelasi_Induk = JenisRelasi_Afiliasi
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangUsaha_Afiliasi, JudulForm)
+        BukaModul_BukuPengawasanPiutangUsaha_Afiliasi()
     End Sub
 
     Private Sub mnu_DataAwal_PiutangUsaha_Ekspor_USD_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangUsaha_Ekspor_USD.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - " & KodeMataUang_USD
-        usc_BukuPengawasanPiutangUsaha_Ekspor_USD = New wpfUsc_BukuPengawasanPiutangUsaha With {
-            .KodeMataUang = KodeMataUang_USD,
-            .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangUsaha_Ekspor_USD, JudulForm)
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_USD()
     End Sub
 
     Private Sub mnu_DataAwal_PiutangUsaha_Ekspor_AUD_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangUsaha_Ekspor_AUD.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - " & KodeMataUang_AUD
-        usc_BukuPengawasanPiutangUsaha_Ekspor_AUD = New wpfUsc_BukuPengawasanPiutangUsaha With {
-            .KodeMataUang = KodeMataUang_AUD,
-            .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangUsaha_Ekspor_AUD, JudulForm)
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_AUD()
     End Sub
 
     Private Sub mnu_DataAwal_PiutangUsaha_Ekspor_JPY_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangUsaha_Ekspor_JPY.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - " & KodeMataUang_JPY
-        usc_BukuPengawasanPiutangUsaha_Ekspor_JPY = New wpfUsc_BukuPengawasanPiutangUsaha With {
-            .KodeMataUang = KodeMataUang_JPY,
-            .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangUsaha_Ekspor_JPY, JudulForm)
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_JPY()
     End Sub
 
     Private Sub mnu_DataAwal_PiutangUsaha_Ekspor_CNY_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangUsaha_Ekspor_CNY.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - " & KodeMataUang_CNY
-        usc_BukuPengawasanPiutangUsaha_Ekspor_CNY = New wpfUsc_BukuPengawasanPiutangUsaha With {
-            .KodeMataUang = KodeMataUang_CNY,
-            .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangUsaha_Ekspor_CNY, JudulForm)
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_CNY()
     End Sub
 
     Private Sub mnu_DataAwal_PiutangUsaha_Ekspor_EUR_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangUsaha_Ekspor_EUR.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - " & KodeMataUang_EUR
-        usc_BukuPengawasanPiutangUsaha_Ekspor_EUR = New wpfUsc_BukuPengawasanPiutangUsaha With {
-            .KodeMataUang = KodeMataUang_EUR,
-            .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangUsaha_Ekspor_EUR, JudulForm)
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_EUR()
     End Sub
 
     Private Sub mnu_DataAwal_PiutangUsaha_Ekspor_SGD_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangUsaha_Ekspor_SGD.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - " & KodeMataUang_SGD
-        usc_BukuPengawasanPiutangUsaha_Ekspor_SGD = New wpfUsc_BukuPengawasanPiutangUsaha With {
-            .KodeMataUang = KodeMataUang_SGD,
-            .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangUsaha_Ekspor_SGD, JudulForm)
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_SGD()
     End Sub
 
     Private Sub mnu_DataAwal_PiutangUsaha_Ekspor_GBP_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangUsaha_Ekspor_GBP.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - " & KodeMataUang_GBP
-        usc_BukuPengawasanPiutangUsaha_Ekspor_GBP = New wpfUsc_BukuPengawasanPiutangUsaha With {
-            .KodeMataUang = KodeMataUang_GBP,
-            .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
-            .JenisRelasi_Induk = Pilihan_Semua
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangUsaha_Ekspor_GBP, JudulForm)
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_GBP()
     End Sub
 
     Private Sub mnu_DataAwal_PiutangPihakKetiga_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangPihakKetiga.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Pihak Ketiga"
-        usc_BukuPengawasanPiutangPihakKetiga = New wpfUsc_BukuPengawasanPiutangPihakKetiga With {
-            .NamaHalaman = Halaman_BUKUPENGAWASANPIUTANGPIHAKKETIGA,
-            .JudulForm = JudulForm,
-            .COAPiutang = KodeTautanCOA_PiutangPihakKetiga
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangPihakKetiga, JudulForm)
+        BukaModul_BukuPengawasanPiutangPihakKetiga()
     End Sub
 
     Private Sub mnu_DataAwal_PiutangAfiliasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangAfiliasi.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Afiliasi"
-        usc_BukuPengawasanPiutangAfiliasi = New wpfUsc_BukuPengawasanPiutangAfiliasi With {
-            .NamaHalaman = Halaman_BUKUPENGAWASANPIUTANGAFILIASI,
-            .JudulForm = JudulForm,
-            .COAPiutang = KodeTautanCOA_PiutangAfiliasi
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangAfiliasi, JudulForm)
+        BukaModul_BukuPengawasanPiutangAfiliasi()
     End Sub
 
     Private Sub mnu_DataAwal_PiutangKaryawan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangKaryawan.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Karyawan"
-        usc_BukuPengawasanPiutangKaryawan = New wpfUsc_BukuPengawasanPiutangKaryawan With {
-            .NamaHalaman = Halaman_BUKUPENGAWASANPIUTANGKARYAWAN,
-            .COAPiutang = KodeTautanCOA_PiutangKaryawan
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangKaryawan, JudulForm)
+        BukaModul_BukuPengawasanPiutangKaryawan()
     End Sub
 
     Private Sub mnu_DataAwal_PiutangPemegangSaham_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_PiutangPemegangSaham.Click
-        Dim JudulForm = "Buku Pengawasan Piutang Pemegang Saham"
-        usc_BukuPengawasanPiutangPemegangSaham = New wpfUsc_BukuPengawasanPiutangPemegangSaham With {
-            .NamaHalaman = Halaman_BUKUPENGAWASANPIUTANGPEMEGANGSAHAM,
-            .COAPiutang = KodeTautanCOA_PiutangPemegangSaham
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanPiutangPemegangSaham, JudulForm)
+        BukaModul_BukuPengawasanPiutangPemegangSaham()
     End Sub
 
     Private Sub mnu_DataAwal_DepositOperasional_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_DepositOperasional.Click
-        Dim JudulForm As String
-        If JenisTahunBuku = JenisTahunBuku_LAMPAU Then
-            JudulForm = "Data Awal Deposit Operasional"
-        Else
-            JudulForm = "Buku Pengawasan Deposit Operasional"
-        End If
-        usc_BukuPengawasanDepositOperasional = New wpfUsc_BukuPengawasanDepositOperasional With {
-            .NamaHalaman = Halaman_BUKUPENGAWASANDEPOSITOPERASIONAL,
-            .COAPiutang = KodeTautanCOA_DepositOperasional,
-            .JudulForm = JudulForm
-        }
-        BukaUserControlDalamTab(usc_BukuPengawasanDepositOperasional, JudulForm)
+        BukaModul_BukuPengawasanDepositOperasional(DariDataAwal:=True)
     End Sub
 
     ' ============================================================
     ' DATA - DATA AWAL ASSET
     ' ============================================================
     Private Sub mnu_DataAwal_AmortisasiBiaya_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_AmortisasiBiaya.Click
-        Dim JudulForm = "Daftar Amortisasi Biaya"
-        usc_DaftarAmortisasiBiaya = New wpfUsc_DaftarAmortisasiBiaya
-        BukaUserControlDalamTab(usc_DaftarAmortisasiBiaya, JudulForm)
+        BukaModul_DaftarAmortisasiBiaya()
     End Sub
 
     Private Sub mnu_DataAwal_AssetTetap_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataAwal_AssetTetap.Click
-        Dim JudulForm = "Daftar Penyusutan Asset Tetap"
-        usc_DaftarPenyusutanAssetTetap = New wpfUsc_DaftarPenyusutanAssetTetap With {
-            .JalurMasuk = Halaman_MENUUTAMA
-        }
-        BukaUserControlDalamTab(usc_DaftarPenyusutanAssetTetap, JudulForm)
+        BukaModul_DaftarPenyusutanAssetTetap()
     End Sub
 
     ' ============================================================
@@ -1400,7 +1116,7 @@ Public Class wpfWin_BOOKU
 
     Private Sub mnu_InvoicePenjualan_TanpaPO_Asset_Click(sender As Object, e As RoutedEventArgs) Handles mnu_InvoicePenjualan_TanpaPO_Asset.Click
         ' Redirect ke Daftar Penyusutan Asset Tetap (sama seperti di frm_BOOKU)
-        mnu_DaftarPenyusutanAssetTetap_Click(sender, e)
+        BukaModul_DaftarPenyusutanAssetTetap()
     End Sub
 
     ' ============================================================
@@ -1457,6 +1173,9 @@ Public Class wpfWin_BOOKU
     ' BUKU PENGAWASAN - GAJI
     ' ============================================================
     Private Sub mnu_BukuPengawasanHutangBPJSKesehatan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangBPJSKesehatan.Click
+        BukaModul_BukuPengawasanHutangBPJSKesehatan()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangBPJSKesehatan()
         Dim JudulForm = "Buku Pengawasan Hutang BPJS Kesehatan"
         usc_BukuPengawasanHutangBPJSKesehatan = New wpfUsc_BukuPengawasanTurunanGaji With {
             .JudulForm = JudulForm,
@@ -1470,6 +1189,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangBPJSKetenagakerjaan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangBPJSKetenagakerjaan.Click
+        BukaModul_BukuPengawasanHutangBPJSKetenagakerjaan()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangBPJSKetenagakerjaan()
         Dim JudulForm = "Buku Pengawasan Hutang BPJS Ketenagakerjaan"
         usc_BukuPengawasanHutangBPJSKetenagakerjaan = New wpfUsc_BukuPengawasanTurunanGaji With {
             .JudulForm = JudulForm,
@@ -1483,6 +1205,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangKoperasiKaryawan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangKoperasiKaryawan.Click
+        BukaModul_BukuPengawasanHutangKoperasiKaryawan()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangKoperasiKaryawan()
         Dim JudulForm = "Buku Pengawasan Hutang Koperasi Karyawan"
         usc_BukuPengawasanHutangKoperasiKaryawan = New wpfUsc_BukuPengawasanTurunanGaji With {
             .JudulForm = JudulForm,
@@ -1496,6 +1221,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangSerikat_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangSerikat.Click
+        BukaModul_BukuPengawasanHutangSerikat()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangSerikat()
         Dim JudulForm = "Buku Pengawasan Hutang Serikat"
         usc_BukuPengawasanHutangSerikat = New wpfUsc_BukuPengawasanTurunanGaji With {
             .JudulForm = JudulForm,
@@ -1512,6 +1240,9 @@ Public Class wpfWin_BOOKU
     ' BUKU PENGAWASAN - HUTANG USAHA
     ' ============================================================
     Private Sub mnu_BukuPengawasanHutangUsaha_NonAfiliasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangUsaha_NonAfiliasi.Click
+        BukaModul_BukuPengawasanHutangUsaha_NonAfiliasi()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangUsaha_NonAfiliasi()
         Dim JudulForm = "Buku Pengawasan Hutang Usaha - Non Afiliasi"
         usc_BukuPengawasanHutangUsaha_NonAfiliasi = New wpfUsc_BukuPengawasanHutangUsaha With {
             .AsalPembelian = AsalPembelian_Lokal,
@@ -1522,7 +1253,10 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Afiliasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangUsaha_Afiliasi.Click
-        Dim JudulForm = "Buku Pengawasan Hutang Usaha - Afiliasi"
+        BukaModul_BukuPengawasanHutangUsaha_Afiliasi()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangUsaha_Afiliasi()
+        Dim JudulForm = "Buku Pengawasan Hutang Usaha -  Afiliasi"
         usc_BukuPengawasanHutangUsaha_Afiliasi = New wpfUsc_BukuPengawasanHutangUsaha With {
             .AsalPembelian = AsalPembelian_Lokal,
             .KodeMataUang = KodeMataUang_IDR,
@@ -1544,6 +1278,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Impor_USD_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangUsaha_Impor_USD.Click
+        BukaModul_BukuPengawasanHutangUsaha_Impor_USD()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangUsaha_Impor_USD()
         Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - USD"
         usc_BukuPengawasanHutangUsaha_Impor_USD = New wpfUsc_BukuPengawasanHutangUsaha With {
             .AsalPembelian = AsalPembelian_Impor,
@@ -1554,6 +1291,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Impor_AUD_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangUsaha_Impor_AUD.Click
+        BukaModul_BukuPengawasanHutangUsaha_Impor_AUD()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangUsaha_Impor_AUD()
         Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - AUD"
         usc_BukuPengawasanHutangUsaha_Impor_AUD = New wpfUsc_BukuPengawasanHutangUsaha With {
             .AsalPembelian = AsalPembelian_Impor,
@@ -1564,6 +1304,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Impor_JPY_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangUsaha_Impor_JPY.Click
+        BukaModul_BukuPengawasanHutangUsaha_Impor_JPY()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangUsaha_Impor_JPY()
         Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - JPY"
         usc_BukuPengawasanHutangUsaha_Impor_JPY = New wpfUsc_BukuPengawasanHutangUsaha With {
             .AsalPembelian = AsalPembelian_Impor,
@@ -1574,6 +1317,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Impor_CNY_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangUsaha_Impor_CNY.Click
+        BukaModul_BukuPengawasanHutangUsaha_Impor_CNY()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangUsaha_Impor_CNY()
         Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - CNY"
         usc_BukuPengawasanHutangUsaha_Impor_CNY = New wpfUsc_BukuPengawasanHutangUsaha With {
             .AsalPembelian = AsalPembelian_Impor,
@@ -1584,6 +1330,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Impor_EUR_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangUsaha_Impor_EUR.Click
+        BukaModul_BukuPengawasanHutangUsaha_Impor_EUR()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangUsaha_Impor_EUR()
         Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - EUR"
         usc_BukuPengawasanHutangUsaha_Impor_EUR = New wpfUsc_BukuPengawasanHutangUsaha With {
             .AsalPembelian = AsalPembelian_Impor,
@@ -1594,6 +1343,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Impor_SGD_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangUsaha_Impor_SGD.Click
+        BukaModul_BukuPengawasanHutangUsaha_Impor_SGD()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangUsaha_Impor_SGD()
         Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - SGD"
         usc_BukuPengawasanHutangUsaha_Impor_SGD = New wpfUsc_BukuPengawasanHutangUsaha With {
             .AsalPembelian = AsalPembelian_Impor,
@@ -1604,6 +1356,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Impor_GBP_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangUsaha_Impor_GBP.Click
+        BukaModul_BukuPengawasanHutangUsaha_Impor_GBP()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangUsaha_Impor_GBP()
         Dim JudulForm = "Buku Pengawasan Hutang Usaha - Impor - GBP"
         usc_BukuPengawasanHutangUsaha_Impor_GBP = New wpfUsc_BukuPengawasanHutangUsaha With {
             .AsalPembelian = AsalPembelian_Impor,
@@ -1617,6 +1372,9 @@ Public Class wpfWin_BOOKU
     ' BUKU PENGAWASAN - HUTANG LAINNYA
     ' ============================================================
     Private Sub mnu_BukuPengawasanHutangBank_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangBank.Click
+        BukaModul_BukuPengawasanHutangBank()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangBank()
         Dim JudulForm = "Buku Pengawasan Hutang Bank"
         usc_BukuPengawasanHutangBank = New wpfUsc_BukuPengawasanHutangBankLeasing With {
             .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGBANK,
@@ -1631,6 +1389,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangLeasing_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangLeasing.Click
+        BukaModul_BukuPengawasanHutangLeasing()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangLeasing()
         Dim JudulForm = "Buku Pengawasan Hutang Leasing"
         usc_BukuPengawasanHutangLeasing = New wpfUsc_BukuPengawasanHutangBankLeasing With {
             .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGLEASING,
@@ -1645,6 +1406,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangPihakKetiga_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangPihakKetiga.Click
+        BukaModul_BukuPengawasanHutangPihakKetiga()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangPihakKetiga()
         Dim JudulForm = "Buku Pengawasan Hutang Pihak Ketiga"
         usc_BukuPengawasanHutangPihakKetiga = New wpfUsc_BukuPengawasanHutangPihakKetiga With {
             .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGPIHAKKETIGA,
@@ -1655,6 +1419,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangAfiliasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangAfiliasi.Click
+        BukaModul_BukuPengawasanHutangAfiliasi()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangAfiliasi()
         Dim JudulForm = "Buku Pengawasan Hutang Afiliasi"
         usc_BukuPengawasanHutangAfiliasi = New wpfUsc_BukuPengawasanHutangAfiliasi With {
             .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGAFILIASI,
@@ -1665,6 +1432,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangKaryawan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangKaryawan.Click
+        BukaModul_BukuPengawasanHutangKaryawan()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangKaryawan()
         Dim JudulForm = "Buku Pengawasan Hutang Karyawan"
         usc_BukuPengawasanHutangKaryawan = New wpfUsc_BukuPengawasanHutangKaryawan With {
             .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGKARYAWAN,
@@ -1674,6 +1444,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangPemegangSaham_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangPemegangSaham.Click
+        BukaModul_BukuPengawasanHutangPemegangSaham()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangPemegangSaham()
         Dim JudulForm = "Buku Pengawasan Hutang Pemegang Saham"
         usc_BukuPengawasanHutangPemegangSaham = New wpfUsc_BukuPengawasanHutangPemegangSaham With {
             .NamaHalaman = Halaman_BUKUPENGAWASANHUTANGPEMEGANGSAHAM,
@@ -1683,6 +1456,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangDividen_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangDividen.Click
+        BukaModul_BukuPengawasanHutangDividen()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangDividen()
         Dim JudulForm = "Buku Pengawasan Hutang Dividen"
         usc_BukuPengawasanHutangDividen = New wpfUsc_BukuPengawasanHutangDividen
         BukaUserControlDalamTab(usc_BukuPengawasanHutangDividen, JudulForm)
@@ -1696,6 +1472,9 @@ Public Class wpfWin_BOOKU
     ' BUKU PENGAWASAN - PIUTANG USAHA
     ' ============================================================
     Private Sub mnu_BukuPengawasanPiutangUsaha_NonAfiliasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangUsaha_NonAfiliasi.Click
+        BukaModul_BukuPengawasanPiutangUsaha_NonAfiliasi()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangUsaha_NonAfiliasi()
         Dim JudulForm = "Buku Pengawasan Piutang Usaha - Non Afiliasi"
         usc_BukuPengawasanPiutangUsaha_NonAfiliasi = New wpfUsc_BukuPengawasanPiutangUsaha With {
             .DestinasiPenjualan = DestinasiPenjualan_Lokal,
@@ -1706,6 +1485,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Afiliasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Afiliasi.Click
+        BukaModul_BukuPengawasanPiutangUsaha_Afiliasi()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangUsaha_Afiliasi()
         Dim JudulForm = "Buku Pengawasan Piutang Usaha - Afiliasi"
         usc_BukuPengawasanPiutangUsaha_Afiliasi = New wpfUsc_BukuPengawasanPiutangUsaha With {
             .DestinasiPenjualan = DestinasiPenjualan_Lokal,
@@ -1728,6 +1510,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_USD_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor_USD.Click
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_USD()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_USD()
         Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - USD"
         usc_BukuPengawasanPiutangUsaha_Ekspor_USD = New wpfUsc_BukuPengawasanPiutangUsaha With {
             .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
@@ -1738,6 +1523,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_AUD_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor_AUD.Click
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_AUD()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_AUD()
         Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - AUD"
         usc_BukuPengawasanPiutangUsaha_Ekspor_AUD = New wpfUsc_BukuPengawasanPiutangUsaha With {
             .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
@@ -1748,6 +1536,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_JPY_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor_JPY.Click
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_JPY()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_JPY()
         Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - JPY"
         usc_BukuPengawasanPiutangUsaha_Ekspor_JPY = New wpfUsc_BukuPengawasanPiutangUsaha With {
             .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
@@ -1758,6 +1549,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_CNY_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor_CNY.Click
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_CNY()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_CNY()
         Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - CNY"
         usc_BukuPengawasanPiutangUsaha_Ekspor_CNY = New wpfUsc_BukuPengawasanPiutangUsaha With {
             .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
@@ -1768,6 +1562,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_EUR_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor_EUR.Click
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_EUR()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_EUR()
         Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - EUR"
         usc_BukuPengawasanPiutangUsaha_Ekspor_EUR = New wpfUsc_BukuPengawasanPiutangUsaha With {
             .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
@@ -1778,6 +1575,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_SGD_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor_SGD.Click
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_SGD()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_SGD()
         Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - SGD"
         usc_BukuPengawasanPiutangUsaha_Ekspor_SGD = New wpfUsc_BukuPengawasanPiutangUsaha With {
             .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
@@ -1788,6 +1588,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_GBP_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor_GBP.Click
+        BukaModul_BukuPengawasanPiutangUsaha_Ekspor_GBP()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_GBP()
         Dim JudulForm = "Buku Pengawasan Piutang Usaha - Ekspor - GBP"
         usc_BukuPengawasanPiutangUsaha_Ekspor_GBP = New wpfUsc_BukuPengawasanPiutangUsaha With {
             .DestinasiPenjualan = DestinasiPenjualan_Ekspor,
@@ -1801,6 +1604,9 @@ Public Class wpfWin_BOOKU
     ' BUKU PENGAWASAN - PIUTANG LAINNYA
     ' ============================================================
     Private Sub mnu_BukuPengawasanPiutangPihakKetiga_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangPihakKetiga.Click
+        BukaModul_BukuPengawasanPiutangPihakKetiga()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangPihakKetiga()
         Dim JudulForm = "Buku Pengawasan Piutang Pihak Ketiga"
         usc_BukuPengawasanPiutangPihakKetiga = New wpfUsc_BukuPengawasanPiutangPihakKetiga With {
             .NamaHalaman = Halaman_BUKUPENGAWASANPIUTANGPIHAKKETIGA,
@@ -1811,6 +1617,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangAfiliasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangAfiliasi.Click
+        BukaModul_BukuPengawasanPiutangAfiliasi()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangAfiliasi()
         Dim JudulForm = "Buku Pengawasan Piutang Afiliasi"
         usc_BukuPengawasanPiutangAfiliasi = New wpfUsc_BukuPengawasanPiutangAfiliasi With {
             .NamaHalaman = Halaman_BUKUPENGAWASANPIUTANGAFILIASI,
@@ -1821,6 +1630,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangKaryawan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangKaryawan.Click
+        BukaModul_BukuPengawasanPiutangKaryawan()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangKaryawan()
         Dim JudulForm = "Buku Pengawasan Piutang Karyawan"
         usc_BukuPengawasanPiutangKaryawan = New wpfUsc_BukuPengawasanPiutangKaryawan With {
             .NamaHalaman = Halaman_BUKUPENGAWASANPIUTANGKARYAWAN,
@@ -1830,6 +1642,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangPemegangSaham_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanPiutangPemegangSaham.Click
+        BukaModul_BukuPengawasanPiutangPemegangSaham()
+    End Sub
+    Sub BukaModul_BukuPengawasanPiutangPemegangSaham()
         Dim JudulForm = "Buku Pengawasan Piutang Pemegang Saham"
         usc_BukuPengawasanPiutangPemegangSaham = New wpfUsc_BukuPengawasanPiutangPemegangSaham With {
             .NamaHalaman = Halaman_BUKUPENGAWASANPIUTANGPEMEGANGSAHAM,
@@ -1839,7 +1654,15 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanDepositOperasional_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanDepositOperasional.Click
-        Dim JudulForm = "Buku Pengawasan Deposit Operasional"
+        BukaModul_BukuPengawasanDepositOperasional()
+    End Sub
+    Sub BukaModul_BukuPengawasanDepositOperasional(Optional DariDataAwal As Boolean = False)
+        Dim JudulForm As String
+        If DariDataAwal AndAlso JenisTahunBuku = JenisTahunBuku_LAMPAU Then
+            JudulForm = "Data Awal Deposit Operasional"
+        Else
+            JudulForm = "Buku Pengawasan Deposit Operasional"
+        End If
         usc_BukuPengawasanDepositOperasional = New wpfUsc_BukuPengawasanDepositOperasional With {
             .NamaHalaman = Halaman_BUKUPENGAWASANDEPOSITOPERASIONAL,
             .COAPiutang = KodeTautanCOA_DepositOperasional,
@@ -2058,6 +1881,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangPPhPasal21_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangPPhPasal21.Click
+        BukaModul_BukuPengawasanHutangPPhPasal21()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangPPhPasal21()
         Dim JudulForm = "Buku Pengawasan Hutang PPh Pasal 21"
         usc_BukuPengawasanHutangPPhPasal21 = New wpfUsc_BukuPengawasanHutangPPhPasal21 With {
             .JenisPajak = JenisPajak_PPhPasal21,
@@ -2084,6 +1910,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangPPhPasal23_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangPPhPasal23.Click
+        BukaModul_BukuPengawasanHutangPPhPasal23()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangPPhPasal23()
         Dim JudulForm = "Buku Pengawasan Hutang PPh Pasal 23"
         usc_BukuPengawasanHutangPPhPasal23 = New wpfUsc_BukuPengawasanHutangPPhPasal23 With {
             .JenisPajak = JenisPajak_PPhPasal23,
@@ -2099,6 +1928,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangPPhPasal42_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangPPhPasal42.Click
+        BukaModul_BukuPengawasanHutangPPhPasal42()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangPPhPasal42()
         Dim JudulForm = "Buku Pengawasan Hutang PPh Pasal 4 (2)"
         usc_BukuPengawasanHutangPPhPasal42 = New wpfUsc_BukuPengawasanHutangPPhPasal42 With {
             .JenisPajak = JenisPajak_PPhPasal42,
@@ -2113,6 +1945,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangPPhPasal25_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangPPhPasal25.Click
+        BukaModul_BukuPengawasanHutangPPhPasal25()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangPPhPasal25()
         Dim JudulForm = "Buku Pengawasan Hutang PPh Pasal 25"
         usc_BukuPengawasanHutangPPhPasal25 = New wpfUsc_BukuPengawasanHutangPPhPasal25 With {
             .JenisPajak = JenisPajak_PPhPasal25,
@@ -2124,6 +1959,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangPPhPasal26_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanHutangPPhPasal26.Click
+        BukaModul_BukuPengawasanHutangPPhPasal26()
+    End Sub
+    Sub BukaModul_BukuPengawasanHutangPPhPasal26()
         Dim JudulForm = "Buku Pengawasan Hutang PPh Pasal 26"
         usc_BukuPengawasanHutangPPhPasal26 = New wpfUsc_BukuPengawasanHutangPPhPasal26 With {
             .JenisPajak = JenisPajak_PPhPasal26,
@@ -2144,6 +1982,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_PPN_Click(sender As Object, e As RoutedEventArgs) Handles mnu_PPN.Click
+        BukaModul_BukuPengawasanPelaporanPPN()
+    End Sub
+    Sub BukaModul_BukuPengawasanPelaporanPPN()
         Dim JudulForm = "Buku Pengawasan Pelaporan PPN"
         usc_BukuPengawasanPelaporanPPN = New wpfUsc_BukuPengawasanPelaporanPPN With {
             .JenisPajak = JenisPajak_PPN,
@@ -2155,6 +1996,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_KetetapanPajak_Click(sender As Object, e As RoutedEventArgs) Handles mnu_KetetapanPajak.Click
+        BukaModul_BukuPengawasanKetetapanPajak()
+    End Sub
+    Sub BukaModul_BukuPengawasanKetetapanPajak()
         Dim JudulForm = "Buku Pengawasan Ketetapan Pajak"
         usc_BukuPengawasanKetetapanPajak = New wpfUsc_BukuPengawasanKetetapanPajak With {
             .JenisPajak = JenisPajak_KetetapanPajak,

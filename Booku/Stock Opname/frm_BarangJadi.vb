@@ -1,4 +1,4 @@
-﻿Imports System.Windows.Forms.Integration
+Imports System.Windows.Forms.Integration
 
 Public Class frm_BarangJadi
 
@@ -21,7 +21,6 @@ Public Class frm_BarangJadi
 
     Sub Inisialisasi()
         usc_BarangJadi = New wpfUsc_StockOpname
-        usc_BarangJadi.NamaFormHalaman = Me
         usc_BarangJadi.JenisStok_Menu = JenisStok_BarangJadi
         usc_BarangJadi.JenisPengecekan_Menu = usc_BarangJadi.JenisPengecekan_CekFisik
     End Sub

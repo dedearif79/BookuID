@@ -67,6 +67,7 @@ Module mdl_VariabelUmum
     Public ID_CPU As String
     Public ID_CPU_Developer As String = "BFEBFBFF000906A3" ' ID CPU PC Developer
     Public ModusAplikasi As String = "CLASSIC" ' CLASSIC = WinForms MDI, MODERN = WPF Shell
+    Public StartupSudahDijalankan As Boolean = False ' Flag untuk skip startup di wpfWin_BOOKU jika sudah dijalankan dari frm_BOOKU
     Public ID_Customer As String
     Public ID_Customer_Kosongan As String = "00000000"
     Public NomorSeriProduk As String

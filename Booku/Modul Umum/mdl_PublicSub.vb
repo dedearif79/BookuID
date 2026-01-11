@@ -1,12 +1,47 @@
 Imports System.Data.Odbc
 Imports System.Text.RegularExpressions
-Imports System.Threading
-Imports System.Windows.Forms.Integration
 Imports bcomm
-Imports Windows.Win32.System
+Imports MySql.Data.MySqlClient
+Imports System.IO
 
 
 Public Module mdl_PublicSub
+
+
+    Sub UpdateInfoAplikasi()
+
+        If AdaInfoUdate = True Then
+            AksesDatabase_General(Buka)
+            cmd = New OdbcCommand(" UPDATE tbl_infoaplikasi SET " &
+                                  " Nama_Aplikasi = '" & NamaAplikasi & "', " &
+                                  " Nomor_Hotline = '" & NomorHotLine & "', " &
+                                  " Website = '" & WebsiteAplikasi & "', " &
+                                  " Email = '" & EmailAplikasi & "' " _
+                                  , KoneksiDatabaseGeneral)
+            Try
+                cmd.ExecuteNonQuery()
+            Catch ex As Exception
+            End Try
+            AksesDatabase_General(Tutup)
+        Else
+            AksesDatabase_General(Buka)
+            Try
+                cmd = New OdbcCommand(" SELECT * FROM tbl_infoaplikasi ", KoneksiDatabaseGeneral)
+                dr = cmd.ExecuteReader
+                dr.Read()
+                NamaAplikasi = dr.Item("Nama_Aplikasi")
+                EmailAplikasi = dr.Item("Email")
+                NomorHotLine = dr.Item("Nomor_Hotline")
+                VersiBooku_SisiDatabase = DekripsiAngkaAES1(dr.Item("Versi_App"))
+                ApdetBooku_SisiDatabase = DekripsiAngkaAES1(dr.Item("Apdet_App"))
+                'Value dari variabel WebsiteAplikasi jangan ngambil dari sini. Sudah langsung ditanam sejak awal saat deklarasi variabel.
+            Catch ex As Exception
+            End Try
+            AksesDatabase_General(Tutup)
+        End If
+
+    End Sub
+
 
     'DATA AWAL LOADING APLIKASI :
     Public Sub DataAwalLoadingAplikasi()
@@ -49,6 +84,187 @@ Public Module mdl_PublicSub
         If BulanIni = "12" Then TanggalAkhirBulan = "31"
 
     End Sub
+
+
+
+    Sub CekVersiDanApdetAplikasi()
+
+        If StatusKoneksiDatabasePublic = True Then
+            '---------------------------------------
+            'Cek Versi dan Apdet, dari SISI PUBLIC :
+            BukaDatabasePublic()
+            Try
+                cmdPublic = New MySqlCommand(" SELECT * FROM tbl_infoaplikasi ", KoneksiDatabasePublic)
+                drPublic = cmdPublic.ExecuteReader
+                drPublic.Read()
+                VersiBooku_SisiPublic = drPublic.Item("Versi_App")
+                ApdetBooku_SisiPublic = drPublic.Item("Apdet_App")
+                urlPaketInstallerPublic = drPublic.Item("URL_Paket_Installer")
+                urlPaketUpdaterPublic = drPublic.Item("URL_Paket_Updater")
+                FolderTempInstaller = Path.Combine(FolderRootBookuID, drPublic.Item("Folder_Temp_Paket_Installer"))
+                FolderTempUpdater = Path.Combine(FolderRootBookuID, drPublic.Item("Folder_Temp_Paket_Updater"))
+                FilePathInstallerLokal = Path.Combine(FolderTempInstaller, drPublic.Item("File_Installer"))
+                FilePathUpdaterLokal = Path.Combine(FolderTempUpdater, drPublic.Item("File_Updater"))
+                FilePathPaketInstallerLokal = Path.Combine(FolderTempInstaller, drPublic.Item("File_Paket_Installer"))
+                FilePathPaketUpdaterLokal = Path.Combine(FolderTempUpdater, drPublic.Item("File_Paket_Updater"))
+                AdaInfoUdate = True
+            Catch ex As Exception
+                AdaInfoUdate = False
+            End Try
+            TutupDatabasePublic()
+        End If
+
+
+        HapusFolder(FolderTempUpdater)
+
+        '--------------------------------------
+        'Cek Versi dan Apdet, dari SISI LOKAL :
+        AksesDatabase_General(Buka)
+        cmd = New OdbcCommand(" SELECT * FROM tbl_infoaplikasi ", KoneksiDatabaseGeneral)
+        dr = cmd.ExecuteReader
+        dr.Read()
+        VersiBooku_SisiDatabase = DekripsiAngkaAES1(dr.Item("Versi_App"))
+        ApdetBooku_SisiDatabase = DekripsiAngkaAES1(dr.Item("Apdet_App"))
+        AksesDatabase_General(Tutup)
+
+        '--------------------------------------
+        'Kirim Info ke Public :
+        BukaDatabasePublic()
+        If StatusKoneksiDatabasePublic = True Then
+            cmdPublic = New MySqlCommand(" UPDATE tbl_customer SET Apdet_App = '" & ApdetBooku_SisiDatabase & "' " &
+                                     " WHERE ID_Customer = '" & ID_Customer & "' ", KoneksiDatabasePublic)
+            cmdPublic_ExecuteNonQuery()
+            TutupDatabasePublic()
+        End If
+
+        '------------------------------------------
+        'Cek Versi dan Apdet, dari SISI APLIKASI :
+        Try
+            DataVersiDanApdetAplikasi = File.ReadLines(FilePathVersiDanApdetAplikasi)
+        Catch ex As Exception
+            Pesan_Gagal("Sistem terkunci." & Enter2Baris &
+                   "File " & NamaFileVersiDanApdetAplikasi & " rusak." & Enter2Baris &
+                   "Silakan hubungi Developer untuk mengatasi masalah ini.")
+            End
+        End Try
+        Dim i = 0
+        For Each Baris In DataVersiDanApdetAplikasi
+            i += 1
+            If i = 5 Then VersiBooku_SisiAplikasi = DekripsiTeksAES1(Baris)
+            If i = 8 Then ApdetBooku_SisiAplikasi = DekripsiTeksAES1(Baris)
+        Next
+
+        If VersiBooku_SisiAplikasi = teks_DekripsiTeksGagal _
+            Or ApdetBooku_SisiAplikasi = teks_DekripsiTeksGagal Then
+            Pesan_Gagal("Sistem terkunci." & Enter2Baris &
+                   "File " & NamaFileVersiDanApdetAplikasi & " rusak." & Enter2Baris &
+                   "Silakan hubungi Developer untuk mengatasi masalah ini.")
+            End
+        End If
+
+        'BypassUpdater() 'Ini Sub untuk mem-byPass Logika Updater...!
+
+        If AdaInfoUdate = True Then
+            If ApdetBooku_SisiAplikasi <> ApdetBooku_SisiPublic Then
+                win_Updater = New wpfWin_Updater
+                win_Updater.ShowDialog()
+                If ProsesUpdate_Aplikasi = False Then
+                    Pesan_Peringatan("Proses update gagal." & Enter2Baris &
+                                    "Aplikasi tetap dijalankan dengan versi yang belum diperbarui.")
+                    HapusFolder(FolderTempUpdater)
+                End If
+            End If
+        End If
+
+        'Jika sisi Database belum cocok dengan Update Sisi Aplikasi :
+        If ApdetBooku_SisiDatabase <> ApdetBooku_SisiAplikasi Then UpdateDatabase()
+
+    End Sub
+
+    Sub CekStatusRegistrasiPerangkat()
+
+        'Cek Status Registrasi (Verifikasi Tahap 1 : Dari sisi Perangkat )
+        StatusRegistrasiPerangkat = False
+        Try
+            DataRegistrasiPerangkat = IO.File.ReadLines(Path.Combine(FilePathRegistrasiPerangkat))
+            FileEksis = True
+        Catch ex As Exception
+            My.Computer.FileSystem.WriteAllText(Path.Combine(FilePathRegistrasiPerangkat), "", False)
+            FileEksis = False
+        End Try
+        Dim Terdaftar = Nothing
+        Dim ID_CPU_Tercatat = Nothing
+        If FileEksis = True Then
+            Dim i = 0
+            For Each Baris In DataRegistrasiPerangkat
+                i += 1
+                If i = 9 Then Terdaftar = DekripsiTeks(Baris)
+                If i = 17 Then ID_CPU_Tercatat = DekripsiTeks(Baris)
+            Next
+        End If
+        If Terdaftar = "TERDAFTAR" And ID_CPU = ID_CPU_Tercatat Then
+            StatusRegistrasiPerangkat = True
+        Else
+            StatusRegistrasiPerangkat = False
+        End If
+
+        'Cek Status Registrasi (Verifikasi Tahap 2 : Dari sisi Database General / tbl_perangkat )
+        If StatusRegistrasiPerangkat = True Then
+            StatusRegistrasiPerangkat = False 'Sengaja dibikin false lagi, untuk verifikasi tahap 2
+            Dim List_ID_Computer = Nothing
+            AksesDatabase_General(Buka)
+            cmd = New OdbcCommand(" SELECT * FROM tbl_perangkat ", KoneksiDatabaseGeneral)
+            dr = cmd.ExecuteReader
+            Do While dr.Read
+                List_ID_Computer = DekripsiTeks(dr.Item("Kode_Khusus")) 'Ini Sebenarnya untuk mengambil value ID_Komputer
+                If ID_CPU = List_ID_Computer Then
+                    StatusRegistrasiPerangkat = True
+                    Exit Do
+                End If
+            Loop
+            AksesDatabase_General(Tutup)
+        End If
+
+        If StatusRegistrasiPerangkat = True Then
+            BukaFormLogin()
+        Else
+            'Halaman Registrasi
+            Pesan_Informasi("Perangkat Anda belum terdaftar untuk menggunakan aplikasi ini." & Enter2Baris & "Silakan mendaftar terlebih dahulu.")
+            BukaDatabasePublic()
+            cmdPublic = New MySqlCommand(" SELECT * FROM tbl_customer WHERE Nomor_Seri_Produk = '" & NomorSeriProduk & "' ", KoneksiDatabasePublic)
+            drPublic = cmdPublic.ExecuteReader
+            drPublic.Read()
+            Dim JumlahPerangkat = 0
+            If drPublic.HasRows Then
+                Try
+                    ID_Customer = drPublic.Item("ID_Customer")
+                    JumlahPerangkat = drPublic.Item("Jumlah_Perangkat")
+                    ProsesRegistrasiPerangkat = True
+                Catch ex As Exception
+                    ProsesRegistrasiPerangkat = False
+                    Pesan_Gagal("Registrasi perangkat gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
+                End Try
+            End If
+            TutupDatabasePublic()
+            If ProsesRegistrasiPerangkat = True Then
+                frm_RegistrasiPerangkat.ResetForm()
+                frm_RegistrasiPerangkat.txt_NomorSeriProduk.Text = NomorSeriProduk
+                frm_RegistrasiPerangkat.txt_IDCustomer.Text = ID_Customer
+                frm_RegistrasiPerangkat.txt_JumlahPerangkat.Text = JumlahPerangkat
+                frm_RegistrasiPerangkat.txt_IDKomputer.Text = ID_CPU
+                frm_RegistrasiPerangkat.ShowDialog()
+            End If
+            If ProsesRegistrasiPerangkat = True Then
+                Pesan_Sukses("Proses registrasi perangkat berhasil.")
+                BukaFormLogin()
+            Else
+                End
+            End If
+        End If
+
+    End Sub
+
+
 
 
     Public Sub IsiValueDataCompany()
@@ -2817,8 +3033,11 @@ Public Module mdl_PublicSub
         frm_BOOKU.StatusMenuLevel_1_Operator() 'Jangan dihapus..!!! Ini penting, untuk meng-enabled menu-menu tertentu yang sudah di-enabled di level user paling rendah. Supaya tidak ada pengulangan coding di sini.
         frm_BOOKU.StatusMenuPosisiLogout()
         KeluarDariSemuaModul()
-        win_BOOKU.StatusMenuLevel_1_Operator() 'Jangan dihapus..!!! Ini penting, untuk meng-enabled menu-menu tertentu yang sudah di-enabled di level user paling rendah. Supaya tidak ada pengulangan coding di sini.
-        win_BOOKU.StatusMenuPosisiLogout()
+        ' Cek apakah win_BOOKU sudah diinisialisasi (belum ada saat startup)
+        If win_BOOKU IsNot Nothing Then
+            win_BOOKU.StatusMenuLevel_1_Operator() 'Jangan dihapus..!!! Ini penting, untuk meng-enabled menu-menu tertentu yang sudah di-enabled di level user paling rendah. Supaya tidak ada pengulangan coding di sini.
+            win_BOOKU.StatusMenuPosisiLogout()
+        End If
     End Sub
 
     Public Sub BeriKeteranganKomputerTerdaftar()
@@ -5329,7 +5548,7 @@ Public Module mdl_PublicSub
                     Pesan_Peringatan("Login dibatalkan karena Anda tidak memilih Tahun Buku untuk dikelola.")
                 Else
                     frm_BOOKU.Text = JudulAplikasi
-                    win_BOOKU.Title = JudulAplikasi
+                    If win_BOOKU IsNot Nothing Then win_BOOKU.Title = JudulAplikasi
                 End If
             Else
                 LoginGagal()

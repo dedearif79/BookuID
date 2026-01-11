@@ -1,4 +1,4 @@
-﻿Imports System.Windows.Forms.Integration
+Imports System.Windows.Forms.Integration
 
 Public Class frm_BahanPenolong
 
@@ -21,7 +21,6 @@ Public Class frm_BahanPenolong
 
     Sub Inisialisasi()
         usc_BahanPenolong = New wpfUsc_StockOpname
-        usc_BahanPenolong.NamaFormHalaman = Me
         usc_BahanPenolong.JenisStok_Menu = JenisStok_BahanPenolong
         usc_BahanPenolong.JenisPengecekan_Menu = usc_BahanPenolong.JenisPengecekan_CekFisik
     End Sub

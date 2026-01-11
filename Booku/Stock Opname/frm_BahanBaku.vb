@@ -1,4 +1,4 @@
-﻿Imports System.Windows.Forms.Integration
+Imports System.Windows.Forms.Integration
 
 Public Class frm_BahanBaku
 
@@ -21,7 +21,6 @@ Public Class frm_BahanBaku
 
     Sub Inisialisasi()
         usc_BahanBaku = New wpfUsc_StockOpname
-        usc_BahanBaku.NamaFormHalaman = Me
         usc_BahanBaku.JenisStok_Menu = JenisStok_BahanBaku
         usc_BahanBaku.JenisPengecekan_Menu = usc_BahanBaku.JenisPengecekan_CekFisik
     End Sub
