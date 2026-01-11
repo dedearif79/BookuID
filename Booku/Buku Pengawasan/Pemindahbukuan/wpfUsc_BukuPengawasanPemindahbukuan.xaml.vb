@@ -9,7 +9,8 @@ Imports bcomm
 Public Class wpfUsc_BukuPengawasanPemindahbukuan
 
 
-    Public StatusAktif As Boolean
+    Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Dim QueryTampilan As String
     Dim FilterDariAkun
@@ -60,7 +61,7 @@ Public Class wpfUsc_BukuPengawasanPemindahbukuan
 
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
-
+        If SudahDimuat Then Return
 
         StatusAktif = True
         ProsesLoadingForm = True
@@ -71,7 +72,7 @@ Public Class wpfUsc_BukuPengawasanPemindahbukuan
 
         ProsesLoadingForm = False
 
-
+        SudahDimuat = True
     End Sub
 
 
@@ -437,7 +438,6 @@ Public Class wpfUsc_BukuPengawasanPemindahbukuan
         datagridUtama.MaxHeight = TinggiKonten
     End Sub
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 

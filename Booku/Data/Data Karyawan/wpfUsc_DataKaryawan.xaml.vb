@@ -9,6 +9,7 @@ Imports System.Windows.Controls.Primitives
 Public Class wpfUsc_DataKaryawan
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Dim NomorUrut
     Dim TanggalRegistrasi
@@ -36,6 +37,7 @@ Public Class wpfUsc_DataKaryawan
     Public KesesuaianJurnal As Boolean
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         StatusAktif = True
 
@@ -47,6 +49,8 @@ Public Class wpfUsc_DataKaryawan
         RefreshTampilanData()
 
         ProsesLoadingForm = False
+
+        SudahDimuat = True
 
     End Sub
 
@@ -271,7 +275,6 @@ Public Class wpfUsc_DataKaryawan
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

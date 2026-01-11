@@ -8,6 +8,7 @@ Imports bcomm
 Public Class wpfUsc_BukuPengawasanHutangKaryawan
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Public JudulForm As String
     'Public JudulForm_SaldoAwalHutangKaryawan = "Saldo Awal Hutang Karyawan"
@@ -58,9 +59,10 @@ Public Class wpfUsc_BukuPengawasanHutangKaryawan
 
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
 
         Terabas()
-        StatusAktif = True
 
         ProsesLoadingForm = True
 
@@ -94,6 +96,7 @@ Public Class wpfUsc_BukuPengawasanHutangKaryawan
 
         ProsesLoadingForm = False
 
+        SudahDimuat = True
     End Sub
 
     Sub RefreshTampilanData()
@@ -832,7 +835,6 @@ Public Class wpfUsc_BukuPengawasanHutangKaryawan
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 

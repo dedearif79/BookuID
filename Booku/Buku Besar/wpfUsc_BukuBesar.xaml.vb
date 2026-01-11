@@ -9,6 +9,7 @@ Imports bcomm
 Public Class wpfUsc_BukuBesar
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
     Public KesesuaianJurnal As Boolean
 
     Public FungsiModul As String
@@ -73,6 +74,7 @@ Public Class wpfUsc_BukuBesar
     Dim NomorIDTerakhir As Int64
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         'Baris-baris Coding yang ada di sini jangan dijadikan acuan untuk di-copy pada Modul Baru...!!!!!!!!!!
         'Dia beda tersendiri....!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -90,6 +92,7 @@ Public Class wpfUsc_BukuBesar
 
         ProsesLoadingForm = False
 
+        SudahDimuat = True
     End Sub
 
     Sub ResetForm()
@@ -869,7 +872,6 @@ Public Class wpfUsc_BukuBesar
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

@@ -8,7 +8,9 @@ Imports System.Windows.Input
 
 Public Class wpfUsc_DataLawanTransaksi
 
-    Public StatusAktif
+    Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
+
     Public JudulForm
     Public KesesuaianJurnal
 
@@ -38,11 +40,10 @@ Public Class wpfUsc_DataLawanTransaksi
 
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
 
         ProsesLoadingForm = True
-
-
-        StatusAktif = True
 
         lbl_JudulForm.Text = frm_DataLawanTransaksi.JudulForm
 
@@ -51,6 +52,7 @@ Public Class wpfUsc_DataLawanTransaksi
 
         RefreshTampilanData()
 
+        SudahDimuat = True
     End Sub
 
 
@@ -294,7 +296,6 @@ Public Class wpfUsc_DataLawanTransaksi
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

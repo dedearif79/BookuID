@@ -486,7 +486,7 @@
                 <TextBlock Name="lbl_StatusUser" Text="User: -" Style="{StaticResource styleStatusBarText}"/>
             </StatusBarItem>
             <StatusBarItem Style="{StaticResource styleStatusBarItemRight}">
-                <TextBlock Text="Mode Modern (WPF Shell)" Style="{StaticResource styleStatusBarTextAccent}"/>
+                <TextBlock Text="booku.id" Style="{StaticResource styleStatusBarTextAccent}"/>
             </StatusBarItem>
         </StatusBar>
 

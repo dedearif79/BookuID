@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -8,6 +8,7 @@ Imports bcomm
 Public Class wpfUsc_BukuPengawasanPiutangUsaha
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Public JudulForm
     Public JudulForm_SaldoAkhirPiutangUsaha = "Saldo Akhir Piutang Usaha"
@@ -167,9 +168,10 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
     Dim KursHariIni As Decimal
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
 
         Terabas()
-        StatusAktif = True
 
         ProsesLoadingForm = True
 
@@ -225,6 +227,8 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
         ProsesLoadingForm = False
 
         RefreshTampilanData()
+
+        SudahDimuat = True
 
     End Sub
 
@@ -1788,7 +1792,6 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 

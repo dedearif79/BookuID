@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -8,7 +8,8 @@ Imports bcomm
 
 Public Class wpfUsc_BukuPembelian
 
-    Public StatusAktif As Boolean
+    Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
 
     Public KesesuaianJurnal As Boolean
@@ -130,6 +131,7 @@ Public Class wpfUsc_BukuPembelian
     Dim PembelianImpor As Boolean
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         StatusAktif = True
 
@@ -161,6 +163,7 @@ Public Class wpfUsc_BukuPembelian
 
         RefreshTampilanData()
 
+        SudahDimuat = True
     End Sub
 
 
@@ -186,6 +189,7 @@ Public Class wpfUsc_BukuPembelian
 
         If EksekusiTampilanData = False Then Return
 
+        KetersediaanMenuHalaman(pnl_Halaman, False)
         KesesuaianJurnal = True
 
         'Style Tabel :
@@ -551,6 +555,7 @@ Public Class wpfUsc_BukuPembelian
         BersihkanSeleksi_WPF(datagridUtama, datatabelUtama, BarisTerseleksi, JumlahBaris)
         btn_Cetak.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
+        KetersediaanMenuHalaman(pnl_Halaman, True)
     End Sub
 
 
@@ -939,7 +944,6 @@ Public Class wpfUsc_BukuPembelian
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

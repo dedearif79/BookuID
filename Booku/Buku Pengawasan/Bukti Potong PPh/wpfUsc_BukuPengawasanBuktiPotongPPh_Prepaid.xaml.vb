@@ -9,6 +9,7 @@ Imports System.Windows.Input
 Public Class wpfUsc_BukuPengawasanBuktiPotongPPh_Prepaid
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Public KesesuaianJurnal As Boolean
 
@@ -77,6 +78,7 @@ Public Class wpfUsc_BukuPengawasanBuktiPotongPPh_Prepaid
 
 
     Private Sub wpfUsc_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         StatusAktif = True
 
@@ -87,6 +89,7 @@ Public Class wpfUsc_BukuPengawasanBuktiPotongPPh_Prepaid
 
         ProsesLoadingForm = False
 
+        SudahDimuat = True
     End Sub
 
 
@@ -566,7 +569,6 @@ Public Class wpfUsc_BukuPengawasanBuktiPotongPPh_Prepaid
     End Sub
 
     Private Sub wpfUsc_Unloaded(sender As Object, e As RoutedEventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 

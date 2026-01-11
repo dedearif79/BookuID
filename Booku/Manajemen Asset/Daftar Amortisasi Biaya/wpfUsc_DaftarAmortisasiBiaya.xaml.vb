@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -8,7 +8,8 @@ Imports bcomm
 
 Public Class wpfUsc_DaftarAmortisasiBiaya
 
-    Public StatusAktif As Boolean
+    Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Dim JudulForm
     Dim TahunLaporan
@@ -95,14 +96,14 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
     Dim JenisTampilan
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
 
         brd_JenisTampilan.Visibility = Visibility.Collapsed 'Untuk sementara, ini belum dibutuhkan
         pnl_JenisTampilan.Visibility = Visibility.Collapsed 'Untuk sementara, ini belum dibutuhkan
 
         btn_Posting.Visibility = Visibility.Collapsed           'kalau sistem sudah berjalan normal, tombol ini nanti dihapus saja
         btn_LihatJurnal.Visibility = Visibility.Collapsed       'kalau sistem sudah berjalan normal, tombol ini nanti dihapus saja
-
-        StatusAktif = True
         Terabas()
 
         ProsesLoadingForm = True
@@ -120,6 +121,8 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
         RefreshTampilanData()
 
         ProsesLoadingForm = False
+
+        SudahDimuat = True
 
     End Sub
 
@@ -1122,7 +1125,11 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
 
 
     Private Sub btn_Adjusment_Click(sender As Object, e As RoutedEventArgs) Handles btn_Adjusment.Click
-        frm_BOOKU.BukaHalamanAdjusmentAmortisasi()
+        If ModusAplikasi = "CLASSIC" Then
+            frm_BOOKU.BukaHalamanAdjusmentAmortisasi()
+        Else
+            win_BOOKU.BukaHalamanAdjusmentAmortisasi()
+        End If
     End Sub
 
 
@@ -1482,7 +1489,6 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

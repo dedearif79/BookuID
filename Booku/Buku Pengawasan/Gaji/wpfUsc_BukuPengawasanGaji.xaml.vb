@@ -8,6 +8,7 @@ Imports bcomm
 Public Class wpfUsc_BukuPengawasanGaji
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Public JudulForm = Kosongan
     Public NamaHalaman
@@ -241,10 +242,11 @@ Public Class wpfUsc_BukuPengawasanGaji
     Dim AwalanBPHG_PlusTahunBukuTampilan
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
 
         lbl_JudulForm.Text = JudulForm
         Terabas()
-        StatusAktif = True
 
         ProsesLoadingForm = True
 
@@ -261,6 +263,8 @@ Public Class wpfUsc_BukuPengawasanGaji
         RefreshTampilanData()
 
         ProsesLoadingForm = False
+
+        SudahDimuat = True
 
     End Sub
 
@@ -1836,7 +1840,6 @@ Public Class wpfUsc_BukuPengawasanGaji
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 

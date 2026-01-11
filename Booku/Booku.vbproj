@@ -21,6 +21,16 @@
     <DebugType>none</DebugType>
     <DebugSymbols>false</DebugSymbols>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="App Admin\**" />
+    <Compile Remove="Logger\**" />
+    <EmbeddedResource Remove="App Admin\**" />
+    <EmbeddedResource Remove="Logger\**" />
+    <None Remove="App Admin\**" />
+    <None Remove="Logger\**" />
+    <Page Remove="App Admin\**" />
+    <Page Remove="Logger\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Interop.Excel">
@@ -93,7 +103,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="App Admin\" />
     <Folder Include="Buku Pengawasan\Hutang Pajak\09 - PPh Pasal 29\" />
     <Folder Include="Buku Pengawasan\Hutang-Piutang Karyawan\Piutang\X_Trash\" />
     <Folder Include="Buku Pengawasan\Hutang-Piutang Pemegang Saham\Piutang\X_Trash\" />
@@ -101,9 +110,7 @@
     <Folder Include="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\X_Trash\" />
     <Folder Include="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\X_Trash\" />
     <Folder Include="Data\Data Project\X_Trash\" />
-    <Folder Include="Jurnal\X_Trash\" />
     <Folder Include="Laporan\X_Trash\" />
-    <Folder Include="Logger\" />
     <Folder Include="Manajemen Asset\Daftar Amortisasi Biaya\X_Trash\" />
     <Folder Include="Manajemen Asset\Daftar Penyusutan Asset Tetap\X_Trash\" />
     <Folder Include="Pembelian - Penjualan\Pembelian\X-Trash\" />

@@ -8,6 +8,7 @@ Imports bcomm
 Public Class wpfUsc_BukuPengawasanHutangPPhPasal26
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Public JudulForm
     Public JenisPajak
@@ -190,6 +191,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal26
 
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         StatusAktif = True
 
@@ -224,6 +226,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal26
 
         ProsesLoadingForm = False
 
+        SudahDimuat = True
     End Sub
 
     Sub RefreshTampilanData()
@@ -2225,7 +2228,6 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal26
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 

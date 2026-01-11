@@ -7,7 +7,8 @@ Imports bcomm
 
 Public Class wpfUsc_SuratJalanPembelian
 
-    Public StatusAktif As Boolean
+    Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
     Public JudulForm
 
 
@@ -51,6 +52,8 @@ Public Class wpfUsc_SuratJalanPembelian
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
+        If SudahDimuat Then Return
+
         StatusAktif = True
 
         lbl_JudulForm.Text = JudulForm
@@ -61,6 +64,8 @@ Public Class wpfUsc_SuratJalanPembelian
         RefreshTampilanData()
 
         ProsesLoadingForm = False
+
+        SudahDimuat = True
 
     End Sub
 
@@ -498,7 +503,6 @@ Public Class wpfUsc_SuratJalanPembelian
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

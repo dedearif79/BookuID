@@ -12,6 +12,7 @@ Imports Windows.Win32.System
 Public Class wpfUsc_Adjusment_PenyusutanAsset
 
     Public StatusAktif As Boolean
+    Private SudahDimuat As Boolean = False
 
     Dim JudulForm
     Public JenisTampilan
@@ -79,6 +80,7 @@ Public Class wpfUsc_Adjusment_PenyusutanAsset
 
     Public AdjusmentBulanBukuAktifSudahLengkap As Boolean
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         StatusAktif = True
         ProsesPostingJurnal = False
@@ -93,6 +95,7 @@ Public Class wpfUsc_Adjusment_PenyusutanAsset
 
         ProsesLoadingForm = False
 
+        SudahDimuat = True
     End Sub
 
     Sub RefreshTampilanData()
@@ -1746,7 +1749,6 @@ Public Class wpfUsc_Adjusment_PenyusutanAsset
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

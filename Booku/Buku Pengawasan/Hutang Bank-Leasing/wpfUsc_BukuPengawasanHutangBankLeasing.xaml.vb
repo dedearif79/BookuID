@@ -8,6 +8,7 @@ Imports bcomm
 Public Class wpfUsc_BukuPengawasanHutangBankLeasing
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Public NamaHalaman
     Public JudulForm
@@ -95,9 +96,10 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
     Dim AngsuranKe As String
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
 
         Terabas()
-        StatusAktif = True
         lbl_JudulForm.Text = JudulForm
 
         ProsesLoadingForm = True
@@ -108,6 +110,7 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
 
         ProsesLoadingForm = False
 
+        SudahDimuat = True
     End Sub
 
     Public Sub RefreshTampilanData()
@@ -1013,7 +1016,6 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 

@@ -6,7 +6,10 @@ Imports System.Windows.Input
 Imports bcomm
 
 Public Class wpfUsc_LaporanNeraca_Tahunan
-    Public StatusAktif
+
+    Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
+
     Public JudulForm
 
     Dim QueryTampilan
@@ -42,10 +45,10 @@ Public Class wpfUsc_LaporanNeraca_Tahunan
     Dim COA_Terseleksi
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
 
         ProsesLoadingForm = True
-
-        StatusAktif = True
 
         lbl_JudulForm.Text = frm_LaporanNeraca_Tahunan.JudulForm
 
@@ -54,6 +57,7 @@ Public Class wpfUsc_LaporanNeraca_Tahunan
 
         RefreshTampilanData()
 
+        SudahDimuat = True
     End Sub
 
 
@@ -721,7 +725,6 @@ Public Class wpfUsc_LaporanNeraca_Tahunan
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

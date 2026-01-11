@@ -1,0 +1,66 @@
+<Window x:Class="wpfWin_VerifikasiDataJurnal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Verifikasi Data Jurnal"
+        Width="590"
+        Height="480"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="ToolWindow"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0 0 0 6">
+            <TextBlock Name="lbl_Judul" Text="Verifikasi Data Jurnal" FontSize="15" FontWeight="SemiBold" />
+            <TextBlock Name="lbl_BarisTabelExcel" Text="( Baris X sampai Y pada tabel Excel )." FontSize="10" Margin="0 4 0 0" Foreground="#555555" />
+        </StackPanel>
+
+        <!-- DataGrid -->
+        <DataGrid Grid.Row="2" Name="datagridUtama" Margin="0 6 0 12" />
+
+        <!-- Footer: Status Balance dan Tombol -->
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Name="lbl_StatusBalance"
+                       Text="Status Balance"
+                       FontSize="15"
+                       FontWeight="SemiBold"
+                       VerticalAlignment="Center"
+                       />
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Name="btn_OK" Content="OK" Width="84" Height="36" Margin="0 0 6 0" />
+                <Button Name="btn_BuangJurnal" Content="Buang Jurnal" Width="99" Height="36" Margin="0 0 6 0" />
+                <Button Name="btn_Batal" Content="Batalkan Proses" Width="125" Height="36" />
+            </StackPanel>
+        </Grid>
+
+    </Grid>
+
+</Window>

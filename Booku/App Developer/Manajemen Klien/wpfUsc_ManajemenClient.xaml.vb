@@ -9,6 +9,7 @@ Imports MySql.Data.MySqlClient
 Public Class wpfUsc_ManajemenClient
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Dim NomorUrut
 
@@ -54,6 +55,7 @@ Public Class wpfUsc_ManajemenClient
     Dim FilterStatusUpdate As String
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         StatusAktif = True
         AdaPerubahanInfoCustomer = False
@@ -72,6 +74,7 @@ Public Class wpfUsc_ManajemenClient
 
         ProsesLoadingForm = False
 
+        SudahDimuat = True
     End Sub
 
 
@@ -491,7 +494,6 @@ Public Class wpfUsc_ManajemenClient
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

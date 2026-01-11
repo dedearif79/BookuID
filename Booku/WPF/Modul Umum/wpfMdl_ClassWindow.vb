@@ -120,6 +120,7 @@ Module wpfMdl_ClassWindow
     Public win_InputJurnalAdjusmentForex As New wpfWin_InputJurnalAdjusmentForex
     Public win_JurnalVoucher As New wpfWin_JurnalVoucher
     Public win_ImportJurnal As New wpfWin_ImportJurnal
+    Public win_VerifikasiDataJurnal As New wpfWin_VerifikasiDataJurnal
 
     '═══════════════════════════════════════════════════════════════════════════
     ' BUKU BESAR

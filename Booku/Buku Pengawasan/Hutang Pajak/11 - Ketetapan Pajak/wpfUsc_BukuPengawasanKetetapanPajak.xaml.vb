@@ -8,6 +8,7 @@ Imports bcomm
 Public Class wpfUsc_BukuPengawasanKetetapanPajak
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Public JudulForm
     Public JenisPajak
@@ -112,6 +113,7 @@ Public Class wpfUsc_BukuPengawasanKetetapanPajak
     Dim Bulan_Terseleksi
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         StatusAktif = True
         Terabas()
@@ -137,6 +139,7 @@ Public Class wpfUsc_BukuPengawasanKetetapanPajak
 
         ProsesLoadingForm = False
 
+        SudahDimuat = True
     End Sub
 
 
@@ -1055,7 +1058,6 @@ Public Class wpfUsc_BukuPengawasanKetetapanPajak
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 

@@ -10,6 +10,7 @@ Imports Microsoft.Office.Interop
 Public Class wpfUsc_Kurs
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Dim NomorID
     Dim KodeMataUang As String
@@ -21,6 +22,7 @@ Public Class wpfUsc_Kurs
     Dim NomorID_Terseleksi
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         StatusAktif = True
 
@@ -52,6 +54,7 @@ Public Class wpfUsc_Kurs
 
         ProsesLoadingForm = False
 
+        SudahDimuat = True
     End Sub
 
 
@@ -460,7 +463,6 @@ Public Class wpfUsc_Kurs
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

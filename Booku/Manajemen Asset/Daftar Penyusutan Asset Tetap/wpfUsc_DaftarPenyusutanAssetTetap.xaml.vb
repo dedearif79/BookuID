@@ -10,7 +10,8 @@ Imports ClosedXML
 
 Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
-    Public StatusAktif As Boolean
+    Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Public JalurMasuk
 
@@ -79,11 +80,11 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
     Dim ProsesPostingJurnal As Boolean
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
 
         btn_Posting.Visibility = Visibility.Collapsed           'kalau sistem sudah berjalan normal, tombol ini nanti dihapus saja
         btn_LihatJurnal.Visibility = Visibility.Collapsed       'kalau sistem sudah berjalan normal, tombol ini nanti dihapus saja
-
-        StatusAktif = True
         ProsesPostingJurnal = False
         Terabas()
 
@@ -106,6 +107,8 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
         End Select
 
         ProsesLoadingForm = False
+
+        SudahDimuat = True
 
     End Sub
 
@@ -2615,7 +2618,6 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 

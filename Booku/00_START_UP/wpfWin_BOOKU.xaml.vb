@@ -49,31 +49,6 @@ Public Class wpfWin_BOOKU
         tab_MainContent.SelectedItem = tabBaru
     End Sub
 
-    ''' <summary>
-    ''' Membuka form WinForms dalam tab (fallback untuk yang belum migrasi)
-    ''' </summary>
-    Public Sub BukaFormDalamTab(form As Form, tabHeader As String)
-        Dim tabExisting = CariTabByHeader(tabHeader)
-        If tabExisting IsNot Nothing Then
-            tab_MainContent.SelectedItem = tabExisting
-            Return
-        End If
-
-        ' Konfigurasi form untuk di-host
-        form.TopLevel = False
-        form.FormBorderStyle = FormBorderStyle.None
-        form.Dock = DockStyle.Fill
-
-        Dim host As New WindowsFormsHost()
-        host.Child = form
-
-        Dim tabBaru = BuatTabDenganCloseButton(tabHeader)
-        tabBaru.Content = host
-        tab_MainContent.Items.Add(tabBaru)
-        tab_MainContent.SelectedItem = tabBaru
-
-        form.Show()
-    End Sub
 
     ''' <summary>
     ''' Menampilkan pesan bahwa menu masih dalam pengembangan
@@ -135,6 +110,26 @@ Public Class wpfWin_BOOKU
         End If
 
         tab_MainContent.Items.Remove(tab)
+    End Sub
+
+    ''' <summary>
+    ''' Menutup semua tab yang aktif di WPF Shell
+    ''' </summary>
+    Public Sub TutupSemuaTab()
+        ' Dispose semua WindowsFormsHost terlebih dahulu
+        For Each item As TabItem In tab_MainContent.Items
+            If TypeOf item.Content Is WindowsFormsHost Then
+                Dim host = CType(item.Content, WindowsFormsHost)
+                Dim form = TryCast(host.Child, Form)
+                If form IsNot Nothing Then
+                    form.Close()
+                    form.Dispose()
+                End If
+                host.Dispose()
+            End If
+        Next
+        ' Hapus semua tab
+        tab_MainContent.Items.Clear()
     End Sub
 
 #End Region
@@ -212,11 +207,17 @@ Public Class wpfWin_BOOKU
     ' End Sub
 
     Private Sub mnu_LaporanHPP_Click(sender As Object, e As RoutedEventArgs) Handles mnu_LaporanHPP.Click
+        BukaHalaman_LaporanHPP()
+    End Sub
+    Sub BukaHalaman_LaporanHPP()
         usc_LaporanHPP = New wpfUsc_LaporanHPP
         BukaUserControlDalamTab(usc_LaporanHPP, "Laporan HPP")
     End Sub
 
     Private Sub mnu_LabaRugi_Bulanan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_LabaRugi_Bulanan.Click
+        BukaHalaman_LaporanLabaRugi_Bulanan()
+    End Sub
+    Sub BukaHalaman_LaporanLabaRugi_Bulanan()
         usc_LaporanLabaRugi_Bulanan = New wpfUsc_LaporanLabaRugi_Bulanan
         BukaUserControlDalamTab(usc_LaporanLabaRugi_Bulanan, "Laba Rugi Bulanan")
     End Sub
@@ -227,6 +228,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_Neraca_Bulanan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_Neraca_Bulanan.Click
+        BukaHalaman_LaporanNeraca_Bulanan()
+    End Sub
+    Sub BukaHalaman_LaporanNeraca_Bulanan()
         usc_LaporanNeraca_Bulanan = New wpfUsc_LaporanNeraca_Bulanan
         BukaUserControlDalamTab(usc_LaporanNeraca_Bulanan, "Neraca Bulanan")
     End Sub
@@ -263,6 +267,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanGaji_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanGaji.Click
+        BukaModul_BukuPengawasanGaji()
+    End Sub
+    Sub BukaModul_BukuPengawasanGaji()
         usc_BukuPengawasanGaji = New wpfUsc_BukuPengawasanGaji
         BukaUserControlDalamTab(usc_BukuPengawasanGaji, "Buku Pengawasan Gaji")
     End Sub
@@ -1924,6 +1931,15 @@ Public Class wpfWin_BOOKU
     ' STOCK OPNAME
     ' ============================================================
     Private Sub mnu_StockOpname_BahanPenolong_Click(sender As Object, e As RoutedEventArgs) Handles mnu_StockOpname_BahanPenolong.Click
+        BukaModul_StockOpname_BahanPenolong()
+        Dim JudulForm = "Stock Opname Bahan Penolong"
+        usc_BahanPenolong = New wpfUsc_StockOpname With {
+            .JenisStok_Menu = JenisStok_BahanPenolong
+        }
+        usc_BahanPenolong.JenisPengecekan_Menu = usc_BahanPenolong.JenisPengecekan_CekFisik
+        BukaUserControlDalamTab(usc_BahanPenolong, JudulForm)
+    End Sub
+    Sub BukaModul_StockOpname_BahanPenolong()
         Dim JudulForm = "Stock Opname Bahan Penolong"
         usc_BahanPenolong = New wpfUsc_StockOpname With {
             .JenisStok_Menu = JenisStok_BahanPenolong
@@ -1933,6 +1949,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_StockOpname_BahanBaku_Click(sender As Object, e As RoutedEventArgs) Handles mnu_StockOpname_BahanBaku.Click
+        BukaModul_StockOpname_BahanBaku()
+    End Sub
+    Sub BukaModul_StockOpname_BahanBaku()
         Dim JudulForm = "Stock Opname Bahan Baku"
         usc_BahanBaku = New wpfUsc_StockOpname With {
             .JenisStok_Menu = JenisStok_BahanBaku
@@ -1940,7 +1959,6 @@ Public Class wpfWin_BOOKU
         usc_BahanBaku.JenisPengecekan_Menu = usc_BahanBaku.JenisPengecekan_CekFisik
         BukaUserControlDalamTab(usc_BahanBaku, JudulForm)
     End Sub
-
     Private Sub mnu_StockOpname_BarangDalamProses_CekFisik_Click(sender As Object, e As RoutedEventArgs) Handles mnu_StockOpname_BarangDalamProses_CekFisik.Click
         Dim JudulForm = "Stock Opname Barang Dalam Proses (Cek Fisik)"
         usc_BarangDalamProses_CekFisik = New wpfUsc_StockOpname With {
@@ -1981,6 +1999,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_JurnalAdjusment_Amortisasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_JurnalAdjusment_Amortisasi.Click
+        BukaHalamanAdjusmentAmortisasi()
+    End Sub
+    Sub BukaHalamanAdjusmentAmortisasi()
         Dim JudulForm = "Adjusment Amortisasi Biaya"
         usc_Adjusment_Amortisasi = New wpfUsc_Adjusment_Amortisasi
         BukaUserControlDalamTab(usc_Adjusment_Amortisasi, JudulForm)
@@ -2189,6 +2210,7 @@ Public Class wpfWin_BOOKU
     End Sub
     Private Sub mnu_SwitchUser_Click(sender As Object, e As RoutedEventArgs) Handles mnu_SwitchUser.Click
         StatusMenuPosisiLogout()
+        TutupSemuaTab()
         KeluarDariSemuaModul()
         BukaFormLogin()
         If LevelUserAktif < LevelUser_81_TimIT Then
@@ -2232,6 +2254,7 @@ Public Class wpfWin_BOOKU
             BukaFormLogin()
         Else 'Jika teks Menu "Logout" maka
             StatusMenuPosisiLogout()
+            TutupSemuaTab()
             KeluarDariSemuaModul()
             MsgBox("Anda telah LOGOUT dari sistem.")
         End If
@@ -2241,6 +2264,7 @@ Public Class wpfWin_BOOKU
     ' JENDELA
     ' ============================================================
     Private Sub mnu_Jendela_TutupSemua_Click(sender As Object, e As RoutedEventArgs) Handles mnu_Jendela_TutupSemua.Click
+        TutupSemuaTab()
         KeluarDariSemuaModul()
     End Sub
 
@@ -2533,17 +2557,7 @@ Public Class wpfWin_BOOKU
         End If
 
         ' Bersihkan semua WindowsFormsHost yang ada di tab
-        For Each item As TabItem In tab_MainContent.Items
-            If TypeOf item.Content Is WindowsFormsHost Then
-                Dim host = CType(item.Content, WindowsFormsHost)
-                Dim form = TryCast(host.Child, Forms.Form)
-                If form IsNot Nothing Then
-                    form.Close()
-                    form.Dispose()
-                End If
-                host.Dispose()
-            End If
-        Next
+        TutupSemuaTab()
 
         ' Karena ini adalah WPF Shell yang menggantikan frm_BOOKU,
         ' saat ditutup harus keluar dari aplikasi sepenuhnya

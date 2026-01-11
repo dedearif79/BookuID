@@ -9,6 +9,7 @@ Imports bcomm
 Public Class wpfUsc_StockOpname
 
     Public StatusAktif As Boolean
+    Private SudahDimuat As Boolean = False
     Public JudulForm
     Public KesesuaianJurnal As Boolean
 
@@ -83,12 +84,13 @@ Public Class wpfUsc_StockOpname
     Dim JumlahBarisBahanData
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
 
         brd_Jurnal.Visibility = Visibility.Collapsed
         btn_Jurnal.Visibility = Visibility.Collapsed
 
         Terabas()
-        StatusAktif = True
 
         ProsesLoadingForm = True
 
@@ -149,6 +151,7 @@ Public Class wpfUsc_StockOpname
 
         ProsesLoadingForm = False
 
+        SudahDimuat = True
     End Sub
 
 
@@ -810,7 +813,6 @@ Public Class wpfUsc_StockOpname
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

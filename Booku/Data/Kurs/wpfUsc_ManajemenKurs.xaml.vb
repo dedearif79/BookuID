@@ -10,16 +10,22 @@ Imports bcomm
 Public Class wpfUsc_ManajemenKurs
 
     Dim KodeMataUang As String
-    Public StatusAktif As Boolean
+    Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Private Shared ReadOnly _http As New HttpClient() With {.Timeout = TimeSpan.FromSeconds(30)}
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
+
         KontenCombo_KodeMataUang()
         If dpStart.SelectedDate Is Nothing Then dpStart.SelectedDate = Date.Today
         If dpEnd.SelectedDate Is Nothing Then dpEnd.SelectedDate = Date.Today
         datatabelUtama = BuatSchema4Kolom()
         datagridUtama.ItemsSource = datatabelUtama.DefaultView
+
+        SudahDimuat = True
     End Sub
 
 
@@ -299,7 +305,6 @@ Public Class wpfUsc_ManajemenKurs
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

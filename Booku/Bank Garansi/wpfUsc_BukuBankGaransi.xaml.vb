@@ -9,6 +9,7 @@ Imports System.Windows.Controls.Primitives
 Public Class wpfUsc_BukuBankGaransi
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Dim NomorUrut
     Dim NomorID
@@ -48,6 +49,7 @@ Public Class wpfUsc_BukuBankGaransi
     Public KesesuaianJurnal As Boolean
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         StatusAktif = True
 
@@ -58,6 +60,8 @@ Public Class wpfUsc_BukuBankGaransi
         RefreshTampilanData()
 
         ProsesLoadingForm = False
+
+        SudahDimuat = True
 
     End Sub
 
@@ -321,7 +325,6 @@ Public Class wpfUsc_BukuBankGaransi
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

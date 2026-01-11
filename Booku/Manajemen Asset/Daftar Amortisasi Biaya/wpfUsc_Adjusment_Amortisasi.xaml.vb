@@ -8,7 +8,8 @@ Imports bcomm
 
 Public Class wpfUsc_Adjusment_Amortisasi
 
-    Public StatusAktif As Boolean
+    Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Dim JudulForm
     Dim TahunLaporan
@@ -104,11 +105,11 @@ Public Class wpfUsc_Adjusment_Amortisasi
 
     Public AdjusmentBulanBukuAktifSudahLengkap As Boolean
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
 
         JudulForm = frm_Adjusment_Amortisasi.JudulForm
         lbl_JudulForm.Text = JudulForm
-
-        StatusAktif = True
         Terabas()
 
         ProsesLoadingForm = True
@@ -118,6 +119,8 @@ Public Class wpfUsc_Adjusment_Amortisasi
         ProsesLoadingForm = False
 
         datagridUtama.SelectionUnit = DataGridSelectionUnit.FullRow 'Ini style khusus, karena ada masalah yang belum diketahui
+
+        SudahDimuat = True
 
     End Sub
 
@@ -1371,7 +1374,6 @@ Public Class wpfUsc_Adjusment_Amortisasi
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

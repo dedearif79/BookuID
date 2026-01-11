@@ -11,6 +11,7 @@ Public Class wpfUsc_ManajemenAplikasi
 
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Dim NomorUrut
 
@@ -33,6 +34,7 @@ Public Class wpfUsc_ManajemenAplikasi
     Dim AdaPerubahanInfoUpdater As Boolean
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         StatusAktif = True
 
@@ -49,6 +51,8 @@ Public Class wpfUsc_ManajemenAplikasi
         btn_SimpanPerubahanInfoUpdater.IsEnabled = False
 
         ProsesLoadingForm = False
+
+        SudahDimuat = True
 
     End Sub
 
@@ -419,7 +423,6 @@ Public Class wpfUsc_ManajemenAplikasi
 
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

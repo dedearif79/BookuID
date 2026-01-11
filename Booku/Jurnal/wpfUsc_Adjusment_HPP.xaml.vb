@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -8,6 +8,7 @@ Imports bcomm
 Public Class wpfUsc_JurnalAdjusment_HPP
 
     Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Dim KodeAkun
     Dim NamaAkun
@@ -59,6 +60,7 @@ Public Class wpfUsc_JurnalAdjusment_HPP
     Public AdjusmentBulanBukuAktifSudahLengkap As Boolean
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         StatusAktif = True
 
@@ -71,6 +73,8 @@ Public Class wpfUsc_JurnalAdjusment_HPP
         RefreshTampilanData()
 
         ProsesLoadingForm = False
+
+        SudahDimuat = True
 
     End Sub
 
@@ -369,36 +373,48 @@ Public Class wpfUsc_JurnalAdjusment_HPP
         jur_StatusPenyimpananJurnal_PerBaris = False
         Select Case AdjusmentHPP
             Case Adjusment_PemakaianBahanPenolong
-                'frm_BOOKU.BukaModul_StockOpname_BahanPenolong()
                 usc_BahanPenolong = New wpfUsc_StockOpname
                 usc_BahanPenolong.JenisStok_Menu = JenisStok_BahanPenolong
                 usc_BahanPenolong.JenisPengecekan_Menu = usc_BahanPenolong.JenisPengecekan_CekFisik
                 usc_BahanPenolong.RefreshTampilanData()
                 usc_BahanPenolong.DorongKeJurnal()
             Case Adjusment_PemakaianBahanBaku
-                'frm_BOOKU.BukaModul_StockOpname_BahanBaku()
                 usc_BahanBaku = New wpfUsc_StockOpname
                 usc_BahanBaku.JenisStok_Menu = JenisStok_BahanBaku
                 usc_BahanBaku.JenisPengecekan_Menu = usc_BahanBaku.JenisPengecekan_CekFisik
                 usc_BahanBaku.RefreshTampilanData()
                 usc_BahanBaku.DorongKeJurnal()
             Case Adjusment_BiayaBahanBaku
-                frm_BOOKU.AdjusmentHPP_BiayaBahanBaku()
+                If ModusAplikasi = "CLASSIC" Then
+                    frm_BOOKU.AdjusmentHPP_BiayaBahanBaku()
+                Else
+                    AdjusmentHPP_BiayaBahanBaku()
+                End If
             Case Adjusment_BiayaTenagaKerjaLangsung
-                frm_BOOKU.AdjusmentHPP_BiayaTenagaKerjaLangsung()
+                If ModusAplikasi = "CLASSIC" Then
+                    frm_BOOKU.AdjusmentHPP_BiayaTenagaKerjaLangsung()
+                Else
+                    AdjusmentHPP_BiayaTenagaKerjaLangsung()
+                End If
             Case Adjusment_BiayaOverheadPabrik
-                frm_BOOKU.AdjusmentHPP_BiayaOverheadPabrik()
+                If ModusAplikasi = "CLASSIC" Then
+                    frm_BOOKU.AdjusmentHPP_BiayaOverheadPabrik()
+                Else
+                    AdjusmentHPP_BiayaOverheadPabrik()
+                End If
             Case Adjusment_BiayaProduksi
-                frm_BOOKU.AdjusmentHPP_BiayaProduksi()
+                If ModusAplikasi = "CLASSIC" Then
+                    frm_BOOKU.AdjusmentHPP_BiayaProduksi()
+                Else
+                    AdjusmentHPP_BiayaProduksi()
+                End If
             Case Adjusment_HargaPokokProduksi
-                'frm_BOOKU.BukaModul_StockOpname_BarangDalamProses_CekFisik()
                 usc_BarangDalamProses_CekFisik = New wpfUsc_StockOpname
                 usc_BarangDalamProses_CekFisik.JenisStok_Menu = JenisStok_BarangDalamProses
                 usc_BarangDalamProses_CekFisik.JenisPengecekan_Menu = usc_BarangDalamProses_CekFisik.JenisPengecekan_CekFisik
                 usc_BarangDalamProses_CekFisik.RefreshTampilanData()
                 usc_BarangDalamProses_CekFisik.DorongKeJurnal()
             Case Adjusment_HargaPokokPenjualan
-                'frm_BOOKU.BukaModul_StockOpname_BarangJadi()
                 usc_BarangJadi = New wpfUsc_StockOpname
                 usc_BarangJadi.JenisStok_Menu = JenisStok_BarangJadi
                 usc_BarangJadi.JenisPengecekan_Menu = usc_BarangJadi.JenisPengecekan_CekFisik
@@ -498,7 +514,6 @@ Public Class wpfUsc_JurnalAdjusment_HPP
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 

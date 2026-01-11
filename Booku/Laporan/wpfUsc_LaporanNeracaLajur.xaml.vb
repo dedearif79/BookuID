@@ -6,7 +6,8 @@ Imports bcomm
 
 Public Class wpfUsc_LaporanNeracaLajur
 
-    Public StatusAktif As Boolean
+    Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
     Public JalurMasuk
 
     Dim QueryTampilan
@@ -35,6 +36,7 @@ Public Class wpfUsc_LaporanNeracaLajur
 
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
 
         StatusAktif = True
 
@@ -57,6 +59,8 @@ Public Class wpfUsc_LaporanNeracaLajur
         pnl_Progress.Visibility = Visibility.Collapsed
 
         ProsesLoadingForm = False
+
+        SudahDimuat = True
 
     End Sub
 
@@ -263,11 +267,23 @@ Public Class wpfUsc_LaporanNeracaLajur
         If JenisLaporan <> Kosongan Then
             Select Case JenisLaporan
                 Case JenisLaporan_HPP
-                    frm_BOOKU.BukaHalaman_LaporanHPP()
+                    If ModusAplikasi = "CLASSIC" Then
+                        frm_BOOKU.BukaHalaman_LaporanHPP()
+                    Else
+                        win_BOOKU.BukaHalaman_LaporanHPP()
+                    End If
                 Case JenisLaporan_LabaRugi
-                    frm_BOOKU.BukaHalaman_LaporanLabaRugi_Bulanan()
+                    If ModusAplikasi = "CLASSIC" Then
+                        frm_BOOKU.BukaHalaman_LaporanLabaRugi_Bulanan()
+                    Else
+                        win_BOOKU.BukaHalaman_LaporanLabaRugi_Bulanan()
+                    End If
                 Case JenisLaporan_Neraca
-                    frm_BOOKU.BukaHalaman_LaporanNeraca_Bulanan()
+                    If ModusAplikasi = "CLASSIC" Then
+                        frm_BOOKU.BukaHalaman_LaporanNeraca_Bulanan()
+                    Else
+                        win_BOOKU.BukaHalaman_LaporanNeraca_Bulanan()
+                    End If
             End Select
             'TampilkanLaporan()
         End If
@@ -1235,7 +1251,6 @@ Public Class wpfUsc_LaporanNeracaLajur
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

@@ -380,11 +380,12 @@ Public Class wpfWin_ImportJurnal
             MsgBox("Data tidak valid pada Jurnal Nomor " & AwalanNomorJV & jur_NomorJV & "." &
                    Enter1Baris & "( Baris " & BarisAwalBahanJV & " sampai " & BarisAkhirBahanJV & " pada tabel Excel )." &
                    Enter2Baris & "Silakan diperbaiki.")
-            frm_VerifikasiDataJurnal.NomorJV = AwalanNomorJV & jur_NomorJV
-            frm_VerifikasiDataJurnal.BarisAwalBahanJV = BarisAwalBahanJV
-            frm_VerifikasiDataJurnal.BarisAkhirBahanJV = BarisAkhirBahanJV
-            frm_VerifikasiDataJurnal.JumlahBarisBahanJV = JumlahBarisBahanJV
-            frm_VerifikasiDataJurnal.ShowDialog()
+            win_VerifikasiDataJurnal = New wpfWin_VerifikasiDataJurnal
+            win_VerifikasiDataJurnal.NomorJV = AwalanNomorJV & jur_NomorJV
+            win_VerifikasiDataJurnal.BarisAwalBahanJV = BarisAwalBahanJV
+            win_VerifikasiDataJurnal.BarisAkhirBahanJV = BarisAkhirBahanJV
+            win_VerifikasiDataJurnal.JumlahBarisBahanJV = JumlahBarisBahanJV
+            win_VerifikasiDataJurnal.ShowDialog()
             If jur_StatusPenyimpananJurnal_Lengkap = False Then
                 JumlahJV_GagalPosting = JumlahJV_GagalPosting + 1
                 JumlahBaris_GagalPosting = JumlahBaris_GagalPosting + JumlahBarisBahanJV

@@ -8,7 +8,9 @@ Imports bcomm
 
 Public Class wpfUsc_DaftarPemegangSaham
 
-    Public StatusAktif
+    Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
+
     Public JudulForm
     Public KesesuaianJurnal
 
@@ -45,19 +47,18 @@ Public Class wpfUsc_DaftarPemegangSaham
     Dim NomorJV
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
 
         ProsesLoadingForm = True
 
-
-        StatusAktif = True
-
         lbl_JudulForm.Text = frm_DaftarPemegangSaham.JudulForm
-
 
         ProsesLoadingForm = False
 
         RefreshTampilanData()
 
+        SudahDimuat = True
     End Sub
 
     Sub RefreshTampilanData()
@@ -397,7 +398,6 @@ Public Class wpfUsc_DaftarPemegangSaham
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 End Class

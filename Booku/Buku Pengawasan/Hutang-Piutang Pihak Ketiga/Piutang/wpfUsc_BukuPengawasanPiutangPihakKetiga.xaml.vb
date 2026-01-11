@@ -7,7 +7,8 @@ Imports bcomm
 
 Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
 
-    Public StatusAktif As Boolean
+    Public StatusAktif As Boolean = False
+    Private SudahDimuat As Boolean = False
 
     Public NamaHalaman
     Public JudulForm
@@ -87,9 +88,10 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
     Dim AngsuranKe As String
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        If SudahDimuat Then Return
+        StatusAktif = True
 
         Terabas()
-        StatusAktif = True
         lbl_JudulForm.Text = JudulForm
 
         ProsesLoadingForm = True
@@ -99,6 +101,7 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
         RefreshTampilanData()
 
         ProsesLoadingForm = False
+        SudahDimuat = True
 
     End Sub
 
@@ -960,7 +963,6 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
     End Sub
 
     Private Sub wpfWin_Closed(sender As Object, e As EventArgs) Handles Me.Unloaded
-        StatusAktif = False
     End Sub
 
 

@@ -645,12 +645,6 @@
     <Compile Update="Jurnal\wpfWin_InputJurnal.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Jurnal\frm_ProgressImportJurnal.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Jurnal\frm_VerifikasiDataJurnal.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Jurnal\wpfWin_JurnalVoucher.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
