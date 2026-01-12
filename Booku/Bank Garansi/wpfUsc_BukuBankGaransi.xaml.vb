@@ -1,4 +1,4 @@
-Imports bcomm
+﻿Imports bcomm
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
@@ -55,7 +55,7 @@ Public Class wpfUsc_BukuBankGaransi
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_BukuBankGaransi.JudulForm
+        'lbl_JudulForm.Text = frm_BukuBankGaransi.JudulForm
 
         RefreshTampilanData()
 

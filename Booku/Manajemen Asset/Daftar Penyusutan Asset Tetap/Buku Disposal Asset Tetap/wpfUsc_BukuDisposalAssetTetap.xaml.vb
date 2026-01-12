@@ -1,4 +1,4 @@
-Imports System.Data.Odbc
+﻿Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -46,7 +46,7 @@ Public Class wpfUsc_BukuDisposalAssetTetap
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_BukuDisposalAssetTetap.Text
+        'lbl_JudulForm.Text = frm_BukuDisposalAssetTetap.Text
 
         ProsesLoadingForm = False
 

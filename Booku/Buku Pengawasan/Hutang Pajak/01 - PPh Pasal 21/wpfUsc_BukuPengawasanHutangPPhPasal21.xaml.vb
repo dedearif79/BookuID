@@ -1,4 +1,4 @@
-Imports System.Data.Odbc
+﻿Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -156,7 +156,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal21
 
         StatusAktif = True
 
-        lbl_JudulForm.Text = frm_BukuPengawasanHutangPPhPasal21.JudulForm
+        'lbl_JudulForm.Text = frm_BukuPengawasanHutangPPhPasal21.JudulForm
         PPh_.Header = "Jumlah" & Enter1Baris & JenisPajak
         Jumlah_Bayar_Pajak.Header = "Jumlah Bayar" & Enter1Baris & JenisPajak
 

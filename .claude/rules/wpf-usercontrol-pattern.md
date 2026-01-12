@@ -134,6 +134,110 @@ Sub Buat_DataTabelUtama()
 End Sub
 ```
 
+## 4a. Tipe-Tipe Kolom DataGrid
+
+### Ringkasan Tipe Kolom
+
+| Tipe Kolom | Deklarasi | DataTable | Fungsi Tambah |
+|------------|-----------|-----------|---------------|
+| **String** | `DataGridTextColumn` | `.Add("Nama")` | `TambahkanKolomTextBoxDataGrid_WPF` |
+| **Angka** | `DataGridTextColumn` | `.Add("Nama", GetType(...))` | `TambahkanKolomTextBoxDataGrid_WPF` |
+| **CheckBox** | `DataGridCheckBoxColumn` | `.Add("Nama")` | `TambahkanKolomCheckBoxDataGrid_WPF` |
+| **Button** | Tidak perlu | Tidak perlu | `TambahkanKolomButtonDataGrid_WPF` |
+
+### a. Kolom String (Default)
+
+```vb
+' Deklarasi
+Dim Kolom_Keterangan As New DataGridTextColumn
+
+' DataTable - tanpa parameter tipe (default String)
+datatabelUtama.Columns.Add("Keterangan")
+
+' Tambah ke DataGrid
+TambahkanKolomTextBoxDataGrid_WPF(datagridUtama, Kolom_Keterangan, "Keterangan", "Keterangan", 200, FormatString, KiriTengah, KunciUrut, Terlihat)
+```
+
+### b. Kolom Angka
+
+```vb
+' Deklarasi
+Dim Kolom_Jumlah As New DataGridTextColumn
+
+' DataTable - dengan GetType untuk tipe numerik
+datatabelUtama.Columns.Add("Jumlah", GetType(Int64))
+datatabelUtama.Columns.Add("Saldo", GetType(Decimal))
+
+' Tambah ke DataGrid
+TambahkanKolomTextBoxDataGrid_WPF(datagridUtama, Kolom_Jumlah, "Jumlah", "Jumlah", 81, FormatAngka, KananTengah, KunciUrut, Terlihat)
+```
+
+### c. Kolom CheckBox
+
+Contoh: `wpfUsc_BukuPengawasanPiutangPihakKetiga.xaml.vb`
+
+```vb
+' Deklarasi - menggunakan DataGridCheckBoxColumn
+Dim Jadwal_Ceklis_ As New DataGridCheckBoxColumn
+
+' DataTable - tetap string (tanpa GetType)
+datatabelJadwalAngsuran.Columns.Add("Jadwal_Ceklis_")
+
+' Tambah ke DataGrid - parameter terakhir: IsReadOnly (Boolean)
+TambahkanKolomCheckBoxDataGrid_WPF(datagridJadwalAngsuran, Jadwal_Ceklis_, "Jadwal_Ceklis_", "Chk", 45, FormatAngka, TengahTengah, KunciUrut, Terlihat, False)
+```
+
+**Parameter `TambahkanKolomCheckBoxDataGrid_WPF`:**
+1. `datagrid` - DataGrid target
+2. `kolom` - Variabel DataGridCheckBoxColumn
+3. `binding` - Nama kolom di DataTable
+4. `header` - Judul kolom
+5. `lebar` - Lebar kolom
+6. `format` - Format (FormatAngka/FormatString)
+7. `alignment` - Alignment (TengahTengah, dll)
+8. `kunci` - KunciUrut
+9. `visibility` - Terlihat/Tersembunyi
+10. `isReadOnly` - True/False
+
+### d. Kolom Button
+
+Contoh: `wpfUsc_Adjusment_Forex.xaml.vb`
+
+```vb
+' Tidak perlu deklarasi variabel kolom
+' Tidak perlu kolom di DataTable
+
+' Tambah ke DataGrid - dengan Tag (identifier) dan AddressOf handler
+TambahkanKolomButtonDataGrid_WPF(datagridUtama, "Januari_", "Januari", 72, 1, AddressOf btn_TombolTabel_Click)
+TambahkanKolomButtonDataGrid_WPF(datagridUtama, "Februari_", "Februari", 72, 2, AddressOf btn_TombolTabel_Click)
+TambahkanKolomButtonDataGrid_WPF(datagridUtama, "Maret_", "Maret", 72, 3, AddressOf btn_TombolTabel_Click)
+```
+
+**Parameter `TambahkanKolomButtonDataGrid_WPF`:**
+1. `datagrid` - DataGrid target
+2. `binding` - Nama binding (untuk identifikasi)
+3. `header` - Judul kolom / teks button
+4. `lebar` - Lebar kolom
+5. `tag` - Tag identifier (Integer) untuk membedakan tombol di handler
+6. `handler` - AddressOf event handler
+
+**Contoh Handler untuk Kolom Button:**
+```vb
+Private Sub btn_TombolTabel_Click(sender As Object, e As RoutedEventArgs)
+    Dim btn As Button = TryCast(sender, Button)
+    If btn Is Nothing Then Return
+
+    Dim tagBulan As Integer = CInt(btn.Tag)
+
+    ' Lakukan aksi berdasarkan tag
+    Select Case tagBulan
+        Case 1 : ' Januari
+        Case 2 : ' Februari
+        ' ... dst
+    End Select
+End Sub
+```
+
 ## 5. Pattern Event Loaded
 
 ```vb
@@ -319,4 +423,111 @@ Event SelectedCellsChanged:
 Button Click:
     └── Gunakan variabel _Terseleksi
         └── TampilkanData() (refresh)
+```
+
+## 12. WPF Host Pattern
+
+Pattern untuk membungkus UserControl dalam ContentControl host yang mengelola inisialisasi dan konfigurasi.
+
+### Aturan Utama
+
+| Aturan | Penjelasan |
+|--------|------------|
+| **1 file = 1 UserControl** | Setiap file `wpfHost_XXX.vb` hanya untuk 1 `wpfUsc_XXX` |
+| **Banyak varian** | 1 file host bisa berisi banyak class varian dengan konfigurasi berbeda |
+| **Lokasi file** | File host harus berada di **folder yang sama** dengan UserControl-nya |
+
+### Struktur Class Host
+
+```vb
+Imports System.Windows.Controls
+
+' =====================================================================
+' WPF Host untuk wpfUsc_NamaModul
+' 1 file berisi semua varian class yang mengarah ke 1 UserControl
+' Menggunakan variabel usc_ yang sudah dideklarasikan di wpfMdl_ClassUserControl
+' =====================================================================
+
+
+' ---------------------------------------------------------------------
+' VARIAN 1: Default
+' ---------------------------------------------------------------------
+Public Class wpfHost_NamaModul
+    Inherits ContentControl
+
+    Public Property JudulForm As String
+
+    Sub New()
+        JudulForm = "Judul Form"
+        Inisialisasi()
+        Me.Content = usc_NamaModul
+    End Sub
+
+    Sub Inisialisasi()
+        usc_NamaModul = New wpfUsc_NamaModul With {
+            .Property1 = Value1,
+            .Property2 = Value2
+        }
+    End Sub
+
+    Sub CekKesesuaianData()
+        Inisialisasi()
+        usc_NamaModul.RefreshTampilanData()
+    End Sub
+
+End Class
+```
+
+### Naming Convention
+
+| Komponen | Format | Contoh |
+|----------|--------|--------|
+| **File** | `wpfHost_[NamaUserControl].vb` | `wpfHost_BukuPembelian.vb` |
+| **Class default** | `wpfHost_[NamaUserControl]` | `wpfHost_BukuPembelian` |
+| **Class varian** | `wpfHost_[NamaUserControl]_[Varian]` | `wpfHost_BukuPembelian_Lokal` |
+
+### Contoh File dengan Banyak Varian
+
+```
+wpfHost_BukuPengawasanHutangUsaha.vb
+├── wpfHost_BukuPengawasanHutangUsaha (default - Semua Lokal IDR)
+├── wpfHost_BukuPengawasanHutangUsaha_Afiliasi
+├── wpfHost_BukuPengawasanHutangUsaha_NonAfiliasi
+├── wpfHost_BukuPengawasanHutangUsaha_Impor_USD
+├── wpfHost_BukuPengawasanHutangUsaha_Impor_EUR
+└── ... (semua menggunakan wpfUsc_BukuPengawasanHutangUsaha)
+```
+
+### Penggunaan di Menu Handler
+
+```vb
+Private Sub mnu_BukuPembelian_Lokal_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPembelian_Lokal.Click
+    host_BukuPembelian_Lokal = New wpfHost_BukuPembelian_Lokal
+    BukaUserControlDalamTab(usc_BukuPembelian_Lokal, host_BukuPembelian_Lokal.JudulForm)
+End Sub
+```
+
+### Deklarasi Variabel Global
+
+| File | Tujuan | Contoh |
+|------|--------|--------|
+| `wpfMdl_ClassHost.vb` | Deklarasi variabel host | `Public host_BukuPembelian_Lokal As wpfHost_BukuPembelian_Lokal` |
+| `wpfMdl_ClassUserControl.vb` | Deklarasi variabel UserControl | `Public usc_BukuPembelian_Lokal As wpfUsc_BukuPembelian` |
+
+### Anti-Pattern (JANGAN DILAKUKAN)
+
+```
+❌ SALAH: 1 file untuk banyak UserControl berbeda
+wpfHost_Pembelian.vb
+├── wpfHost_POPembelian         → wpfUsc_POPembelian
+├── wpfHost_SuratJalanPembelian → wpfUsc_SuratJalanPembelian
+├── wpfHost_InvoicePembelian    → wpfUsc_InvoicePembelian
+└── wpfHost_BukuPembelian       → wpfUsc_BukuPembelian
+
+✓ BENAR: 1 file untuk 1 UserControl dengan banyak varian
+wpfHost_POPembelian.vb
+├── wpfHost_POPembelian_Lokal_Barang    → wpfUsc_POPembelian
+├── wpfHost_POPembelian_Lokal_Jasa      → wpfUsc_POPembelian
+├── wpfHost_POPembelian_Impor_Barang    → wpfUsc_POPembelian
+└── wpfHost_POPembelian_Impor_Jasa      → wpfUsc_POPembelian
 ```

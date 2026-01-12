@@ -82,7 +82,7 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
         StatusAktif = True
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_BukuPengawasanBuktiPengeluaranBankCash.JudulForm
+        'lbl_JudulForm.Text = frm_BukuPengawasanBuktiPengeluaranBankCash.JudulForm
         pnl_FilterData.Visibility = Visibility.Collapsed
         pnl_FilterData.Visibility = Visibility.Visible
 

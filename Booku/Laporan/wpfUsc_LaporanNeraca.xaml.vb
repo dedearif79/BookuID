@@ -50,7 +50,7 @@ Public Class wpfUsc_LaporanNeraca
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_LaporanNeraca.JudulForm
+        'lbl_JudulForm.Text = frm_LaporanNeraca.JudulForm
 
 
         ProsesLoadingForm = False

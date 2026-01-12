@@ -46,7 +46,7 @@ Public Class wpfUsc_BukuPenjualanEceran
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_BukuPenjualanEceran.JudulForm
+        'lbl_JudulForm.Text = frm_BukuPenjualanEceran.JudulForm
 
         ProsesLoadingForm = False
 

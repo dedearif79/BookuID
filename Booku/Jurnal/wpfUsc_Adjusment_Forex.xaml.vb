@@ -42,7 +42,7 @@ Public Class wpfUsc_JurnalAdjusment_Forex
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_Adjusment_Forex.JudulForm
+        'lbl_JudulForm.Text = frm_Adjusment_Forex.JudulForm
         pnl_FilterData.Visibility = Visibility.Collapsed
         pnl_TombolForm.Visibility = Visibility.Collapsed
 

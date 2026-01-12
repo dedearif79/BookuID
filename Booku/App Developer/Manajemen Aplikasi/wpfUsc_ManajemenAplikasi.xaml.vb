@@ -44,7 +44,7 @@ Public Class wpfUsc_ManajemenAplikasi
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_ManajemenAplikasi.JudulForm
+        'lbl_JudulForm.Text = frm_ManajemenAplikasi.JudulForm
 
         RefreshTampilanData()
 

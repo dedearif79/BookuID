@@ -1,4 +1,4 @@
-Imports System.Windows
+﻿Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
 Imports System.Windows.Input
@@ -25,7 +25,7 @@ Public Class wpfUsc_DataProdukApp
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_DataProdukApp.JudulForm
+        'lbl_JudulForm.Text = frm_DataProdukApp.JudulForm
 
         RefreshTampilanData()
 

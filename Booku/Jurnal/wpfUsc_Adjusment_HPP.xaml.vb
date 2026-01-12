@@ -1,4 +1,4 @@
-Imports System.Data.Odbc
+﻿Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -66,7 +66,7 @@ Public Class wpfUsc_JurnalAdjusment_HPP
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_Adjusment_HPP.JudulForm
+        'lbl_JudulForm.Text = frm_Adjusment_HPP.JudulForm
         pnl_FilterData.Visibility = Visibility.Collapsed
         pnl_TombolForm.Visibility = Visibility.Collapsed
 

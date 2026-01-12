@@ -37,7 +37,7 @@ Public Class wpfUsc_LaporanLabaRugi
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_LaporanLabaRugi.JudulForm
+        'lbl_JudulForm.Text = frm_LaporanLabaRugi.JudulForm
 
 
         ProsesLoadingForm = False

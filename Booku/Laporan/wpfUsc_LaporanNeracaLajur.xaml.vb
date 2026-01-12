@@ -1,4 +1,4 @@
-Imports System.Data.Odbc
+﻿Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -54,7 +54,7 @@ Public Class wpfUsc_LaporanNeracaLajur
         Visibilitas_JenisLaporan(False)
         QueryTampilan = " SELECT * FROM tbl_COA WHERE Visibilitas = '" & Pilihan_Ya & "' "
 
-        lbl_JudulForm.Text = frm_LaporanNeracaLajur.JudulForm
+        'lbl_JudulForm.Text = frm_LaporanNeracaLajur.JudulForm
 
         pnl_Progress.Visibility = Visibility.Collapsed
 

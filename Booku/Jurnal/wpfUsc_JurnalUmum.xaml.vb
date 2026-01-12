@@ -39,7 +39,7 @@ Public Class wpfUsc_JurnalUmum
         If SudahDimuat Then Return
         StatusAktif = True
 
-        lbl_JudulForm.Text = frm_JurnalUmum.JudulForm
+        'lbl_JudulForm.Text = frm_JurnalUmum.JudulForm
         Terabas()
 
         ProsesLoadingForm = True

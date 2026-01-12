@@ -50,7 +50,7 @@ Public Class wpfUsc_LaporanNeraca_Tahunan
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_LaporanNeraca_Tahunan.JudulForm
+        'lbl_JudulForm.Text = frm_LaporanNeraca_Tahunan.JudulForm
 
 
         ProsesLoadingForm = False

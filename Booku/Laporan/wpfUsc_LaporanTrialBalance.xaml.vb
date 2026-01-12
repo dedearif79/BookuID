@@ -1,4 +1,4 @@
-Imports System.Data.Odbc
+﻿Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -30,7 +30,7 @@ Public Class wpfUsc_LaporanTrialBalance
         If JalurMasuk = Halaman_MENUUTAMA Then Me.Visibility = Visibility.Visible
         If JalurMasuk <> Halaman_MENUUTAMA Then Me.Visibility = Visibility.Collapsed
 
-        lbl_JudulForm.Text = frm_LaporanTrialBalance.JudulForm
+        'lbl_JudulForm.Text = frm_LaporanTrialBalance.JudulForm
 
         pnl_Progress.Visibility = Visibility.Collapsed
 

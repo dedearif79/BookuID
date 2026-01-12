@@ -62,7 +62,7 @@ Public Class wpfUsc_BukuPengawasanPiutangDividen
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_BukuPengawasanPiutangDividen.JudulForm
+        'lbl_JudulForm.Text = frm_BukuPengawasanPiutangDividen.JudulForm
 
         RefreshTampilanData()
 

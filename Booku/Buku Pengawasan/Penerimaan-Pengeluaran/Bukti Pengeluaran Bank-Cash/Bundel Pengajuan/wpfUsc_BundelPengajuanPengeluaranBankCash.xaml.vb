@@ -1,4 +1,4 @@
-Imports System.Windows
+﻿Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -68,7 +68,7 @@ Public Class wpfUsc_BundelPengajuanPengeluaranBankCash
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_BundelPengajuanPengeluaranBankCash.JudulForm
+        'lbl_JudulForm.Text = frm_BundelPengajuanPengeluaranBankCash.JudulForm
 
         RefreshTampilanData()
 

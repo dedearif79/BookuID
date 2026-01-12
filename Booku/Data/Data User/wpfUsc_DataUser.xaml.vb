@@ -1,4 +1,4 @@
-Imports bcomm
+﻿Imports bcomm
 Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
@@ -41,7 +41,7 @@ Public Class wpfUsc_DataUser
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_DataUser.JudulForm
+        'lbl_JudulForm.Text = frm_DataUser.JudulForm
 
         ProsesLoadingForm = False
 

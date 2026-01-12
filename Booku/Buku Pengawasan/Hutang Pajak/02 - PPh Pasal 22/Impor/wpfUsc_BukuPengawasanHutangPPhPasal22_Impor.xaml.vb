@@ -113,7 +113,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal22_Impor
         StatusAktif = True
 
         JudulForm = frm_BukuPengawasanHutangPPhPasal22_Impor.JudulForm
-        lbl_JudulForm.Text = frm_BukuPengawasanHutangPPhPasal22_Impor.JudulForm
+        'lbl_JudulForm.Text = frm_BukuPengawasanHutangPPhPasal22_Impor.JudulForm
 
         VisibilitasInfoSaldo(False)
 

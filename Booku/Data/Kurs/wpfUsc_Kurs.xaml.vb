@@ -48,7 +48,7 @@ Public Class wpfUsc_Kurs
             Kurs_Akhir_Tahun_Lalu.Visibility = Visibility.Collapsed
         End If
 
-        lbl_JudulForm.Text = frm_Kurs.JudulForm
+        'lbl_JudulForm.Text = frm_Kurs.JudulForm
 
         KontenCombo_TahunKurs()
 

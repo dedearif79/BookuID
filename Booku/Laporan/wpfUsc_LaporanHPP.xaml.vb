@@ -66,7 +66,7 @@ Public Class wpfUsc_LaporanHPP
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_LaporanHPP.JudulForm
+        'lbl_JudulForm.Text = frm_LaporanHPP.JudulForm
 
 
         ProsesLoadingForm = False

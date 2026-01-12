@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -49,7 +49,7 @@ Public Class wpfUsc_TutupBuku
         ProsesLoadingForm = True
         KetersediaanMenuHalaman(pnl_Halaman, False)
 
-        lbl_JudulForm.Text = frm_TutupBuku.JudulForm
+        'lbl_JudulForm.Text = frm_TutupBuku.JudulForm
 
         Saldo_Awal.Header = "Saldo Awal " & Enter1Baris & "Tahun " & TahunBukuAktif
         Saldo_Akhir.Header = "Saldo Akhir " & Enter1Baris & "Tahun " & TahunBukuAktif

@@ -52,7 +52,7 @@ Public Class wpfUsc_DaftarPemegangSaham
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_DaftarPemegangSaham.JudulForm
+        'lbl_JudulForm.Text = frm_DaftarPemegangSaham.JudulForm
 
         ProsesLoadingForm = False
 

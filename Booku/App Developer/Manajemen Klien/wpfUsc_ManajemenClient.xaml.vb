@@ -62,7 +62,7 @@ Public Class wpfUsc_ManajemenClient
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_ManajemenClient.JudulForm
+        'lbl_JudulForm.Text = frm_ManajemenClient.JudulForm
         pnl_FilterData.Visibility = Visibility.Collapsed
         pnl_FilterData.Visibility = Visibility.Visible
 

@@ -66,7 +66,7 @@ Public Class wpfUsc_BukuPengawasanPemindahbukuan
         StatusAktif = True
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_BukuPengawasanPemindahbukuan.JudulForm
+        'lbl_JudulForm.Text = frm_BukuPengawasanPemindahbukuan.JudulForm
 
         RefreshTampilanData()
 

@@ -503,45 +503,45 @@ Public Class frm_BOOKU
 
     'SUB MENU : DATA USER ---------------------------------------------------------------------
     Private Sub mnu_DataUser_Click(sender As Object, e As EventArgs) Handles mnu_DataUser.Click
-        frm_DataUser.MdiParent = Me
-        frm_DataUser.Show()
-        frm_DataUser.Focus()
+        'frm_DataUser.MdiParent = Me
+        'frm_DataUser.Show()
+        'frm_DataUser.Focus()
     End Sub
 
     'SUB MENU : DATA COA --------------------------------------------------------------------
     Private Sub mnu_DataCOA_Click(sender As Object, e As EventArgs) Handles mnu_DataCOA.Click
-        frm_DataCOA.MdiParent = Me
-        frm_DataCOA.Show()
-        frm_DataCOA.Focus()
+        'frm_DataCOA.MdiParent = Me
+        'frm_DataCOA.Show()
+        'frm_DataCOA.Focus()
     End Sub
 
     'SUB MENU : DATA MITRA ----------------------------------------------------------------------
     Private Sub mnu_DataMitra_Click(sender As Object, e As EventArgs) Handles mnu_DataMitra.Click
-        frm_DataMitra.MdiParent = Me
-        frm_DataMitra.Show()
-        frm_DataMitra.Focus()
+        'frm_DataMitra.MdiParent = Me
+        'frm_DataMitra.Show()
+        'frm_DataMitra.Focus()
     End Sub
 
     'SUB MENU : DATA LAWAN TRANSAKSI ------------------------------------------------------------------------------
     Private Sub mnu_DataLawanTransaksi_Click(sender As Object, e As EventArgs) Handles mnu_DataLawanTransaksi.Click
-        frm_DataLawanTransaksi.MdiParent = Me
-        frm_DataLawanTransaksi.Show()
-        frm_DataLawanTransaksi.Focus()
+        'frm_DataLawanTransaksi.MdiParent = Me
+        'frm_DataLawanTransaksi.Show()
+        'frm_DataLawanTransaksi.Focus()
     End Sub
 
     'SUB MENU : DATA KARYAWAN ----------------------------------------------------------------------
     Private Sub mnu_DataKaryawan_Click(sender As Object, e As EventArgs) Handles mnu_DataKaryawan.Click
-        frm_DataKaryawan.MdiParent = Me
-        frm_DataKaryawan.Show()
-        frm_DataKaryawan.Focus()
+        'frm_DataKaryawan.MdiParent = Me
+        'frm_DataKaryawan.Show()
+        'frm_DataKaryawan.Focus()
     End Sub
 
 
     'SUB MENU : DAFTAR PEMEGANG SAHAM --------------------------------------------------------------
     Private Sub mnu_DaftarPemegangSaham_Click(sender As Object, e As EventArgs) Handles mnu_DaftarPemegangSaham.Click
-        frm_DaftarPemegangSaham.MdiParent = Me
-        frm_DaftarPemegangSaham.Show()
-        frm_DaftarPemegangSaham.Focus()
+        'frm_DaftarPemegangSaham.MdiParent = Me
+        'frm_DaftarPemegangSaham.Show()
+        'frm_DaftarPemegangSaham.Focus()
     End Sub
 
 
@@ -554,9 +554,9 @@ Public Class frm_BOOKU
 
     'SUB MENU : DATA PROJECT ----------------------------------------------------------------------
     Private Sub mnu_DataProject_Click(sender As Object, e As EventArgs) Handles mnu_DataProject.Click
-        frm_DataProject.MdiParent = Me
-        frm_DataProject.Show()
-        frm_DataProject.Focus()
+        'frm_DataProject.MdiParent = Me
+        'frm_DataProject.Show()
+        'frm_DataProject.Focus()
     End Sub
 
     'SUB MENU : TAHUN BUKU ------------------------------------------------------------------------
@@ -583,9 +583,9 @@ Public Class frm_BOOKU
         '    Return
         'End If
         usc_TutupBuku.ResetForm()
-        frm_TutupBuku.MdiParent = Me
-        frm_TutupBuku.Show()
-        frm_TutupBuku.Focus()
+        'frm_TutupBuku.MdiParent = Me
+        'frm_TutupBuku.Show()
+        'frm_TutupBuku.Focus()
     End Sub
 
 
@@ -922,33 +922,33 @@ Public Class frm_BOOKU
     End Sub
 
     Private Sub mnu_POPembelian_Lokal_Barang_Click(sender As Object, e As EventArgs) Handles mnu_POPembelian_Lokal_Barang.Click
-        frm_POPembelian_Lokal_Barang.MdiParent = Me
-        frm_POPembelian_Lokal_Barang.Show()
-        frm_POPembelian_Lokal_Barang.Focus()
+        'frm_POPembelian_Lokal_Barang.MdiParent = Me
+        'frm_POPembelian_Lokal_Barang.Show()
+        'frm_POPembelian_Lokal_Barang.Focus()
     End Sub
 
     Private Sub mnu_POPembelian_Lokal_Jasa_Click(sender As Object, e As EventArgs) Handles mnu_POPembelian_Lokal_Jasa.Click
-        frm_POPembelian_Lokal_Jasa.MdiParent = Me
-        frm_POPembelian_Lokal_Jasa.Show()
-        frm_POPembelian_Lokal_Jasa.Focus()
+        'frm_POPembelian_Lokal_Jasa.MdiParent = Me
+        'frm_POPembelian_Lokal_Jasa.Show()
+        'frm_POPembelian_Lokal_Jasa.Focus()
     End Sub
 
     Private Sub mnu_POPembelian_Lokal_BarangDanJasa_Click(sender As Object, e As EventArgs) Handles mnu_POPembelian_Lokal_BarangDanJasa.Click
-        frm_POPembelian_Lokal_BarangDanJasa.MdiParent = Me
-        frm_POPembelian_Lokal_BarangDanJasa.Show()
-        frm_POPembelian_Lokal_BarangDanJasa.Focus()
+        'frm_POPembelian_Lokal_BarangDanJasa.MdiParent = Me
+        'frm_POPembelian_Lokal_BarangDanJasa.Show()
+        'frm_POPembelian_Lokal_BarangDanJasa.Focus()
     End Sub
 
     Private Sub mnu_POPembelian_Lokal_JasaKonstruksi_Click(sender As Object, e As EventArgs) Handles mnu_POPembelian_Lokal_JasaKonstruksi.Click
-        frm_POPembelian_Lokal_JasaKonstruksi.MdiParent = Me
-        frm_POPembelian_Lokal_JasaKonstruksi.Show()
-        frm_POPembelian_Lokal_JasaKonstruksi.Focus()
+        'frm_POPembelian_Lokal_JasaKonstruksi.MdiParent = Me
+        'frm_POPembelian_Lokal_JasaKonstruksi.Show()
+        'frm_POPembelian_Lokal_JasaKonstruksi.Focus()
     End Sub
 
     Private Sub mnu_POPembelian_Semua_Click(sender As Object, e As EventArgs) Handles mnu_POPembelian_Semua.Click
-        frm_POPembelian_Lokal_Semua.MdiParent = Me
-        frm_POPembelian_Lokal_Semua.Show()
-        frm_POPembelian_Lokal_Semua.Focus()
+        'frm_POPembelian_Lokal_Semua.MdiParent = Me
+        'frm_POPembelian_Lokal_Semua.Show()
+        'frm_POPembelian_Lokal_Semua.Focus()
     End Sub
 
     Private Sub mnu_PO_Pembelian_Impor_Click(sender As Object, e As EventArgs) Handles mnu_PO_Pembelian_Impor.Click
@@ -956,21 +956,21 @@ Public Class frm_BOOKU
 
 
     Private Sub mnu_PO_Pembelian_Impor_Barang_Click(sender As Object, e As EventArgs) Handles mnu_PO_Pembelian_Impor_Barang.Click
-        frm_POPembelian_Impor_Barang.MdiParent = Me
-        frm_POPembelian_Impor_Barang.Show()
-        frm_POPembelian_Impor_Barang.Focus()
+        'frm_POPembelian_Impor_Barang.MdiParent = Me
+        'frm_POPembelian_Impor_Barang.Show()
+        'frm_POPembelian_Impor_Barang.Focus()
     End Sub
 
     Private Sub mnu_PO_Pembelian_Impor_Jasa_Click(sender As Object, e As EventArgs) Handles mnu_PO_Pembelian_Impor_Jasa.Click
-        frm_POPembelian_Impor_Jasa.MdiParent = Me
-        frm_POPembelian_Impor_Jasa.Show()
-        frm_POPembelian_Impor_Jasa.Focus()
+        'frm_POPembelian_Impor_Jasa.MdiParent = Me
+        'frm_POPembelian_Impor_Jasa.Show()
+        'frm_POPembelian_Impor_Jasa.Focus()
     End Sub
 
     Private Sub mnu_PO_Pembelian_Impor_Semua_Click(sender As Object, e As EventArgs) Handles mnu_PO_Pembelian_Impor_Semua.Click
-        frm_POPembelian_Impor_Semua.MdiParent = Me
-        frm_POPembelian_Impor_Semua.Show()
-        frm_POPembelian_Impor_Semua.Focus()
+        'frm_POPembelian_Impor_Semua.MdiParent = Me
+        'frm_POPembelian_Impor_Semua.Show()
+        'frm_POPembelian_Impor_Semua.Focus()
     End Sub
 
 
@@ -978,16 +978,16 @@ Public Class frm_BOOKU
 
     'SUB MENU : SURAT JALAN -------------------------------------------------------------------------------------------------------
     Private Sub mnu_SuratJalanPembelian_Click(sender As Object, e As EventArgs) Handles mnu_SuratJalanPembelian.Click
-        frm_SuratJalanPembelian.MdiParent = Me
-        frm_SuratJalanPembelian.Show()
-        frm_SuratJalanPembelian.Focus()
+        'frm_SuratJalanPembelian.MdiParent = Me
+        'frm_SuratJalanPembelian.Show()
+        'frm_SuratJalanPembelian.Focus()
     End Sub
 
     'SUB MENU : BUKU BAST ---------------------------------------------------------------------------------------------------------
     Private Sub mnu_BASTPembelian_Click(sender As Object, e As EventArgs) Handles mnu_BASTPembelian.Click
-        frm_BASTPembelian.MdiParent = Me
-        frm_BASTPembelian.Show()
-        frm_BASTPembelian.Focus()
+        'frm_BASTPembelian.MdiParent = Me
+        'frm_BASTPembelian.Show()
+        'frm_BASTPembelian.Focus()
     End Sub
 
     'SUB MENU : INVOICE PEMBELIAN -------------------------------------------------------------------------------------------------
@@ -1001,15 +1001,15 @@ Public Class frm_BOOKU
     End Sub
 
     Private Sub mnu_InvoicePembelian_DenganPO_Lokal_Rutin_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_DenganPO_Lokal_Rutin.Click
-        frm_InvoicePembelian_DenganPO_Lokal_Rutin.MdiParent = Me
-        frm_InvoicePembelian_DenganPO_Lokal_Rutin.Show()
-        frm_InvoicePembelian_DenganPO_Lokal_Rutin.Focus()
+        'frm_InvoicePembelian_DenganPO_Lokal_Rutin.MdiParent = Me
+        'frm_InvoicePembelian_DenganPO_Lokal_Rutin.Show()
+        'frm_InvoicePembelian_DenganPO_Lokal_Rutin.Focus()
     End Sub
 
     Private Sub mnu_InvoicePembelian_DenganPO_Lokal_Termin_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_DenganPO_Lokal_Termin.Click
-        frm_InvoicePembelian_DenganPO_Lokal_Termin.MdiParent = Me
-        frm_InvoicePembelian_DenganPO_Lokal_Termin.Show()
-        frm_InvoicePembelian_DenganPO_Lokal_Termin.Focus()
+        'frm_InvoicePembelian_DenganPO_Lokal_Termin.MdiParent = Me
+        'frm_InvoicePembelian_DenganPO_Lokal_Termin.Show()
+        'frm_InvoicePembelian_DenganPO_Lokal_Termin.Focus()
     End Sub
 
 
@@ -1017,57 +1017,57 @@ Public Class frm_BOOKU
     End Sub
 
     Private Sub mnu_InvoicePembelian_DenganPO_Impor_Rutin_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_DenganPO_Impor_Rutin.Click
-        frm_InvoicePembelian_DenganPO_Impor_Rutin.MdiParent = Me
-        frm_InvoicePembelian_DenganPO_Impor_Rutin.Show()
-        frm_InvoicePembelian_DenganPO_Impor_Rutin.Focus()
+        'frm_InvoicePembelian_DenganPO_Impor_Rutin.MdiParent = Me
+        'frm_InvoicePembelian_DenganPO_Impor_Rutin.Show()
+        'frm_InvoicePembelian_DenganPO_Impor_Rutin.Focus()
     End Sub
 
     Private Sub mnu_InvoicePembelian_DenganPO_Impor_Termin_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_DenganPO_Impor_Termin.Click
-        frm_InvoicePembelian_DenganPO_Impor_Termin.MdiParent = Me
-        frm_InvoicePembelian_DenganPO_Impor_Termin.Show()
-        frm_InvoicePembelian_DenganPO_Impor_Termin.Focus()
+        'frm_InvoicePembelian_DenganPO_Impor_Termin.MdiParent = Me
+        'frm_InvoicePembelian_DenganPO_Impor_Termin.Show()
+        'frm_InvoicePembelian_DenganPO_Impor_Termin.Focus()
     End Sub
 
     Private Sub mnu_InvoicePembelian_TanpaPO_Lokal_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_TanpaPO_Lokal.Click
     End Sub
 
     Private Sub mnu_InvoicePembelian_TanpaPO_Lokal_Barang_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_TanpaPO_Lokal_Barang.Click
-        frm_InvoicePembelian_TanpaPO_Lokal_Barang.MdiParent = Me
-        frm_InvoicePembelian_TanpaPO_Lokal_Barang.Show()
-        frm_InvoicePembelian_TanpaPO_Lokal_Barang.Focus()
+        'frm_InvoicePembelian_TanpaPO_Lokal_Barang.MdiParent = Me
+        'frm_InvoicePembelian_TanpaPO_Lokal_Barang.Show()
+        'frm_InvoicePembelian_TanpaPO_Lokal_Barang.Focus()
     End Sub
 
     Private Sub mnu_InvoicePembelian_TanpaPO_Lokal_Jasa_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_TanpaPO_Lokal_Jasa.Click
-        frm_InvoicePembelian_TanpaPO_Lokal_Jasa.MdiParent = Me
-        frm_InvoicePembelian_TanpaPO_Lokal_Jasa.Show()
-        frm_InvoicePembelian_TanpaPO_Lokal_Jasa.Focus()
+        'frm_InvoicePembelian_TanpaPO_Lokal_Jasa.MdiParent = Me
+        'frm_InvoicePembelian_TanpaPO_Lokal_Jasa.Show()
+        'frm_InvoicePembelian_TanpaPO_Lokal_Jasa.Focus()
     End Sub
 
     Private Sub mnu_InvoicePembelian_TanpaPO_Lokal_BarangDanJasa_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_TanpaPO_Lokal_BarangDanJasa.Click
-        frm_InvoicePembelian_TanpaPO_Lokal_BarangDanJasa.MdiParent = Me
-        frm_InvoicePembelian_TanpaPO_Lokal_BarangDanJasa.Show()
-        frm_InvoicePembelian_TanpaPO_Lokal_BarangDanJasa.Focus()
+        'frm_InvoicePembelian_TanpaPO_Lokal_BarangDanJasa.MdiParent = Me
+        'frm_InvoicePembelian_TanpaPO_Lokal_BarangDanJasa.Show()
+        'frm_InvoicePembelian_TanpaPO_Lokal_BarangDanJasa.Focus()
     End Sub
 
     Private Sub mnu_InvoicePembelian_TanpaPO_Lokal_JasaKonstruksi_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_TanpaPO_Lokal_JasaKonstruksi.Click
-        frm_InvoicePembelian_TanpaPO_Lokal_JasaKonstruksi.MdiParent = Me
-        frm_InvoicePembelian_TanpaPO_Lokal_JasaKonstruksi.Show()
-        frm_InvoicePembelian_TanpaPO_Lokal_JasaKonstruksi.Focus()
+        'frm_InvoicePembelian_TanpaPO_Lokal_JasaKonstruksi.MdiParent = Me
+        'frm_InvoicePembelian_TanpaPO_Lokal_JasaKonstruksi.Show()
+        'frm_InvoicePembelian_TanpaPO_Lokal_JasaKonstruksi.Focus()
     End Sub
 
     Private Sub mnu_InvoicePembelian_TanpaPO_Impor_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_TanpaPO_Impor.Click
     End Sub
 
     Private Sub mnu_InvoicePembelian_TanpaPO_Impor_Barang_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_TanpaPO_Impor_Barang.Click
-        frm_InvoicePembelian_TanpaPO_Impor_Barang.MdiParent = Me
-        frm_InvoicePembelian_TanpaPO_Impor_Barang.Show()
-        frm_InvoicePembelian_TanpaPO_Impor_Barang.Focus()
+        'frm_InvoicePembelian_TanpaPO_Impor_Barang.MdiParent = Me
+        'frm_InvoicePembelian_TanpaPO_Impor_Barang.Show()
+        'frm_InvoicePembelian_TanpaPO_Impor_Barang.Focus()
     End Sub
 
     Private Sub mnu_InvoicePembelian_TanpaPO_Impor_Jasa_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_TanpaPO_Impor_Jasa.Click
-        frm_InvoicePembelian_TanpaPO_Impor_Jasa.MdiParent = Me
-        frm_InvoicePembelian_TanpaPO_Impor_Jasa.Show()
-        frm_InvoicePembelian_TanpaPO_Impor_Jasa.Focus()
+        'frm_InvoicePembelian_TanpaPO_Impor_Jasa.MdiParent = Me
+        'frm_InvoicePembelian_TanpaPO_Impor_Jasa.Show()
+        'frm_InvoicePembelian_TanpaPO_Impor_Jasa.Focus()
     End Sub
 
     Private Sub mnu_InvoicePembelian_TanpaPO_LokalMUA_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePembelian_TanpaPO_LokalMUA.Click
@@ -1082,23 +1082,23 @@ Public Class frm_BOOKU
     End Sub
 
     Private Sub mnu_BukuPembelian_Lokal_Click(sender As Object, e As EventArgs) Handles mnu_BukuPembelian_Lokal.Click
-        frm_BukuPembelian_lokal.MdiParent = Me
-        frm_BukuPembelian_lokal.Show()
-        frm_BukuPembelian_lokal.Focus()
+        'frm_BukuPembelian_lokal.MdiParent = Me
+        'frm_BukuPembelian_lokal.Show()
+        'frm_BukuPembelian_lokal.Focus()
     End Sub
 
     Private Sub mnu_BukuPembelian_Impor_Click(sender As Object, e As EventArgs) Handles mnu_BukuPembelian_Impor.Click
-        frm_BukuPembelian_Impor.MdiParent = Me
-        frm_BukuPembelian_Impor.Show()
-        frm_BukuPembelian_Impor.Focus()
+        'frm_BukuPembelian_Impor.MdiParent = Me
+        'frm_BukuPembelian_Impor.Show()
+        'frm_BukuPembelian_Impor.Focus()
     End Sub
 
 
     'SUB MENU : RETUR PEMBELIAN ---------------------------------------------------------------------------------------------------
     Private Sub mnu_ReturPembelian_Click(sender As Object, e As EventArgs) Handles mnu_ReturPembelian.Click
-        frm_ReturPembelian.MdiParent = Me
-        frm_ReturPembelian.Show()
-        frm_ReturPembelian.Focus()
+        'frm_ReturPembelian.MdiParent = Me
+        'frm_ReturPembelian.Show()
+        'frm_ReturPembelian.Focus()
     End Sub
 
 
@@ -1115,110 +1115,110 @@ Public Class frm_BOOKU
     End Sub
 
     Private Sub mnu_POPenjualan_Lokal_Barang_Click(sender As Object, e As EventArgs) Handles mnu_POPenjualan_Lokal_Barang.Click
-        frm_POPenjualan_Lokal_Barang.MdiParent = Me
-        frm_POPenjualan_Lokal_Barang.Show()
-        frm_POPenjualan_Lokal_Barang.Focus()
+        'frm_POPenjualan_Lokal_Barang.MdiParent = Me
+        'frm_POPenjualan_Lokal_Barang.Show()
+        'frm_POPenjualan_Lokal_Barang.Focus()
     End Sub
 
     Private Sub mnu_POPenjualan_Lokal_Jasa_Click(sender As Object, e As EventArgs) Handles mnu_POPenjualan_Lokal_Jasa.Click
-        frm_POPenjualan_Lokal_Jasa.MdiParent = Me
-        frm_POPenjualan_Lokal_Jasa.Show()
-        frm_POPenjualan_Lokal_Jasa.Focus()
+        'frm_POPenjualan_Lokal_Jasa.MdiParent = Me
+        'frm_POPenjualan_Lokal_Jasa.Show()
+        'frm_POPenjualan_Lokal_Jasa.Focus()
     End Sub
 
     Private Sub mnu_POPenjualan_Lokal_BarangDanJasa_Click(sender As Object, e As EventArgs) Handles mnu_POPenjualan_Lokal_BarangDanJasa.Click
-        frm_POPenjualan_Lokal_BarangDanJasa.MdiParent = Me
-        frm_POPenjualan_Lokal_BarangDanJasa.Show()
-        frm_POPenjualan_Lokal_BarangDanJasa.Focus()
+        'frm_POPenjualan_Lokal_BarangDanJasa.MdiParent = Me
+        'frm_POPenjualan_Lokal_BarangDanJasa.Show()
+        'frm_POPenjualan_Lokal_BarangDanJasa.Focus()
     End Sub
 
     Private Sub mnu_POPenjualan_Lokal_JasaKonstruksi_Click(sender As Object, e As EventArgs) Handles mnu_POPenjualan_Lokal_JasaKonstruksi.Click
-        frm_POPenjualan_Lokal_JasaKonstruksi.MdiParent = Me
-        frm_POPenjualan_Lokal_JasaKonstruksi.Show()
-        frm_POPenjualan_Lokal_JasaKonstruksi.Focus()
+        'frm_POPenjualan_Lokal_JasaKonstruksi.MdiParent = Me
+        'frm_POPenjualan_Lokal_JasaKonstruksi.Show()
+        'frm_POPenjualan_Lokal_JasaKonstruksi.Focus()
     End Sub
 
     Private Sub mnu_POPenjualan_Lokal_Semua_Click(sender As Object, e As EventArgs) Handles mnu_POPenjualan_Lokal_Semua.Click
-        frm_POPenjualan_Lokal_Semua.MdiParent = Me
-        frm_POPenjualan_Lokal_Semua.Show()
-        frm_POPenjualan_Lokal_Semua.Focus()
+        'frm_POPenjualan_Lokal_Semua.MdiParent = Me
+        'frm_POPenjualan_Lokal_Semua.Show()
+        'frm_POPenjualan_Lokal_Semua.Focus()
     End Sub
 
     Private Sub mnu_POPenjualan_Ekspor_Click(sender As Object, e As EventArgs) Handles mnu_POPenjualan_Ekspor.Click
-        frm_POPenjualan_Ekspor.MdiParent = Me
-        frm_POPenjualan_Ekspor.Show()
-        frm_POPenjualan_Ekspor.Focus()
+        'frm_POPenjualan_Ekspor.MdiParent = Me
+        'frm_POPenjualan_Ekspor.Show()
+        'frm_POPenjualan_Ekspor.Focus()
     End Sub
 
 
     Private Sub mnu_SuratJalanPenjualan_Click(sender As Object, e As EventArgs) Handles mnu_SuratJalanPenjualan.Click
-        frm_SuratJalanPenjualan.MdiParent = Me
-        frm_SuratJalanPenjualan.Show()
-        frm_SuratJalanPenjualan.Focus()
+        'frm_SuratJalanPenjualan.MdiParent = Me
+        'frm_SuratJalanPenjualan.Show()
+        'frm_SuratJalanPenjualan.Focus()
     End Sub
 
     Private Sub mnu_BASTPenjualan_Click(sender As Object, e As EventArgs) Handles mnu_BASTPenjualan.Click
-        frm_BASTPenjualan.MdiParent = Me
-        frm_BASTPenjualan.Show()
-        frm_BASTPenjualan.Focus()
+        'frm_BASTPenjualan.MdiParent = Me
+        'frm_BASTPenjualan.Show()
+        'frm_BASTPenjualan.Focus()
     End Sub
 
     Private Sub mnu_InvoicePenjualan_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePenjualan.Click
     End Sub
 
     Private Sub mnu_InvoicePenjualan_DenganPO_Lokal_Rutin_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePenjualan_DenganPO_Lokal_Rutin.Click
-        frm_InvoicePenjualan_DenganPO_Lokal_Rutin.MdiParent = Me
-        frm_InvoicePenjualan_DenganPO_Lokal_Rutin.Show()
-        frm_InvoicePenjualan_DenganPO_Lokal_Rutin.Focus()
+        'frm_InvoicePenjualan_DenganPO_Lokal_Rutin.MdiParent = Me
+        'frm_InvoicePenjualan_DenganPO_Lokal_Rutin.Show()
+        'frm_InvoicePenjualan_DenganPO_Lokal_Rutin.Focus()
     End Sub
 
     Private Sub mnu_InvoicePenjualan_DenganPO_Lokal_Termin_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePenjualan_DenganPO_Lokal_Termin.Click
-        frm_InvoicePenjualan_DenganPO_Lokal_Termin.MdiParent = Me
-        frm_InvoicePenjualan_DenganPO_Lokal_Termin.Show()
-        frm_InvoicePenjualan_DenganPO_Lokal_Termin.Focus()
+        'frm_InvoicePenjualan_DenganPO_Lokal_Termin.MdiParent = Me
+        'frm_InvoicePenjualan_DenganPO_Lokal_Termin.Show()
+        'frm_InvoicePenjualan_DenganPO_Lokal_Termin.Focus()
     End Sub
 
     Private Sub mnu_InvoicePenjualan_DenganPO_Ekspor_Rutin_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePenjualan_DenganPO_Ekspor_Rutin.Click
-        frm_InvoicePenjualan_DenganPO_Ekspor_Rutin.MdiParent = Me
-        frm_InvoicePenjualan_DenganPO_Ekspor_Rutin.Show()
-        frm_InvoicePenjualan_DenganPO_Ekspor_Rutin.Focus()
+        'frm_InvoicePenjualan_DenganPO_Ekspor_Rutin.MdiParent = Me
+        'frm_InvoicePenjualan_DenganPO_Ekspor_Rutin.Show()
+        'frm_InvoicePenjualan_DenganPO_Ekspor_Rutin.Focus()
     End Sub
 
     Private Sub mnu_InvoicePenjualan_DenganPO_Ekspor_Termin_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePenjualan_DenganPO_Ekspor_Termin.Click
-        frm_InvoicePenjualan_DenganPO_Ekspor_Termin.MdiParent = Me
-        frm_InvoicePenjualan_DenganPO_Ekspor_Termin.Show()
-        frm_InvoicePenjualan_DenganPO_Ekspor_Termin.Focus()
+        'frm_InvoicePenjualan_DenganPO_Ekspor_Termin.MdiParent = Me
+        'frm_InvoicePenjualan_DenganPO_Ekspor_Termin.Show()
+        'frm_InvoicePenjualan_DenganPO_Ekspor_Termin.Focus()
     End Sub
 
 
     Private Sub mnu_InvoicePenjualan_TanpaPO_Lokal_Barang_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePenjualan_TanpaPO_Lokal_Barang.Click
-        frm_InvoicePenjualan_TanpaPO_Lokal_Barang.MdiParent = Me
-        frm_InvoicePenjualan_TanpaPO_Lokal_Barang.Show()
-        frm_InvoicePenjualan_TanpaPO_Lokal_Barang.Focus()
+        'frm_InvoicePenjualan_TanpaPO_Lokal_Barang.MdiParent = Me
+        'frm_InvoicePenjualan_TanpaPO_Lokal_Barang.Show()
+        'frm_InvoicePenjualan_TanpaPO_Lokal_Barang.Focus()
     End Sub
 
     Private Sub mnu_InvoicePenjualan_TanpaPO_Lokal_Jasa_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePenjualan_TanpaPO_Lokal_Jasa.Click
-        frm_InvoicePenjualan_TanpaPO_Lokal_Jasa.MdiParent = Me
-        frm_InvoicePenjualan_TanpaPO_Lokal_Jasa.Show()
-        frm_InvoicePenjualan_TanpaPO_Lokal_Jasa.Focus()
+        'frm_InvoicePenjualan_TanpaPO_Lokal_Jasa.MdiParent = Me
+        'frm_InvoicePenjualan_TanpaPO_Lokal_Jasa.Show()
+        'frm_InvoicePenjualan_TanpaPO_Lokal_Jasa.Focus()
     End Sub
 
     Private Sub mnu_InvoicePenjualan_TanpaPO_Lokal_BarangDanJasa_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePenjualan_TanpaPO_Lokal_BarangDanJasa.Click
-        frm_InvoicePenjualan_TanpaPO_Lokal_BarangdanJasa.MdiParent = Me
-        frm_InvoicePenjualan_TanpaPO_Lokal_BarangdanJasa.Show()
-        frm_InvoicePenjualan_TanpaPO_Lokal_BarangdanJasa.Focus()
+        'frm_InvoicePenjualan_TanpaPO_Lokal_BarangdanJasa.MdiParent = Me
+        'frm_InvoicePenjualan_TanpaPO_Lokal_BarangdanJasa.Show()
+        'frm_InvoicePenjualan_TanpaPO_Lokal_BarangdanJasa.Focus()
     End Sub
 
     Private Sub mnu_InvoicePenjualan_TanpaPO_Lokal_JasaKonstruksi_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePenjualan_TanpaPO_Lokal_JasaKonstruksi.Click
-        frm_InvoicePenjualan_TanpaPO_Lokal_JasaKonstruksi.MdiParent = Me
-        frm_InvoicePenjualan_TanpaPO_Lokal_JasaKonstruksi.Show()
-        frm_InvoicePenjualan_TanpaPO_Lokal_JasaKonstruksi.Focus()
+        'frm_InvoicePenjualan_TanpaPO_Lokal_JasaKonstruksi.MdiParent = Me
+        'frm_InvoicePenjualan_TanpaPO_Lokal_JasaKonstruksi.Show()
+        'frm_InvoicePenjualan_TanpaPO_Lokal_JasaKonstruksi.Focus()
     End Sub
 
     Private Sub mnu_InvoicePenjualan_TanpaPO_Ekspor_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePenjualan_TanpaPO_Ekspor.Click
-        frm_InvoicePenjualan_TanpaPO_Ekspor.MdiParent = Me
-        frm_InvoicePenjualan_TanpaPO_Ekspor.Show()
-        frm_InvoicePenjualan_TanpaPO_Ekspor.Focus()
+        'frm_InvoicePenjualan_TanpaPO_Ekspor.MdiParent = Me
+        'frm_InvoicePenjualan_TanpaPO_Ekspor.Show()
+        'frm_InvoicePenjualan_TanpaPO_Ekspor.Focus()
     End Sub
 
     Private Sub mnu_InvoicePenjualan_TanpaPO_Asset_Click(sender As Object, e As EventArgs) Handles mnu_InvoicePenjualan_TanpaPO_Asset.Click
@@ -1232,28 +1232,28 @@ Public Class frm_BOOKU
     End Sub
 
     Private Sub mnu_BukuPenjualan_Lokal_Click(sender As Object, e As EventArgs) Handles mnu_BukuPenjualan_Lokal.Click
-        frm_BukuPenjualan_Lokal.MdiParent = Me
-        frm_BukuPenjualan_Lokal.Show()
-        frm_BukuPenjualan_Lokal.Focus()
+        'frm_BukuPenjualan_Lokal.MdiParent = Me
+        'frm_BukuPenjualan_Lokal.Show()
+        'frm_BukuPenjualan_Lokal.Focus()
     End Sub
 
     Private Sub mnu_BukuPenjualan_Ekspor_Click(sender As Object, e As EventArgs) Handles mnu_BukuPenjualan_Ekspor.Click
-        frm_BukuPenjualan_Ekspor.MdiParent = Me
-        frm_BukuPenjualan_Ekspor.Show()
-        frm_BukuPenjualan_Ekspor.Focus()
+        'frm_BukuPenjualan_Ekspor.MdiParent = Me
+        'frm_BukuPenjualan_Ekspor.Show()
+        'frm_BukuPenjualan_Ekspor.Focus()
     End Sub
 
 
     Private Sub mnu_BukuPenjualanEceran_Click(sender As Object, e As EventArgs) Handles mnu_BukuPenjualanEceran.Click
-        frm_BukuPenjualanEceran.MdiParent = Me
-        frm_BukuPenjualanEceran.Show()
-        frm_BukuPenjualanEceran.Focus()
+        'frm_BukuPenjualanEceran.MdiParent = Me
+        'frm_BukuPenjualanEceran.Show()
+        'frm_BukuPenjualanEceran.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanReturPenjualan_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanReturPenjualan.Click
-        frm_ReturPenjualan.MdiParent = Me
-        frm_ReturPenjualan.Show()
-        frm_ReturPenjualan.Focus()
+        'frm_ReturPenjualan.MdiParent = Me
+        'frm_ReturPenjualan.Show()
+        'frm_ReturPenjualan.Focus()
     End Sub
 
 
@@ -1268,37 +1268,37 @@ Public Class frm_BOOKU
 
     'Buku Bank :
     Private Sub mnu_BukuBank_Click(sender As Object, e As EventArgs) Handles mnu_BukuBank.Click
-        frm_BukuBank.MdiParent = Me
-        frm_BukuBank.Show()
-        frm_BukuBank.Focus()
+        'frm_BukuBank.MdiParent = Me
+        'frm_BukuBank.Show()
+        'frm_BukuBank.Focus()
     End Sub
 
     'Buku Kas :
     Private Sub mnu_BukuKas_Click(sender As Object, e As EventArgs) Handles mnu_BukuKas.Click
-        frm_BukuKas.MdiParent = Me
-        frm_BukuKas.Show()
-        frm_BukuKas.Focus()
+        'frm_BukuKas.MdiParent = Me
+        'frm_BukuKas.Show()
+        'frm_BukuKas.Focus()
     End Sub
 
     'Buku Petty Cash :
     Private Sub mnu_BukuPettyCash_Click(sender As Object, e As EventArgs) Handles mnu_BukuPettyCash.Click
-        frm_BukuPettyCash.MdiParent = Me
-        frm_BukuPettyCash.Show()
-        frm_BukuPettyCash.Focus()
+        'frm_BukuPettyCash.MdiParent = Me
+        'frm_BukuPettyCash.Show()
+        'frm_BukuPettyCash.Focus()
     End Sub
 
     'Buku Cash Advance :
     Private Sub mnu_BukuCashAdvance_Click(sender As Object, e As EventArgs) Handles mnu_BukuCashAdvance.Click
-        frm_BukuCashAdvance.MdiParent = Me
-        frm_BukuCashAdvance.Show()
-        frm_BukuCashAdvance.Focus()
+        'frm_BukuCashAdvance.MdiParent = Me
+        'frm_BukuCashAdvance.Show()
+        'frm_BukuCashAdvance.Focus()
     End Sub
 
     'Buku Bank Garansi :
     Private Sub mnu_BukuBankGaransi_Click(sender As Object, e As EventArgs) Handles mnu_BukuBankGaransi.Click
-        frm_BukuBankGaransi.MdiParent = Me
-        frm_BukuBankGaransi.Show()
-        frm_BukuBankGaransi.Focus()
+        'frm_BukuBankGaransi.MdiParent = Me
+        'frm_BukuBankGaransi.Show()
+        'frm_BukuBankGaransi.Focus()
     End Sub
 
 
@@ -1309,9 +1309,9 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanGaji()
     End Sub
     Sub BukaModul_BukuPengawasanGaji()
-        frm_BukuPengawasanGaji.MdiParent = Me
-        frm_BukuPengawasanGaji.Show()
-        frm_BukuPengawasanGaji.Focus()
+        'frm_BukuPengawasanGaji.MdiParent = Me
+        'frm_BukuPengawasanGaji.Show()
+        'frm_BukuPengawasanGaji.Focus()
     End Sub
 
     'Buku Pengawasan Hutang BPJS Kesehatan :
@@ -1319,9 +1319,9 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangBPJSKesehatan()
     End Sub
     Sub BukaModul_BukuPengawasanHutangBPJSKesehatan()
-        frm_BukuPengawasanHutangBPJSKesehatan.MdiParent = Me
-        frm_BukuPengawasanHutangBPJSKesehatan.Show()
-        frm_BukuPengawasanHutangBPJSKesehatan.Focus()
+        'frm_BukuPengawasanHutangBPJSKesehatan.MdiParent = Me
+        'frm_BukuPengawasanHutangBPJSKesehatan.Show()
+        'frm_BukuPengawasanHutangBPJSKesehatan.Focus()
     End Sub
 
 
@@ -1330,9 +1330,9 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangBPJSKetenagakerjaan()
     End Sub
     Sub BukaModul_BukuPengawasanHutangBPJSKetenagakerjaan()
-        frm_BukuPengawasanHutangBPJSKetenagakerjaan.MdiParent = Me
-        frm_BukuPengawasanHutangBPJSKetenagakerjaan.Show()
-        frm_BukuPengawasanHutangBPJSKetenagakerjaan.Focus()
+        'frm_BukuPengawasanHutangBPJSKetenagakerjaan.MdiParent = Me
+        'frm_BukuPengawasanHutangBPJSKetenagakerjaan.Show()
+        'frm_BukuPengawasanHutangBPJSKetenagakerjaan.Focus()
     End Sub
 
 
@@ -1341,9 +1341,9 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangKoperasiKaryawan()
     End Sub
     Sub BukaModul_BukuPengawasanHutangKoperasiKaryawan()
-        frm_BukuPengawasanHutangKoperasiKaryawan.MdiParent = Me
-        frm_BukuPengawasanHutangKoperasiKaryawan.Show()
-        frm_BukuPengawasanHutangKoperasiKaryawan.Focus()
+        'frm_BukuPengawasanHutangKoperasiKaryawan.MdiParent = Me
+        'frm_BukuPengawasanHutangKoperasiKaryawan.Show()
+        'frm_BukuPengawasanHutangKoperasiKaryawan.Focus()
     End Sub
 
 
@@ -1352,9 +1352,9 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangSerikat()
     End Sub
     Sub BukaModul_BukuPengawasanHutangSerikat()
-        frm_BukuPengawasanHutangSerikat.MdiParent = Me
-        frm_BukuPengawasanHutangSerikat.Show()
-        frm_BukuPengawasanHutangSerikat.Focus()
+        'frm_BukuPengawasanHutangSerikat.MdiParent = Me
+        'frm_BukuPengawasanHutangSerikat.Show()
+        'frm_BukuPengawasanHutangSerikat.Focus()
     End Sub
 
 
@@ -1367,22 +1367,22 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangUsaha_NonAfiliasi()
     End Sub
     Sub BukaModul_BukuPengawasanHutangUsaha_NonAfiliasi()
-        frm_BukuPengawasanHutangUsaha_NonAfiliasi.MdiParent = Me
-        frm_BukuPengawasanHutangUsaha_NonAfiliasi.Show()
-        frm_BukuPengawasanHutangUsaha_NonAfiliasi.Focus()
+        'frm_BukuPengawasanHutangUsaha_NonAfiliasi.MdiParent = Me
+        'frm_BukuPengawasanHutangUsaha_NonAfiliasi.Show()
+        'frm_BukuPengawasanHutangUsaha_NonAfiliasi.Focus()
     End Sub
     Private Sub mnu_BukuPengawasanHutangUsaha_Afiliasi_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangUsaha_Afiliasi.Click
         BukaModul_BukuPengawasanHutangUsaha_Afiliasi()
     End Sub
     Sub BukaModul_BukuPengawasanHutangUsaha_Afiliasi()
-        frm_BukuPengawasanHutangUsaha_Afiliasi.MdiParent = Me
-        frm_BukuPengawasanHutangUsaha_Afiliasi.Show()
-        frm_BukuPengawasanHutangUsaha_Afiliasi.Focus()
+        'frm_BukuPengawasanHutangUsaha_Afiliasi.MdiParent = Me
+        'frm_BukuPengawasanHutangUsaha_Afiliasi.Show()
+        'frm_BukuPengawasanHutangUsaha_Afiliasi.Focus()
     End Sub
     Private Sub mnu_BukuPengawasanHutangUsaha_Semua_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangUsaha_Semua.Click
-        frm_BukuPengawasanHutangUsaha.MdiParent = Me
-        frm_BukuPengawasanHutangUsaha.Show()
-        frm_BukuPengawasanHutangUsaha.Focus()
+        'frm_BukuPengawasanHutangUsaha.MdiParent = Me
+        'frm_BukuPengawasanHutangUsaha.Show()
+        'frm_BukuPengawasanHutangUsaha.Focus()
     End Sub
 
 
@@ -1393,18 +1393,18 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangUsaha_Impor_USD()
     End Sub
     Sub BukaModul_BukuPengawasanHutangUsaha_Impor_USD()
-        frm_BukuPengawasanHutangUsaha_Impor_USD.MdiParent = Me
-        frm_BukuPengawasanHutangUsaha_Impor_USD.Show()
-        frm_BukuPengawasanHutangUsaha_Impor_USD.Focus()
+        'frm_BukuPengawasanHutangUsaha_Impor_USD.MdiParent = Me
+        'frm_BukuPengawasanHutangUsaha_Impor_USD.Show()
+        'frm_BukuPengawasanHutangUsaha_Impor_USD.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Impor_AUD_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangUsaha_Impor_AUD.Click
         BukaModul_BukuPengawasanHutangUsaha_Impor_AUD()
     End Sub
     Sub BukaModul_BukuPengawasanHutangUsaha_Impor_AUD()
-        frm_BukuPengawasanHutangUsaha_Impor_AUD.MdiParent = Me
-        frm_BukuPengawasanHutangUsaha_Impor_AUD.Show()
-        frm_BukuPengawasanHutangUsaha_Impor_AUD.Focus()
+        'frm_BukuPengawasanHutangUsaha_Impor_AUD.MdiParent = Me
+        'frm_BukuPengawasanHutangUsaha_Impor_AUD.Show()
+        'frm_BukuPengawasanHutangUsaha_Impor_AUD.Focus()
     End Sub
 
 
@@ -1412,45 +1412,45 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangUsaha_Impor_JPY()
     End Sub
     Sub BukaModul_BukuPengawasanHutangUsaha_Impor_JPY()
-        frm_BukuPengawasanHutangUsaha_Impor_JPY.MdiParent = Me
-        frm_BukuPengawasanHutangUsaha_Impor_JPY.Show()
-        frm_BukuPengawasanHutangUsaha_Impor_JPY.Focus()
+        'frm_BukuPengawasanHutangUsaha_Impor_JPY.MdiParent = Me
+        'frm_BukuPengawasanHutangUsaha_Impor_JPY.Show()
+        'frm_BukuPengawasanHutangUsaha_Impor_JPY.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Impor_CNY_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangUsaha_Impor_CNY.Click
         BukaModul_BukuPengawasanHutangUsaha_Impor_CNY()
     End Sub
     Sub BukaModul_BukuPengawasanHutangUsaha_Impor_CNY()
-        frm_BukuPengawasanHutangUsaha_Impor_CNY.MdiParent = Me
-        frm_BukuPengawasanHutangUsaha_Impor_CNY.Show()
-        frm_BukuPengawasanHutangUsaha_Impor_CNY.Focus()
+        'frm_BukuPengawasanHutangUsaha_Impor_CNY.MdiParent = Me
+        'frm_BukuPengawasanHutangUsaha_Impor_CNY.Show()
+        'frm_BukuPengawasanHutangUsaha_Impor_CNY.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Impor_EUR_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangUsaha_Impor_EUR.Click
         BukaModul_BukuPengawasanHutangUsaha_Impor_EUR()
     End Sub
     Sub BukaModul_BukuPengawasanHutangUsaha_Impor_EUR()
-        frm_BukuPengawasanHutangUsaha_Impor_EUR.MdiParent = Me
-        frm_BukuPengawasanHutangUsaha_Impor_EUR.Show()
-        frm_BukuPengawasanHutangUsaha_Impor_EUR.Focus()
+        'frm_BukuPengawasanHutangUsaha_Impor_EUR.MdiParent = Me
+        'frm_BukuPengawasanHutangUsaha_Impor_EUR.Show()
+        'frm_BukuPengawasanHutangUsaha_Impor_EUR.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Impor_SGD_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangUsaha_Impor_SGD.Click
         BukaModul_BukuPengawasanHutangUsaha_Impor_SGD()
     End Sub
     Sub BukaModul_BukuPengawasanHutangUsaha_Impor_SGD()
-        frm_BukuPengawasanHutangUsaha_Impor_SGD.MdiParent = Me
-        frm_BukuPengawasanHutangUsaha_Impor_SGD.Show()
-        frm_BukuPengawasanHutangUsaha_Impor_SGD.Focus()
+        'frm_BukuPengawasanHutangUsaha_Impor_SGD.MdiParent = Me
+        'frm_BukuPengawasanHutangUsaha_Impor_SGD.Show()
+        'frm_BukuPengawasanHutangUsaha_Impor_SGD.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangUsaha_Impor_GBP_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangUsaha_Impor_GBP.Click
         BukaModul_BukuPengawasanHutangUsaha_Impor_GBP()
     End Sub
     Sub BukaModul_BukuPengawasanHutangUsaha_Impor_GBP()
-        frm_BukuPengawasanHutangUsaha_Impor_GBP.MdiParent = Me
-        frm_BukuPengawasanHutangUsaha_Impor_GBP.Show()
-        frm_BukuPengawasanHutangUsaha_Impor_GBP.Focus()
+        'frm_BukuPengawasanHutangUsaha_Impor_GBP.MdiParent = Me
+        'frm_BukuPengawasanHutangUsaha_Impor_GBP.Show()
+        'frm_BukuPengawasanHutangUsaha_Impor_GBP.Focus()
     End Sub
 
 
@@ -1458,63 +1458,63 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangBank()
     End Sub
     Sub BukaModul_BukuPengawasanHutangBank()
-        frm_BukuPengawasanHutangBank.MdiParent = Me
-        frm_BukuPengawasanHutangBank.Show()
-        frm_BukuPengawasanHutangBank.Focus()
+        'frm_BukuPengawasanHutangBank.MdiParent = Me
+        'frm_BukuPengawasanHutangBank.Show()
+        'frm_BukuPengawasanHutangBank.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangLeasing_X_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangLeasing.Click
         BukaModul_BukuPengawasanHutangLeasing()
     End Sub
     Sub BukaModul_BukuPengawasanHutangLeasing()
-        frm_BukuPengawasanHutangLeasing.MdiParent = Me
-        frm_BukuPengawasanHutangLeasing.Show()
-        frm_BukuPengawasanHutangLeasing.Focus()
+        'frm_BukuPengawasanHutangLeasing.MdiParent = Me
+        'frm_BukuPengawasanHutangLeasing.Show()
+        'frm_BukuPengawasanHutangLeasing.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangPihakKetiga_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangPihakKetiga.Click
         BukaModul_BukuPengawasanHutangPihakKetiga()
     End Sub
     Sub BukaModul_BukuPengawasanHutangPihakKetiga()
-        frm_BukuPengawasanHutangPihakKetiga.MdiParent = Me
-        frm_BukuPengawasanHutangPihakKetiga.Show()
-        frm_BukuPengawasanHutangPihakKetiga.Focus()
+        'frm_BukuPengawasanHutangPihakKetiga.MdiParent = Me
+        'frm_BukuPengawasanHutangPihakKetiga.Show()
+        'frm_BukuPengawasanHutangPihakKetiga.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangAfiliasi_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangAfiliasi.Click
         BukaModul_BukuPengawasanHutangAfiliasi()
     End Sub
     Sub BukaModul_BukuPengawasanHutangAfiliasi()
-        frm_BukuPengawasanHutangAfiliasi.MdiParent = Me
-        frm_BukuPengawasanHutangAfiliasi.Show()
-        frm_BukuPengawasanHutangAfiliasi.Focus()
+        'frm_BukuPengawasanHutangAfiliasi.MdiParent = Me
+        'frm_BukuPengawasanHutangAfiliasi.Show()
+        'frm_BukuPengawasanHutangAfiliasi.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangKaryawan_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangKaryawan.Click
         BukaModul_BukuPengawasanHutangKaryawan()
     End Sub
     Sub BukaModul_BukuPengawasanHutangKaryawan()
-        frm_BukuPengawasanHutangKaryawan.MdiParent = Me
-        frm_BukuPengawasanHutangKaryawan.Show()
-        frm_BukuPengawasanHutangKaryawan.Focus()
+        'frm_BukuPengawasanHutangKaryawan.MdiParent = Me
+        'frm_BukuPengawasanHutangKaryawan.Show()
+        'frm_BukuPengawasanHutangKaryawan.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangPemegangSaham_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangPemegangSaham.Click
         BukaModul_BukuPengawasanHutangPemegangSaham()
     End Sub
     Sub BukaModul_BukuPengawasanHutangPemegangSaham()
-        frm_BukuPengawasanHutangPemegangSaham.MdiParent = Me
-        frm_BukuPengawasanHutangPemegangSaham.Show()
-        frm_BukuPengawasanHutangPemegangSaham.Focus()
+        'frm_BukuPengawasanHutangPemegangSaham.MdiParent = Me
+        'frm_BukuPengawasanHutangPemegangSaham.Show()
+        'frm_BukuPengawasanHutangPemegangSaham.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangDividen_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangDividen.Click
         BukaModul_BukuPengawasanHutangDividen()
     End Sub
     Sub BukaModul_BukuPengawasanHutangDividen()
-        frm_BukuPengawasanHutangDividen.MdiParent = Me
-        frm_BukuPengawasanHutangDividen.Show()
-        frm_BukuPengawasanHutangDividen.Focus()
+        'frm_BukuPengawasanHutangDividen.MdiParent = Me
+        'frm_BukuPengawasanHutangDividen.Show()
+        'frm_BukuPengawasanHutangDividen.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanHutangLainnya_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangLainnya.Click
@@ -1529,22 +1529,22 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanPiutangUsaha_NonAfiliasi()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangUsaha_NonAfiliasi()
-        frm_BukuPengawasanPiutangUsaha_NonAfiliasi.MdiParent = Me
-        frm_BukuPengawasanPiutangUsaha_NonAfiliasi.Show()
-        frm_BukuPengawasanPiutangUsaha_NonAfiliasi.Focus()
+        'frm_BukuPengawasanPiutangUsaha_NonAfiliasi.MdiParent = Me
+        'frm_BukuPengawasanPiutangUsaha_NonAfiliasi.Show()
+        'frm_BukuPengawasanPiutangUsaha_NonAfiliasi.Focus()
     End Sub
     Private Sub mnu_BukuPengawasanPiutangUsaha_Afiliasi_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Afiliasi.Click
         BukaModul_BukuPengawasanPiutangUsaha_Afiliasi()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangUsaha_Afiliasi()
-        frm_BukuPengawasanPiutangUsaha_Afiliasi.MdiParent = Me
-        frm_BukuPengawasanPiutangUsaha_Afiliasi.Show()
-        frm_BukuPengawasanPiutangUsaha_Afiliasi.Focus()
+        'frm_BukuPengawasanPiutangUsaha_Afiliasi.MdiParent = Me
+        'frm_BukuPengawasanPiutangUsaha_Afiliasi.Show()
+        'frm_BukuPengawasanPiutangUsaha_Afiliasi.Focus()
     End Sub
     Private Sub mnu_BukuPengawasanPiutangUsaha_Semua_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Semua.Click
-        frm_BukuPengawasanPiutangUsaha.MdiParent = Me
-        frm_BukuPengawasanPiutangUsaha.Show()
-        frm_BukuPengawasanPiutangUsaha.Focus()
+        'frm_BukuPengawasanPiutangUsaha.MdiParent = Me
+        'frm_BukuPengawasanPiutangUsaha.Show()
+        'frm_BukuPengawasanPiutangUsaha.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor.Click
@@ -1554,18 +1554,18 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanPiutangUsaha_Ekspor_USD()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_USD()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_USD.MdiParent = Me
-        frm_BukuPengawasanPiutangUsaha_Ekspor_USD.Show()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_USD.Focus()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_USD.MdiParent = Me
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_USD.Show()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_USD.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_AUD_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor_AUD.Click
         BukaModul_BukuPengawasanPiutangUsaha_Ekspor_AUD()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_AUD()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_AUD.MdiParent = Me
-        frm_BukuPengawasanPiutangUsaha_Ekspor_AUD.Show()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_AUD.Focus()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_AUD.MdiParent = Me
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_AUD.Show()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_AUD.Focus()
     End Sub
 
 
@@ -1573,45 +1573,45 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanPiutangUsaha_Ekspor_JPY()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_JPY()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_JPY.MdiParent = Me
-        frm_BukuPengawasanPiutangUsaha_Ekspor_JPY.Show()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_JPY.Focus()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_JPY.MdiParent = Me
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_JPY.Show()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_JPY.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_CNY_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor_CNY.Click
         BukaModul_BukuPengawasanPiutangUsaha_Ekspor_CNY()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_CNY()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_CNY.MdiParent = Me
-        frm_BukuPengawasanPiutangUsaha_Ekspor_CNY.Show()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_CNY.Focus()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_CNY.MdiParent = Me
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_CNY.Show()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_CNY.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_EUR_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor_EUR.Click
         BukaModul_BukuPengawasanPiutangUsaha_Ekspor_EUR()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_EUR()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_EUR.MdiParent = Me
-        frm_BukuPengawasanPiutangUsaha_Ekspor_EUR.Show()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_EUR.Focus()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_EUR.MdiParent = Me
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_EUR.Show()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_EUR.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_SGD_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor_SGD.Click
         BukaModul_BukuPengawasanPiutangUsaha_Ekspor_SGD()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_SGD()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_SGD.MdiParent = Me
-        frm_BukuPengawasanPiutangUsaha_Ekspor_SGD.Show()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_SGD.Focus()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_SGD.MdiParent = Me
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_SGD.Show()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_SGD.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangUsaha_Ekspor_GBP_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangUsaha_Ekspor_GBP.Click
         BukaModul_BukuPengawasanPiutangUsaha_Ekspor_GBP()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangUsaha_Ekspor_GBP()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_GBP.MdiParent = Me
-        frm_BukuPengawasanPiutangUsaha_Ekspor_GBP.Show()
-        frm_BukuPengawasanPiutangUsaha_Ekspor_GBP.Focus()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_GBP.MdiParent = Me
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_GBP.Show()
+        'frm_BukuPengawasanPiutangUsaha_Ekspor_GBP.Focus()
     End Sub
 
 
@@ -1619,54 +1619,54 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanPiutangPihakKetiga()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangPihakKetiga()
-        frm_BukuPengawasanPiutangPihakKetiga.MdiParent = Me
-        frm_BukuPengawasanPiutangPihakKetiga.Show()
-        frm_BukuPengawasanPiutangPihakKetiga.Focus()
+        'frm_BukuPengawasanPiutangPihakKetiga.MdiParent = Me
+        'frm_BukuPengawasanPiutangPihakKetiga.Show()
+        'frm_BukuPengawasanPiutangPihakKetiga.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangAfiliasi_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangAfiliasi.Click
         BukaModul_BukuPengawasanPiutangAfiliasi()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangAfiliasi()
-        frm_BukuPengawasanPiutangAfiliasi.MdiParent = Me
-        frm_BukuPengawasanPiutangAfiliasi.Show()
-        frm_BukuPengawasanPiutangAfiliasi.Focus()
+        'frm_BukuPengawasanPiutangAfiliasi.MdiParent = Me
+        'frm_BukuPengawasanPiutangAfiliasi.Show()
+        'frm_BukuPengawasanPiutangAfiliasi.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangKaryawan_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangKaryawan.Click
         BukaModul_BukuPengawasanPiutangKaryawan()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangKaryawan()
-        frm_BukuPengawasanPiutangKaryawan.MdiParent = Me
-        frm_BukuPengawasanPiutangKaryawan.Show()
-        frm_BukuPengawasanPiutangKaryawan.Focus()
+        'frm_BukuPengawasanPiutangKaryawan.MdiParent = Me
+        'frm_BukuPengawasanPiutangKaryawan.Show()
+        'frm_BukuPengawasanPiutangKaryawan.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangPemegangSaham_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangPemegangSaham.Click
         BukaModul_BukuPengawasanPiutangPemegangSaham()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangPemegangSaham()
-        frm_BukuPengawasanPiutangPemegangSaham.MdiParent = Me
-        frm_BukuPengawasanPiutangPemegangSaham.Show()
-        frm_BukuPengawasanPiutangPemegangSaham.Focus()
+        'frm_BukuPengawasanPiutangPemegangSaham.MdiParent = Me
+        'frm_BukuPengawasanPiutangPemegangSaham.Show()
+        'frm_BukuPengawasanPiutangPemegangSaham.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanDepositOperasional_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanDepositOperasional.Click
         BukaModul_BukuPengawasanDepositOperasional()
     End Sub
     Sub BukaModul_BukuPengawasanDepositOperasional()
-        frm_BukuPengawasanDepositOperasional.MdiParent = Me
-        frm_BukuPengawasanDepositOperasional.Show()
-        frm_BukuPengawasanDepositOperasional.Focus()
+        'frm_BukuPengawasanDepositOperasional.MdiParent = Me
+        'frm_BukuPengawasanDepositOperasional.Show()
+        'frm_BukuPengawasanDepositOperasional.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangDividen_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangDividen.Click
         BukaModul_BukuPengawasanPiutangDividen()
     End Sub
     Sub BukaModul_BukuPengawasanPiutangDividen()
-        frm_BukuPengawasanPiutangDividen.MdiParent = Me
-        frm_BukuPengawasanPiutangDividen.Show()
-        frm_BukuPengawasanPiutangDividen.Focus()
+        'frm_BukuPengawasanPiutangDividen.MdiParent = Me
+        'frm_BukuPengawasanPiutangDividen.Show()
+        'frm_BukuPengawasanPiutangDividen.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanPiutangLainnya_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPiutangLainnya.Click
@@ -1681,9 +1681,9 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanBuktiPenerimaanBankCash()
     End Sub
     Sub BukaModul_BukuPengawasanBuktiPenerimaanBankCash()
-        frm_BukuPengawasanBuktiPenerimaanBankCash.MdiParent = Me
-        frm_BukuPengawasanBuktiPenerimaanBankCash.Show()
-        frm_BukuPengawasanBuktiPenerimaanBankCash.Focus()
+        'frm_BukuPengawasanBuktiPenerimaanBankCash.MdiParent = Me
+        'frm_BukuPengawasanBuktiPenerimaanBankCash.Show()
+        'frm_BukuPengawasanBuktiPenerimaanBankCash.Focus()
     End Sub
 
 
@@ -1691,9 +1691,9 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanBuktiPengeluaranBankCash()
     End Sub
     Sub BukaModul_BukuPengawasanBuktiPengeluaranBankCash()
-        frm_BukuPengawasanBuktiPengeluaranBankCash.MdiParent = Me
-        frm_BukuPengawasanBuktiPengeluaranBankCash.Show()
-        frm_BukuPengawasanBuktiPengeluaranBankCash.Focus()
+        'frm_BukuPengawasanBuktiPengeluaranBankCash.MdiParent = Me
+        'frm_BukuPengawasanBuktiPengeluaranBankCash.Show()
+        'frm_BukuPengawasanBuktiPengeluaranBankCash.Focus()
     End Sub
 
 
@@ -1701,18 +1701,18 @@ Public Class frm_BOOKU
     'KELOMPOK SUB MENU : BUKU PENGAWASAN PEMINDAHBUKUAN ---------------------------------------------------------------------------
 
     Private Sub mnu_BukuPengawasanPemindabukuan_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanPemindabukuan.Click
-        frm_BukuPengawasanPemindahbukuan.MdiParent = Me
-        frm_BukuPengawasanPemindahbukuan.Show()
-        frm_BukuPengawasanPemindahbukuan.Focus()
+        'frm_BukuPengawasanPemindahbukuan.MdiParent = Me
+        'frm_BukuPengawasanPemindahbukuan.Show()
+        'frm_BukuPengawasanPemindahbukuan.Focus()
     End Sub
 
 
     'KELOMPOK SUB MENU : BUKU PENGAWASAN AKTIVA LAINNYA ---------------------------------------------------------------------------
 
     Private Sub mnu_BukuPengawasanAktivaLainnya_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanAktivaLainnya.Click
-        frm_BukuPengawasanAktivaLainnya.MdiParent = Me
-        frm_BukuPengawasanAktivaLainnya.Show()
-        frm_BukuPengawasanAktivaLainnya.Focus()
+        'frm_BukuPengawasanAktivaLainnya.MdiParent = Me
+        'frm_BukuPengawasanAktivaLainnya.Show()
+        'frm_BukuPengawasanAktivaLainnya.Focus()
     End Sub
 
 
@@ -1727,9 +1727,9 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangPPhPasal21()
     End Sub
     Sub BukaModul_BukuPengawasanHutangPPhPasal21()
-        frm_BukuPengawasanHutangPPhPasal21.MdiParent = Me
-        frm_BukuPengawasanHutangPPhPasal21.Show()
-        frm_BukuPengawasanHutangPPhPasal21.Focus()
+        'frm_BukuPengawasanHutangPPhPasal21.MdiParent = Me
+        'frm_BukuPengawasanHutangPPhPasal21.Show()
+        'frm_BukuPengawasanHutangPPhPasal21.Focus()
     End Sub
 
     'Buku Pengawasan Hutang PPh Pasal 22
@@ -1739,17 +1739,17 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangPPhPasal22_Lokal()
     End Sub
     Sub BukaModul_BukuPengawasanHutangPPhPasal22_Lokal()
-        frm_BukuPengawasanHutangPPhPasal22_Lokal.MdiParent = Me
-        frm_BukuPengawasanHutangPPhPasal22_Lokal.Show()
-        frm_BukuPengawasanHutangPPhPasal22_Lokal.Focus()
+        'frm_BukuPengawasanHutangPPhPasal22_Lokal.MdiParent = Me
+        'frm_BukuPengawasanHutangPPhPasal22_Lokal.Show()
+        'frm_BukuPengawasanHutangPPhPasal22_Lokal.Focus()
     End Sub
     Private Sub mnu_BukuPengawasanHutangPPhPasal22_ImporClick(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanHutangPPhPasal22_Impor.Click
         BukaModul_BukuPengawasanHutangPPhPasal22_Impor()
     End Sub
     Sub BukaModul_BukuPengawasanHutangPPhPasal22_Impor()
-        frm_BukuPengawasanHutangPPhPasal22_Impor.MdiParent = Me
-        frm_BukuPengawasanHutangPPhPasal22_Impor.Show()
-        frm_BukuPengawasanHutangPPhPasal22_Impor.Focus()
+        'frm_BukuPengawasanHutangPPhPasal22_Impor.MdiParent = Me
+        'frm_BukuPengawasanHutangPPhPasal22_Impor.Show()
+        'frm_BukuPengawasanHutangPPhPasal22_Impor.Focus()
     End Sub
 
     'Buku Pengawasan Hutang PPh Pasal 23
@@ -1757,9 +1757,9 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangPPhPasal23()
     End Sub
     Sub BukaModul_BukuPengawasanHutangPPhPasal23()
-        frm_BukuPengawasanHutangPPhPasal23.MdiParent = Me
-        frm_BukuPengawasanHutangPPhPasal23.Show()
-        frm_BukuPengawasanHutangPPhPasal23.Focus()
+        'frm_BukuPengawasanHutangPPhPasal23.MdiParent = Me
+        'frm_BukuPengawasanHutangPPhPasal23.Show()
+        'frm_BukuPengawasanHutangPPhPasal23.Focus()
     End Sub
 
     'Buku Pengawasan Hutang PPh Pasal 4 (2)
@@ -1767,9 +1767,9 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangPPhPasal42()
     End Sub
     Sub BukaModul_BukuPengawasanHutangPPhPasal42()
-        frm_BukuPengawasanHutangPPhPasal42.MdiParent = Me
-        frm_BukuPengawasanHutangPPhPasal42.Show()
-        frm_BukuPengawasanHutangPPhPasal42.Focus()
+        'frm_BukuPengawasanHutangPPhPasal42.MdiParent = Me
+        'frm_BukuPengawasanHutangPPhPasal42.Show()
+        'frm_BukuPengawasanHutangPPhPasal42.Focus()
     End Sub
 
     'Buku Pengawasan Hutang PPh Pasal 25
@@ -1777,9 +1777,9 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangPPhPasal25()
     End Sub
     Sub BukaModul_BukuPengawasanHutangPPhPasal25()
-        frm_BukuPengawasanHutangPPhPasal25.MdiParent = Me
-        frm_BukuPengawasanHutangPPhPasal25.Show()
-        frm_BukuPengawasanHutangPPhPasal25.Focus()
+        'frm_BukuPengawasanHutangPPhPasal25.MdiParent = Me
+        'frm_BukuPengawasanHutangPPhPasal25.Show()
+        'frm_BukuPengawasanHutangPPhPasal25.Focus()
         'X_frm_BukuPengawasanHutangPPhPasal25_X.MdiParent = Me
         'X_frm_BukuPengawasanHutangPPhPasal25_X.Show()
         'X_frm_BukuPengawasanHutangPPhPasal25_X.Focus()
@@ -1790,9 +1790,9 @@ Public Class frm_BOOKU
         BukaModul_BukuPengawasanHutangPPhPasal26()
     End Sub
     Sub BukaModul_BukuPengawasanHutangPPhPasal26()
-        frm_BukuPengawasanHutangPPhPasal26.MdiParent = Me
-        frm_BukuPengawasanHutangPPhPasal26.Show()
-        frm_BukuPengawasanHutangPPhPasal26.Focus()
+        'frm_BukuPengawasanHutangPPhPasal26.MdiParent = Me
+        'frm_BukuPengawasanHutangPPhPasal26.Show()
+        'frm_BukuPengawasanHutangPPhPasal26.Focus()
     End Sub
 
     'Buku Pengawasan Hutang PPh Pasal 29
@@ -1808,9 +1808,9 @@ Public Class frm_BOOKU
             MenuDalamPerbaikan()
             Return
         End If
-        frm_BukuPengawasanPelaporanPPN.MdiParent = Me
-        frm_BukuPengawasanPelaporanPPN.Show()
-        frm_BukuPengawasanPelaporanPPN.Focus()
+        'frm_BukuPengawasanPelaporanPPN.MdiParent = Me
+        'frm_BukuPengawasanPelaporanPPN.Show()
+        'frm_BukuPengawasanPelaporanPPN.Focus()
     End Sub
 
 
@@ -1822,9 +1822,9 @@ Public Class frm_BOOKU
             MenuDalamPerbaikan()
             Return
         End If
-        frm_BukuPengawasanKetetapanPajak.MdiParent = Me
-        frm_BukuPengawasanKetetapanPajak.Show()
-        frm_BukuPengawasanKetetapanPajak.Focus()
+        'frm_BukuPengawasanKetetapanPajak.MdiParent = Me
+        'frm_BukuPengawasanKetetapanPajak.Show()
+        'frm_BukuPengawasanKetetapanPajak.Focus()
     End Sub
 
 
@@ -1836,9 +1836,9 @@ Public Class frm_BOOKU
             MenuIniMasihDalamPengembangan()
             Return
         End If
-        frm_BukuPengawasanPajakImpor.MdiParent = Me
-        frm_BukuPengawasanPajakImpor.Show()
-        frm_BukuPengawasanPajakImpor.Focus()
+        'frm_BukuPengawasanPajakImpor.MdiParent = Me
+        'frm_BukuPengawasanPajakImpor.Show()
+        'frm_BukuPengawasanPajakImpor.Focus()
     End Sub
 
 
@@ -1859,18 +1859,18 @@ Public Class frm_BOOKU
     End Sub
 
     Private Sub mnu_BukuPengawasanBuktiPotongPPh_Paid_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanBuktiPotongPPh_Paid.Click
-        frm_BukuPengawasanBuktiPotongPPh_Paid.MdiParent = Me
-        frm_BukuPengawasanBuktiPotongPPh_Paid.Show()
-        frm_BukuPengawasanBuktiPotongPPh_Paid.Focus()
+        'frm_BukuPengawasanBuktiPotongPPh_Paid.MdiParent = Me
+        'frm_BukuPengawasanBuktiPotongPPh_Paid.Show()
+        'frm_BukuPengawasanBuktiPotongPPh_Paid.Focus()
         'X_frm_BukuPengawasanBuktiPotongPPh_Paid.MdiParent = Me
         'X_frm_BukuPengawasanBuktiPotongPPh_Paid.Show()
         'X_frm_BukuPengawasanBuktiPotongPPh_Paid.Focus()
     End Sub
 
     Private Sub mnu_BukuPengawasanBuktiPotongPPh_Prepaid_Click(sender As Object, e As EventArgs) Handles mnu_BukuPengawasanBuktiPotongPPh_Prepaid.Click
-        frm_BukuPengawasanBuktiPotongPPh_Prepaid.MdiParent = Me
-        frm_BukuPengawasanBuktiPotongPPh_Prepaid.Show()
-        frm_BukuPengawasanBuktiPotongPPh_Prepaid.Focus()
+        'frm_BukuPengawasanBuktiPotongPPh_Prepaid.MdiParent = Me
+        'frm_BukuPengawasanBuktiPotongPPh_Prepaid.Show()
+        'frm_BukuPengawasanBuktiPotongPPh_Prepaid.Focus()
         'X_frm_BukuPengawasanBuktiPotongPPh_Prepaid.MdiParent = Me
         'X_frm_BukuPengawasanBuktiPotongPPh_Prepaid.Show()
         'X_frm_BukuPengawasanBuktiPotongPPh_Prepaid.Focus()
@@ -1886,9 +1886,9 @@ Public Class frm_BOOKU
             PesanUntukProgrammer("Tentukan Dulu Jenis Stoknya")
             Return
         End If
-        frm_StockOpname.MdiParent = Me
-        frm_StockOpname.Show()
-        frm_StockOpname.Focus()
+        'frm_StockOpname.MdiParent = Me
+        'frm_StockOpname.Show()
+        'frm_StockOpname.Focus()
     End Sub
 
     Private Sub mnu_StockOpname_BahanPenolong_Click(sender As Object, e As EventArgs) Handles mnu_StockOpname_BahanPenolong.Click
@@ -1896,9 +1896,9 @@ Public Class frm_BOOKU
     End Sub
     Sub BukaModul_StockOpname_BahanPenolong()
         frm_BahanPenolong.Close()
-        frm_BahanPenolong.MdiParent = Me
-        frm_BahanPenolong.Show()
-        frm_BahanPenolong.Focus()
+        'frm_BahanPenolong.MdiParent = Me
+        'frm_BahanPenolong.Show()
+        'frm_BahanPenolong.Focus()
     End Sub
 
     Private Sub mnu_StockOpname_BahanBaku_Click(sender As Object, e As EventArgs) Handles mnu_StockOpname_BahanBaku.Click
@@ -1906,9 +1906,9 @@ Public Class frm_BOOKU
     End Sub
     Sub BukaModul_StockOpname_BahanBaku()
         frm_BahanBaku.Close()
-        frm_BahanBaku.MdiParent = Me
-        frm_BahanBaku.Show()
-        frm_BahanBaku.Focus()
+        'frm_BahanBaku.MdiParent = Me
+        'frm_BahanBaku.Show()
+        'frm_BahanBaku.Focus()
     End Sub
     Private Sub mnu_StockOpname_BarangDalamProses_Click(sender As Object, e As EventArgs) Handles mnu_StockOpname_BarangDalamProses.Click
     End Sub
@@ -1918,9 +1918,9 @@ Public Class frm_BOOKU
     End Sub
     Sub BukaModul_StockOpname_BarangDalamProses_CekFisik()
         frm_BarangDalamProses_CekFisik.Close()
-        frm_BarangDalamProses_CekFisik.MdiParent = Me
-        frm_BarangDalamProses_CekFisik.Show()
-        frm_BarangDalamProses_CekFisik.Focus()
+        'frm_BarangDalamProses_CekFisik.MdiParent = Me
+        'frm_BarangDalamProses_CekFisik.Show()
+        'frm_BarangDalamProses_CekFisik.Focus()
     End Sub
 
     Private Sub mnu_StockOpname_BarangDalamProses_TarikanData_Click(sender As Object, e As EventArgs) Handles mnu_StockOpname_BarangDalamProses_TarikanData.Click
@@ -1931,18 +1931,18 @@ Public Class frm_BOOKU
         BukaModul_StockOpnameBarangDalamProses_TarikanData()
     End Sub
     Sub BukaModul_StockOpnameBarangDalamProses_TarikanData()
-        frm_BarangDalamProses_TarikanData.MdiParent = Me
-        frm_BarangDalamProses_TarikanData.Show()
-        frm_BarangDalamProses_TarikanData.Focus()
+        'frm_BarangDalamProses_TarikanData.MdiParent = Me
+        'frm_BarangDalamProses_TarikanData.Show()
+        'frm_BarangDalamProses_TarikanData.Focus()
     End Sub
     Private Sub mnu_StockOpname_BarangJadi_Click(sender As Object, e As EventArgs) Handles mnu_StockOpname_BarangJadi.Click
         BukaModul_StockOpname_BarangJadi()
     End Sub
     Sub BukaModul_StockOpname_BarangJadi()
         frm_BarangJadi.Close()
-        frm_BarangJadi.MdiParent = Me
-        frm_BarangJadi.Show()
-        frm_BarangJadi.Focus()
+        'frm_BarangJadi.MdiParent = Me
+        'frm_BarangJadi.Show()
+        'frm_BarangJadi.Focus()
     End Sub
 
 
@@ -1953,9 +1953,9 @@ Public Class frm_BOOKU
     End Sub
 
     Private Sub mnu_JurnalUmum_Click(sender As Object, e As EventArgs) Handles mnu_JurnalUmum.Click
-        frm_JurnalUmum.MdiParent = Me
-        frm_JurnalUmum.Show()
-        frm_JurnalUmum.Focus()
+        'frm_JurnalUmum.MdiParent = Me
+        'frm_JurnalUmum.Show()
+        'frm_JurnalUmum.Focus()
     End Sub
 
 
@@ -1966,24 +1966,24 @@ Public Class frm_BOOKU
         BukaHalamanAdjusmentPenyusutanAsset()
     End Sub
     Sub BukaHalamanAdjusmentPenyusutanAsset()
-        frm_Adjusment_PenyusutanAsset.MdiParent = Me
-        frm_Adjusment_PenyusutanAsset.Show()
-        frm_Adjusment_PenyusutanAsset.Focus()
+        'frm_Adjusment_PenyusutanAsset.MdiParent = Me
+        'frm_Adjusment_PenyusutanAsset.Show()
+        'frm_Adjusment_PenyusutanAsset.Focus()
     End Sub
 
     Private Sub mnu_JurnalAdjusment_Amortisasi_Click(sender As Object, e As EventArgs) Handles mnu_JurnalAdjusment_Amortisasi.Click
         BukaHalamanAdjusmentAmortisasi()
     End Sub
     Sub BukaHalamanAdjusmentAmortisasi()
-        frm_Adjusment_Amortisasi.MdiParent = Me
-        frm_Adjusment_Amortisasi.Show()
-        frm_Adjusment_Amortisasi.Focus()
+        'frm_Adjusment_Amortisasi.MdiParent = Me
+        'frm_Adjusment_Amortisasi.Show()
+        'frm_Adjusment_Amortisasi.Focus()
     End Sub
 
     Private Sub mnu_JurnalAdjusment_Forex_Click(sender As Object, e As EventArgs) Handles mnu_JurnalAdjusment_Forex.Click
-        frm_Adjusment_Forex.MdiParent = Me
-        frm_Adjusment_Forex.Show()
-        frm_Adjusment_Forex.Focus()
+        'frm_Adjusment_Forex.MdiParent = Me
+        'frm_Adjusment_Forex.Show()
+        'frm_Adjusment_Forex.Focus()
     End Sub
 
     Private Sub mnu_JurnalAdjusment_HPP_Click(sender As Object, e As EventArgs) Handles mnu_JurnalAdjusment_HPP.Click
@@ -2000,14 +2000,14 @@ Public Class frm_BOOKU
             Return
         End If
         'Cek Dulu Kelengkapan Adjusment Forex :
-        frm_Adjusment_Forex.CekAdjusment()
+        'frm_Adjusment_Forex.CekAdjusment()
         If Not usc_Adjusment_Forex.AdjusmentBulanBukuAktifSudahLengkap Then
             PesanPemberitahuan("Silakan tuntaskan dulu Adjusment Forex untuk Bulan " & KonversiAngkaKeBulanString(BulanBukuAktif) & ", baru masuk ke menu ini.")
             Return
         End If
-        frm_Adjusment_HPP.MdiParent = Me
-        frm_Adjusment_HPP.Show()
-        frm_Adjusment_HPP.Focus()
+        'frm_Adjusment_HPP.MdiParent = Me
+        'frm_Adjusment_HPP.Show()
+        'frm_Adjusment_HPP.Focus()
     End Sub
 
 
@@ -2016,11 +2016,11 @@ Public Class frm_BOOKU
         BukaModul_BukuBesar(Kosongan)
     End Sub
     Sub BukaModul_BukuBesar(AkunTerpilih)
-        frm_BukuBesar.Close() 'Ini jangan dihapus. Ini dibutuhkan untuk mereset tampilan Buku Besar.
-        frm_BukuBesar.MdiParent = Me
-        frm_BukuBesar.AkunTerpilih = AkunTerpilih
-        frm_BukuBesar.Show()
-        frm_BukuBesar.Focus()
+        'frm_BukuBesar.Close() 'Ini jangan dihapus. Ini dibutuhkan untuk mereset tampilan Buku Besar.
+        'frm_BukuBesar.MdiParent = Me
+        'frm_BukuBesar.AkunTerpilih = AkunTerpilih
+        'frm_BukuBesar.Show()
+        'frm_BukuBesar.Focus()
     End Sub
 
     Private Sub mnu_Laporan_Click(sender As Object, e As EventArgs) Handles mnu_Laporan.Click
@@ -2028,9 +2028,9 @@ Public Class frm_BOOKU
 
     'Sub Menu : LAPORAN DATA TRANSAKSI --------------------------------------------------------------------------------------------
     Private Sub mnu_LaporanAktivitasTransaksi_Click(sender As Object, e As EventArgs) Handles mnu_LaporanAktivitasTransaksi.Click
-        frm_LaporanAktivitasTransaksi.MdiParent = Me
-        frm_LaporanAktivitasTransaksi.Show()
-        frm_LaporanAktivitasTransaksi.Focus()
+        'frm_LaporanAktivitasTransaksi.MdiParent = Me
+        'frm_LaporanAktivitasTransaksi.Show()
+        'frm_LaporanAktivitasTransaksi.Focus()
     End Sub
 
 
@@ -2040,17 +2040,17 @@ Public Class frm_BOOKU
         BukaModul_LaporanTrialBalance()
     End Sub
     Sub BukaModul_LaporanTrialBalance()
-        frm_LaporanTrialBalance.MdiParent = Me
-        frm_LaporanTrialBalance.JalurMasuk = Halaman_MENUUTAMA
-        frm_LaporanTrialBalance.Show()
-        frm_LaporanTrialBalance.Focus()
+        'frm_LaporanTrialBalance.MdiParent = Me
+        'frm_LaporanTrialBalance.JalurMasuk = Halaman_MENUUTAMA
+        'frm_LaporanTrialBalance.Show()
+        'frm_LaporanTrialBalance.Focus()
     End Sub
 
     'Sub Menu : LAPORAN >> Neraca Lajur -------------------------------------------------------------------------------------------
     Private Sub mnu_NeracaLajur_Click(sender As Object, e As EventArgs) Handles mnu_NeracaLajur.Click
-        frm_LaporanNeracaLajur.MdiParent = Me
-        frm_LaporanNeracaLajur.Show()
-        frm_LaporanNeracaLajur.Focus()
+        'frm_LaporanNeracaLajur.MdiParent = Me
+        'frm_LaporanNeracaLajur.Show()
+        'frm_LaporanNeracaLajur.Focus()
     End Sub
 
     Private Sub mnu_LaporanKeuangan_Click(sender As Object, e As EventArgs) Handles mnu_LaporanKeuangan.Click
@@ -2061,9 +2061,9 @@ Public Class frm_BOOKU
         BukaHalaman_LaporanHPP()
     End Sub
     Sub BukaHalaman_LaporanHPP()
-        frm_LaporanHPP.MdiParent = Me
-        frm_LaporanHPP.Show()
-        frm_LaporanHPP.Focus()
+        'frm_LaporanHPP.MdiParent = Me
+        'frm_LaporanHPP.Show()
+        'frm_LaporanHPP.Focus()
     End Sub
 
     'Sub Menu : LAPORAN >> Neraca -------------------------------------------------------------------------------------------------
@@ -2073,18 +2073,18 @@ Public Class frm_BOOKU
         BukaHalaman_LaporanNeraca_Bulanan()
     End Sub
     Sub BukaHalaman_LaporanNeraca_Bulanan()
-        frm_LaporanNeraca_Bulanan.MdiParent = Me
-        frm_LaporanNeraca_Bulanan.Show()
-        frm_LaporanNeraca_Bulanan.Focus()
+        'frm_LaporanNeraca_Bulanan.MdiParent = Me
+        'frm_LaporanNeraca_Bulanan.Show()
+        'frm_LaporanNeraca_Bulanan.Focus()
     End Sub
     Private Sub mnu_Neraca_Tahunan_Click(sender As Object, e As EventArgs) Handles mnu_Neraca_Tahunan.Click
         If LevelUserAktif < LevelUser_99_AppDeveloper Then
             MenuIniMasihDalamPengembangan()
             Return
         End If
-        frm_LaporanNeraca_Tahunan.MdiParent = Me
-        frm_LaporanNeraca_Tahunan.Show()
-        frm_LaporanNeraca_Tahunan.Focus()
+        'frm_LaporanNeraca_Tahunan.MdiParent = Me
+        'frm_LaporanNeraca_Tahunan.Show()
+        'frm_LaporanNeraca_Tahunan.Focus()
     End Sub
 
     'Sub Menu : LAPORAN >> Laba/Rugi ----------------------------------------------------------------------------------------------
@@ -2094,26 +2094,26 @@ Public Class frm_BOOKU
         BukaHalaman_LaporanLabaRugi_Bulanan()
     End Sub
     Sub BukaHalaman_LaporanLabaRugi_Bulanan()
-        frm_LaporanLabaRugi_Bulanan.MdiParent = Me
-        frm_LaporanLabaRugi_Bulanan.Show()
-        frm_LaporanLabaRugi_Bulanan.Focus()
+        'frm_LaporanLabaRugi_Bulanan.MdiParent = Me
+        'frm_LaporanLabaRugi_Bulanan.Show()
+        'frm_LaporanLabaRugi_Bulanan.Focus()
     End Sub
     Private Sub mnu_LabaRugi_Tahunan_Click(sender As Object, e As EventArgs) Handles mnu_LabaRugi_Tahunan.Click
         If LevelUserAktif < LevelUser_99_AppDeveloper Then
             MenuIniMasihDalamPengembangan()
             Return
         End If
-        frm_LaporanLabaRugi_Tahunan.MdiParent = Me
-        frm_LaporanLabaRugi_Tahunan.Show()
-        frm_LaporanLabaRugi_Tahunan.Focus()
+        'frm_LaporanLabaRugi_Tahunan.MdiParent = Me
+        'frm_LaporanLabaRugi_Tahunan.Show()
+        'frm_LaporanLabaRugi_Tahunan.Focus()
     End Sub
 
 
     'Sub Menu : LAPORAN >> Aktivitas Transaksi ------------------------------------------------------------------------------------
     Private Sub mnu_LaporanAktivitasTransaksi_Click_1(sender As Object, e As EventArgs) Handles mnu_LaporanAktivitasTransaksi.Click
-        frm_JurnalUmum.MdiParent = Me
-        frm_JurnalUmum.Show()
-        frm_JurnalUmum.Focus()
+        'frm_JurnalUmum.MdiParent = Me
+        'frm_JurnalUmum.Show()
+        'frm_JurnalUmum.Focus()
     End Sub
 
 
@@ -2126,9 +2126,9 @@ Public Class frm_BOOKU
         BukaModul_ManajemenAmortisasiBiaya()
     End Sub
     Sub BukaModul_ManajemenAmortisasiBiaya()
-        frm_DaftarAmortisasiBiaya.MdiParent = Me
-        frm_DaftarAmortisasiBiaya.Show()
-        frm_DaftarAmortisasiBiaya.Focus()
+        'frm_DaftarAmortisasiBiaya.MdiParent = Me
+        'frm_DaftarAmortisasiBiaya.Show()
+        'frm_DaftarAmortisasiBiaya.Focus()
     End Sub
     'Sub Menu : Manemen Amortisasi >> Amortisasi AssetTidakBerwujud :
     Private Sub mnu_ManajemenAmortisasiAssetTidakBerwujud_Click(sender As Object, e As EventArgs) Handles mnu_ManajemenAmortisasiAssetTidakBerwujud.Click
@@ -2142,27 +2142,27 @@ Public Class frm_BOOKU
         BukaModul_DaftarPenyusutanAssetTetap()
     End Sub
     Sub BukaModul_DaftarPenyusutanAssetTetap()
-        frm_DaftarPenyusutanAssetTetap.JalurMasuk = Halaman_MENUUTAMA
-        frm_DaftarPenyusutanAssetTetap.MdiParent = Me
-        frm_DaftarPenyusutanAssetTetap.Show()
-        frm_DaftarPenyusutanAssetTetap.Focus()
+        'frm_DaftarPenyusutanAssetTetap.JalurMasuk = Halaman_MENUUTAMA
+        'frm_DaftarPenyusutanAssetTetap.MdiParent = Me
+        'frm_DaftarPenyusutanAssetTetap.Show()
+        'frm_DaftarPenyusutanAssetTetap.Focus()
     End Sub
     'Sub Menu : Manemen Asset Tetap >> Buku Penjualan Asset Tetap :
     Private Sub mnu_BukuPenjualanAssetTetap_Click(sender As Object, e As EventArgs) Handles mnu_BukuPenjualanAssetTetap.Click
         BukaModul_BukuPenjualanAsset()
     End Sub
     Public Sub BukaModul_BukuPenjualanAsset()
-        frm_BukuPenjualanAsset.Close()
-        frm_BukuPenjualanAsset.MdiParent = Me
-        frm_BukuPenjualanAsset.Show()
-        frm_BukuPenjualanAsset.Focus()
+        'frm_BukuPenjualanAsset.Close()
+        'frm_BukuPenjualanAsset.MdiParent = Me
+        'frm_BukuPenjualanAsset.Show()
+        'frm_BukuPenjualanAsset.Focus()
     End Sub
 
     'Sub Menu : Manemen Asset Tetap >> Buku Disposal Asset Tetap :
     Private Sub mnu_BukuDisposalAssetTetap_Click(sender As Object, e As EventArgs) Handles mnu_BukuDisposalAssetTetap.Click
-        frm_BukuDisposalAssetTetap.MdiParent = Me
-        frm_BukuDisposalAssetTetap.Show()
-        frm_BukuDisposalAssetTetap.Focus()
+        'frm_BukuDisposalAssetTetap.MdiParent = Me
+        'frm_BukuDisposalAssetTetap.Show()
+        'frm_BukuDisposalAssetTetap.Focus()
     End Sub
 
 
@@ -2317,54 +2317,54 @@ Public Class frm_BOOKU
 
     'MENU : TECHNICAL SUPPORT =====================================================================================================
     Private Sub mnu_PhpMyAdmin_Click(sender As Object, e As EventArgs) Handles mnu_PhpMyAdmin.Click
-        frm_phpMyAdmin.Show()
-        frm_phpMyAdmin.Focus()
+        'frm_phpMyAdmin.Show()
+        'frm_phpMyAdmin.Focus()
     End Sub
 
 
 
     'MENU : APP DEVELOPER =========================================================================================================
     Private Sub mnu_ManajemenAplikasi_Click(sender As Object, e As EventArgs) Handles mnu_ManajemenAplikasi.Click
-        frm_ManajemenAplikasi.MdiParent = Me
-        frm_ManajemenAplikasi.Show()
-        frm_ManajemenAplikasi.Focus()
+        'frm_ManajemenAplikasi.MdiParent = Me
+        'frm_ManajemenAplikasi.Show()
+        'frm_ManajemenAplikasi.Focus()
     End Sub
 
 
     Private Sub mnu_ManajemenClient_Click(sender As Object, e As EventArgs) Handles mnu_ManajemenClient.Click
-        frm_ManajemenClient.MdiParent = Me
-        frm_ManajemenClient.Show()
-        frm_ManajemenClient.Focus()
+        'frm_ManajemenClient.MdiParent = Me
+        'frm_ManajemenClient.Show()
+        'frm_ManajemenClient.Focus()
     End Sub
 
     Private Sub mnu_ManajemenKurs_Click(sender As Object, e As EventArgs) Handles mnu_ManajemenKurs.Click
-        frm_ManajemenKurs.MdiParent = Me
-        frm_ManajemenKurs.Show()
-        frm_ManajemenKurs.Focus()
+        'frm_ManajemenKurs.MdiParent = Me
+        'frm_ManajemenKurs.Show()
+        'frm_ManajemenKurs.Focus()
     End Sub
 
 
     Private Sub mnu_DataProduk_Click(sender As Object, e As EventArgs) Handles mnu_DataProduk.Click
-        frm_DataProdukApp.MdiParent = Me
-        frm_DataProdukApp.Show()
-        frm_DataProdukApp.Focus()
+        'frm_DataProdukApp.MdiParent = Me
+        'frm_DataProdukApp.Show()
+        'frm_DataProdukApp.Focus()
     End Sub
 
     Private Sub mnu_DataPerangkat_Click(sender As Object, e As EventArgs) Handles mnu_DataPerangkat.Click
-        frm_DataPerangkatApp.MdiParent = Me
-        frm_DataPerangkatApp.Show()
-        frm_DataPerangkatApp.Focus()
+        'frm_DataPerangkatApp.MdiParent = Me
+        'frm_DataPerangkatApp.Show()
+        'frm_DataPerangkatApp.Focus()
     End Sub
 
     Private Sub mnu_DataVoucher_Click(sender As Object, e As EventArgs) Handles mnu_DataVoucher.Click
-        frm_DataVoucherApp.MdiParent = Me
-        frm_DataVoucherApp.Show()
-        frm_DataVoucherApp.Focus()
+        'frm_DataVoucherApp.MdiParent = Me
+        'frm_DataVoucherApp.Show()
+        'frm_DataVoucherApp.Focus()
     End Sub
 
     Private Sub mnu_TabPokok_Click(sender As Object, e As EventArgs) Handles mnu_TabPokok.Click
-        frm_TabPokok.Show()
-        frm_TabPokok.Focus()
+        'frm_TabPokok.Show()
+        'frm_TabPokok.Focus()
     End Sub
 
     Private Sub mnu_TryApp_Click(sender As Object, e As EventArgs) Handles mnu_TryApp.Click
@@ -2754,9 +2754,9 @@ Public Class frm_BOOKU
     End Sub
 
     Private Sub KursToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles KursToolStripMenuItem.Click
-        frm_Kurs.MdiParent = Me
-        frm_Kurs.Show()
-        frm_Kurs.Focus()
+        'frm_Kurs.MdiParent = Me
+        'frm_Kurs.Show()
+        'frm_Kurs.Focus()
     End Sub
 
     Private Sub mnu_TechnicalSupport_Click(sender As Object, e As EventArgs) Handles mnu_TechnicalSupport.Click

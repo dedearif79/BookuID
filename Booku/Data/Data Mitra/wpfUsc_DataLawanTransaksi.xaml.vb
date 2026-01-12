@@ -45,7 +45,7 @@ Public Class wpfUsc_DataLawanTransaksi
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_DataLawanTransaksi.JudulForm
+        'lbl_JudulForm.Text = frm_DataLawanTransaksi.JudulForm
 
 
         ProsesLoadingForm = False

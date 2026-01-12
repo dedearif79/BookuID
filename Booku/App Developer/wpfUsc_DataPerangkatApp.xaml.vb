@@ -1,4 +1,4 @@
-Imports System.Windows
+﻿Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
 Imports System.Windows.Input
@@ -24,7 +24,7 @@ Public Class wpfUsc_DataPerangkatApp
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_DataPerangkatApp.JudulForm
+        'lbl_JudulForm.Text = frm_DataPerangkatApp.JudulForm
 
         RefreshTampilanData()
 

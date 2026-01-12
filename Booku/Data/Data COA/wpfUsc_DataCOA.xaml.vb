@@ -29,7 +29,7 @@ Public Class wpfUsc_DataCOA
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_DataCOA.JudulForm
+        'lbl_JudulForm.Text = frm_DataCOA.JudulForm
         pnl_FilterData.Visibility = Visibility.Collapsed
         pnl_FilterData.Visibility = Visibility.Visible
 

@@ -43,7 +43,7 @@ Public Class wpfUsc_DataProject
 
         ProsesLoadingForm = True
 
-        lbl_JudulForm.Text = frm_DataProject.JudulForm
+        'lbl_JudulForm.Text = frm_DataProject.JudulForm
         pnl_FilterData.Visibility = Visibility.Collapsed
 
         RefreshTampilanData()
