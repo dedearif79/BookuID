@@ -1,4 +1,4 @@
-﻿Public Class ops_PilihJurnal_DataAsset
+﻿Public Class X_ops_PilihJurnal_DataAsset
 
     Dim NomorJV
     Public JalurMasuk

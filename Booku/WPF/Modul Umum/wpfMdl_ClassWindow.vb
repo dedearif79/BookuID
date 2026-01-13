@@ -122,6 +122,7 @@ Module wpfMdl_ClassWindow
     '═══════════════════════════════════════════════════════════════════════════
     Public win_InputTransaksi As New wpfWin_InputTransaksi
     Public win_InputJurnal As New wpfWin_InputJurnal
+    Public win_InputJurnalPerTransaksi As New wpfWin_InputJurnalPerTransaksi
     Public win_InputJurnalAdjusmentForex As New wpfWin_InputJurnalAdjusmentForex
     Public win_JurnalVoucher As New wpfWin_JurnalVoucher
     Public win_ImportJurnal As New wpfWin_ImportJurnal
@@ -175,6 +176,7 @@ Module wpfMdl_ClassWindow
     Public win_InputLaporPajak As New wpfWin_InputLaporPajak
     Public win_BayarPajakDengan As New wpfWin_BayarPajakDengan
     Public win_InputBuktiPotongPPh As wpfWin_InputBuktiPotongPPh
+    Public win_DetailPembayaranPajak As New wpfWin_DetailPembayaranPajak
 
     '═══════════════════════════════════════════════════════════════════════════
     ' BUKU PENGAWASAN - GAJI
@@ -190,6 +192,7 @@ Module wpfMdl_ClassWindow
     Public win_JualAsset As New wpfWin_JualAsset
     Public win_InputAmortisasiBiaya As New wpfWin_InputAmortisasiBiaya
     Public win_ProgressImportDataAsset As New wpfWin_ProgressImportDataAsset
+    Public win_PilihJurnal_DataAsset As New wpfWin_PilihJurnal_DataAsset
 
     '═══════════════════════════════════════════════════════════════════════════
     ' STOCK OPNAME

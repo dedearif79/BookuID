@@ -5125,11 +5125,6 @@ Public Module mdl_PublicSub
     End Function
 
 
-    Sub EksporDataGridViewKeCSV(datagridBahanEkspor As DataGridView)
-        frm_ProgressExport_CSV.BahanExport = datagridBahanEkspor
-        frm_ProgressExport_CSV.ShowDialog()
-    End Sub
-
 
     Function TahunBukuSudahStabil(TahunBuku) As Boolean
         Dim SudahStabil As Boolean

@@ -2005,7 +2005,8 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
 
     Private Sub btn_LihatJurnal_Click(sender As Object, e As RoutedEventArgs) Handles btn_LihatJurnal.Click
-        ops_PilihJurnal_DataAsset.ResetForm()
+        win_PilihJurnal_DataAsset = New wpfWin_PilihJurnal_DataAsset
+        win_PilihJurnal_DataAsset.ResetForm()
         Dim AdaJurnal = 0
         AksesDatabase_Transaksi(Buka)
         cmdCEKJURNAL = New OdbcCommand(" SELECT * FROM tbl_Transaksi " &
@@ -2017,69 +2018,69 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
             Dim TanggalJurnalPenyusutan = drCEKJURNAL.Item("Tanggal_Transaksi")
             Dim BulanJurnalPenyusutan = Format(TanggalJurnalPenyusutan, "MM")
             If AmbilAngka(BulanJurnalPenyusutan) = 1 Then
-                ops_PilihJurnal_DataAsset.rdb_Januari.Enabled = True
-                ops_PilihJurnal_DataAsset.AngkaNomorJV_Januari = drCEKJURNAL.Item("Nomor_JV")
+                win_PilihJurnal_DataAsset.rdb_Januari.IsEnabled = True
+                win_PilihJurnal_DataAsset.AngkaNomorJV_Januari = drCEKJURNAL.Item("Nomor_JV")
                 AdaJurnal += 1
             End If
             If AmbilAngka(BulanJurnalPenyusutan) = 2 Then
-                ops_PilihJurnal_DataAsset.rdb_Februari.Enabled = True
-                ops_PilihJurnal_DataAsset.AngkaNomorJV_Februari = drCEKJURNAL.Item("Nomor_JV")
+                win_PilihJurnal_DataAsset.rdb_Februari.IsEnabled = True
+                win_PilihJurnal_DataAsset.AngkaNomorJV_Februari = drCEKJURNAL.Item("Nomor_JV")
                 AdaJurnal += 1
             End If
             If AmbilAngka(BulanJurnalPenyusutan) = 3 Then
-                ops_PilihJurnal_DataAsset.rdb_Maret.Enabled = True
-                ops_PilihJurnal_DataAsset.AngkaNomorJV_Maret = drCEKJURNAL.Item("Nomor_JV")
+                win_PilihJurnal_DataAsset.rdb_Maret.IsEnabled = True
+                win_PilihJurnal_DataAsset.AngkaNomorJV_Maret = drCEKJURNAL.Item("Nomor_JV")
                 AdaJurnal += 1
             End If
             If AmbilAngka(BulanJurnalPenyusutan) = 4 Then
-                ops_PilihJurnal_DataAsset.rdb_April.Enabled = True
-                ops_PilihJurnal_DataAsset.AngkaNomorJV_April = drCEKJURNAL.Item("Nomor_JV")
+                win_PilihJurnal_DataAsset.rdb_April.IsEnabled = True
+                win_PilihJurnal_DataAsset.AngkaNomorJV_April = drCEKJURNAL.Item("Nomor_JV")
                 AdaJurnal += 1
             End If
             If AmbilAngka(BulanJurnalPenyusutan) = 5 Then
-                ops_PilihJurnal_DataAsset.rdb_Mei.Enabled = True
-                ops_PilihJurnal_DataAsset.AngkaNomorJV_Mei = drCEKJURNAL.Item("Nomor_JV")
+                win_PilihJurnal_DataAsset.rdb_Mei.IsEnabled = True
+                win_PilihJurnal_DataAsset.AngkaNomorJV_Mei = drCEKJURNAL.Item("Nomor_JV")
                 AdaJurnal += 1
             End If
             If AmbilAngka(BulanJurnalPenyusutan) = 6 Then
-                ops_PilihJurnal_DataAsset.rdb_Juni.Enabled = True
-                ops_PilihJurnal_DataAsset.AngkaNomorJV_Juni = drCEKJURNAL.Item("Nomor_JV")
+                win_PilihJurnal_DataAsset.rdb_Juni.IsEnabled = True
+                win_PilihJurnal_DataAsset.AngkaNomorJV_Juni = drCEKJURNAL.Item("Nomor_JV")
                 AdaJurnal += 1
             End If
             If AmbilAngka(BulanJurnalPenyusutan) = 7 Then
-                ops_PilihJurnal_DataAsset.rdb_Juli.Enabled = True
-                ops_PilihJurnal_DataAsset.AngkaNomorJV_Juli = drCEKJURNAL.Item("Nomor_JV")
+                win_PilihJurnal_DataAsset.rdb_Juli.IsEnabled = True
+                win_PilihJurnal_DataAsset.AngkaNomorJV_Juli = drCEKJURNAL.Item("Nomor_JV")
                 AdaJurnal += 1
             End If
             If AmbilAngka(BulanJurnalPenyusutan) = 8 Then
-                ops_PilihJurnal_DataAsset.rdb_Agustus.Enabled = True
-                ops_PilihJurnal_DataAsset.AngkaNomorJV_Agustus = drCEKJURNAL.Item("Nomor_JV")
+                win_PilihJurnal_DataAsset.rdb_Agustus.IsEnabled = True
+                win_PilihJurnal_DataAsset.AngkaNomorJV_Agustus = drCEKJURNAL.Item("Nomor_JV")
                 AdaJurnal += 1
             End If
             If AmbilAngka(BulanJurnalPenyusutan) = 9 Then
-                ops_PilihJurnal_DataAsset.rdb_September.Enabled = True
-                ops_PilihJurnal_DataAsset.AngkaNomorJV_September = drCEKJURNAL.Item("Nomor_JV")
+                win_PilihJurnal_DataAsset.rdb_September.IsEnabled = True
+                win_PilihJurnal_DataAsset.AngkaNomorJV_September = drCEKJURNAL.Item("Nomor_JV")
                 AdaJurnal += 1
             End If
             If AmbilAngka(BulanJurnalPenyusutan) = 10 Then
-                ops_PilihJurnal_DataAsset.rdb_Oktober.Enabled = True
-                ops_PilihJurnal_DataAsset.AngkaNomorJV_Oktober = drCEKJURNAL.Item("Nomor_JV")
+                win_PilihJurnal_DataAsset.rdb_Oktober.IsEnabled = True
+                win_PilihJurnal_DataAsset.AngkaNomorJV_Oktober = drCEKJURNAL.Item("Nomor_JV")
                 AdaJurnal += 1
             End If
             If AmbilAngka(BulanJurnalPenyusutan) = 11 Then
-                ops_PilihJurnal_DataAsset.rdb_Nopember.Enabled = True
-                ops_PilihJurnal_DataAsset.AngkaNomorJV_Nopember = drCEKJURNAL.Item("Nomor_JV")
+                win_PilihJurnal_DataAsset.rdb_Nopember.IsEnabled = True
+                win_PilihJurnal_DataAsset.AngkaNomorJV_Nopember = drCEKJURNAL.Item("Nomor_JV")
                 AdaJurnal += 1
             End If
             If AmbilAngka(BulanJurnalPenyusutan) = 12 Then
-                ops_PilihJurnal_DataAsset.rdb_Desember.Enabled = True
-                ops_PilihJurnal_DataAsset.AngkaNomorJV_Desember = drCEKJURNAL.Item("Nomor_JV")
+                win_PilihJurnal_DataAsset.rdb_Desember.IsEnabled = True
+                win_PilihJurnal_DataAsset.AngkaNomorJV_Desember = drCEKJURNAL.Item("Nomor_JV")
                 AdaJurnal += 1
             End If
         Loop
         AksesDatabase_Transaksi(Tutup)
         If AdaJurnal > 0 Then
-            ops_PilihJurnal_DataAsset.ShowDialog()
+            win_PilihJurnal_DataAsset.ShowDialog()
         Else
             MsgBox("Tidak/Belum ada Jurnal pada Tahun Buku ini untuk data terpilih.")
         End If

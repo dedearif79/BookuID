@@ -542,7 +542,7 @@ Sub IsiValueForm()
 End Sub
 ```
 
-## 7. Pattern Validasi dan Submit Data
+## 7. Pattern Validasi Input
 
 ```vb
 Private Sub btn_Simpan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Simpan.Click
@@ -560,86 +560,28 @@ Private Sub btn_Simpan_Click(sender As Object, e As RoutedEventArgs) Handles btn
         Return
     End If
 
-    ' ===== KONFIRMASI SEBELUM SIMPAN =====
-    If Not TanyaKonfirmasi("Yakin data sudah benar?") Then Return
-
-    ' ===== PROSES PENYIMPANAN =====
-    Select Case FungsiForm
-        Case FungsiForm_TAMBAH
-            ' ---- VALIDASI DUPLIKAT ----
-            AksesDatabase_General(Buka)
-            cmd = New OdbcCommand(" SELECT Kode FROM tbl_Entity WHERE Kode = '" & Kode & "' ",
-                                  KoneksiDatabaseGeneral)
-            dr = cmd.ExecuteReader()
-            If dr.HasRows Then
-                Pesan_Peringatan("Kode sudah ada. Silakan masukkan yang lain.")
-                AksesDatabase_General(Tutup)
-                Return
-            End If
+    ' ===== VALIDASI DUPLIKAT (untuk TAMBAH) =====
+    If FungsiForm = FungsiForm_TAMBAH Then
+        AksesDatabase_General(Buka)
+        cmd = New OdbcCommand(" SELECT Kode FROM tbl_Entity WHERE Kode = '" & Kode & "' ",
+                              KoneksiDatabaseGeneral)
+        dr = cmd.ExecuteReader()
+        If dr.HasRows Then
+            Pesan_Peringatan("Kode sudah ada. Silakan masukkan yang lain.")
             AksesDatabase_General(Tutup)
-
-            ' ---- INSERT DATA ----
-            AksesDatabase_General(Buka)
-            If StatusKoneksiDatabase = False Then Return
-            cmd = New OdbcCommand(" INSERT INTO tbl_Entity (Kode, Nama, Keterangan)
-                                    VALUES ('" & Kode & "', '" & Nama & "', '" & Keterangan & "') ",
-                                  KoneksiDatabaseGeneral)
-            Try
-                cmd.ExecuteNonQuery()
-                ProsesSuntingDatabase = True
-            Catch ex As Exception
-                ProsesSuntingDatabase = False
-            End Try
-            AksesDatabase_General(Tutup)
-
-        Case FungsiForm_EDIT
-            ' ---- UPDATE DATA ----
-            AksesDatabase_General(Buka)
-            cmd = New OdbcCommand(" UPDATE tbl_Entity SET
-                                    Nama = '" & Nama & "',
-                                    Keterangan = '" & Keterangan & "'
-                                    WHERE Kode = '" & Kode & "' ",
-                                  KoneksiDatabaseGeneral)
-            Try
-                cmd.ExecuteNonQuery()
-                ProsesSuntingDatabase = True
-            Catch ex As Exception
-                ProsesSuntingDatabase = False
-            End Try
-            AksesDatabase_General(Tutup)
-    End Select
-
-    ' ===== FEEDBACK DAN AKSI SETELAH SIMPAN =====
-    If ProsesSuntingDatabase = True Then
-        Pesan_Sukses("Data berhasil disimpan.")
-        DataTersimpan = True
-
-        ' ---- REFRESH PARENT USERCONTROL ----
-        If usc_DataEntity IsNot Nothing AndAlso usc_DataEntity.StatusAktif Then
-            usc_DataEntity.TampilkanData()
+            Return
         End If
-
-        ' ---- AKSI BERDASARKAN FUNGSI ----
-        If FungsiForm = FungsiForm_TAMBAH Then
-            ResetForm()
-            FungsiForm = FungsiForm_TAMBAH
-            txt_Kode.Focus()
-        Else
-            Me.Close()
-        End If
-    Else
-        Pesan_Gagal("Data gagal disimpan. Silakan coba lagi.")
+        AksesDatabase_General(Tutup)
     End If
+
+    ' ... lanjutkan dengan proses penyimpanan ...
 
 End Sub
 ```
 
 **Pattern Penting:**
 - Validasi SEBELUM akses database
-- Gunakan `Try/Catch` untuk operasi database
-- Set `ProsesSuntingDatabase` flag
-- Refresh parent UserControl jika data berhasil
-- TAMBAH: Reset form dan tetap buka | EDIT: Close dialog
+- Cek duplikat hanya untuk mode TAMBAH
 
 ## 8. Pattern Dialog Result / Komunikasi dengan Parent
 
@@ -1370,11 +1312,8 @@ Event Loaded:
 
 btn_Simpan_Click:
     └── Validasi input
-        └── TanyaKonfirmasi()
-            └── SELECT/INSERT/UPDATE database
-                └── ProsesSuntingDatabase = True/False
-                    └── Pesan feedback
-                        └── Refresh parent / Close
+        └── Validasi duplikat (untuk TAMBAH)
+            └── ... proses penyimpanan ...
 ```
 
 ### Window List/Picker

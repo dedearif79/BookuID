@@ -222,27 +222,29 @@ Public Class wpfWin_VerifikasiDataJurnal
 
         If String.IsNullOrEmpty(COATerseleksi) Then Return
 
-        frm_InputJurnalPerTransaksi.ResetForm()
-        frm_InputJurnalPerTransaksi.txt_COA.Text = COATerseleksi
-        frm_InputJurnalPerTransaksi.txt_NamaAkun.Text = NamaAkunTerseleksi
+        win_InputJurnalPerTransaksi = New wpfWin_InputJurnalPerTransaksi
+        win_InputJurnalPerTransaksi.ResetForm()
+        win_InputJurnalPerTransaksi.FungsiForm = FungsiForm_EDIT
+        win_InputJurnalPerTransaksi.KodeAkunInput = COATerseleksi
+        win_InputJurnalPerTransaksi.NamaAkunInput = NamaAkunTerseleksi
 
         If DKTerseleksi = "D" Then
-            frm_InputJurnalPerTransaksi.cmb_DK.Text = "DEBET"
-            frm_InputJurnalPerTransaksi.txt_JumlahTransaksi.Text = JumlahDebetTerseleksi.ToString()
+            win_InputJurnalPerTransaksi.DKInput = "D"
+            win_InputJurnalPerTransaksi.JumlahTransaksiInput = JumlahDebetTerseleksi
         End If
 
         If DKTerseleksi = "K" Then
-            frm_InputJurnalPerTransaksi.cmb_DK.Text = "KREDIT"
-            frm_InputJurnalPerTransaksi.txt_JumlahTransaksi.Text = JumlahKreditTerseleksi.ToString()
+            win_InputJurnalPerTransaksi.DKInput = "K"
+            win_InputJurnalPerTransaksi.JumlahTransaksiInput = JumlahKreditTerseleksi
         End If
 
-        frm_InputJurnalPerTransaksi.ShowDialog()
+        win_InputJurnalPerTransaksi.ShowDialog()
 
         ' Update data setelah edit
-        rowviewUtama("Kode_Akun") = frm_InputJurnalPerTransaksi.COATerseleksi
-        rowviewUtama("Nama_Akun") = frm_InputJurnalPerTransaksi.NamaAkunTerseleksi
-        Dim DK = frm_InputJurnalPerTransaksi.DK
-        Dim JumlahTransaksi As Int64 = AmbilAngka(frm_InputJurnalPerTransaksi.txt_JumlahTransaksi.Text)
+        rowviewUtama("Kode_Akun") = win_InputJurnalPerTransaksi.COATerseleksi
+        rowviewUtama("Nama_Akun") = win_InputJurnalPerTransaksi.NamaAkunTerseleksi
+        Dim DK = win_InputJurnalPerTransaksi.DK
+        Dim JumlahTransaksi As Int64 = win_InputJurnalPerTransaksi.JumlahTransaksi
 
         If DK = "D" Then
             rowviewUtama("D_K") = "D"

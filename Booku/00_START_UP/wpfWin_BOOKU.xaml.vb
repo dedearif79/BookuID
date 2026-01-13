@@ -4,7 +4,7 @@ Imports System.Windows.Controls
 Imports System.Windows.Forms.Integration
 Imports bcomm
 
-Imports System.IO
+
 ''' <summary>
 ''' WPF Application Shell untuk BOOKU (Mode Modern)
 ''' - Langsung membuka WPF UserControl jika tersedia

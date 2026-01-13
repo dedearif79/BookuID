@@ -349,16 +349,18 @@ Public Class wpfWin_InputJurnal
 
     Private Sub btn_Input_Click(sender As Object, e As RoutedEventArgs) Handles btn_Input.Click
 
-        frm_InputJurnalPerTransaksi.ResetForm()
-        frm_InputJurnalPerTransaksi.ShowDialog()
+        win_InputJurnalPerTransaksi = New wpfWin_InputJurnalPerTransaksi
+        win_InputJurnalPerTransaksi.ResetForm()
+        win_InputJurnalPerTransaksi.FungsiForm = FungsiForm_TAMBAH
+        win_InputJurnalPerTransaksi.ShowDialog()
 
-        If frm_InputJurnalPerTransaksi.TombolPenutup = "OK" Then
+        If win_InputJurnalPerTransaksi.TombolPenutup = "OK" Then
 
             Dim BarisDitambahkan As Integer = 0
-            Dim DK = frm_InputJurnalPerTransaksi.DK
-            Dim JumlahTransaksi As Int64 = frm_InputJurnalPerTransaksi.JumlahTransaksi
-            Dim KodeAkun = frm_InputJurnalPerTransaksi.COATerseleksi
-            Dim NamaAkun = frm_InputJurnalPerTransaksi.NamaAkunTerseleksi
+            Dim DK = win_InputJurnalPerTransaksi.DK
+            Dim JumlahTransaksi As Int64 = win_InputJurnalPerTransaksi.JumlahTransaksi
+            Dim KodeAkun = win_InputJurnalPerTransaksi.COATerseleksi
+            Dim NamaAkun = win_InputJurnalPerTransaksi.NamaAkunTerseleksi
             Dim JumlahDebet
             Dim JumlahKredit
             If DK = dk_D Then
@@ -420,27 +422,28 @@ Public Class wpfWin_InputJurnal
             Return
         End If
 
-        frm_InputJurnalPerTransaksi.ResetForm()
-        frm_InputJurnalPerTransaksi.txt_COA.Text = COATerseleksi
-        frm_InputJurnalPerTransaksi.txt_NamaAkun.Text = NamaAkunTerseleksi
+        win_InputJurnalPerTransaksi = New wpfWin_InputJurnalPerTransaksi
+        win_InputJurnalPerTransaksi.ResetForm()
+        win_InputJurnalPerTransaksi.FungsiForm = FungsiForm_EDIT
+        win_InputJurnalPerTransaksi.KodeAkunInput = COATerseleksi
+        win_InputJurnalPerTransaksi.NamaAkunInput = NamaAkunTerseleksi
         If DKTerseleksi = dk_D Then
-            frm_InputJurnalPerTransaksi.cmb_DK.Text = "DEBET"
-            frm_InputJurnalPerTransaksi.txt_JumlahTransaksi.Text = JumlahDebetTerseleksi
+            win_InputJurnalPerTransaksi.DKInput = "D"
+            win_InputJurnalPerTransaksi.JumlahTransaksiInput = JumlahDebetTerseleksi
         End If
         If DKTerseleksi = dk_K Then
-            frm_InputJurnalPerTransaksi.cmb_DK.Text = "KREDIT"
-            frm_InputJurnalPerTransaksi.txt_JumlahTransaksi.Text = JumlahKreditTerseleksi
+            win_InputJurnalPerTransaksi.DKInput = "K"
+            win_InputJurnalPerTransaksi.JumlahTransaksiInput = JumlahKreditTerseleksi
         End If
 
-        'Reset form Input Jurnal, ada di atas. Jangan taruh di sini...!!!
-        frm_InputJurnalPerTransaksi.ShowDialog()
+        win_InputJurnalPerTransaksi.ShowDialog()
 
-        DKTerseleksi = frm_InputJurnalPerTransaksi.DK
+        DKTerseleksi = win_InputJurnalPerTransaksi.DK
         Dim KodeAkun
         Dim NamaAkun
-        Dim JumlahTransaksi As Int64 = AmbilAngka(frm_InputJurnalPerTransaksi.txt_JumlahTransaksi.Text)
-        KodeAkun = frm_InputJurnalPerTransaksi.COATerseleksi
-        NamaAkun = GantiTeks(frm_InputJurnalPerTransaksi.NamaAkunTerseleksi, PenjorokNamaAkun, Kosongan)
+        Dim JumlahTransaksi As Int64 = win_InputJurnalPerTransaksi.JumlahTransaksi
+        KodeAkun = win_InputJurnalPerTransaksi.COATerseleksi
+        NamaAkun = GantiTeks(win_InputJurnalPerTransaksi.NamaAkunTerseleksi, PenjorokNamaAkun, Kosongan)
         If DKTerseleksi = dk_D Then
             rowviewUtama("D_K") = "D"
             rowviewUtama("Jumlah_Debet") = JumlahTransaksi

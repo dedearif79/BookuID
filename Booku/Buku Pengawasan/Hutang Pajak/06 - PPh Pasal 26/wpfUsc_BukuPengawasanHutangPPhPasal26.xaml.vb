@@ -1588,9 +1588,10 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal26
     End Sub
 
     Private Sub btn_DetailPembayaran_Click(sender As Object, e As RoutedEventArgs) Handles btn_DetailPembayaran.Click
-        frm_DetailPembayaranPajak.ResetForm()
-        frm_DetailPembayaranPajak.JenisPajak = JenisPajak
-        frm_DetailPembayaranPajak.ShowDialog()
+        win_DetailPembayaranPajak = New wpfWin_DetailPembayaranPajak
+        win_DetailPembayaranPajak.ResetForm()
+        win_DetailPembayaranPajak.JenisPajak = JenisPajak
+        win_DetailPembayaranPajak.ShowDialog()
     End Sub
 
 

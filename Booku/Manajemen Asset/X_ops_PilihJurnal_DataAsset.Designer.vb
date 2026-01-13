@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class ops_PilihJurnal_DataAsset
+Partial Class X_ops_PilihJurnal_DataAsset
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.
@@ -215,7 +215,7 @@ Partial Class ops_PilihJurnal_DataAsset
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "ops_PilihJurnal_DataAsset"
+        Me.Name = "X_ops_PilihJurnal_DataAsset"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent
         Me.Text = "Pilih Jurnal"
         Me.ResumeLayout(False)

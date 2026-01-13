@@ -50,9 +50,6 @@
     <Compile Update="Buku Pengawasan\Hutang Pajak\12 - Pajak Impor\wpfUsc_BukuPengawasanPajakImpor.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Buku Pengawasan\Hutang Pajak\frm_DetailPembayaranPajak.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Buku Pengawasan\Pemindahbukuan\wpfUsc_BukuPengawasanPemindahbukuan.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -67,9 +64,6 @@
     </Compile>
     <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\wpfUsc_BukuPengawasanBuktiPengeluaranBankCash.xaml.vb">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\frm_InputJumlah.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\Bundel Pengajuan\wpfUsc_BundelPengajuanPengeluaranBankCash.xaml.vb">
       <SubType>Code</SubType>
@@ -236,7 +230,7 @@
     <Compile Update="Data\Kurs\wpfWin_UpdateKurs_Harian.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Jurnal\frm_InputJurnalPerTransaksi.vb">
+    <Compile Update="Manajemen Asset\X_ops_PilihJurnal_DataAsset.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Page1.xaml.vb">
@@ -246,6 +240,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Pembelian - Penjualan\frm_PilihJenisProdukInduk.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Progress\frm_ProgressLoadingData.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Registrasi\frm_RegistrasiPerangkat.vb">
@@ -334,12 +331,6 @@
     </Compile>
     <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfWin_InputDataAsset.xaml.vb">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Manajemen Asset\frm_PostingJurnal_DataAsset.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Manajemen Asset\ops_PilihJurnal_DataAsset.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\frm_KodeDivisi.vb">
       <SubType>Form</SubType>
@@ -461,18 +452,6 @@
     <Compile Update="Print\wpfWin_Pratinjau.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Progress\frm_ProgressExport_CSV.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Progress\frm_ProgressExport_EXCEL.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Progress\frm_ProgressIsiTabelSaldoAwal.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Progress\frm_ProgressLoadingData.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Progress\wpfUsc_Loading.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -490,9 +469,6 @@
     </Compile>
     <Compile Update="Stock Opname\wpfUsc_StockOpname.xaml.vb">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Tahun Buku\frm_TutupBuku.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Tahun Buku\wpfUsc_TutupBuku.xaml.vb">
       <SubType>Code</SubType>

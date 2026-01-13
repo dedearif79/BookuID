@@ -1,0 +1,73 @@
+<Window x:Class="wpfWin_InputJurnalPerTransaksi"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Item Jurnal"
+        Width="Auto"
+        Height="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}">
+
+        <!-- BODY: Input Fields -->
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}">
+            <Grid Style="{StaticResource styleGridFormDialog}">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Row 0: Kode Akun -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Kode Akun"/>
+                <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormDialogKolom}">
+                    <TextBox Style="{StaticResource styleTextBoxFormDialog}" x:Name="txt_COA" Width="99"/>
+                    <Button Style="{StaticResource styleButtonFormDialogPilih}" x:Name="btn_PilihCOA"/>
+                </StackPanel>
+
+                <!-- Row 1: Nama Akun -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Nama Akun"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}" x:Name="txt_NamaAkun"/>
+
+                <!-- Row 2: Debet/Kredit -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Debet/Kredit"/>
+                <ComboBox Grid.Row="2" Grid.Column="1" Style="{StaticResource styleComboBoxFormDialog}" x:Name="cmb_DK"/>
+
+                <!-- Row 3: Jumlah Transaksi -->
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah Transaksi"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}" x:Name="txt_JumlahTransaksi"/>
+
+            </Grid>
+        </StackPanel>
+
+        <!-- FOOTER: Tombol -->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}">
+            <Button Style="{StaticResource styleButtonFormDialogSimpan}" x:Name="btn_OK" Content="OK"/>
+            <Button Style="{StaticResource styleButtonFormDialogBatal}" x:Name="btn_Batal"/>
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>
