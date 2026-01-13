@@ -246,7 +246,8 @@ Public Class wpfUsc_DataCOA
 
 
     Private Sub btn_TautanCOA_Click(sender As Object, e As RoutedEventArgs) Handles btn_TautanCOA.Click
-        frm_TautanCOA.ShowDialog()
+        win_TautanCOA = New wpfWin_TautanCOA
+        win_TautanCOA.ShowDialog()
     End Sub
 
 
@@ -339,7 +340,8 @@ Public Class wpfUsc_DataCOA
     Private Sub btn_Import_Click(sender As Object, e As RoutedEventArgs) Handles btn_Import.Click
         PesanPemberitahuan("Fitur ini masih dalam perbaikan.")
         Return
-        frm_ProgressImportDataCOA.ShowDialog()
+        win_ProgressImportDataCOA = New wpfWin_ProgressImportDataCOA
+        win_ProgressImportDataCOA.ShowDialog()
         If StatusPosting = "BATAL" Then
             Pesan_Informasi("Proses posting telah dibatalkan seluruhnya pada event ini.")
         End If

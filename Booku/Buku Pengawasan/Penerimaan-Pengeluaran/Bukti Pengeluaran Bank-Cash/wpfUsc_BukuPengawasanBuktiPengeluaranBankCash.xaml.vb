@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -353,11 +353,10 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
     End Sub
 
 
-
     Private Sub btn_Bundelan_Click(sender As Object, e As System.Windows.RoutedEventArgs) Handles btn_Bundelan.Click
-        frm_BundelPengajuanPengeluaranBankCash.MdiParent = frm_BOOKU
-        frm_BundelPengajuanPengeluaranBankCash.Show()
-        frm_BundelPengajuanPengeluaranBankCash.Focus()
+        host_BundelPengajuanPengeluaranBankCash = New wpfHost_BundelPengajuanPengeluaranBankCash
+        PesanUntukProgrammer("Ada keanehan di sini : Masalah JUDUL FORM")
+        win_BOOKU.BukaUserControlDalamTab(usc_BundelPengajuanPengeluaranBankCash, host_BundelPengajuanPengeluaranBankCash.JudulForm)
     End Sub
 
 

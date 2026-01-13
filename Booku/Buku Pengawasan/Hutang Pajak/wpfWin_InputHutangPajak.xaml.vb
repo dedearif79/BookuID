@@ -150,7 +150,7 @@ Public Class wpfWin_InputHutangPajak
         KodeSupplier = txt_KodeSupplier.Text
         txt_NamaSupplier.Text = AmbilValue_NamaMitra(KodeSupplier)
         txt_NPWP.Text = AmbilValue_NPWPMitra(KodeSupplier)
-        If KodeSupplier <> Kosongan And NamaSupplier = Kosongan Then txt_NamaSupplier.Text = frm_ListMitra.NamaMitraTerseleksi
+        If KodeSupplier <> Kosongan And NamaSupplier = Kosongan Then txt_NamaSupplier.Text = win_ListLawanTransaksi.NamaMitraTerseleksi
     End Sub
     Private Sub btn_PilihMitra_Click(sender As Object, e As RoutedEventArgs) Handles btn_PilihMitra.Click
         BukaFormListLawanTransaksi(txt_KodeSupplier, txt_NamaSupplier, Mitra_Supplier, Pilihan_Semua, Pilihan_Semua, Pilihan_Semua, Pilihan_Tidak)

@@ -25,7 +25,7 @@ Public Class wpfHost_AdjusmentForex
         usc_Adjusment_Forex = New wpfUsc_JurnalAdjusment_Forex
     End Sub
 
-    Sub CekKesesuaianData()
+    Sub CekAdjusment()
         Inisialisasi()
         usc_Adjusment_Forex.RefreshTampilanData()
     End Sub

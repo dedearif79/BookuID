@@ -25,7 +25,7 @@ Public Class wpfHost_AdjusmentPenyusutanAsset
         usc_Adjusment_PenyusutanAsset = New wpfUsc_Adjusment_PenyusutanAsset
     End Sub
 
-    Sub CekKesesuaianData()
+    Sub CekAdjusment()
         Inisialisasi()
         usc_Adjusment_PenyusutanAsset.RefreshTampilanData()
     End Sub

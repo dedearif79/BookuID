@@ -18,6 +18,8 @@ BookuID adalah aplikasi akuntansi enterprise berbasis VB.NET dengan arsitektur h
 | Arsitektur & Modul | `.claude/rules/architecture.md` |
 | WPF Styling | `.claude/rules/wpf-styling.md` |
 | WPF UserControl Pattern | `.claude/rules/wpf-usercontrol-pattern.md` |
+| WPF Window Pattern | `.claude/rules/wpf-window-pattern.md` |
+| WPF Host Pattern | `.claude/rules/wpf-host-pattern.md` |
 | Database | `.claude/rules/database.md` |
 | Modul & Dependencies | `.claude/rules/modules-dependencies.md` |
 
@@ -43,6 +45,7 @@ BookuID adalah aplikasi akuntansi enterprise berbasis VB.NET dengan arsitektur h
 | `frm_` | WinForms Form | `frm_BOOKU.vb` |
 | `wpfWin_` | WPF Window | `wpfWin_StartUp.xaml` |
 | `wpfUsc_` | WPF UserControl | `wpfUsc_BukuBesar.xaml` |
+| `wpfHost_` | WPF Host (wrapper) | `wpfHost_BukuPembelian.vb` |
 | `mdl_` | VB Module | `mdl_PublicSub.vb` |
 | `cls_` | Class | `cls_DecimalConverter.vb` |
 | `X_` | **Deprecated** | `X_frm_LaporanLama.vb` |

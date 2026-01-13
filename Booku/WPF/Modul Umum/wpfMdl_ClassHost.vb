@@ -126,6 +126,7 @@ Module wpfMdl_ClassHost
     ' =================================================================
     Public host_BukuPengawasanBuktiPenerimaanBankCash As wpfHost_BukuPengawasanBuktiPenerimaanBankCash
     Public host_BukuPengawasanBuktiPengeluaranBankCash As wpfHost_BukuPengawasanBuktiPengeluaranBankCash
+    Public host_BundelPengajuanPengeluaranBankCash As wpfHost_BundelPengajuanPengeluaranBankCash
 
     ' =================================================================
     ' PENJUALAN ECERAN

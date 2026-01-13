@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -346,14 +346,6 @@ Public Class wpfUsc_BukuPengawasanHutangKaryawan
     Private Sub btn_BukuPembantu_Click(sender As Object, e As RoutedEventArgs) Handles btn_BukuPembantu.Click
         FiturDalamPengembangan()
         Return
-        frm_BukuPembantuHutangKaryawan.ResetForm()
-        frm_BukuPembantuHutangKaryawan.NomorBPHK = NomorBPHK_Terseleksi
-        frm_BukuPembantuHutangKaryawan.lbl_NamaKaryawan.Text = NamaKaryawan_Terseleksi
-        frm_BukuPembantuHutangKaryawan.lbl_Jabatan.Text = Jabatan_Terseleksi
-        frm_BukuPembantuHutangKaryawan.lbl_TanggalPinjaman.Text = TanggalPinjam_Terseleksi
-        frm_BukuPembantuHutangKaryawan.txt_JumlahPinjaman.Text = JumlahHutang_Terseleksi
-        frm_BukuPembantuHutangKaryawan.txt_SaldoAwal.Text = SaldoAwalPerBaris_Terseleksi
-        frm_BukuPembantuHutangKaryawan.ShowDialog()
     End Sub
 
 

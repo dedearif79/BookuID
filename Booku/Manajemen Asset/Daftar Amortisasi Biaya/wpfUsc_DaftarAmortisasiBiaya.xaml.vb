@@ -567,7 +567,6 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
         KetersediaanTombolLihatJurnal(False)
         KetersediaanTombolPosting(False)
         KetersediaanMenuHalaman(pnl_Halaman, True)
-        Dispatcher.InvokeAsync(Sub() RefreshForm(frm_DaftarAmortisasiBiaya))
     End Sub
 
 
@@ -1148,7 +1147,6 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
         TahunLaporan = AmbilAngka(cmb_TahunLaporan.SelectedValue)
         TahunLaporanSebelumnya = TahunLaporan - 1
         JudulForm = "Daftar Amortisasi Biaya - Tahun " & TahunLaporan
-        frm_DaftarAmortisasiBiaya.Text = JudulForm
         lbl_JudulForm.Text = JudulForm
         TampilkanData()
     End Sub

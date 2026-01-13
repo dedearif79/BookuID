@@ -1,0 +1,53 @@
+<Window x:Class="wpfWin_ListDataProject"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Daftar Project"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../../WPF\Styles\StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+            <!-- Filter -->
+            <StackPanel Orientation="Horizontal" Margin="0 0 0 9">
+                <StackPanel Margin="0 0 15 0">
+                    <TextBlock  Style="{StaticResource styleTextBlockFormDialog}"   Text="Cari Kode Project :" />
+                    <TextBox    Style="{StaticResource styleTextBoxFormDialog}"     Name="txt_CariKodeProject" Width="150" HorizontalAlignment="Left" />
+                </StackPanel>
+                <StackPanel>
+                    <TextBlock  Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_FilterCustomer" Text="Filter Customer :" />
+                    <ComboBox   Style="{StaticResource styleComboBoxFormDialog}"    Name="cmb_Customer" Width="200" HorizontalAlignment="Left" />
+                </StackPanel>
+            </StackPanel>
+
+            <!-- DataGrid -->
+            <DataGrid Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="550" MinHeight="300" MaxHeight="400" />
+
+        </StackPanel>
+
+        <!-- Tombol -->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"     Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogPilih}"     Name="btn_Pilih" />
+            <Button Style="{StaticResource styleButtonFormDialogTutup}"     Name="btn_Tutup" />
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>

@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -433,12 +433,13 @@ Public Class wpfUsc_BundelPengajuanPengeluaranBankCash
 
     Private Sub btn_PengajuanCashAdvance_Click(sender As Object, e As RoutedEventArgs) Handles btn_PengajuanCashAdvance.Click
 
-        frm_InputPemindahbukuan.ResetForm()
-        frm_InputPemindahbukuan.FungsiForm = FungsiForm_TAMBAH
-        frm_InputPemindahbukuan.dtp_TanggalBPPB.Value = bundel_TanggalBundel_Terseleksi
-        frm_InputPemindahbukuan.txt_JumlahTransaksi.Text = TotalCashAdvance
-        frm_InputPemindahbukuan.cmb_KeBuku.SelectedValue = KonversiCOAKeSaranaPembayaran(KodeTautanCOA_CashAdvance)
-        frm_InputPemindahbukuan.ShowDialog()
+        win_InputPemindahbukuan = New wpfWin_InputPemindahbukuan
+        win_InputPemindahbukuan.ResetForm()
+        win_InputPemindahbukuan.FungsiForm = FungsiForm_TAMBAH
+        win_InputPemindahbukuan.dtp_TanggalBPPB.SelectedDate = TanggalFormatWPF(bundel_TanggalBundel_Terseleksi)
+        'win_InputPemindahbukuan.txt_JumlahTransaksi.Text = TotalCashAdvance
+        win_InputPemindahbukuan.cmb_KeBuku.SelectedValue = KonversiCOAKeSaranaPembayaran(KodeTautanCOA_CashAdvance)
+        win_InputPemindahbukuan.ShowDialog()
 
     End Sub
 

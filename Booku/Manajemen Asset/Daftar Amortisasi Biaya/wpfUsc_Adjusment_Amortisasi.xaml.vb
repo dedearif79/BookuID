@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -108,7 +108,6 @@ Public Class wpfUsc_Adjusment_Amortisasi
         If SudahDimuat Then Return
         StatusAktif = True
 
-        JudulForm = frm_Adjusment_Amortisasi.JudulForm
         lbl_JudulForm.Text = JudulForm
         Terabas()
 

@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -483,6 +483,8 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
             Else
                 KetersediaanTombolPosting(True)
                 btn_LihatJurnalPencairan.IsEnabled = False
+                PesanUntukProgrammer("Nomor JV Pencairan: " & NomorJV_Pencairan_Terseleksi & Enter2Baris &
+                                     "Termasuk Hutang Tahun Ini: " & TermasukHutangTahunIni_Terseleksi)
             End If
             If JumlahAngsuran_Terseleksi > 0 Then
                 btn_EditHutang.IsEnabled = False
@@ -631,12 +633,13 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
             Return
         End If
 
-        frm_InputJadwalAngsuranHutangBankLeasing.ResetForm()
-        frm_InputJadwalAngsuranHutangBankLeasing.BankLeasing = BankLeasing
-        frm_InputJadwalAngsuranHutangBankLeasing.FungsiForm = FungsiForm_TAMBAH
-        frm_InputJadwalAngsuranHutangBankLeasing.NomorBPH = NomorBPH_Terseleksi
-        frm_InputJadwalAngsuranHutangBankLeasing.KodeKreditur = KodeKreditur_Terseleksi
-        frm_InputJadwalAngsuranHutangBankLeasing.ShowDialog()
+        win_InputJadwalAngsuranHutangBankLeasing = New wpfWin_InputJadwalAngsuranHutangBankLeasing
+        win_InputJadwalAngsuranHutangBankLeasing.ResetForm()
+        win_InputJadwalAngsuranHutangBankLeasing.BankLeasing = BankLeasing
+        win_InputJadwalAngsuranHutangBankLeasing.FungsiForm = FungsiForm_TAMBAH
+        win_InputJadwalAngsuranHutangBankLeasing.NomorBPH = NomorBPH_Terseleksi
+        win_InputJadwalAngsuranHutangBankLeasing.KodeKreditur = KodeKreditur_Terseleksi
+        win_InputJadwalAngsuranHutangBankLeasing.ShowDialog()
 
     End Sub
 
@@ -657,18 +660,15 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
         End If
         AksesDatabase_Transaksi(Tutup)
 
-        frm_InputJadwalAngsuranHutangBankLeasing.ResetForm()
-        frm_InputJadwalAngsuranHutangBankLeasing.FungsiForm = FungsiForm_EDIT
-        frm_InputJadwalAngsuranHutangBankLeasing.BankLeasing = BankLeasing
-        frm_InputJadwalAngsuranHutangBankLeasing.NomorID = jadwal_NomorID_Terseleksi
-        frm_InputJadwalAngsuranHutangBankLeasing.NomorBPH = NomorBPH_Terseleksi
-        frm_InputJadwalAngsuranHutangBankLeasing.NomorJV = jadwal_NomorJV_Terseleksi
-        frm_InputJadwalAngsuranHutangBankLeasing.KodeKreditur = KodeKreditur_Terseleksi
-        frm_InputJadwalAngsuranHutangBankLeasing.txt_AngsuranKe.Text = jadwal_NomorUrut_Terseleksi
-        frm_InputJadwalAngsuranHutangBankLeasing.dtp_TanggalJatuhTempo.Text = jadwal_TanggalJatuhTempo_Terseleksi
-        frm_InputJadwalAngsuranHutangBankLeasing.txt_Pokok.Text = jadwal_Pokok_Terseleksi
-        frm_InputJadwalAngsuranHutangBankLeasing.txt_BagiHasil.Text = jadwal_BagiHasil_Terseleksi
-        frm_InputJadwalAngsuranHutangBankLeasing.ShowDialog()
+        win_InputJadwalAngsuranHutangBankLeasing = New wpfWin_InputJadwalAngsuranHutangBankLeasing
+        win_InputJadwalAngsuranHutangBankLeasing.ResetForm()
+        win_InputJadwalAngsuranHutangBankLeasing.FungsiForm = FungsiForm_EDIT
+        win_InputJadwalAngsuranHutangBankLeasing.BankLeasing = BankLeasing
+        win_InputJadwalAngsuranHutangBankLeasing.NomorID = jadwal_NomorID_Terseleksi
+        win_InputJadwalAngsuranHutangBankLeasing.NomorBPH = NomorBPH_Terseleksi
+        win_InputJadwalAngsuranHutangBankLeasing.NomorJV = jadwal_NomorJV_Terseleksi
+        win_InputJadwalAngsuranHutangBankLeasing.KodeKreditur = KodeKreditur_Terseleksi
+        win_InputJadwalAngsuranHutangBankLeasing.ShowDialog()
 
     End Sub
 
@@ -746,16 +746,16 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
 
     End Sub
     Sub RefreshSetelahBayar()
-        If frm_InputTransaksi.PenyimpananSukses = True Then
-            TampilkanData_JadwalAngsuran()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal21 Then frm_BukuPengawasanHutangPPhPasal21.RefreshTampilanData()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal22 Then frm_BukuPengawasanHutangPPhPasal22.RefreshTampilanData()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal23 Then frm_BukuPengawasanHutangPPhPasal23.RefreshTampilanData()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal42 Then frm_BukuPengawasanHutangPPhPasal42.RefreshTampilanData()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal25 Then frm_BukuPengawasanHutangPPhPasal25.RefreshTampilanData()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal26 Then frm_BukuPengawasanHutangPPhPasal26.RefreshTampilanData()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal29 Then frm_BukuPengawasanHutangPPhPasal29.RefreshTampilanData()
-        End If
+        'If frm_InputTransaksi.PenyimpananSukses = True Then
+        '    TampilkanData_JadwalAngsuran()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal21 Then frm_BukuPengawasanHutangPPhPasal21.RefreshTampilanData()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal22 Then frm_BukuPengawasanHutangPPhPasal22.RefreshTampilanData()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal23 Then frm_BukuPengawasanHutangPPhPasal23.RefreshTampilanData()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal42 Then frm_BukuPengawasanHutangPPhPasal42.RefreshTampilanData()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal25 Then frm_BukuPengawasanHutangPPhPasal25.RefreshTampilanData()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal26 Then frm_BukuPengawasanHutangPPhPasal26.RefreshTampilanData()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal29 Then frm_BukuPengawasanHutangPPhPasal29.RefreshTampilanData()
+        'End If
     End Sub
 
 

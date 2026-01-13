@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Media.Animation
 Imports bcomm
@@ -26,7 +26,7 @@ Public Class wpfWin_PilihJurnalAdjusment
         AdjusmentBulanBukuAktifSudahLengkap = True
 
         'Cek Adjusment Penyusutan :
-        frm_Adjusment_PenyusutanAsset.CekAdjusment()
+        host_AdjusmentPenyusutanAsset.CekAdjusment()
         If usc_Adjusment_PenyusutanAsset.AdjusmentBulanBukuAktifSudahLengkap Then
             rdb_AdjusmentPenyusutan.IsEnabled = False
             rdb_AdjusmentHPP.IsEnabled = True
@@ -36,7 +36,7 @@ Public Class wpfWin_PilihJurnalAdjusment
         End If
 
         'Cek Adjusment Amortisasi :
-        frm_Adjusment_Amortisasi.CekAdjusment()
+        host_AdjusmentAmortisasi.CekAdjusment()
         If usc_Adjusment_Amortisasi.AdjusmentBulanBukuAktifSudahLengkap Then
             rdb_AdjusmentAmortisasi.IsEnabled = False
             rdb_AdjusmentHPP.IsEnabled = True
@@ -46,7 +46,7 @@ Public Class wpfWin_PilihJurnalAdjusment
         End If
 
         'Cek Adjusment Forex :
-        frm_Adjusment_Forex.CekAdjusment()
+        host_AdjusmentForex.CekAdjusment()
         If usc_Adjusment_Forex.AdjusmentBulanBukuAktifSudahLengkap Then
             rdb_AdjusmentForex.IsEnabled = False
             rdb_AdjusmentHPP.IsEnabled = True
@@ -56,7 +56,7 @@ Public Class wpfWin_PilihJurnalAdjusment
         End If
 
         'Cek Adjusment HPP :
-        frm_Adjusment_HPP.CekAdjusment()
+        host_AdjusmentHPP.CekAdjusment()
         If usc_JurnalAdjusment_HPP.AdjusmentBulanBukuAktifSudahLengkap Then
             rdb_AdjusmentHPP.IsEnabled = False
         Else
@@ -120,15 +120,11 @@ Public Class wpfWin_PilihJurnalAdjusment
         End If
 
         If rdb_AdjusmentForex.IsChecked = True Then
-            frm_Adjusment_Forex.MdiParent = frm_BOOKU
-            frm_Adjusment_Forex.Show()
-            frm_Adjusment_Forex.Focus()
+            win_BOOKU.BukaModul_AdjusmentForex()
         End If
 
         If rdb_AdjusmentHPP.IsChecked = True Then
-            frm_Adjusment_HPP.MdiParent = frm_BOOKU
-            frm_Adjusment_HPP.Show()
-            frm_Adjusment_HPP.Focus()
+            win_BOOKU.BukaModul_AdjusmentHPP()
         End If
 
         Me.Close()

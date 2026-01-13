@@ -3201,14 +3201,15 @@ Public Class wpfWin_InputInvoicePembelian_Alt
 
     Sub BukaForm_ListDataProject()
         PesanPeringatan("Untuk COA Kepala 5 harus memilih 'Kode Project'")
-        frm_ListDataProject.ResetForm()
-        frm_ListDataProject.ShowDialog()
-        If frm_ListDataProject.KodeProject_Terseleksi = Kosongan Then
+        win_ListDataProject = New wpfWin_ListDataProject
+        win_ListDataProject.ResetForm()
+        win_ListDataProject.ShowDialog()
+        If win_ListDataProject.KodeProject_Terseleksi = Kosongan Then
             rowviewUtama("Kode_Project_Produk") = Kosongan
             PesanPeringatan("Tidak ada 'Kode Project' yang dipilih." & Enter2Baris & "COA Kepala 5 dibatalkan..!")
             rowviewUtama("COA_Produk") = Kosongan
         Else
-            rowviewUtama("Kode_Project_Produk") = frm_ListDataProject.KodeProject_Terseleksi
+            rowviewUtama("Kode_Project_Produk") = win_ListDataProject.KodeProject_Terseleksi
         End If
     End Sub
 

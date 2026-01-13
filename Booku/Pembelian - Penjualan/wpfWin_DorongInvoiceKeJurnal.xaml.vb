@@ -635,7 +635,7 @@ Public Class wpfWin_DorongInvoiceKeJurnal
                                            " WHERE Kode_Closing     = '" & NomorPenjualan & "' ",
                                        KoneksiDatabaseGeneral)
                 cmd_ExecuteNonQuery()
-                frm_BukuPenjualan.TampilkanData()
+                'frm_BukuPenjualan.TampilkanData()
                 RefreshTampilanInvoicePenjualan()
                 pesan_DataBerhasilDikirimKeJurnal()
                 If JualAsset = False Then

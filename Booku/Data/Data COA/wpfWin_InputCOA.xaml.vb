@@ -402,7 +402,7 @@ Public Class wpfWin_InputCOA
                         usc_DataCOA.rowviewUtama("Uraian_") = Uraian
                         usc_DataCOA.rowviewUtama("Visibilitas_") = Visibilitas
                     Case Halaman_SALDOAWALHUTANGUSAHA
-                        frm_SaldoAwalHutangUsaha.RefreshTampilanData()
+                        'frm_SaldoAwalHutangUsaha.RefreshTampilanData()
                     Case Halaman_TUTUPBUKU
                         If usc_TutupBuku.StatusAktif Then usc_TutupBuku.TampilkanData()
                 End Select

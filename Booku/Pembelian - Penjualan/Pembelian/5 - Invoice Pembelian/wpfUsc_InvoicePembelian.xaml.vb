@@ -832,7 +832,8 @@ Public Class wpfUsc_InvoicePembelian
         If StatusSuntingDatabase = True Then
             pesan_DataTerpilihBerhasilDihapus()
             TampilkanData()
-            frm_BukuPembelian.TampilkanData()
+            If usc_BukuPembelian_Lokal.StatusAktif Then usc_BukuPembelian_Lokal.TampilkanData()
+            If usc_BukuPembelian_Impor.StatusAktif Then usc_BukuPembelian_Impor.TampilkanData()
         Else
             pesan_DataTerpilihGagalDihapus()
         End If
@@ -901,21 +902,21 @@ Public Class wpfUsc_InvoicePembelian
             Return
         End If
 
-        'Isi Variabel :
-        frm_Input_InvoicePembelian.ResetForm()
-        frm_Input_InvoicePembelian.FungsiForm = FungsiForm_PEMBETULAN
-        IsiValueForm_InvoicePembelian()
+        ''Isi Variabel :
+        'frm_Input_InvoicePembelian.ResetForm()
+        'frm_Input_InvoicePembelian.FungsiForm = FungsiForm_PEMBETULAN
+        'IsiValueForm_InvoicePembelian()
 
-        'Reset Variabel-bariabel Tertentu :
-        frm_Input_InvoicePembelian.NomorJV = 0
-        frm_Input_InvoicePembelian.ReturDPP = 0
-        frm_Input_InvoicePembelian.ReturPPN = 0
-        EksekusiKode = False
-        frm_Input_InvoicePembelian.dtp_TanggalInvoice.Value = Today
-        frm_Input_InvoicePembelian.TanggalInvoice = TanggalInvoice_Terseleksi
-        EksekusiKode = True
+        ''Reset Variabel-bariabel Tertentu :
+        'frm_Input_InvoicePembelian.NomorJV = 0
+        'frm_Input_InvoicePembelian.ReturDPP = 0
+        'frm_Input_InvoicePembelian.ReturPPN = 0
+        'EksekusiKode = False
+        'frm_Input_InvoicePembelian.dtp_TanggalInvoice.Value = Today
+        'frm_Input_InvoicePembelian.TanggalInvoice = TanggalInvoice_Terseleksi
+        'EksekusiKode = True
 
-        frm_Input_InvoicePembelian.ShowDialog()
+        'frm_Input_InvoicePembelian.ShowDialog()
 
     End Sub
 

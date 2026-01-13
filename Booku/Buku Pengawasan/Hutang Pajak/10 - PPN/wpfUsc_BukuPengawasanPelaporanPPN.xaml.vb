@@ -915,9 +915,7 @@ Public Class wpfUsc_BukuPengawasanPelaporanPPN
             If NomorUrut_Terseleksi <> 0 Then cmb_MasaPajak.SelectedValue = rowviewUtama("Bulan_")
         End If
         If Bulan_Terseleksi = JenisPajak_KetetapanPajak Then
-            frm_BukuPengawasanKetetapanPajak.MdiParent = frm_BOOKU
-            frm_BukuPengawasanKetetapanPajak.Show()
-            frm_BukuPengawasanKetetapanPajak.Focus()
+            win_BOOKU.BukaModul_BukuPengawasanKetetapanPajak()
             usc_BukuPengawasanKetetapanPajak.cmb_PilihanJenisPajak.SelectedValue = JenisPajak_PPN
         End If
     End Sub

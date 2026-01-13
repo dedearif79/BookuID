@@ -284,7 +284,6 @@ Public Class wpfUsc_BukuPengawasanGaji
         If EksekusiTampilanData = False Then Return
 
         'Judul Halaman :
-        frm_BukuPengawasanGaji.Text = JudulForm
         lbl_JudulForm.Text = JudulForm
 
         VisibilitasKolomKolomTabel()

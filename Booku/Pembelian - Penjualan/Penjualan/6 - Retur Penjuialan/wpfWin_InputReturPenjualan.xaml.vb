@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
@@ -726,7 +726,7 @@ Public Class wpfWin_InputReturPenjualan
         PemecahRibuanUntukTextBox_WPF(txt_JumlahNota)
     End Sub
     Private Sub txt_JumlahNota_PreviewTextInput(sender As Object, e As TextCompositionEventArgs) Handles txt_JumlahNota.PreviewTextInput
-              
+
     End Sub
 
 
@@ -744,7 +744,7 @@ Public Class wpfWin_InputReturPenjualan
         PemecahRibuanUntukTextBox_WPF(txt_Diskon_Rp)
     End Sub
     Private Sub txt_Diskon_Rp_PreviewTextInput(sender As Object, e As TextCompositionEventArgs) Handles txt_Diskon_Rp.PreviewTextInput
-              
+
     End Sub
 
 
@@ -770,7 +770,7 @@ Public Class wpfWin_InputReturPenjualan
         PemecahRibuanUntukTextBox_WPF(txt_PPN)
     End Sub
     Private Sub txt_PPN_PreviewTextInput(sender As Object, e As TextCompositionEventArgs) Handles txt_PPN.PreviewTextInput
-              
+
     End Sub
 
 
@@ -779,7 +779,7 @@ Public Class wpfWin_InputReturPenjualan
         PemecahRibuanUntukTextBox_WPF(txt_TotalRetur)
     End Sub
     Private Sub txt_TotalRetur_PreviewTextInput(sender As Object, e As TextCompositionEventArgs) Handles txt_TotalRetur.PreviewTextInput
-              
+
     End Sub
 
 
@@ -988,7 +988,7 @@ Public Class wpfWin_InputReturPenjualan
         End If
 
         If StatusSuntingDatabase = True Then
-            frm_ReturPenjualan.TampilkanData()
+            'frm_ReturPenjualan.TampilkanData()
             If FungsiForm = FungsiForm_TAMBAH Then pesan_DataBerhasilDisimpan_PlusJurnal()
             If FungsiForm = FungsiForm_EDIT Then pesan_DataBerhasilDiedit_PlusJurnal()
             Me.Close()

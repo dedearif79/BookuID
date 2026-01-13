@@ -118,19 +118,13 @@
   <ItemGroup>
     <Folder Include="App IT\phpMyAdmin\" />
     <Folder Include="Buku Pengawasan\Hutang Pajak\09 - PPh Pasal 29\" />
-    <Folder Include="Buku Pengawasan\Hutang-Piutang Karyawan\Piutang\X_Trash\" />
-    <Folder Include="Buku Pengawasan\Hutang-Piutang Pemegang Saham\Piutang\X_Trash\" />
-    <Folder Include="Buku Pengawasan\Hutang-Piutang Pihak Ketiga\X_Trash\" />
-    <Folder Include="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\X_Trash\" />
-    <Folder Include="Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\X_Trash\" />
-    <Folder Include="Data\Data Project\X_Trash\" />
-    <Folder Include="Laporan\X_Trash\" />
-    <Folder Include="Manajemen Asset\Daftar Amortisasi Biaya\X_Trash\" />
-    <Folder Include="Manajemen Asset\Daftar Penyusutan Asset Tetap\X_Trash\" />
+    <Folder Include="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\" />
+    <Folder Include="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\" />
     <Folder Include="Pembelian - Penjualan\Pembelian\X-Trash\" />
+    <Folder Include="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Dengan PO\" />
+    <Folder Include="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Tanpa PO\" />
     <Folder Include="Pembelian - Penjualan\Penjualan\X-Trash\" />
     <Folder Include="Resources\" />
-    <Folder Include="Tahun Buku\X_Trash\" />
     <Folder Include="WPF\Styles\Class Window\" />
   </ItemGroup>
 

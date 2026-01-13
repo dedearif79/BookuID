@@ -350,14 +350,6 @@ Public Class wpfUsc_BukuPengawasanPiutangKaryawan
     Private Sub btn_BukuPembantu_Click(sender As Object, e As RoutedEventArgs) Handles btn_BukuPembantu.Click
         FiturDalamPengembangan()
         Return
-        frm_BukuPembantuPiutangKaryawan.ResetForm()
-        frm_BukuPembantuPiutangKaryawan.NomorBPPK = NomorBPPK_Terseleksi
-        frm_BukuPembantuPiutangKaryawan.lbl_NamaKaryawan.Text = NamaKaryawan_Terseleksi
-        frm_BukuPembantuPiutangKaryawan.lbl_Jabatan.Text = Jabatan_Terseleksi
-        frm_BukuPembantuPiutangKaryawan.lbl_TanggalPinjaman.Text = TanggalPinjam_Terseleksi
-        frm_BukuPembantuPiutangKaryawan.txt_JumlahPinjaman.Text = JumlahPiutang_Terseleksi
-        frm_BukuPembantuPiutangKaryawan.txt_SaldoAwal.Text = SaldoAwalPerBaris_Terseleksi
-        frm_BukuPembantuPiutangKaryawan.ShowDialog()
     End Sub
 
 

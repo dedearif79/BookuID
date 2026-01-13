@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
@@ -1046,7 +1046,7 @@ Public Class wpfWin_InputReturPembelian
         End If
 
         If StatusSuntingDatabase = True Then
-            frm_ReturPembelian.TampilkanData()
+            'frm_ReturPembelian.TampilkanData()
             If FungsiForm = FungsiForm_TAMBAH Then pesan_DataBerhasilDisimpan_PlusJurnal()
             If FungsiForm = FungsiForm_EDIT Then pesan_DataBerhasilDiedit_PlusJurnal()
             Me.Close()

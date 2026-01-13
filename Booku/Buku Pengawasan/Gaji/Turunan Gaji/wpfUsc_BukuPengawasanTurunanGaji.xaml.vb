@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -378,14 +378,15 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
     End Sub
 
     Private Sub btn_Tagihan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Tagihan.Click
-        frm_InputTagihanTurunanGaji.ResetForm()
-        frm_InputTagihanTurunanGaji.JudulForm = JudulForm
-        frm_InputTagihanTurunanGaji.TahunTelusurData = TahunTelusurData
-        frm_InputTagihanTurunanGaji.txt_Bulan.Text = Bulan_Terseleksi
-        frm_InputTagihanTurunanGaji.txt_JumlahTagihan.Text = JumlahTagihan_Terseleksi
-        frm_InputTagihanTurunanGaji.txt_JumlahPotongan.Text = JumlahPotongan_Terseleksi
-        frm_InputTagihanTurunanGaji.txt_Keterangan.Text = Keterangan_Terseleksi
-        frm_InputTagihanTurunanGaji.ShowDialog()
+        win_InputTagihanTurunanGaji = New wpfWin_InputTagihanTurunanGaji
+        win_InputTagihanTurunanGaji.ResetForm()
+        win_InputTagihanTurunanGaji.JudulForm = JudulForm
+        win_InputTagihanTurunanGaji.TahunTelusurData = TahunTelusurData
+        win_InputTagihanTurunanGaji.Bulan = Bulan_Terseleksi
+        win_InputTagihanTurunanGaji.JumlahTagihan = AmbilAngka(JumlahTagihan_Terseleksi)
+        win_InputTagihanTurunanGaji.JumlahPotongan = AmbilAngka(JumlahPotongan_Terseleksi)
+        win_InputTagihanTurunanGaji.Keterangan = Keterangan_Terseleksi
+        win_InputTagihanTurunanGaji.ShowDialog()
     End Sub
 
     Private Sub btn_Adjusment_Click(sender As Object, e As RoutedEventArgs) Handles btn_Adjusment.Click
@@ -767,7 +768,7 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
                 "Lanjutkan proses?"
             If Not TanyaKonfirmasi(Pesan) Then Return
             PenyesuaianSelisih()
-            If frm_InputJurnal.JurnalTersimpan = False Then Return
+            If win_InputJurnal.JurnalTersimpan = False Then Return
         End If
 
         Dim Uraian = Kosongan

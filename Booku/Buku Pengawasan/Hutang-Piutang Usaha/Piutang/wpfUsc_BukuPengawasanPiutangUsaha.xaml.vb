@@ -1062,10 +1062,10 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
             Dim NomorJV_Retur = dr.Item("Nomor_JV")
             AksesDatabase_Transaksi(Tutup)
             PesanUntukProgrammer("Nanti Form berikut ini harus diganti dengan Pilih Jurnal Penjualan/Retur..!!!")
-            frm_PilihJurnal_Penjualan_Retur.ResetForm()
-            frm_PilihJurnal_Penjualan_Retur.NomorJV_Penjualan = NomorJV_Penjualan_Terseleksi
-            frm_PilihJurnal_Penjualan_Retur.NomorJV_Retur = NomorJV_Retur
-            frm_PilihJurnal_Penjualan_Retur.ShowDialog()
+            'frm_PilihJurnal_Penjualan_Retur.ResetForm()
+            'frm_PilihJurnal_Penjualan_Retur.NomorJV_Penjualan = NomorJV_Penjualan_Terseleksi
+            'frm_PilihJurnal_Penjualan_Retur.NomorJV_Retur = NomorJV_Retur
+            'frm_PilihJurnal_Penjualan_Retur.ShowDialog()
 
         End If
     End Sub
@@ -1164,21 +1164,21 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
                 VisibilitasTombolDPPU(True)
                 VisibilitasTombolJurnal(True)
         End Select
-        frm_BukuPengawasanPiutangUsaha.Text = JudulForm
+        'frm_BukuPengawasanPiutangUsaha.Text = JudulForm
         LogikaJudulForm()
     End Sub
 
     Sub LogikaJudulForm()
         If JenisRelasi_Induk = Pilihan_Semua Then
             lbl_JudulForm.Text = JudulForm
-            frm_BukuPengawasanPiutangUsaha.Text = JudulForm
+            'frm_BukuPengawasanPiutangUsaha.Text = JudulForm
         Else
             lbl_JudulForm.Text = JudulForm & StripKosong & JenisRelasi_Induk
-            frm_BukuPengawasanPiutangUsaha.Text = JudulForm & StripKosong & JenisRelasi_Induk
+            'frm_BukuPengawasanPiutangUsaha.Text = JudulForm & StripKosong & JenisRelasi_Induk
         End If
         If DestinasiPenjualan = DestinasiPenjualan_Ekspor Then
             lbl_JudulForm.Text = JudulForm & StripKosong & DestinasiPenjualan_Ekspor
-            frm_BukuPengawasanPiutangUsaha.Text = JudulForm & StripKosong & DestinasiPenjualan_Ekspor
+            'frm_BukuPengawasanPiutangUsaha.Text = JudulForm & StripKosong & DestinasiPenjualan_Ekspor
         End If
     End Sub
 

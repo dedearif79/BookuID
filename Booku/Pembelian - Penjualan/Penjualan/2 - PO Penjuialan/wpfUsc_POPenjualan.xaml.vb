@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -121,17 +121,17 @@ Public Class wpfUsc_POPenjualan
         EksekusiTampilanData = False
         KontenCombo_JenisProduk_Induk()
         Select Case JudulForm
-            Case frm_POPenjualan_Lokal_Barang.JudulForm
+            Case host_POPenjualan_Lokal_Barang.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_Barang
-            Case frm_POPenjualan_Lokal_Jasa.JudulForm
+            Case host_POPenjualan_Lokal_Jasa.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_Jasa
-            Case frm_POPenjualan_Lokal_BarangDanJasa.JudulForm
+            Case host_POPenjualan_Lokal_BarangDanJasa.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_BarangDanJasa
-            Case frm_POPenjualan_Lokal_JasaKonstruksi.JudulForm
+            Case host_POPenjualan_Lokal_JasaKonstruksi.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_JasaKonstruksi
-            Case frm_POPenjualan_Lokal_Semua.JudulForm
+            Case host_POPenjualan_Lokal_Semua.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_Semua
-            Case frm_POPenjualan_Ekspor.JudulForm
+            Case host_POPenjualan_Ekspor.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_Barang
         End Select
         KontenCombo_Kontrol()
@@ -509,7 +509,7 @@ Public Class wpfUsc_POPenjualan
             DiskonPerItem_Persen = FormatUlangDesimal_Prosentase(dr.Item("Diskon_Per_Item"))
             DiskonPerItem_Rp = JumlahHargaPerItem * (DiskonPerItem_Persen / 100)
             TotalHargaPerItem = dr.Item("Total_Harga_Per_Item")
-            frm_Input_POPenjualan.DataTabelUtama.Rows.Add(NomorUrut, JenisProduk_PerItem, NamaProduk, DeskripsiProduk,
+            win_InputPOPenjualan.datatabelUtama.Rows.Add(NomorUrut, JenisProduk_PerItem, NamaProduk, DeskripsiProduk,
                                                           JumlahProduk, SatuanProduk, HargaSatuan, JumlahHargaPerItem,
                                                           (FormatUlangDesimal_Prosentase(DiskonPerItem_Persen) & " %"), DiskonPerItem_Rp, TotalHargaPerItem, KodeProject)
         Loop

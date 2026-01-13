@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -209,7 +209,6 @@ Public Class wpfUsc_BukuPengawasanPajakImpor
 
         StatusAktif = True
 
-        JudulForm = frm_BukuPengawasanPajakImpor.JudulForm
         'lbl_JudulForm.Text = frm_BukuPengawasanPajakImpor.JudulForm
 
         VisibilitasInfoSaldo(False)
@@ -254,7 +253,6 @@ Public Class wpfUsc_BukuPengawasanPajakImpor
         KetersediaanMenuHalaman(pnl_Halaman, False)
 
         'Judul Halaman :
-        frm_BukuPengawasanPajakImpor.Text = JudulForm
         lbl_JudulForm.Text = JudulForm
 
         KesesuaianJurnal_100 = True

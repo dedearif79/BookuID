@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 
 Public Class frm_InputJurnalPerTransaksi
 
@@ -93,7 +93,7 @@ Public Class frm_InputJurnalPerTransaksi
             Return
         End If
         If FungsiForm = FungsiForm_TAMBAH Then
-            For Each row As DataGridViewRow In frm_InputJurnal.DataTabelUtama.Rows
+            For Each row As DataGridViewRow In win_InputJurnal.datatabelUtama.Rows 'Kalau nanti ada ERROR di sini, berarti masalahnya ada di DataGridView yang seharusnya adalah DataGrid
                 Dim KodeAkun = row.Cells("Kode_Akun").Value
                 If txt_COA.Text = KodeAkun Then
                     MsgBox("Akun '" & txt_NamaAkun.Text & "' sudah ada pada jurnal ini." _

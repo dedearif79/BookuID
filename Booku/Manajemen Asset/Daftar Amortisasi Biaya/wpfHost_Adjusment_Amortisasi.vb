@@ -25,7 +25,7 @@ Public Class wpfHost_AdjusmentAmortisasi
         usc_Adjusment_Amortisasi = New wpfUsc_Adjusment_Amortisasi
     End Sub
 
-    Sub CekKesesuaianData()
+    Sub CekAdjusment()
         Inisialisasi()
         usc_Adjusment_Amortisasi.RefreshTampilanData()
     End Sub

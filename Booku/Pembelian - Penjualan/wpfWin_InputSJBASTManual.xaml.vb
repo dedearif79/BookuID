@@ -97,8 +97,10 @@ Public Class wpfWin_InputSJBASTManual
         Select Case JalurMasuk
             Case Form_INPUTINVOICEPEMBELIAN
                 win_InputInvoicePembelian.datatabelSJBAST.Rows.Add(NomorSJBAST, TanggalSJBAST_Formatted, TanggalDiterima_Formatted, Kosongan, 0)
+                win_InputInvoicePembelian_Alt.datatabelSJBAST.Rows.Add(NomorSJBAST, TanggalSJBAST_Formatted, TanggalDiterima_Formatted, Kosongan, 0)
             Case Form_INPUTINVOICEPENJUALAN
                 win_InputInvoicePenjualan.datatabelSJBAST.Rows.Add(NomorSJBAST, TanggalSJBAST_Formatted, TanggalDiterima_Formatted, Kosongan, 0)
+                win_InputInvoicePenjualan_Alt.datatabelSJBAST.Rows.Add(NomorSJBAST, TanggalSJBAST_Formatted, TanggalDiterima_Formatted, Kosongan, 0)
         End Select
 
         Me.Close()

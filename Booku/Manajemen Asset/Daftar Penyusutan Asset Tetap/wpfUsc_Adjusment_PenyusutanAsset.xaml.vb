@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -88,7 +88,6 @@ Public Class wpfUsc_Adjusment_PenyusutanAsset
 
         ProsesLoadingForm = True
 
-        JudulForm = frm_Adjusment_PenyusutanAsset.Text
         lbl_JudulForm.Text = JudulForm
 
         RefreshTampilanData()
@@ -662,7 +661,6 @@ Public Class wpfUsc_Adjusment_PenyusutanAsset
 
         KesesuaianJurnal = True
 
-        frm_DaftarPenyusutanAssetTetap.Text = JudulForm
         lbl_JudulForm.Text = JudulForm
         PewarnaanKolomBulan()
 

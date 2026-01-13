@@ -760,7 +760,7 @@ Public Class wpfUsc_InvoicePenjualan
         If StatusSuntingDatabase = True Then
             pesan_DataTerpilihBerhasilDihapus()
             TampilkanData()
-            frm_BukuPenjualan.TampilkanData()
+            'frm_BukuPenjualan.TampilkanData()
         Else
             pesan_DataTerpilihGagalDihapus()
         End If
@@ -829,21 +829,21 @@ Public Class wpfUsc_InvoicePenjualan
             Return
         End If
 
-        'Isi Variabel :
-        frm_Input_InvoicePenjualan.ResetForm()
-        frm_Input_InvoicePenjualan.FungsiForm = FungsiForm_PEMBETULAN
-        IsiValueForm_InvoicePenjualan()
+        ''Isi Variabel :
+        'frm_Input_InvoicePenjualan.ResetForm()
+        'frm_Input_InvoicePenjualan.FungsiForm = FungsiForm_PEMBETULAN
+        'IsiValueForm_InvoicePenjualan()
 
-        'Reset Variabel-bariabel Tertentu :
-        frm_Input_InvoicePenjualan.NomorJV = 0
-        frm_Input_InvoicePenjualan.ReturDPP = 0
-        frm_Input_InvoicePenjualan.ReturPPN = 0
-        EksekusiKode = False
-        frm_Input_InvoicePenjualan.dtp_TanggalInvoice.Value = Today
-        frm_Input_InvoicePenjualan.TanggalInvoice = TanggalInvoice_Terseleksi
-        EksekusiKode = True
+        ''Reset Variabel-bariabel Tertentu :
+        'frm_Input_InvoicePenjualan.NomorJV = 0
+        'frm_Input_InvoicePenjualan.ReturDPP = 0
+        'frm_Input_InvoicePenjualan.ReturPPN = 0
+        'EksekusiKode = False
+        'frm_Input_InvoicePenjualan.dtp_TanggalInvoice.Value = Today
+        'frm_Input_InvoicePenjualan.TanggalInvoice = TanggalInvoice_Terseleksi
+        'EksekusiKode = True
 
-        frm_Input_InvoicePenjualan.ShowDialog()
+        'frm_Input_InvoicePenjualan.ShowDialog()
 
     End Sub
 

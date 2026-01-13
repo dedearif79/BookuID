@@ -39,6 +39,8 @@ Module wpfMdl_ClassWindow
     '═══════════════════════════════════════════════════════════════════════════
     Public win_InputCOA As New wpfWin_InputCOA
     Public win_ListCOA As New wpfWin_ListCOA
+    Public win_TautanCOA As New wpfWin_TautanCOA
+    Public win_ProgressImportDataCOA As New wpfWin_ProgressImportDataCOA
 
     '═══════════════════════════════════════════════════════════════════════════
     ' DATA MASTER - LAWAN TRANSAKSI / MITRA
@@ -56,6 +58,7 @@ Module wpfMdl_ClassWindow
     ' DATA MASTER - PROJECT
     '═══════════════════════════════════════════════════════════════════════════
     Public win_InputDataProject As New wpfWin_InputDataProject
+    Public win_ListDataProject As New wpfWin_ListDataProject
 
     '═══════════════════════════════════════════════════════════════════════════
     ' DATA MASTER - KARYAWAN
@@ -149,6 +152,7 @@ Module wpfMdl_ClassWindow
     Public win_InputHutangPiutangPemegangSaham As New wpfWin_InputHutangPiutangPemegangSaham
     Public win_InputHutangPiutangDividen As New wpfWin_InputHutangPiutangDividen
     Public win_InputHutangBankLeasing As New wpfWin_InputHutangBankLeasing
+    Public win_InputJadwalAngsuranHutangBankLeasing As New wpfWin_InputJadwalAngsuranHutangBankLeasing
 
     '═══════════════════════════════════════════════════════════════════════════
     ' BUKU PENGAWASAN - DEPOSIT OPERASIONAL
@@ -176,6 +180,7 @@ Module wpfMdl_ClassWindow
     ' BUKU PENGAWASAN - GAJI
     '═══════════════════════════════════════════════════════════════════════════
     Public win_InputGaji As New wpfWin_InputGaji
+    Public win_InputTagihanTurunanGaji As New wpfWin_InputTagihanTurunanGaji
 
     '═══════════════════════════════════════════════════════════════════════════
     ' MANAJEMEN ASSET

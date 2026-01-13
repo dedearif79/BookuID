@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -112,7 +112,6 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal22_Impor
 
         StatusAktif = True
 
-        JudulForm = frm_BukuPengawasanHutangPPhPasal22_Impor.JudulForm
         'lbl_JudulForm.Text = frm_BukuPengawasanHutangPPhPasal22_Impor.JudulForm
 
         VisibilitasInfoSaldo(False)
@@ -154,7 +153,6 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal22_Impor
         KetersediaanMenuHalaman(pnl_Halaman, False)
 
         'Judul Halaman :
-        frm_BukuPengawasanHutangPPhPasal22_Impor.Text = JudulForm
         lbl_JudulForm.Text = JudulForm
 
         KesesuaianJurnal = True

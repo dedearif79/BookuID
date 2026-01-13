@@ -172,9 +172,9 @@ Public Class wpfUsc_BukuPembelian
         KontenCombo_JenisTampilan()
         KontenCombo_JenisProduk_Induk()
         Select Case JudulForm
-            Case frm_BukuPembelian_lokal.JudulForm
+            Case host_BukuPembelian_Lokal.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_Semua
-            Case frm_BukuPembelian_lokal.JudulForm
+            Case host_BukuPembelian_Impor.JudulForm
                 IsiValueComboBypassTerkunci(cmb_JenisProduk_Induk, JenisProduk_Barang)
         End Select
         KontenCombo_Supplier()

@@ -425,109 +425,105 @@ Button Click:
         └── TampilkanData() (refresh)
 ```
 
-## 12. WPF Host Pattern
+## 12. Pattern Tipe Input Field
 
-Pattern untuk membungkus UserControl dalam ContentControl host yang mengelola inisialisasi dan konfigurasi.
+> **Dokumentasi lengkap:** Lihat file `.claude/rules/wpf-window-pattern.md` section 1a.
 
-### Aturan Utama
+Pattern ini berlaku untuk input field di UserControl (filter, form inline, dll).
+
+### Ringkasan Tipe Input Field
+
+| Tipe Input | Style XAML | Code-Behind | Contoh |
+|------------|------------|-------------|--------|
+| **Teks String** | `styleTextBoxFormDialog` | Langsung `.Text` | Kode, Nama, Filter |
+| **Angka Ribuan** | `styleTextBoxFormDialogAngkaSeparatePlus` | `AmbilAngka()` | Jumlah, Harga |
+| **Keterangan/Uraian** | `styleRichTextBoxFormDialog` | Helper functions | Keterangan, Catatan |
+
+### a. Input Angka dengan Separator Ribuan
+
+> **PENTING:** Gunakan `styleTextBoxFormDialogAngkaSeparatePlus` - style ini **otomatis** menangani formatting separator ribuan. **JANGAN** panggil fungsi formatter manual.
+
+```xml
+<TextBox Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}" x:Name="txt_Jumlah"/>
+```
+
+```vb
+' Mengisi nilai - cukup .ToString(), style akan auto-format
+txt_Jumlah.Text = JumlahDariDatabase.ToString()
+
+' Mengambil nilai
+Jumlah = AmbilAngka(txt_Jumlah.Text)
+```
+
+### b. Input Keterangan/Uraian (RichTextBox)
+
+> **PENTING:** Gunakan `RichTextBox` dengan `styleRichTextBoxFormDialog`, bukan `TextBox` dengan `TextWrapping="Wrap"`.
+
+```xml
+<!-- Label di row terpisah dengan titik dua (:) -->
+<TextBlock Style="{StaticResource styleTextBlockFormDialog}" Text="Keterangan :"/>
+
+<!-- RichTextBox dengan Grid.ColumnSpan="2" -->
+<RichTextBox Style="{StaticResource styleRichTextBoxFormDialog}" x:Name="txt_Keterangan" Grid.ColumnSpan="2"/>
+```
+
+**Helper Functions:**
+
+| Fungsi | Tujuan |
+|--------|--------|
+| `IsiValueElemenRichTextBox(rtb, nilai)` | Mengisi nilai ke RichTextBox |
+| `KosongkanValueElemenRichTextBox(rtb)` | Mengosongkan RichTextBox |
+| `IsiValueVariabelRichTextBox(rtb)` | Mengambil nilai dari RichTextBox |
+
+```vb
+' Mengisi nilai
+IsiValueElemenRichTextBox(txt_Keterangan, KeteranganDariDatabase)
+
+' Mengosongkan
+KosongkanValueElemenRichTextBox(txt_Keterangan)
+
+' Mengambil nilai
+Keterangan = IsiValueVariabelRichTextBox(txt_Keterangan)
+```
+
+## 13. WPF Host Pattern
+
+> **Dokumentasi lengkap:** Lihat file `.claude/rules/wpf-host-pattern.md`
+
+Host adalah class wrapper untuk UserControl dengan konfigurasi spesifik. Satu UserControl dapat memiliki banyak varian Host.
+
+### Ringkasan Aturan
 
 | Aturan | Penjelasan |
 |--------|------------|
-| **1 file = 1 UserControl** | Setiap file `wpfHost_XXX.vb` hanya untuk 1 `wpfUsc_XXX` |
-| **Banyak varian** | 1 file host bisa berisi banyak class varian dengan konfigurasi berbeda |
-| **Lokasi file** | File host harus berada di **folder yang sama** dengan UserControl-nya |
+| **1 file = 1 UserControl** | `wpfHost_XXX.vb` hanya untuk 1 `wpfUsc_XXX` |
+| **Banyak varian** | 1 file host bisa berisi banyak class varian |
+| **Lokasi file** | Folder yang sama dengan UserControl |
+| **Inherits** | `ContentControl` |
 
-### Struktur Class Host
+### Contoh Singkat
 
 ```vb
-Imports System.Windows.Controls
-
-' =====================================================================
-' WPF Host untuk wpfUsc_NamaModul
-' 1 file berisi semua varian class yang mengarah ke 1 UserControl
-' Menggunakan variabel usc_ yang sudah dideklarasikan di wpfMdl_ClassUserControl
-' =====================================================================
-
-
-' ---------------------------------------------------------------------
-' VARIAN 1: Default
-' ---------------------------------------------------------------------
-Public Class wpfHost_NamaModul
+Public Class wpfHost_BukuPembelian_Lokal
     Inherits ContentControl
 
     Public Property JudulForm As String
 
     Sub New()
-        JudulForm = "Judul Form"
+        JudulForm = "Buku Pembelian"
         Inisialisasi()
-        Me.Content = usc_NamaModul
+        Me.Content = usc_BukuPembelian_Lokal
     End Sub
 
     Sub Inisialisasi()
-        usc_NamaModul = New wpfUsc_NamaModul With {
-            .Property1 = Value1,
-            .Property2 = Value2
+        usc_BukuPembelian_Lokal = New wpfUsc_BukuPembelian With {
+            .AsalPembelian = AsalPembelian_Lokal
         }
     End Sub
 
     Sub CekKesesuaianData()
         Inisialisasi()
-        usc_NamaModul.RefreshTampilanData()
+        usc_BukuPembelian_Lokal.RefreshTampilanData()
     End Sub
-
 End Class
-```
-
-### Naming Convention
-
-| Komponen | Format | Contoh |
-|----------|--------|--------|
-| **File** | `wpfHost_[NamaUserControl].vb` | `wpfHost_BukuPembelian.vb` |
-| **Class default** | `wpfHost_[NamaUserControl]` | `wpfHost_BukuPembelian` |
-| **Class varian** | `wpfHost_[NamaUserControl]_[Varian]` | `wpfHost_BukuPembelian_Lokal` |
-
-### Contoh File dengan Banyak Varian
-
-```
-wpfHost_BukuPengawasanHutangUsaha.vb
-├── wpfHost_BukuPengawasanHutangUsaha (default - Semua Lokal IDR)
-├── wpfHost_BukuPengawasanHutangUsaha_Afiliasi
-├── wpfHost_BukuPengawasanHutangUsaha_NonAfiliasi
-├── wpfHost_BukuPengawasanHutangUsaha_Impor_USD
-├── wpfHost_BukuPengawasanHutangUsaha_Impor_EUR
-└── ... (semua menggunakan wpfUsc_BukuPengawasanHutangUsaha)
-```
-
-### Penggunaan di Menu Handler
-
-```vb
-Private Sub mnu_BukuPembelian_Lokal_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPembelian_Lokal.Click
-    host_BukuPembelian_Lokal = New wpfHost_BukuPembelian_Lokal
-    BukaUserControlDalamTab(usc_BukuPembelian_Lokal, host_BukuPembelian_Lokal.JudulForm)
-End Sub
-```
-
-### Deklarasi Variabel Global
-
-| File | Tujuan | Contoh |
-|------|--------|--------|
-| `wpfMdl_ClassHost.vb` | Deklarasi variabel host | `Public host_BukuPembelian_Lokal As wpfHost_BukuPembelian_Lokal` |
-| `wpfMdl_ClassUserControl.vb` | Deklarasi variabel UserControl | `Public usc_BukuPembelian_Lokal As wpfUsc_BukuPembelian` |
-
-### Anti-Pattern (JANGAN DILAKUKAN)
-
-```
-❌ SALAH: 1 file untuk banyak UserControl berbeda
-wpfHost_Pembelian.vb
-├── wpfHost_POPembelian         → wpfUsc_POPembelian
-├── wpfHost_SuratJalanPembelian → wpfUsc_SuratJalanPembelian
-├── wpfHost_InvoicePembelian    → wpfUsc_InvoicePembelian
-└── wpfHost_BukuPembelian       → wpfUsc_BukuPembelian
-
-✓ BENAR: 1 file untuk 1 UserControl dengan banyak varian
-wpfHost_POPembelian.vb
-├── wpfHost_POPembelian_Lokal_Barang    → wpfUsc_POPembelian
-├── wpfHost_POPembelian_Lokal_Jasa      → wpfUsc_POPembelian
-├── wpfHost_POPembelian_Impor_Barang    → wpfUsc_POPembelian
-└── wpfHost_POPembelian_Impor_Jasa      → wpfUsc_POPembelian
 ```

@@ -658,7 +658,6 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
         KetersediaanTombolPosting(False)
         KetersediaanTombolJualAsset(False)
         KetersediaanMenuHalaman(pnl_Halaman, True)
-        Dispatcher.InvokeAsync(Sub() RefreshForm(frm_DaftarPenyusutanAssetTetap))
     End Sub
 
 
@@ -870,7 +869,6 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
     Sub TampilkanData_Global_Rinci()
 
-        frm_DaftarPenyusutanAssetTetap.Text = JudulForm
         lbl_JudulForm.Text = JudulForm
         btn_DetailGlobal.Content = teks_DetailPerbulan
         btn_Rekap.Content = teks_RekapGlobal
@@ -916,7 +914,6 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
     Sub TampilkanData_Global_Rekap()
 
-        frm_DaftarPenyusutanAssetTetap.Text = JudulForm
         lbl_JudulForm.Text = JudulForm
         btn_DetailGlobal.Content = teks_DetailPerbulan
         btn_Rekap.Content = teks_Kembali
@@ -1067,7 +1064,6 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
     Sub TampilkanData_Detail_Rinci()
 
         If Not ProsesPostingJurnal Then
-            frm_DaftarPenyusutanAssetTetap.Text = JudulForm
             lbl_JudulForm.Text = JudulForm
             btn_DetailGlobal.Content = teks_Global
             btn_Rekap.Content = teks_RekapPenyusutan
@@ -1126,7 +1122,6 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
         KesesuaianJurnal = True
 
-        frm_DaftarPenyusutanAssetTetap.Text = JudulForm
         lbl_JudulForm.Text = JudulForm
         btn_DetailGlobal.Content = teks_Global
         btn_Rekap.Content = teks_Kembali

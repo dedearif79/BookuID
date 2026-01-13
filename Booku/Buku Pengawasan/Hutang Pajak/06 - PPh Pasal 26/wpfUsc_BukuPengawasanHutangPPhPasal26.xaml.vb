@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -282,7 +282,6 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal26
         VisibilitasInfoSaldo(False)
 
         'Judul Halaman :
-        frm_BukuPengawasanHutangPPhPasal26.Text = JudulForm
         lbl_JudulForm.Text = JudulForm
 
         If MasaPajak = Kosongan Then Return
@@ -1736,9 +1735,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal26
             If NomorUrut_Terseleksi <> 0 Then cmb_MasaPajak.SelectedValue = datatabelUtama.Rows(BarisTerseleksi)("Bulan_")
         End If
         If Bulan_Terseleksi = JenisPajak_KetetapanPajak Then
-            frm_BukuPengawasanKetetapanPajak.MdiParent = frm_BOOKU
-            frm_BukuPengawasanKetetapanPajak.Show()
-            frm_BukuPengawasanKetetapanPajak.Focus()
+            win_BOOKU.BukaModul_BukuPengawasanKetetapanPajak()
             usc_BukuPengawasanKetetapanPajak.cmb_PilihanJenisPajak.SelectedValue = JenisPajak
         End If
     End Sub

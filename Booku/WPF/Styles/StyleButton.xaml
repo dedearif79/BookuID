@@ -394,6 +394,11 @@
         <Setter Property="Content" Value="Reset"/>
     </Style>
 
+    <!--Button Form Dialog - Refresh -->
+    <Style x:Key="styleButtonFormDialogRefresh" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+        <Setter Property="Content" Value="Refresh"/>
+    </Style>
+
     <!--Button Form Dialog - Tambahkan -->
     <Style x:Key="styleButtonFormDialogTambahkan" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
         <Setter Property="Content" Value="Tambahkan"/>
@@ -403,6 +408,11 @@
     <Style x:Key="styleButtonFormDialogTutup" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
         <Setter Property="Content" Value="Tutup"/>
     </Style>
+
+    <!--Button Form Dialog - Pilih --><!--
+    <Style x:Key="styleButtonFormDialogPilih" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+        <Setter Property="Content" Value="Pilih"/>
+    </Style>-->
 
     <!--Button Form Dialog - Backup -->
     <Style x:Key="styleButtonFormDialogBackup" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
@@ -574,7 +584,7 @@
         <Setter Property="VerticalAlignment" Value="Top"/>
     </Style>
 
-
+    
     <!--Button Form Halaman - Sesuaikan -->
     <Style x:Key="styleButtonFormHalamanSesuaikan" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
         <Setter Property="Height" Value="Auto"/>

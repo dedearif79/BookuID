@@ -25,7 +25,7 @@ Public Class wpfHost_AdjusmentHPP
         usc_JurnalAdjusment_HPP = New wpfUsc_JurnalAdjusment_HPP
     End Sub
 
-    Sub CekKesesuaianData()
+    Sub CekAdjusment()
         Inisialisasi()
         usc_JurnalAdjusment_HPP.RefreshTampilanData()
     End Sub

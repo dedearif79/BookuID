@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -126,21 +126,21 @@ Public Class wpfUsc_POPembelian
         EksekusiTampilanData = False
         KontenCombo_JenisProduk_Induk()
         Select Case JudulForm
-            Case frm_POPembelian_Lokal_Barang.JudulForm
+            Case host_POPembelian_Lokal_Barang.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_Barang
-            Case frm_POPembelian_Lokal_Jasa.JudulForm
+            Case host_POPembelian_Lokal_Jasa.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_Jasa
-            Case frm_POPembelian_Lokal_BarangDanJasa.JudulForm
+            Case host_POPembelian_Lokal_BarangDanJasa.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_BarangDanJasa
-            Case frm_POPembelian_Lokal_JasaKonstruksi.JudulForm
+            Case host_POPembelian_Lokal_JasaKonstruksi.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_JasaKonstruksi
-            Case frm_POPembelian_Lokal_Semua.JudulForm
+            Case host_POPembelian_Lokal_Semua.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_Semua
-            Case frm_POPembelian_Impor_Barang.JudulForm
+            Case host_POPembelian_Impor_Barang.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_Barang
-            Case frm_POPembelian_Impor_Jasa.JudulForm
+            Case host_POPembelian_Impor_Jasa.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_Jasa
-            Case frm_POPembelian_Impor_Semua.JudulForm
+            Case host_POPembelian_Impor_Semua.JudulForm
                 cmb_JenisProduk_Induk.SelectedValue = JenisProduk_Semua
         End Select
         KontenCombo_Kontrol()

@@ -1,3 +1,0 @@
-﻿Public Class frm_BukuPengawasanHutangPPhPasal22_Lokal
-
-End Class

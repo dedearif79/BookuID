@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Input
@@ -92,8 +92,8 @@ Public Class wpfWin_InputProduk_Nota
 
         If JalurMasuk <> Form_INPUTPOPENJUALAN _
             And JalurMasuk <> Form_INPUTPOPEMBELIAN _
-            And Not (JalurMasuk = Form_INPUTINVOICEPEMBELIAN And frm_Input_InvoicePembelian.NP <> "N") _
-            And Not (JalurMasuk = Form_INPUTINVOICEPENJUALAN And frm_Input_InvoicePenjualan.NP <> "N") _
+            And Not (JalurMasuk = Form_INPUTINVOICEPEMBELIAN And win_InputInvoicePembelian.NP <> "N") _
+            And Not (JalurMasuk = Form_INPUTINVOICEPENJUALAN And win_InputInvoicePenjualan.NP <> "N") _
             And InvoiceDenganPO = True _
             Then
             KunciInputanKolom = True
@@ -415,12 +415,13 @@ Public Class wpfWin_InputProduk_Nota
 
 
     Private Sub btn_PilihKodeProject_Click(sender As Object, e As RoutedEventArgs) Handles btn_PilihKodeProject.Click
-        frm_ListDataProject.ResetForm()
+        win_ListDataProject = New wpfWin_ListDataProject
+        win_ListDataProject.ResetForm()
         If txt_KodeProject.Text <> Kosongan Then
-            frm_ListDataProject.KodeProject_Terseleksi = txt_KodeProject.Text
+            win_ListDataProject.KodeProject_Terseleksi = txt_KodeProject.Text
         End If
-        frm_ListDataProject.ShowDialog()
-        txt_KodeProject.Text = frm_ListDataProject.KodeProject_Terseleksi
+        win_ListDataProject.ShowDialog()
+        txt_KodeProject.Text = win_ListDataProject.KodeProject_Terseleksi
     End Sub
 
     Sub KetersediaanKolom_KodeProject()

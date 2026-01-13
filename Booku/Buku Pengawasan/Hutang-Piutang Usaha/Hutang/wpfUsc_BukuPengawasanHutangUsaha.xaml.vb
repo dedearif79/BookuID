@@ -1066,10 +1066,10 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
             Dim NomorJV_Retur = dr.Item("Nomor_JV")
             AksesDatabase_Transaksi(Tutup)
             PesanUntukProgrammer("Nanti Form berikut ini harus diganti dengan Pilih Jurnal Pembelian/Retur..!!!")
-            frm_PilihJurnal_Penjualan_Retur.ResetForm()
-            frm_PilihJurnal_Penjualan_Retur.NomorJV_Penjualan = NomorJV_Pembelian_Terseleksi
-            frm_PilihJurnal_Penjualan_Retur.NomorJV_Retur = NomorJV_Retur
-            frm_PilihJurnal_Penjualan_Retur.ShowDialog()
+            'frm_PilihJurnal_Penjualan_Retur.ResetForm()
+            'frm_PilihJurnal_Penjualan_Retur.NomorJV_Penjualan = NomorJV_Pembelian_Terseleksi
+            'frm_PilihJurnal_Penjualan_Retur.NomorJV_Retur = NomorJV_Retur
+            'frm_PilihJurnal_Penjualan_Retur.ShowDialog()
 
         End If
     End Sub
@@ -1168,21 +1168,17 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
                 VisibilitasTombolDPHU(True)
                 VisibilitasTombolJurnal(True)
         End Select
-        frm_BukuPengawasanHutangUsaha.Text = JudulForm
         LogikaJudulForm()
     End Sub
 
     Sub LogikaJudulForm()
         If JenisRelasi_Induk = Pilihan_Semua Then
             lbl_JudulForm.Text = JudulForm
-            frm_BukuPengawasanHutangUsaha.Text = JudulForm
         Else
             lbl_JudulForm.Text = JudulForm & StripKosong & JenisRelasi_Induk
-            frm_BukuPengawasanHutangUsaha.Text = JudulForm & StripKosong & JenisRelasi_Induk
         End If
         If AsalPembelian = AsalPembelian_Impor Then
             lbl_JudulForm.Text = JudulForm & StripKosong & AsalPembelian_Impor & StripKosong & KodeMataUang
-            frm_BukuPengawasanHutangUsaha.Text = JudulForm & StripKosong & AsalPembelian_Impor & StripKosong & KodeMataUang
         End If
     End Sub
 

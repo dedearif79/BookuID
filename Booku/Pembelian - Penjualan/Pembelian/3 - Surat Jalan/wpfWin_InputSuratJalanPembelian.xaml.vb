@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
@@ -680,8 +680,8 @@ Public Class wpfWin_InputSuratJalanPembelian
                                       " WHERE Nomor_SJ_BAST_Produk = '" & NomorSJ_Lama & "' ", KoneksiDatabaseTransaksi)
                 cmd_ExecuteNonQuery()
                 AksesDatabase_Transaksi(Tutup)
-                frm_InvoicePembelian.TampilkanData()
-                frm_BukuPembelian.TampilkanData()
+                'frm_InvoicePembelian.TampilkanData()
+                'frm_BukuPembelian.TampilkanData()
             End If
         End If
 

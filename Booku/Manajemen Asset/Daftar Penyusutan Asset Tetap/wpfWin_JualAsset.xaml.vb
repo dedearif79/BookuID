@@ -237,30 +237,31 @@ Public Class wpfWin_JualAsset
         JumlahHarga = JumlahProduk * HargaSatuan
         TotalHarga = JumlahHarga - DiskonPerItem_Rp
 
-        frm_Input_InvoicePenjualan.ResetForm()
-        frm_Input_InvoicePenjualan.FungsiForm = FungsiForm_TAMBAH
-        frm_Input_InvoicePenjualan.JenisProduk_Induk = JenisProduk_Induk
-        frm_Input_InvoicePenjualan.InvoiceDenganPO = False
-        frm_Input_InvoicePenjualan.JualAsset = True
-        frm_Input_InvoicePenjualan.dtp_TanggalInvoice.Value = TanggalTransaksi
-        frm_Input_InvoicePenjualan.DataTabelUtama.
+        win_InputInvoicePenjualan = New wpfWin_InputInvoicePenjualan
+        win_InputInvoicePenjualan.ResetForm()
+        win_InputInvoicePenjualan.FungsiForm = FungsiForm_TAMBAH
+        win_InputInvoicePenjualan.JenisProduk_Induk = JenisProduk_Induk
+        win_InputInvoicePenjualan.InvoiceDenganPO = False
+        win_InputInvoicePenjualan.JualAsset = True
+        win_InputInvoicePenjualan.dtp_TanggalInvoice.SelectedDate = TanggalFormatWPF(TanggalTransaksi)
+        win_InputInvoicePenjualan.datatabelUtama.
             Rows.Add(NomorUrutProduk, JenisProduk_PerItem, NomorSJBAST, TanggalSJBAST, TanggalDiterimaSJBAST,
                      NamaProduk, DeskripsiProduk, JumlahProduk, SatuanProduk, HargaSatuan,
                      JumlahHarga, (FormatUlangDesimal_Prosentase(DiskonPerItem_Persen) & " %"), DiskonPerItem_Rp, TotalHarga)
         If AdaPPh = True Then
-            frm_Input_InvoicePenjualan.cmb_JenisPPh.Text = JenisPPh_Pasal42
-            frm_Input_InvoicePenjualan.txt_TarifPPh.Text = FormatUlangDesimal_Prosentase(2.5)
-            frm_Input_InvoicePenjualan.KodeSetoran = KodeSetoran_402
+            win_InputInvoicePenjualan.cmb_JenisPPh.Text = JenisPPh_Pasal42
+            win_InputInvoicePenjualan.txt_TarifPPh.Text = FormatUlangDesimal_Prosentase(2.5)
+            win_InputInvoicePenjualan.KodeSetoran = KodeSetoran_402
         Else
-            frm_Input_InvoicePenjualan.cmb_JenisPPh.Text = Kosongan
-            frm_Input_InvoicePenjualan.txt_TarifPPh.Text = Kosongan
-            frm_Input_InvoicePenjualan.KodeSetoran = KodeSetoran_Non
+            win_InputInvoicePenjualan.cmb_JenisPPh.Text = Kosongan
+            win_InputInvoicePenjualan.txt_TarifPPh.Text = Kosongan
+            win_InputInvoicePenjualan.KodeSetoran = KodeSetoran_Non
         End If
-        frm_Input_InvoicePenjualan.txt_Catatan.Text = Keterangan
-        frm_Input_InvoicePenjualan.KelompokHarta = KelompokHarta
-        frm_Input_InvoicePenjualan.ShowDialog()
-        If frm_Input_InvoicePenjualan.PenyimpananInvoicePenjualan = True Then
-            If frm_Input_InvoicePenjualan.AdaPenyimpananjurnal = True Then SimpanJurnalClosing()
+        IsiValueElemenRichTextBox(win_InputInvoicePenjualan.txt_Catatan, Keterangan)
+        win_InputInvoicePenjualan.KelompokHarta = KelompokHarta
+        win_InputInvoicePenjualan.ShowDialog()
+        If win_InputInvoicePenjualan.PenyimpananInvoicePenjualan = True Then
+            If win_InputInvoicePenjualan.AdaPenyimpananjurnal = True Then SimpanJurnalClosing()
             UpdateDataAsset()
             frm_BOOKU.BukaModul_BukuPenjualanAsset()
             Me.Close()

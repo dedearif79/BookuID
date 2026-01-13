@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.IO
 Imports MySql.Data.MySqlClient
 Imports bcomm
@@ -166,7 +166,7 @@ Public Class frm_TryApp
     End Sub
 
     Private Sub btn_BakcupDatabase_Click(sender As Object, e As EventArgs) Handles btn_BakcupDatabase.Click
-        frm_BackupDatabase.ShowDialog()
+        'frm_BackupDatabase.ShowDialog()
     End Sub
 
     Private Sub txt_Nomor_TextChanged(sender As Object, e As EventArgs) Handles txt_Nomor.TextChanged

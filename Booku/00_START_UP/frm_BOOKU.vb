@@ -334,10 +334,10 @@ Public Class frm_BOOKU
 
 
     Private Sub mnu_DataAwal_HutangUsaha_BAK_Click(sender As Object, e As EventArgs) Handles mnu_DataAwal_HutangUsaha_BAK.Click
-        X_BukuPengawasanHutangUsaha_BAK.JalurMasuk = Halaman_MENUUTAMA
-        X_BukuPengawasanHutangUsaha_BAK.MdiParent = Me
-        X_BukuPengawasanHutangUsaha_BAK.Show()
-        X_BukuPengawasanHutangUsaha_BAK.Focus()
+        'X_BukuPengawasanHutangUsaha_BAK.JalurMasuk = Halaman_MENUUTAMA
+        'X_BukuPengawasanHutangUsaha_BAK.MdiParent = Me
+        'X_BukuPengawasanHutangUsaha_BAK.Show()
+        'X_BukuPengawasanHutangUsaha_BAK.Focus()
     End Sub
 
     'DATA AWAL - Hutang - Hutang Bank :
@@ -601,9 +601,9 @@ Public Class frm_BOOKU
 
     'SUB MENU : PEMBELIAN ---------------------------------------------------------------------------------------------------------
     Private Sub mnu_InputPembelian_Click(sender As Object, e As EventArgs) Handles mnu_InputPembelian.Click
-        frm_InputPembelian.ResetForm()
-        frm_InputPembelian.FungsiForm = FungsiForm_TAMBAH
-        frm_InputPembelian.ShowDialog()
+        'frm_InputPembelian.ResetForm()
+        'frm_InputPembelian.FungsiForm = FungsiForm_TAMBAH
+        'frm_InputPembelian.ShowDialog()
     End Sub
 
     'SUB MENU : PENJUALAN ---------------------------------------------------------------------------------------------------------
@@ -903,9 +903,9 @@ Public Class frm_BOOKU
 
     'Pemindahbukuan :
     Private Sub mnu_Pemindahbukuan_Click(sender As Object, e As EventArgs) Handles mnu_Pemindahbukuan.Click
-        frm_InputPemindahbukuan.ResetForm()
-        frm_InputPemindahbukuan.FungsiForm = FungsiForm_TAMBAH
-        frm_InputPemindahbukuan.ShowDialog()
+        'frm_InputPemindahbukuan.ResetForm()
+        'frm_InputPemindahbukuan.FungsiForm = FungsiForm_TAMBAH
+        'frm_InputPemindahbukuan.ShowDialog()
     End Sub
 
 
@@ -1882,10 +1882,10 @@ Public Class frm_BOOKU
     Private Sub mnu_StockOpname_Click(sender As Object, e As EventArgs) Handles mnu_StockOpname.Click
     End Sub
     Sub BukaModul_StockOpname()
-        If frm_StockOpname.JenisStok_Menu = Kosongan Then
-            PesanUntukProgrammer("Tentukan Dulu Jenis Stoknya")
-            Return
-        End If
+        'If frm_StockOpname.JenisStok_Menu = Kosongan Then
+        '    PesanUntukProgrammer("Tentukan Dulu Jenis Stoknya")
+        '    Return
+        'End If
         'frm_StockOpname.MdiParent = Me
         'frm_StockOpname.Show()
         'frm_StockOpname.Focus()
@@ -1895,7 +1895,7 @@ Public Class frm_BOOKU
         BukaModul_StockOpname_BahanPenolong()
     End Sub
     Sub BukaModul_StockOpname_BahanPenolong()
-        frm_BahanPenolong.Close()
+        'frm_BahanPenolong.Close()
         'frm_BahanPenolong.MdiParent = Me
         'frm_BahanPenolong.Show()
         'frm_BahanPenolong.Focus()
@@ -1905,7 +1905,7 @@ Public Class frm_BOOKU
         BukaModul_StockOpname_BahanBaku()
     End Sub
     Sub BukaModul_StockOpname_BahanBaku()
-        frm_BahanBaku.Close()
+        'frm_BahanBaku.Close()
         'frm_BahanBaku.MdiParent = Me
         'frm_BahanBaku.Show()
         'frm_BahanBaku.Focus()
@@ -1917,7 +1917,7 @@ Public Class frm_BOOKU
         BukaModul_StockOpname_BarangDalamProses_CekFisik()
     End Sub
     Sub BukaModul_StockOpname_BarangDalamProses_CekFisik()
-        frm_BarangDalamProses_CekFisik.Close()
+        'frm_BarangDalamProses_CekFisik.Close()
         'frm_BarangDalamProses_CekFisik.MdiParent = Me
         'frm_BarangDalamProses_CekFisik.Show()
         'frm_BarangDalamProses_CekFisik.Focus()
@@ -1939,7 +1939,7 @@ Public Class frm_BOOKU
         BukaModul_StockOpname_BarangJadi()
     End Sub
     Sub BukaModul_StockOpname_BarangJadi()
-        frm_BarangJadi.Close()
+        'frm_BarangJadi.Close()
         'frm_BarangJadi.MdiParent = Me
         'frm_BarangJadi.Show()
         'frm_BarangJadi.Focus()
@@ -1987,27 +1987,27 @@ Public Class frm_BOOKU
     End Sub
 
     Private Sub mnu_JurnalAdjusment_HPP_Click(sender As Object, e As EventArgs) Handles mnu_JurnalAdjusment_HPP.Click
-        'Cek Dulu Kelengkapan Adjusment Penyusutan Asset :
-        frm_Adjusment_PenyusutanAsset.CekAdjusment()
-        If Not usc_Adjusment_PenyusutanAsset.AdjusmentBulanBukuAktifSudahLengkap Then
-            PesanPemberitahuan("Silakan lengkapi dulu Adjusment Penyusutan Asset untuk Bulan " & KonversiAngkaKeBulanString(BulanBukuAktif) & ", baru masuk ke menu ini.")
-            Return
-        End If
-        'Cek Dulu Kelengkapan Adjusment Amortisasi :
-        frm_Adjusment_Amortisasi.CekAdjusment()
-        If Not usc_Adjusment_Amortisasi.AdjusmentBulanBukuAktifSudahLengkap Then
-            PesanPemberitahuan("Silakan lengkapi dulu Adjusment Amortisasi untuk Bulan " & KonversiAngkaKeBulanString(BulanBukuAktif) & ", baru masuk ke menu ini.")
-            Return
-        End If
-        'Cek Dulu Kelengkapan Adjusment Forex :
+        ''Cek Dulu Kelengkapan Adjusment Penyusutan Asset :
+        'frm_Adjusment_PenyusutanAsset.CekAdjusment()
+        'If Not usc_Adjusment_PenyusutanAsset.AdjusmentBulanBukuAktifSudahLengkap Then
+        '    PesanPemberitahuan("Silakan lengkapi dulu Adjusment Penyusutan Asset untuk Bulan " & KonversiAngkaKeBulanString(BulanBukuAktif) & ", baru masuk ke menu ini.")
+        '    Return
+        'End If
+        ''Cek Dulu Kelengkapan Adjusment Amortisasi :
+        'frm_Adjusment_Amortisasi.CekAdjusment()
+        'If Not usc_Adjusment_Amortisasi.AdjusmentBulanBukuAktifSudahLengkap Then
+        '    PesanPemberitahuan("Silakan lengkapi dulu Adjusment Amortisasi untuk Bulan " & KonversiAngkaKeBulanString(BulanBukuAktif) & ", baru masuk ke menu ini.")
+        '    Return
+        'End If
+        ''Cek Dulu Kelengkapan Adjusment Forex :
         'frm_Adjusment_Forex.CekAdjusment()
-        If Not usc_Adjusment_Forex.AdjusmentBulanBukuAktifSudahLengkap Then
-            PesanPemberitahuan("Silakan tuntaskan dulu Adjusment Forex untuk Bulan " & KonversiAngkaKeBulanString(BulanBukuAktif) & ", baru masuk ke menu ini.")
-            Return
-        End If
-        'frm_Adjusment_HPP.MdiParent = Me
-        'frm_Adjusment_HPP.Show()
-        'frm_Adjusment_HPP.Focus()
+        'If Not usc_Adjusment_Forex.AdjusmentBulanBukuAktifSudahLengkap Then
+        '    PesanPemberitahuan("Silakan tuntaskan dulu Adjusment Forex untuk Bulan " & KonversiAngkaKeBulanString(BulanBukuAktif) & ", baru masuk ke menu ini.")
+        '    Return
+        'End If
+        ''frm_Adjusment_HPP.MdiParent = Me
+        ''frm_Adjusment_HPP.Show()
+        ''frm_Adjusment_HPP.Focus()
     End Sub
 
 
@@ -2591,7 +2591,7 @@ Public Class frm_BOOKU
                                     HalamanTarget, Pesan, StatusDibaca, StatusDieksekusi)
         Loop
         AksesDatabase_Transaksi(Tutup)
-        BeginInvoke(Sub() dgv_Notifikasi.ClearSelection())
+        dgv_Notifikasi.ClearSelection()
     End Sub
 
     Private Sub frm_Resize(sender As Object, e As EventArgs) Handles Me.Resize

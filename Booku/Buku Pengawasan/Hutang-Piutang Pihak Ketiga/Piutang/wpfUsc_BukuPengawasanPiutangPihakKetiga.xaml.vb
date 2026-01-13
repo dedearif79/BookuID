@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -691,16 +691,16 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
 
     End Sub
     Sub RefreshSetelahBayar()
-        If frm_InputTransaksi.PenyimpananSukses = True Then
-            TampilkanData_JadwalAngsuran()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal21 Then frm_BukuPengawasanPiutangPPhPasal21.RefreshTampilanData()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal22 Then frm_BukuPengawasanPiutangPPhPasal22.RefreshTampilanData()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal23 Then frm_BukuPengawasanPiutangPPhPasal23.RefreshTampilanData()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal42 Then frm_BukuPengawasanPiutangPPhPasal42.RefreshTampilanData()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal25 Then frm_BukuPengawasanPiutangPPhPasal25.RefreshTampilanData()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal26 Then frm_BukuPengawasanPiutangPPhPasal26.RefreshTampilanData()
-            'If JenisPPh_Terseleksi = JenisPPh_Pasal29 Then frm_BukuPengawasanPiutangPPhPasal29.RefreshTampilanData()
-        End If
+        'If frm_InputTransaksi.PenyimpananSukses = True Then
+        '    TampilkanData_JadwalAngsuran()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal21 Then frm_BukuPengawasanPiutangPPhPasal21.RefreshTampilanData()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal22 Then frm_BukuPengawasanPiutangPPhPasal22.RefreshTampilanData()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal23 Then frm_BukuPengawasanPiutangPPhPasal23.RefreshTampilanData()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal42 Then frm_BukuPengawasanPiutangPPhPasal42.RefreshTampilanData()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal25 Then frm_BukuPengawasanPiutangPPhPasal25.RefreshTampilanData()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal26 Then frm_BukuPengawasanPiutangPPhPasal26.RefreshTampilanData()
+        '    'If JenisPPh_Terseleksi = JenisPPh_Pasal29 Then frm_BukuPengawasanPiutangPPhPasal29.RefreshTampilanData()
+        'End If
     End Sub
 
 

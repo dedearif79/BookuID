@@ -1358,11 +1358,35 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_JurnalAdjusment_Forex_Click(sender As Object, e As RoutedEventArgs) Handles mnu_JurnalAdjusment_Forex.Click
+        BukaModul_AdjusmentForex()
+    End Sub
+    Sub BukaModul_AdjusmentForex()
         host_AdjusmentForex = New wpfHost_AdjusmentForex
         BukaUserControlDalamTab(usc_Adjusment_Forex, host_AdjusmentForex.JudulForm)
     End Sub
 
     Private Sub mnu_JurnalAdjusment_HPP_Click(sender As Object, e As RoutedEventArgs) Handles mnu_JurnalAdjusment_HPP.Click
+        'Cek Dulu Kelengkapan Adjusment Penyusutan Asset :
+        host_AdjusmentPenyusutanAsset.CekAdjusment()
+        If Not usc_Adjusment_PenyusutanAsset.AdjusmentBulanBukuAktifSudahLengkap Then
+            PesanPemberitahuan("Silakan lengkapi dulu Adjusment Penyusutan Asset untuk Bulan " & KonversiAngkaKeBulanString(BulanBukuAktif) & ", baru masuk ke menu ini.")
+            Return
+        End If
+        'Cek Dulu Kelengkapan Adjusment Amortisasi :
+        host_AdjusmentAmortisasi.CekAdjusment()
+        If Not usc_Adjusment_Amortisasi.AdjusmentBulanBukuAktifSudahLengkap Then
+            PesanPemberitahuan("Silakan lengkapi dulu Adjusment Amortisasi untuk Bulan " & KonversiAngkaKeBulanString(BulanBukuAktif) & ", baru masuk ke menu ini.")
+            Return
+        End If
+        'Cek Dulu Kelengkapan Adjusment Forex :
+        host_AdjusmentForex.CekAdjusment()
+        If Not usc_Adjusment_Forex.AdjusmentBulanBukuAktifSudahLengkap Then
+            PesanPemberitahuan("Silakan tuntaskan dulu Adjusment Forex untuk Bulan " & KonversiAngkaKeBulanString(BulanBukuAktif) & ", baru masuk ke menu ini.")
+            Return
+        End If
+        BukaModul_AdjusmentHPP()
+    End Sub
+    Sub BukaModul_AdjusmentHPP()
         host_AdjusmentHPP = New wpfHost_AdjusmentHPP
         BukaUserControlDalamTab(usc_JurnalAdjusment_HPP, host_AdjusmentHPP.JudulForm)
     End Sub
