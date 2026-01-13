@@ -1046,6 +1046,7 @@ Module wpfMdl_PublicSub
 
 
     'STYLE TABEL DASAR :
+    ' Warna menggunakan variabel dari mdlPub_ModulUmum.vb yang selaras dengan StyleColor.xaml
     Public Sub StyleTabelDasar_WPF(ByVal Tabel As DataGrid)
         If Proses = False Then
             Tabel.AutoGenerateColumns = False
@@ -1053,7 +1054,7 @@ Module wpfMdl_PublicSub
             Tabel.VerticalAlignment = VerticalAlignment.Top
             Tabel.HeadersVisibility = DataGridHeadersVisibility.Column
             Tabel.CanUserDeleteRows = False
-            Tabel.RowBackground = New SolidColorBrush(Colors.White)
+            Tabel.RowBackground = WarnaPutih_WPF                          ' clrDataGridBg #FFFFFF
             Tabel.CanUserSortColumns = False
             Tabel.CanUserReorderColumns = False
             Tabel.CanUserDeleteRows = False
@@ -1062,8 +1063,8 @@ Module wpfMdl_PublicSub
             Tabel.SelectionMode = DataGridSelectionMode.Single
             Tabel.SelectionUnit = DataGridSelectionUnit.FullRow
             Tabel.BorderThickness = New Thickness(0.5)
-            Tabel.VerticalGridLinesBrush = Brushes.LightGray
-            Tabel.HorizontalGridLinesBrush = Brushes.LightGray
+            Tabel.VerticalGridLinesBrush = WarnaHitam_15_WPF              ' clrDataGridGridLine #EEEEEE
+            Tabel.HorizontalGridLinesBrush = WarnaHitam_15_WPF            ' clrDataGridGridLine #EEEEEE
             Tabel.GridLinesVisibility = DataGridGridLinesVisibility.All
             Tabel.IsReadOnly = True
 
@@ -1075,15 +1076,32 @@ Module wpfMdl_PublicSub
             'Style Baris :
             Dim rowStyle As New Style(GetType(DataGridRow))
             rowStyle.Setters.Add(New Setter(DataGridRow.ForegroundProperty, WarnaTeksStandar_WPF))
-            Dim selectedTrigger As New Trigger() With {
+            Dim selectedRowTrigger As New Trigger() With {
                 .Property = DataGridRow.IsSelectedProperty,
                 .Value = True
             }
-            selectedTrigger.Setters.Add(New Setter(DataGridRow.BackgroundProperty, Brushes.Gray))
-            rowStyle.Triggers.Add(selectedTrigger)
+            selectedRowTrigger.Setters.Add(New Setter(DataGridRow.BackgroundProperty, WarnaHijauSolid_WPF))  ' clrPrimary #388E3C
+            selectedRowTrigger.Setters.Add(New Setter(DataGridRow.ForegroundProperty, WarnaPutih_WPF))       ' Teks putih agar terbaca
+            rowStyle.Triggers.Add(selectedRowTrigger)
+
+            'Style Cell (agar warna seleksi terlihat):
+            Dim cellStyle As New Style(GetType(DataGridCell))
+            cellStyle.Setters.Add(New Setter(DataGridCell.BackgroundProperty, Brushes.Transparent))
+            cellStyle.Setters.Add(New Setter(DataGridCell.ForegroundProperty, WarnaTeksStandar_WPF))
+            cellStyle.Setters.Add(New Setter(DataGridCell.BorderBrushProperty, Brushes.Transparent))
+            cellStyle.Setters.Add(New Setter(DataGridCell.FocusVisualStyleProperty, Nothing))
+            Dim selectedCellTrigger As New Trigger() With {
+                .Property = DataGridCell.IsSelectedProperty,
+                .Value = True
+            }
+            selectedCellTrigger.Setters.Add(New Setter(DataGridCell.BackgroundProperty, WarnaHijauSolid_WPF))   ' Hijau solid #388E3C
+            selectedCellTrigger.Setters.Add(New Setter(DataGridCell.ForegroundProperty, WarnaPutih_WPF))        ' Teks putih
+            selectedCellTrigger.Setters.Add(New Setter(DataGridCell.BorderBrushProperty, Brushes.Transparent))
+            cellStyle.Triggers.Add(selectedCellTrigger)
 
             ' Terapkan Style ke DataGrid
             Tabel.RowStyle = rowStyle
+            Tabel.CellStyle = cellStyle
 
         End If
     End Sub
@@ -1092,7 +1110,7 @@ Module wpfMdl_PublicSub
     Public Sub StyleTabelUtama_WPF(ByRef datagridUtama As DataGrid, ByRef datatabelUtama As DataTable, ByRef dataviewUtama As DataView)
         If Proses = False Then
             StyleTabelDasar_WPF(datagridUtama)
-            datagridUtama.AlternatingRowBackground = New SolidColorBrush(Colors.WhiteSmoke)
+            datagridUtama.AlternatingRowBackground = WarnaHitam_5_WPF     ' clrDataGridBgAlt #FAFAFA
             dataviewUtama = New DataView(datatabelUtama)
             dataviewUtama.RowFilter = Kosongan
             datagridUtama.ItemsSource = dataviewUtama
@@ -1112,7 +1130,7 @@ Module wpfMdl_PublicSub
     Public Sub StyleTabelBisaDicreate_WPF(ByRef datagridBisaDiCreate As DataGrid, ByRef datatabelBisaDiCreate As DataTable, ByRef dataviewBisaDiCreate As DataView)
         If Proses = False Then
             StyleTabelDasar_WPF(datagridBisaDiCreate)
-            datagridBisaDiCreate.AlternatingRowBackground = New SolidColorBrush(Colors.WhiteSmoke)
+            datagridBisaDiCreate.AlternatingRowBackground = WarnaHitam_5_WPF   ' clrDataGridBgAlt #FAFAFA
             dataviewBisaDiCreate = New DataView(datatabelBisaDiCreate)
             dataviewBisaDiCreate.RowFilter = Kosongan
             datagridBisaDiCreate.ItemsSource = dataviewBisaDiCreate
@@ -1123,7 +1141,7 @@ Module wpfMdl_PublicSub
     Public Sub StyleTabelPembantu_WPF(ByRef datagridPembantu As DataGrid, ByRef datatabelPembantu As DataTable, ByRef dataviewPembantu As DataView)
         If Proses = False Then
             StyleTabelDasar_WPF(datagridPembantu)
-            datagridPembantu.AlternatingRowBackground = New SolidColorBrush(Colors.WhiteSmoke)
+            datagridPembantu.AlternatingRowBackground = WarnaHitam_5_WPF      ' clrDataGridBgAlt #FAFAFA
             dataviewPembantu = New DataView(datatabelPembantu)
             dataviewPembantu.RowFilter = Kosongan
             datagridPembantu.ItemsSource = dataviewPembantu
@@ -1139,7 +1157,7 @@ Module wpfMdl_PublicSub
             datagridTotal.ItemsSource = dataviewTotal
             datagridTotal.HeadersVisibility = DataGridHeadersVisibility.None
             datagridTotal.CanUserResizeColumns = False
-            datagridTotal.RowBackground = New SolidColorBrush(Colors.WhiteSmoke)
+            datagridTotal.RowBackground = WarnaHitam_5_WPF                    ' clrDataGridBgAlt #FAFAFA
         End If
     End Sub
 

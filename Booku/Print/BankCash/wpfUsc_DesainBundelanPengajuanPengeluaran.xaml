@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-<DockPanel Background="White" Width="742" Height="Auto" >
+<DockPanel Background="{StaticResource clrBgPanel}" Width="742" Height="Auto" >
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
 
@@ -110,11 +110,11 @@
                     <TextBlock  Grid.Row="2" Grid.Column="6"    HorizontalAlignment="Center"  Text="Nama Direktur"          Name="lbl_NamaDirektur"/>
                     <TextBlock  Grid.Row="2" Grid.Column="8"    HorizontalAlignment="Center"  Text="Nama Penerima"          Name="lbl_NamaPenerima"/>
 
-                    <Border     Grid.Row="3" Grid.Column="0"    BorderBrush="Black"         BorderThickness="0.2" ></Border>
-                    <Border     Grid.Row="3" Grid.Column="2"    BorderBrush="Black"         BorderThickness="0.2" ></Border>
-                    <Border     Grid.Row="3" Grid.Column="4"    BorderBrush="Black"         BorderThickness="0.2" ></Border>
-                    <Border     Grid.Row="3" Grid.Column="6"    BorderBrush="Black"         BorderThickness="0.2" ></Border>
-                    <Border     Grid.Row="3" Grid.Column="8"    BorderBrush="Black"         BorderThickness="0.2" ></Border>
+                    <Border     Grid.Row="3" Grid.Column="0"    BorderBrush="{StaticResource clrTeksPrimer}"         BorderThickness="0.2" ></Border>
+                    <Border     Grid.Row="3" Grid.Column="2"    BorderBrush="{StaticResource clrTeksPrimer}"         BorderThickness="0.2" ></Border>
+                    <Border     Grid.Row="3" Grid.Column="4"    BorderBrush="{StaticResource clrTeksPrimer}"         BorderThickness="0.2" ></Border>
+                    <Border     Grid.Row="3" Grid.Column="6"    BorderBrush="{StaticResource clrTeksPrimer}"         BorderThickness="0.2" ></Border>
+                    <Border     Grid.Row="3" Grid.Column="8"    BorderBrush="{StaticResource clrTeksPrimer}"         BorderThickness="0.2" ></Border>
 
                     <TextBlock  Grid.Row="4" Grid.Column="0"    HorizontalAlignment="Center"  Text="Kasir"                  />
                     <TextBlock  Grid.Row="4" Grid.Column="2"    HorizontalAlignment="Center"  Text="Manager Purchasing"     />

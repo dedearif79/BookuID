@@ -19,7 +19,11 @@
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku/Booku.vbproj\" -t:Build -verbosity:minimal)",
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku/Booku.vbproj\" /t:Build /verbosity:minimal)",
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\Booku\\\\Booku.vbproj\" -t:Clean -verbosity:minimal)",
-      "Bash(powershell.exe -ExecutionPolicy Bypass -File ./rollback-xaml-resources.ps1)"
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File ./rollback-xaml-resources.ps1)",
+      "Bash(while read file)",
+      "Bash(do sed -i 's/Background=\"\"\"\"Gray\"\"\"\"/Background=\"\"\"\"{StaticResource clrBgSidebar}\"\"\"\"/g' \"$file\" echo \"Updated: $file\" done)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\BookuID.sln\" /t:Build /verbosity:minimal)",
+      "Bash(cmd.exe /c \"start Booku.exe\")"
     ]
   }
 }

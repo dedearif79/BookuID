@@ -17,17 +17,22 @@
         >
 
     <Window.Resources>
-        <Storyboard x:Key="SpinStoryboard">
-            <DoubleAnimation Storyboard.TargetName="rtSpinner"
-                             Storyboard.TargetProperty="Angle"
-                             From="0" To="360"
-                             Duration="0:0:0.8"
-                             RepeatBehavior="Forever"/>
-        </Storyboard>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Storyboard x:Key="SpinStoryboard">
+                <DoubleAnimation Storyboard.TargetName="rtSpinner"
+                                 Storyboard.TargetProperty="Angle"
+                                 From="0" To="360"
+                                 Duration="0:0:0.8"
+                                 RepeatBehavior="Forever"/>
+            </Storyboard>
+        </ResourceDictionary>
     </Window.Resources>
 
-    <Border Background="#B3FAFAFA"
-            BorderBrush="#C0C0C0"
+    <Border Background="{StaticResource clrBgOverlayLight}"
+            BorderBrush="{StaticResource clrBorderDefault}"
             BorderThickness="1"
             CornerRadius="8"
             Padding="15">
@@ -40,10 +45,10 @@
             <!-- SPINNER -->
             <Grid Width="32" Height="32" HorizontalAlignment="Center">
                 <Ellipse Width="32" Height="32"
-                         Stroke="#E0E0E0"
+                         Stroke="{StaticResource clrLoadingStroke}"
                          StrokeThickness="3" />
 
-                <Path Stroke="#505050"
+                <Path Stroke="{StaticResource clrLoadingStrokeDark}"
                       StrokeThickness="3"
                       StrokeStartLineCap="Round"
                       StrokeEndLineCap="Round"
@@ -59,7 +64,7 @@
                        Text="Memuat..."
                        Margin="0,8,0,0"
                        FontSize="11"
-                       Foreground="#505050"
+                       Foreground="{StaticResource clrLoadingStrokeDark}"
                        HorizontalAlignment="Center"/>
 
         </StackPanel>

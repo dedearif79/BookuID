@@ -64,7 +64,7 @@
 
                 </StackPanel>
                 <GridSplitter Grid.Column="1" Grid.RowSpan="2" Width="3"/>
-                <StackPanel Grid.Row="0" Grid.Column="2" Style="{StaticResource stylePanelFormHalamanSidebarKanan}" Background="Gray" CanVerticallyScroll="True" Height="99" Grid.RowSpan="2" >
+                <StackPanel Grid.Row="0" Grid.Column="2" Style="{StaticResource stylePanelFormHalamanSidebarKanan}" Background="{StaticResource clrBgSidebar}" CanVerticallyScroll="True" Height="99" Grid.RowSpan="2" >
                 </StackPanel>
                 <StackPanel Grid.Row="1" Grid.Column="1" Background="Transparent" >
                 </StackPanel>

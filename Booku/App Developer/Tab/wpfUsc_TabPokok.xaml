@@ -34,14 +34,14 @@
                       Height="5"
                       HorizontalAlignment="Stretch"
                       VerticalAlignment="Center"
-                      Background="Gray"
+                      Background="{StaticResource clrBgSidebar}"
                       ShowsPreview="True"/>
 
         <GridSplitter Grid.Column="1"
                       Width="5"
                       VerticalAlignment="Stretch"
                       HorizontalAlignment="Center"
-                      Background="Gray"
+                      Background="{StaticResource clrBgSidebar}"
                       ShowsPreview="True"/>-->
 
     </Grid>

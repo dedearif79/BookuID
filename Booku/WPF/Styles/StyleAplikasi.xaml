@@ -2,6 +2,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
+        <!-- StyleColor harus di-load pertama karena berisi definisi warna -->
+        <ResourceDictionary Source="/WPF/Styles/StyleColor.xaml" />
         <ResourceDictionary Source="/WPF/Styles/StyleWindow.xaml" />
         <ResourceDictionary Source="/WPF/Styles/StyleUserControl.xaml" />
         <ResourceDictionary Source="/WPF/Styles/StyleScrollViewer.xaml" />

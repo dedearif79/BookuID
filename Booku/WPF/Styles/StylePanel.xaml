@@ -1,103 +1,97 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- STYLE PANEL DASAR -->
+    <!-- =================================================================== -->
+    <!-- STYLE PANEL                                                         -->
+    <!-- =================================================================== -->
+    <!-- Semua warna menggunakan referensi dari StyleColor.xaml              -->
+    <!-- =================================================================== -->
+
+
+    <!-- ===== PANEL DASAR ===== -->
     <Style x:Key="stylePanelDasar" TargetType="Panel">
-        <Setter Property="Background" Value="WhiteSmoke"/>
-        <Setter Property="Opacity" Value="1" />
+        <Setter Property="Background" Value="{StaticResource clrBgUserControl}"/>
+        <Setter Property="Opacity" Value="1"/>
     </Style>
 
 
-    <!-- FORM HALAMAN -->
+    <!-- =================================================================== -->
+    <!-- FORM HALAMAN (UserControl)                                          -->
+    <!-- =================================================================== -->
 
-    <!-- Stack Panel Form Halaman -->
+    <!-- DockPanel Form Halaman - Root Container -->
     <Style x:Key="stylePanelFormHalaman" BasedOn="{StaticResource stylePanelDasar}" TargetType="DockPanel">
         <Setter Property="Margin" Value="0"/>
+        <Setter Property="Background" Value="{StaticResource clrBgUserControl}"/>
     </Style>
 
-    <!-- Stack Panel Form Halaman - Header -->
+    <!-- StackPanel Form Halaman - Header -->
     <Style x:Key="stylePanelFormHalamanHeader" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="DockPanel.Dock"  Value="Top"/>
+        <Setter Property="DockPanel.Dock" Value="Top"/>
         <Setter Property="Orientation" Value="Vertical"/>
-        <Setter Property="Margin" Value="0"/>
         <Setter Property="Height" Value="Auto"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Margin" Value="15 0 15 15"/>
     </Style>
 
-    <!-- Stack Panel Form Halaman - Header Kanan -->
+    <!-- StackPanel Form Halaman - Header Kanan -->
     <Style x:Key="stylePanelFormHalamanHeaderKanan" BasedOn="{StaticResource stylePanelFormHalamanHeader}" TargetType="StackPanel">
         <Setter Property="HorizontalAlignment" Value="Right"/>
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="DockPanel.Dock"  Value="Top"/>
-        <Setter Property="Orientation" Value="Vertical"/>
         <Setter Property="Width" Value="Auto"/>
-        <Setter Property="Height" Value="Auto"/>
-        <Setter Property="Margin" Value="0"/>
-        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Margin" Value="0"/>
     </Style>
 
-    <!-- Stack Panel Form Halaman - Header Kiri -->
+    <!-- StackPanel Form Halaman - Header Kiri -->
     <Style x:Key="stylePanelFormHalamanHeaderKiri" BasedOn="{StaticResource stylePanelFormHalamanHeader}" TargetType="StackPanel">
-        <Setter Property="VerticalAlignment" Value="Top"/>
-        <Setter Property="DockPanel.Dock"  Value="Top"/>
-        <Setter Property="Orientation" Value="Vertical"/>
-        <Setter Property="Margin" Value="0"/>
-        <Setter Property="Width" Value="Auto"/>
-        <Setter Property="Height" Value="Auto"/>
-        <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Margin" Value="0"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Margin" Value="0"/>
     </Style>
 
-    <!-- Stack Panel Form Halaman - Konten -->
+    <!-- StackPanel Form Halaman - Konten -->
     <Style x:Key="stylePanelFormHalamanKonten" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="DockPanel.Dock"  Value="Left"/>
+        <Setter Property="DockPanel.Dock" Value="Left"/>
         <Setter Property="Orientation" Value="Vertical"/>
-        <Setter Property="Margin" Value="0"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Margin" Value="15 0"/>
     </Style>
 
-    <!-- Stack Panel Form Halaman - Footer -->
+    <!-- StackPanel Form Halaman - Footer -->
     <Style x:Key="stylePanelFormHalamanFooter" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="VerticalAlignment" Value="Bottom"/>
-        <Setter Property="DockPanel.Dock"  Value="Bottom"/>
+        <Setter Property="DockPanel.Dock" Value="Bottom"/>
         <Setter Property="Orientation" Value="Horizontal"/>
-        <Setter Property="Margin" Value="0"/>
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="Height" Value="Auto"/>
-        <Setter Property="Background" Value="White"/>
+        <Setter Property="Background" Value="{StaticResource clrBgPanel}"/>
+        <Setter Property="Margin" Value="0"/>
     </Style>
 
-    <!-- Stack Panel Form Halaman - Sidebar Kanan -->
+    <!-- StackPanel Form Halaman - Sidebar Kanan -->
     <Style x:Key="stylePanelFormHalamanSidebarKanan" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="DockPanel.Dock" Value="Right"/>
         <Setter Property="Orientation" Value="Vertical"/>
-        <Setter Property="Margin" Value="0"/>
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="Height" Value="Auto"/>
-        <Setter Property="Background" Value="White"/>
-        <Setter Property="DockPanel.Dock"  Value="Right"/>
+        <Setter Property="Background" Value="{StaticResource clrBgPanel}"/>
         <Setter Property="Margin" Value="0"/>
     </Style>
 
-    <!-- Stack Panel Form Halaman - Sidebar Kiri -->
+    <!-- StackPanel Form Halaman - Sidebar Kiri -->
     <Style x:Key="stylePanelFormHalamanSidebarKiri" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="VerticalAlignment" Value="Top"/>
+        <Setter Property="DockPanel.Dock" Value="Left"/>
         <Setter Property="Orientation" Value="Vertical"/>
-        <Setter Property="Margin" Value="0"/>
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="Height" Value="Auto"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="DockPanel.Dock"  Value="Left"/>
+        <Setter Property="Margin" Value="0"/>
     </Style>
 
-    <!-- Stack Panel Form Halaman - Tittle Form -->
+    <!-- StackPanel Form Halaman - Title -->
     <Style x:Key="stylePanelFormHalamanTittle" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -106,7 +100,7 @@
         <Setter Property="Margin" Value="0"/>
     </Style>
 
-    <!-- Stack Panel Form Halaman - Filter Data -->
+    <!-- StackPanel Form Halaman - Filter Data -->
     <Style x:Key="stylePanelFormHalamanFilterData" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -115,7 +109,7 @@
         <Setter Property="Margin" Value="0 6 0 0"/>
     </Style>
 
-    <!-- Stack Panel Form Halaman - Filter Data : Sub - Vertikal -->
+    <!-- StackPanel Form Halaman - Filter Data Sub Vertikal -->
     <Style x:Key="stylePanelFormHalamanFilterDataSubVertikal" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
@@ -124,7 +118,7 @@
         <Setter Property="Margin" Value="0 0 9 0"/>
     </Style>
 
-    <!-- Stack Panel Form Halaman - Tombol - Horizontal -->
+    <!-- StackPanel Form Halaman - Tombol Horizontal -->
     <Style x:Key="stylePanelFormHalamanTombolHorizontal" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -133,7 +127,7 @@
         <Setter Property="Margin" Value="0 6 0 0"/>
     </Style>
 
-    <!-- Stack Panel Form Halaman - Tombol - Vertikal -->
+    <!-- StackPanel Form Halaman - Tombol Vertikal -->
     <Style x:Key="stylePanelFormHalamanTombolVertikal" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
@@ -143,34 +137,38 @@
     </Style>
 
 
-    <!-- FORM DIALOG -->
-    
-    <!-- Stack Panel Form Dialog -->
+    <!-- =================================================================== -->
+    <!-- FORM DIALOG (Window)                                                -->
+    <!-- =================================================================== -->
+
+    <!-- StackPanel Form Dialog - Root Container -->
     <Style x:Key="stylePanelFormDialog" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
+        <Setter Property="Background" Value="{StaticResource clrBgWindow}"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Orientation" Value="Vertical"/>
     </Style>
 
-    <!-- Stack Panel Form Dialog - Horizontal -->
+    <!-- StackPanel Form Dialog - Horizontal -->
     <Style x:Key="stylePanelFormDialogHorizontal" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Orientation" Value="Horizontal"/>
     </Style>
 
-    <!-- Stack Panel Form Dialog - Vertikal -->
+    <!-- StackPanel Form Dialog - Vertikal -->
     <Style x:Key="stylePanelFormDialogVertikal" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="Margin" Value="27"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Orientation" Value="Vertical"/>
     </Style>
 
-    <!-- Stack Panel Form Dialog - Kolom -->
+    <!-- StackPanel Form Dialog - Kolom -->
     <Style x:Key="stylePanelFormDialogKolom" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="Orientation" Value="Horizontal"/>
     </Style>
 
-    <!-- Stack Panel Form Dialog - Tombol Kontrol -->
+    <!-- StackPanel Form Dialog - Tombol Kontrol -->
     <Style x:Key="stylePanelFormDialogTombol" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalAlignment" Value="Right"/>
@@ -179,10 +177,40 @@
         <Setter Property="Margin" Value="0 0 27 27"/>
     </Style>
 
+    <!-- StackPanel Form Dialog - Tombol Kiri -->
+    <Style x:Key="stylePanelFormDialogTombolKiri" BasedOn="{StaticResource stylePanelFormDialogTombol}" TargetType="StackPanel">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Margin" Value="27 0 0 27"/>
+    </Style>
 
-    <!-- Stack Panel - DataGridView -->
+
+    <!-- =================================================================== -->
+    <!-- PANEL UTILITY                                                       -->
+    <!-- =================================================================== -->
+
+    <!-- StackPanel DataGridView Container -->
     <Style x:Key="stylePanelDataGridView" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
         <Setter Property="Background" Value="Transparent"/>
+    </Style>
+
+    <!-- StackPanel Section (untuk mengelompokkan field) -->
+    <Style x:Key="stylePanelSection" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Margin" Value="0 10 0 0"/>
+        <Setter Property="Orientation" Value="Vertical"/>
+    </Style>
+
+    <!-- StackPanel Row (untuk baris horizontal) -->
+    <Style x:Key="stylePanelRow" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Orientation" Value="Horizontal"/>
+        <Setter Property="Margin" Value="0 3"/>
+    </Style>
+
+    <!-- WrapPanel untuk layout responsif -->
+    <Style x:Key="styleWrapPanelFormDialog" TargetType="WrapPanel">
+        <Setter Property="Orientation" Value="Horizontal"/>
+        <Setter Property="Margin" Value="0"/>
     </Style>
 
 

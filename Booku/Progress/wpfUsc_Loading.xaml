@@ -19,7 +19,7 @@
         <!-- OVERLAY LOADING (paling atas) -->
         <Grid x:Name="LoadingOverlay"
           Visibility="Collapsed"
-          Background="#80000000"
+          Background="{StaticResource clrBgOverlay}"
           Panel.ZIndex="9999" >
 
             <!-- Trik kunci input: overlay menangkap mouse/keyboard -->
@@ -36,10 +36,10 @@
                         <!-- SPINNER -->
                         <Grid Width="48" Height="48">
                             <Ellipse Width="48" Height="48"
-                                 Stroke="#E0E0E0"
+                                 Stroke="{StaticResource clrLoadingStroke}"
                                  StrokeThickness="6" />
 
-                            <Path Stroke="#606060"
+                            <Path Stroke="{StaticResource clrLoadingStrokeDark}"
                               StrokeThickness="6"
                               StrokeStartLineCap="Round"
                               StrokeEndLineCap="Round"
@@ -54,7 +54,7 @@
                                Text="Memuat data..."
                                Margin="0,12,0,0"
                                FontSize="13"
-                               Foreground="#303030"
+                               Foreground="{StaticResource clrLoadingText}"
                                HorizontalAlignment="Center"/>
                     </StackPanel>
 

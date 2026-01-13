@@ -53,5 +53,14 @@ mdlWpf_Program.Main()                    <- Entry point utama
 
 - **mdlPub_Enkripsi.vb** - AES-256 encryption dengan 3 key-IV pairs
 - **mdlPub_KoneksiDatabase.vb** - Database utilities publik
-- **mdlPub_ModulUmum.vb** - Common utilities
+- **mdlPub_ModulUmum.vb** - Common utilities + **variabel warna WPF** (`WarnaXxx_WPF`)
 - **mdlPub_Styling.vb** - UI styling utilities
+
+## WPF Styles (`/Booku/WPF/Styles/`)
+
+- **StyleAplikasi.xaml** - Master file yang merge semua style
+- **StyleColor.xaml** - **Definisi warna terpusat** (2-Layer Color System)
+- **StyleDataGrid.xaml** - Style DataGrid dengan warna seleksi
+- **Style[Komponen].xaml** - Style per komponen (Button, TextBox, dll)
+
+> Lihat `.claude/rules/wpf-styling.md` untuk dokumentasi lengkap sistem warna

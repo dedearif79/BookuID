@@ -32,7 +32,7 @@
         <!-- Header -->
         <StackPanel Grid.Row="0" Margin="0 0 0 6">
             <TextBlock Name="lbl_Judul" Text="Verifikasi Data Jurnal" FontSize="15" FontWeight="SemiBold" />
-            <TextBlock Name="lbl_BarisTabelExcel" Text="( Baris X sampai Y pada tabel Excel )." FontSize="10" Margin="0 4 0 0" Foreground="#555555" />
+            <TextBlock Name="lbl_BarisTabelExcel" Text="( Baris X sampai Y pada tabel Excel )." FontSize="10" Margin="0 4 0 0" Foreground="{StaticResource clrTeksSekunder}" />
         </StackPanel>
 
         <!-- DataGrid -->

@@ -1,14 +1,153 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- CheckBox Dasar -->
+    <!-- =================================================================== -->
+    <!-- STYLE CHECKBOX                                                      -->
+    <!-- =================================================================== -->
+    <!-- Semua warna menggunakan referensi dari StyleColor.xaml              -->
+    <!-- =================================================================== -->
+
+
+    <!-- ===== CHECKBOX DASAR ===== -->
     <Style x:Key="styleCheckBoxDasar" TargetType="CheckBox">
-        <Setter Property="Opacity" Value="1" ></Setter>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
+        <Setter Property="Background" Value="{StaticResource clrBgInput}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource clrBorderDefault}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="4,0,0,0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Opacity" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- CheckBox Box -->
+                        <Border x:Name="checkBoxBorder"
+                                Grid.Column="0"
+                                Width="16"
+                                Height="16"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="2"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center">
+
+                            <!-- Checkmark -->
+                            <Grid x:Name="markGrid">
+                                <!-- Checked mark (checkmark) -->
+                                <Path x:Name="optionMark"
+                                      Data="M0,5 L3,8 L8,0"
+                                      Stroke="{StaticResource clrTeksAksen}"
+                                      StrokeThickness="2"
+                                      Stretch="None"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"
+                                      Opacity="0"/>
+
+                                <!-- Indeterminate mark (square) -->
+                                <Rectangle x:Name="indeterminateMark"
+                                           Width="8"
+                                           Height="8"
+                                           Fill="{StaticResource clrTeksAksen}"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Opacity="0"/>
+                            </Grid>
+                        </Border>
+
+                        <!-- Content -->
+                        <ContentPresenter x:Name="contentPresenter"
+                                          Grid.Column="1"
+                                          Focusable="False"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <!-- Hover -->
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{StaticResource clrBorderFocus}"/>
+                            <Setter TargetName="checkBoxBorder" Property="Background" Value="{StaticResource clrBgInputHover}"/>
+                        </Trigger>
+
+                        <!-- Checked -->
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="optionMark" Property="Opacity" Value="1"/>
+                            <Setter TargetName="checkBoxBorder" Property="Background" Value="{StaticResource clrCheckBoxCheckedBg}"/>
+                            <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{StaticResource clrCheckBoxCheckedBorder}"/>
+                            <Setter TargetName="optionMark" Property="Stroke" Value="{StaticResource clrCheckBoxCheckedMark}"/>
+                        </Trigger>
+
+                        <!-- Indeterminate -->
+                        <Trigger Property="IsChecked" Value="{x:Null}">
+                            <Setter TargetName="indeterminateMark" Property="Opacity" Value="1"/>
+                            <Setter TargetName="checkBoxBorder" Property="Background" Value="{StaticResource clrCheckBoxCheckedBg}"/>
+                            <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{StaticResource clrCheckBoxCheckedBorder}"/>
+                        </Trigger>
+
+                        <!-- Disabled -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="checkBoxBorder" Property="Background" Value="{StaticResource clrBgInputDisabled}"/>
+                            <Setter TargetName="checkBoxBorder" Property="BorderBrush" Value="{StaticResource clrBorderDisabled}"/>
+                            <Setter TargetName="optionMark" Property="Stroke" Value="{StaticResource clrTeksDisabled}"/>
+                            <Setter TargetName="indeterminateMark" Property="Fill" Value="{StaticResource clrTeksDisabled}"/>
+                            <Setter Property="Foreground" Value="{StaticResource clrTeksDisabled}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
-    <!-- CheckBox Form Dialog -->
+
+    <!-- =================================================================== -->
+    <!-- CHECKBOX FORM HALAMAN (UserControl)                                 -->
+    <!-- =================================================================== -->
+
+    <!-- CheckBox Form Halaman - Base -->
+    <Style x:Key="styleCheckBoxFormHalaman" BasedOn="{StaticResource styleCheckBoxDasar}" TargetType="CheckBox">
+        <Setter Property="Margin" Value="0 5"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- CHECKBOX FORM DIALOG (Window)                                       -->
+    <!-- =================================================================== -->
+
+    <!-- CheckBox Form Dialog - Base -->
     <Style x:Key="styleCheckBoxFormDialog" BasedOn="{StaticResource styleCheckBoxDasar}" TargetType="CheckBox">
-        <Setter Property="Margin" Value="0 7" ></Setter>
+        <Setter Property="Margin" Value="0 7"/>
+    </Style>
+
+    <!-- CheckBox Form Dialog - Kecil (tanpa label) -->
+    <Style x:Key="styleCheckBoxFormDialogKecil" BasedOn="{StaticResource styleCheckBoxFormDialog}" TargetType="CheckBox">
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- CHECKBOX DATAGRID (untuk kolom checkbox di DataGrid)                -->
+    <!-- =================================================================== -->
+
+    <!-- CheckBox DataGrid -->
+    <Style x:Key="styleCheckBoxDataGrid" BasedOn="{StaticResource styleCheckBoxDasar}" TargetType="CheckBox">
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
 

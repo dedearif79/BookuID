@@ -1,14 +1,146 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Label Dasar -->
+    <!-- =================================================================== -->
+    <!-- STYLE LABEL                                                         -->
+    <!-- =================================================================== -->
+    <!-- Semua warna menggunakan referensi dari StyleColor.xaml              -->
+    <!-- =================================================================== -->
+
+
+    <!-- ===== LABEL DASAR ===== -->
     <Style x:Key="styleLabelDasar" TargetType="Label">
-        <Setter Property="Opacity" Value="1" ></Setter>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="Opacity" Value="1"/>
     </Style>
 
-    <!-- Label Form Dialog -->
-    <Style x:Key="styleLabelFormDialog" TargetType="Label">
-        <Setter Property="Margin" Value="0 1" ></Setter>
+
+    <!-- =================================================================== -->
+    <!-- LABEL FORM HALAMAN (UserControl)                                    -->
+    <!-- =================================================================== -->
+
+    <!-- Label Form Halaman - Base -->
+    <Style x:Key="styleLabelFormHalaman" BasedOn="{StaticResource styleLabelDasar}" TargetType="Label">
+        <Setter Property="Margin" Value="0 3"/>
+        <Setter Property="Padding" Value="0"/>
     </Style>
+
+    <!-- Label Form Halaman - Header/Judul -->
+    <Style x:Key="styleLabelFormHalamanHeader" BasedOn="{StaticResource styleLabelFormHalaman}" TargetType="Label">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksAksen}"/>
+        <Setter Property="Margin" Value="0 0 0 10"/>
+    </Style>
+
+    <!-- Label Form Halaman - Sub Header -->
+    <Style x:Key="styleLabelFormHalamanSubHeader" BasedOn="{StaticResource styleLabelFormHalaman}" TargetType="Label">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
+        <Setter Property="Margin" Value="0 5 0 3"/>
+    </Style>
+
+    <!-- Label Form Halaman - Info (teks kecil) -->
+    <Style x:Key="styleLabelFormHalamanInfo" BasedOn="{StaticResource styleLabelFormHalaman}" TargetType="Label">
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksSekunder}"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- LABEL FORM DIALOG (Window)                                          -->
+    <!-- =================================================================== -->
+
+    <!-- Label Form Dialog - Base -->
+    <Style x:Key="styleLabelFormDialog" BasedOn="{StaticResource styleLabelDasar}" TargetType="Label">
+        <Setter Property="Margin" Value="0 3"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Label Form Dialog - Header/Judul -->
+    <Style x:Key="styleLabelFormDialogHeader" BasedOn="{StaticResource styleLabelFormDialog}" TargetType="Label">
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksAksen}"/>
+        <Setter Property="Margin" Value="0 0 0 10"/>
+    </Style>
+
+    <!-- Label Form Dialog - Section (pemisah section) -->
+    <Style x:Key="styleLabelFormDialogSection" BasedOn="{StaticResource styleLabelFormDialog}" TargetType="Label">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksAksen}"/>
+        <Setter Property="Margin" Value="0 15 0 5"/>
+        <Setter Property="Padding" Value="0 0 0 3"/>
+        <Setter Property="BorderBrush" Value="{StaticResource clrSeparator}"/>
+        <Setter Property="BorderThickness" Value="0 0 0 1"/>
+    </Style>
+
+    <!-- Label Form Dialog - Info (teks kecil) -->
+    <Style x:Key="styleLabelFormDialogInfo" BasedOn="{StaticResource styleLabelFormDialog}" TargetType="Label">
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksSekunder}"/>
+    </Style>
+
+    <!-- Label Form Dialog - Required (dengan asterisk merah) -->
+    <Style x:Key="styleLabelFormDialogRequired" BasedOn="{StaticResource styleLabelFormDialog}" TargetType="Label">
+        <Setter Property="Foreground" Value="{StaticResource clrStatusError}"/>
+        <Setter Property="Content" Value="*"/>
+        <Setter Property="Margin" Value="2 3 0 3"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- LABEL STATUS (untuk badge/tag)                                      -->
+    <!-- =================================================================== -->
+
+    <!-- Label Status - Sukses -->
+    <Style x:Key="styleLabelStatusSukses" BasedOn="{StaticResource styleLabelDasar}" TargetType="Label">
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource clrStatusSukses}"/>
+        <Setter Property="Background" Value="{StaticResource clrStatusSuksesBg}"/>
+        <Setter Property="Padding" Value="8 2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Label Status - Peringatan -->
+    <Style x:Key="styleLabelStatusPeringatan" BasedOn="{StaticResource styleLabelDasar}" TargetType="Label">
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource clrStatusPeringatan}"/>
+        <Setter Property="Background" Value="{StaticResource clrStatusPeringatanBg}"/>
+        <Setter Property="Padding" Value="8 2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Label Status - Error -->
+    <Style x:Key="styleLabelStatusError" BasedOn="{StaticResource styleLabelDasar}" TargetType="Label">
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource clrStatusError}"/>
+        <Setter Property="Background" Value="{StaticResource clrStatusErrorBg}"/>
+        <Setter Property="Padding" Value="8 2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
+    <!-- Label Status - Info -->
+    <Style x:Key="styleLabelStatusInfo" BasedOn="{StaticResource styleLabelDasar}" TargetType="Label">
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="Foreground" Value="{StaticResource clrStatusInfo}"/>
+        <Setter Property="Background" Value="{StaticResource clrStatusInfoBg}"/>
+        <Setter Property="Padding" Value="8 2"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+    </Style>
+
 
 </ResourceDictionary>

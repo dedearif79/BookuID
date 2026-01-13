@@ -1,60 +1,90 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- ===== WARNA TEMA STATUS BAR (BOOKU Green Branding) ===== -->
-    <SolidColorBrush x:Key="StatusBarBackground" Color="#E8F5E9"/>
-    <SolidColorBrush x:Key="StatusBarForeground" Color="#333333"/>
-    <SolidColorBrush x:Key="StatusBarAccent" Color="#388E3C"/>
-    <SolidColorBrush x:Key="StatusBarSeparator" Color="#A5D6A7"/>
+    <!-- =================================================================== -->
+    <!-- STYLE STATUSBAR                                                     -->
+    <!-- =================================================================== -->
+    <!-- Semua warna menggunakan referensi dari StyleColor.xaml              -->
+    <!-- =================================================================== -->
 
-    <!-- ===== STATUS BAR DASAR ===== -->
+
+    <!-- ===== STATUSBAR DASAR ===== -->
     <Style x:Key="styleStatusBarDasar" TargetType="StatusBar">
-        <Setter Property="Background" Value="{StaticResource StatusBarBackground}"/>
-        <Setter Property="Foreground" Value="{StaticResource StatusBarForeground}"/>
-        <Setter Property="FontSize" Value="11"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="11"/>
+        <Setter Property="Background" Value="{StaticResource clrStatusBarBg}"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
         <Setter Property="Height" Value="28"/>
         <Setter Property="Padding" Value="5,0"/>
     </Style>
 
-    <!-- Status Bar Aplikasi (untuk main window) -->
+
+    <!-- =================================================================== -->
+    <!-- STATUSBAR APLIKASI (Main Window)                                    -->
+    <!-- =================================================================== -->
+
+    <!-- StatusBar Aplikasi -->
     <Style x:Key="styleStatusBarAplikasi" BasedOn="{StaticResource styleStatusBarDasar}" TargetType="StatusBar">
         <Setter Property="DockPanel.Dock" Value="Bottom"/>
+        <Setter Property="BorderBrush" Value="{StaticResource clrStatusBarBorder}"/>
+        <Setter Property="BorderThickness" Value="0,1,0,0"/>
     </Style>
 
-    <!-- ===== STATUS BAR ITEM ===== -->
+
+    <!-- =================================================================== -->
+    <!-- STATUSBAR ITEM                                                      -->
+    <!-- =================================================================== -->
+
+    <!-- StatusBarItem Dasar -->
     <Style x:Key="styleStatusBarItemDasar" TargetType="StatusBarItem">
         <Setter Property="Padding" Value="5,0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
     </Style>
 
-    <!-- Status Bar Item untuk informasi -->
+    <!-- StatusBarItem Info -->
     <Style x:Key="styleStatusBarItemInfo" BasedOn="{StaticResource styleStatusBarItemDasar}" TargetType="StatusBarItem">
     </Style>
 
-    <!-- Status Bar Item untuk label di kanan -->
+    <!-- StatusBarItem Right (align kanan) -->
     <Style x:Key="styleStatusBarItemRight" BasedOn="{StaticResource styleStatusBarItemDasar}" TargetType="StatusBarItem">
         <Setter Property="HorizontalAlignment" Value="Right"/>
     </Style>
 
-    <!-- ===== TEXT BLOCK DI STATUS BAR ===== -->
+
+    <!-- =================================================================== -->
+    <!-- TEXTBLOCK DI STATUSBAR                                              -->
+    <!-- =================================================================== -->
+
+    <!-- TextBlock StatusBar - Base -->
     <Style x:Key="styleStatusBarText" TargetType="TextBlock">
         <Setter Property="FontSize" Value="11"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="{StaticResource StatusBarForeground}"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
     </Style>
 
-    <!-- Text Block aksen (untuk mode indicator) -->
+    <!-- TextBlock StatusBar - Aksen (untuk mode indicator) -->
     <Style x:Key="styleStatusBarTextAccent" BasedOn="{StaticResource styleStatusBarText}" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="{StaticResource StatusBarAccent}"/>
+        <Setter Property="Foreground" Value="{StaticResource clrStatusBarFg}"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
     </Style>
 
-    <!-- ===== SEPARATOR DI STATUS BAR ===== -->
+    <!-- TextBlock StatusBar - Sekunder -->
+    <Style x:Key="styleStatusBarTextSecondary" BasedOn="{StaticResource styleStatusBarText}" TargetType="TextBlock">
+        <Setter Property="Foreground" Value="{StaticResource clrTeksSekunder}"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- SEPARATOR DI STATUSBAR                                              -->
+    <!-- =================================================================== -->
+
+    <!-- Separator StatusBar -->
     <Style x:Key="styleStatusBarSeparator" TargetType="Separator">
-        <Setter Property="Background" Value="{StaticResource StatusBarSeparator}"/>
+        <Setter Property="Background" Value="{StaticResource clrStatusBarBorder}"/>
         <Setter Property="Width" Value="1"/>
         <Setter Property="Margin" Value="5,4"/>
     </Style>
+
 
 </ResourceDictionary>

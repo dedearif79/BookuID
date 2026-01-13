@@ -25,7 +25,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Border CornerRadius="8" Background="White" BorderThickness="1" BorderBrush="#E0E0E0">
+    <Border CornerRadius="8" Background="{StaticResource clrBgPanel}" BorderThickness="1" BorderBrush="{StaticResource clrBorderDefault}">
         <Border.Effect>
             <DropShadowEffect BlurRadius="20" ShadowDepth="3" Opacity="0.25" Color="#000000"/>
         </Border.Effect>
@@ -38,7 +38,7 @@
             </Grid.RowDefinitions>
 
             <!-- HEADER -->
-            <Border x:Name="bdr_Header" Grid.Row="0" CornerRadius="8,8,0,0" Padding="18,14" Background="#388E3C">
+            <Border x:Name="bdr_Header" Grid.Row="0" CornerRadius="8,8,0,0" Padding="18,14" Background="{StaticResource clrBtnPrimerBg}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
@@ -75,7 +75,7 @@
 
                     <!-- Judul -->
                     <TextBlock x:Name="txt_Judul" Grid.Column="1" Text="Informasi"
-                               Foreground="White" FontSize="15" FontWeight="SemiBold"
+                               Foreground="{StaticResource clrTeksInvers}" FontSize="15" FontWeight="SemiBold"
                                Margin="14,0,0,0" VerticalAlignment="Center"/>
                 </Grid>
             </Border>
@@ -86,13 +86,13 @@
                            Text="Isi pesan ditampilkan di sini."
                            TextWrapping="Wrap"
                            FontSize="13"
-                           Foreground="#333333"
+                           Foreground="{StaticResource clrTeksPrimer}"
                            LineHeight="21"/>
             </Border>
 
             <!-- FOOTER -->
-            <Border Grid.Row="2" Padding="18,12" Background="#FAFAFA" CornerRadius="0,0,8,8"
-                    BorderThickness="0,1,0,0" BorderBrush="#E8E8E8">
+            <Border Grid.Row="2" Padding="18,12" Background="{StaticResource clrBgWindow}" CornerRadius="0,0,8,8"
+                    BorderThickness="0,1,0,0" BorderBrush="{StaticResource clrSeparatorLight}">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <!-- Urutan: Ya/OK di kiri, Tidak di kanan (standar Windows) -->
                     <Button x:Name="btn_OK"

@@ -1,363 +1,409 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!--Button Dasar-->
+    <!-- =================================================================== -->
+    <!-- STYLE BUTTON                                                        -->
+    <!-- =================================================================== -->
+    <!-- Semua warna menggunakan referensi dari StyleColor.xaml              -->
+    <!-- =================================================================== -->
+
+
+    <!-- ===== BUTTON DASAR ===== -->
     <Style x:Key="styleButtonDasar" TargetType="Button">
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Opacity" Value="1" />
-        <Setter Property="BorderBrush"  Value="#FFABAFBF" />
-        <Setter Property="Background"   Value="#FFDEDEE4" />
-        <Setter Property="Foreground"   Value="Black" />
-        <!--<Setter Property="Template">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Opacity" Value="1"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource clrBtnBorder}"/>
+        <Setter Property="Background" Value="{StaticResource clrBtnBg}"/>
+        <Setter Property="Foreground" Value="{StaticResource clrBtnFg}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border BorderBrush="Gray" 
-                            BorderThickness="1" 
-                            Padding="9 3"
-                            CornerRadius="3" 
-                            SnapsToDevicePixels="True"
-                            Effect="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Effect}">
-                        <Border.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <GradientStop Color="WhiteSmoke" Offset="0"/>
-                                <GradientStop Color="LightGray" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Border.Background>
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            CornerRadius="3"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"/>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource clrBtnBgHover}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource clrBtnBorder}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{StaticResource clrBtnBgPressed}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{StaticResource clrBtnDisabledBg}"/>
+                            <Setter Property="Foreground" Value="{StaticResource clrBtnDisabledFg}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource clrBtnDisabledBorder}"/>
+                            <Setter Property="Cursor" Value="Arrow"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="LightSkyBlue"/>
-                <Setter Property="BorderBrush" Value="RoyalBlue"/>
-                <Setter Property="BorderBrush" Value="Red"/>
-                <Setter Property="BorderThickness" Value="1"/>
-                -->
-        <!--<Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect Color="Black" Direction="0" ShadowDepth="3" Opacity="0.05"/>
-                    </Setter.Value>
-                </Setter>-->
-        <!--
-            </Trigger>
-            <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="DarkSlateBlue"/>
-                <Setter Property="BorderBrush" Value="Navy"/>
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Background" Value="LightGray"/>
-                <Setter Property="BorderBrush" Value="Gray"/>
-                <Setter Property="Background" Value="WhiteSmoke"/>
-                <Setter Property="Foreground" Value="Gray"/>
-                -->
-        <!--<Setter Property="Effect">
-                    <Setter.Value>
-                        <DropShadowEffect Color="Transparent" Direction="0" ShadowDepth="0" Opacity="0"/>
-                    </Setter.Value>
-                </Setter>-->
-        <!--
-            </Trigger>
-        </Style.Triggers>-->
-
     </Style>
 
-    <!--Button Form Halaman -->
-    <Style x:Key="styleButtonFormHalaman" BasedOn="{StaticResource styleButtonDasar}"  TargetType="Button">
+
+    <!-- ===== BUTTON PRIMER (Aksi Utama - Hijau) ===== -->
+    <Style x:Key="styleButtonPrimer" TargetType="Button">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="Opacity" Value="1"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderBrush" Value="{StaticResource clrBtnPrimerBorder}"/>
+        <Setter Property="Background" Value="{StaticResource clrBtnPrimerBg}"/>
+        <Setter Property="Foreground" Value="{StaticResource clrBtnPrimerFg}"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Padding="{TemplateBinding Padding}"
+                            CornerRadius="3"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          RecognizesAccessKey="True"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{StaticResource clrBtnPrimerBgHover}"/>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" Value="{StaticResource clrBtnPrimerBgPressed}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="{StaticResource clrBtnDisabledBg}"/>
+                            <Setter Property="Foreground" Value="{StaticResource clrBtnDisabledFg}"/>
+                            <Setter Property="BorderBrush" Value="{StaticResource clrBtnDisabledBorder}"/>
+                            <Setter Property="Cursor" Value="Arrow"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- BUTTON FORM HALAMAN (UserControl)                                   -->
+    <!-- =================================================================== -->
+
+    <!-- Button Form Halaman - Base -->
+    <Style x:Key="styleButtonFormHalaman" BasedOn="{StaticResource styleButtonDasar}" TargetType="Button">
         <Setter Property="Height" Value="27"/>
         <Setter Property="Margin" Value="0 0 9 0"/>
     </Style>
 
-    <!--Button Form Halaman - Refresh -->
-    <Style x:Key="styleButtonFormHalamanRefresh" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Refresh -->
+    <Style x:Key="styleButtonFormHalamanRefresh" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Refresh"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - CRUD-->
-    <Style x:Key="styleButtonFormHalamanCrud" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - CRUD Base -->
+    <Style x:Key="styleButtonFormHalamanCrud" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Width" Value="69"/>
     </Style>
 
-    <!--Button Form Halaman - CRUD Tambah -->
-    <Style x:Key="styleButtonFormHalamanCrudTambah" BasedOn="{StaticResource styleButtonFormHalamanCrud}"  TargetType="Button">
+    <!-- Button Form Halaman - CRUD Tambah -->
+    <Style x:Key="styleButtonFormHalamanCrudTambah" BasedOn="{StaticResource styleButtonFormHalamanCrud}" TargetType="Button">
         <Setter Property="Content" Value="Tambah"/>
     </Style>
 
-    <!--Button Form Halaman - CRUD Input -->
-    <Style x:Key="styleButtonFormHalamanCrudInput" BasedOn="{StaticResource styleButtonFormHalamanCrud}"  TargetType="Button">
+    <!-- Button Form Halaman - CRUD Input -->
+    <Style x:Key="styleButtonFormHalamanCrudInput" BasedOn="{StaticResource styleButtonFormHalamanCrud}" TargetType="Button">
         <Setter Property="Content" Value="Input"/>
     </Style>
 
-    <!--Button Form Halaman - CRUD Lihat -->
-    <Style x:Key="styleButtonFormHalamanCrudLihat" BasedOn="{StaticResource styleButtonFormHalamanCrud}"  TargetType="Button">
+    <!-- Button Form Halaman - CRUD Lihat -->
+    <Style x:Key="styleButtonFormHalamanCrudLihat" BasedOn="{StaticResource styleButtonFormHalamanCrud}" TargetType="Button">
         <Setter Property="Content" Value="Lihat"/>
     </Style>
 
-    <!--Button Form Halaman - CRUD Edi t-->
-    <Style x:Key="styleButtonFormHalamanCrudEdit" BasedOn="{StaticResource styleButtonFormHalamanCrud}"  TargetType="Button">
+    <!-- Button Form Halaman - CRUD Edit -->
+    <Style x:Key="styleButtonFormHalamanCrudEdit" BasedOn="{StaticResource styleButtonFormHalamanCrud}" TargetType="Button">
         <Setter Property="Content" Value="Edit"/>
     </Style>
 
-    <!--Button Form Halaman - CRUD Hapus -->
-    <Style x:Key="styleButtonFormHalamanCrudHapus" BasedOn="{StaticResource styleButtonFormHalamanCrud}"  TargetType="Button">
+    <!-- Button Form Halaman - CRUD Hapus -->
+    <Style x:Key="styleButtonFormHalamanCrudHapus" BasedOn="{StaticResource styleButtonFormHalamanCrud}" TargetType="Button">
         <Setter Property="Content" Value="Hapus"/>
     </Style>
 
-    <!--Button Form Halaman - CRUD Input Bayar -->
-    <Style x:Key="styleButtonFormHalamanCrudInputBayar" BasedOn="{StaticResource styleButtonFormHalamanCrud}"  TargetType="Button">
+    <!-- Button Form Halaman - CRUD Input Bayar -->
+    <Style x:Key="styleButtonFormHalamanCrudInputBayar" BasedOn="{StaticResource styleButtonFormHalamanCrud}" TargetType="Button">
         <Setter Property="Content" Value="Bayar"/>
     </Style>
 
-    <!--Button Form Halaman - CRUD Edit Bayar -->
-    <Style x:Key="styleButtonFormHalamanCrudEditBayar" BasedOn="{StaticResource styleButtonFormHalamanCrud}"  TargetType="Button">
+    <!-- Button Form Halaman - CRUD Edit Bayar -->
+    <Style x:Key="styleButtonFormHalamanCrudEditBayar" BasedOn="{StaticResource styleButtonFormHalamanCrud}" TargetType="Button">
         <Setter Property="Content" Value="Edit"/>
     </Style>
 
-    <!--Button Form Halaman - CRUD Hapus Bayar -->
-    <Style x:Key="styleButtonFormHalamanCrudHapusBayar" BasedOn="{StaticResource styleButtonFormHalamanCrud}"  TargetType="Button">
+    <!-- Button Form Halaman - CRUD Hapus Bayar -->
+    <Style x:Key="styleButtonFormHalamanCrudHapusBayar" BasedOn="{StaticResource styleButtonFormHalamanCrud}" TargetType="Button">
         <Setter Property="Content" Value="Hapus"/>
     </Style>
 
-    <!--Button Form Halaman - Cetak -->
-    <Style x:Key="styleButtonFormHalamanCetak" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Cetak -->
+    <Style x:Key="styleButtonFormHalamanCetak" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Cetak"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Pratinjau -->
-    <Style x:Key="styleButtonFormHalamanPratinjau" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Pratinjau -->
+    <Style x:Key="styleButtonFormHalamanPratinjau" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Pratinjau"/>
         <Setter Property="Padding" Value="9 0"/>
     </Style>
 
-    <!--Button Form Halaman - Posting -->
-    <Style x:Key="styleButtonFormHalamanPosting" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Posting -->
+    <Style x:Key="styleButtonFormHalamanPosting" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Posting"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Proses -->
-    <Style x:Key="styleButtonFormHalamanProses" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Proses -->
+    <Style x:Key="styleButtonFormHalamanProses" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Proses"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Detail -->
-    <Style x:Key="styleButtonFormHalamanDetail" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Detail -->
+    <Style x:Key="styleButtonFormHalamanDetail" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Detail"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Rekap -->
-    <Style x:Key="styleButtonFormHalamanRekap" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Rekap -->
+    <Style x:Key="styleButtonFormHalamanRekap" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Rekap"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Backup -->
-    <Style x:Key="styleButtonFormHalamanBackup" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Backup -->
+    <Style x:Key="styleButtonFormHalamanBackup" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Backup"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - CRUD Installer -->
-    <Style x:Key="styleButtonFormHalamanInstaller" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Installer -->
+    <Style x:Key="styleButtonFormHalamanInstaller" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Installer"/>
     </Style>
 
-    <!--Button Form Halaman - CRUD Update -->
-    <Style x:Key="styleButtonFormHalamanUpdater" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Updater -->
+    <Style x:Key="styleButtonFormHalamanUpdater" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Updater"/>
     </Style>
 
-    <!--Button Form Halaman - KodeDivisi -->
-    <Style x:Key="styleButtonFormHalamanKodeDivisi" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Kode Divisi -->
+    <Style x:Key="styleButtonFormHalamanKodeDivisi" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Kode Divisi"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Jual -->
-    <Style x:Key="styleButtonFormHalamanJual" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Jual -->
+    <Style x:Key="styleButtonFormHalamanJual" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Jual"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Disposal -->
-    <Style x:Key="styleButtonFormHalamanDisposal" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Disposal -->
+    <Style x:Key="styleButtonFormHalamanDisposal" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Disposal"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Jurnal -->
-    <Style x:Key="styleButtonFormHalamanJurnal" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Jurnal -->
+    <Style x:Key="styleButtonFormHalamanJurnal" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Jurnal"/>
         <Setter Property="Padding" Value="9 0"/>
     </Style>
 
-    <!--Button Form Halaman - Lihat Jurnal -->
-    <Style x:Key="styleButtonFormHalamanLihatJurnal" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Lihat Jurnal -->
+    <Style x:Key="styleButtonFormHalamanLihatJurnal" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Lihat Jurnal"/>
         <Setter Property="Padding" Value="9 0"/>
     </Style>
 
-    <!--Button Form Halaman - Lihat Invoice -->
-    <Style x:Key="styleButtonFormHalamanLihatInvoice" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Lihat Invoice -->
+    <Style x:Key="styleButtonFormHalamanLihatInvoice" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Lihat Invoice"/>
         <Setter Property="Padding" Value="9 0"/>
     </Style>
 
-    <!--Button Form Halaman - Lihat Bundelan -->
-    <Style x:Key="styleButtonFormHalamanLihatBundelan" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Lihat Bundelan -->
+    <Style x:Key="styleButtonFormHalamanLihatBundelan" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Lihat Bundelan"/>
         <Setter Property="Padding" Value="9 0"/>
     </Style>
 
-    <!--Button Form Halaman - Bundelan -->
-    <Style x:Key="styleButtonFormHalamanBundelan" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Bundelan -->
+    <Style x:Key="styleButtonFormHalamanBundelan" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Bundelan"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Ajukan -->
-    <Style x:Key="styleButtonFormHalamanAjukan" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Ajukan -->
+    <Style x:Key="styleButtonFormHalamanAjukan" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Ajukan"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Bayar -->
-    <Style x:Key="styleButtonFormHalamanBayar" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Bayar -->
+    <Style x:Key="styleButtonFormHalamanBayar" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Bayar"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Cair -->
-    <Style x:Key="styleButtonFormHalamanCair" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Cair -->
+    <Style x:Key="styleButtonFormHalamanCair" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Cair"/>
         <Setter Property="Padding" Value="21 0"/>
     </Style>
 
-    <!--Button Form Halaman - Export -->
-    <Style x:Key="styleButtonFormHalamanExport" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Export -->
+    <Style x:Key="styleButtonFormHalamanExport" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Ekspor"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Import -->
-    <Style x:Key="styleButtonFormHalamanImport" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Import -->
+    <Style x:Key="styleButtonFormHalamanImport" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Impor"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Reset -->
-    <Style x:Key="styleButtonFormHalamanReset" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Reset -->
+    <Style x:Key="styleButtonFormHalamanReset" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Reset"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Setujui -->
-    <Style x:Key="styleButtonFormHalamanSetujui" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Setujui -->
+    <Style x:Key="styleButtonFormHalamanSetujui" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Setujui"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Saldo Awal -->
-    <Style x:Key="styleButtonFormHalamanPembetulan" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Pembetulan -->
+    <Style x:Key="styleButtonFormHalamanPembetulan" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Pembetulan"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Saldo Awal -->
-    <Style x:Key="styleButtonFormHalamanSaldoAwal" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Saldo Awal -->
+    <Style x:Key="styleButtonFormHalamanSaldoAwal" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Saldo Awal"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Detail Pembayaran -->
-    <Style x:Key="styleButtonFormHalamanDetailPembayaran" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Detail Pembayaran -->
+    <Style x:Key="styleButtonFormHalamanDetailPembayaran" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Detail Pembayaran"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Jurnal Voucher -->
-    <Style x:Key="styleButtonFormHalamanJurnalVoucher" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Jurnal Voucher -->
+    <Style x:Key="styleButtonFormHalamanJurnalVoucher" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Jurnal Voucher"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Update -->
-    <Style x:Key="styleButtonFormHalamanUpdate" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Update -->
+    <Style x:Key="styleButtonFormHalamanUpdate" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Update"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Upload -->
-    <Style x:Key="styleButtonFormHalamanUpload" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Upload -->
+    <Style x:Key="styleButtonFormHalamanUpload" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Upload"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Tagihan -->
-    <Style x:Key="styleButtonFormHalamanTagihan" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Tagihan -->
+    <Style x:Key="styleButtonFormHalamanTagihan" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Tagihan"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Adjusment -->
-    <Style x:Key="styleButtonFormHalamanAdjusment" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Adjusment -->
+    <Style x:Key="styleButtonFormHalamanAdjusment" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Adjusment"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Buku Pembantu -->
-    <Style x:Key="styleButtonFormHalamanBukuPembantu" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Buku Pembantu -->
+    <Style x:Key="styleButtonFormHalamanBukuPembantu" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Buku Pembantu"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
-    <!--Button Form Halaman - Buku Besar -->
-    <Style x:Key="styleButtonFormHalamanBukuBesar" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Buku Besar -->
+    <Style x:Key="styleButtonFormHalamanBukuBesar" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Buku Besar"/>
         <Setter Property="Padding" Value="9 0"/>
     </Style>
 
-    <!--Button Form Halaman - Tautan COA -->
-    <Style x:Key="styleButtonFormHalamanTautanCOA" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Tautan COA -->
+    <Style x:Key="styleButtonFormHalamanTautanCOA" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Tautan COA"/>
         <Setter Property="Padding" Value="9 0"/>
     </Style>
 
-    <!--Button Form Halaman - Trial Balance -->
-    <Style x:Key="styleButtonFormHalamanTrialBalance" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Trial Balance -->
+    <Style x:Key="styleButtonFormHalamanTrialBalance" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Trial Balance"/>
         <Setter Property="Padding" Value="9 0"/>
     </Style>
 
-    <!--Button Form Halaman - Edit Saldo -->
-    <Style x:Key="styleButtonFormHalamanEditSaldo" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Edit Saldo -->
+    <Style x:Key="styleButtonFormHalamanEditSaldo" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Edit Saldo"/>
         <Setter Property="Padding" Value="9 0"/>
     </Style>
 
-    <!--Button Form Halaman - Tutup Buku -->
-    <Style x:Key="styleButtonFormHalamanTutupBuku" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Tutup Buku -->
+    <Style x:Key="styleButtonFormHalamanTutupBuku" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Transfer Saldo dan Tutup Buku >>"/>
         <Setter Property="Padding" Value="9 0"/>
     </Style>
 
-    <!--Button Form Halaman - Detail Gaji -->
-    <Style x:Key="styleButtonFormHalamanDetailGaji" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
+    <!-- Button Form Halaman - Detail Gaji -->
+    <Style x:Key="styleButtonFormHalamanDetailGaji" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Detail Gaji dan Pesangon"/>
         <Setter Property="Padding" Value="9 0"/>
     </Style>
 
+    <!-- Button Form Halaman - Sesuaikan -->
+    <Style x:Key="styleButtonFormHalamanSesuaikan" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
+        <Setter Property="Height" Value="Auto"/>
+        <Setter Property="Content" Value="Sesuaikan"/>
+        <Setter Property="Margin" Value="9 3 0 3"/>
+    </Style>
 
 
+    <!-- =================================================================== -->
+    <!-- BUTTON FORM DIALOG (Window)                                         -->
+    <!-- =================================================================== -->
 
-    <!--Button Form Dialog -->
-    <Style x:Key="styleButtonFormDialog" BasedOn="{StaticResource styleButtonDasar}"  TargetType="Button">
+    <!-- Button Form Dialog - Base -->
+    <Style x:Key="styleButtonFormDialog" BasedOn="{StaticResource styleButtonDasar}" TargetType="Button">
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="MinWidth" Value="81"/>
         <Setter Property="Padding" Value="17 0"/>
@@ -367,165 +413,160 @@
         <Setter Property="Margin" Value="15 0 0 0"/>
     </Style>
 
-    <!--Button Form Dialog - Simpan -->
-    <Style x:Key="styleButtonFormDialogSimpan" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Simpan -->
+    <Style x:Key="styleButtonFormDialogSimpan" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Simpan"/>
     </Style>
 
-    <!--Button Form Dialog - Hitung -->
-    <Style x:Key="styleButtonFormDialogHitung" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Hitung -->
+    <Style x:Key="styleButtonFormDialogHitung" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Hitung"/>
     </Style>
 
-    <!--Button Form Dialog - Simpan Perubahan -->
-    <Style x:Key="styleButtonFormDialogSimpanPerubahan" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
-        <Setter Property="Width" Value="Auto" />
-        <Setter Property="Padding" Value="17 0" />
+    <!-- Button Form Dialog - Simpan Perubahan -->
+    <Style x:Key="styleButtonFormDialogSimpanPerubahan" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
+        <Setter Property="Width" Value="Auto"/>
+        <Setter Property="Padding" Value="17 0"/>
         <Setter Property="Content" Value="Simpan Perubahan"/>
     </Style>
 
-    <!--Button Form Dialog - Setujui -->
-    <Style x:Key="styleButtonFormDialogSetujui" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Setujui -->
+    <Style x:Key="styleButtonFormDialogSetujui" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Setujui"/>
     </Style>
 
-    <!--Button Form Dialog - Reset -->
-    <Style x:Key="styleButtonFormDialogReset" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Reset -->
+    <Style x:Key="styleButtonFormDialogReset" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Reset"/>
     </Style>
 
-    <!--Button Form Dialog - Refresh -->
-    <Style x:Key="styleButtonFormDialogRefresh" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Refresh -->
+    <Style x:Key="styleButtonFormDialogRefresh" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Refresh"/>
     </Style>
 
-    <!--Button Form Dialog - Tambahkan -->
-    <Style x:Key="styleButtonFormDialogTambahkan" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Tambahkan -->
+    <Style x:Key="styleButtonFormDialogTambahkan" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Tambahkan"/>
     </Style>
 
-    <!--Button Form Dialog - Tutup -->
-    <Style x:Key="styleButtonFormDialogTutup" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Tutup -->
+    <Style x:Key="styleButtonFormDialogTutup" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Tutup"/>
     </Style>
 
-    <!--Button Form Dialog - Pilih --><!--
-    <Style x:Key="styleButtonFormDialogPilih" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
-        <Setter Property="Content" Value="Pilih"/>
-    </Style>-->
-
-    <!--Button Form Dialog - Backup -->
-    <Style x:Key="styleButtonFormDialogBackup" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Backup -->
+    <Style x:Key="styleButtonFormDialogBackup" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Backup"/>
     </Style>
 
-    <!--Button Form Dialog - Upload -->
-    <Style x:Key="styleButtonFormDialogUpload" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Upload -->
+    <Style x:Key="styleButtonFormDialogUpload" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Upload"/>
     </Style>
 
-    <!--Button Form Dialog - Pulihkan -->
-    <Style x:Key="styleButtonFormDialogPulihkan" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Pulihkan -->
+    <Style x:Key="styleButtonFormDialogPulihkan" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Pulihkan"/>
     </Style>
 
-    <!--Button Form Dialog - Kloning -->
-    <Style x:Key="styleButtonFormDialogKloning" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Kloning -->
+    <Style x:Key="styleButtonFormDialogKloning" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Kloning"/>
     </Style>
 
-    <!--Button Form Dialog - Lanjutkan -->
-    <Style x:Key="styleButtonFormDialogLanjutkan" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Lanjutkan -->
+    <Style x:Key="styleButtonFormDialogLanjutkan" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Lanjutkan >>"/>
         <Setter Property="Width" Value="Auto"/>
         <Setter Property="Padding" Value="21 0"/>
     </Style>
 
-    <!--Button Form Dialog - Kembali -->
-    <Style x:Key="styleButtonFormDialogKembali" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Kembali -->
+    <Style x:Key="styleButtonFormDialogKembali" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Kembali"/>
     </Style>
 
-    <!--Button Form Dialog - OK -->
-    <Style x:Key="styleButtonFormDialogOK" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - OK -->
+    <Style x:Key="styleButtonFormDialogOK" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="OK"/>
     </Style>
 
-    <!--Button Form Dialog - Posting -->
-    <Style x:Key="styleButtonFormDialogPosting" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Posting -->
+    <Style x:Key="styleButtonFormDialogPosting" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Posting"/>
     </Style>
 
-    <!--Button Form Dialog - Cetak -->
-    <Style x:Key="styleButtonFormDialogCetak" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Cetak -->
+    <Style x:Key="styleButtonFormDialogCetak" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Cetak"/>
     </Style>
 
-    <!--Button Form Dialog - Pratinjau -->
-    <Style x:Key="styleButtonFormDialogPratinjau" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Pratinjau -->
+    <Style x:Key="styleButtonFormDialogPratinjau" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Pratinjau"/>
     </Style>
 
-    <!--Button Form Dialog - Batal -->
-    <Style x:Key="styleButtonFormDialogBatal" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Batal -->
+    <Style x:Key="styleButtonFormDialogBatal" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Batal"/>
     </Style>
 
-    <!--Button Form Dialog - Terbitkan -->
-    <Style x:Key="styleButtonFormDialogTerbitkan" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Terbitkan -->
+    <Style x:Key="styleButtonFormDialogTerbitkan" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Terbitkan"/>
     </Style>
 
-    <!--Button Form Dialog - Batalkan -->
-    <Style x:Key="styleButtonFormDialogBatalkan" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Batalkan -->
+    <Style x:Key="styleButtonFormDialogBatalkan" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Batalkan"/>
     </Style>
 
-    <!--Button Form Dialog - Proses -->
-    <Style x:Key="styleButtonFormDialogProses" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Proses -->
+    <Style x:Key="styleButtonFormDialogProses" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Proses"/>
     </Style>
 
-    <!--Button Form Dialog - Buang -->
-    <Style x:Key="styleButtonFormDialogBuang" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Buang -->
+    <Style x:Key="styleButtonFormDialogBuang" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Buang"/>
     </Style>
 
-    <!--Button Form Dialog - Terapkan -->
-    <Style x:Key="styleButtonFormDialogTerapkan" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Terapkan -->
+    <Style x:Key="styleButtonFormDialogTerapkan" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Terapkan"/>
     </Style>
-    
-    <!--Button Form Dialog - CRUD -->
-    <Style x:Key="styleButtonFormDialogCRUD" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
-        <Setter Property="Margin"   Value="5"/>
-        <Setter Property="Width"    Value="57"/>
-        <Setter Property="Height"   Value="25"/>
+
+    <!-- Button Form Dialog - CRUD Base -->
+    <Style x:Key="styleButtonFormDialogCRUD" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Width" Value="57"/>
+        <Setter Property="Height" Value="25"/>
         <Setter Property="FontSize" Value="10"/>
     </Style>
 
-    <!--Button Form Dialog - CRUD - Input -->
-    <Style x:Key="styleButtonFormDialogCRUDInput" BasedOn="{StaticResource styleButtonFormDialogCRUD}"  TargetType="Button">
+    <!-- Button Form Dialog - CRUD Input -->
+    <Style x:Key="styleButtonFormDialogCRUDInput" BasedOn="{StaticResource styleButtonFormDialogCRUD}" TargetType="Button">
         <Setter Property="Content" Value="Input"/>
     </Style>
 
-    <!--Button Form Dialog - CRUD - Tambah -->
-    <Style x:Key="styleButtonFormDialogCRUDTambah" BasedOn="{StaticResource styleButtonFormDialogCRUD}"  TargetType="Button">
+    <!-- Button Form Dialog - CRUD Tambah -->
+    <Style x:Key="styleButtonFormDialogCRUDTambah" BasedOn="{StaticResource styleButtonFormDialogCRUD}" TargetType="Button">
         <Setter Property="Content" Value="Tambah"/>
     </Style>
 
-    <!--Button Form Dialog - CRUD - Edit -->
-    <Style x:Key="styleButtonFormDialogCRUDEdit" BasedOn="{StaticResource styleButtonFormDialogCRUD}"  TargetType="Button">
+    <!-- Button Form Dialog - CRUD Edit -->
+    <Style x:Key="styleButtonFormDialogCRUDEdit" BasedOn="{StaticResource styleButtonFormDialogCRUD}" TargetType="Button">
         <Setter Property="Content" Value="Edit"/>
     </Style>
 
-    <!--Button Form Dialog - CRUD - Hapus -->
-    <Style x:Key="styleButtonFormDialogCRUDHapus" BasedOn="{StaticResource styleButtonFormDialogCRUD}"  TargetType="Button">
+    <!-- Button Form Dialog - CRUD Hapus -->
+    <Style x:Key="styleButtonFormDialogCRUDHapus" BasedOn="{StaticResource styleButtonFormDialogCRUD}" TargetType="Button">
         <Setter Property="Content" Value="Hapus"/>
     </Style>
 
-    <!--Button Form Dialog - CRUD Kecil -->
-    <Style x:Key="styleButtonFormDialogCrudKecil" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - CRUD Kecil Base -->
+    <Style x:Key="styleButtonFormDialogCrudKecil" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="+"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
@@ -537,23 +578,23 @@
         <Setter Property="HorizontalAlignment" Value="Right"/>
     </Style>
 
-    <!--Button Form Dialog - Plus (+) -->
-    <Style x:Key="styleButtonFormDialogPlus" BasedOn="{StaticResource styleButtonFormDialogCrudKecil}"  TargetType="Button">
+    <!-- Button Form Dialog - Plus (+) -->
+    <Style x:Key="styleButtonFormDialogPlus" BasedOn="{StaticResource styleButtonFormDialogCrudKecil}" TargetType="Button">
         <Setter Property="Content" Value="+"/>
     </Style>
 
-    <!--Button Form Dialog - Edit (e) -->
-    <Style x:Key="styleButtonFormDialogE" BasedOn="{StaticResource styleButtonFormDialogCrudKecil}"  TargetType="Button">
+    <!-- Button Form Dialog - Edit (e) -->
+    <Style x:Key="styleButtonFormDialogE" BasedOn="{StaticResource styleButtonFormDialogCrudKecil}" TargetType="Button">
         <Setter Property="Content" Value="e"/>
     </Style>
 
-    <!--Button Form Dialog - Minus (-) -->
-    <Style x:Key="styleButtonFormDialogMinus" BasedOn="{StaticResource styleButtonFormDialogCrudKecil}"  TargetType="Button">
+    <!-- Button Form Dialog - Minus (-) -->
+    <Style x:Key="styleButtonFormDialogMinus" BasedOn="{StaticResource styleButtonFormDialogCrudKecil}" TargetType="Button">
         <Setter Property="Content" Value="-"/>
     </Style>
 
-    <!--Button Form Dialog - Singkirkan -->
-    <Style x:Key="styleButtonFormDialogSingkirkan" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Singkirkan -->
+    <Style x:Key="styleButtonFormDialogSingkirkan" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Singkirkan >>"/>
         <Setter Property="FontSize" Value="10"/>
         <Setter Property="Height" Value="Auto"/>
@@ -562,8 +603,8 @@
         <Setter Property="Margin" Value="0 21 0 0"/>
     </Style>
 
-    <!--Button Form Dialog - Tolak -->
-    <Style x:Key="styleButtonFormDialogTolak" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Tolak -->
+    <Style x:Key="styleButtonFormDialogTolak" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Tolak"/>
         <Setter Property="FontSize" Value="10"/>
         <Setter Property="Height" Value="Auto"/>
@@ -572,8 +613,8 @@
         <Setter Property="Margin" Value="0 21 0 0"/>
     </Style>
 
-    <!--Button Form Dialog - Pilih -->
-    <Style x:Key="styleButtonFormDialogPilih" BasedOn="{StaticResource styleButtonFormDialog}"  TargetType="Button">
+    <!-- Button Form Dialog - Pilih -->
+    <Style x:Key="styleButtonFormDialogPilih" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Pilih"/>
         <Setter Property="MinWidth" Value="45"/>
         <Setter Property="Width" Value="45"/>
@@ -582,14 +623,6 @@
         <Setter Property="Padding" Value="9 3 9 3"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
-    </Style>
-
-    
-    <!--Button Form Halaman - Sesuaikan -->
-    <Style x:Key="styleButtonFormHalamanSesuaikan" BasedOn="{StaticResource styleButtonFormHalaman}"  TargetType="Button">
-        <Setter Property="Height" Value="Auto"/>
-        <Setter Property="Content" Value="Sesuaikan"/>
-        <Setter Property="Margin" Value="9 3 0 3"/>
     </Style>
 
 

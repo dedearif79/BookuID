@@ -1,28 +1,29 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- ===== WARNA TEMA TAB CONTROL (BOOKU Green Branding) ===== -->
-    <SolidColorBrush x:Key="TabControlBackground" Color="#F5F5F5"/>
-    <SolidColorBrush x:Key="TabControlBorderBrush" Color="#C8E6C9"/>
-    <SolidColorBrush x:Key="TabItemBackground" Color="#EEEEEE"/>
-    <SolidColorBrush x:Key="TabItemSelectedBackground" Color="White"/>
-    <SolidColorBrush x:Key="TabItemHoverBackground" Color="#E8F5E9"/>
-    <SolidColorBrush x:Key="TabItemForeground" Color="#333333"/>
-    <SolidColorBrush x:Key="TabItemSelectedForeground" Color="#388E3C"/>
-    <SolidColorBrush x:Key="TabItemBorderBrush" Color="#A5D6A7"/>
-    <SolidColorBrush x:Key="TabContentBackground" Color="White"/>
+    <!-- =================================================================== -->
+    <!-- STYLE TAB CONTROL                                                   -->
+    <!-- =================================================================== -->
+    <!-- Semua warna menggunakan referensi dari StyleColor.xaml              -->
+    <!-- =================================================================== -->
+
 
     <!-- ===== TAB CONTROL DASAR ===== -->
     <Style x:Key="styleTabControlDasar" TargetType="TabControl">
-        <Setter Property="Background" Value="{StaticResource TabControlBackground}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource TabControlBorderBrush}"/>
+        <Setter Property="Background" Value="{StaticResource clrTabBg}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource clrTabBorder}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
     </Style>
 
-    <!-- Tab Control untuk Main Content (Application Shell) -->
+
+    <!-- =================================================================== -->
+    <!-- TAB CONTROL MAIN CONTENT (Application Shell)                        -->
+    <!-- =================================================================== -->
+
+    <!-- Tab Control untuk Main Content -->
     <Style x:Key="styleTabControlMainContent" BasedOn="{StaticResource styleTabControlDasar}" TargetType="TabControl">
         <Setter Property="Template">
             <Setter.Value>
@@ -35,8 +36,8 @@
 
                         <!-- Tab Headers dengan ScrollViewer untuk banyak tab -->
                         <Border Grid.Row="0"
-                                Background="{StaticResource TabControlBackground}"
-                                BorderBrush="{StaticResource TabControlBorderBrush}"
+                                Background="{StaticResource clrTabBg}"
+                                BorderBrush="{StaticResource clrTabBorder}"
                                 BorderThickness="0,0,0,1">
                             <ScrollViewer HorizontalScrollBarVisibility="Auto"
                                           VerticalScrollBarVisibility="Disabled"
@@ -48,8 +49,8 @@
 
                         <!-- Tab Content -->
                         <Border Grid.Row="1"
-                                Background="{StaticResource TabContentBackground}"
-                                BorderBrush="{StaticResource TabControlBorderBrush}"
+                                Background="{StaticResource clrTabBgSelected}"
+                                BorderBrush="{StaticResource clrTabBorder}"
                                 BorderThickness="0">
                             <ContentPresenter ContentSource="SelectedContent"
                                               Margin="0"/>
@@ -60,9 +61,16 @@
         </Setter>
     </Style>
 
-    <!-- ===== TAB ITEM DASAR ===== -->
+
+    <!-- =================================================================== -->
+    <!-- TAB ITEM                                                            -->
+    <!-- =================================================================== -->
+
+    <!-- Tab Item Dasar -->
     <Style x:Key="styleTabItemDasar" TargetType="TabItem">
-        <Setter Property="Foreground" Value="{StaticResource TabItemForeground}"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTabFg}"/>
+        <Setter Property="Background" Value="{StaticResource clrTabBg}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource clrTabBorder}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="12,8"/>
         <Setter Property="Margin" Value="0,0,2,0"/>
@@ -70,8 +78,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="TabItem">
                     <Border x:Name="Border"
-                            Background="{StaticResource TabItemBackground}"
-                            BorderBrush="{StaticResource TabItemBorderBrush}"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="1,1,1,0"
                             CornerRadius="4,4,0,0"
                             Padding="{TemplateBinding Padding}"
@@ -82,22 +90,27 @@
                                           HorizontalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <!-- Selected -->
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource TabItemSelectedBackground}"/>
-                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource TabControlBorderBrush}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource clrTabBgSelected}"/>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource clrTabBorderSelected}"/>
                             <Setter TargetName="Border" Property="Margin" Value="0,0,2,-1"/>
-                            <Setter Property="Foreground" Value="{StaticResource TabItemSelectedForeground}"/>
+                            <Setter Property="Foreground" Value="{StaticResource clrTabFgSelected}"/>
                             <Setter Property="FontWeight" Value="SemiBold"/>
                         </Trigger>
+
+                        <!-- Hover -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource TabItemHoverBackground}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource clrTabBgHover}"/>
                         </Trigger>
+
+                        <!-- Selected + Hover -->
                         <MultiTrigger>
                             <MultiTrigger.Conditions>
                                 <Condition Property="IsSelected" Value="True"/>
                                 <Condition Property="IsMouseOver" Value="True"/>
                             </MultiTrigger.Conditions>
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource TabItemSelectedBackground}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource clrTabBgSelected}"/>
                         </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -111,13 +124,18 @@
         <Setter Property="MaxWidth" Value="200"/>
     </Style>
 
-    <!-- ===== BUTTON CLOSE TAB ===== -->
+
+    <!-- =================================================================== -->
+    <!-- BUTTON CLOSE TAB                                                    -->
+    <!-- =================================================================== -->
+
+    <!-- Button Close Tab -->
     <Style x:Key="styleButtonCloseTab" TargetType="Button">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="Foreground" Value="#757575"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksSekunder}"/>
         <Setter Property="Cursor" Value="Hand"/>
         <Setter Property="Padding" Value="4,0"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -132,17 +150,38 @@
                                           VerticalAlignment="Center"/>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <!-- Hover -->
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="#FFCDD2"/>
-                            <Setter Property="Foreground" Value="#D32F2F"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource clrStatusErrorBg}"/>
+                            <Setter Property="Foreground" Value="{StaticResource clrStatusError}"/>
                         </Trigger>
+
+                        <!-- Pressed -->
                         <Trigger Property="IsPressed" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="#EF9A9A"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource clrStatusError}"/>
+                            <Setter Property="Foreground" Value="{StaticResource clrTeksInvers}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- TAB CONTROL FORM DIALOG (untuk tab di dalam dialog)                 -->
+    <!-- =================================================================== -->
+
+    <!-- Tab Control Form Dialog -->
+    <Style x:Key="styleTabControlFormDialog" BasedOn="{StaticResource styleTabControlDasar}" TargetType="TabControl">
+        <Setter Property="Margin" Value="0 5"/>
+    </Style>
+
+    <!-- Tab Item Form Dialog -->
+    <Style x:Key="styleTabItemFormDialog" BasedOn="{StaticResource styleTabItemDasar}" TargetType="TabItem">
+        <Setter Property="Padding" Value="10,6"/>
+        <Setter Property="FontSize" Value="11"/>
+    </Style>
+
 
 </ResourceDictionary>

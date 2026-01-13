@@ -1,11 +1,120 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Panel Dasar -->
+    <!-- =================================================================== -->
+    <!-- STYLE USERCONTROL                                                   -->
+    <!-- =================================================================== -->
+    <!-- Semua warna menggunakan referensi dari StyleColor.xaml              -->
+    <!-- =================================================================== -->
+
+
+    <!-- ===== USERCONTROL DASAR ===== -->
     <Style x:Key="styleUserControlDasar" TargetType="UserControl">
-        <Setter Property="Background" Value="WhiteSmoke"></Setter>
-        <Setter Property="Opacity" Value="1" ></Setter>
-        <Setter Property="Height" Value="450" ></Setter>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Background" Value="{StaticResource clrBgUserControl}"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
+        <Setter Property="Opacity" Value="1"/>
+        <Setter Property="Padding" Value="0"/>
     </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- USERCONTROL FORM HALAMAN (untuk modul utama)                        -->
+    <!-- =================================================================== -->
+
+    <!-- UserControl Form Halaman - Base (default untuk semua modul) -->
+    <Style x:Key="styleUserControlFormHalaman" BasedOn="{StaticResource styleUserControlDasar}" TargetType="UserControl">
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+    </Style>
+
+    <!-- UserControl Form Halaman - Fixed Width -->
+    <Style x:Key="styleUserControlFormHalamanFixedWidth" BasedOn="{StaticResource styleUserControlFormHalaman}" TargetType="UserControl">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="Width" Value="Auto"/>
+    </Style>
+
+    <!-- UserControl Form Halaman - Compact (untuk sidebar/panel kecil) -->
+    <Style x:Key="styleUserControlFormHalamanCompact" BasedOn="{StaticResource styleUserControlFormHalaman}" TargetType="UserControl">
+        <Setter Property="Padding" Value="10"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- USERCONTROL EMBED (untuk embed di dalam form lain)                  -->
+    <!-- =================================================================== -->
+
+    <!-- UserControl Embed - Base -->
+    <Style x:Key="styleUserControlEmbed" BasedOn="{StaticResource styleUserControlDasar}" TargetType="UserControl">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <!-- UserControl Embed - dengan Border -->
+    <Style x:Key="styleUserControlEmbedBordered" BasedOn="{StaticResource styleUserControlEmbed}" TargetType="UserControl">
+        <Setter Property="BorderBrush" Value="{StaticResource clrBorderDefault}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="10"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- USERCONTROL PRINT (untuk preview/cetak)                             -->
+    <!-- =================================================================== -->
+
+    <!-- UserControl Print - Base (untuk desain cetak) -->
+    <Style x:Key="styleUserControlPrint" BasedOn="{StaticResource styleUserControlDasar}" TargetType="UserControl">
+        <Setter Property="Background" Value="{StaticResource clrBgPanel}"/>
+        <Setter Property="Padding" Value="20"/>
+    </Style>
+
+    <!-- UserControl Print - A4 Portrait -->
+    <Style x:Key="styleUserControlPrintA4Portrait" BasedOn="{StaticResource styleUserControlPrint}" TargetType="UserControl">
+        <Setter Property="Width" Value="793"/>
+        <Setter Property="MinHeight" Value="1122"/>
+    </Style>
+
+    <!-- UserControl Print - A4 Landscape -->
+    <Style x:Key="styleUserControlPrintA4Landscape" BasedOn="{StaticResource styleUserControlPrint}" TargetType="UserControl">
+        <Setter Property="Width" Value="1122"/>
+        <Setter Property="MinHeight" Value="793"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- USERCONTROL WIDGET (untuk komponen kecil/dashboard)                 -->
+    <!-- =================================================================== -->
+
+    <!-- UserControl Widget - Base -->
+    <Style x:Key="styleUserControlWidget" BasedOn="{StaticResource styleUserControlDasar}" TargetType="UserControl">
+        <Setter Property="Background" Value="{StaticResource clrBgPanel}"/>
+        <Setter Property="Padding" Value="15"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
+    <!-- UserControl Widget - Highlight (dengan background aksen) -->
+    <Style x:Key="styleUserControlWidgetHighlight" BasedOn="{StaticResource styleUserControlWidget}" TargetType="UserControl">
+        <Setter Property="Background" Value="{StaticResource clrBgPrimarySurface}"/>
+    </Style>
+
+    <!-- UserControl Widget - Info -->
+    <Style x:Key="styleUserControlWidgetInfo" BasedOn="{StaticResource styleUserControlWidget}" TargetType="UserControl">
+        <Setter Property="Background" Value="{StaticResource clrStatusInfoBg}"/>
+    </Style>
+
+    <!-- UserControl Widget - Warning -->
+    <Style x:Key="styleUserControlWidgetWarning" BasedOn="{StaticResource styleUserControlWidget}" TargetType="UserControl">
+        <Setter Property="Background" Value="{StaticResource clrStatusPeringatanBg}"/>
+    </Style>
+
+    <!-- UserControl Widget - Success -->
+    <Style x:Key="styleUserControlWidgetSuccess" BasedOn="{StaticResource styleUserControlWidget}" TargetType="UserControl">
+        <Setter Property="Background" Value="{StaticResource clrStatusSuksesBg}"/>
+    </Style>
+
 
 </ResourceDictionary>

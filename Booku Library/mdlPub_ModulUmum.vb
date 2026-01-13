@@ -54,29 +54,37 @@ Public Module mdlPub_ModulUmum
 
 
 
-    'Pewarnaan :
-    Public WarnaAbuAbu_WPF As New SolidColorBrush(Colors.Gray)
-    Public WarnaBiruSolid_WPF As New SolidColorBrush(Colors.Blue)
-    Public WarnaBiruTerang_WPF As New SolidColorBrush(Colors.LightBlue)
-    Public WarnaMerahSolid_WPF As New SolidColorBrush(Colors.Red)
-    Public WarnaMerahTerang_WPF As New SolidColorBrush(Colors.Pink)
-    Public WarnaKuningSolid_WPF As New SolidColorBrush(Colors.Yellow)
-    Public WarnaKuningTerang_WPF As New SolidColorBrush(Colors.LightYellow)
-    Public WarnaHijauSolid_WPF As New SolidColorBrush(Colors.Green)
-    Public WarnaHijauTerang_WPF As New SolidColorBrush(Colors.LightGreen)
-    Public WarnaHijauProgressBar_WPF As New SolidColorBrush(Color.FromRgb(0, 170, 0))
-    Public WarnaPutih_WPF As New SolidColorBrush(Colors.White)
-    Public WarnaPutihAsap_WPF As New SolidColorBrush(Colors.WhiteSmoke)
-    Public WarnaHitam_5_WPF As New SolidColorBrush(Color.FromRgb(242, 242, 242))
-    Public WarnaHitam_10_WPF As New SolidColorBrush(Color.FromRgb(230, 230, 230))
-    Public WarnaHitam_15_WPF As New SolidColorBrush(Color.FromRgb(217, 217, 217))
-    Public WarnaHitam_20_WPF As New SolidColorBrush(Color.FromRgb(204, 204, 204))
-    Public WarnaHitam_25_WPF As New SolidColorBrush(Color.FromRgb(191, 191, 191))
-    Public WarnaHitam_30_WPF As New SolidColorBrush(Color.FromRgb(179, 179, 179))
-    Public WarnaHitam_35_WPF As New SolidColorBrush(Color.FromRgb(166, 166, 166))
-    Public WarnaHitam_40_WPF As New SolidColorBrush(Color.FromRgb(153, 153, 153))
-    Public WarnaHitam_45_WPF As New SolidColorBrush(Color.FromRgb(140, 140, 140))
-    Public WarnaHitam_50_WPF As New SolidColorBrush(Color.FromRgb(128, 128, 128))
+    ' =================================================================
+    ' PEWARNAAN WPF
+    ' =================================================================
+    ' Warna-warna ini selaras dengan StyleColor.xaml untuk konsistensi
+    ' Referensi: /Booku/WPF/Styles/StyleColor.xaml
+    ' =================================================================
+
+    ' === WARNA DASAR (sesuai StyleColor.xaml) ===
+    Public WarnaAbuAbu_WPF As New SolidColorBrush(Color.FromRgb(&H75, &H75, &H75))         ' clrNeutral600 #757575
+    Public WarnaBiruSolid_WPF As New SolidColorBrush(Color.FromRgb(&H21, &H96, &HF3))      ' clrInfo #2196F3
+    Public WarnaBiruTerang_WPF As New SolidColorBrush(Color.FromRgb(&HE3, &HF2, &HFD))     ' clrInfoSurface #E3F2FD
+    Public WarnaMerahSolid_WPF As New SolidColorBrush(Color.FromRgb(&HF4, &H43, &H36))     ' clrError #F44336
+    Public WarnaMerahTerang_WPF As New SolidColorBrush(Color.FromRgb(&HFF, &HEB, &HEE))    ' clrErrorSurface #FFEBEE
+    Public WarnaKuningSolid_WPF As New SolidColorBrush(Color.FromRgb(&HFF, &H98, &H0))     ' clrWarning #FF9800
+    Public WarnaKuningTerang_WPF As New SolidColorBrush(Color.FromRgb(&HFF, &HF3, &HE0))   ' clrWarningSurface #FFF3E0
+    Public WarnaHijauSolid_WPF As New SolidColorBrush(Color.FromRgb(&H38, &H8E, &H3C))     ' clrPrimary #388E3C (Hijau BOOKU)
+    Public WarnaHijauTerang_WPF As New SolidColorBrush(Color.FromRgb(&HE8, &HF5, &HE9))    ' clrPrimarySurface #E8F5E9
+    Public WarnaHijauProgressBar_WPF As New SolidColorBrush(Color.FromRgb(&H38, &H8E, &H3C)) ' clrPrimary #388E3C
+    Public WarnaPutih_WPF As New SolidColorBrush(Color.FromRgb(&HFF, &HFF, &HFF))          ' clrWhite #FFFFFF
+    Public WarnaPutihAsap_WPF As New SolidColorBrush(Color.FromRgb(&HF5, &HF5, &HF5))      ' clrNeutral100 #F5F5F5
+    ' === WARNA GRAYSCALE (Neutral Scale) ===
+    Public WarnaHitam_5_WPF As New SolidColorBrush(Color.FromRgb(&HFA, &HFA, &HFA))   ' clrNeutral50 #FAFAFA
+    Public WarnaHitam_10_WPF As New SolidColorBrush(Color.FromRgb(&HF5, &HF5, &HF5))  ' clrNeutral100 #F5F5F5
+    Public WarnaHitam_15_WPF As New SolidColorBrush(Color.FromRgb(&HEE, &HEE, &HEE))  ' clrNeutral200 #EEEEEE
+    Public WarnaHitam_20_WPF As New SolidColorBrush(Color.FromRgb(&HE0, &HE0, &HE0))  ' clrNeutral300 #E0E0E0
+    Public WarnaHitam_25_WPF As New SolidColorBrush(Color.FromRgb(&HBD, &HBD, &HBD))  ' clrNeutral400 #BDBDBD
+    Public WarnaHitam_30_WPF As New SolidColorBrush(Color.FromRgb(&H9E, &H9E, &H9E))  ' clrNeutral500 #9E9E9E
+    Public WarnaHitam_35_WPF As New SolidColorBrush(Color.FromRgb(&H75, &H75, &H75))  ' clrNeutral600 #757575
+    Public WarnaHitam_40_WPF As New SolidColorBrush(Color.FromRgb(&H61, &H61, &H61))  ' clrNeutral700 #616161
+    Public WarnaHitam_45_WPF As New SolidColorBrush(Color.FromRgb(&H42, &H42, &H42))  ' clrNeutral800 #424242
+    Public WarnaHitam_50_WPF As New SolidColorBrush(Color.FromRgb(&H21, &H21, &H21))  ' clrNeutral900 #212121
     Public WarnaHitam_55_WPF As New SolidColorBrush(Color.FromRgb(115, 115, 115))
     Public WarnaHitam_60_WPF As New SolidColorBrush(Color.FromRgb(102, 102, 102))
     Public WarnaHitam_65_WPF As New SolidColorBrush(Color.FromRgb(89, 89, 89))
@@ -89,15 +97,17 @@ Public Module mdlPub_ModulUmum
     Public WarnaHitam_100_WPF As New SolidColorBrush(Color.FromRgb(0, 0, 0))
     Public WarnaHitamSolid_WPF As New SolidColorBrush(Colors.Black)
 
-
-    Public WarnaAlternatif_1_WPF = WarnaBiruSolid_WPF
-    Public WarnaDasar_WPF = WarnaPutihAsap_WPF
-    Public WarnaTeksStandar_WPF = WarnaHitam_70_WPF
+    ' === ALIAS WARNA SEMANTIK (sesuai StyleColor.xaml) ===
+    Public WarnaAlternatif_1_WPF = WarnaBiruSolid_WPF                                          ' Info/Link color
+    Public WarnaDasar_WPF = WarnaPutihAsap_WPF                                                 ' Background window
+    Public WarnaTeksStandar_WPF As New SolidColorBrush(Color.FromRgb(&H21, &H21, &H21))        ' clrTeksPrimer #212121
+    Public WarnaTeksSekunder_WPF As New SolidColorBrush(Color.FromRgb(&H75, &H75, &H75))       ' clrTeksSekunder #757575
+    Public WarnaTeksDisabled_WPF As New SolidColorBrush(Color.FromRgb(&HBD, &HBD, &HBD))       ' clrTeksDisabled #BDBDBD
     Public WarnaTegas_WPF = WarnaHitamSolid_WPF
-    Public WarnaPudar_WPF = WarnaAbuAbu_WPF
-    Public WarnaPeringatan_WPF = WarnaMerahSolid_WPF
-    Public WarnaBermasalahTerseleksi_WPF = WarnaMerahTerang_WPF
-    Public WarnaDataTahunLalu_WPF As New SolidColorBrush(Color.FromArgb(255, 63, 63, 128))
+    Public WarnaPudar_WPF As New SolidColorBrush(Color.FromRgb(&H9E, &H9E, &H9E))              ' clrNeutral500 #9E9E9E
+    Public WarnaPeringatan_WPF = WarnaMerahSolid_WPF                                           ' Error color
+    Public WarnaBermasalahTerseleksi_WPF = WarnaMerahTerang_WPF                                ' Error surface
+    Public WarnaDataTahunLalu_WPF As New SolidColorBrush(Color.FromArgb(255, 63, 63, 128))     ' Legacy - untuk data tahun lalu
 
 
     Sub StandarisasiSetinganAplikasi()

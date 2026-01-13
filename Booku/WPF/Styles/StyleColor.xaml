@@ -1,0 +1,254 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- =================================================================== -->
+    <!-- STYLE COLOR - Sistem Manajemen Warna Terpusat                       -->
+    <!-- =================================================================== -->
+    <!-- File ini berisi semua definisi warna untuk aplikasi BOOKU.          -->
+    <!-- Menggunakan 2-Layer Color System:                                   -->
+    <!--   Layer 1: Core Colors (Palet Warna Dasar) - Color                  -->
+    <!--   Layer 2: Semantic Colors (Warna Semantik) - SolidColorBrush       -->
+    <!-- =================================================================== -->
+
+
+    <!-- =================================================================== -->
+    <!-- LAYER 1: CORE COLORS (PALET WARNA DASAR)                            -->
+    <!-- =================================================================== -->
+    <!-- Warna mentah tanpa konteks penggunaan.                              -->
+    <!-- Ubah di sini jika ingin mengganti tema aplikasi.                    -->
+    <!-- =================================================================== -->
+
+
+    <!-- ===== PRIMARY (Hijau BOOKU - Brand Color) ===== -->
+    <Color x:Key="clrPrimary">#388E3C</Color>
+    <Color x:Key="clrPrimaryLight">#4CAF50</Color>
+    <Color x:Key="clrPrimaryLighter">#81C784</Color>
+    <Color x:Key="clrPrimaryDark">#2E7D32</Color>
+    <Color x:Key="clrPrimaryDarker">#1B5E20</Color>
+    <Color x:Key="clrPrimarySurface">#E8F5E9</Color>
+    <Color x:Key="clrPrimaryBorder">#A5D6A7</Color>
+
+
+    <!-- ===== NEUTRAL (Abu-abu) ===== -->
+    <Color x:Key="clrNeutral50">#FAFAFA</Color>
+    <Color x:Key="clrNeutral100">#F5F5F5</Color>
+    <Color x:Key="clrNeutral200">#EEEEEE</Color>
+    <Color x:Key="clrNeutral300">#E0E0E0</Color>
+    <Color x:Key="clrNeutral400">#BDBDBD</Color>
+    <Color x:Key="clrNeutral500">#9E9E9E</Color>
+    <Color x:Key="clrNeutral600">#757575</Color>
+    <Color x:Key="clrNeutral700">#616161</Color>
+    <Color x:Key="clrNeutral800">#424242</Color>
+    <Color x:Key="clrNeutral900">#212121</Color>
+
+
+    <!-- ===== STATUS ===== -->
+    <!-- Success (Hijau) -->
+    <Color x:Key="clrSuccess">#4CAF50</Color>
+    <Color x:Key="clrSuccessDark">#388E3C</Color>
+    <Color x:Key="clrSuccessSurface">#E8F5E9</Color>
+
+    <!-- Warning (Oranye) -->
+    <Color x:Key="clrWarning">#FF9800</Color>
+    <Color x:Key="clrWarningDark">#F57C00</Color>
+    <Color x:Key="clrWarningSurface">#FFF3E0</Color>
+
+    <!-- Error (Merah) -->
+    <Color x:Key="clrError">#F44336</Color>
+    <Color x:Key="clrErrorDark">#D32F2F</Color>
+    <Color x:Key="clrErrorSurface">#FFEBEE</Color>
+
+    <!-- Info (Biru) -->
+    <Color x:Key="clrInfo">#2196F3</Color>
+    <Color x:Key="clrInfoDark">#1976D2</Color>
+    <Color x:Key="clrInfoSurface">#E3F2FD</Color>
+
+
+    <!-- ===== BASE ===== -->
+    <Color x:Key="clrWhite">#FFFFFF</Color>
+    <Color x:Key="clrBlack">#000000</Color>
+
+
+    <!-- ===== OVERLAY ===== -->
+    <Color x:Key="clrOverlay">#80000000</Color>
+    <Color x:Key="clrOverlayLight">#B3FAFAFA</Color>
+
+
+    <!-- =================================================================== -->
+    <!-- LAYER 2: SEMANTIC COLORS (WARNA SEMANTIK)                           -->
+    <!-- =================================================================== -->
+    <!-- Warna berdasarkan konteks penggunaan.                               -->
+    <!-- Referensi ke Layer 1 (Core Colors).                                 -->
+    <!-- Gunakan warna ini di semua style komponen.                          -->
+    <!-- =================================================================== -->
+
+
+    <!-- ===== TEKS ===== -->
+    <SolidColorBrush x:Key="clrTeksPrimer" Color="{StaticResource clrNeutral900}"/>
+    <SolidColorBrush x:Key="clrTeksSekunder" Color="{StaticResource clrNeutral600}"/>
+    <SolidColorBrush x:Key="clrTeksDisabled" Color="{StaticResource clrNeutral400}"/>
+    <SolidColorBrush x:Key="clrTeksPlaceholder" Color="{StaticResource clrNeutral500}"/>
+    <SolidColorBrush x:Key="clrTeksLink" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrTeksAksen" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrTeksInvers" Color="{StaticResource clrWhite}"/>
+
+
+    <!-- ===== BACKGROUND ===== -->
+    <SolidColorBrush x:Key="clrBgWindow" Color="{StaticResource clrNeutral100}"/>
+    <SolidColorBrush x:Key="clrBgUserControl" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrBgPanel" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrBgInput" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrBgInputHover" Color="{StaticResource clrNeutral50}"/>
+    <SolidColorBrush x:Key="clrBgInputDisabled" Color="{StaticResource clrNeutral200}"/>
+    <SolidColorBrush x:Key="clrBgInputReadOnly" Color="{StaticResource clrNeutral100}"/>
+    <SolidColorBrush x:Key="clrBgHover" Color="{StaticResource clrPrimarySurface}"/>
+    <SolidColorBrush x:Key="clrBgPressed" Color="{StaticResource clrPrimaryBorder}"/>
+    <SolidColorBrush x:Key="clrBgSelected" Color="{StaticResource clrPrimarySurface}"/>
+
+    <!-- Primary Surface & Border (Brush untuk akses langsung) -->
+    <SolidColorBrush x:Key="clrBgPrimarySurface" Color="{StaticResource clrPrimarySurface}"/>
+    <SolidColorBrush x:Key="clrBorderPrimary" Color="{StaticResource clrPrimaryBorder}"/>
+
+
+    <!-- ===== DATAGRID ===== -->
+    <SolidColorBrush x:Key="clrDataGridBg" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrDataGridBgAlt" Color="{StaticResource clrNeutral50}"/>
+    <SolidColorBrush x:Key="clrDataGridHeader" Color="{StaticResource clrNeutral100}"/>
+    <SolidColorBrush x:Key="clrDataGridHeaderFg" Color="{StaticResource clrNeutral800}"/>
+    <SolidColorBrush x:Key="clrDataGridRowSelect" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrDataGridRowSelectFg" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrDataGridRowHover" Color="{StaticResource clrNeutral100}"/>
+    <SolidColorBrush x:Key="clrDataGridBorder" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrDataGridGridLine" Color="{StaticResource clrNeutral200}"/>
+
+
+    <!-- ===== TOMBOL SEKUNDER (Default) ===== -->
+    <SolidColorBrush x:Key="clrBtnBg" Color="{StaticResource clrNeutral200}"/>
+    <SolidColorBrush x:Key="clrBtnBgHover" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrBtnBgPressed" Color="{StaticResource clrNeutral400}"/>
+    <SolidColorBrush x:Key="clrBtnFg" Color="{StaticResource clrNeutral800}"/>
+    <SolidColorBrush x:Key="clrBtnBorder" Color="{StaticResource clrNeutral400}"/>
+
+
+    <!-- ===== TOMBOL PRIMER (Aksi Utama) ===== -->
+    <SolidColorBrush x:Key="clrBtnPrimerBg" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrBtnPrimerBgHover" Color="{StaticResource clrPrimaryDark}"/>
+    <SolidColorBrush x:Key="clrBtnPrimerBgPressed" Color="{StaticResource clrPrimaryDarker}"/>
+    <SolidColorBrush x:Key="clrBtnPrimerFg" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrBtnPrimerBorder" Color="{StaticResource clrPrimaryDark}"/>
+
+
+    <!-- ===== TOMBOL DISABLED ===== -->
+    <SolidColorBrush x:Key="clrBtnDisabledBg" Color="{StaticResource clrNeutral200}"/>
+    <SolidColorBrush x:Key="clrBtnDisabledFg" Color="{StaticResource clrNeutral400}"/>
+    <SolidColorBrush x:Key="clrBtnDisabledBorder" Color="{StaticResource clrNeutral300}"/>
+
+
+    <!-- ===== BORDER ===== -->
+    <SolidColorBrush x:Key="clrBorderDefault" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrBorderFocus" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrBorderDisabled" Color="{StaticResource clrNeutral200}"/>
+    <SolidColorBrush x:Key="clrBorderError" Color="{StaticResource clrError}"/>
+    <SolidColorBrush x:Key="clrBorderSuccess" Color="{StaticResource clrSuccess}"/>
+
+
+    <!-- ===== MENU & NAVIGASI ===== -->
+    <SolidColorBrush x:Key="clrMenuBg" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrMenuFg" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrMenuHover" Color="{StaticResource clrPrimarySurface}"/>
+    <SolidColorBrush x:Key="clrMenuActive" Color="{StaticResource clrPrimaryBorder}"/>
+    <SolidColorBrush x:Key="clrMenuBorder" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrSubMenuBg" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrSubMenuFg" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrSubMenuHover" Color="{StaticResource clrPrimarySurface}"/>
+    <SolidColorBrush x:Key="clrSubMenuBorder" Color="{StaticResource clrPrimaryBorder}"/>
+
+
+    <!-- ===== TAB CONTROL ===== -->
+    <SolidColorBrush x:Key="clrTabBg" Color="{StaticResource clrNeutral100}"/>
+    <SolidColorBrush x:Key="clrTabBgSelected" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrTabBgHover" Color="{StaticResource clrPrimarySurface}"/>
+    <SolidColorBrush x:Key="clrTabFg" Color="{StaticResource clrNeutral700}"/>
+    <SolidColorBrush x:Key="clrTabFgSelected" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrTabBorder" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrTabBorderSelected" Color="{StaticResource clrPrimary}"/>
+
+
+    <!-- ===== PROGRESS BAR ===== -->
+    <SolidColorBrush x:Key="clrProgressBg" Color="{StaticResource clrNeutral200}"/>
+    <SolidColorBrush x:Key="clrProgressFg" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrProgressBorder" Color="{StaticResource clrNeutral300}"/>
+
+
+    <!-- ===== STATUS BAR ===== -->
+    <SolidColorBrush x:Key="clrStatusBarBg" Color="{StaticResource clrPrimarySurface}"/>
+    <SolidColorBrush x:Key="clrStatusBarFg" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrStatusBarBorder" Color="{StaticResource clrPrimaryBorder}"/>
+
+
+    <!-- ===== SCROLLBAR ===== -->
+    <SolidColorBrush x:Key="clrScrollbarBg" Color="{StaticResource clrNeutral100}"/>
+    <SolidColorBrush x:Key="clrScrollbarThumb" Color="{StaticResource clrNeutral400}"/>
+    <SolidColorBrush x:Key="clrScrollbarThumbHover" Color="{StaticResource clrNeutral500}"/>
+
+
+    <!-- ===== GROUPBOX ===== -->
+    <SolidColorBrush x:Key="clrGroupBoxBg" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrGroupBoxBorder" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrGroupBoxHeader" Color="{StaticResource clrPrimary}"/>
+
+
+    <!-- ===== CHECKBOX & RADIOBUTTON ===== -->
+    <SolidColorBrush x:Key="clrCheckBoxBg" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrCheckBoxBorder" Color="{StaticResource clrNeutral400}"/>
+    <SolidColorBrush x:Key="clrCheckBoxCheckedBg" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrCheckBoxCheckedBorder" Color="{StaticResource clrPrimaryDark}"/>
+    <SolidColorBrush x:Key="clrCheckBoxCheckedMark" Color="{StaticResource clrWhite}"/>
+
+
+    <!-- ===== COMBOBOX ===== -->
+    <SolidColorBrush x:Key="clrComboBoxBg" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrComboBoxBorder" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrComboBoxArrow" Color="{StaticResource clrNeutral600}"/>
+    <SolidColorBrush x:Key="clrComboBoxDropdownBg" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrComboBoxItemHover" Color="{StaticResource clrPrimarySurface}"/>
+    <SolidColorBrush x:Key="clrComboBoxItemSelected" Color="{StaticResource clrPrimarySurface}"/>
+
+
+    <!-- ===== DATEPICKER ===== -->
+    <SolidColorBrush x:Key="clrDatePickerBg" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrDatePickerBorder" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrDatePickerCalendarBg" Color="{StaticResource clrWhite}"/>
+    <SolidColorBrush x:Key="clrDatePickerDayHover" Color="{StaticResource clrPrimarySurface}"/>
+    <SolidColorBrush x:Key="clrDatePickerDaySelected" Color="{StaticResource clrPrimary}"/>
+
+
+    <!-- ===== STATUS COLORS (untuk badge, alert, notifikasi) ===== -->
+    <SolidColorBrush x:Key="clrStatusSukses" Color="{StaticResource clrSuccess}"/>
+    <SolidColorBrush x:Key="clrStatusSuksesBg" Color="{StaticResource clrSuccessSurface}"/>
+    <SolidColorBrush x:Key="clrStatusPeringatan" Color="{StaticResource clrWarning}"/>
+    <SolidColorBrush x:Key="clrStatusPeringatanBg" Color="{StaticResource clrWarningSurface}"/>
+    <SolidColorBrush x:Key="clrStatusError" Color="{StaticResource clrError}"/>
+    <SolidColorBrush x:Key="clrStatusErrorBg" Color="{StaticResource clrErrorSurface}"/>
+    <SolidColorBrush x:Key="clrStatusInfo" Color="{StaticResource clrInfo}"/>
+    <SolidColorBrush x:Key="clrStatusInfoBg" Color="{StaticResource clrInfoSurface}"/>
+
+
+    <!-- ===== SEPARATOR ===== -->
+    <SolidColorBrush x:Key="clrSeparator" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrSeparatorLight" Color="{StaticResource clrNeutral200}"/>
+
+
+    <!-- ===== OVERLAY & LOADING ===== -->
+    <SolidColorBrush x:Key="clrBgOverlay" Color="{StaticResource clrOverlay}"/>
+    <SolidColorBrush x:Key="clrBgOverlayLight" Color="{StaticResource clrOverlayLight}"/>
+    <SolidColorBrush x:Key="clrLoadingStroke" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrLoadingStrokeDark" Color="{StaticResource clrNeutral700}"/>
+    <SolidColorBrush x:Key="clrLoadingText" Color="{StaticResource clrNeutral800}"/>
+
+
+    <!-- ===== SIDEBAR ===== -->
+    <SolidColorBrush x:Key="clrBgSidebar" Color="{StaticResource clrNeutral500}"/>
+
+
+</ResourceDictionary>

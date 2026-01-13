@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-<DockPanel Background="White" Width="742" Height="Auto" >
+<DockPanel Background="{StaticResource clrBgPanel}" Width="742" Height="Auto" >
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
 
@@ -146,7 +146,7 @@
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Margin="0 7 0 0" Name="pnl_NamaProduk">
 
-                <Border BorderBrush="Black" BorderThickness="0.5">
+                <Border BorderBrush="{StaticResource clrTeksPrimer}" BorderThickness="0.5">
                     
                 <StackPanel Background="Transparent" >
                     <TextBlock Text="Nama Barang/Jasa :" Padding="5" FontWeight="Bold" TextDecorations="Underline"  />
@@ -161,7 +161,7 @@
 
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" Margin="0 7 0 0" Name="pnl_UraianTransaksi" >
 
-                <Border BorderBrush="Black" BorderThickness="0.5">
+                <Border BorderBrush="{StaticResource clrTeksPrimer}" BorderThickness="0.5">
 
                     <StackPanel Background="Transparent" >
                         <TextBlock Text="Uraian Transaksi :" Padding="5" FontWeight="Bold" TextDecorations="Underline"  />

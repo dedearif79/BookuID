@@ -16,7 +16,7 @@ BookuID adalah aplikasi akuntansi enterprise berbasis VB.NET dengan arsitektur h
 |-------|------------|
 | Build & Release | `.claude/rules/build-commands.md` |
 | Arsitektur & Modul | `.claude/rules/architecture.md` |
-| WPF Styling | `.claude/rules/wpf-styling.md` |
+| WPF Styling & Warna | `.claude/rules/wpf-styling.md` |
 | WPF UserControl Pattern | `.claude/rules/wpf-usercontrol-pattern.md` |
 | WPF Window Pattern | `.claude/rules/wpf-window-pattern.md` |
 | WPF Host Pattern | `.claude/rules/wpf-host-pattern.md` |
@@ -37,6 +37,12 @@ BookuID adalah aplikasi akuntansi enterprise berbasis VB.NET dengan arsitektur h
 4. **Deprecated Code**: File/folder dengan prefix `X_` adalah kode yang sudah deprecated dan tidak boleh digunakan
 
 5. **Git Commit**: Setiap perubahan kode akan di-commit secara mandiri oleh programmer. Claude tidak perlu menawarkan untuk meng-commit setiap perubahan
+
+6. **Sistem Warna Terpusat**: Semua warna harus menggunakan sistem warna terpusat
+   - XAML: Gunakan `{StaticResource clrXxx}` dari `StyleColor.xaml`
+   - Code-Behind: Gunakan variabel `WarnaXxx_WPF` dari `mdlPub_ModulUmum.vb`
+   - **JANGAN** hardcode warna seperti `#388E3C` atau `Brushes.Red`
+   - Lihat `.claude/rules/wpf-styling.md` untuk daftar lengkap warna
 
 ## File Naming Convention
 

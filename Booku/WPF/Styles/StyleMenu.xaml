@@ -1,23 +1,17 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- ===== WARNA TEMA MENU (BOOKU Green Branding) ===== -->
-    <!-- Menu Bar (Top Level) - sama dengan SubMenu -->
-    <SolidColorBrush x:Key="MenuBarBackground" Color="White"/>
-    <SolidColorBrush x:Key="MenuBarForeground" Color="#388E3C"/>
-    <SolidColorBrush x:Key="MenuBarBorderBrush" Color="#E0E0E0"/>
-    <SolidColorBrush x:Key="MenuItemHoverBackground" Color="#E8F5E9"/>
-    <SolidColorBrush x:Key="MenuItemPressedBackground" Color="#C8E6C9"/>
-    <!-- Sub Menu (Dropdown) -->
-    <SolidColorBrush x:Key="SubMenuBackground" Color="White"/>
-    <SolidColorBrush x:Key="SubMenuForeground" Color="#388E3C"/>
-    <SolidColorBrush x:Key="SubMenuHoverBackground" Color="#E8F5E9"/>
-    <SolidColorBrush x:Key="SubMenuBorderBrush" Color="#A5D6A7"/>
+    <!-- =================================================================== -->
+    <!-- STYLE MENU                                                          -->
+    <!-- =================================================================== -->
+    <!-- Semua warna menggunakan referensi dari StyleColor.xaml              -->
+    <!-- =================================================================== -->
+
 
     <!-- ===== MENU UTAMA (Menu Bar) ===== -->
     <Style x:Key="styleMenuDasar" TargetType="Menu">
-        <Setter Property="Background" Value="{StaticResource MenuBarBackground}"/>
-        <Setter Property="Foreground" Value="{StaticResource MenuBarForeground}"/>
+        <Setter Property="Background" Value="{StaticResource clrMenuBg}"/>
+        <Setter Property="Foreground" Value="{StaticResource clrMenuFg}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="Padding" Value="5,4"/>
@@ -28,13 +22,14 @@
         <Setter Property="Height" Value="Auto"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="DockPanel.Dock" Value="Top"/>
-        <Setter Property="BorderBrush" Value="{StaticResource MenuBarBorderBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource clrMenuBorder}"/>
         <Setter Property="BorderThickness" Value="0,0,0,1"/>
     </Style>
 
+
     <!-- ===== MENU ITEM TOP LEVEL (di Menu Bar) ===== -->
     <Style x:Key="styleMenuItemDasar" TargetType="MenuItem">
-        <Setter Property="Foreground" Value="{StaticResource MenuBarForeground}"/>
+        <Setter Property="Foreground" Value="{StaticResource clrMenuFg}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="10,8"/>
         <Setter Property="Template">
@@ -54,8 +49,8 @@
                                    AllowsTransparency="True"
                                    Focusable="False"
                                    PopupAnimation="Fade">
-                                <Border Background="{StaticResource SubMenuBackground}"
-                                        BorderBrush="{StaticResource SubMenuBorderBrush}"
+                                <Border Background="{StaticResource clrSubMenuBg}"
+                                        BorderBrush="{StaticResource clrSubMenuBorder}"
                                         BorderThickness="1"
                                         CornerRadius="0"
                                         Padding="0">
@@ -66,10 +61,10 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHighlighted" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource MenuItemHoverBackground}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource clrMenuHover}"/>
                         </Trigger>
                         <Trigger Property="IsSubmenuOpen" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource MenuItemPressedBackground}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource clrMenuActive}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -82,9 +77,10 @@
         <Setter Property="Padding" Value="12,10"/>
     </Style>
 
+
     <!-- ===== SUB MENU ITEM (dropdown items) ===== -->
     <Style x:Key="styleSubMenuItemDasar" TargetType="MenuItem">
-        <Setter Property="Foreground" Value="{StaticResource SubMenuForeground}"/>
+        <Setter Property="Foreground" Value="{StaticResource clrSubMenuFg}"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Padding" Value="25,8,20,8"/>
         <Setter Property="Template">
@@ -120,7 +116,7 @@
                             <Path x:Name="Arrow"
                                   Grid.Column="2"
                                   Data="M0,0 L4,4 L0,8 Z"
-                                  Fill="{StaticResource SubMenuForeground}"
+                                  Fill="{StaticResource clrSubMenuFg}"
                                   VerticalAlignment="Center"
                                   Margin="10,0,0,0"
                                   Visibility="Collapsed"/>
@@ -134,8 +130,8 @@
                                    AllowsTransparency="True"
                                    Focusable="False"
                                    PopupAnimation="Fade">
-                                <Border Background="{StaticResource SubMenuBackground}"
-                                        BorderBrush="{StaticResource SubMenuBorderBrush}"
+                                <Border Background="{StaticResource clrSubMenuBg}"
+                                        BorderBrush="{StaticResource clrSubMenuBorder}"
                                         BorderThickness="1"
                                         CornerRadius="0"
                                         Padding="0">
@@ -146,13 +142,13 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsHighlighted" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource SubMenuHoverBackground}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource clrSubMenuHover}"/>
                         </Trigger>
                         <Trigger Property="HasItems" Value="True">
                             <Setter TargetName="Arrow" Property="Visibility" Value="Visible"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="Gray"/>
+                            <Setter Property="Foreground" Value="{StaticResource clrTeksDisabled}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -164,11 +160,13 @@
     <Style x:Key="styleSubMenuItem" BasedOn="{StaticResource styleSubMenuItemDasar}" TargetType="MenuItem">
     </Style>
 
+
     <!-- ===== SEPARATOR MENU ===== -->
     <Style x:Key="styleMenuSeparator" TargetType="Separator">
         <Setter Property="Height" Value="1"/>
         <Setter Property="Margin" Value="5,4"/>
-        <Setter Property="Background" Value="#E0E0E0"/>
+        <Setter Property="Background" Value="{StaticResource clrSeparator}"/>
     </Style>
+
 
 </ResourceDictionary>

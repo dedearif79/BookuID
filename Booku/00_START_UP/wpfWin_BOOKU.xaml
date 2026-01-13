@@ -500,21 +500,21 @@
 
                 <!-- Welcome Tab -->
                 <TabItem Header="Beranda" IsSelected="True">
-                    <Grid Background="White">
+                    <Grid Background="{StaticResource clrBgPanel}">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                             <TextBlock Text="BOOKU"
                                        FontSize="48"
                                        FontWeight="Bold"
-                                       Foreground="#388E3C"
+                                       Foreground="{StaticResource clrTeksAksen}"
                                        HorizontalAlignment="Center"/>
                             <TextBlock Text="Sistem Akuntansi Terpadu"
                                        FontSize="18"
-                                       Foreground="#757575"
+                                       Foreground="{StaticResource clrTeksSekunder}"
                                        HorizontalAlignment="Center"
                                        Margin="0 10 0 0"/>
                             <TextBlock Text="Mode Modern (WPF Shell) - Versi Development"
                                        FontSize="12"
-                                       Foreground="#9E9E9E"
+                                       Foreground="{StaticResource clrTeksDisabled}"
                                        HorizontalAlignment="Center"
                                        Margin="0 30 0 0"/>
                         </StackPanel>
@@ -525,17 +525,17 @@
 
             <!-- Panel Notifikasi (Kanan) -->
             <Border Name="pnl_Notifikasi" Grid.Column="1" Width="350" Visibility="Collapsed"
-                    BorderBrush="#A5D6A7" BorderThickness="1 0 0 0" Background="#F5F5F5">
+                    BorderBrush="{StaticResource clrBorderPrimary}" BorderThickness="1 0 0 0" Background="{StaticResource clrBgWindow}">
                 <DockPanel>
                     <!-- Header Panel Notifikasi -->
-                    <Border DockPanel.Dock="Top" Background="#388E3C" Padding="10 8">
+                    <Border DockPanel.Dock="Top" Background="{StaticResource clrBtnPrimerBg}" Padding="10 8">
                         <DockPanel>
                             <Button Name="btn_TutupNotifikasi" DockPanel.Dock="Right"
                                     Content="×" FontSize="16" FontWeight="Bold"
-                                    Background="Transparent" Foreground="White"
+                                    Background="Transparent" Foreground="{StaticResource clrTeksInvers}"
                                     BorderThickness="0" Cursor="Hand" Padding="5 0"/>
                             <TextBlock Text="Notifikasi" FontSize="14" FontWeight="SemiBold"
-                                       Foreground="White" VerticalAlignment="Center"/>
+                                       Foreground="{StaticResource clrTeksInvers}" VerticalAlignment="Center"/>
                         </DockPanel>
                     </Border>
 
@@ -548,9 +548,9 @@
                               HeadersVisibility="Column"
                               GridLinesVisibility="Horizontal"
                               BorderThickness="0"
-                              Background="White"
-                              RowBackground="White"
-                              AlternatingRowBackground="#FAFAFA"
+                              Background="{StaticResource clrDataGridBg}"
+                              RowBackground="{StaticResource clrDataGridBg}"
+                              AlternatingRowBackground="{StaticResource clrDataGridBgAlt}"
                               CanUserAddRows="False"
                               CanUserDeleteRows="False"
                               CanUserResizeRows="False">

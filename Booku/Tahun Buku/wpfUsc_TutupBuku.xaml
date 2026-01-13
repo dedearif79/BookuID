@@ -59,7 +59,7 @@
                         <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="555" MinHeight="33" VerticalAlignment="Stretch" />
                     </StackPanel>
                 </StackPanel>
-                <StackPanel Grid.Row="0" Grid.Column="3" Style="{StaticResource stylePanelFormHalamanSidebarKanan}" Background="Gray" CanVerticallyScroll="True" Height="99" Grid.RowSpan="2" >
+                <StackPanel Grid.Row="0" Grid.Column="3" Style="{StaticResource stylePanelFormHalamanSidebarKanan}" Background="{StaticResource clrBgSidebar}" CanVerticallyScroll="True" Height="99" Grid.RowSpan="2" >
                 </StackPanel>
             </Grid>
 

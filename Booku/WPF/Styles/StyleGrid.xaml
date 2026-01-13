@@ -1,28 +1,96 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!-- Grid Dasar -->
+    <!-- =================================================================== -->
+    <!-- STYLE GRID                                                          -->
+    <!-- =================================================================== -->
+    <!-- Semua warna menggunakan referensi dari StyleColor.xaml              -->
+    <!-- =================================================================== -->
+
+
+    <!-- ===== GRID DASAR ===== -->
     <Style x:Key="styleGridDasar" TargetType="Grid">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Opacity" Value="1" />
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Opacity" Value="1"/>
     </Style>
 
-    <!-- Grid Form Dialog -->
+
+    <!-- =================================================================== -->
+    <!-- GRID FORM HALAMAN (UserControl)                                     -->
+    <!-- =================================================================== -->
+
+    <!-- Grid Form Halaman - Base -->
+    <Style x:Key="styleGridFormHalaman" BasedOn="{StaticResource styleGridDasar}" TargetType="Grid">
+        <Setter Property="Margin" Value="0"/>
+    </Style>
+
+    <!-- Grid Form Halaman - Filter -->
+    <Style x:Key="styleGridFormHalamanFilter" BasedOn="{StaticResource styleGridFormHalaman}" TargetType="Grid">
+        <Setter Property="Margin" Value="0 5 0 10"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- GRID FORM DIALOG (Window)                                           -->
+    <!-- =================================================================== -->
+
+    <!-- Grid Form Dialog - Base -->
     <Style x:Key="styleGridFormDialog" BasedOn="{StaticResource styleGridDasar}" TargetType="Grid">
-        <Setter Property="Margin" Value="0 0 0 15" />
-        <Setter Property="DockPanel.HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="0 0 0 15"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Left"/>
+    </Style>
+
+    <!-- Grid Form Dialog - Stretch -->
+    <Style x:Key="styleGridFormDialogStretch" BasedOn="{StaticResource styleGridFormDialog}" TargetType="Grid">
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch"/>
     </Style>
 
     <!-- Grid Form Dialog - Bank -->
     <Style x:Key="styleGridFormDialogBank" BasedOn="{StaticResource styleGridFormDialog}" TargetType="Grid">
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch"/>
     </Style>
 
     <!-- Grid Form Dialog - Akun -->
     <Style x:Key="styleGridFormDialogAkun" BasedOn="{StaticResource styleGridFormDialog}" TargetType="Grid">
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch"/>
     </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- GRID NOTA (untuk Invoice/Nota)                                      -->
+    <!-- =================================================================== -->
+
+    <!-- Grid Nota - Header -->
+    <Style x:Key="styleGridNotaHeader" BasedOn="{StaticResource styleGridDasar}" TargetType="Grid">
+        <Setter Property="Margin" Value="0 0 0 10"/>
+    </Style>
+
+    <!-- Grid Nota - Footer -->
+    <Style x:Key="styleGridNotaFooter" BasedOn="{StaticResource styleGridDasar}" TargetType="Grid">
+        <Setter Property="Margin" Value="0 10 0 0"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- GRID UTILITY                                                        -->
+    <!-- =================================================================== -->
+
+    <!-- Grid dengan Background -->
+    <Style x:Key="styleGridWithBackground" BasedOn="{StaticResource styleGridDasar}" TargetType="Grid">
+        <Setter Property="Background" Value="{StaticResource clrBgPanel}"/>
+    </Style>
+
+    <!-- Grid Card -->
+    <Style x:Key="styleGridCard" BasedOn="{StaticResource styleGridDasar}" TargetType="Grid">
+        <Setter Property="Background" Value="{StaticResource clrBgPanel}"/>
+        <Setter Property="Margin" Value="5"/>
+    </Style>
+
 
 </ResourceDictionary>

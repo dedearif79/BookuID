@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-<DockPanel Background="White" Width="742" Height="Auto" >
+<DockPanel Background="{StaticResource clrBgPanel}" Width="742" Height="Auto" >
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
 
@@ -117,7 +117,7 @@
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0 7 0 0" >
 
-                <Border BorderBrush="Black" BorderThickness="0.5"   Margin="0 0 15 0" >
+                <Border BorderBrush="{StaticResource clrTeksPrimer}" BorderThickness="0.5"   Margin="0 0 15 0" >
 
                     <StackPanel Background="Transparent" Width="480" >
                         <TextBlock Text="Notes :" Padding="5" FontWeight="Bold" TextDecorations="Underline"  />
@@ -177,7 +177,7 @@
             </StackPanel>
 
             <DockPanel HorizontalAlignment="Stretch" Margin="0 7 0 0" Background="Transparent" >
-                <Border BorderBrush="Black" BorderThickness="0.5">
+                <Border BorderBrush="{StaticResource clrTeksPrimer}" BorderThickness="0.5">
                     <TextBlock Name="lbl_TotalTagihanTerbilang" TextWrapping="Wrap" TextAlignment="Right"
                            Padding="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" FontStyle="Italic" 
                            Text="Teks ini sengaja dibikin panjang untuk melihat efek wrap saat jumlah teks melebihi ukuran lebar panel. Jadi, teks ini jangan dihapus ya. Biarkan saja begini apa adanya. Ok."

@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-<DockPanel Background="White" Width="742" Height="Auto" >
+<DockPanel Background="{StaticResource clrBgPanel}" Width="742" Height="Auto" >
 
         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
             
