@@ -2088,7 +2088,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
     Private Sub btn_Adjusment_Click(sender As Object, e As RoutedEventArgs) Handles btn_Adjusment.Click
         If ModusAplikasi = "CLASSIC" Then
-            frm_BOOKU.BukaHalamanAdjusmentPenyusutanAsset()
+            win_BOOKU.BukaHalamanAdjusmentPenyusutanAsset()
         Else
             win_BOOKU.BukaHalamanAdjusmentPenyusutanAsset()
         End If

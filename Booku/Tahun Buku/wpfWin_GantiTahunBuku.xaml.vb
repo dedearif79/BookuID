@@ -506,19 +506,9 @@ Public Class wpfWin_GantiTahunBuku
         KeluarDariSemuaModul()
         JudulAplikasi = NamaAplikasi & " - " & NamaPerusahaan & " - Tahun Buku " & TahunBukuAktif
         If JenisTahunBuku = JenisTahunBuku_LAMPAU Then JudulAplikasi = JudulAplikasi & " (Lampau)"
-        frm_BOOKU.Text = JudulAplikasi
+        win_BOOKU.Title = JudulAplikasi
 
         If JenisTahunBuku = JenisTahunBuku_LAMPAU Then
-            frm_BOOKU.mnu_BukuPengawasan.Enabled = False
-            frm_BOOKU.mnu_Pembelian.Enabled = False
-            frm_BOOKU.mnu_Penjualan.Enabled = False
-            frm_BOOKU.mnu_Transaksi.Enabled = False
-            frm_BOOKU.mnu_StockOpname.Enabled = False
-            frm_BOOKU.mnu_Akuntansi.Enabled = False
-            frm_BOOKU.mnu_ManajemenAsset.Enabled = False
-            frm_BOOKU.mnu_Pengajuan.Enabled = False
-            frm_BOOKU.mnu_Pajak.Enabled = False
-            frm_BOOKU.mnu_DataAwal.Visible = True
             win_BOOKU.mnu_BukuPengawasan.IsEnabled = False
             win_BOOKU.mnu_Pembelian.IsEnabled = False
             win_BOOKU.mnu_Penjualan.IsEnabled = False
@@ -531,16 +521,6 @@ Public Class wpfWin_GantiTahunBuku
             win_BOOKU.mnu_DataAwal.Visibility = Visibility.Visible
         End If
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
-            frm_BOOKU.mnu_BukuPengawasan.Enabled = True
-            frm_BOOKU.mnu_Pembelian.Enabled = True
-            frm_BOOKU.mnu_Penjualan.Enabled = True
-            frm_BOOKU.mnu_Transaksi.Enabled = True
-            frm_BOOKU.mnu_StockOpname.Enabled = True
-            frm_BOOKU.mnu_Akuntansi.Enabled = True
-            frm_BOOKU.mnu_ManajemenAsset.Enabled = True
-            frm_BOOKU.mnu_Pengajuan.Enabled = True
-            frm_BOOKU.mnu_Pajak.Enabled = True
-            frm_BOOKU.mnu_DataAwal.Visible = False
             win_BOOKU.mnu_BukuPengawasan.IsEnabled = True
             win_BOOKU.mnu_Pembelian.IsEnabled = True
             win_BOOKU.mnu_Penjualan.IsEnabled = True

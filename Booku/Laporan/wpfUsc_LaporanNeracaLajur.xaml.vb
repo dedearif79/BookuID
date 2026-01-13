@@ -267,23 +267,11 @@ Public Class wpfUsc_LaporanNeracaLajur
         If JenisLaporan <> Kosongan Then
             Select Case JenisLaporan
                 Case JenisLaporan_HPP
-                    If ModusAplikasi = "CLASSIC" Then
-                        frm_BOOKU.BukaHalaman_LaporanHPP()
-                    Else
-                        win_BOOKU.BukaHalaman_LaporanHPP()
-                    End If
+                    win_BOOKU.BukaHalaman_LaporanHPP()
                 Case JenisLaporan_LabaRugi
-                    If ModusAplikasi = "CLASSIC" Then
-                        frm_BOOKU.BukaHalaman_LaporanLabaRugi_Bulanan()
-                    Else
-                        win_BOOKU.BukaHalaman_LaporanLabaRugi_Bulanan()
-                    End If
+                    win_BOOKU.BukaHalaman_LaporanLabaRugi_Bulanan()
                 Case JenisLaporan_Neraca
-                    If ModusAplikasi = "CLASSIC" Then
-                        frm_BOOKU.BukaHalaman_LaporanNeraca_Bulanan()
-                    Else
-                        win_BOOKU.BukaHalaman_LaporanNeraca_Bulanan()
-                    End If
+                    win_BOOKU.BukaHalaman_LaporanNeraca_Bulanan()
             End Select
             'TampilkanLaporan()
         End If

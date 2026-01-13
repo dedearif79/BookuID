@@ -1126,7 +1126,7 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
 
     Private Sub btn_Adjusment_Click(sender As Object, e As RoutedEventArgs) Handles btn_Adjusment.Click
         If ModusAplikasi = "CLASSIC" Then
-            frm_BOOKU.BukaHalamanAdjusmentAmortisasi()
+            win_BOOKU.BukaHalamanAdjusmentAmortisasi()
         Else
             win_BOOKU.BukaHalamanAdjusmentAmortisasi()
         End If

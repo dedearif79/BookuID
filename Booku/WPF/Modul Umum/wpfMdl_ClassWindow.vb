@@ -33,6 +33,7 @@ Module wpfMdl_ClassWindow
     Public win_PilihJurnalAdjusment As New wpfWin_PilihJurnalAdjusment
     Public win_MetodeInputBayar As New wpfWin_MetodeInputBayar
     Public win_Pengaturan As New wpfWin_Pengaturan
+    Public win_Pesan As wpfWin_Pesan  ' Custom MessageBox dialog (dibuat baru setiap pemanggilan)
 
     '═══════════════════════════════════════════════════════════════════════════
     ' DATA MASTER - COA

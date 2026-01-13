@@ -6,7 +6,6 @@ Imports System.Threading
 Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Threading
-Imports Forms = System.Windows.Forms
 Imports bcomm
 
 ''' <summary>
@@ -82,32 +81,11 @@ Public Module mdlWpf_Program
         StartupSudahDijalankan = True
 
         ' =====================================================
-        ' 6. MODE SELECTION (Khusus Developer PC)
-        ' =====================================================
-        If ID_CPU = ID_CPU_Developer Then
-            Dim dialogPilihMode As New wpfWin_PilihModeAplikasi
-            dialogPilihMode.ShowDialog()
-
-            If Not dialogPilihMode.ModeModernDipilih Then
-                ' User memilih Mode Classic (WinForms)
-                ModusAplikasi = "CLASSIC"
-
-                ' Jalankan WinForms Application
-                Forms.Application.EnableVisualStyles()
-                Forms.Application.SetCompatibleTextRenderingDefault(False)
-                Forms.Application.Run(New frm_BOOKU())
-
-                MutexApp.ReleaseMutex()
-                Return
-            End If
-        End If
-
-        ' =====================================================
-        ' 7. Run WPF Application (Mode Modern)
+        ' 6. Run WPF Application
         ' =====================================================
         app.Run(win_BOOKU)
 
-        ' 8. Cleanup
+        ' 7. Cleanup
         MutexApp.ReleaseMutex()
     End Sub
 

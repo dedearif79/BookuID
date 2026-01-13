@@ -477,7 +477,7 @@ Public Class wpfUsc_DataCOA
             End If
         End If
 
-        frm_BOOKU.IsiKontenNotifikasi()
+        win_BOOKU.IsiKontenNotifikasi()
 
     End Sub
 

@@ -2980,30 +2980,15 @@ Public Module mdl_PublicSub
     End Sub
 
     Public Sub TampilkanPanelNotifikasi()
-        If ModusAplikasi = "CLASSIC" Then
-            ' Mode Classic (WinForms)
-            frm_BOOKU.pnl_Notifikasi.Visible = True
-            frm_BOOKU.mnu_Notifikasi.Text = "Tutup"
-            frm_BOOKU.IsiKontenNotifikasi()
-        Else
-            ' Mode Modern (WPF)
-            If win_BOOKU IsNot Nothing Then
-                win_BOOKU.TampilkanPanelNotifikasi()
-            End If
+        If win_BOOKU IsNot Nothing Then
+            win_BOOKU.TampilkanPanelNotifikasi()
         End If
         VisibilitasNotifikasi = True
     End Sub
 
     Public Sub TutupPanelNotifikasi()
-        If ModusAplikasi = "CLASSIC" Then
-            ' Mode Classic (WinForms)
-            frm_BOOKU.pnl_Notifikasi.Visible = False
-            frm_BOOKU.mnu_Notifikasi.Text = "Notifikasi"
-        Else
-            ' Mode Modern (WPF)
-            If win_BOOKU IsNot Nothing Then
-                win_BOOKU.TutupPanelNotifikasi()
-            End If
+        If win_BOOKU IsNot Nothing Then
+            win_BOOKU.TutupPanelNotifikasi()
         End If
         VisibilitasNotifikasi = False
     End Sub
@@ -3031,7 +3016,7 @@ Public Module mdl_PublicSub
             "Silakan pergi ke Buku Pengawasan Bukti Penerimaan Bank-Cash untuk mengedit/hapus data ini." & Enter2Baris &
             "Lanjut ke Buku Pengawasan?"
         Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbYes Then frm_BOOKU.BukaModul_BukuPengawasanBuktiPenerimaanBankCash()
+        If Pilihan = vbYes Then win_BOOKU.BukaModul_BukuPengawasanBuktiPenerimaanBankCash()
     End Sub
 
     Public Sub KelolaDataPembayaranDiBukuPengawasanPengeluaran()
@@ -3039,16 +3024,14 @@ Public Module mdl_PublicSub
             "Silakan pergi ke Buku Pengawasan Bukti Pengeluaran Bank-Cash untuk mengedit/hapus data ini." & Enter2Baris &
             "Lanjut ke Buku Pengawasan?"
         Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbYes Then frm_BOOKU.BukaModul_BukuPengawasanBuktiPengeluaranBankCash()
+        If Pilihan = vbYes Then win_BOOKU.BukaModul_BukuPengawasanBuktiPengeluaranBankCash()
     End Sub
 
 
     Public Sub LoginGagal()
         StatusLogin = False
-        frm_BOOKU.StatusMenuLevel_1_Operator() 'Jangan dihapus..!!! Ini penting, untuk meng-enabled menu-menu tertentu yang sudah di-enabled di level user paling rendah. Supaya tidak ada pengulangan coding di sini.
-        frm_BOOKU.StatusMenuPosisiLogout()
         KeluarDariSemuaModul()
-        ' Cek apakah win_BOOKU sudah diinisialisasi (belum ada saat startup)
+        ' Update menu state
         If win_BOOKU IsNot Nothing Then
             win_BOOKU.StatusMenuLevel_1_Operator() 'Jangan dihapus..!!! Ini penting, untuk meng-enabled menu-menu tertentu yang sudah di-enabled di level user paling rendah. Supaya tidak ada pengulangan coding di sini.
             win_BOOKU.StatusMenuPosisiLogout()
@@ -5557,7 +5540,6 @@ Public Module mdl_PublicSub
                     LoginGagal() 'Ini penting, untuk mencegah user masuk log/applikasi tanpa memilih Tahun Buku.
                     Pesan_Peringatan("Login dibatalkan karena Anda tidak memilih Tahun Buku untuk dikelola.")
                 Else
-                    frm_BOOKU.Text = JudulAplikasi
                     If win_BOOKU IsNot Nothing Then win_BOOKU.Title = JudulAplikasi
                 End If
             Else

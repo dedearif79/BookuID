@@ -450,7 +450,7 @@ Public Class wpfUsc_StockOpname
                     'Me.Text = JudulForm
                     'lbl_JudulForm.Text = JudulForm
                     'KontenCombo_Bulan()
-                    frm_BOOKU.BukaModul_StockOpname_BarangDalamProses_CekFisik()
+                    win_BOOKU.BukaModul_StockOpname_BarangDalamProses_CekFisik()
                     Return
                 End If
 

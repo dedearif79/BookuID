@@ -385,29 +385,13 @@ Public Class wpfUsc_JurnalAdjusment_HPP
                 usc_BahanBaku.RefreshTampilanData()
                 usc_BahanBaku.DorongKeJurnal()
             Case Adjusment_BiayaBahanBaku
-                If ModusAplikasi = "CLASSIC" Then
-                    frm_BOOKU.AdjusmentHPP_BiayaBahanBaku()
-                Else
-                    AdjusmentHPP_BiayaBahanBaku()
-                End If
+                AdjusmentHPP_BiayaBahanBaku()
             Case Adjusment_BiayaTenagaKerjaLangsung
-                If ModusAplikasi = "CLASSIC" Then
-                    frm_BOOKU.AdjusmentHPP_BiayaTenagaKerjaLangsung()
-                Else
-                    AdjusmentHPP_BiayaTenagaKerjaLangsung()
-                End If
+                AdjusmentHPP_BiayaTenagaKerjaLangsung()
             Case Adjusment_BiayaOverheadPabrik
-                If ModusAplikasi = "CLASSIC" Then
-                    frm_BOOKU.AdjusmentHPP_BiayaOverheadPabrik()
-                Else
-                    AdjusmentHPP_BiayaOverheadPabrik()
-                End If
+                AdjusmentHPP_BiayaOverheadPabrik()
             Case Adjusment_BiayaProduksi
-                If ModusAplikasi = "CLASSIC" Then
-                    frm_BOOKU.AdjusmentHPP_BiayaProduksi()
-                Else
-                    AdjusmentHPP_BiayaProduksi()
-                End If
+                AdjusmentHPP_BiayaProduksi()
             Case Adjusment_HargaPokokProduksi
                 usc_BarangDalamProses_CekFisik = New wpfUsc_StockOpname
                 usc_BarangDalamProses_CekFisik.JenisStok_Menu = JenisStok_BarangDalamProses

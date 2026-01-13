@@ -63,39 +63,28 @@ Public Class wpfWin_Login
         StatusLogin = True
         PengulanganLogin = 0
 
-        frm_BOOKU.mnu_AppDeveloper.Visible = False
-
         win_BOOKU.mnu_AppDeveloper.Visibility = Visibility.Collapsed
 
         Select Case LevelUserAktif
             Case LevelUser_01_Operator
-                frm_BOOKU.StatusMenuLevel_1_Operator()
                 win_BOOKU.StatusMenuLevel_1_Operator()
             Case LevelUser_02_Manager
-                frm_BOOKU.StatusMenuLevel_2_Manager()
                 win_BOOKU.StatusMenuLevel_2_Manager()
             Case LevelUser_03_Direktur
-                frm_BOOKU.StatusMenuLevel_3_Direktur()
                 win_BOOKU.StatusMenuLevel_3_Direktur()
             Case levelUser_04_GeneralUser
-                frm_BOOKU.StatusMenuLevel_4_GeneralUser()
                 win_BOOKU.StatusMenuLevel_4_GeneralUser()
             Case LevelUser_09_SuperUser
-                frm_BOOKU.StatusMenuLevel_9_SuperUser()
                 win_BOOKU.StatusMenuLevel_9_SuperUser()
             Case LevelUser_81_TimIT
-                frm_BOOKU.StatusMenuLevel_81_TimIT()
                 win_BOOKU.StatusMenuLevel_81_TimIT()
             Case LevelUser_99_AppDeveloper
-                frm_BOOKU.StatusMenuLevel_99_AppDeveloper()
                 win_BOOKU.StatusMenuLevel_99_AppDeveloper()
         End Select
 
         If LevelUserAktif >= LevelUser_09_SuperUser Then
-            frm_BOOKU.mnu_DataUser.Enabled = True
             win_BOOKU.mnu_DataUser.IsEnabled = True
         Else
-            frm_BOOKU.mnu_DataUser.Enabled = False
             win_BOOKU.mnu_DataUser.IsEnabled = False
         End If
 
@@ -104,52 +93,6 @@ Public Class wpfWin_Login
         If ClusterAccounting = 1 Then KeteranganCluster = KeteranganCluster & "Accounting  -  "
         KeteranganCluster = StrReverse(Mid(StrReverse(KeteranganCluster), 6))
 
-        frm_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif & "  |  " & JabatanUserAktif & "  |  " & KeteranganCluster
-        frm_BOOKU.mnu_GantiPeran.Visible = False
-        frm_BOOKU.mnu_PeranTimIT.Visible = False
-        frm_BOOKU.mnu_PeranAppDeveloper.Visible = False
-        If JabatanUserAktif = JabatanUser_AppDeveloper _
-            Or JabatanUserAktif = JabatanUser_TimIT _
-            Or JabatanUserAktif = JabatanUser_SuperUser _
-            Or JabatanUserAktif = JabatanUser_GeneralUser _
-            Then
-            If SistemApprovalPerusahaan = True Then frm_BOOKU.mnu_GantiPeran.Visible = True
-            If JabatanUserAktif = JabatanUser_SuperUser _
-                Or JabatanUserAktif = JabatanUser_GeneralUser _
-                Then
-                LevelUserAktif = LevelUser_03_Direktur
-                frm_BOOKU.mnu_PeranOperator.Enabled = True
-                frm_BOOKU.mnu_PeranManager.Enabled = True
-                frm_BOOKU.mnu_PeranDirektur.Enabled = False
-                frm_BOOKU.mnu_PeranTimIT.Enabled = True
-                frm_BOOKU.mnu_PeranAppDeveloper.Enabled = True
-                frm_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif & "  |  " & JabatanUserAktif & "  -->  " & JabatanUser_Direktur & "  |  " & KeteranganCluster
-                If SistemApprovalPerusahaan = True Then Pesan_Informasi("Anda login sebagai DIREKTUR.")
-            End If
-            If JabatanUserAktif = JabatanUser_TimIT Then
-                frm_BOOKU.mnu_PeranTimIT.Visible = True
-                frm_BOOKU.mnu_PeranOperator.Enabled = True
-                frm_BOOKU.mnu_PeranManager.Enabled = True
-                frm_BOOKU.mnu_PeranDirektur.Enabled = True
-                frm_BOOKU.mnu_PeranTimIT.Enabled = False
-                frm_BOOKU.mnu_PeranAppDeveloper.Enabled = True
-                frm_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif & "  |  " & JabatanUserAktif & "  -->  " & JabatanUser_TimIT & "  |  " & KeteranganCluster
-            End If
-            If JabatanUserAktif = JabatanUser_AppDeveloper Then
-                frm_BOOKU.mnu_PeranTimIT.Visible = True
-                frm_BOOKU.mnu_PeranAppDeveloper.Visible = True
-                frm_BOOKU.mnu_PeranOperator.Enabled = True
-                frm_BOOKU.mnu_PeranManager.Enabled = True
-                frm_BOOKU.mnu_PeranDirektur.Enabled = True
-                frm_BOOKU.mnu_PeranTimIT.Enabled = True
-                frm_BOOKU.mnu_PeranAppDeveloper.Enabled = False
-                frm_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif & "  |  " & JabatanUserAktif & "  -->  " & JabatanUser_AppDeveloper & "  |  " & KeteranganCluster
-            End If
-        End If
-
-        If SistemApprovalPerusahaan = False Then frm_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif
-
-        'win_BOOKU.tls_UserAktif.Text = "User  :  " & NamaUserAktif & "  |  " & JabatanUserAktif & "  |  " & KeteranganCluster
         win_BOOKU.mnu_GantiPeran.Visibility = Visibility.Collapsed
         win_BOOKU.mnu_PeranTimIT.Visibility = Visibility.Collapsed
         win_BOOKU.mnu_PeranAppDeveloper.Visibility = Visibility.Collapsed

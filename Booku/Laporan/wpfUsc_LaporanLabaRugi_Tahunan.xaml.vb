@@ -494,7 +494,7 @@ Public Class wpfUsc_LaporanLabaRugi_Tahunan
 
 
     'Private Sub btn_TrialBalance_Click(sender As Object, e As RoutedEventArgs) Handles btn_TrialBalance.Click
-    '    frm_BOOKU.BukaModul_LaporanTrialBalance()
+    '    win_BOOKU.BukaModul_LaporanTrialBalance()
     'End Sub
 
 

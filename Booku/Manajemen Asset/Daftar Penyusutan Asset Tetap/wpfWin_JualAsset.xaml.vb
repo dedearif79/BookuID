@@ -263,7 +263,7 @@ Public Class wpfWin_JualAsset
         If win_InputInvoicePenjualan.PenyimpananInvoicePenjualan = True Then
             If win_InputInvoicePenjualan.AdaPenyimpananjurnal = True Then SimpanJurnalClosing()
             UpdateDataAsset()
-            frm_BOOKU.BukaModul_BukuPenjualanAsset()
+            win_BOOKU.BukaModul_BukuPenjualanAsset()
             Me.Close()
         End If
 

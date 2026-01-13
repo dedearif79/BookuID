@@ -424,7 +424,8 @@ Public Class frm_TryApp
 
         AksesDatabase_General(Tutup)
 
-        frm_BOOKU.Mnu_Keluar_Click(sender, e)
+        ' Trigger keluar aplikasi melalui WPF Window
+        win_BOOKU.Close()
 
     End Sub
 

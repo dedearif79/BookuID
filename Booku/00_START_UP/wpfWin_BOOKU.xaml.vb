@@ -152,16 +152,6 @@ Public Class wpfWin_BOOKU
         win_Pengaturan.ShowDialog()
     End Sub
 
-    Private Sub mnu_KembaliKeClassic_Click(sender As Object, e As RoutedEventArgs) Handles mnu_KembaliKeClassic.Click
-        If MessageBox.Show(
-            "Beralih ke Mode Classic? Aplikasi akan restart.",
-            "Konfirmasi", MessageBoxButton.YesNo, MessageBoxImage.Question) = MessageBoxResult.Yes Then
-            ModusAplikasi = "CLASSIC"
-            Forms.Application.Restart()
-            Application.Current.Shutdown()
-        End If
-    End Sub
-
     Private Sub mnu_Keluar_Click(sender As Object, e As RoutedEventArgs) Handles mnu_Keluar.Click
         Me.Close()
     End Sub
@@ -204,6 +194,12 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuBesar_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuBesar.Click
+        host_BukuBesar = New wpfHost_BukuBesar
+        BukaUserControlDalamTab(usc_BukuBesar, host_BukuBesar.JudulForm)
+    End Sub
+    Sub BukaModul_BukuBesar(COA)
+        ' Buka Buku Besar
+        ' Catatan: Parameter COA untuk filter tidak diimplementasikan di WPF
         host_BukuBesar = New wpfHost_BukuBesar
         BukaUserControlDalamTab(usc_BukuBesar, host_BukuBesar.JudulForm)
     End Sub
@@ -1324,6 +1320,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_StockOpname_BarangDalamProses_CekFisik_Click(sender As Object, e As RoutedEventArgs) Handles mnu_StockOpname_BarangDalamProses_CekFisik.Click
+        BukaModul_StockOpname_BarangDalamProses_CekFisik()
+    End Sub
+    Sub BukaModul_StockOpname_BarangDalamProses_CekFisik()
         host_StockOpname_BarangDalamProses_CekFisik = New wpfHost_StockOpname_BarangDalamProses_CekFisik
         BukaUserControlDalamTab(usc_BarangDalamProses_CekFisik, host_StockOpname_BarangDalamProses_CekFisik.JudulForm)
     End Sub
@@ -1403,6 +1402,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPenjualanAssetTetap_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPenjualanAssetTetap.Click
+        BukaModul_BukuPenjualanAsset()
+    End Sub
+    Sub BukaModul_BukuPenjualanAsset()
         host_BukuPenjualan_Asset = New wpfHost_BukuPenjualan_Asset
         BukaUserControlDalamTab(usc_BukuPenjualan_Asset, host_BukuPenjualan_Asset.JudulForm)
     End Sub

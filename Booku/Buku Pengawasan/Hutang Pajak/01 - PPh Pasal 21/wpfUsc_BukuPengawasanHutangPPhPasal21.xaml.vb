@@ -1095,7 +1095,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal21
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             EksekusiKode = False
-            frm_BOOKU.BukaModul_BukuPengawasanGaji()
+            win_BOOKU.BukaModul_BukuPengawasanGaji()
             EksekusiKode = True
             If MasaPajak = MasaPajak_Rekap Then
                 usc_BukuPengawasanGaji.cmb_Bulan.SelectedValue = usc_BukuPengawasanGaji.Bulan_ALL

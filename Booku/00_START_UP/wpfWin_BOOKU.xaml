@@ -38,8 +38,6 @@
                     <MenuItem Header="Kloning" Name="mnu_Database_Kloning"/>
                 </MenuItem>
                 <Separator/>
-                <MenuItem Header="Kembali ke Mode Classic" Name="mnu_KembaliKeClassic"/>
-                <Separator/>
                 <MenuItem Header="Keluar" Name="mnu_Keluar"/>
             </MenuItem>
 

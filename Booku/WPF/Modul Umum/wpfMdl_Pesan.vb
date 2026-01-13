@@ -1,7 +1,6 @@
-Imports System.Windows.Forms
 Imports bcomm
 
-Module mdl_Pesan
+Module wpfMdl_Pesan
 
     Private Const JudulAplikasi As String = "Booku"
 
@@ -20,36 +19,51 @@ Module mdl_Pesan
 #Region "Fungsi Utama"
 
     ''' <summary>
-    ''' Menampilkan pesan dengan kategori tertentu
+    ''' Menampilkan pesan dengan kategori tertentu menggunakan custom WPF dialog
     ''' </summary>
     Public Sub TampilkanPesan(pesan As String, kategori As KategoriPesan)
-        Dim ikon As MessageBoxIcon
-        Select Case kategori
-            Case KategoriPesan.Informasi, KategoriPesan.Sukses
-                ikon = MessageBoxIcon.Information
-            Case KategoriPesan.Peringatan
-                ikon = MessageBoxIcon.Warning
-            Case KategoriPesan.Gagal, KategoriPesan.KesalahanTeknis
-                ikon = MessageBoxIcon.Error
-            Case Else
-                ikon = MessageBoxIcon.Information
-        End Select
-        MessageBox.Show(pesan, JudulAplikasi, MessageBoxButtons.OK, ikon)
+        ' Konversi enum KategoriPesan ke konstanta Integer di wpfWin_Pesan
+        Dim kategoriInt As Integer = KonversiKategoriKeInteger(kategori)
+
+        Dim dialog As New wpfWin_Pesan With {
+            .Kategori = kategoriInt,
+            .IsiPesan = pesan,
+            .TampilkanTombolTidak = False
+        }
+        dialog.ShowDialog()
     End Sub
 
     ''' <summary>
-    ''' Menampilkan konfirmasi Yes/No dan mengembalikan True jika Yes
+    ''' Menampilkan konfirmasi Ya/Tidak dan mengembalikan True jika Ya
     ''' </summary>
     Public Function TanyaKonfirmasi(pesan As String) As Boolean
-        Dim hasil = MessageBox.Show(pesan, JudulAplikasi, MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-        Return hasil = DialogResult.Yes
+        Dim dialog As New wpfWin_Pesan With {
+            .Kategori = wpfWin_Pesan.Kategori_Informasi,
+            .IsiPesan = pesan,
+            .TampilkanTombolTidak = True
+        }
+        dialog.ShowDialog()
+        Return dialog.HasilKonfirmasi
     End Function
 
     ''' <summary>
-    ''' Menampilkan pesan dengan tombol kustom dan mengembalikan DialogResult
+    ''' Konversi enum KategoriPesan ke konstanta Integer
     ''' </summary>
-    Public Function TampilkanPesanDenganPilihan(pesan As String, tombol As MessageBoxButtons, ikon As MessageBoxIcon) As DialogResult
-        Return MessageBox.Show(pesan, JudulAplikasi, tombol, ikon)
+    Private Function KonversiKategoriKeInteger(kategori As KategoriPesan) As Integer
+        Select Case kategori
+            Case KategoriPesan.Informasi
+                Return wpfWin_Pesan.Kategori_Informasi
+            Case KategoriPesan.Sukses
+                Return wpfWin_Pesan.Kategori_Sukses
+            Case KategoriPesan.Peringatan
+                Return wpfWin_Pesan.Kategori_Peringatan
+            Case KategoriPesan.Gagal
+                Return wpfWin_Pesan.Kategori_Gagal
+            Case KategoriPesan.KesalahanTeknis
+                Return wpfWin_Pesan.Kategori_KesalahanTeknis
+            Case Else
+                Return wpfWin_Pesan.Kategori_Informasi
+        End Select
     End Function
 
 #End Region

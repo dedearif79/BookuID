@@ -112,11 +112,11 @@ Public Class wpfWin_PilihJurnalAdjusment
         LanjutkanProses = True
 
         If rdb_AdjusmentPenyusutan.IsChecked = True Then
-            frm_BOOKU.BukaHalamanAdjusmentPenyusutanAsset()
+            win_BOOKU.BukaHalamanAdjusmentPenyusutanAsset()
         End If
 
         If rdb_AdjusmentAmortisasi.IsChecked = True Then
-            frm_BOOKU.BukaHalamanAdjusmentAmortisasi()
+            win_BOOKU.BukaHalamanAdjusmentAmortisasi()
         End If
 
         If rdb_AdjusmentForex.IsChecked = True Then

@@ -316,7 +316,7 @@ Module wpfMdl_SaldoDanPenyesuaian
                               KoneksiDatabaseTransaksi)
         cmd.ExecuteNonQuery()
         AksesDatabase_Transaksi(Tutup)
-        frm_BOOKU.IsiKontenNotifikasi()
+        win_BOOKU.IsiKontenNotifikasi()
     End Sub
 
 
