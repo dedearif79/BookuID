@@ -17,10 +17,10 @@ Public Class wpfWin_GantiTahunBuku
         Select Case FungsiForm
             Case FungsiForm_MASUKTAHUNBUKU
                 JudulForm = "Masuk Tahun Buku"
-                btn_Ganti.Content = "Masuk"
+                btn_Ganti.Content = "Masuk Tahun Buku"
             Case FungsiForm_GANTITAHUNBUKU
                 JudulForm = "Ganti Tahun Buku"
-                btn_Ganti.Content = "Ganti"
+                btn_Ganti.Content = "Ganti Tahun Buku"
             Case FungsiForm_EksekusiSub_PROSESGANTITAHUNBUKU
                 Me.Visibility = Visibility.Hidden
                 ProsesGantiTahunBuku()
@@ -572,9 +572,12 @@ Public Class wpfWin_GantiTahunBuku
     End Sub
 
 
+    Private Sub btn_Batal_Click(sender As Object, e As RoutedEventArgs) Handles btn_Batal.Click
+        Me.Close()
+    End Sub
+
     Sub New()
         InitializeComponent()
-        StyleWindowDialogWPF_Dasar(Me)
     End Sub
 
 End Class

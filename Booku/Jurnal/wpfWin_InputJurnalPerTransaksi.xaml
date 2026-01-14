@@ -44,7 +44,7 @@
                 <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Kode Akun"/>
                 <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormDialogKolom}">
                     <TextBox Style="{StaticResource styleTextBoxFormDialog}" x:Name="txt_COA" Width="99"/>
-                    <Button Style="{StaticResource styleButtonFormDialogPilih}" x:Name="btn_PilihCOA"/>
+                    <Button Style="{StaticResource styleButtonFormDialogPilihKode}" x:Name="btn_PilihCOA"/>
                 </StackPanel>
 
                 <!-- Row 1: Nama Akun -->

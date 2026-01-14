@@ -89,7 +89,7 @@
                 <TextBox        Grid.Row="9"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlusReadOnly}"   Name="txt_TotalHarga_Asing"   />
                 <ComboBox       Grid.Row="10" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"            Name="cmb_Peruntukan" />
                 <TextBox        Grid.Row="11" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"             Name="txt_KodeProject"          />
-                <Button         Grid.Row="11" Grid.Column="3"   Style="{StaticResource styleButtonFormDialogPilih}"         Name="btn_PilihKodeProject" Margin="0 3"/>
+                <Button         Grid.Row="11" Grid.Column="3"   Style="{StaticResource styleButtonFormDialogPilihKode}"         Name="btn_PilihKodeProject" Margin="0 3"/>
 
             </Grid>
 

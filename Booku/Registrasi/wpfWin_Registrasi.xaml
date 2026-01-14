@@ -1,4 +1,4 @@
-﻿<Window x:Class="wpfWin_Registrasi"
+<Window x:Class="wpfWin_Registrasi"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,70 +6,313 @@
         xmlns:local="clr-namespace:Booku"
         mc:Ignorable="d"
         Title="Registrasi Online"
-        Height="320"
-        Width="400"
+        Height="Auto"
+        Width="Auto"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="ToolWindow"
-        ResizeMode="NoResize">
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        SizeToContent="Height"
+        >
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../WPF\Styles\StyleAplikasi.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- Subtle Shadow -->
+            <DropShadowEffect x:Key="SubtleShadow" BlurRadius="20" ShadowDepth="2" Direction="270" Color="#000000" Opacity="0.15"/>
+
+            <!-- Style Input Field -->
+            <Style x:Key="MinimalTextBox" TargetType="TextBox">
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Padding" Value="12,0"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Background" Value="{StaticResource clrBgInput}"/>
+                <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource clrBorderDefault}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="6">
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="BorderBrush" Value="{StaticResource clrBorderPrimary}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Background" Value="{StaticResource clrBgInputDisabled}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource clrTeksSekunder}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style Tombol Primer -->
+            <Style x:Key="BtnPrimary" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource clrBtnPrimerBg}"/>
+                <Setter Property="Foreground" Value="{StaticResource clrBtnPrimerFg}"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="6"
+                                    BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBtnPrimerBgHover}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBtnPrimerBgPressed}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBtnDisabledBg}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource clrBtnDisabledFg}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style Tombol Sekunder -->
+            <Style x:Key="BtnSecondary" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{StaticResource clrTeksSekunder}"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="6"
+                                    BorderThickness="1"
+                                    BorderBrush="{StaticResource clrBorderDefault}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBgHover}"/>
+                                    <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource clrBorderPrimary}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBgPressed}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style Tombol Outline Primary -->
+            <Style x:Key="BtnOutlinePrimary" TargetType="Button">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="Foreground" Value="{StaticResource clrBtnPrimerBg}"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="6"
+                                    BorderThickness="1.5"
+                                    BorderBrush="{StaticResource clrBtnPrimerBg}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBgPrimarySurface}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBtnPrimerBg}"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource clrBorderDefault}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource clrTeksDisabled}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
         </ResourceDictionary>
     </Window.Resources>
-<Grid Margin="15">
-        <StackPanel>
-            <!-- GroupBox Data Produk -->
-            <GroupBox Header="Data Produk :" Style="{StaticResource styleGroupBoxFormDialog}">
+
+    <!-- Main Container -->
+    <Border Effect="{StaticResource SubtleShadow}" CornerRadius="10" Margin="15" Width="420">
+        <Border.Background>
+            <SolidColorBrush Color="{StaticResource clrWhite}"/>
+        </Border.Background>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- ========== HEADER (Minimalist) ========== -->
+            <Border Grid.Row="0"
+                    CornerRadius="10,10,0,0"
+                    BorderBrush="{StaticResource clrBorderDefault}"
+                    BorderThickness="0,0,0,1"
+                    Padding="24,20">
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Accent Bar -->
+                    <Border Grid.Column="0"
+                            Width="4"
+                            CornerRadius="2"
+                            Background="{StaticResource clrBtnPrimerBg}"
+                            Margin="0,0,16,0"/>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="Registrasi Online"
+                                   FontSize="18"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource clrTeksPrimer}"/>
+                        <TextBlock Text="Daftarkan produk BOOKU Anda"
+                                   FontSize="12"
+                                   Foreground="{StaticResource clrTeksSekunder}"
+                                   Margin="0,2,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- ========== CONTENT ========== -->
+            <StackPanel Grid.Row="1" Margin="24,20,24,24">
+
+                <!-- Section: Data Produk -->
+                <TextBlock Text="DATA PRODUK"
+                           FontSize="11"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource clrBtnPrimerBg}"
+                           Margin="0,0,0,12"/>
+
+                <!-- Nomor Seri Produk -->
+                <TextBlock Text="Nomor Seri Produk"
+                           FontSize="12"
+                           Foreground="{StaticResource clrTeksSekunder}"
+                           Margin="0,0,0,6"/>
+                <TextBox x:Name="txt_NomorSeriProduk"
+                         Style="{StaticResource MinimalTextBox}"
+                         MaxLength="27"/>
+
+                <!-- Row: ID Customer + Cek Ketersediaan -->
+                <Grid Margin="0,14,0,0">
+                    <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                    <!-- Nomor Seri Produk -->
-                    <TextBlock Text="Nomor Seri Produk" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center"   Style="{StaticResource styleTextBlockFormDialog}"/>
-                    <TextBox Name="txt_NomorSeriProduk" Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" MaxLength="27"   Style="{StaticResource styleTextBoxFormDialog}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0"
+                               Text="ID Customer"
+                               FontSize="12"
+                               Foreground="{StaticResource clrTeksSekunder}"
+                               Margin="0,0,0,6"/>
+                    <TextBox Grid.Row="1" Grid.Column="0"
+                             x:Name="txt_IDCustomer"
+                             Style="{StaticResource MinimalTextBox}"
+                             IsEnabled="False"
+                             Margin="0,0,10,0"/>
 
-                    <!-- ID Customer -->
-                    <TextBlock Text="ID Customer" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"  Style="{StaticResource styleTextBlockFormDialog}"/>
-                    <TextBox Name="txt_IDCustomer" Grid.Row="1" Grid.Column="1" IsEnabled="False"   Style="{StaticResource styleTextBoxFormDialog}"/>
-
-                    <!-- Button Cek Ketersediaan -->
-                    <Button Name="btn_CekKetersediaan" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" HorizontalContentAlignment="Center" Margin="9 0 0 0"
-                            Content="Cek&#x0a;Ketersediaan" Width="90" Height="55" IsEnabled="False"/>
-
-                    <!-- Jumlah Perangkat -->
-                    <TextBlock Text="Jumlah Perangkat" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                    <TextBox Name="txt_JumlahPerangkat" Grid.Row="2" Grid.Column="1" Width="50" HorizontalAlignment="Left" IsEnabled="False" Style="{StaticResource styleTextBoxFormDialog}"/>
+                    <Button Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"
+                            x:Name="btn_CekKetersediaan"
+                            Content="Cek"
+                            Style="{StaticResource BtnOutlinePrimary}"
+                            Width="70" Height="40"
+                            VerticalAlignment="Bottom"
+                            IsEnabled="False"/>
                 </Grid>
-            </GroupBox>
 
-            <!-- ID Komputer -->
-            <Grid Margin="0,15,0,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="ID Komputer" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                <TextBox Name="txt_IDKomputer" Grid.Column="1" IsEnabled="False" Style="{StaticResource styleTextBoxFormDialog}"/>
-            </Grid>
+                <!-- Jumlah Perangkat -->
+                <TextBlock Text="Jumlah Perangkat"
+                           FontSize="12"
+                           Foreground="{StaticResource clrTeksSekunder}"
+                           Margin="0,14,0,6"/>
+                <TextBox x:Name="txt_JumlahPerangkat"
+                         Style="{StaticResource MinimalTextBox}"
+                         Width="80"
+                         HorizontalAlignment="Left"
+                         IsEnabled="False"/>
 
-            <!-- Buttons -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
-                <Button Name="btn_Batal" Content="Batal" Width="90" Height="38" Margin="0,0,10,0"/>
-                <Button Name="btn_Kirim" Content="Kirim" Width="90" Height="38" IsEnabled="False"/>
+                <!-- Separator -->
+                <Border Height="1"
+                        Background="{StaticResource clrBorderDefault}"
+                        Margin="0,20,0,16"/>
+
+                <!-- Section: Data Perangkat -->
+                <TextBlock Text="DATA PERANGKAT"
+                           FontSize="11"
+                           FontWeight="SemiBold"
+                           Foreground="{StaticResource clrBtnPrimerBg}"
+                           Margin="0,0,0,12"/>
+
+                <!-- ID Komputer -->
+                <TextBlock Text="ID Komputer"
+                           FontSize="12"
+                           Foreground="{StaticResource clrTeksSekunder}"
+                           Margin="0,0,0,6"/>
+                <TextBox x:Name="txt_IDKomputer"
+                         Style="{StaticResource MinimalTextBox}"
+                         IsEnabled="False"/>
+
+                <!-- Buttons -->
+                <Grid Margin="0,24,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Grid.Column="0"
+                            x:Name="btn_Batal"
+                            Content="Batal"
+                            Style="{StaticResource BtnSecondary}"/>
+
+                    <Button Grid.Column="2"
+                            x:Name="btn_Kirim"
+                            Content="Kirim Registrasi"
+                            Style="{StaticResource BtnPrimary}"
+                            IsEnabled="False"/>
+                </Grid>
+
             </StackPanel>
-        </StackPanel>
-    </Grid>
+
+        </Grid>
+    </Border>
+
 </Window>
-
-

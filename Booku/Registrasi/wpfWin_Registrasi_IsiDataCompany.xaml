@@ -1,183 +1,330 @@
-﻿<Window x:Class="wpfWin_Registrasi_IsiDataCompany"
+<Window x:Class="wpfWin_Registrasi_IsiDataCompany"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Booku"
         mc:Ignorable="d"
-        Title="Buat Database General - Langkah Kedua"
-        Height="700"
-        Width="480"
+        Title="Data Perusahaan"
+        Height="Auto"
+        Width="Auto"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="ToolWindow"
-        ResizeMode="NoResize">
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="True"
+        Background="Transparent"
+        SizeToContent="WidthAndHeight"
+        >
 
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../WPF\Styles\StyleAplikasi.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- Subtle Shadow -->
+            <DropShadowEffect x:Key="SubtleShadow" BlurRadius="20" ShadowDepth="2" Direction="270" Color="#000000" Opacity="0.15"/>
+
+            <!-- Style Input Field -->
+            <Style x:Key="MinimalTextBox" TargetType="TextBox">
+                <Setter Property="Height" Value="36"/>
+                <Setter Property="Padding" Value="10,0"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                <Setter Property="Background" Value="{StaticResource clrBgInput}"/>
+                <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource clrBorderDefault}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="TextBox">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="5">
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                              VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="BorderBrush" Value="{StaticResource clrBorderPrimary}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style TextBox Multiline -->
+            <Style x:Key="MinimalTextBoxMultiline" TargetType="TextBox" BasedOn="{StaticResource MinimalTextBox}">
+                <Setter Property="Height" Value="60"/>
+                <Setter Property="Padding" Value="10,8"/>
+                <Setter Property="AcceptsReturn" Value="True"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+                <Setter Property="VerticalContentAlignment" Value="Top"/>
+                <Setter Property="VerticalScrollBarVisibility" Value="Auto"/>
+            </Style>
+
+            <!-- Style ComboBox -->
+            <Style x:Key="MinimalComboBox" TargetType="ComboBox" BasedOn="{StaticResource styleComboBoxFormDialog}">
+                <Setter Property="Height" Value="36"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+
+            <!-- Style DatePicker -->
+            <Style x:Key="MinimalDatePicker" TargetType="DatePicker" BasedOn="{StaticResource styleDatePickerFormDialog}">
+                <Setter Property="Height" Value="36"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+
+            <!-- Style Label -->
+            <Style x:Key="FieldLabel" TargetType="TextBlock">
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="Foreground" Value="{StaticResource clrTeksSekunder}"/>
+                <Setter Property="Margin" Value="0,0,0,5"/>
+            </Style>
+
+            <!-- Style Tombol Primer -->
+            <Style x:Key="BtnPrimary" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource clrBtnPrimerBg}"/>
+                <Setter Property="Foreground" Value="{StaticResource clrBtnPrimerFg}"/>
+                <Setter Property="FontSize" Value="13"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Height" Value="40"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="6"
+                                    BorderThickness="0">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBtnPrimerBgHover}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBtnPrimerBgPressed}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
         </ResourceDictionary>
     </Window.Resources>
-<Grid Margin="20">
-        <StackPanel VerticalAlignment="Top">
-            <!-- Header -->
-            <TextBlock Text="Langkah Kedua :"
-                       HorizontalAlignment="Center"
-                       FontWeight="SemiBold"
-                       Margin="0,0,0,5"/>
-            <TextBlock Text="Isi Form di bawah ini :"
-                       HorizontalAlignment="Center"
-                       Margin="0,0,0,15"/>
 
-            <!-- GroupBox Data Perusahaan -->
-            <GroupBox Header="Data Perusahaan :" Style="{StaticResource styleGroupBoxFormDialog}">
-                <StackPanel>
-                    <!-- Nama Perusahaan -->
-                    <Grid Margin="0,0,0,8">
+    <!-- Main Container -->
+    <Border Effect="{StaticResource SubtleShadow}" CornerRadius="10" Margin="15" Width="480">
+        <Border.Background>
+            <SolidColorBrush Color="{StaticResource clrWhite}"/>
+        </Border.Background>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- ========== HEADER ========== -->
+            <Border Grid.Row="0"
+                    CornerRadius="10,10,0,0"
+                    BorderBrush="{StaticResource clrBorderDefault}"
+                    BorderThickness="0,0,0,1"
+                    Padding="24,18">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Accent Bar -->
+                    <Border Grid.Column="0"
+                            Width="4"
+                            CornerRadius="2"
+                            Background="{StaticResource clrBtnPrimerBg}"
+                            Margin="0,0,16,0"/>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock Text="Data Perusahaan"
+                                   FontSize="17"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource clrTeksPrimer}"/>
+                        <TextBlock Text="Langkah 2 dari 3 - Lengkapi informasi perusahaan"
+                                   FontSize="11"
+                                   Foreground="{StaticResource clrTeksSekunder}"
+                                   Margin="0,2,0,0"/>
+                    </StackPanel>
+
+                    <!-- Step Indicator -->
+                    <Border Grid.Column="2"
+                            Background="{StaticResource clrBgPrimarySurface}"
+                            CornerRadius="12"
+                            Padding="10,4"
+                            VerticalAlignment="Center">
+                        <TextBlock Text="2/3"
+                                   FontSize="11"
+                                   FontWeight="SemiBold"
+                                   Foreground="{StaticResource clrBtnPrimerBg}"/>
+                    </Border>
+                </Grid>
+            </Border>
+
+            <!-- ========== CONTENT ========== -->
+            <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" MaxHeight="550">
+                <StackPanel Margin="24,20,24,24">
+
+                    <!-- Section: Informasi Umum -->
+                    <TextBlock Text="INFORMASI UMUM"
+                               FontSize="10"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource clrBtnPrimerBg}"
+                               Margin="0,0,0,12"/>
+
+                    <!-- Row 1: Nama Perusahaan -->
+                    <TextBlock Text="Nama Perusahaan" Style="{StaticResource FieldLabel}"/>
+                    <TextBox x:Name="txt_NamaPerusahaan" Style="{StaticResource MinimalTextBox}"/>
+
+                    <!-- Row 2: Jenis Usaha + Jenis WP -->
+                    <Grid Margin="0,12,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Nama Perusahaan" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <TextBox Name="txt_NamaPerusahaan" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Jenis Usaha" Style="{StaticResource FieldLabel}"/>
+                        <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cmb_JenisUsahaPerusahaan" Style="{StaticResource MinimalComboBox}"/>
+
+                        <TextBlock Grid.Column="2" Text="Jenis WP" Style="{StaticResource FieldLabel}"/>
+                        <ComboBox Grid.Row="1" Grid.Column="2" x:Name="cmb_JenisWPPerusahaan" Style="{StaticResource MinimalComboBox}"/>
                     </Grid>
 
-                    <!-- Jenis Usaha -->
-                    <Grid Margin="0,0,0,8">
+                    <!-- Row 3: NPWP -->
+                    <TextBlock Text="NPWP" Style="{StaticResource FieldLabel}" Margin="0,12,0,5"/>
+                    <TextBox x:Name="txt_NPWP" Style="{StaticResource MinimalTextBox}"/>
+
+                    <!-- Row 4: Nama Direktur -->
+                    <TextBlock Text="Nama Direktur" Style="{StaticResource FieldLabel}" Margin="0,12,0,5"/>
+                    <TextBox x:Name="txt_NamaDirektur" Style="{StaticResource MinimalTextBox}"/>
+
+                    <!-- Row 5: Alamat -->
+                    <TextBlock Text="Alamat" Style="{StaticResource FieldLabel}" Margin="0,12,0,5"/>
+                    <TextBox x:Name="txt_AlamatPerusahaan" Style="{StaticResource MinimalTextBoxMultiline}"/>
+
+                    <!-- Row 6: Email + PIC -->
+                    <Grid Margin="0,12,0,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="120"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Jenis Usaha" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <ComboBox Name="cmb_JenisUsahaPerusahaan" Grid.Column="1" Height="25" VerticalContentAlignment="Center"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Email" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Grid.Row="1" Grid.Column="0" x:Name="txt_EmailPerusahaan" Style="{StaticResource MinimalTextBox}"/>
+
+                        <TextBlock Grid.Column="2" Text="PIC" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Grid.Row="1" Grid.Column="2" x:Name="txt_PIC" Style="{StaticResource MinimalTextBox}"/>
                     </Grid>
 
-                    <!-- Jenis WP -->
-                    <Grid Margin="0,0,0,8">
+                    <!-- Separator -->
+                    <Border Height="1"
+                            Background="{StaticResource clrBorderDefault}"
+                            Margin="0,20,0,16"/>
+
+                    <!-- Section: Data SKT -->
+                    <TextBlock Text="DATA SKT"
+                               FontSize="10"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource clrBtnPrimerBg}"
+                               Margin="0,0,0,12"/>
+
+                    <!-- Row 7: Nomor SKT + Tanggal SKT -->
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="140"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="Jenis WP" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <ComboBox Name="cmb_JenisWPPerusahaan" Grid.Column="1" Height="25" VerticalContentAlignment="Center"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Nomor SKT" Style="{StaticResource FieldLabel}"/>
+                        <TextBox Grid.Row="1" Grid.Column="0" x:Name="txt_NomorSKT" Style="{StaticResource MinimalTextBox}"/>
+
+                        <TextBlock Grid.Column="2" Text="Tanggal SKT" Style="{StaticResource FieldLabel}"/>
+                        <DatePicker Grid.Row="1" Grid.Column="2" x:Name="dtp_TanggalSKT" Style="{StaticResource MinimalDatePicker}"/>
                     </Grid>
 
-                    <!-- NPWP -->
-                    <Grid Margin="0,0,0,8">
+                    <!-- Separator -->
+                    <Border Height="1"
+                            Background="{StaticResource clrBorderDefault}"
+                            Margin="0,20,0,16"/>
+
+                    <!-- Section: Pengaturan Sistem -->
+                    <TextBlock Text="PENGATURAN SISTEM"
+                               FontSize="10"
+                               FontWeight="SemiBold"
+                               Foreground="{StaticResource clrBtnPrimerBg}"
+                               Margin="0,0,0,12"/>
+
+                    <!-- Row 8: Sistem Approval + Sistem COA -->
+                    <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBlock Text="NPWP" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <TextBox Name="txt_NPWP" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Column="0" Text="Sistem Approval" Style="{StaticResource FieldLabel}"/>
+                        <ComboBox Grid.Row="1" Grid.Column="0" x:Name="cmb_SistemApproval" Style="{StaticResource MinimalComboBox}"/>
+
+                        <TextBlock Grid.Column="2" Text="Sistem COA" Style="{StaticResource FieldLabel}"/>
+                        <ComboBox Grid.Row="1" Grid.Column="2" x:Name="cmb_SistemCOA" Style="{StaticResource MinimalComboBox}"/>
                     </Grid>
 
-                    <!-- Nama Direktur -->
-                    <Grid Margin="0,0,0,8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Nama Direktur" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <TextBox Name="txt_NamaDirektur" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}"/>
-                    </Grid>
+                    <!-- Row 9: Tanggal Cut Off -->
+                    <TextBlock Text="Tanggal Cut Off" Style="{StaticResource FieldLabel}" Margin="0,12,0,5"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="31 / 12 /"
+                                   FontSize="13"
+                                   Foreground="{StaticResource clrTeksPrimer}"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,8,0"/>
+                        <ComboBox x:Name="cmb_TahunCutOff" Style="{StaticResource MinimalComboBox}" Width="90"/>
+                    </StackPanel>
 
-                    <!-- Alamat -->
-                    <Grid Margin="0,0,0,8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Alamat" VerticalAlignment="Top" Margin="0,5,0,0" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <TextBox Name="txt_AlamatPerusahaan" Grid.Column="1" Height="55"
-                                 AcceptsReturn="True" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"
-                                 Style="{StaticResource styleTextBoxFormDialog}"/>
-                    </Grid>
+                    <!-- Button Lanjutkan -->
+                    <Button x:Name="btn_Lanjutkan"
+                            Content="Lanjutkan"
+                            Style="{StaticResource BtnPrimary}"
+                            Margin="0,24,0,0"/>
 
-                    <!-- Email -->
-                    <Grid Margin="0,0,0,8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Email" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <TextBox Name="txt_EmailPerusahaan" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}"/>
-                    </Grid>
-
-                    <!-- PIC -->
-                    <Grid Margin="0,0,0,8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="PIC" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <TextBox Name="txt_PIC" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}"/>
-                    </Grid>
-
-                    <!-- Nomor SKT -->
-                    <Grid Margin="0,0,0,8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Nomor SKT" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <TextBox Name="txt_NomorSKT" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}"/>
-                    </Grid>
-
-                    <!-- Tanggal SKT -->
-                    <Grid Margin="0,0,0,8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="130"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Tanggal SKT" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <DatePicker Name="dtp_TanggalSKT" Grid.Column="1" Height="25"/>
-                    </Grid>
-
-                    <!-- Sistem Approval -->
-                    <Grid Margin="0,0,0,8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="130"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Sistem Approval" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <ComboBox Name="cmb_SistemApproval" Grid.Column="1" Height="25" VerticalContentAlignment="Center"/>
-                    </Grid>
-
-                    <!-- Tanggal Cut Off -->
-                    <Grid Margin="0,0,0,8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Tanggal Cut Off" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <TextBlock Text="31/12/" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,5,0"/>
-                        <ComboBox Name="cmb_TahunCutOff" Grid.Column="2" Width="80" Height="25" VerticalContentAlignment="Center"/>
-                    </Grid>
-
-                    <!-- Sistem COA -->
-                    <Grid Margin="0,0,0,8">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="130"/>
-                            <ColumnDefinition Width="130"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Sistem COA" VerticalAlignment="Center" Style="{StaticResource styleTextBlockFormDialog}"/>
-                        <ComboBox Name="cmb_SistemCOA" Grid.Column="1" Height="25" VerticalContentAlignment="Center"/>
-                    </Grid>
                 </StackPanel>
-            </GroupBox>
+            </ScrollViewer>
 
-            <!-- Button Lanjutkan -->
-            <Button Name="btn_Lanjutkan"
-                    Content="Lanjutkan"
-                    Width="130"
-                    Height="40"
-                    Margin="0,20,0,0"
-                    HorizontalAlignment="Center"/>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </Border>
+
 </Window>
-
-

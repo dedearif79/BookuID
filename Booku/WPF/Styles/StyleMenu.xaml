@@ -31,7 +31,7 @@
     <Style x:Key="styleMenuItemDasar" TargetType="MenuItem">
         <Setter Property="Foreground" Value="{StaticResource clrMenuFg}"/>
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Padding" Value="10,8"/>
+        <Setter Property="Padding" Value="10,10"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="MenuItem">
@@ -74,7 +74,7 @@
 
     <!-- Menu Item Top Level untuk Aplikasi Shell -->
     <Style x:Key="styleMenuItemTopLevel" BasedOn="{StaticResource styleMenuItemDasar}" TargetType="MenuItem">
-        <Setter Property="Padding" Value="12,10"/>
+        <Setter Property="Padding" Value="12,12"/>
     </Style>
 
 

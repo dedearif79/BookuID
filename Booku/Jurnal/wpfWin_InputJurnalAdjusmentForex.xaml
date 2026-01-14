@@ -73,7 +73,7 @@
                         <TextBox        Grid.Row="7"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorFakturPajak" />
                         <StackPanel     Grid.Row="8"  Grid.Column="1"   Style="{StaticResource stylePanelFormDialogKolom}"  >
                             <TextBox    Width="99"                      Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_KodeLawanTransaksi" />
-                            <Button                                     Style="{StaticResource styleButtonFormDialogPilih}"     Name="btn_PilihMitra" />
+                            <Button                                     Style="{StaticResource styleButtonFormDialogPilihKode}"     Name="btn_PilihMitra" />
                         </StackPanel>
                         <TextBox        Grid.Row="9"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaLawanTransaksi" />
                         <TextBox        Grid.Row="10" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"   Name="txt_KursAkhirBulan" />

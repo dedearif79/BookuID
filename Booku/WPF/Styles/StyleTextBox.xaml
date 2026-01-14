@@ -13,6 +13,7 @@
     <Style x:Key="styleTextBoxDasar" TargetType="TextBox">
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Height" Value="29"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Opacity" Value="1"/>
@@ -20,7 +21,7 @@
         <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
         <Setter Property="BorderBrush" Value="{StaticResource clrBorderDefault}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Padding" Value="4,2"/>
+        <Setter Property="Padding" Value="4,0"/>
         <Setter Property="local:TextBoxBehavior.KarakterDilarang" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -29,7 +30,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="2"
+                            CornerRadius="3"
                             SnapsToDevicePixels="True">
                         <ScrollViewer x:Name="PART_ContentHost"
                                       Focusable="False"
@@ -66,8 +67,7 @@
     <Style x:Key="styleTextBoxFormHalaman" BasedOn="{StaticResource styleTextBoxDasar}" TargetType="TextBox">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="Margin" Value="0 3"/>
-        <Setter Property="Padding" Value="4,2"/>
+        <Setter Property="Margin" Value="0 5"/>
     </Style>
 
     <!-- TextBox Form Halaman - Footer -->
@@ -75,7 +75,6 @@
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch"/>
         <Setter Property="Margin" Value="0 5 15 5"/>
-        <Setter Property="Padding" Value="4,2"/>
     </Style>
 
 
@@ -87,8 +86,7 @@
     <Style x:Key="styleTextBoxFormDialog" BasedOn="{StaticResource styleTextBoxDasar}" TargetType="TextBox">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="Margin" Value="0 3"/>
-        <Setter Property="Padding" Value="4,3"/>
+        <Setter Property="Margin" Value="0 5"/>
     </Style>
 
     <!-- TextBox Form Dialog - Kanan -->

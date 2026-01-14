@@ -1,4 +1,4 @@
-﻿<Window x:Class="wpfWin_InputHutangBankLeasing"
+<Window x:Class="wpfWin_InputHutangBankLeasing"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -63,7 +63,7 @@
                 <TextBox        Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorBP"/>
                 <StackPanel     Grid.Row="2" Grid.Column="1"    Style="{StaticResource stylePanelFormDialogKolom}"  >
                     <TextBox    Width="99"                      Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_KodeKreditur"/>
-                    <Button                                     Style="{StaticResource styleButtonFormDialogPilih}"     Name="btn_PilihMitra"/>
+                    <Button                                     Style="{StaticResource styleButtonFormDialogPilihKode}"     Name="btn_PilihMitra"/>
                 </StackPanel>
                 <TextBox        Grid.Row="3" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaKreditur" />
                 <TextBox        Grid.Row="4" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_JumlahPinjaman" />

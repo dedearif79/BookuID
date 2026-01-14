@@ -1,4 +1,4 @@
-﻿<Window x:Class="wpfWin_InputDisposalAssetTetap"
+<Window x:Class="wpfWin_InputDisposalAssetTetap"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -74,7 +74,7 @@
                             </StackPanel>
                             <TextBox    Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_COA_AkumulasiPenyusutan"/>
                             <TextBox    Grid.Row="2" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaAkun_AkumulasiPenyusutan"   Grid.ColumnSpan="2"/>
-                            <Button     Grid.Row="1" Grid.Column="2"    Style="{StaticResource styleButtonFormDialogPilih}"     Name="btn_PilihCOA_AkumulasiPenyusutan"/>
+                            <Button     Grid.Row="1" Grid.Column="2"    Style="{StaticResource styleButtonFormDialogPilihKode}"     Name="btn_PilihCOA_AkumulasiPenyusutan"/>
                         </Grid>
                     </GroupBox>
 

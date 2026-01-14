@@ -3,6 +3,7 @@ Imports MySql.Data.MySqlClient
 Imports System.Windows
 Imports System.Windows.Threading
 Imports System.Windows.Input
+Imports System.Windows.Media.Imaging
 Imports bcomm
 Imports System.IO
 
@@ -17,14 +18,18 @@ Public Class wpfWin_StartUp
         Dispatcher.BeginInvoke(Sub() cmb_ListCompany.Focus())
 
         NamaAplikasi = "Booku - Sistem Akuntansi Terpadu"
-        lbl_Baris_01.Text = NamaAplikasi
-        lbl_Baris_02.Visibility = Visibility.Hidden
-        lbl_ProgressReport.Text = Kosongan
-        lbl_Company.Visibility = Visibility.Hidden
-        cmb_ListCompany.Visibility = Visibility.Hidden
+
+        ' Muat Logo Booku
+        MuatLogoBooku()
+
+        ' Inisialisasi tampilan
+        lbl_Baris_01.Text = "BOOKU"
+        lbl_Baris_02.Text = "Sistem Akuntansi Terpadu"
+        lbl_ProgressReport.Text = "Memuat aplikasi..."
+        pnl_PilihCompany.Visibility = Visibility.Collapsed
         btn_Lanjutkan.Visibility = Visibility.Hidden
         lbl_Identitas.Text = Kosongan
-        lbl_Identitas.Visibility = Visibility.Collapsed
+        pnl_Identitas.Visibility = Visibility.Collapsed
 
         EksekusiKode = True
 
@@ -64,6 +69,33 @@ Public Class wpfWin_StartUp
 
 
     Dim Maximum = 333
+
+    ''' <summary>
+    ''' Memuat logo Booku dari folder Attach/Img
+    ''' </summary>
+    Sub MuatLogoBooku()
+        Try
+            Dim PathLogo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Attach", "Img", "Logo BOOKU.jpg")
+            If File.Exists(PathLogo) Then
+                Dim bitmap As New BitmapImage()
+                bitmap.BeginInit()
+                bitmap.UriSource = New Uri(PathLogo, UriKind.Absolute)
+                bitmap.CacheOption = BitmapCacheOption.OnLoad
+                bitmap.EndInit()
+                img_Logo.Source = bitmap
+                lbl_LogoFallback.Visibility = Visibility.Collapsed
+            Else
+                ' Tampilkan fallback text "B" jika logo tidak ditemukan
+                img_Logo.Visibility = Visibility.Collapsed
+                lbl_LogoFallback.Visibility = Visibility.Visible
+            End If
+        Catch ex As Exception
+            ' Jika gagal load logo, tampilkan fallback
+            img_Logo.Visibility = Visibility.Collapsed
+            lbl_LogoFallback.Visibility = Visibility.Visible
+        End Try
+    End Sub
+
     Sub ProgressLoading()
         StartProgress(pgb_Progress, 0, Maximum)
         Do While ProgressValue < 111
@@ -72,8 +104,7 @@ Public Class wpfWin_StartUp
             Jeda(1)
         Loop
         If JumlahCompany > 1 Then
-            lbl_Company.Visibility = Visibility.Visible
-            cmb_ListCompany.Visibility = Visibility.Visible
+            pnl_PilihCompany.Visibility = Visibility.Visible
         End If
         btn_Lanjutkan.Visibility = Visibility.Visible
     End Sub
@@ -263,11 +294,9 @@ Public Class wpfWin_StartUp
         AksesDatabase_General(Tutup)
 
         If StatusKoneksiDatabasePublic = True Then
-            lbl_Baris_01.Text = NamaAplikasi
-            lbl_Baris_02.Visibility = Visibility.Visible
-            lbl_Baris_02.Text = "Web : " & WebsiteAplikasi
-            'Application.DoEvents()
-            lbl_Identitas.Text = lbl_Identitas.Text
+            lbl_Baris_01.Text = "BOOKU"
+            lbl_Baris_02.Text = NamaAplikasi
+            lbl_Website.Text = WebsiteAplikasi
         End If
 
     End Sub
@@ -297,7 +326,7 @@ Public Class wpfWin_StartUp
     Sub Lanjutkan()
 
         lbl_ProgressReport.Text = "Harap tunggu..."
-        lbl_Identitas.Visibility = Visibility.Visible
+        pnl_Identitas.Visibility = Visibility.Visible
         Terabas()
         ProgressKoneksiDatabasePublic()
 
@@ -343,11 +372,9 @@ Public Class wpfWin_StartUp
 
     Private Sub btn_Lanjutkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Lanjutkan.Click
 
-        lbl_Company.Visibility = Visibility.Hidden
-        cmb_ListCompany.Visibility = Visibility.Hidden
+        pnl_PilihCompany.Visibility = Visibility.Collapsed
         btn_Lanjutkan.Visibility = Visibility.Hidden
 
-        lbl_Company.IsEnabled = False
         cmb_ListCompany.IsEnabled = False
         btn_Lanjutkan.IsEnabled = False
 

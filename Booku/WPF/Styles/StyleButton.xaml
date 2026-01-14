@@ -10,7 +10,7 @@
 
     <!-- ===== BUTTON DASAR ===== -->
     <Style x:Key="styleButtonDasar" TargetType="Button">
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="13"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="Opacity" Value="1"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -55,7 +55,7 @@
 
     <!-- ===== BUTTON PRIMER (Aksi Utama - Hijau) ===== -->
     <Style x:Key="styleButtonPrimer" TargetType="Button">
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="13"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="Opacity" Value="1"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -103,13 +103,19 @@
 
     <!-- Button Form Halaman - Base -->
     <Style x:Key="styleButtonFormHalaman" BasedOn="{StaticResource styleButtonDasar}" TargetType="Button">
-        <Setter Property="Height" Value="27"/>
+        <Setter Property="Height" Value="32"/>
         <Setter Property="Margin" Value="0 0 9 0"/>
     </Style>
 
     <!-- Button Form Halaman - Refresh -->
     <Style x:Key="styleButtonFormHalamanRefresh" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Refresh"/>
+        <Setter Property="Padding" Value="15 0"/>
+    </Style>
+
+    <!-- Button Form Halaman - Blokir -->
+    <Style x:Key="styleButtonFormHalamanBlokir" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
+        <Setter Property="Content" Value="Blokir"/>
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
@@ -405,9 +411,9 @@
     <!-- Button Form Dialog - Base -->
     <Style x:Key="styleButtonFormDialog" BasedOn="{StaticResource styleButtonDasar}" TargetType="Button">
         <Setter Property="Width" Value="Auto"/>
-        <Setter Property="MinWidth" Value="81"/>
-        <Setter Property="Padding" Value="17 0"/>
-        <Setter Property="Height" Value="33"/>
+        <Setter Property="MinWidth" Value="90"/>
+        <Setter Property="Padding" Value="20 0"/>
+        <Setter Property="Height" Value="40"/>
         <Setter Property="DockPanel.HorizontalAlignment" Value="Right"/>
         <Setter Property="DockPanel.VerticalAlignment" Value="Bottom"/>
         <Setter Property="Margin" Value="15 0 0 0"/>
@@ -453,6 +459,11 @@
     <!-- Button Form Dialog - Tutup -->
     <Style x:Key="styleButtonFormDialogTutup" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Tutup"/>
+    </Style>
+
+    <!-- Button Form Dialog - Pilih -->
+    <Style x:Key="styleButtonFormDialogPilih" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
+        <Setter Property="Content" Value="Pilih"/>
     </Style>
 
     <!-- Button Form Dialog - Backup -->
@@ -614,7 +625,7 @@
     </Style>
 
     <!-- Button Form Dialog - Pilih -->
-    <Style x:Key="styleButtonFormDialogPilih" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
+    <Style x:Key="styleButtonFormDialogPilihKode" BasedOn="{StaticResource styleButtonFormDialog}" TargetType="Button">
         <Setter Property="Content" Value="Pilih"/>
         <Setter Property="MinWidth" Value="45"/>
         <Setter Property="Width" Value="45"/>

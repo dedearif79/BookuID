@@ -1,4 +1,4 @@
-﻿<Window x:Class="wpfWin_InputSuratJalanPembelian"
+<Window x:Class="wpfWin_InputSuratJalanPembelian"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -69,7 +69,7 @@
                         <DatePicker     Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalDiterima" />
                         <StackPanel     Grid.Row="4"  Grid.Column="1"   Style="{StaticResource stylePanelFormDialogKolom}"  >
                             <TextBox    Width="99"                      Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_KodeSupplier" />
-                            <Button                                     Style="{StaticResource styleButtonFormDialogPilih}"     Name="btn_PilihMitra"/>
+                            <Button                                     Style="{StaticResource styleButtonFormDialogPilihKode}"     Name="btn_PilihMitra"/>
                         </StackPanel>
                         <TextBox        Grid.Row="5"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaSupplier" />
                         <TextBox        Grid.Row="6"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_PICSupplier" />

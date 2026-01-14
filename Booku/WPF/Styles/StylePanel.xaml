@@ -156,7 +156,7 @@
 
     <!-- StackPanel Form Dialog - Vertikal -->
     <Style x:Key="stylePanelFormDialogVertikal" BasedOn="{StaticResource stylePanelDasar}" TargetType="StackPanel">
-        <Setter Property="Margin" Value="27"/>
+        <Setter Property="Margin" Value="24"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Orientation" Value="Vertical"/>
     </Style>
@@ -174,13 +174,13 @@
         <Setter Property="HorizontalAlignment" Value="Right"/>
         <Setter Property="VerticalAlignment" Value="Bottom"/>
         <Setter Property="Orientation" Value="Horizontal"/>
-        <Setter Property="Margin" Value="0 0 27 27"/>
+        <Setter Property="Margin" Value="0 0 24 24"/>
     </Style>
 
     <!-- StackPanel Form Dialog - Tombol Kiri -->
     <Style x:Key="stylePanelFormDialogTombolKiri" BasedOn="{StaticResource stylePanelFormDialogTombol}" TargetType="StackPanel">
         <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="Margin" Value="27 0 0 27"/>
+        <Setter Property="Margin" Value="24 0 0 24"/>
     </Style>
 
 

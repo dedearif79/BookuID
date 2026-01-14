@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
@@ -359,7 +359,7 @@ Public Class wpfUsc_DataCOA
         TampilkanData()
     End Sub
     Private Sub txt_KepalaCOA_PreviewTextInput(sender As Object, e As TextCompositionEventArgs) Handles txt_KepalaCOA.PreviewTextInput
-              
+
     End Sub
 
 

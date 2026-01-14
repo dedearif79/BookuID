@@ -511,8 +511,6 @@ Public Class wpfWin_Registrasi
 
     Sub New()
         InitializeComponent()
-        StyleWindowDialogWPF_Dasar(Me)
-        SizeToContent = SizeToContent.Height
     End Sub
 
 End Class

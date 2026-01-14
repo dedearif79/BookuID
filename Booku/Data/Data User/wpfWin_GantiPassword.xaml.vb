@@ -89,7 +89,6 @@ Public Class wpfWin_GantiPassword
 
     Sub New()
         InitializeComponent()
-        StyleWindowDialogWPF_Dasar(Me)
         txt_PasswordLama.MaxLength = 50
         txt_PasswordBaru.MaxLength = 50
     End Sub

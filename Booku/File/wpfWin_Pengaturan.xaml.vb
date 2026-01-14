@@ -2,6 +2,7 @@ Imports bcomm
 Imports System.IO
 Imports System.Windows
 Imports System.Windows.Controls
+Imports System.Windows.Input
 
 
 Public Class wpfWin_Pengaturan
@@ -331,9 +332,20 @@ Public Class wpfWin_Pengaturan
     End Sub
 
 
+    '=============================== WINDOW CONTROLS ===========================================================================
+
+    Private Sub Header_MouseLeftButtonDown(sender As Object, e As MouseButtonEventArgs)
+        Me.DragMove()
+    End Sub
+
+
+    Private Sub btn_Close_Click(sender As Object, e As RoutedEventArgs) Handles btn_Close.Click
+        Me.Close()
+    End Sub
+
+
     Sub New()
         InitializeComponent()
-        StyleWindowDialogWPF_Dasar(Me)
     End Sub
 
 End Class

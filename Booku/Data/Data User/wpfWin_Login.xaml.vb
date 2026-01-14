@@ -289,7 +289,6 @@ Public Class wpfWin_Login
 
     Public Sub New()
         InitializeComponent()
-        StyleWindowDialogWPF_Dasar(Me)
         chk_TampilkanPassword.Visibility = Visibility.Collapsed
     End Sub
 

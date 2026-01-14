@@ -150,8 +150,6 @@ Public Class wpfWin_Registrasi_IsiDataCompany
 
     Sub New()
         InitializeComponent()
-        StyleWindowDialogWPF_Dasar(Me)
-        SizeToContent = SizeToContent.Height
     End Sub
 
 End Class

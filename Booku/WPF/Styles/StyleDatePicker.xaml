@@ -12,6 +12,7 @@
     <Style x:Key="styleDatePickerDasar" TargetType="DatePicker">
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Height" Value="29"/>
         <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
         <Setter Property="Background" Value="{StaticResource clrDatePickerBg}"/>
         <Setter Property="BorderBrush" Value="{StaticResource clrDatePickerBorder}"/>
@@ -20,8 +21,8 @@
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Opacity" Value="1"/>
         <Setter Property="SelectedDateFormat" Value="Short"/>
-        <Setter Property="MaxWidth" Value="110"/>
-        <Setter Property="Padding" Value="2"/>
+        <Setter Property="MaxWidth" Value="120"/>
+        <Setter Property="Padding" Value="4,0"/>
     </Style>
 
 
@@ -32,8 +33,7 @@
     <!-- DatePicker Form Halaman - Base -->
     <Style x:Key="styleDatePickerFormHalaman" BasedOn="{StaticResource styleDatePickerDasar}" TargetType="DatePicker">
         <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="Margin" Value="0"/>
-        <Setter Property="Height" Value="24"/>
+        <Setter Property="Margin" Value="0 5"/>
     </Style>
 
     <!-- DatePicker Form Halaman - Lebar -->
@@ -49,8 +49,7 @@
     <!-- DatePicker Form Dialog - Base -->
     <Style x:Key="styleDatePickerFormDialog" BasedOn="{StaticResource styleDatePickerDasar}" TargetType="DatePicker">
         <Setter Property="HorizontalAlignment" Value="Left"/>
-        <Setter Property="Margin" Value="0 3"/>
-        <Setter Property="Height" Value="26"/>
+        <Setter Property="Margin" Value="0 5"/>
     </Style>
 
     <!-- DatePicker Form Dialog - Lebar -->

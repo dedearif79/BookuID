@@ -30,7 +30,12 @@
         <Menu DockPanel.Dock="Top" Style="{StaticResource styleMenuBarAplikasi}">
 
             <!-- 1. File -->
-            <MenuItem Header="_File" Name="mnu_File">
+            <MenuItem Name="mnu_File">
+                <MenuItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="File" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </MenuItem.Header>
                 <MenuItem Header="Pengaturan" Name="mnu_Pengaturan"/>
                 <MenuItem Header="Database" Name="mnu_Database">
                     <MenuItem Header="Cadangkan" Name="mnu_Database_Cadangkan"/>

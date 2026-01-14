@@ -799,7 +799,7 @@ Module wpfMdl_PublicSub
 
     Sub IsiValueElemenRichTextBox(txt_Keterangan As RichTextBox, Konten As String)
         Dim txtRange As New TextRange(txt_Keterangan.Document.ContentStart, txt_Keterangan.Document.ContentEnd)
-        txtRange.Text = Konten
+        txtRange.Text = If(Konten, String.Empty)
     End Sub
 
     Sub KosongkanValueElemenRichTextBox(ByRef txt_Keterangan As RichTextBox)

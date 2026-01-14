@@ -73,12 +73,12 @@
                 <TextBox        Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus}"       Name="txt_Kurs" Width="123"  HorizontalAlignment="Left" MaxLength="9" />
                 <StackPanel     Grid.Row="5"  Grid.Column="1"   Style="{StaticResource stylePanelFormDialogKolom}"  >
                     <TextBox    Width="135"                     Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_KodeLawanTransaksi" />
-                    <Button                                     Style="{StaticResource styleButtonFormDialogPilih}"     Name="btn_PilihMitra"/>
+                    <Button                                     Style="{StaticResource styleButtonFormDialogPilihKode}"     Name="btn_PilihMitra"/>
                 </StackPanel>
                 <TextBox        Grid.Row="6"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaLawanTransaksi" />
                 <StackPanel     Grid.Row="7"  Grid.Column="1"   Style="{StaticResource stylePanelFormDialogKolom}"  >
                     <TextBox    Width="135"                     Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_COALawan" />
-                    <Button                                     Style="{StaticResource styleButtonFormDialogPilih}"     Name="btn_PilihCOA"/>
+                    <Button                                     Style="{StaticResource styleButtonFormDialogPilihKode}"     Name="btn_PilihCOA"/>
                 </StackPanel>
                 <TextBox        Grid.Row="8"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"                     Name="txt_NamaLawanAkun" />
                 <TextBox        Grid.Row="9"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaAsingPlus }"      Name="txt_JumlahTransaksi_MUA" />
@@ -109,7 +109,7 @@
                         <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Name="lbl_TotalBank" Text="Total Bank" />
 
                         <TextBox        Grid.Row="2" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_BiayaAdministrasiBank" />
-                        <ComboBox       Grid.Row="3" Grid.Column="1"    Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_DitanggungOleh" />
+                        <ComboBox       Grid.Row="3" Grid.Column="1"    Style="{StaticResource styleComboBoxFormDialog}"            Name="cmb_DitanggungOleh" />
                         <TextBox        Grid.Row="4" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_JumlahTransfer"/>
                         <TextBox        Grid.Row="5" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_TotalBank"/>
                     </Grid>

@@ -20,12 +20,12 @@
                     Background="{StaticResource clrComboBoxBg}"
                     BorderBrush="{StaticResource clrComboBoxBorder}"
                     BorderThickness="1"
-                    CornerRadius="2"/>
+                    CornerRadius="3"/>
             <Border Grid.Column="0"
                     Margin="1"
                     Background="{StaticResource clrComboBoxBg}"
                     BorderThickness="0"
-                    CornerRadius="2,0,0,2"/>
+                    CornerRadius="6,0,0,6"/>
             <Path x:Name="Arrow"
                   Grid.Column="1"
                   HorizontalAlignment="Center"
@@ -92,6 +92,7 @@
     <Style x:Key="styleComboBoxDasar" TargetType="ComboBox">
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Height" Value="29"/>
         <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
         <Setter Property="Background" Value="{StaticResource clrComboBoxBg}"/>
         <Setter Property="BorderBrush" Value="{StaticResource clrComboBoxBorder}"/>
@@ -148,7 +149,7 @@
                                         Background="{StaticResource clrComboBoxDropdownBg}"
                                         BorderBrush="{StaticResource clrComboBoxBorder}"
                                         BorderThickness="1"
-                                        CornerRadius="0,0,2,2"/>
+                                        CornerRadius="0,0,6,6"/>
                                 <ScrollViewer Margin="2" SnapsToDevicePixels="True">
                                     <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained"/>
                                 </ScrollViewer>
@@ -185,8 +186,7 @@
     <Style x:Key="styleComboBoxFormHalaman" BasedOn="{StaticResource styleComboBoxDasar}" TargetType="ComboBox">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="Margin" Value="0 3"/>
-        <Setter Property="Height" Value="26"/>
+        <Setter Property="Margin" Value="0 5"/>
     </Style>
 
 
@@ -198,8 +198,7 @@
     <Style x:Key="styleComboBoxFormDialog" BasedOn="{StaticResource styleComboBoxDasar}" TargetType="ComboBox">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch"/>
-        <Setter Property="Margin" Value="0 3"/>
-        <Setter Property="Height" Value="26"/>
+        <Setter Property="Margin" Value="0 5"/>
     </Style>
 
     <!-- ComboBox Form Dialog - Kecil -->

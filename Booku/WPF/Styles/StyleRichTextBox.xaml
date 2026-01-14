@@ -20,7 +20,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Top"/>
         <Setter Property="Opacity" Value="1"/>
-        <Setter Property="Padding" Value="4,2"/>
+        <Setter Property="Padding" Value="10,8"/>
         <Setter Property="AcceptsReturn" Value="True"/>
         <Setter Property="local:RichTextBoxBehavior.KarakterDilarang" Value="True"/>
         <Setter Property="Template">
@@ -30,7 +30,7 @@
                             Background="{TemplateBinding Background}"
                             BorderBrush="{TemplateBinding BorderBrush}"
                             BorderThickness="{TemplateBinding BorderThickness}"
-                            CornerRadius="2"
+                            CornerRadius="6"
                             SnapsToDevicePixels="True">
                         <ScrollViewer x:Name="PART_ContentHost"
                                       Focusable="False"
@@ -69,7 +69,7 @@
         <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch"/>
         <Setter Property="Height" Value="Auto"/>
         <Setter Property="MinHeight" Value="60"/>
-        <Setter Property="Margin" Value="0 3"/>
+        <Setter Property="Margin" Value="0 5"/>
     </Style>
 
 
@@ -84,8 +84,8 @@
         <Setter Property="Height" Value="Auto"/>
         <Setter Property="MinHeight" Value="60"/>
         <Setter Property="MaxHeight" Value="120"/>
-        <Setter Property="Margin" Value="0 3"/>
-        <Setter Property="Padding" Value="2 3"/>
+        <Setter Property="Margin" Value="0 5"/>
+        <Setter Property="Padding" Value="10,8"/>
     </Style>
 
     <!-- RichTextBox Form Dialog - Kecil -->

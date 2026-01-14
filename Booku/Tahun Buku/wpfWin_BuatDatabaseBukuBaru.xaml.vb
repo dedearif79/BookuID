@@ -88,9 +88,13 @@ Public Class wpfWin_BuatDatabaseBukuBaru
     End Sub
 
 
+    Private Sub btn_Batal_Click(sender As Object, e As RoutedEventArgs) Handles btn_Batal.Click
+        Me.Close()
+    End Sub
+
+
     Sub New()
         InitializeComponent()
-        StyleWindowDialogWPF_Dasar(Me)
     End Sub
 
 End Class

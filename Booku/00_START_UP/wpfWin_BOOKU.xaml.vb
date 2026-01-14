@@ -1615,6 +1615,7 @@ Public Class wpfWin_BOOKU
             Return
         End If
         win_Registrasi = New wpfWin_Registrasi
+        win_Registrasi.ResetForm()
         win_Registrasi.ShowDialog()
     End Sub
 
