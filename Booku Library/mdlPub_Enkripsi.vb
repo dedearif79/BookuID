@@ -324,10 +324,10 @@ Public Module mdlPub_Enkripsi
         If IsDBNull(value) Then Return 0
         If value Is Nothing Then Return 0
         Dim valueString As String = value.ToString
+        If valueString = "" OrElse valueString = Kosongan OrElse valueString Is Nothing Then valueString = "0"
         Dim PlusMinus = pm_PLUS
         If valueString(0) = "-"c Then PlusMinus = pm_MINUS
         Dim HasilString As String = Kosongan
-        If valueString = "" Or valueString = Kosongan Or valueString = Nothing Then valueString = "xyZ0"
         Dim coll As MatchCollection = Regex.Matches(valueString, "\d+")
         For Each a As Match In coll
             HasilString += a.ToString()

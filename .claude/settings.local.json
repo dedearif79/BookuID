@@ -28,7 +28,9 @@
       "Bash(cmd.exe:*)",
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/Common7/Tools/VsDevCmd.bat\")",
       "Bash(MSBuild.exe:*)",
-      "Bash(powershell.exe:*)"
+      "Bash(powershell.exe:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ]
   }
 }

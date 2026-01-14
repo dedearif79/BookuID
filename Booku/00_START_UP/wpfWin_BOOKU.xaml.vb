@@ -1603,11 +1603,9 @@ Public Class wpfWin_BOOKU
     ' TENTANG, HELP, REGISTRASI, NOTIFIKASI
     ' ============================================================
     Private Sub mnu_Tentang_Click(sender As Object, e As RoutedEventArgs) Handles mnu_Tentang.Click
-        frm_Tentang.ShowDialog()
     End Sub
 
     Private Sub mnu_Help_Click(sender As Object, e As RoutedEventArgs) Handles mnu_Help.Click
-        frm_Help.ShowDialog()
     End Sub
 
     Private Sub mnu_Registrasi_Click(sender As Object, e As RoutedEventArgs) Handles mnu_Registrasi.Click

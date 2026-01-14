@@ -8,7 +8,9 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
 ## Project Overview
 
-BookuID adalah aplikasi akuntansi enterprise berbasis VB.NET dengan arsitektur **full WPF**, menggunakan .NET 8.0 untuk Windows.
+BookuID adalah aplikasi akuntansi enterprise berbasis VB.NET dengan arsitektur **hybrid** (WinForms entry point + WPF UI), menggunakan .NET 8.0 untuk Windows.
+
+> **Arsitektur Hybrid:** Entry point menggunakan `Sub Main()` di `wpfMdl_Program.vb` (pola WinForms), sementara seluruh UI menggunakan WPF. File `App.xaml.vb` sudah disiapkan untuk migrasi WPF murni di masa depan.
 
 ### Quick Reference
 

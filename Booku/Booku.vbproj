@@ -118,6 +118,7 @@
   <ItemGroup>
     <Folder Include="App IT\phpMyAdmin\" />
     <Folder Include="Buku Pengawasan\Hutang Pajak\09 - PPh Pasal 29\" />
+    <Folder Include="Menu Tambahan\" />
     <Folder Include="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\" />
     <Folder Include="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\" />
     <Folder Include="Pembelian - Penjualan\Pembelian\X-Trash\" />

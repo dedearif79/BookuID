@@ -2096,10 +2096,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
 
     Private Sub btn_LihatInvoice_Click(sender As Object, e As RoutedEventArgs) Handles btn_LihatInvoice.Click
-        Dim InvoicePenjualanAsset = KonversiNomorPenjualanKeNomorInvoice(KodeClosing_Terseleksi)
-        frm_Cetak.FungsiForm = FungsiForm_PRATINJAU
-        NomorInvoicePenjualan_Cetak = InvoicePenjualanAsset
-        TampilkanHalamanCetak_InvoicePenjualan()
+        Cetak(JenisFormCetak_Invoice, KonversiNomorPenjualanKeNomorInvoice(KodeClosing_Terseleksi), True, False)
     End Sub
 
 

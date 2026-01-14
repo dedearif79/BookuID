@@ -326,12 +326,6 @@
     <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\frm_KodeDivisi.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Menu Tambahan\frm_Help.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Menu Tambahan\frm_Tentang.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\wpfUsc_BukuPembelian.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -406,9 +400,6 @@
     </Compile>
     <Compile Update="Print\BankCash\wpfUsc_DesainBuktiPengeluaran.xaml.vb">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Print\frm_Cetak.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Print\Jurnal Voucher\wpfUsc_DesainJurnalVoucher.xaml.vb">
       <SubType>Code</SubType>
