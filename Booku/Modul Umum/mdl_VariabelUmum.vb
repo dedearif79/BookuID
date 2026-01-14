@@ -148,7 +148,7 @@ Module mdl_VariabelUmum
 
     Public TanggalIni_Date As Date = Today
 
-    Public TanggalIni = Microsoft.VisualBasic.Left(Today, 10)
+    Public TanggalIni = AmbilKiri(Today, 10)
 
     Public TanggalHariIni = Format(Today, "dd")
 

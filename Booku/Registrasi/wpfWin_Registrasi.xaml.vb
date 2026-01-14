@@ -43,7 +43,7 @@ Public Class wpfWin_Registrasi
     Private Sub txt_NomorSeriProduk_TextChanged(sender As Object, e As Controls.TextChangedEventArgs) Handles txt_NomorSeriProduk.TextChanged
         btn_Kirim.IsEnabled = False
         ResetFormDataProduk()
-        If Microsoft.VisualBasic.Len(txt_NomorSeriProduk.Text) = 27 Then
+        If txt_NomorSeriProduk.Text.Length = 27 Then
             btn_CekKetersediaan.IsEnabled = True
         Else
             btn_CekKetersediaan.IsEnabled = False
@@ -142,7 +142,7 @@ Public Class wpfWin_Registrasi
             Pesan_Sukses("Pembuatan kerangka database berhasil.")
             AksesDatabase_General(Buka)
             Dim QueryIsiTabel
-            ExpireSaatRegistrasi = Microsoft.VisualBasic.Left(Today, 10)
+            ExpireSaatRegistrasi = AmbilKiri(Today, 10)
             QueryIsiTabel = " INSERT INTO tbl_Company VALUES ('" &
                 txt_NomorSeriProduk.Text & "', '" &
                 txt_IDCustomer.Text & "', '" &
@@ -424,12 +424,12 @@ Public Class wpfWin_Registrasi
         If ProsesRegistrasiPerusahaan = True Then
 
             If RegistrasiTambahan = True Then
-                MsgBox("Selamat...! Registrasi berhasil." &
+                Pesan_Sukses("Selamat...! Registrasi berhasil." &
                        Enter2Baris & "Anda masih berada di Zona ." & NamaPerusahaan & "." &
                        Enter2Baris & "Untuk masuk ke Zona ." & NamaPerusahaan_Reg & ", Anda harus keluar aplikasi terlebih dahulu kemudian lakukan LOGIN seperti biasa.")
                 Me.Close()
             Else
-                MsgBox("Selamat...! Registrasi berhasil.")
+                Pesan_Sukses("Selamat...! Registrasi berhasil.")
                 btn_Kirim.IsEnabled = False
                 btn_Batal.Content = "Tutup"
                 Me.Close()

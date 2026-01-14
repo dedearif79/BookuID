@@ -806,7 +806,7 @@ Public Class wpfWin_InputPOPenjualan
                 dr.Read()
                 If dr.HasRows Then
                     txt_NomorPO.Text = Kosongan
-                    MsgBox("Nomor PO '" & NomorPO & "' sudah ada." & Enter2Baris & "Silakan input Nomor PO yang lain.")
+                    Pesan_Peringatan("Nomor PO '" & NomorPO & "' sudah ada." & Enter2Baris & "Silakan input Nomor PO yang lain.")
                 End If
                 AksesDatabase_Transaksi(Tutup)
             End If
@@ -1523,12 +1523,12 @@ Public Class wpfWin_InputPOPenjualan
             Return
         End If
         If JenisPPN = Kosongan Then
-            MsgBox("Silakan pilih 'Jenis PPN' terlebih dahulu.")
+            Pesan_Peringatan("Silakan pilih 'Jenis PPN' terlebih dahulu.")
             cmb_JenisPPN.Focus()
             Return
         End If
         If JenisPPN <> JenisPPN_NonPPN And PerlakuanPPN = Kosongan Then
-            MsgBox("Silakan pilih 'Perlakuan PPN' terlebih dahulu.")
+            Pesan_Peringatan("Silakan pilih 'Perlakuan PPN' terlebih dahulu.")
             cmb_PerlakuanPPN.Focus()
             Return
         End If
@@ -1718,7 +1718,7 @@ Public Class wpfWin_InputPOPenjualan
     Private Sub txt_TarifPPh_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_TarifPPh.TextChanged
         TextBoxFormatPersen_WPF(txt_TarifPPh, TarifPPh)
         If TarifPPh > 100 Then
-            MsgBox("Silakan isi kolom 'Diskon' dengan benar.")
+            Pesan_Peringatan("Silakan isi kolom 'Diskon' dengan benar.")
             txt_TarifPPh.Text = Kosongan
             txt_TarifPPh.Focus()
             Return
@@ -1744,7 +1744,7 @@ Public Class wpfWin_InputPOPenjualan
         If PPhDipotong < 0 Then
             txt_PPhDitanggung.Text = 0
             txt_PPhDitanggung.Focus()
-            MsgBox("Silakan isi kolom 'PPh Ditanggung' dengan benar!")
+            Pesan_Peringatan("Silakan isi kolom 'PPh Ditanggung' dengan benar!")
             Return
         End If
     End Sub
@@ -1771,7 +1771,7 @@ Public Class wpfWin_InputPOPenjualan
     Private Sub btn_Simpan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Simpan.Click
 
         If NomorPO = Kosongan Then
-            MsgBox("Silakan isi kolom 'Nomor PO'")
+            Pesan_Peringatan("Silakan isi kolom 'Nomor PO'.")
             txt_NomorPO.Focus()
             Return
         End If
@@ -1795,12 +1795,12 @@ Public Class wpfWin_InputPOPenjualan
         End If
 
         If JumlahProduk = 0 Then
-            MsgBox("Silakan tambahkan data 'Barang/Jasa'.")
+            Pesan_Peringatan("Silakan tambahkan data 'Barang/Jasa'.")
             Return
         End If
 
         If KodeCustomer = Nothing Then
-            MsgBox("silakan isi data 'Customer'.")
+            Pesan_Peringatan("Silakan isi data 'Customer'.")
             Return
         End If
 
@@ -1811,12 +1811,12 @@ Public Class wpfWin_InputPOPenjualan
 
         If AdaPPh Then
             If JenisPPh = Kosongan Then
-                MsgBox("Silakan pilih 'Jenis PPh'.")
+                Pesan_Peringatan("Silakan pilih 'Jenis PPh'.")
                 cmb_JenisPPh.Focus()
                 Return
             End If
             If TarifPPh = 0 Then
-                MsgBox("Silakan isi 'Tarif PPh'.")
+                Pesan_Peringatan("Silakan isi 'Tarif PPh'.")
                 txt_TarifPPh.Focus()
                 Return
             End If
@@ -1825,13 +1825,13 @@ Public Class wpfWin_InputPOPenjualan
         End If
 
         If rdb_JumlahHariJangkaWaktuPenyelesaian.IsChecked = False And rdb_TanggalJangkaWaktuPenyelesaian.IsChecked = False Then
-            MsgBox("Silakan isi kolom 'Jatuh TempoPenyelesaian'.")
+            Pesan_Peringatan("Silakan isi kolom 'Jatuh Tempo Penyelesaian'.")
             Return
         End If
 
         If rdb_JumlahHariJangkaWaktuPenyelesaian.IsChecked = True Then
             If JumlahHari_JangkaWaktuPenyelesaian = 0 Then
-                MsgBox("Silakan isi kolom 'Jumlah Hari'.")
+                Pesan_Peringatan("Silakan isi kolom 'Jumlah Hari'.")
                 txt_JumlahHariJangkaWaktuPenyelesaian.Focus()
                 Return
             End If

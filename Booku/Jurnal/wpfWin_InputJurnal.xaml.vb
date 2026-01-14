@@ -281,7 +281,7 @@ Public Class wpfWin_InputJurnal
     Private Sub dtp_TanggalJurnal_ValueChanged(sender As Object, e As SelectionChangedEventArgs) Handles dtp_TanggalJurnal.SelectedDateChanged
         If dtp_TanggalJurnal.Text <> Kosongan Then
             KunciTahun_HarusSamaDenganTahunBukuAktif_WPF(dtp_TanggalJurnal)
-            TanggalJurnal = Microsoft.VisualBasic.Left(dtp_TanggalJurnal.Text, 10)
+            TanggalJurnal = AmbilKiri(dtp_TanggalJurnal.Text, 10)
             TahunJurnal = dtp_TanggalJurnal.SelectedDate.Value.Year
         End If
     End Sub

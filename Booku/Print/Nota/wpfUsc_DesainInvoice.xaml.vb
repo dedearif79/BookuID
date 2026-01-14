@@ -60,7 +60,7 @@ Public Class wpfUsc_DesainInvoice
                     Else
                         NomorSJBAST &= SlashGanda_Pemisah & NomorSJBAST_Satuan
                     End If
-                    If Microsoft.VisualBasic.Left(NomorSJBAST_Satuan, 2) = "SJ" Then
+                    If AmbilKiri(NomorSJBAST_Satuan, 2) = "SJ" Then
                         QueryTelusur2 = " SELECT * FROM tbl_Penjualan_SJ   WHERE Nomor_SJ   = '" & NomorSJBAST_Satuan & "' "
                     Else
                         QueryTelusur2 = " SELECT * FROM tbl_Penjualan_BAST WHERE Nomor_BAST = '" & NomorSJBAST_Satuan & "' "

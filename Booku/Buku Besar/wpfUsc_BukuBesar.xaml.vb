@@ -678,7 +678,7 @@ Public Class wpfUsc_BukuBesar
 
         AksesDatabase_Transaksi(Buka)
         If StatusKoneksiDatabaseTransaksi = False Then
-            MsgBox("Data terpilih GAGAL dihapus." & Enter2Baris & teks_SilakanCobaLagi_Database)
+            Pesan_Gagal("Data terpilih GAGAL dihapus." & Enter2Baris & teks_SilakanCobaLagi_Database)
             Return
         End If
 
@@ -687,7 +687,7 @@ Public Class wpfUsc_BukuBesar
 
         AksesDatabase_Transaksi(Tutup)
         TampilkanData()
-        MsgBox("Data terpilih BERHASIL DIHAPUS")
+        Pesan_Sukses("Data terpilih BERHASIL DIHAPUS")
 
     End Sub
 

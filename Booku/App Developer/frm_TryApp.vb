@@ -82,14 +82,14 @@ Public Class frm_TryApp
             EnkripsiTeks(ID_CPU) &
             FooterConfig
         Try
-            My.Computer.FileSystem.WriteAllText(FilePathRegistrasiPerangkat, DataKoneksi, False)
+            IO.File.WriteAllText(FilePathRegistrasiPerangkat, DataKoneksi)
         Catch ex As Exception
         End Try
     End Sub
 
     Private Sub btn_SimpanDataExpire_Click(sender As Object, e As EventArgs) Handles btn_SimpanDataExpire.Click
 
-        Dim TanggalExpire = Microsoft.VisualBasic.Left(dtp_AppExpire.Text, 10)
+        Dim TanggalExpire = AmbilKiri(dtp_AppExpire.Text, 10)
         Dim TanggalExpire_Enk = EnkripsiTanggal(TanggalExpire)
         AppExpire = TanggalExpire
 
@@ -132,7 +132,7 @@ Public Class frm_TryApp
         Loop
         AksesDatabase_Transaksi(Tutup)
 
-        MsgBox("Selesai.")
+        Pesan_Informasi("Selesai.")
 
     End Sub
 

@@ -81,8 +81,8 @@ Public Class wpfUsc_DataUser
             If ClusterFinance = 1 Then Cluster = Cluster & "Finance  &  "
             If ClusterAccounting = 1 Then Cluster = Cluster & "Accounting  &  "
             If Cluster IsNot Nothing Then
-                Dim ClusterReverse = Microsoft.VisualBasic.StrReverse(Cluster)
-                Cluster = Microsoft.VisualBasic.StrReverse(Microsoft.VisualBasic.Mid(ClusterReverse, 6))
+                Dim ClusterReverse = BalikTeks(Cluster)
+                Cluster = BalikTeks(AmbilTengah(ClusterReverse, 6))
             End If
 
             If dr.Item("Status_Aktif") = 1 Then

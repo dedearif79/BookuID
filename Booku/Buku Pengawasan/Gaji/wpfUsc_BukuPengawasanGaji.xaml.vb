@@ -412,7 +412,7 @@ Public Class wpfUsc_BukuPengawasanGaji
             Do While dr.Read
 
                 NomorID = dr.Item("Nomor_ID")
-                TanggalTransaksi = Microsoft.VisualBasic.Left(dr.Item("Tanggal_Transaksi"), 10)
+                TanggalTransaksi = AmbilKiri(dr.Item("Tanggal_Transaksi"), 10)
                 GajiBagianProduksi = dr.Item("Gaji_Bagian_Produksi")
                 GajiBagianProduksi2 = dr.Item("Gaji_Bagian_Produksi_2")
                 GajiBagianProduksi3 = dr.Item("Gaji_Bagian_Produksi_3")

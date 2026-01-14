@@ -354,7 +354,7 @@ Public Class wpfWin_InputLawanTransaksi
             Return
         End If
 
-        If Len(KodeLawanTransaksi) < 3 Then
+        If KodeLawanTransaksi.Length < 3 Then
             PesanPeringatan("Kode Lawan Transaksi minimal 3 huruf")
             txt_KodeLawanTransaksi.Focus()
             Return

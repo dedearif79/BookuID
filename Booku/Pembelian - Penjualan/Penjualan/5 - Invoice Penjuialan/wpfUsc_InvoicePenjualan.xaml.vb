@@ -811,7 +811,7 @@ Public Class wpfUsc_InvoicePenjualan
         Else
             Dim PembetulanKe = AmbilAngka(NP_Terseleksi)
             NP_Pembetulan = "P" & (PembetulanKe + 1)
-            NomorInvoice_Pembetulan = Microsoft.VisualBasic.Replace(NomorInvoice_Terseleksi, NP_Terseleksi, NP_Pembetulan)
+            NomorInvoice_Pembetulan = NomorInvoice_Terseleksi.Replace(NP_Terseleksi, NP_Pembetulan)
         End If
         AksesDatabase_Transaksi(Buka)
         cmd = New OdbcCommand(" SELECT * FROM tbl_Penjualan_Invoice " &

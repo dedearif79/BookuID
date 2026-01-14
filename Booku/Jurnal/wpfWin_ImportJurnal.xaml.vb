@@ -140,17 +140,17 @@ Public Class wpfWin_ImportJurnal
         End If
 
         If StatusImport = Status_DATARUSAK Then
-            MsgBox("Format sumber data tidak sesuai." & Enter2Baris & "Silakan perbaiki terlebih dahulu dan ulangi lagi.")
+            Pesan_Peringatan("Format sumber data tidak sesuai." & Enter2Baris & "Silakan perbaiki terlebih dahulu dan ulangi lagi.")
             TutupForm()
         End If
 
         If StatusImport = Status_GAGAL Then
-            MsgBox("Silakan buka/aktifkan terlebih dahulu file yang bersangkutan menggunakan Excel, dan jalankan kembali fitur ini.")
+            Pesan_Peringatan("Silakan buka/aktifkan terlebih dahulu file yang bersangkutan menggunakan Excel, dan jalankan kembali fitur ini.")
             TutupForm()
         End If
 
         If StatusImport = Status_BARISLEBIH Then
-            MsgBox("Sistem import tidak mengizinkan data melebihi baris " & BatasLimitJumlahBaris & " pada tabel Excel dalam sekali event." &
+            Pesan_Peringatan("Sistem import tidak mengizinkan data melebihi baris " & BatasLimitJumlahBaris & " pada tabel Excel dalam sekali event." &
                    Enter2Baris & "Silakan Anda pecah sumber data menjadi beberapa partisi, dan ulangi kembali." &
                    "")
             DsImport.Clear()
@@ -159,7 +159,7 @@ Public Class wpfWin_ImportJurnal
 
         If StatusImport = Status_SUKSES Then
             If JumlahBaris_SumberData = 0 Then
-                MsgBox("Tidak ada data yang bisa diimpor.")
+                Pesan_Peringatan("Tidak ada data yang bisa diimpor.")
                 TutupForm()
             End If
             pgb_Progress.Value = 0
@@ -242,7 +242,7 @@ Public Class wpfWin_ImportJurnal
                 Referensi = datatabelBahanImpor.Rows(Baris)(3).ToString
                 Bundelan = datatabelBahanImpor.Rows(Baris)(4).ToString
                 TanggalInvoice = datatabelBahanImpor.Rows(Baris)(5).ToString
-                If Len(TanggalInvoice) > 10 Then TanggalInvoice = Microsoft.VisualBasic.Left(TanggalInvoice, 10)
+                If TanggalInvoice.Length > 10 Then TanggalInvoice = TanggalInvoice.Substring(0, 10)
                 NomorInvoice = datatabelBahanImpor.Rows(Baris)(6).ToString
                 NomorFakturPajak = datatabelBahanImpor.Rows(Baris)(7).ToString
                 NamaLawanTransaksi = datatabelBahanImpor.Rows(Baris)(8).ToString
@@ -377,7 +377,7 @@ Public Class wpfWin_ImportJurnal
         If jur_StatusPenyimpananJurnal_Lengkap = True Then
             BarisAwalBahanJV = Baris - JumlahBarisBahanJV + 2
             BarisAkhirBahanJV = BarisAwalBahanJV - 1 + JumlahBarisBahanJV
-            MsgBox("Data tidak valid pada Jurnal Nomor " & AwalanNomorJV & jur_NomorJV & "." &
+            Pesan_Peringatan("Data tidak valid pada Jurnal Nomor " & AwalanNomorJV & jur_NomorJV & "." &
                    Enter1Baris & "( Baris " & BarisAwalBahanJV & " sampai " & BarisAkhirBahanJV & " pada tabel Excel )." &
                    Enter2Baris & "Silakan diperbaiki.")
             win_VerifikasiDataJurnal = New wpfWin_VerifikasiDataJurnal
@@ -435,7 +435,7 @@ Public Class wpfWin_ImportJurnal
             PesanError = PesanError & Enter1Baris & "- 'Tahun Transaksi' tidak sesuai dengan 'Tahun Buku Aktif'."
         End If
         If jur_AkunTerdaftar = False Or TahunTransaksiSesuai = False Then
-            MsgBox(PesanError & Enter2Baris &
+            Pesan_Peringatan(PesanError & Enter2Baris &
                    "Silakan koreksi baris " & Baris + 2 & " pada tabel Excel.")
         End If
         If jur_StatusPenyimpananJurnal_PerBaris = False Then
@@ -469,9 +469,9 @@ Public Class wpfWin_ImportJurnal
 
     Sub ProsesPostingGagal()
         HapusSemuaDataPostinganJurnalEventIni()
-        MsgBox("Proses GAGAL, karena ada kesalahan format dari sumber data." &
+        Pesan_Gagal("Proses GAGAL, karena ada kesalahan format dari sumber data." &
                Enter2Baris & "Silakan perbaiki dan sesuaikan sumber data, kemudian ulangi lagi.")
-        MsgBox("Info :" &
+        Pesan_Informasi("Info :" &
                Enter1Baris & "Kesalahan ada pada baris " & Baris + 2 & " tabel Excel sumber data." &
                Enter2Baris & "Tips :" &
                Enter1Baris & "- Susun sumber data sesuai kerangka yang disediakan" &
@@ -564,7 +564,7 @@ Public Class wpfWin_ImportJurnal
         SistemPenomoranOtomatis_NomorJV()
         Dim NomorJV_AwalPosting = jur_NomorJV
         NomorJV_GagalPosting = 0
-        MsgBox("Penomoran jurnal pada event ini dimulai dari Nomor " & AwalanNomorJV & NomorJV_AwalPosting & "")
+        Pesan_Informasi("Penomoran jurnal pada event ini dimulai dari Nomor " & AwalanNomorJV & NomorJV_AwalPosting & "")
         btn_Proses.Visibility = Visibility.Collapsed
         lbl_Baris_01.Text = "Harap tunggu..."
         lbl_Baris_02.Text = "Proses posting sedang berjalan."

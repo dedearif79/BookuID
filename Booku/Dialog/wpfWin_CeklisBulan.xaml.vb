@@ -337,7 +337,7 @@ Public Class wpfWin_CeklisBulan
 
     Private Sub btn_Lanjutkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Lanjutkan.Click
         If BulanTerceklis_Awal = Kosongan Or BulanTerceklis_Akhir = Kosongan Then
-            MsgBox("Silakan pilih salah satu atau beberapa 'Bulan' untuk diposting.")
+            Pesan_Peringatan("Silakan pilih salah satu atau beberapa 'Bulan' untuk diposting.")
         Else
             LanjutkanProses = True
             Me.Close()

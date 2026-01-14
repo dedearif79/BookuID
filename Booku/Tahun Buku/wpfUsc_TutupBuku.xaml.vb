@@ -251,7 +251,7 @@ Public Class wpfUsc_TutupBuku
         'Cek Keseimbangan Neraca Saldo Akhir
         usc_DataCOA.RefreshTampilanData()
         If usc_DataCOA.KeseimbanganNeraca = False Then
-            MsgBox("Neraca pada Data COA tidak seimbang!" & Enter2Baris &
+            Pesan_Peringatan("Neraca pada Data COA tidak seimbang!" & Enter2Baris &
                    "Silakan seimbangkan terlebih dahulu Neraca pada halaman Data COA, atau silakan cek notifikasi.")
             KetersediaanMenuHalaman(pnl_Halaman, True)
             Return
@@ -323,9 +323,9 @@ Public Class wpfUsc_TutupBuku
 
         BuatDatabaseBaruTransaksi(TahunBukuBaru)
         If HasilPembuatanDatabaseTransaksi = True Then
-            MsgBox("Database Tahun Buku " & TahunBukuBaru & " BERHASIL dibuat.")
+            Pesan_Sukses("Database Tahun Buku " & TahunBukuBaru & " BERHASIL dibuat.")
         Else
-            MsgBox("Database Tahun Buku " & TahunBukuBaru & " GAGAL dibuat karena ada kesalahan teknis." & Enter2Baris &
+            Pesan_Gagal("Database Tahun Buku " & TahunBukuBaru & " GAGAL dibuat karena ada kesalahan teknis." & Enter2Baris &
                        teks_SilakanCobaLagi_Database & Enter2Baris)
             ProsesTutupBuku = False
             Return
@@ -399,9 +399,9 @@ Public Class wpfUsc_TutupBuku
         TutupDatabaseTransaksi_Alternatif()
 
         If StatusSuntingDatabase = True Then
-            MsgBox("Data Saldo Akhir Tahun " & TahunBukuAktif & " BERHASIL dikirim sebagai Saldo Awal Tahun " & TahunBukuBaru & ".")
+            Pesan_Sukses("Data Saldo Akhir Tahun " & TahunBukuAktif & " BERHASIL dikirim sebagai Saldo Awal Tahun " & TahunBukuBaru & ".")
         Else
-            MsgBox("Pengisian Saldo Awal Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
             Return
@@ -565,7 +565,7 @@ Public Class wpfUsc_TutupBuku
         KetersediaanMenuHalaman(pnl_Halaman, True)
 
         If KesesuaianData = False Then
-            MsgBox(pesan_DataTidakSesuai & "." & Enter2Baris &
+            Pesan_Peringatan(pesan_DataTidakSesuai & "." & Enter2Baris &
                    "Proses Tutup Buku akan tetap dilanjutkan dengan beberapa catatan yang akan dikirim ke Pembukuan Tahun Berikutnya." &
                    Enter2Baris &
                    "Silakan nanti buka notifikasinya untuk arahan bagi perbaikan.")
@@ -676,9 +676,9 @@ Public Class wpfUsc_TutupBuku
         AksesDatabase_General(Tutup)
 
         If StatusSuntingDatabase = True Then
-            MsgBox("Proses Tutup Buku Tahun " & TahunBukuYangAkanDitutup & " BERHASIL.")
+            Pesan_Sukses("Proses Tutup Buku Tahun " & TahunBukuYangAkanDitutup & " BERHASIL.")
         Else
-            MsgBox("Proses Tutup Buku GAGAL karena ada kesalahan teknis." _
+            Pesan_Gagal("Proses Tutup Buku GAGAL karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
             Return

@@ -1518,7 +1518,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
         AksesDatabase_Transaksi(Tutup)
 
         If BulanJurnalPenyusutan = 12 Then
-            MsgBox("'Jurnal Penyusutan' terkait dengan asset ini sudah diposting sampai Bulan Desember." & Enter2Baris &
+            Pesan_Peringatan("'Jurnal Penyusutan' terkait dengan asset ini sudah diposting sampai Bulan Desember." & Enter2Baris &
                    "Jika ingin posting data penjutalan terkait asset ini, silakan hapus terlebih dahulu postingan jurnalnya, " &
                    "mulai dari bulan saat transaksi penjualan asset sampai seterusnya.")
             Return
@@ -1591,7 +1591,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
         AksesDatabase_Transaksi(Tutup)
 
         If BulanJurnalPenyusutan = 12 Then
-            MsgBox("'Jurnal Penyusutan' terkait dengan asset ini sudah diposting sampai Bulan Desember." & Enter2Baris &
+            Pesan_Peringatan("'Jurnal Penyusutan' terkait dengan asset ini sudah diposting sampai Bulan Desember." & Enter2Baris &
                    "Jika ingin posting data disposal terkait asset ini, silakan hapus terlebih dahulu postingan jurnalnya, " &
                    "mulai dari bulan saat Disposal Asset sampai seterusnya.")
             Return
@@ -1964,7 +1964,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
                 If jur_StatusPenyimpananJurnal_Lengkap = True Then
                     JumlahJurnalTerposting += 1
                 Else
-                    MsgBox("Ups... Terjadi kesalahan pada proses penyimpanan..!")
+                    Pesan_Gagal("Ups... Terjadi kesalahan pada proses penyimpanan..!")
                     Exit Do
                 End If
             End If
@@ -1987,17 +1987,17 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
         If jur_StatusPenyimpananJurnal_PerBaris = True Then
             If JumlahJurnalTerposting = 1 Then
-                MsgBox("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi &
+                Pesan_Sukses("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi &
                        "' Bulan " & BulanTerceklis_Awal & " BERHASIL diposting.")
             Else
-                MsgBox("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi &
+                Pesan_Sukses("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi &
                        "' BERHASIL diposting untuk Bulan " & BulanTerceklis_Awal & " - " & BulanTerceklis_Akhir & ".")
             End If
         Else
             If JumlahJurnalTerposting > 0 Then
-                MsgBox("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi & "' hanya terposting sebagian." & Enter2Baris & teks_SilakanUlangiLagi_Database)
+                Pesan_Peringatan("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi & "' hanya terposting sebagian." & Enter2Baris & teks_SilakanUlangiLagi_Database)
             Else
-                MsgBox("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi & "' GAGAL diposting." & Enter2Baris & teks_SilakanUlangiLagi_Database)
+                Pesan_Gagal("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi & "' GAGAL diposting." & Enter2Baris & teks_SilakanUlangiLagi_Database)
             End If
         End If
 
@@ -2082,7 +2082,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
         If AdaJurnal > 0 Then
             win_PilihJurnal_DataAsset.ShowDialog()
         Else
-            MsgBox("Tidak/Belum ada Jurnal pada Tahun Buku ini untuk data terpilih.")
+            Pesan_Informasi("Tidak/Belum ada Jurnal pada Tahun Buku ini untuk data terpilih.")
         End If
     End Sub
 
@@ -2164,19 +2164,19 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
                 If Pilihan = vbNo Then Return
             Else
                 If JenisTahunBuku = JenisTahunBuku_NORMAL Then
-                    MsgBox("Belum ada Jurnal yang perlu dihapus pada event ini." _
+                    Pesan_Informasi("Belum ada Jurnal yang perlu dihapus pada event ini." _
                        & Enter2Baris & "Silakan lanjurkan proses import.")
                 End If
             End If
         Else
-            MsgBox("Import dibatalakan..!!!" & Enter2Baris & teks_SilakanCobaLagi_Database)
+            Pesan_Gagal("Import dibatalakan..!!!" & Enter2Baris & teks_SilakanCobaLagi_Database)
             Return
         End If
 
         win_ProgressImportDataAsset = New wpfWin_ProgressImportDataAsset
         win_ProgressImportDataAsset.ShowDialog()
         If StatusPosting = Status_BATAL Then
-            MsgBox("Proses posting telah dibatalkan seluruhnya pada event ini.")
+            Pesan_Informasi("Proses posting telah dibatalkan seluruhnya pada event ini.")
         End If
 
     End Sub

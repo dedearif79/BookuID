@@ -335,7 +335,7 @@ Public Class wpfWin_InputJurnalAdjusmentForex
     Private Sub dtp_TanggalJurnal_ValueChanged(sender As Object, e As SelectionChangedEventArgs) Handles dtp_TanggalJurnal.SelectedDateChanged
         If dtp_TanggalJurnal.Text <> Kosongan Then
             KunciTahun_HarusSamaDenganTahunBukuAktif_WPF(dtp_TanggalJurnal)
-            TanggalJurnal = Microsoft.VisualBasic.Left(dtp_TanggalJurnal.Text, 10)
+            TanggalJurnal = AmbilKiri(dtp_TanggalJurnal.Text, 10)
             TahunJurnal = dtp_TanggalJurnal.SelectedDate.Value.Year
         End If
     End Sub
@@ -634,13 +634,13 @@ Public Class wpfWin_InputJurnalAdjusmentForex
         End If
 
         If TotalDebet <> TotalKredit Then
-            MsgBox("Jurnal tidak dapat diposting karena ADA SELISIH." &
+            PesanPeringatan("Jurnal tidak dapat diposting karena ADA SELISIH." &
                    Enter2Baris & "Silakan dikoreksi kembali.")
             Return
         End If
 
         If cmb_JenisJurnal.Text = Kosongan Then
-            MsgBox("Silakan tentukan 'Jenis Jurnal'.")
+            PesanPeringatan("Silakan tentukan 'Jenis Jurnal'.")
             cmb_JenisJurnal.Focus()
             Return
         End If
@@ -700,11 +700,11 @@ Public Class wpfWin_InputJurnalAdjusmentForex
 
         If jur_StatusPenyimpananJurnal_PerBaris = True Then
             JurnalTersimpan = True
-            MsgBox("Jurnal BERHASIL disimpan.")
+            Pesan_Sukses("Jurnal BERHASIL disimpan.")
             Me.Close()
         Else
             JurnalTersimpan = False
-            MsgBox("Jurnal GAGAL disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
+            Pesan_Gagal("Jurnal GAGAL disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
         End If
 
     End Sub

@@ -282,7 +282,7 @@ Public Class wpfWin_InputKetetapanPajak
               
     End Sub
     Private Sub txt_TahunPajak_Inputan_LostFocus(sender As Object, e As RoutedEventArgs) Handles txt_TahunPajak_Inputan.LostFocus
-        Dim JumlahKarakterTahunPajak As Integer = Microsoft.VisualBasic.Len(TahunPajak_Inputan.ToString)
+        Dim JumlahKarakterTahunPajak As Integer = TahunPajak_Inputan.ToString.Length
         If JumlahKarakterTahunPajak <> 4 Then
             Pesan_Peringatan("Silakan isi kolom 'Tahun Pajak' dengan benar.")
             txt_TahunPajak_Inputan.Focus()

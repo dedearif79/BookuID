@@ -1237,7 +1237,7 @@ Public Class wpfWin_InputInvoicePembelian
             Dim Tabel
             Dim KolomNomor
             Dim KolomTanggal
-            If Microsoft.VisualBasic.Left(NomorSJBAST, 2) = AwalanSJ Then
+            If AmbilKiri(NomorSJBAST, 2) = AwalanSJ Then
                 Tabel = "tbl_Pembelian_SJ"
                 KolomNomor = "Nomor_SJ"
                 KolomTanggal = "Tanggal_SJ"
@@ -3083,7 +3083,7 @@ Public Class wpfWin_InputInvoicePembelian
         TotalHarga_Asing_Terseleksi = AmbilAngka_Asing(AmbilValueCellTeksBerpotensiDBNull_RowView(rowviewUtama, "Total_Harga_Asing"))
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
-            If Not IsNothing(KolomTerseleksi) Then
+            If KolomTerseleksi IsNot Nothing Then
                 If NomorUrutProduk_Terseleksi > 0 And KolomTerseleksi.DisplayIndex = COA_Produk.DisplayIndex Then
                     win_ListCOA = New wpfWin_ListCOA
                     win_ListCOA.ResetForm()

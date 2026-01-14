@@ -154,7 +154,7 @@ Public Class wpfWin_ProgressImportDataCOA
                 JumlahBaris_SumberData += 1
                 If IsiNamaAkun = Kosongan _
                     Or IsiDebetKredit = Kosongan _
-                    Or Len(IsiCOA) <> 5 _
+                    Or IsiCOA.Length <> 5 _
                     Then
                     StatusImport = Status_DATARUSAK
                 End If
@@ -172,17 +172,17 @@ Public Class wpfWin_ProgressImportDataCOA
         End If
 
         If StatusImport = Status_DATARUSAK Then
-            MsgBox("Format sumber data tidak sesuai." & Enter2Baris & "Silakan perbaiki terlebih dahulu dan ulangi lagi.")
+            Pesan_Peringatan("Format sumber data tidak sesuai." & Enter2Baris & "Silakan perbaiki terlebih dahulu dan ulangi lagi.")
             TutupForm()
         End If
 
         If StatusImport = Status_GAGAL Then
-            MsgBox("Silakan buka/aktifkan terlebih dahulu file yang bersangkutan menggunakan Excel, dan jalankan kembali fitur ini.")
+            Pesan_Peringatan("Silakan buka/aktifkan terlebih dahulu file yang bersangkutan menggunakan Excel, dan jalankan kembali fitur ini.")
             TutupForm()
         End If
 
         If StatusImport = Status_BARISLEBIH Then
-            MsgBox("Sistem import tidak mengizinkan data melebihi baris " & BatasLimitJumlahBaris & " pada tabel Excel dalam sekali event." &
+            Pesan_Peringatan("Sistem import tidak mengizinkan data melebihi baris " & BatasLimitJumlahBaris & " pada tabel Excel dalam sekali event." &
                    Enter2Baris & "Silakan Anda pecah sumber data menjadi beberapa partisi, dan ulangi kembali.")
             DsImport.Clear()
             TutupForm()
@@ -190,7 +190,7 @@ Public Class wpfWin_ProgressImportDataCOA
 
         If StatusImport = Status_SUKSES Then
             If JumlahBaris_SumberData = 0 Then
-                MsgBox("Tidak ada data yang bisa diimpor.")
+                Pesan_Peringatan("Tidak ada data yang bisa diimpor.")
                 TutupForm()
                 Return
             End If
@@ -271,7 +271,7 @@ Public Class wpfWin_ProgressImportDataCOA
                 AksesDatabase_General(Tutup)
             Else
                 JumlahBaris_GagalPosting += 1
-                MsgBox("Ada masalah pada baris " & Baris + 2 & " di tabel Excel.")
+                Pesan_Peringatan("Ada masalah pada baris " & Baris + 2 & " di tabel Excel.")
             End If
             If StatusPosting = Status_TAHAN Then
                 TanyaBatalPostingCOA()
@@ -353,7 +353,7 @@ Public Class wpfWin_ProgressImportDataCOA
         cmd.ExecuteNonQuery()
         AksesDatabase_General(Tutup)
 
-        MsgBox("Harap tunggu, dan jangan hentikan aplikasi selama proses import berjalan..!")
+        Pesan_Informasi("Harap tunggu, dan jangan hentikan aplikasi selama proses import berjalan..!")
         btn_Proses.Visibility = Visibility.Collapsed
         lbl_Baris_01.Text = "Harap tunggu..."
         lbl_Baris_02.Text = "Proses posting sedang berjalan."
@@ -392,9 +392,9 @@ Public Class wpfWin_ProgressImportDataCOA
 
     Sub ProsesPostingGagal()
         HapusSemuaDataPostinganPadaEventIni()
-        MsgBox("Proses GAGAL, karena ada kesalahan format dari sumber data." &
+        Pesan_Gagal("Proses GAGAL, karena ada kesalahan format dari sumber data." &
                Enter2Baris & "Silakan perbaiki dan sesuaikan sumber data, kemudian ulangi lagi.")
-        MsgBox("Info :" &
+        Pesan_Informasi("Info :" &
                Enter1Baris & "Kesalahan ada pada baris " & Baris + 2 & " tabel Excel sumber data." &
                Enter2Baris & "Tips :" &
                Enter1Baris & "- Susun sumber data sesuai kerangka yang disediakan" &

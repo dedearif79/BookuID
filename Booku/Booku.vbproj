@@ -4,7 +4,7 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>Booku</RootNamespace>
-    <StartupObject>Sub Main</StartupObject>
+    <!-- StartupObject dihapus - default ke Application (App.xaml) -->
     <UseWindowsForms>true</UseWindowsForms>
     <MyType>WindowsFormsWithCustomSubMain</MyType>
     <UseWPF>True</UseWPF>
@@ -128,12 +128,8 @@
     <Folder Include="WPF\Styles\Class Window\" />
   </ItemGroup>
 
-  <!-- Application.xaml: Digunakan untuk design-time support di Visual Studio -->
-  <!-- Kembali ke Page karena ApplicationDefinition selalu generate Main() -->
-  <ItemGroup>
-    <ApplicationDefinition Remove="Application.xaml" />
-    <Page Include="Application.xaml" />
-  </ItemGroup>
+  <!-- App.xaml: WPF SDK auto-detect sebagai ApplicationDefinition -->
+  <!-- Resources auto-load dari XAML, startup logic di App.xaml.vb -->
 
   <ItemGroup>
     <ProjectReference Include="..\Booku Library\Booku Library.vbproj" />

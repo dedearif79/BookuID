@@ -479,7 +479,7 @@ Public Class wpfUsc_CompanyProfile
             Return
         End If
 
-        If Not (Len(KodeKPP) = 3) Then
+        If Not (KodeKPP.Length = 3) Then
             PesanPeringatan("Silakan isi kolom Kode KPP dengan benar..!" & Enter2Baris & "(3 digit angka)")
             txt_KodeKPP.Focus()
             Return

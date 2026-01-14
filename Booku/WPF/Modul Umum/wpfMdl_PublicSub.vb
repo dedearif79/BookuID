@@ -793,7 +793,7 @@ Module wpfMdl_PublicSub
     Function IsiValueVariabelRichTextBox(txt_Keterangan As RichTextBox)
         Dim textRange As New TextRange(txt_Keterangan.Document.ContentStart, txt_Keterangan.Document.ContentEnd)
         Dim Konten As String = textRange.Text
-        Replace(Konten, Chr(10), Kosongan)
+        Replace(Konten, Convert.ToChar(10), Kosongan)
         Return Konten
     End Function
 
@@ -1707,7 +1707,7 @@ Module wpfMdl_PublicSub
     End Function
 
     Sub IsiValueComboBypassTerkunci(Combo As ComboBox, Value As String)
-        If Not IsNothing(Combo) Then
+        If Combo IsNot Nothing Then
             Combo.Items.Clear()
             Combo.Items.Add(Value)
             Combo.SelectedValue = Value
@@ -1717,7 +1717,7 @@ Module wpfMdl_PublicSub
     End Sub
 
     Sub IsiValueComboBypassTerbuka(Combo As ComboBox, Value As String)
-        If Not IsNothing(Combo) Then
+        If Combo IsNot Nothing Then
             Combo.SelectedValue = Value
         Else
             PesanUntukProgrammer("Elemen Combo masih Nothing...!!!")
@@ -1754,7 +1754,7 @@ Module wpfMdl_PublicSub
 
 
     Sub KosongkanItemCombo(Combo As ComboBox)
-        If Not IsNothing(Combo) Then
+        If Combo IsNot Nothing Then
             Combo.Items.Clear()
             Combo.Text = Kosongan
         Else

@@ -168,7 +168,7 @@ Public Class wpfWin_InputDataAsset
         dr.Read()
         If dr.HasRows Then
             Dim NamaMitra = dr.Item("Nama_Mitra")
-            MsgBox("Kode '" & txt_KodeAsset.Text & "' sudah terdaftar" & Enter1Baris & "untuk " & NamaMitra & "." & Enter2Baris & "Silakan masukkan kode yang lain.")
+            Pesan_Peringatan("Kode '" & txt_KodeAsset.Text & "' sudah terdaftar" & Enter1Baris & "untuk " & NamaMitra & "." & Enter2Baris & "Silakan masukkan kode yang lain.")
             txt_KodeAsset.Text = Kosongan
             txt_KodeAsset.Focus()
             AksesDatabase_General(Tutup)
@@ -352,51 +352,51 @@ Public Class wpfWin_InputDataAsset
         End If
 
         If NamaAktiva = Kosongan Then
-            MsgBox("Silakan isi kolom 'Nama Aktiva'.")
+            Pesan_Peringatan("Silakan isi kolom 'Nama Aktiva'.")
             txt_NamaAktiva.Focus()
             Return
         End If
 
         If KelompokHarta = Kosongan Then
-            MsgBox("Silakan pilih 'Kelompok Harta'.")
+            Pesan_Peringatan("Silakan pilih 'Kelompok Harta'.")
             cmb_KelompokHarta.Focus()
             Return
         End If
 
         If COA_Asset = Kosongan Then
-            MsgBox("Silakan pilih 'Kode Akun Asset'.")
+            Pesan_Peringatan("Silakan pilih 'Kode Akun Asset'.")
             txt_COA_Asset.Focus()
             Return
         End If
 
         If grb_AkunBiayaPenyusutan.IsEnabled = True And COA_BiayaPenyusutan = Kosongan Then
-            MsgBox("Silakan pilih 'Kode Akun Biaya Penyusutan'.")
+            Pesan_Peringatan("Silakan pilih 'Kode Akun Biaya Penyusutan'.")
             txt_COA_BiayaPenyusutan.Focus()
             Return
         End If
 
         If grb_AkunAkumulasiPenyusutan.IsEnabled = True And COA_AkumulasiPenyusutan = Kosongan Then
-            MsgBox("Silakan pilih 'Kode Akun Akumulasi Penyusutan'.")
+            Pesan_Peringatan("Silakan pilih 'Kode Akun Akumulasi Penyusutan'.")
             txt_COA_AkumulasiPenyusutan.Focus()
             Return
         End If
 
         If KodeDivisi = Kosongan Then
-            MsgBox("Silakan pilih 'Divisi'.")
+            Pesan_Peringatan("Silakan pilih 'Divisi'.")
             cmb_Divisi.Focus()
             Return
         End If
 
         If JenisTahunBuku = JenisTahunBuku_LAMPAU Then
             If TahunPerolehan > TahunCutOff Then
-                MsgBox("Untuk 'Transaksi' setelah 'Tanggal Cut Off' (31-12-" & TahunCutOff & "), silakan diinput sesuai Tahun Bukunya masing-masing. ")
+                Pesan_Peringatan("Untuk 'Transaksi' setelah 'Tanggal Cut Off' (31-12-" & TahunCutOff & "), silakan diinput sesuai Tahun Bukunya masing-masing. ")
                 Return
             End If
         End If
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             If TahunPerolehan <> TahunBukuAktif Then
-                MsgBox("'Tahun Transaksi' tidak sesuai dengan 'Tahun Buku Aktif'")
+                Pesan_Peringatan("'Tahun Transaksi' tidak sesuai dengan 'Tahun Buku Aktif'")
                 Return
             End If
         End If
@@ -407,7 +407,7 @@ Public Class wpfWin_InputDataAsset
         End If
 
         If HargaPerolehan = 0 Then
-            MsgBox("Silakan isi kolom 'Harga Perolehan'.")
+            Pesan_Peringatan("Silakan isi kolom 'Harga Perolehan'.")
             txt_HargaPerolehan.Focus()
             Return
         End If

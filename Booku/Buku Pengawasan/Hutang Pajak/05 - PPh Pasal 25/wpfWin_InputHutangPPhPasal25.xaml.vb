@@ -108,7 +108,7 @@ Public Class wpfWin_InputHutangPPhPasal25
     Sub IsiValueForm()
         If NomorBulan > 0 Then
             Dim NomorBulan_String As String
-            If Len(NomorBulan.ToString) = 1 Then
+            If NomorBulan.ToString.Length = 1 Then
                 NomorBulan_String = "0" & NomorBulan.ToString
             Else
                 NomorBulan_String = NomorBulan.ToString

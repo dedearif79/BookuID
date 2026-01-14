@@ -28,19 +28,19 @@ Public Class wpfWin_BuatDatabaseBukuBaru
         Dim TahunBukuSebelumnya = TahunBukuAktif
 
         If AmbilAngka(TahunBukuBaru) > AmbilAngka(TahunIni) Then
-            MsgBox("Database Tahun Buku " & TahunBukuBaru & " belum saatnya untuk dibuat.")
+            Pesan_Peringatan("Database Tahun Buku " & TahunBukuBaru & " belum saatnya untuk dibuat.")
             btn_BuatDatabase.IsEnabled = True
             Return
         End If
 
         If AmbilAngka(TahunBukuBaru) < (AmbilAngka(TahunIni) - 4) Then
-            MsgBox("Sistem hanya bisa membuat database untuk tahun ini dan 4 tahun ke belakang.")
+            Pesan_Peringatan("Sistem hanya bisa membuat database untuk tahun ini dan 4 tahun ke belakang.")
             btn_BuatDatabase.IsEnabled = True
             Return
         End If
 
         If cmb_JenisTahunBuku.SelectedValue Is Nothing Then
-            MsgBox("Silakan pilih Jenis Fitur")
+            Pesan_Peringatan("Silakan pilih Jenis Fitur")
             cmb_JenisTahunBuku.Focus()
             Return
         End If
@@ -55,7 +55,7 @@ Public Class wpfWin_BuatDatabaseBukuBaru
             JenisTahunBuku_Baru = CStr(cmb_JenisTahunBuku.SelectedValue)
             BuatDatabaseBaruTransaksi(TahunBukuBaru)
         Else
-            MsgBox("Database Tahun Buku " & TahunBukuBaru & " sudah ada.")
+            Pesan_Peringatan("Database Tahun Buku " & TahunBukuBaru & " sudah ada.")
             AksesDatabase_General(Tutup)
             btn_BuatDatabase.IsEnabled = True
             Return
@@ -63,12 +63,12 @@ Public Class wpfWin_BuatDatabaseBukuBaru
         AksesDatabase_General(Tutup)
 
         If HasilPembuatanDatabaseTransaksi = True Then
-            MsgBox("Database Tahun Buku " & TahunBukuBaru & " berhasil dibuat.")
+            Pesan_Sukses("Database Tahun Buku " & TahunBukuBaru & " berhasil dibuat.")
             win_GantiTahunBuku = New wpfWin_GantiTahunBuku
             win_GantiTahunBuku.ProsesGantiTahunBuku()
             Me.Close()
         Else
-            MsgBox("Database Tahun Buku " & TahunBukuBaru & " GAGAL dibuat karena kendala tertentu." & Enter2Baris & teks_SilakanCobaLagi_Database)
+            Pesan_Gagal("Database Tahun Buku " & TahunBukuBaru & " GAGAL dibuat karena kendala tertentu." & Enter2Baris & teks_SilakanCobaLagi_Database)
             TahunBukuAktif = TahunBukuSebelumnya
             btn_BuatDatabase.IsEnabled = True
         End If

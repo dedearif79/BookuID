@@ -1098,7 +1098,7 @@ Public Class wpfUsc_Adjusment_Amortisasi
         If AdaJurnal > 0 Then
             win_PilihJurnal_DataAsset.ShowDialog()
         Else
-            MsgBox("Tidak/Belum ada Jurnal pada Tahun Buku ini untuk data terpilih.")
+            Pesan_Informasi("Tidak/Belum ada Jurnal pada Tahun Buku ini untuk data terpilih.")
         End If
     End Sub
 

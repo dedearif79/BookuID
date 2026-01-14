@@ -859,7 +859,7 @@ Public Class wpfWin_InputReturPenjualan
                 JumlahProduk_PerItem = AmbilAngka(datatabelUtama.Rows(NomorUrutProduk - 1)("Jumlah_Produk"))
                 SatuanProduk = datatabelUtama.Rows(NomorUrutProduk - 1)("Satuan_Produk")
                 HargaSatuan = AmbilAngka(datatabelUtama.Rows(NomorUrutProduk - 1)("Harga_Satuan"))
-                DiskonPerItem_Persen = Microsoft.VisualBasic.Replace(datatabelUtama.Rows(NomorUrutProduk - 1)("Diskon_Per_Item_Persen"), " %", "") 'Jangan pakai function AmbilAngka()..!!!!
+                DiskonPerItem_Persen = datatabelUtama.Rows(NomorUrutProduk - 1)("Diskon_Per_Item_Persen").ToString().Replace(" %", "") 'Jangan pakai function AmbilAngka()..!!!!
                 TotalHarga = AmbilAngka(datatabelUtama.Rows(NomorUrutProduk - 1)("Total_Harga"))
                 QueryPenyimpanan = " INSERT INTO tbl_Penjualan_Retur VALUES ( " &
                     " '" & NomorID & "', " &

@@ -71,7 +71,7 @@ Public Class wpfWin_VerifikasiDataJurnal
         AksesDatabase_Transaksi(Buka)
         AksesDatabase_General(Buka)
 
-        cmd = New OdbcCommand(" SELECT * FROM tbl_Transaksi WHERE Nomor_JV = '" & Microsoft.VisualBasic.Mid(NomorJV, PanjangTeks_AwalanNomorJV_Plus1) & "' ", KoneksiDatabaseTransaksi)
+        cmd = New OdbcCommand(" SELECT * FROM tbl_Transaksi WHERE Nomor_JV = '" & AmbilTengah(NomorJV, PanjangTeks_AwalanNomorJV_Plus1) & "' ", KoneksiDatabaseTransaksi)
         dr = cmd.ExecuteReader
 
         datatabelUtama.Rows.Clear()
@@ -117,7 +117,7 @@ Public Class wpfWin_VerifikasiDataJurnal
         AksesDatabase_Transaksi(Tutup)
 
         If StatusPosting = "BATAL" Then
-            MsgBox("Proses GAGAL, karena ada COA yang belum terdaftar." &
+            Pesan_Gagal("Proses GAGAL, karena ada COA yang belum terdaftar." &
                 Enter2Baris & "Silakan perbaiki dan sesuaikan sumber data, kemudian ulangi lagi.")
             win_ImportJurnal.HapusSemuaDataPostinganJurnalEventIni()
             Me.Close()

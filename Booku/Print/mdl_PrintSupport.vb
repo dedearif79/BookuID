@@ -28,7 +28,7 @@ Module mdl_PrintSupport
             "?>"
 
         Try
-            My.Computer.FileSystem.WriteAllText(LokasiFolderXAMPP & "htdocs\rekend\sat\cetak\php\" & NamaFile_KoneksiDatabase, KontenFile_KoneksiDatabase, False)
+            IO.File.WriteAllText(LokasiFolderXAMPP & "htdocs\rekend\sat\cetak\php\" & NamaFile_KoneksiDatabase, KontenFile_KoneksiDatabase)
         Catch ex As Exception
             pesan_AdaKesalahanTeknis_SilakanUlangiBeberapaSaat()
             Return
@@ -92,7 +92,7 @@ Module mdl_PrintSupport
         Dim PPhDipotong = dr.Item("PPh_Dipotong")
         Dim TotalTagihan = dr.Item("Total_Tagihan")
         Dim TotalTagihan_Terbilang = AngkaTerbilangRupiah(TotalTagihan)
-        Dim Catatan = Microsoft.VisualBasic.Replace(dr.Item("Catatan"), Chr(10), "<br/>")  'Chr(10) mewakili karakter 'Enter' dalam penyimpanan MySQL. Bukan Chr(13) ya..!!!
+        Dim Catatan = dr.Item("Catatan").ToString().Replace(Convert.ToChar(10), "<br/>")  'Convert.ToChar(10) mewakili karakter 'Enter' dalam penyimpanan MySQL. Bukan Chr(13) ya..!!!
         Dim PembuatPO = dr.Item("Pembuat_PO")
         AksesDatabase_Transaksi(Tutup)
 
@@ -113,7 +113,7 @@ Module mdl_PrintSupport
             "$AlamatSupplier = '" & AlamatSupplier & "';" & Enter1Baris &
             "$Attention = '" & Attention & "';" & Enter1Baris &
             "$JumlahHargaKeseluruhan = '" & JumlahHargaKeseluruhan & "';" & Enter1Baris &
-            "$DiskonPersen = '" & Microsoft.VisualBasic.Replace(Diskon_Persen, ",", ".") & "';" & Enter1Baris &
+            "$DiskonPersen = '" & Diskon_Persen.ToString().Replace(",", ".") & "';" & Enter1Baris &
             "$DiskonRupiah = '" & Diskon_Rupiah & "';" & Enter1Baris &
             "$DasarPengenaanPajak = '" & DasarPengenaanPajak & "';" & Enter1Baris &
             "$PPN = '" & PPN & "';" & Enter1Baris &
@@ -134,7 +134,7 @@ Module mdl_PrintSupport
             "?>"
 
         Try
-            My.Computer.FileSystem.WriteAllText(LokasiFolderXAMPP & "htdocs\rekend\sat\cetak\php\" & NamaFile_VariabelAwal, KontenFile_VariabelAwal, False)
+            IO.File.WriteAllText(LokasiFolderXAMPP & "htdocs\rekend\sat\cetak\php\" & NamaFile_VariabelAwal, KontenFile_VariabelAwal)
         Catch ex As Exception
             pesan_AdaKesalahanTeknis_SilakanUlangiBeberapaSaat()
             Return
@@ -179,7 +179,7 @@ Module mdl_PrintSupport
         Dim PPN = dr.Item("PPN")
         Dim TotalTagihan = dr.Item("Total_Tagihan")
         Dim TotalTagihan_Terbilang = AngkaTerbilangRupiah(TotalTagihan)
-        Dim Catatan = Microsoft.VisualBasic.Replace(dr.Item("Catatan"), Chr(10), "<br/>")  'Chr(10) mewakili karakter 'Enter' dalam penyimpanan MySQL. Bukan Chr(13) ya..!!!
+        Dim Catatan = dr.Item("Catatan").ToString().Replace(Convert.ToChar(10), "<br/>")  'Convert.ToChar(10) mewakili karakter 'Enter' dalam penyimpanan MySQL. Bukan Chr(13) ya..!!!
         AksesDatabase_Transaksi(Tutup)
 
         Isi_VariabelPerusahaan()
@@ -199,7 +199,7 @@ Module mdl_PrintSupport
             "$NamaSupplier = '" & NamaSupplier & "';" & Enter1Baris &
             "$AlamatSupplier = '" & AlamatSupplier & "';" & Enter1Baris &
             "$JumlahHargaKeseluruhan = '" & JumlahHargaKeseluruhan & "';" & Enter1Baris &
-            "$DiskonPersen = '" & Microsoft.VisualBasic.Replace(Diskon_Persen, ",", ".") & "';" & Enter1Baris &
+            "$DiskonPersen = '" & Diskon_Persen.ToString().Replace(",", ".") & "';" & Enter1Baris &
             "$DiskonRupiah = '" & Diskon_Rupiah & "';" & Enter1Baris &
             "$DasarPengenaanPajak = '" & DasarPengenaanPajak & "';" & Enter1Baris &
             "$PPN = '" & PPN & "';" & Enter1Baris &
@@ -213,7 +213,7 @@ Module mdl_PrintSupport
             "?>"
 
         Try
-            My.Computer.FileSystem.WriteAllText(LokasiFolderXAMPP & "htdocs\rekend\sat\cetak\php\" & NamaFile_VariabelAwal, KontenFile_VariabelAwal, False)
+            IO.File.WriteAllText(LokasiFolderXAMPP & "htdocs\rekend\sat\cetak\php\" & NamaFile_VariabelAwal, KontenFile_VariabelAwal)
         Catch ex As Exception
             pesan_AdaKesalahanTeknis_SilakanUlangiBeberapaSaat()
             Return
@@ -275,7 +275,7 @@ Module mdl_PrintSupport
                 Else
                     NomorSJBAST &= "<br/>" & NomorSJBAST_Satuan
                 End If
-                If Microsoft.VisualBasic.Left(NomorSJBAST_Satuan, 2) = "SJ" Then
+                If AmbilKiri(NomorSJBAST_Satuan, 2) = "SJ" Then
                     QueryTelusur2 = " SELECT * FROM tbl_Penjualan_SJ   WHERE Nomor_SJ   = '" & NomorSJBAST_Satuan & "' "
                 Else
                     QueryTelusur2 = " SELECT * FROM tbl_Penjualan_BAST WHERE Nomor_BAST = '" & NomorSJBAST_Satuan & "' "
@@ -313,7 +313,7 @@ Module mdl_PrintSupport
         Dim PPhDipotong = dr.Item("PPh_Dipotong")
         Dim TotalTagihan = dr.Item("Total_Tagihan")
         Dim TotalTagihan_Terbilang = AngkaTerbilangRupiah(TotalTagihan)
-        Dim Catatan = Microsoft.VisualBasic.Replace(dr.Item("Catatan"), Chr(10), "<br/>")  'Chr(10) mewakili karakter 'Enter' dalam penyimpanan MySQL. Bukan Chr(13) ya..!!!
+        Dim Catatan = dr.Item("Catatan").ToString().Replace(Convert.ToChar(10), "<br/>")  'Convert.ToChar(10) mewakili karakter 'Enter' dalam penyimpanan MySQL. Bukan Chr(13) ya..!!!
         AksesDatabase_Transaksi(Tutup)
 
         Isi_VariabelPerusahaan()
@@ -353,7 +353,7 @@ Module mdl_PrintSupport
             "?>"
 
         Try
-            My.Computer.FileSystem.WriteAllText(LokasiFolderXAMPP & "htdocs\rekend\sat\cetak\php\" & NamaFile_VariabelAwal, KontenFile_VariabelAwal, False)
+            IO.File.WriteAllText(LokasiFolderXAMPP & "htdocs\rekend\sat\cetak\php\" & NamaFile_VariabelAwal, KontenFile_VariabelAwal)
         Catch ex As Exception
             pesan_AdaKesalahanTeknis_SilakanUlangiBeberapaSaat()
             Return
@@ -423,7 +423,7 @@ Module mdl_PrintSupport
             End If
             NomorPO_Sebelumnya = NomorPO_Satuan
         Loop
-        Dim Catatan = Microsoft.VisualBasic.Replace(dr.Item("Catatan"), Chr(10), "<br/>")  'Chr(10) mewakili karakter 'Enter' dalam penyimpanan MySQL. Bukan Chr(13) ya..!!!
+        Dim Catatan = dr.Item("Catatan").ToString().Replace(Convert.ToChar(10), "<br/>")  'Convert.ToChar(10) mewakili karakter 'Enter' dalam penyimpanan MySQL. Bukan Chr(13) ya..!!!
         AksesDatabase_Transaksi(Tutup)
 
         Isi_VariabelPerusahaan()
@@ -453,7 +453,7 @@ Module mdl_PrintSupport
             "?>"
 
         Try
-            My.Computer.FileSystem.WriteAllText(LokasiFolderXAMPP & "htdocs\rekend\sat\cetak\php\" & NamaFile_VariabelAwal, KontenFile_VariabelAwal, False)
+            IO.File.WriteAllText(LokasiFolderXAMPP & "htdocs\rekend\sat\cetak\php\" & NamaFile_VariabelAwal, KontenFile_VariabelAwal)
         Catch ex As Exception
             pesan_AdaKesalahanTeknis_SilakanUlangiBeberapaSaat()
             Return
@@ -520,7 +520,7 @@ Module mdl_PrintSupport
             End If
             NomorPO_Sebelumnya = NomorPO_Satuan
         Loop
-        Dim Catatan = Microsoft.VisualBasic.Replace(dr.Item("Catatan"), Chr(10), "<br/>")  'Chr(10) mewakili karakter 'Enter' dalam penyimpanan MySQL. Bukan Chr(13) ya..!!!
+        Dim Catatan = dr.Item("Catatan").ToString().Replace(Convert.ToChar(10), "<br/>")  'Convert.ToChar(10) mewakili karakter 'Enter' dalam penyimpanan MySQL. Bukan Chr(13) ya..!!!
         AksesDatabase_Transaksi(Tutup)
 
         Isi_VariabelPerusahaan()
@@ -548,7 +548,7 @@ Module mdl_PrintSupport
             "?>"
 
         Try
-            My.Computer.FileSystem.WriteAllText(LokasiFolderXAMPP & "htdocs\rekend\sat\cetak\php\" & NamaFile_VariabelAwal, KontenFile_VariabelAwal, False)
+            IO.File.WriteAllText(LokasiFolderXAMPP & "htdocs\rekend\sat\cetak\php\" & NamaFile_VariabelAwal, KontenFile_VariabelAwal)
         Catch ex As Exception
             pesan_AdaKesalahanTeknis_SilakanUlangiBeberapaSaat()
             Return

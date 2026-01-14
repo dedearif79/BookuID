@@ -1970,7 +1970,7 @@ Public Class wpfWin_InputBuktiPengeluaran
             End If
         End If
 
-        If Not IsNothing(KolomTerseleksi) Then
+        If KolomTerseleksi IsNot Nothing Then
 
             'If NomorUrutInvoice_Terseleksi > 0 _
             'And (KolomTerseleksi.DisplayIndex = Jumlah_Pengajuan_Per_Baris.DisplayIndex _

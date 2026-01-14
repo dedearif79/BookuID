@@ -40,7 +40,7 @@ Public Class wpfWin_Login
 
 
     Sub LogikaTombolOK()
-        If txt_UsernameInput.Text <> Kosongan And Len(txt_PasswordInput.Password) >= 8 Then
+        If txt_UsernameInput.Text <> Kosongan And txt_PasswordInput.Password.Length >= 8 Then
             btn_OK.IsEnabled = True
         Else
             btn_OK.IsEnabled = False

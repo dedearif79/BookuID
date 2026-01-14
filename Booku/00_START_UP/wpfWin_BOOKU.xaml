@@ -23,7 +23,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    
+
     <DockPanel LastChildFill="True">
 
         <!-- Menu Bar -->

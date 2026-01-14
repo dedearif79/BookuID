@@ -321,7 +321,7 @@ Public Class wpfWin_InputAmortisasiBiaya
         AmortisasiPerBulan = JumlahTransaksi / MasaAmortisasi
 
         If COAAmortisasi = Kosongan Then
-            MsgBox("Silakan pilih 'Kode Akun Amortisasi'.")
+            Pesan_Peringatan("Silakan pilih 'Kode Akun Amortisasi'.")
             txt_COA_Amortisasi.Focus()
             Return
         End If
@@ -332,13 +332,13 @@ Public Class wpfWin_InputAmortisasiBiaya
         End If
 
         If COABiaya = Kosongan Then
-            MsgBox("Silakan pilih 'Kode Akun Biaya'.")
+            Pesan_Peringatan("Silakan pilih 'Kode Akun Biaya'.")
             txt_COA_Biaya.Focus()
             Return
         End If
 
         If AmbilAngka(txt_MasaAmortisasi.Text) = 0 Then
-            MsgBox("Silakan isi kolom 'Masa Amortisasi'.")
+            Pesan_Peringatan("Silakan isi kolom 'Masa Amortisasi'.")
             txt_MasaAmortisasi.Focus()
             Return
         End If
@@ -362,20 +362,20 @@ Public Class wpfWin_InputAmortisasiBiaya
 
         If JenisTahunBuku = JenisTahunBuku_LAMPAU Then
             If TahunTransaksi_String > TahunCutOff Then
-                MsgBox("Untuk 'Transaksi' setelah 'Tanggal Cut Off' (31-12-" & TahunCutOff & "), silakan diinput sesuai Tahun Bukunya masing-masing. ")
+                Pesan_Peringatan("Untuk 'Transaksi' setelah 'Tanggal Cut Off' (31-12-" & TahunCutOff & "), silakan diinput sesuai Tahun Bukunya masing-masing. ")
                 Return
             End If
         End If
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             If TahunTransaksi_String <> TahunBukuAktif Then
-                MsgBox("'Tahun Transaksi' tidak sesuai dengan 'Tahun Buku Aktif'")
+                Pesan_Peringatan("'Tahun Transaksi' tidak sesuai dengan 'Tahun Buku Aktif'")
                 Return
             End If
         End If
 
         If txt_JumlahTransaksi.Text = Kosongan Then
-            MsgBox("Silakan isi kolom 'Jumlah Transaksi'.")
+            Pesan_Peringatan("Silakan isi kolom 'Jumlah Transaksi'.")
             txt_JumlahTransaksi.Focus()
             Return
         End If

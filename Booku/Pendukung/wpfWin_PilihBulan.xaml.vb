@@ -118,7 +118,7 @@ Public Class wpfWin_PilihBulan
 
     Private Sub btn_Lanjutkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Lanjutkan.Click
         If BulanTerpilih_Angka = 0 Then
-            MsgBox("Silakan pilih salah satu bulan..!")
+            Pesan_Peringatan("Silakan pilih salah satu bulan..!")
             Return
         Else
             LanjutkanProses = True

@@ -36,13 +36,13 @@ Public Class frm_RegistrasiPerangkat
                 Loop
                 ProsesRegistrasiPerangkat = True
             Catch ex As Exception
-                MsgBox("Registrasi Perangkat Gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
+                Pesan_Gagal("Registrasi Perangkat Gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
                 ProsesRegistrasiPerangkat = False
             End Try
             If ProsesRegistrasiPerangkat = True Then
                 If JumlahPerangkatTerdaftar >= txt_JumlahPerangkat.Text Then
                     ProsesRegistrasiPerangkat = False
-                    MsgBox("Registrasi Perangkat Gagal." &
+                    Pesan_Gagal("Registrasi Perangkat Gagal." &
                            Enter2Baris & "Jumlah perangkat pada Nomor Seri Produk '" & NomorSeriProduk & "' sudah mencapai batas." &
                            Enter2Baris & "Silakan hubungi Developer jika ingin menambah jumlah perangkat.")
                 Else
@@ -61,7 +61,7 @@ Public Class frm_RegistrasiPerangkat
                         ProsesRegistrasiPerangkat = True
                     Catch ex As Exception
                         ProsesRegistrasiPerangkat = False
-                        MsgBox("Registrasi Perangkat Gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
+                        Pesan_Gagal("Registrasi Perangkat Gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
                     End Try
                     TutupDatabasePublic()
                     If ProsesRegistrasiPerangkat = True Then
@@ -75,7 +75,7 @@ Public Class frm_RegistrasiPerangkat
                             ProsesRegistrasiPerangkat = True
                         Catch ex As Exception
                             ProsesRegistrasiPerangkat = False
-                            MsgBox("Registrasi Perangkat Gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
+                            Pesan_Gagal("Registrasi Perangkat Gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
                         End Try
                         TutupDatabasePublic()
                     End If
@@ -83,7 +83,7 @@ Public Class frm_RegistrasiPerangkat
             End If
         Else
             ProsesRegistrasiPerangkat = False
-            MsgBox("Registrasi Perangkat Gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
+            Pesan_Gagal("Registrasi Perangkat Gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
         End If
         TutupDatabasePublic()
 
@@ -96,7 +96,7 @@ Public Class frm_RegistrasiPerangkat
                 ProsesRegistrasiPerangkat = True
             Catch ex As Exception
                 ProsesRegistrasiPerangkat = False
-                MsgBox("Registrasi Perangkat Gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
+                Pesan_Gagal("Registrasi Perangkat Gagal." & Enter2Baris & teks_SilakanCobaLagi_Internet)
             End Try
             TutupDatabasePublic()
         End If

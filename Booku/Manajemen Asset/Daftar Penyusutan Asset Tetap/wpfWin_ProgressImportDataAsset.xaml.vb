@@ -156,7 +156,7 @@ Public Class wpfWin_ProgressImportDataAsset
             IsiKodeDivisi = row(5).ToString
             IsiTanggalPerolehan = row(6).ToString
             IsiHargaPerolehan = row(7).ToString
-            TahunPerolehan = Microsoft.VisualBasic.Left(TanggalFormatWPF(IsiTanggalPerolehan), 4)
+            TahunPerolehan = AmbilKiri(TanggalFormatWPF(IsiTanggalPerolehan), 4)
             If IsiNamaAktiva <> Nothing Then
                 JumlahBaris_SumberData += 1
                 If IsiCOA_Asset = Nothing _
@@ -184,12 +184,12 @@ Public Class wpfWin_ProgressImportDataAsset
                 Case JenisTahunBuku_LAMPAU
                     If AmbilAngka(TahunPerolehan) > TahunBukuAktif Then
                         StatusImport = Status_DATARUSAK
-                        MsgBox("Tahun Perolehan di baris ke-" & BarisIterasi & " pada sumber data tidak sesuai, karena melebihi 'Tahun Buku Aktif'.")
+                        Pesan_Peringatan("Tahun Perolehan di baris ke-" & BarisIterasi & " pada sumber data tidak sesuai, karena melebihi 'Tahun Buku Aktif'.")
                     End If
                 Case JenisTahunBuku_NORMAL
                     If AmbilAngka(TahunPerolehan) <> TahunBukuAktif Then
                         StatusImport = Status_DATARUSAK
-                        MsgBox("Tahun Perolehan di baris ke-" & BarisIterasi & " pada sumber data tidak sesuai dengan 'Tahun Buku Aktif'.")
+                        Pesan_Peringatan("Tahun Perolehan di baris ke-" & BarisIterasi & " pada sumber data tidak sesuai dengan 'Tahun Buku Aktif'.")
                     End If
             End Select
         Next
@@ -199,19 +199,19 @@ Public Class wpfWin_ProgressImportDataAsset
         End If
 
         If StatusImport = Status_DATARUSAK Then
-            MsgBox("Import Dibatalkan..!!!" & Enter2Baris & "Format sumber data tidak sesuai." & Enter2Baris & "Silakan perbaiki terlebih dahulu sebelum kembali melakukan import.")
+            Pesan_Peringatan("Import Dibatalkan..!!!" & Enter2Baris & "Format sumber data tidak sesuai." & Enter2Baris & "Silakan perbaiki terlebih dahulu sebelum kembali melakukan import.")
             TutupForm()
             Return
         End If
 
         If StatusImport = Status_GAGAL Then
-            MsgBox("Silakan buka/aktifkan terlebih dahulu file yang bersangkutan menggunakan Excel, dan jalankan kembali fitur ini.")
+            Pesan_Peringatan("Silakan buka/aktifkan terlebih dahulu file yang bersangkutan menggunakan Excel, dan jalankan kembali fitur ini.")
             TutupForm()
             Return
         End If
 
         If StatusImport = Status_BARISLEBIH Then
-            MsgBox("Sistem import tidak mengizinkan data melebihi baris " & BatasLimitJumlahBaris & " pada tabel Excel dalam sekali event." &
+            Pesan_Peringatan("Sistem import tidak mengizinkan data melebihi baris " & BatasLimitJumlahBaris & " pada tabel Excel dalam sekali event." &
                    Enter2Baris & "Silakan Anda pecah sumber data menjadi beberapa partisi, dan ulangi kembali." &
                    "")
             DsImport.Clear()
@@ -221,7 +221,7 @@ Public Class wpfWin_ProgressImportDataAsset
 
         If StatusImport = Status_SUKSES Then
             If JumlahBaris_SumberData = 0 Then
-                MsgBox("Tidak ada data yang bisa diimpor.")
+                Pesan_Informasi("Tidak ada data yang bisa diimpor.")
                 TutupForm()
                 Return
             End If
@@ -363,12 +363,12 @@ Public Class wpfWin_ProgressImportDataAsset
                 Catch ex As Exception
                     JumlahBaris_GagalPosting = JumlahBaris_GagalPosting + 1
                     HasilPosting = Hasil_BERMASALAH
-                    MsgBox("Baris ke " & Baris + 2 & " pada tabel Excel gagal tersimpan ke database.")
+                    Pesan_Gagal("Baris ke " & Baris + 2 & " pada tabel Excel gagal tersimpan ke database.")
                 End Try
                 AksesDatabase_General(Tutup)
             Else
                 JumlahBaris_GagalPosting = JumlahBaris_GagalPosting + 1
-                MsgBox(PesanMasalah)
+                Pesan_Peringatan(PesanMasalah)
             End If
             If StatusPosting = Status_TAHAN Then
                 TanyaBatalPostingDataAsset()
@@ -440,7 +440,7 @@ Public Class wpfWin_ProgressImportDataAsset
     Private Async Sub btn_Proses_Click(sender As Object, e As RoutedEventArgs) Handles btn_Proses.Click
         SistemPenomoranOtomatis_NomorJV()
         Dim NomorJV_AwalPosting = jur_NomorJV
-        MsgBox("Harap tunggu, dan jangan hentikan aplikasi selama proses import berjalan..!")
+        Pesan_Informasi("Harap tunggu, dan jangan hentikan aplikasi selama proses import berjalan..!")
         btn_Proses.Visibility = Visibility.Collapsed
         lbl_Baris_01.Text = "Harap tunggu..."
         lbl_Baris_02.Text = "Proses posting sedang berjalan."
@@ -479,9 +479,9 @@ Public Class wpfWin_ProgressImportDataAsset
 
     Sub ProsesPostingGagal()
         HapusSemuaDataPostinganPadaEventIni()
-        MsgBox("Proses GAGAL, karena ada kesalahan format dari sumber data." &
+        Pesan_Gagal("Proses GAGAL, karena ada kesalahan format dari sumber data." &
                Enter2Baris & "Silakan perbaiki dan sesuaikan sumber data, kemudian ulangi lagi.")
-        MsgBox("Info :" &
+        Pesan_Informasi("Info :" &
                Enter1Baris & "Kesalahan ada pada baris " & Baris + 2 & " tabel Excel sumber data." &
                Enter2Baris & "Tips :" &
                Enter1Baris & "- Susun sumber data sesuai kerangka yang disediakan" &

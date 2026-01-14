@@ -942,7 +942,7 @@ Public Class wpfUsc_BukuPengawasanPelaporanPPN
         NomorIdPembayaran_Terseleksi = AmbilAngka(rowviewBayar("Nomor_ID_Bayar").ToString)
         NomorJV_Pembayaran_Terseleksi = rowviewBayar("Nomor_JV_Bayar")
         Referensi_Terseleksi = rowviewBayar("Referensi_")
-        TahunPembayaran_Terseleksi = AmbilAngka(Microsoft.VisualBasic.Left(AmbilAngka(Referensi_Terseleksi), 4))
+        TahunPembayaran_Terseleksi = AmbilAngka(AmbilKiri(AmbilAngka(Referensi_Terseleksi), 4))
         If BarisBayar_Terseleksi >= 0 Then
             btn_LihatJurnal.IsEnabled = True
             btn_EditBayar.IsEnabled = True

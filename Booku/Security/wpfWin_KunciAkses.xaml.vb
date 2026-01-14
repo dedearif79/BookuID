@@ -35,7 +35,7 @@ Public Class wpfWin_KunciAkses
 
 
     Sub LogikaTombolOK()
-        If Len(txt_KodeAkses.Password) >= JumlahKarakterKodeAkses Then
+        If txt_KodeAkses.Password.Length >= JumlahKarakterKodeAkses Then
             btn_OK.IsEnabled = True
         Else
             btn_OK.IsEnabled = False
@@ -54,7 +54,7 @@ Public Class wpfWin_KunciAkses
         PengulanganLogin = PengulanganLogin + 1
         If PengulanganLogin >= 7 Then
             StatusLogin = False
-            MsgBox("Akses Ditutup..!")
+            Pesan_Peringatan("Akses Ditutup..!")
             End
         End If
     End Sub

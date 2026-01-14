@@ -188,7 +188,7 @@ Public Module mdl_PublicSub
             DataRegistrasiPerangkat = IO.File.ReadLines(Path.Combine(FilePathRegistrasiPerangkat))
             FileEksis = True
         Catch ex As Exception
-            My.Computer.FileSystem.WriteAllText(Path.Combine(FilePathRegistrasiPerangkat), "", False)
+            IO.File.WriteAllText(Path.Combine(FilePathRegistrasiPerangkat), "")
             FileEksis = False
         End Try
         Dim Terdaftar = Nothing
@@ -312,7 +312,7 @@ Public Module mdl_PublicSub
         drKhusus.Read()
         JumlahPerangkat = DekripsiAngka(drKhusus.Item("SC_01"))
         If ValidasiDekripsiAngka = False Then
-            MsgBox(teks_SistemTerkunci_HubungiDeveloper & Enter2Baris & "Error : SC_01")
+            Pesan_Gagal(teks_SistemTerkunci_HubungiDeveloper & Enter2Baris & "Error : SC_01")
             End
         End If
         Dim Value_SistemApprovalPerusahaan = DekripsiTeks(drKhusus.Item("SC_02"))
@@ -323,12 +323,12 @@ Public Module mdl_PublicSub
         End If
         TahunCutOff = DekripsiAngka(drKhusus.Item("SC_03"))
         If ValidasiDekripsiAngka = False Then
-            MsgBox(teks_SistemTerkunci_HubungiDeveloper & Enter2Baris & "Error : SC_03")
+            Pesan_Gagal(teks_SistemTerkunci_HubungiDeveloper & Enter2Baris & "Error : SC_03")
             End
         End If
         SistemCOA = DekripsiTeks(drKhusus.Item("SC_04"))
         If Not (SistemCOA = SistemCOA_StandarAplikasi Or SistemCOA = SistemCOA_Customize) Then
-            MsgBox(teks_SistemTerkunci_HubungiDeveloper & Enter2Baris & "Error : SC_04")
+            Pesan_Gagal(teks_SistemTerkunci_HubungiDeveloper & Enter2Baris & "Error : SC_04")
             End
         End If
 
@@ -383,7 +383,7 @@ Public Module mdl_PublicSub
 
     'KUNCI INPUTAN HANYA BOLEH NOMOR. Sebetulnya sama saja dengan fungsi di atas (HANYA BOLEH INPUT ANGKA). Ini hanya variasi kode saja.
     Public Sub HanyaBolehInputNomor(sender As Object, e As KeyPressEventArgs)
-        Dim keyascii As Short = Asc(e.KeyChar)
+        Dim keyascii As Short = CShort(Convert.ToInt32(e.KeyChar))
         If (e.KeyChar Like "[0-9]" OrElse keyascii = Keys.Back) Then
             keyascii = 0
         Else
@@ -409,7 +409,7 @@ Public Module mdl_PublicSub
         KarakterYangDiizinkan = "1234567890-"
         KarakterYangDiizinkan = KarakterYangDiizinkan & "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
         KarakterYangDiizinkan = KarakterYangDiizinkan & "abcdefghijklmnopqrstuvwxyz"
-        KarakterYangDiizinkan = KarakterYangDiizinkan & Chr(8) '(Backspase)
+        KarakterYangDiizinkan = KarakterYangDiizinkan & Convert.ToChar(8) '(Backspase)
         e.Handled = Not (KarakterYangDiizinkan.Contains(e.KeyChar))
     End Sub
 
@@ -1262,9 +1262,9 @@ Public Module mdl_PublicSub
 
     'KEPALA COA :
     Public Function KepalaCOA(COA As String, Kepala As String) As Boolean
-        Dim JumlahDigitKepalaCOA As Integer = Len(Kepala)
+        Dim JumlahDigitKepalaCOA As Integer = Kepala.Length
         Dim Termasuk As Boolean
-        COA = Left(COA, JumlahDigitCOA)
+        COA = COA.Substring(0, JumlahDigitCOA)
         If AmbilTeksKiri(COA, JumlahDigitKepalaCOA) = Kepala Then
             Termasuk = True
         Else
@@ -1417,7 +1417,7 @@ Public Module mdl_PublicSub
 
     'KONVERSI SARANA PEMBAYARAN KE JENIS JURNAL :
     Public Function KonversiSaranaPembayaranKeJenisJurnal(ByVal SaranaPembayaran As String) As String
-        Dim JenisJurnal = Mid(SaranaPembayaran, JumlahDigitCOA + Len(StripPemisah) + 1)
+        Dim JenisJurnal = SaranaPembayaran.Substring(JumlahDigitCOA + StripPemisah.Length)
         Return JenisJurnal
     End Function
 
@@ -1888,21 +1888,21 @@ Public Module mdl_PublicSub
     Public Function PemisahRibuan(ByVal value As String) As String
         Dim rval As String = String.Empty
         If value = "" Then value = "xyZ0"
-        Dim AngkaTerpisah
+        Dim AngkaTerpisah As String
         Dim coll As MatchCollection = Regex.Matches(value, "\d+")
         For Each a As Match In coll
             rval += a.ToString()
         Next
-        rval = StrReverse(rval)
-        AngkaTerpisah = Left(rval, 3)
-        If Len(rval) > 3 Then AngkaTerpisah = AngkaTerpisah & "." & Mid(rval, 4, 3)
-        If Len(rval) > 6 Then AngkaTerpisah = AngkaTerpisah & "." & Mid(rval, 7, 3)
-        If Len(rval) > 9 Then AngkaTerpisah = AngkaTerpisah & "." & Mid(rval, 10, 3)
-        If Len(rval) > 12 Then AngkaTerpisah = AngkaTerpisah & "." & Mid(rval, 13, 3)
-        If Len(rval) > 15 Then AngkaTerpisah = AngkaTerpisah & "." & Mid(rval, 16, 3)
-        If Len(rval) > 18 Then AngkaTerpisah = AngkaTerpisah & "." & Mid(rval, 19, 3)
+        rval = New String(rval.Reverse().ToArray())
+        AngkaTerpisah = rval.Substring(0, Math.Min(3, rval.Length))
+        If rval.Length > 3 Then AngkaTerpisah = AngkaTerpisah & "." & rval.Substring(3, 3)
+        If rval.Length > 6 Then AngkaTerpisah = AngkaTerpisah & "." & rval.Substring(6, 3)
+        If rval.Length > 9 Then AngkaTerpisah = AngkaTerpisah & "." & rval.Substring(9, 3)
+        If rval.Length > 12 Then AngkaTerpisah = AngkaTerpisah & "." & rval.Substring(12, 3)
+        If rval.Length > 15 Then AngkaTerpisah = AngkaTerpisah & "." & rval.Substring(15, 3)
+        If rval.Length > 18 Then AngkaTerpisah = AngkaTerpisah & "." & rval.Substring(18, 3)
         If rval = "0" Or rval = "" Then AngkaTerpisah = StripKosong
-        Return StrReverse(AngkaTerpisah)
+        Return New String(AngkaTerpisah.Reverse().ToArray())
     End Function
 
     'FORMAT TANGGAL UNTUK DISIMPAN DI DATABASE MySQL
@@ -2107,9 +2107,9 @@ Public Module mdl_PublicSub
         For Each a As Match In coll
             Hasil += a.ToString()
         Next
-        Dim Tahun = Microsoft.VisualBasic.Mid(Hasil, 5, 4)
-        Dim Bulan = Microsoft.VisualBasic.Mid(Hasil, 3, 2)
-        Dim Hari = Microsoft.VisualBasic.Left(Hasil, 2)
+        Dim Tahun = AmbilTengah(Hasil, 5, 4)
+        Dim Bulan = AmbilTengah(Hasil, 3, 2)
+        Dim Hari = AmbilKiri(Hasil, 2)
         Hasil = Bulan & "-" & Hari & "-" & Tahun
         Return Hasil
     End Function
@@ -2202,7 +2202,7 @@ Public Module mdl_PublicSub
             If Left(AngkaHurufGeneral, 17) = "Sepuluh Sembilan " Then AngkaHurufGeneral = "Sembilan Belas " & Mid(AngkaHurufGeneral, 18)
             Pengulangan -= 1
         Loop
-        AngkaHurufGeneral = Microsoft.VisualBasic.Left(AngkaHurufGeneral, AngkaHurufGeneral.Length - 1) '(Ini untuk menghapus spasi paling akhir).
+        AngkaHurufGeneral = AmbilKiri(AngkaHurufGeneral, AngkaHurufGeneral.Length - 1) '(Ini untuk menghapus spasi paling akhir).
         Return AngkaHurufGeneral
     End Function
 
@@ -2280,7 +2280,7 @@ Public Module mdl_PublicSub
         Dim BulanAngka_String As String = Nothing
         Dim BulanAngka As Integer = KonversiBulanKeAngka(NamaBulan)
         BulanAngka_String = BulanAngka.ToString
-        If Microsoft.VisualBasic.Len(BulanAngka_String) = 1 Then BulanAngka_String = "0" & BulanAngka_String
+        If BulanAngka_String.Length = 1 Then BulanAngka_String = "0" & BulanAngka_String
         Return BulanAngka_String
     End Function
 
@@ -2331,8 +2331,8 @@ Public Module mdl_PublicSub
     'KONVERSI ANGKA KE STRING 2 DIGIT :
     Public Function KonversiAngkaKeStringDuaDigit(ByVal Angka As Integer) As String
         Dim NomorStringDuaDigit As String = Angka.ToString
-        If Len(NomorStringDuaDigit) = 1 Then NomorStringDuaDigit = "0" & NomorStringDuaDigit
-        If Len(NomorStringDuaDigit) > 2 Then NomorStringDuaDigit = Left(NomorStringDuaDigit, 2)
+        If NomorStringDuaDigit.Length = 1 Then NomorStringDuaDigit = "0" & NomorStringDuaDigit
+        If NomorStringDuaDigit.Length > 2 Then NomorStringDuaDigit = NomorStringDuaDigit.Substring(0, 2)
         Return NomorStringDuaDigit
     End Function
 
@@ -2615,7 +2615,7 @@ Public Module mdl_PublicSub
         jur_NamaUserEntry = NamaUserAktif
         LogikaApprovalJurnal()
         If jur_JenisJurnal = Nothing Then
-            MsgBox("Jenis Jurnal belum ditentukan." & Enter2Baris & "Penyimpanan Jurnal dibatalkan.")
+            Pesan_Peringatan("Jenis Jurnal belum ditentukan." & Enter2Baris & "Penyimpanan Jurnal dibatalkan.")
             jur_StatusPenyimpananJurnal_PerBaris = False
             jur_StatusPenyimpananJurnal_Lengkap = False
             Return
@@ -2995,20 +2995,20 @@ Public Module mdl_PublicSub
 
     'Fitur Dalam Pengembangan
     Public Sub FiturDalamPengembangan()
-        MsgBox("Mohon maaf, menu/fitur ini masih dalam tahap pengembangan.")
+        Pesan_Informasi("Mohon maaf, menu/fitur ini masih dalam tahap pengembangan.")
     End Sub
 
     'Fitur Belum Bisa Digunakan
     Public Sub FiturBelumBisaDigunakan()
-        MsgBox("Mohon maaf, menu/fitur ini belum dapat digunakan.")
+        Pesan_Informasi("Mohon maaf, menu/fitur ini belum dapat digunakan.")
     End Sub
 
     Public Sub MenuDalamPerbaikan()
-        MsgBox("Mohon maaf, menu ini sedang dalam perbaikan.")
+        Pesan_Informasi("Mohon maaf, menu ini sedang dalam perbaikan.")
     End Sub
 
     Public Sub FiturDalamPerbaikan()
-        MsgBox("Mohon maaf, fitur ini sedang dalam perbaikan.")
+        Pesan_Informasi("Mohon maaf, fitur ini sedang dalam perbaikan.")
     End Sub
 
     Public Sub KelolaDataPembayaranDiBukuPengawasanPenerimaan()
@@ -3057,8 +3057,8 @@ Public Module mdl_PublicSub
             EnkripsiTeks(ID_CPU) &
             FooterConfig
         Try
-            My.Computer.FileSystem.WriteAllText(FilePathRegistrasiPerangkat, DataKeteranganKomputerTerdaftar, False)
-            My.Computer.FileSystem.WriteAllText(FilePathRegistrasiPerangkat_Backup, DataKeteranganKomputerTerdaftar, False) 'File Backup dibutuhkan untuk antisipasi. Khawatir ada trouble saat registrasi ke-2 yang menyebabkan perangkat di-unreg.
+            IO.File.WriteAllText(FilePathRegistrasiPerangkat, DataKeteranganKomputerTerdaftar)
+            IO.File.WriteAllText(FilePathRegistrasiPerangkat_Backup, DataKeteranganKomputerTerdaftar) 'File Backup dibutuhkan untuk antisipasi. Khawatir ada trouble saat registrasi ke-2 yang menyebabkan perangkat di-unreg.
             ProsesRegistrasiPerangkat = True
             ProsesRegistrasiPerusahaan = True
         Catch ex As Exception
@@ -3086,7 +3086,7 @@ Public Module mdl_PublicSub
             EnkripsiTeks(ID_CPU) &
             FooterConfig
         Try
-            My.Computer.FileSystem.WriteAllText(FilePathRegistrasiPerangkat, DataKeteranganKomputerTidakTerdaftar, False)
+            IO.File.WriteAllText(FilePathRegistrasiPerangkat, DataKeteranganKomputerTidakTerdaftar)
         Catch ex As Exception
         End Try
         ProsesRegistrasiPerangkat = False    '|| Sudah Benar disini.......!!!
@@ -3104,7 +3104,7 @@ Public Module mdl_PublicSub
             Enter1Baris &
             FooterConfig
         Try
-            My.Computer.FileSystem.WriteAllText(FilePathVersiDanApdetAplikasi, DataKeteranganVersiDanApdet, False)
+            IO.File.WriteAllText(FilePathVersiDanApdetAplikasi, DataKeteranganVersiDanApdet)
             ProsesRegistrasiPerangkat = True
             ProsesRegistrasiPerusahaan = True
         Catch ex As Exception
@@ -3275,43 +3275,43 @@ Public Module mdl_PublicSub
     End Sub
 
     Sub PosisiBug1()
-        If LevelUserAktif = LevelUser_99_AppDeveloper Then MsgBox("Posisi Bug 1")
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then Pesan_Informasi("Posisi Bug 1")
     End Sub
 
     Sub PosisiBug2()
-        If LevelUserAktif = LevelUser_99_AppDeveloper Then MsgBox("Posisi Bug 2")
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then Pesan_Informasi("Posisi Bug 2")
     End Sub
 
     Sub PosisiBug3()
-        If LevelUserAktif = LevelUser_99_AppDeveloper Then MsgBox("Posisi Bug 3")
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then Pesan_Informasi("Posisi Bug 3")
     End Sub
 
     Sub PosisiBug4()
-        If LevelUserAktif = LevelUser_99_AppDeveloper Then MsgBox("Posisi Bug 4")
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then Pesan_Informasi("Posisi Bug 4")
     End Sub
 
     Sub PosisiBug5()
-        If LevelUserAktif = LevelUser_99_AppDeveloper Then MsgBox("Posisi Bug 5")
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then Pesan_Informasi("Posisi Bug 5")
     End Sub
 
     Sub PosisiBug6()
-        If LevelUserAktif = LevelUser_99_AppDeveloper Then MsgBox("Posisi Bug 6")
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then Pesan_Informasi("Posisi Bug 6")
     End Sub
 
     Sub PosisiBug7()
-        If LevelUserAktif = LevelUser_99_AppDeveloper Then MsgBox("Posisi Bug 7")
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then Pesan_Informasi("Posisi Bug 7")
     End Sub
 
     Sub PosisiBug8()
-        If LevelUserAktif = LevelUser_99_AppDeveloper Then MsgBox("Posisi Bug 8")
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then Pesan_Informasi("Posisi Bug 8")
     End Sub
 
     Sub PosisiBug9()
-        If LevelUserAktif = LevelUser_99_AppDeveloper Then MsgBox("Posisi Bug 9")
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then Pesan_Informasi("Posisi Bug 9")
     End Sub
 
     Sub YeuhDiDieu()
-        If LevelUserAktif = LevelUser_99_AppDeveloper Then MsgBox("Yeuh...! Di dieu...!!!!")
+        If LevelUserAktif = LevelUser_99_AppDeveloper Then Pesan_Informasi("Yeuh...! Di dieu...!!!!")
     End Sub
 
     Sub KontenComboDaftarBank_Public(ByVal DaftarBank As ComboBox)
@@ -3617,7 +3617,7 @@ Public Module mdl_PublicSub
 
 
     Sub Pesan_PenyesuaianSelisihSaldoAkhir_UntukTahunBukuLampau()
-        MsgBox("Selisih ini nanti akan disesuaikan pada awal Pembukuan Tahun " & (TahunBukuAktif + 1).ToString & " melalui Jurnal Adjusment.")
+        Pesan_Informasi("Selisih ini nanti akan disesuaikan pada awal Pembukuan Tahun " & (TahunBukuAktif + 1).ToString & " melalui Jurnal Adjusment.")
     End Sub
 
 
@@ -5080,7 +5080,7 @@ Public Module mdl_PublicSub
     End Function
 
     Function PanjangTeks(Teks As String)
-        Return Len(Teks)
+        Return Teks.Length
     End Function
 
     Function TampilanBundelan(Teks As String) As String
@@ -5100,9 +5100,9 @@ Public Module mdl_PublicSub
 
     Function PenghapusEnter(TeksMentah As String)
         Dim TeksBaru As String = TeksMentah
-        TeksBaru = Replace(TeksBaru, Chr(13) & Chr(10), " ")
-        TeksBaru = Replace(TeksBaru, Chr(13), " ")
-        TeksBaru = Replace(TeksBaru, Chr(10), " ")
+        TeksBaru = Replace(TeksBaru, Convert.ToChar(13) & Convert.ToChar(10), " ")
+        TeksBaru = Replace(TeksBaru, Convert.ToChar(13), " ")
+        TeksBaru = Replace(TeksBaru, Convert.ToChar(10), " ")
         If TeksBaru Is Nothing Then TeksBaru = Kosongan
         Return TeksBaru
     End Function

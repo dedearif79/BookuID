@@ -224,12 +224,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Hutang Usaha Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Hutang Usaha Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Hutang Usaha Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Hutang Usaha Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 
@@ -444,12 +444,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Piutang Usaha Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Piutang Usaha Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Piutang Usaha Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Piutang Usaha Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 
@@ -588,12 +588,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Hutang Karyawan Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Hutang Karyawan Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Hutang Karyawan Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Hutang Karyawan Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 
@@ -725,12 +725,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Piutang Karyawan Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Piutang Karyawan Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Piutang Karyawan Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Piutang Karyawan Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 
@@ -870,12 +870,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Hutang Pemegang Saham Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Hutang Pemegang Saham Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Hutang Pemegang Saham Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Hutang Pemegang Saham Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 
@@ -1007,12 +1007,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Piutang Pemegang Saham Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Piutang Pemegang Saham Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Piutang Pemegang Saham Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Piutang Pemegang Saham Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 
@@ -1132,12 +1132,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Hutang Bank Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Hutang Bank Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Hutang Bank Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Hutang Bank Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 
@@ -1258,12 +1258,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Hutang Leasing Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Hutang Leasing Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Hutang Leasing Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Hutang Leasing Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 
@@ -1383,12 +1383,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Hutang Pihak Ketiga Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Hutang Pihak Ketiga Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Hutang Pihak Ketiga Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Hutang Pihak Ketiga Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 
@@ -1507,12 +1507,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Piutang Pihak Ketiga Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Piutang Pihak Ketiga Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Piutang Pihak Ketiga Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Piutang Pihak Ketiga Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 
@@ -1632,12 +1632,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Hutang Afiliasi Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Hutang Afiliasi Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Hutang Afiliasi Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Hutang Afiliasi Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 
@@ -1756,12 +1756,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Piutang Afiliasi Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Piutang Afiliasi Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Piutang Afiliasi Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Piutang Afiliasi Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 
@@ -1962,12 +1962,12 @@ Module wpfMdl_TutupBuku
 
         'Laporan :
         If StatusSuntingDatabase = True Then
-            MsgBox("Pengisian Saldo Awal Piutang Afiliasi Tahun Buku " & TahunBukuBaru & " BERHASIL.")
+            Pesan_Sukses("Pengisian Saldo Awal Piutang Afiliasi Tahun Buku " & TahunBukuBaru & " BERHASIL.")
         Else
-            MsgBox("Pengisian Saldo Awal Piutang Afiliasi Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
+            Pesan_Gagal("Pengisian Saldo Awal Piutang Afiliasi Tahun Buku " & TahunBukuBaru & " GAGAL atau hanya terisi sebagian karena ada kesalahan teknis." _
                    & Enter2Baris & teks_SilakanCobaLagi_Database)
             ProsesTutupBuku = False
-            MsgBox(pesan_TutupBukuGagal)
+            Pesan_Gagal(pesan_TutupBukuGagal)
             Return
         End If
 

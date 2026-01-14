@@ -87,7 +87,7 @@ Public Class wpfWin_InputDisposalAssetTetap
         Dim BulanInputan = dtp_TanggalDisposal.SelectedDate.Value.Month
         KunciBulanDanTahun_HarusSama_WPF(dtp_TanggalDisposal, BulanDisposal_Angka, TahunBukuAktif)
         If ProsesResetForm = False And BulanInputan <> BulanDisposal_Angka Then
-            MsgBox("Tanggal Disposal dikunci hanya untuk bulan '" & KonversiAngkaKeBulanString(BulanDisposal_Angka) & "'." & Enter2Baris &
+            Pesan_Peringatan("Tanggal Disposal dikunci hanya untuk bulan '" & KonversiAngkaKeBulanString(BulanDisposal_Angka) & "'." & Enter2Baris &
                    "Silahkan Jurnal Penyusutan terlebih dahulu sebelum Disposal Asset, " &
                    "atau hubungi Costumer Service.")
             Return
@@ -119,7 +119,7 @@ Public Class wpfWin_InputDisposalAssetTetap
             AksesDatabase_General(Tutup)
         End If
         If NomorBeritaAcaraDisposalSudahAda = True Then
-            MsgBox("Nomor Disposal sudah pernah diinput." & Enter2Baris &
+            Pesan_Peringatan("Nomor Disposal sudah pernah diinput." & Enter2Baris &
                    "Silakan input nomor yang lain.")
             txt_NomorBeritaAcaraDisposal.Text = Kosongan
             txt_NomorBeritaAcaraDisposal.Focus()
@@ -199,13 +199,13 @@ Public Class wpfWin_InputDisposalAssetTetap
         HPP = NilaiSisaBuku
 
         If NomorBeritaAcaraDisposal = Kosongan Then
-            MsgBox("Silakan isi kolom 'Nomor Disposal'.")
+            Pesan_Peringatan("Silakan isi kolom 'Nomor Disposal'.")
             txt_NomorBeritaAcaraDisposal.Focus()
             Return
         End If
 
         If KelompokHarta <> KelompokHarta_Tanah And COA_AkumulasiPenyusutan = Kosongan Then
-            MsgBox("Silakan pilih Kode Akun untuk 'Akumulasi Penyusutan'.")
+            Pesan_Peringatan("Silakan pilih Kode Akun untuk 'Akumulasi Penyusutan'.")
             txt_COA_AkumulasiPenyusutan.Focus()
             Return
         End If
@@ -213,11 +213,11 @@ Public Class wpfWin_InputDisposalAssetTetap
         SimpanJurnalClosing()
         If jur_StatusPenyimpananJurnal_Lengkap = True Then UpdateDataAsset()
         If StatusSuntingDatabase = True Then
-            MsgBox("Data Disposal Asset BERHASIL disimpan dan diposting ke Jurnal.")
+            Pesan_Sukses("Data Disposal Asset BERHASIL disimpan dan diposting ke Jurnal.")
             If usc_DaftarPenyusutanAssetTetap.StatusAktif Then usc_DaftarPenyusutanAssetTetap.RefreshTampilanData()
             Close()
         Else
-            MsgBox("Data Disposal Asset GAGAL disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
+            Pesan_Gagal("Data Disposal Asset GAGAL disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
         End If
 
     End Sub

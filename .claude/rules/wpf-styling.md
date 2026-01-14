@@ -34,13 +34,13 @@ StyleAplikasi.xaml (Master/Induk)
 
 | Situasi | Sumber Resources | Keterangan |
 |---------|------------------|------------|
-| **Runtime** | `mdlWpf_Program.Main()` | Dimuat ke `app.Resources.MergedDictionaries` |
-| **Design-time** | `Application.xaml` + setiap file XAML | Untuk Visual Studio designer |
+| **Runtime** | `App.xaml` + `App.xaml.vb` constructor | Auto-load via XAML + manual load di constructor |
+| **Design-time** | `App.xaml` + setiap file XAML | Untuk Visual Studio designer |
 
 **Catatan Penting:**
-- `Application.xaml` diinclude sebagai `Page` (bukan `ApplicationDefinition`) di vbproj untuk menghindari konflik `Sub Main`
+- `App.xaml` di-include sebagai `ApplicationDefinition` di vbproj (entry point WPF standar)
+- Resources di-load dua kali untuk memastikan tersedia: (1) dari XAML definition, (2) dari constructor `App.xaml.vb`
 - Setiap file XAML (Window/UserControl) memiliki `Resources` sendiri yang me-reference `StyleAplikasi.xaml` untuk design-time support
-- Ini adalah **trade-off** karena menggunakan custom entry point (`mdlWpf_Program.Main`)
 
 **Prinsip:**
 1. `StyleAplikasi.xaml` adalah **master file** yang merge semua style via `MergedDictionaries`

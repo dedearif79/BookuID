@@ -49,7 +49,7 @@ Public Class wpfWin_StartUp
                 lbl_ProgressReport.Text = "Silakan pilih Company dan klik 'Lanjutkan'."
             End If
         Else
-            MsgBox("Anda belum melakukan Registrasi untuk pemakaian aplikasi ini." & Enter2Baris & "Silakan lakukan Registrasi terlebih dahulu.")
+            Pesan_Peringatan("Anda belum melakukan Registrasi untuk pemakaian aplikasi ini." & Enter2Baris & "Silakan lakukan Registrasi terlebih dahulu.")
             win_Registrasi = New wpfWin_Registrasi
             win_Registrasi.ResetForm()
             win_Registrasi.RegistrasiTambahan = False
@@ -105,7 +105,7 @@ Public Class wpfWin_StartUp
             DataKoneksi = IO.File.ReadLines(FilePathDataKoneksi)
             FileEksis = True
         Catch ex As Exception
-            My.Computer.FileSystem.WriteAllText(FilePathDataKoneksi, Kosongan, False)
+            IO.File.WriteAllText(FilePathDataKoneksi, Kosongan)
             FileEksis = False
         End Try
         If FileEksis = True Then
@@ -149,7 +149,7 @@ Public Class wpfWin_StartUp
                 BukaTesKoneksiMySQL()
             End If
             If StatusKoneksiTesKoneksiMySQL = False Then
-                MsgBox("Ada masalah dengan koneksi Database." _
+                Pesan_Peringatan("Ada masalah dengan koneksi Database." _
                        & Enter2Baris & "Silakan perbaiki koneksi, atau hubungi pihak server.")
                 PengaturanKoneksi()
                 If StatusKoneksiTesKoneksiMySQL = False Then
@@ -164,7 +164,7 @@ Public Class wpfWin_StartUp
         'Tes Koneksi DbSAT (untuk koneksi Database General dan Database Transaksi) :
         TesKoneksiDbSAT()
         If StatusKoneksiTesKoneksiDbSAT = False Then
-            MsgBox("Ada masalah dengan koneksi Database." _
+            Pesan_Peringatan("Ada masalah dengan koneksi Database." _
                    & Enter2Baris & "Silakan perbaiki koneksi, atau hubungi Tim IT untuk menangani masalah ini.")
             PengaturanKoneksi()
             If StatusKoneksiTesKoneksiDbSAT = False Then

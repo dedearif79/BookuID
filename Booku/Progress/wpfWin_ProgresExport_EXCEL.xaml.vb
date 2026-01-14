@@ -44,14 +44,14 @@ Public Class wpfWin_ProgresExport_EXCEL
     Sub ProsesEkspor_DataTable()
 
         If datatableBahanEkspor Is Nothing Then
-            MsgBox("Sumber DataTable untuk ekspor belum diset.")
+            Pesan_Peringatan("Sumber DataTable untuk ekspor belum diset.")
             TutupForm()
             Return
         End If
 
         JumlahBarisBahanExport = datatableBahanEkspor.Rows.Count
         If JumlahBarisBahanExport = 0 Then
-            MsgBox("Tidak ada bahan data yang akan di-export.")
+            Pesan_Peringatan("Tidak ada bahan data yang akan di-export.")
             TutupForm()
             Return
         Else
@@ -207,7 +207,7 @@ Public Class wpfWin_ProgresExport_EXCEL
 
         JumlahBarisBahanExport = datagridBahanEkspor.Items.Count
         If JumlahBarisBahanExport = 0 Then
-            MsgBox("Tidak ada bahan data yang akan di-export.")
+            Pesan_Peringatan("Tidak ada bahan data yang akan di-export.")
             TutupForm()
             Return
         Else

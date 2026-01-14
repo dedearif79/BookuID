@@ -448,7 +448,7 @@ Public Class wpfWin_DorongInvoiceKeJurnal
                 Dim JumlahPiutangUsaha_Selisih
 
                 If NP = "P1" Then
-                    NomorInvoiceLama = Microsoft.VisualBasic.Left(NomorInvoice, (Len(NomorInvoice) - 3))
+                    NomorInvoiceLama = NomorInvoice.Substring(0, NomorInvoice.Length - 3)
                 Else
                     Dim PembetulanKe As Integer = AmbilAngka(NP)
                     Dim NPLama = "P" & (PembetulanKe - 1)

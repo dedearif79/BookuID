@@ -1237,7 +1237,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             Dim Tabel
             Dim KolomNomor
             Dim KolomTanggal
-            If Microsoft.VisualBasic.Left(NomorSJBAST, 2) = AwalanSJ Then
+            If AmbilKiri(NomorSJBAST, 2) = AwalanSJ Then
                 Tabel = "tbl_Pembelian_SJ"
                 KolomNomor = "Nomor_SJ"
                 KolomTanggal = "Tanggal_SJ"
@@ -1749,7 +1749,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             And ProsesResetForm = False _
             Then
             Kosongkan_TabelSJBAST()
-            MsgBox("Daftar Surat Jalan / BAST telah dikosongkan." & Enter2Baris & "Silakan isi kembali.")
+            Pesan_Peringatan("Daftar Surat Jalan / BAST telah dikosongkan." & Enter2Baris & "Silakan isi kembali.")
             btn_TambahSJBAST.Focus()
         End If
         KunciTanggalInvoice = False
@@ -1774,7 +1774,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             dr.Read()
             If dr.HasRows Then
                 txt_NomorInvoice.Text = Kosongan
-                MsgBox("Nomor Invoice '" & NomorInvoice & "' sudah ada." & Enter2Baris & "Silakan input Nomor Invoice yang lain.")
+                Pesan_Peringatan("Nomor Invoice '" & NomorInvoice & "' sudah ada." & Enter2Baris & "Silakan input Nomor Invoice yang lain.")
                 txt_NomorInvoice.Focus()
             End If
             AksesDatabase_Transaksi(Tutup)
@@ -2813,7 +2813,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         NomorPOProduk = Kosongan
         If JumlahBarisSJBAST > 0 Then
             If win_ListSJBAST.NomorPO_Terseleksi <> datatabelSJBAST.Rows(0)("Nomor_PO").ToString() Then
-                MsgBox("Nomor Surat Jalan / BAST yang berbeda PO tidak dapat ditambahkan ke dalam daftar..!")
+                Pesan_Peringatan("Nomor Surat Jalan / BAST yang berbeda PO tidak dapat ditambahkan ke dalam daftar..!")
                 Return
             End If
         End If
@@ -3083,7 +3083,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         TotalHarga_Asing_Terseleksi = AmbilAngka_Asing(AmbilValueCellTeksBerpotensiDBNull_RowView(rowviewUtama, "Total_Harga_Asing"))
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
-            If Not IsNothing(KolomTerseleksi) Then
+            If KolomTerseleksi IsNot Nothing Then
                 If NomorUrutProduk_Terseleksi > 0 And KolomTerseleksi.DisplayIndex = COA_Produk.DisplayIndex Then
                     win_ListCOA = New wpfWin_ListCOA
                     win_ListCOA.ResetForm()
@@ -3226,12 +3226,12 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             End If
         End If
         If JenisPPN = Kosongan Then
-            MsgBox("Silakan pilih 'Jenis PPN' terlebih dahulu.")
+            Pesan_Peringatan("Silakan pilih 'Jenis PPN' terlebih dahulu.")
             cmb_JenisPPN.Focus()
             Return
         End If
         If JenisPPN <> JenisPPN_NonPPN And PerlakuanPPN = Kosongan Then
-            MsgBox("Silakan pilih 'Perlakuan PPN' terlebih dahulu.")
+            Pesan_Peringatan("Silakan pilih 'Perlakuan PPN' terlebih dahulu.")
             cmb_PerlakuanPPN.Focus()
             Return
         End If
@@ -3510,7 +3510,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
     Private Sub txt_TarifPPh_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_TarifPPh.TextChanged
         TextBoxFormatPersen_WPF(txt_TarifPPh, TarifPPh)
         If TarifPPh > 100 Then
-            MsgBox("Silakan isi kolom 'Diskon' dengan benar.")
+            Pesan_Peringatan("Silakan isi kolom 'Diskon' dengan benar.")
             txt_TarifPPh.Text = Kosongan
             txt_TarifPPh.Focus()
             Return
@@ -3556,7 +3556,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         If PPhDipotong < 0 Then
             txt_PPhDitanggung.Text = 0
             txt_PPhDitanggung.Focus()
-            MsgBox("Silakan isi kolom 'PPh Ditanggung' dengan benar!")
+            Pesan_Peringatan("Silakan isi kolom 'PPh Ditanggung' dengan benar!")
             Return
         End If
         KetersediaanTombolHitung(True)
@@ -3667,7 +3667,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         End If
 
         If KodeSupplier = Kosongan Then
-            MsgBox("silakan isi data 'Supplier'.")
+            Pesan_Peringatan("silakan isi data 'Supplier'.")
             Return
         End If
 
@@ -3675,7 +3675,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
 
         If JenisProduk_Induk <> JenisProduk_Barang And JenisJasa = Kosongan Then
             cmb_JenisJasa.Focus()
-            MsgBox("silakan pilih 'Jenis Jasa'.")
+            Pesan_Peringatan("silakan pilih 'Jenis Jasa'.")
             Return
         End If
 
@@ -3754,17 +3754,17 @@ Public Class wpfWin_InputInvoicePembelian_Alt
 
         If AdaPPh Then
             If JenisPPh = Kosongan Then
-                MsgBox("Silakan pilih 'Jenis PPh'.")
+                Pesan_Peringatan("Silakan pilih 'Jenis PPh'.")
                 cmb_JenisPPh.Focus()
                 Return
             End If
             If KodeSetoran = Kosongan Then
-                MsgBox("Silakan pilih 'Kode Setoran'.")
+                Pesan_Peringatan("Silakan pilih 'Kode Setoran'.")
                 cmb_KodeSetoran.Focus()
                 Return
             End If
             If TarifPPh = 0 Then
-                MsgBox("Silakan isi 'Tarif PPh'.")
+                Pesan_Peringatan("Silakan isi 'Tarif PPh'.")
                 txt_TarifPPh.Focus()
                 Return
             End If
@@ -3796,7 +3796,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             If MetodePembayaran = MetodePembayaran_Normal Or TahapTermin = TahapTermin_Pelunasan Then
                 If AdaCOA = False Then
-                    MsgBox("Silakan isi kolom 'COA' pada masing-masing baris produk.")
+                    Pesan_Peringatan("Silakan isi kolom 'COA' pada masing-masing baris produk.")
                     Return
                 End If
             End If
@@ -3853,7 +3853,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
 
         If datagridSJBAST.Visibility = Visibility.Visible Then
             If JumlahBarisSJBAST = 0 And InvoiceDenganPO Then
-                MsgBox("Silakan input 'Surat Jalan / BAST'.")
+                Pesan_Peringatan("Silakan input 'Surat Jalan / BAST'.")
                 btn_TambahSJBAST.Focus()
                 Return
             End If
@@ -3868,19 +3868,19 @@ Public Class wpfWin_InputInvoicePembelian_Alt
         End If
 
         If JumlahProduk = 0 Then
-            MsgBox("Silakan tambahkan data 'Barang/Jasa'.")
+            Pesan_Peringatan("Silakan tambahkan data 'Barang/Jasa'.")
             btn_Tambahkan.Focus()
             Return
         End If
 
         If rdb_JumlahHariJatuhTempo.IsChecked = False And rdb_TanggalJatuhTempo.IsChecked = False Then
-            MsgBox("Silakan isi kolom 'Jatuh Tempo'.")
+            Pesan_Peringatan("Silakan isi kolom 'Jatuh Tempo'.")
             Return
         End If
 
         If rdb_JumlahHariJatuhTempo.IsChecked = True Then
             If JumlahHariJatuhTempo = 0 Then
-                MsgBox("Silakan isi kolom 'Jumlah Hari'.")
+                Pesan_Peringatan("Silakan isi kolom 'Jumlah Hari'.")
                 txt_JumlahHariJatuhTempo.Focus()
                 Return
             End If

@@ -20,7 +20,8 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-<StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
 
         <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
 

@@ -310,7 +310,7 @@ Module mdl_KoneksiDatabase
             StatusKoneksiDatabase = True
         Catch ex As Exception
             StatusKoneksiDatabase = False
-            MsgBox("Ups..! Ada kesalahan teknis database..!" & Enter2Baris &
+            Pesan_Gagal("Ups..! Ada kesalahan teknis database..!" & Enter2Baris &
                    "Kueri : " & Kueri)
         End Try
     End Sub
@@ -321,7 +321,7 @@ Module mdl_KoneksiDatabase
             StatusKoneksiDatabase = True
         Catch ex As Exception
             StatusKoneksiDatabase = False
-            MsgBox("Ups..! Ada kesalahan teknis database..!" & Enter2Baris &
+            Pesan_Gagal("Ups..! Ada kesalahan teknis database..!" & Enter2Baris &
                    "Kueri :" & Enter1Baris & Kueri)
         End Try
     End Sub
@@ -383,7 +383,7 @@ Module mdl_KoneksiDatabase
             StatusSuntingDatabase = True
         Catch ex As Exception
             StatusSuntingDatabase = False
-            MsgBox("Ups..! Ada kesalahan teknis database..!" & Enter2Baris &
+            Pesan_Gagal("Ups..! Ada kesalahan teknis database..!" & Enter2Baris &
                    "Kueri :" & Enter1Baris & Kueri)
         End Try
     End Sub
@@ -406,7 +406,7 @@ Module mdl_KoneksiDatabase
             StatusSuntingDatabase = True
         Catch ex As Exception
             StatusSuntingDatabase = False
-            MsgBox("Ups..! Ada kesalahan teknis database..!" & Enter2Baris &
+            Pesan_Gagal("Ups..! Ada kesalahan teknis database..!" & Enter2Baris &
                    "Kueri :" & Enter1Baris & Kueri)
         End Try
     End Sub
@@ -450,7 +450,7 @@ Module mdl_KoneksiDatabase
             StatusSuntingDatabase = True
         Catch ex As Exception
             StatusSuntingDatabase = False
-            MsgBox("Ups..! Ada kesalahan teknis database..!" & Enter2Baris &
+            Pesan_Gagal("Ups..! Ada kesalahan teknis database..!" & Enter2Baris &
                    "Kueri :" & Enter1Baris & Kueri)
         End Try
     End Sub

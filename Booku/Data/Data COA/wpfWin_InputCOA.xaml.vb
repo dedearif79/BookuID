@@ -131,7 +131,7 @@ Public Class wpfWin_InputCOA
     Private Sub txt_COA_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_COA.TextChanged
         COA = txt_COA.Text
         cmb_DebetKredit.SelectedValue = PenentuanDEBETKREDIT_COA(COA)
-        If Len(COA) = 5 Then
+        If COA.Length = 5 Then
             If FungsiForm = FungsiForm_TAMBAH Then
                 Dim KodeCOATersedia As Boolean = True
                 AksesDatabase_General(Buka)

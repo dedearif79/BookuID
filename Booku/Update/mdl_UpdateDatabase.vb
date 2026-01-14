@@ -127,7 +127,7 @@ Module mdl_UpdateDatabase
 
     Sub CekStatusUpdate(NomorUpdate As Integer)
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_" & NomorUpdate & " varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_" & NomorUpdate & " varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -198,15 +198,15 @@ Module mdl_UpdateDatabase
     Sub CuciDebetKreditCOA()
         Dim QueryUpdate As String = Kosongan
         'COA Debet :
-        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'DEBET'   WHERE COA   LIKE  '1%'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'DEBET'   WHERE COA   LIKE  '5%'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'DEBET'   WHERE COA   LIKE  '6%'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'DEBET'   WHERE COA   LIKE  '8%'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'DEBET'   WHERE COA   LIKE  '1%'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'DEBET'   WHERE COA   LIKE  '5%'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'DEBET'   WHERE COA   LIKE  '6%'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'DEBET'   WHERE COA   LIKE  '8%'; " & Enter1Baris
         'COA Kredit :
-        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'KREDIT'   WHERE COA   LIKE  '2%'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'KREDIT'   WHERE COA   LIKE  '3%'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'KREDIT'   WHERE COA   LIKE  '4%'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'KREDIT'   WHERE COA   LIKE  '7%'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'KREDIT'   WHERE COA   LIKE  '2%'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'KREDIT'   WHERE COA   LIKE  '3%'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'KREDIT'   WHERE COA   LIKE  '4%'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_coa     SET     D_K = 'KREDIT'   WHERE COA   LIKE  '7%'; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -254,10 +254,10 @@ Module mdl_UpdateDatabase
         QueryUpdate &= " ( '11610', 'Deposit Operasional Ekspor',   'DEBET',  'Tidak' ), "
         QueryUpdate &= " ( '11704', 'Biaya Dibayar Dimuka - MUA',   'DEBET',  'Tidak' ), "
         QueryUpdate &= " ( '21100', 'Hutang Usaha - Impor',         'KREDIT', 'Tidak' ), "
-        QueryUpdate &= " ( '62404', 'Biaya Asuransi Penjualan',     'DEBET',  'Tidak' ); " & vbCrLf  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
-        QueryUpdate &= " UPDATE tbl_coa SET Nama_Akun = 'Uang Muka Pembelian - Impor' WHERE tbl_coa.COA = '11702'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_coa SET Nama_Akun = 'Biaya Dibayar Dimuka' WHERE tbl_coa.COA = '11703'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_coa SET Nama_Akun = 'Uang Muka Penjualan - Ekspor' WHERE tbl_coa.COA = '21501'; " & vbCrLf
+        QueryUpdate &= " ( '62404', 'Biaya Asuransi Penjualan',     'DEBET',  'Tidak' ); " & Enter1Baris  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
+        QueryUpdate &= " UPDATE tbl_coa SET Nama_Akun = 'Uang Muka Pembelian - Impor' WHERE tbl_coa.COA = '11702'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_coa SET Nama_Akun = 'Biaya Dibayar Dimuka' WHERE tbl_coa.COA = '11703'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_coa SET Nama_Akun = 'Uang Muka Penjualan - Ekspor' WHERE tbl_coa.COA = '21501'; " & Enter1Baris
 
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
@@ -276,15 +276,15 @@ Module mdl_UpdateDatabase
         QueryUpdate &= " ( '11610', '0' ), "
         QueryUpdate &= " ( '11704', '0' ), "
         QueryUpdate &= " ( '21100', '0' ), "
-        QueryUpdate &= " ( '62404', '0' ); " & vbCrLf  '<-- Ujurng Query, tidak pakai koma..!
-        QueryUpdate &= " ALTER TABLE tbl_penjualan_po ADD Kode_Mata_Uang VARCHAR(9) NOT NULL AFTER Nama_Customer; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE tbl_penjualan_po ADD Harga_Satuan_Asing DECIMAL(21,2) NOT NULL AFTER Harga_Satuan; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_penjualan_po SET Kode_Mata_Uang = 'IDR'; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE tbl_penjualan_invoice ADD Kode_Mata_Uang VARCHAR(9) NOT NULL AFTER Nama_Customer; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE tbl_penjualan_invoice ADD Kurs DECIMAL(21,2) NOT NULL AFTER Kode_Mata_Uang; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE tbl_penjualan_invoice ADD Biaya_Asuransi_Penjualan_Asing DECIMAL(21,2) NOT NULL AFTER Biaya_Transportasi; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_penjualan_invoice SET Kode_Mata_Uang = 'IDR'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_penjualan_invoice SET Kurs = 1; " & vbCrLf
+        QueryUpdate &= " ( '62404', '0' ); " & Enter1Baris  '<-- Ujurng Query, tidak pakai koma..!
+        QueryUpdate &= " ALTER TABLE tbl_penjualan_po ADD Kode_Mata_Uang VARCHAR(9) NOT NULL AFTER Nama_Customer; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE tbl_penjualan_po ADD Harga_Satuan_Asing DECIMAL(21,2) NOT NULL AFTER Harga_Satuan; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_penjualan_po SET Kode_Mata_Uang = 'IDR'; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE tbl_penjualan_invoice ADD Kode_Mata_Uang VARCHAR(9) NOT NULL AFTER Nama_Customer; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE tbl_penjualan_invoice ADD Kurs DECIMAL(21,2) NOT NULL AFTER Kode_Mata_Uang; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE tbl_penjualan_invoice ADD Biaya_Asuransi_Penjualan_Asing DECIMAL(21,2) NOT NULL AFTER Biaya_Transportasi; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_penjualan_invoice SET Kode_Mata_Uang = 'IDR'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_penjualan_invoice SET Kurs = 1; " & Enter1Baris
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
         cmdTELUSUR = New OdbcCommand(" SELECT Tahun_Buku FROM tbl_InfoData ", KoneksiDatabaseGeneral)
@@ -310,9 +310,9 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         Dim QueryUpdate As String = Kosongan
-        QueryUpdate &= " ALTER TABLE tbl_lawantransaksi ADD UMKM INT(3) NOT NULL AFTER Nama_Mitra; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE tbl_company ADD Nomor_Suket_UMKM VARCHAR(63) NOT NULL AFTER Password_DJPO; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE tbl_company ADD Tanggal_Suket_UMKM DATETIME NOT NULL DEFAULT '1900-01-01' AFTER Nomor_Suket_UMKM; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE tbl_lawantransaksi ADD UMKM INT(3) NOT NULL AFTER Nama_Mitra; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE tbl_company ADD Nomor_Suket_UMKM VARCHAR(63) NOT NULL AFTER Password_DJPO; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE tbl_company ADD Tanggal_Suket_UMKM DATETIME NOT NULL DEFAULT '1900-01-01' AFTER Nomor_Suket_UMKM; " & Enter1Baris
 
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
@@ -330,97 +330,97 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Pembelian - PO :
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        ADD Kode_Mata_Uang                  VARCHAR(9)      NOT NULL    AFTER   Nama_Supplier; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        ADD Harga_Satuan_Asing              DECIMAL(21,2)   NOT NULL    AFTER   Harga_Satuan; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        ADD DPP_Jasa_Asing                  DECIMAL(21,2)   NOT NULL    AFTER   DPP_Jasa; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        ADD Dasar_Pengenaan_Pajak_Asing     DECIMAL(21,2)   NOT NULL    AFTER   Dasar_Pengenaan_Pajak; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        ADD PPN_Asing                       DECIMAL(21,2)   NOT NULL    AFTER   PPN; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        ADD PPh_Terutang_Asing              DECIMAL(21,2)   NOT NULL    AFTER   PPh_Terutang; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_pembelian_po        SET Kode_Mata_Uang                  = 'IDR'; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        ADD Kode_Mata_Uang                  VARCHAR(9)      NOT NULL    AFTER   Nama_Supplier; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        ADD Harga_Satuan_Asing              DECIMAL(21,2)   NOT NULL    AFTER   Harga_Satuan; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        ADD DPP_Jasa_Asing                  DECIMAL(21,2)   NOT NULL    AFTER   DPP_Jasa; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        ADD Dasar_Pengenaan_Pajak_Asing     DECIMAL(21,2)   NOT NULL    AFTER   Dasar_Pengenaan_Pajak; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        ADD PPN_Asing                       DECIMAL(21,2)   NOT NULL    AFTER   PPN; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        ADD PPh_Terutang_Asing              DECIMAL(21,2)   NOT NULL    AFTER   PPh_Terutang; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_pembelian_po        SET Kode_Mata_Uang                  = 'IDR'; " & Enter1Baris
 
         'Pembelian - Invoice :
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Kode_Mata_Uang              VARCHAR(9)      NOT NULL    AFTER   Nama_Supplier; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Kurs                        DECIMAL(21,2)   NOT NULL    AFTER   Kode_Mata_Uang; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Nomor_SKB                   VARCHAR(99)     NOT NULL    AFTER   Pilihan_PPN; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Tanggal_SKB                 DATETIME        NOT NULL    DEFAULT '1900-01-01' AFTER Nomor_SKB; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Biaya_Asuransi_Pembelian    DECIMAL(21,2)   NOT NULL    AFTER   Biaya_Transportasi; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Insurance                   DECIMAL(21,2)   NOT NULL    AFTER   Termin_Persen; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Freight                     DECIMAL(21,2)   NOT NULL    AFTER   Insurance; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Bea_Masuk                   DECIMAL(21,2)   NOT NULL    AFTER   Freight; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Harga_Satuan                Harga_Satuan                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Total_Harga_Per_Item        Total_Harga_Per_Item        Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Jumlah_Harga_Keseluruhan    Jumlah_Harga_Keseluruhan    Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Diskon                      Diskon                      Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  DPP_Barang                  DPP_Barang                  Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  DPP_Jasa                    DPP_Jasa                    Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Dasar_Pengenaan_Pajak       Dasar_Pengenaan_Pajak       Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPN                         PPN                         Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Total_Tagihan_Kotor         Total_Tagihan_Kotor         Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPh_Terutang                PPh_Terutang                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPh_Ditanggung              PPh_Ditanggung              Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPh_Dipotong                PPh_Dipotong                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Total_Tagihan               Total_Tagihan               Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Jumlah_Hutang_Usaha         Jumlah_Hutang_Usaha         Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Biaya_Administrasi_Bank     Biaya_Administrasi_Bank     Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Biaya_Transportasi          Biaya_Transportasi          Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Biaya_Materai               Biaya_Materai               Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Retur_DPP                   Retur_DPP                   Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Retur_PPN                   Retur_PPN                   Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_pembelian_invoice   SET     Kode_Mata_Uang              = 'IDR'; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_pembelian_invoice   SET     Kurs                        = 1; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Kode_Mata_Uang              VARCHAR(9)      NOT NULL    AFTER   Nama_Supplier; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Kurs                        DECIMAL(21,2)   NOT NULL    AFTER   Kode_Mata_Uang; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Nomor_SKB                   VARCHAR(99)     NOT NULL    AFTER   Pilihan_PPN; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Tanggal_SKB                 DATETIME        NOT NULL    DEFAULT '1900-01-01' AFTER Nomor_SKB; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Biaya_Asuransi_Pembelian    DECIMAL(21,2)   NOT NULL    AFTER   Biaya_Transportasi; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Insurance                   DECIMAL(21,2)   NOT NULL    AFTER   Termin_Persen; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Freight                     DECIMAL(21,2)   NOT NULL    AFTER   Insurance; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Bea_Masuk                   DECIMAL(21,2)   NOT NULL    AFTER   Freight; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Harga_Satuan                Harga_Satuan                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Total_Harga_Per_Item        Total_Harga_Per_Item        Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Jumlah_Harga_Keseluruhan    Jumlah_Harga_Keseluruhan    Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Diskon                      Diskon                      Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  DPP_Barang                  DPP_Barang                  Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  DPP_Jasa                    DPP_Jasa                    Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Dasar_Pengenaan_Pajak       Dasar_Pengenaan_Pajak       Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPN                         PPN                         Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Total_Tagihan_Kotor         Total_Tagihan_Kotor         Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPh_Terutang                PPh_Terutang                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPh_Ditanggung              PPh_Ditanggung              Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPh_Dipotong                PPh_Dipotong                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Total_Tagihan               Total_Tagihan               Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Jumlah_Hutang_Usaha         Jumlah_Hutang_Usaha         Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Biaya_Administrasi_Bank     Biaya_Administrasi_Bank     Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Biaya_Transportasi          Biaya_Transportasi          Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Biaya_Materai               Biaya_Materai               Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Retur_DPP                   Retur_DPP                   Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Retur_PPN                   Retur_PPN                   Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_pembelian_invoice   SET     Kode_Mata_Uang              = 'IDR'; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_pembelian_invoice   SET     Kurs                        = 1; " & Enter1Baris
 
         'Penjualan - Invoice :
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Biaya_Asuransi_Penjualan_Asing Biaya_Asuransi_Penjualan Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Harga_Satuan                Harga_Satuan                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Total_Harga_Per_Item        Total_Harga_Per_Item        Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Jumlah_Harga_Keseluruhan    Jumlah_Harga_Keseluruhan    Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Diskon                      Diskon                      Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  DPP_Barang                  DPP_Barang                  Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  DPP_Jasa                    DPP_Jasa                    Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Dasar_Pengenaan_Pajak       Dasar_Pengenaan_Pajak       Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPN                         PPN                         Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Total_Tagihan_Kotor         Total_Tagihan_Kotor         Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPh_Terutang                PPh_Terutang                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPh_Ditanggung              PPh_Ditanggung              Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPh_Dipotong                PPh_Dipotong                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Total_Tagihan               Total_Tagihan               Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Jumlah_Piutang_Usaha        Jumlah_Piutang_Usaha        Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Biaya_Transportasi          Biaya_Transportasi          Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Retur_DPP                   Retur_DPP                   Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Retur_PPN                   Retur_PPN                   Decimal(21,2)   Not NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Biaya_Asuransi_Penjualan_Asing Biaya_Asuransi_Penjualan Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Harga_Satuan                Harga_Satuan                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Total_Harga_Per_Item        Total_Harga_Per_Item        Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Jumlah_Harga_Keseluruhan    Jumlah_Harga_Keseluruhan    Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Diskon                      Diskon                      Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  DPP_Barang                  DPP_Barang                  Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  DPP_Jasa                    DPP_Jasa                    Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Dasar_Pengenaan_Pajak       Dasar_Pengenaan_Pajak       Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPN                         PPN                         Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Total_Tagihan_Kotor         Total_Tagihan_Kotor         Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPh_Terutang                PPh_Terutang                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPh_Ditanggung              PPh_Ditanggung              Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPh_Dipotong                PPh_Dipotong                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Total_Tagihan               Total_Tagihan               Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Jumlah_Piutang_Usaha        Jumlah_Piutang_Usaha        Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Biaya_Transportasi          Biaya_Transportasi          Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Retur_DPP                   Retur_DPP                   Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Retur_PPN                   Retur_PPN                   Decimal(21,2)   Not NULL; " & Enter1Baris
 
         'Jurnal :
-        QueryUpdate &= " ALTER TABLE    tbl_transaksi           ADD     Kurs                        DECIMAL(21,2)   NOT NULL    AFTER   Nama_Lawan_Transaksi; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_transaksi           CHANGE  Jumlah_Debet                Jumlah_Debet                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_transaksi           CHANGE  Jumlah_Kredit               Jumlah_Kredit               Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_transaksi           SET     Kurs                        = 1; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_transaksi           ADD     Kurs                        DECIMAL(21,2)   NOT NULL    AFTER   Nama_Lawan_Transaksi; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_transaksi           CHANGE  Jumlah_Debet                Jumlah_Debet                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_transaksi           CHANGE  Jumlah_Kredit               Jumlah_Kredit               Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_transaksi           SET     Kurs                        = 1; " & Enter1Baris
 
         'Bukti Pengeluaran :
-        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    ADD     Kurs                        DECIMAL(21,2)   NOT NULL    AFTER   Uraian_Invoice; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Jumlah_Tagihan              Jumlah_Tagihan              Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Pokok                       Pokok                       Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Bagi_Hasil                  Bagi_Hasil                  Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Jumlah_Pengajuan            Jumlah_Pengajuan            Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Jumlah_Bayar                Jumlah_Bayar                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Denda                       Denda                       Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Biaya_Administrasi_Bank     Biaya_Administrasi_Bank     Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  PPh_Terutang                PPh_Terutang                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  PPh_Ditanggung              PPh_Ditanggung              Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  PPh_Dipotong                PPh_Dipotong                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_buktipengeluaran    SET     Kurs                        = 1; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    ADD     Kurs                        DECIMAL(21,2)   NOT NULL    AFTER   Uraian_Invoice; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Jumlah_Tagihan              Jumlah_Tagihan              Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Pokok                       Pokok                       Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Bagi_Hasil                  Bagi_Hasil                  Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Jumlah_Pengajuan            Jumlah_Pengajuan            Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Jumlah_Bayar                Jumlah_Bayar                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Denda                       Denda                       Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  Biaya_Administrasi_Bank     Biaya_Administrasi_Bank     Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  PPh_Terutang                PPh_Terutang                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  PPh_Ditanggung              PPh_Ditanggung              Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipengeluaran    CHANGE  PPh_Dipotong                PPh_Dipotong                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_buktipengeluaran    SET     Kurs                        = 1; " & Enter1Baris
 
         'Bukti Penerimaan :
-        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     ADD     Kurs                        DECIMAL(21,2)   NOT NULL    AFTER   Uraian_Invoice; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  Jumlah_Tagihan              Jumlah_Tagihan              Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  Pokok                       Pokok                       Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  Bagi_Hasil                  Bagi_Hasil                  Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  Jumlah_Bayar                Jumlah_Bayar                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  Denda                       Denda                       Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  Biaya_Administrasi_Bank     Biaya_Administrasi_Bank     Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  PPh_Terutang                PPh_Terutang                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  PPh_Ditanggung              PPh_Ditanggung              Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  PPh_Dipotong                PPh_Dipotong                Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_buktipenerimaan     SET     Kurs                        = 1; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     ADD     Kurs                        DECIMAL(21,2)   NOT NULL    AFTER   Uraian_Invoice; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  Jumlah_Tagihan              Jumlah_Tagihan              Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  Pokok                       Pokok                       Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  Bagi_Hasil                  Bagi_Hasil                  Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  Jumlah_Bayar                Jumlah_Bayar                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  Denda                       Denda                       Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  Biaya_Administrasi_Bank     Biaya_Administrasi_Bank     Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  PPh_Terutang                PPh_Terutang                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  PPh_Ditanggung              PPh_Ditanggung              Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_buktipenerimaan     CHANGE  PPh_Dipotong                PPh_Dipotong                Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_buktipenerimaan     SET     Kurs                        = 1; " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -469,40 +469,40 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Pembelian - PO :
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        DROP    DPP_Jasa_Asing; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        DROP    Dasar_Pengenaan_Pajak_Asing; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        DROP    PPN_Asing; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        DROP    PPh_Terutang_Asing; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        DROP    DPP_Jasa_Asing; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        DROP    Dasar_Pengenaan_Pajak_Asing; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        DROP    PPN_Asing; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_po        DROP    PPh_Terutang_Asing; " & Enter1Baris
 
         'Pembelian - Invoice :
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   DROP    Biaya_Asuransi_Pembelian; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Bea_Masuk                   Bea_Masuk                   Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Dasar_Pengenaan_Pajak       Dasar_Pengenaan_Pajak       Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  DPP_Barang                  DPP_Barang                  Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  DPP_Jasa                    DPP_Jasa                    Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPN                         PPN                         Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPh_Terutang                PPh_Terutang                Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPh_Ditanggung              PPh_Ditanggung              Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPh_Dipotong                PPh_Dipotong                Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Biaya_Transportasi          Biaya_Transportasi          Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Biaya_Materai               Biaya_Materai               Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Retur_DPP                   Retur_DPP                   Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Retur_PPN                   Retur_PPN                   Bigint(27)      Not NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   DROP    Biaya_Asuransi_Pembelian; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Bea_Masuk                   Bea_Masuk                   Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Dasar_Pengenaan_Pajak       Dasar_Pengenaan_Pajak       Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  DPP_Barang                  DPP_Barang                  Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  DPP_Jasa                    DPP_Jasa                    Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPN                         PPN                         Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPh_Terutang                PPh_Terutang                Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPh_Ditanggung              PPh_Ditanggung              Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  PPh_Dipotong                PPh_Dipotong                Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Biaya_Transportasi          Biaya_Transportasi          Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Biaya_Materai               Biaya_Materai               Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Retur_DPP                   Retur_DPP                   Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   CHANGE  Retur_PPN                   Retur_PPN                   Bigint(27)      Not NULL; " & Enter1Baris
 
         'Penjualan - Invoice :
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Biaya_Asuransi_Penjualan    Insurance                   Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Biaya_Transportasi          Biaya_Transportasi          Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   ADD     Freight                     DECIMAL(21,2)   NOT NULL    AFTER           Insurance; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  DPP_Barang                  DPP_Barang                  Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  DPP_Jasa                    DPP_Jasa                    Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Dasar_Pengenaan_Pajak       Dasar_Pengenaan_Pajak       Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPN                         PPN                         Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPh_Terutang                PPh_Terutang                Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPh_Ditanggung              PPh_Ditanggung              Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPh_Dipotong                PPh_Dipotong                Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Biaya_Transportasi          Biaya_Transportasi          Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Retur_DPP                   Retur_DPP                   Bigint(27)      Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Retur_PPN                   Retur_PPN                   Bigint(27)      Not NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Biaya_Asuransi_Penjualan    Insurance                   Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Biaya_Transportasi          Biaya_Transportasi          Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   ADD     Freight                     DECIMAL(21,2)   NOT NULL    AFTER           Insurance; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  DPP_Barang                  DPP_Barang                  Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  DPP_Jasa                    DPP_Jasa                    Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Dasar_Pengenaan_Pajak       Dasar_Pengenaan_Pajak       Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPN                         PPN                         Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPh_Terutang                PPh_Terutang                Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPh_Ditanggung              PPh_Ditanggung              Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  PPh_Dipotong                PPh_Dipotong                Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Biaya_Transportasi          Biaya_Transportasi          Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Retur_DPP                   Retur_DPP                   Bigint(27)      Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice   CHANGE  Retur_PPN                   Retur_PPN                   Bigint(27)      Not NULL; " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -529,7 +529,7 @@ Module mdl_UpdateDatabase
         'Jika sudah dipublish, maka jangan ada lagi yang dirubah...!!!
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_32 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_32 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -546,10 +546,10 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Penjualan - Invoice :
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice DROP    Harga_Satuan_Asing; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice DROP    Jumlah_Harga_Keseluruhan_Asing; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice DROP    Total_Tagihan_Asing; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice DROP    Biaya_Transportasi_Asing; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice DROP    Harga_Satuan_Asing; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice DROP    Jumlah_Harga_Keseluruhan_Asing; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice DROP    Total_Tagihan_Asing; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_invoice DROP    Biaya_Transportasi_Asing; " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -576,7 +576,7 @@ Module mdl_UpdateDatabase
         'Jika sudah dipublish, maka jangan ada lagi yang dirubah...!!!
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_36 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_36 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -592,27 +592,27 @@ Module mdl_UpdateDatabase
 
         QueryUpdate = Kosongan
 
-        QueryUpdate &= " ALTER TABLE    tbl_COA ADD     Kode_Mata_Uang      VARCHAR(9)          NOT NULL        AFTER   Nama_Akun; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_COA ADD     Kode_Mata_Uang      VARCHAR(9)          NOT NULL        AFTER   Nama_Akun; " & Enter1Baris
 
         'Tabel COA :
-        QueryUpdate &= " UPDATE     tbl_COA         SET     Nama_Akun =  'Hutang Usaha - Impor (USD)'   WHERE COA =  '21100'; " & vbCrLf 'Hutang Usaha - Impor (Lama)
-        QueryUpdate &= " UPDATE     tbl_COA         SET     Nama_Akun =  'Piutang Usaha - Ekspor (USD)' WHERE COA =  '11500'; " & vbCrLf 'Piutang Usaha - Ekspor (Lama)
-        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '21111'       WHERE COA =  '21100'; " & vbCrLf 'Hutang Usaha - Impor (Lama)
-        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '11511'       WHERE COA =  '11500'; " & vbCrLf 'Piutang Usaha - Ekspor (Lama)
-        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '11600'       WHERE COA =  '11510'; " & vbCrLf 'Gaji Dibayar Dimuka (Lama)
-        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '21120'       WHERE COA =  '21102'; " & vbCrLf 'Hutang Usaha - Afiliasi
-        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '11520'       WHERE COA =  '11502'; " & vbCrLf 'Piutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_COA         SET     Nama_Akun =  'Hutang Usaha - Impor (USD)'   WHERE COA =  '21100'; " & Enter1Baris 'Hutang Usaha - Impor (Lama)
+        QueryUpdate &= " UPDATE     tbl_COA         SET     Nama_Akun =  'Piutang Usaha - Ekspor (USD)' WHERE COA =  '11500'; " & Enter1Baris 'Piutang Usaha - Ekspor (Lama)
+        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '21111'       WHERE COA =  '21100'; " & Enter1Baris 'Hutang Usaha - Impor (Lama)
+        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '11511'       WHERE COA =  '11500'; " & Enter1Baris 'Piutang Usaha - Ekspor (Lama)
+        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '11600'       WHERE COA =  '11510'; " & Enter1Baris 'Gaji Dibayar Dimuka (Lama)
+        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '21120'       WHERE COA =  '21102'; " & Enter1Baris 'Hutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '11520'       WHERE COA =  '11502'; " & Enter1Baris 'Piutang Usaha - Afiliasi
 
         'Tabel Tautan COA :
-        QueryUpdate &= " UPDATE     tbl_TautanCOA   SET     COA = '21111'       WHERE COA =  '21100'; " & vbCrLf 'Hutang Usaha - Impor (Lama)
-        QueryUpdate &= " UPDATE     tbl_TautanCOA   SET     COA = '11511'       WHERE COA =  '11500'; " & vbCrLf 'Piutang Usaha - Ekspor (Lama)
-        QueryUpdate &= " UPDATE     tbl_TautanCOA   SET     COA = '21120'       WHERE COA =  '21102'; " & vbCrLf 'Hutang Usaha - Afiliasi
-        QueryUpdate &= " UPDATE     tbl_TautanCOA   SET     COA = '11520'       WHERE COA =  '11502'; " & vbCrLf 'Piutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_TautanCOA   SET     COA = '21111'       WHERE COA =  '21100'; " & Enter1Baris 'Hutang Usaha - Impor (Lama)
+        QueryUpdate &= " UPDATE     tbl_TautanCOA   SET     COA = '11511'       WHERE COA =  '11500'; " & Enter1Baris 'Piutang Usaha - Ekspor (Lama)
+        QueryUpdate &= " UPDATE     tbl_TautanCOA   SET     COA = '21120'       WHERE COA =  '21102'; " & Enter1Baris 'Hutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_TautanCOA   SET     COA = '11520'       WHERE COA =  '11502'; " & Enter1Baris 'Piutang Usaha - Afiliasi
 
         'Update Kode Mata Uang :
-        QueryUpdate &= " UPDATE     tbl_COA         SET     Kode_Mata_Uang  = 'IDR'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA         SET     Kode_Mata_Uang  = 'USD' WHERE COA =  '21111'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA         SET     Kode_Mata_Uang  = 'USD' WHERE COA =  '11511'; " & vbCrLf
+        QueryUpdate &= " UPDATE     tbl_COA         SET     Kode_Mata_Uang  = 'IDR'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA         SET     Kode_Mata_Uang  = 'USD' WHERE COA =  '21111'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA         SET     Kode_Mata_Uang  = 'USD' WHERE COA =  '11511'; " & Enter1Baris
 
         'COA Baru :
         QueryUpdate &= " INSERT INTO tbl_COA ( COA, Nama_Akun, Kode_Mata_Uang, D_K, Visibilitas ) VALUES "
@@ -639,35 +639,35 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Tabel Transaksi :
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     Nama_Akun =  'Hutang Usaha - Impor (USD)'   WHERE COA =  '21100'; " & vbCrLf 'Hutang Usaha - Impor (Lama)
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     Nama_Akun =  'Piutang Usaha - Ekspor (USD)' WHERE COA =  '11500'; " & vbCrLf 'Piutang Usaha - Ekspor (Lama)
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '21111'       WHERE COA =  '21100'; " & vbCrLf 'Hutang Usaha - Impor (Lama)
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11511'       WHERE COA =  '11500'; " & vbCrLf 'Piutang Usaha - Ekspor (Lama)
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11600'       WHERE COA =  '11510'; " & vbCrLf 'Gaji Dibayar Dimuka (Lama)
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '21120'       WHERE COA =  '21102'; " & vbCrLf 'Hutang Usaha - Afiliasi
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11520'       WHERE COA =  '11502'; " & vbCrLf 'PiUtang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     Nama_Akun =  'Hutang Usaha - Impor (USD)'   WHERE COA =  '21100'; " & Enter1Baris 'Hutang Usaha - Impor (Lama)
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     Nama_Akun =  'Piutang Usaha - Ekspor (USD)' WHERE COA =  '11500'; " & Enter1Baris 'Piutang Usaha - Ekspor (Lama)
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '21111'       WHERE COA =  '21100'; " & Enter1Baris 'Hutang Usaha - Impor (Lama)
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11511'       WHERE COA =  '11500'; " & Enter1Baris 'Piutang Usaha - Ekspor (Lama)
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11600'       WHERE COA =  '11510'; " & Enter1Baris 'Gaji Dibayar Dimuka (Lama)
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '21120'       WHERE COA =  '21102'; " & Enter1Baris 'Hutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11520'       WHERE COA =  '11502'; " & Enter1Baris 'PiUtang Usaha - Afiliasi
 
         'Tabel Saldo Awal COA :
-        QueryUpdate &= " UPDATE     tbl_SaldoAwalCOA    SET     COA = '21111'       WHERE COA =  '21100'; " & vbCrLf 'Hutang Usaha - Impor (Lama)
-        QueryUpdate &= " UPDATE     tbl_SaldoAwalCOA    SET     COA = '11511'       WHERE COA =  '11500'; " & vbCrLf 'Piutang Usaha - Ekspor (Lama)
-        QueryUpdate &= " UPDATE     tbl_SaldoAwalCOA    SET     COA = '21120'       WHERE COA =  '21102'; " & vbCrLf 'Hutang Usaha - Afiliasi
-        QueryUpdate &= " UPDATE     tbl_SaldoAwalCOA    SET     COA = '11520'       WHERE COA =  '11502'; " & vbCrLf 'Piutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_SaldoAwalCOA    SET     COA = '21111'       WHERE COA =  '21100'; " & Enter1Baris 'Hutang Usaha - Impor (Lama)
+        QueryUpdate &= " UPDATE     tbl_SaldoAwalCOA    SET     COA = '11511'       WHERE COA =  '11500'; " & Enter1Baris 'Piutang Usaha - Ekspor (Lama)
+        QueryUpdate &= " UPDATE     tbl_SaldoAwalCOA    SET     COA = '21120'       WHERE COA =  '21102'; " & Enter1Baris 'Hutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_SaldoAwalCOA    SET     COA = '11520'       WHERE COA =  '11502'; " & Enter1Baris 'Piutang Usaha - Afiliasi
 
         'Tabel Bukti Pengeluaran :
-        QueryUpdate &= " UPDATE tbl_BuktiPengeluaran    SET     COA_Debet  = '21111'       WHERE COA_Debet  =  '21100'; " & vbCrLf 'Hutang Usaha - Impor (Lama)
-        QueryUpdate &= " UPDATE tbl_BuktiPengeluaran    SET     COA_Debet  = '21120'       WHERE COA_Debet  =  '21102'; " & vbCrLf 'Hutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE tbl_BuktiPengeluaran    SET     COA_Debet  = '21111'       WHERE COA_Debet  =  '21100'; " & Enter1Baris 'Hutang Usaha - Impor (Lama)
+        QueryUpdate &= " UPDATE tbl_BuktiPengeluaran    SET     COA_Debet  = '21120'       WHERE COA_Debet  =  '21102'; " & Enter1Baris 'Hutang Usaha - Afiliasi
 
         'Tabel Bukti Penerimaan:
-        QueryUpdate &= " UPDATE tbl_BuktiPenerimaan     SET     COA_Kredit = '11511'       WHERE COA_Kredit =  '11500'; " & vbCrLf 'Piutang Usaha - Ekspor (Lama)
-        QueryUpdate &= " UPDATE tbl_BuktiPenerimaan     SET     COA_Kredit = '11520'       WHERE COA_Kredit =  '11502'; " & vbCrLf 'Piutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE tbl_BuktiPenerimaan     SET     COA_Kredit = '11511'       WHERE COA_Kredit =  '11500'; " & Enter1Baris 'Piutang Usaha - Ekspor (Lama)
+        QueryUpdate &= " UPDATE tbl_BuktiPenerimaan     SET     COA_Kredit = '11520'       WHERE COA_Kredit =  '11502'; " & Enter1Baris 'Piutang Usaha - Afiliasi
 
         'Tabel Invoice Pembelian :
-        QueryUpdate &= " UPDATE tbl_Pembelian_Invoice   SET     COA_Kredit = '21111'       WHERE COA_Kredit =  '21100'; " & vbCrLf 'Hutang Usaha - Impor (Lama)
-        QueryUpdate &= " UPDATE tbl_Pembelian_Invoice   SET     COA_Kredit = '21120'       WHERE COA_Kredit =  '21102'; " & vbCrLf 'Hutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE tbl_Pembelian_Invoice   SET     COA_Kredit = '21111'       WHERE COA_Kredit =  '21100'; " & Enter1Baris 'Hutang Usaha - Impor (Lama)
+        QueryUpdate &= " UPDATE tbl_Pembelian_Invoice   SET     COA_Kredit = '21120'       WHERE COA_Kredit =  '21102'; " & Enter1Baris 'Hutang Usaha - Afiliasi
 
         'Tabel Invoice Penjualan :
-        QueryUpdate &= " UPDATE tbl_Penjualan_Invoice   SET     COA_Debet  = '11511'       WHERE COA_Debet  =  '11500'; " & vbCrLf 'Piutang Usaha - Ekspor (Lama)
-        QueryUpdate &= " UPDATE tbl_Penjualan_Invoice   SET     COA_Debet  = '11520'       WHERE COA_Debet  =  '11502'; " & vbCrLf 'Piutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE tbl_Penjualan_Invoice   SET     COA_Debet  = '11511'       WHERE COA_Debet  =  '11500'; " & Enter1Baris 'Piutang Usaha - Ekspor (Lama)
+        QueryUpdate &= " UPDATE tbl_Penjualan_Invoice   SET     COA_Debet  = '11520'       WHERE COA_Debet  =  '11502'; " & Enter1Baris 'Piutang Usaha - Afiliasi
 
 
         'Susur Database Transaksi :
@@ -693,7 +693,7 @@ Module mdl_UpdateDatabase
         'Jika sudah dipublish, maka jangan ada lagi yang dirubah...!!!
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_37 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_37 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -712,12 +712,12 @@ Module mdl_UpdateDatabase
 
         '---------------- PENGULANGAN - UNTUK JAGA-JAGA -----------------------------------------------------------------------------------------------------
         'Tabel COA :
-        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '21120'       WHERE COA =  '21102'; " & vbCrLf 'Hutang Usaha - Afiliasi
-        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '11520'       WHERE COA =  '11502'; " & vbCrLf 'Piutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '21120'       WHERE COA =  '21102'; " & Enter1Baris 'Hutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_COA         SET     COA = '11520'       WHERE COA =  '11502'; " & Enter1Baris 'Piutang Usaha - Afiliasi
 
         'Tabel Tautan COA :
-        QueryUpdate &= " UPDATE     tbl_TautanCOA   SET     COA = '21120'       WHERE COA =  '21102'; " & vbCrLf 'Hutang Usaha - Afiliasi
-        QueryUpdate &= " UPDATE     tbl_TautanCOA   SET     COA = '11520'       WHERE COA =  '11502'; " & vbCrLf 'Piutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_TautanCOA   SET     COA = '21120'       WHERE COA =  '21102'; " & Enter1Baris 'Hutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_TautanCOA   SET     COA = '11520'       WHERE COA =  '11502'; " & Enter1Baris 'Piutang Usaha - Afiliasi
 
         'COA Baru :
         QueryUpdate &= " INSERT INTO tbl_COA ( COA, Nama_Akun, Kode_Mata_Uang, D_K, Visibilitas ) VALUES "
@@ -727,43 +727,43 @@ Module mdl_UpdateDatabase
 
 
         'Perubahan Property Kolom :
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Awal          Saldo_Awal          Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Januari       Debet_Januari       Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Januari      Kredit_Januari      Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Januari       Saldo_Januari       Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Februari      Debet_Februari      Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Februari     Kredit_Februari     Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Februari      Saldo_Februari      Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Maret         Debet_Maret         Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Maret        Kredit_Maret        Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Maret         Saldo_Maret         Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_April         Debet_April         Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_April        Kredit_April        Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_April         Saldo_April         Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Mei           Debet_Mei           Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Mei          Kredit_Mei          Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Mei           Saldo_Mei           Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Juni          Debet_Juni          Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Juni         Kredit_Juni         Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Juni          Saldo_Juni          Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Juli          Debet_Juli          Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Juli         Kredit_Juli         Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Juli          Saldo_Juli          Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Agustus       Debet_Agustus       Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Agustus      Kredit_Agustus      Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Agustus       Saldo_Agustus       Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_September     Debet_September     Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_September    Kredit_September    Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_September     Saldo_September     Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Oktober       Debet_Oktober       Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Oktober      Kredit_Oktober      Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Oktober       Saldo_Oktober       Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Nopember      Debet_Nopember      Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Nopember     Kredit_Nopember     Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Nopember      Saldo_Nopember      Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Desember      Debet_Desember      Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Desember     Kredit_Desember     Decimal(21,2)   Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Desember      Saldo_Desember      Decimal(21,2)   Not NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Awal          Saldo_Awal          Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Januari       Debet_Januari       Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Januari      Kredit_Januari      Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Januari       Saldo_Januari       Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Februari      Debet_Februari      Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Februari     Kredit_Februari     Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Februari      Saldo_Februari      Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Maret         Debet_Maret         Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Maret        Kredit_Maret        Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Maret         Saldo_Maret         Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_April         Debet_April         Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_April        Kredit_April        Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_April         Saldo_April         Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Mei           Debet_Mei           Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Mei          Kredit_Mei          Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Mei           Saldo_Mei           Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Juni          Debet_Juni          Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Juni         Kredit_Juni         Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Juni          Saldo_Juni          Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Juli          Debet_Juli          Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Juli         Kredit_Juli         Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Juli          Saldo_Juli          Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Agustus       Debet_Agustus       Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Agustus      Kredit_Agustus      Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Agustus       Saldo_Agustus       Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_September     Debet_September     Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_September    Kredit_September    Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_September     Saldo_September     Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Oktober       Debet_Oktober       Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Oktober      Kredit_Oktober      Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Oktober       Saldo_Oktober       Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Nopember      Debet_Nopember      Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Nopember     Kredit_Nopember     Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Nopember      Saldo_Nopember      Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Debet_Desember      Debet_Desember      Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Kredit_Desember     Kredit_Desember     Decimal(21,2)   Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_COA CHANGE  Saldo_Desember      Saldo_Desember      Decimal(21,2)   Not NULL; " & Enter1Baris
 
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
@@ -782,44 +782,44 @@ Module mdl_UpdateDatabase
 
         '---------------- PENGULANGAN - UNTUK JAGA-JAGA -----------------------------------------------------------------------------------------------------
         'Tabel Transaksi :
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '21120'       WHERE COA =  '21102'; " & vbCrLf 'Hutang Usaha - Afiliasi
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11520'       WHERE COA =  '11502'; " & vbCrLf 'PiUtang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '21120'       WHERE COA =  '21102'; " & Enter1Baris 'Hutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11520'       WHERE COA =  '11502'; " & Enter1Baris 'PiUtang Usaha - Afiliasi
 
         'Tabel Saldo Awal COA :
-        QueryUpdate &= " UPDATE     tbl_SaldoAwalCOA    SET     COA = '21120'       WHERE COA =  '21102'; " & vbCrLf 'Hutang Usaha - Afiliasi
-        QueryUpdate &= " UPDATE     tbl_SaldoAwalCOA    SET     COA = '11520'       WHERE COA =  '11502'; " & vbCrLf 'Piutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_SaldoAwalCOA    SET     COA = '21120'       WHERE COA =  '21102'; " & Enter1Baris 'Hutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE     tbl_SaldoAwalCOA    SET     COA = '11520'       WHERE COA =  '11502'; " & Enter1Baris 'Piutang Usaha - Afiliasi
 
         'Tabel Bukti Pengeluaran :
-        QueryUpdate &= " UPDATE tbl_BuktiPengeluaran    SET     COA_Debet  = '21120'       WHERE COA_Debet  =  '21102'; " & vbCrLf 'Hutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE tbl_BuktiPengeluaran    SET     COA_Debet  = '21120'       WHERE COA_Debet  =  '21102'; " & Enter1Baris 'Hutang Usaha - Afiliasi
 
         'Tabel Bukti Penerimaan:
-        QueryUpdate &= " UPDATE tbl_BuktiPenerimaan     SET     COA_Kredit = '11520'       WHERE COA_Kredit =  '11502'; " & vbCrLf 'Piutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE tbl_BuktiPenerimaan     SET     COA_Kredit = '11520'       WHERE COA_Kredit =  '11502'; " & Enter1Baris 'Piutang Usaha - Afiliasi
 
         'Tabel Invoice Pembelian :
-        QueryUpdate &= " UPDATE tbl_Pembelian_Invoice   SET     COA_Kredit = '21120'       WHERE COA_Kredit =  '21102'; " & vbCrLf 'Hutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE tbl_Pembelian_Invoice   SET     COA_Kredit = '21120'       WHERE COA_Kredit =  '21102'; " & Enter1Baris 'Hutang Usaha - Afiliasi
 
         'Tabel Invoice Penjualan :
-        QueryUpdate &= " UPDATE tbl_Penjualan_Invoice   SET     COA_Debet  = '11520'       WHERE COA_Debet  =  '11502'; " & vbCrLf 'Piutang Usaha - Afiliasi
+        QueryUpdate &= " UPDATE tbl_Penjualan_Invoice   SET     COA_Debet  = '11520'       WHERE COA_Debet  =  '11502'; " & Enter1Baris 'Piutang Usaha - Afiliasi
         '---------------- PENGULANGAN - UNTUK JAGA-JAGA -----------------------------------------------------------------------------------------------------
 
 
         'Update Tabel : tbl_Transaksi :
-        QueryUpdate &= " ALTER TABLE    tbl_Transaksi       ADD Kode_Mata_Uang VARCHAR(9) NOT NULL AFTER Nama_Lawan_Transaksi; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_Transaksi       SET Kode_Mata_Uang = 'IDR' WHERE Kurs =  1; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_Transaksi       SET Kode_Mata_Uang = 'USD' WHERE Kurs >  1; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Transaksi       ADD Kode_Mata_Uang VARCHAR(9) NOT NULL AFTER Nama_Lawan_Transaksi; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_Transaksi       SET Kode_Mata_Uang = 'IDR' WHERE Kurs =  1; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_Transaksi       SET Kode_Mata_Uang = 'USD' WHERE Kurs >  1; " & Enter1Baris
 
         'Update Tabel : tbl_Penerimaan :
-        QueryUpdate &= " ALTER TABLE    tbl_BuktiPenerimaan     ADD Kode_Mata_Uang VARCHAR(9) NOT NULL AFTER Uraian_Invoice; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_BuktiPenerimaan     SET Kode_Mata_Uang = 'IDR' WHERE Kurs =  1; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_BuktiPenerimaan     SET Kode_Mata_Uang = 'USD' WHERE Kurs >  1; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_BuktiPenerimaan     ADD Kode_Mata_Uang VARCHAR(9) NOT NULL AFTER Uraian_Invoice; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_BuktiPenerimaan     SET Kode_Mata_Uang = 'IDR' WHERE Kurs =  1; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_BuktiPenerimaan     SET Kode_Mata_Uang = 'USD' WHERE Kurs >  1; " & Enter1Baris
 
         'Update Tabel : tbl_Pengeluaran :
-        QueryUpdate &= " ALTER TABLE    tbl_BuktiPengeluaran    ADD Kode_Mata_Uang VARCHAR(9) NOT NULL AFTER Uraian_Invoice; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_BuktiPengeluaran    SET Kode_Mata_Uang = 'IDR' WHERE Kurs =  1; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_BuktiPengeluaran    SET Kode_Mata_Uang = 'USD' WHERE Kurs >  1; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_BuktiPengeluaran    ADD Kode_Mata_Uang VARCHAR(9) NOT NULL AFTER Uraian_Invoice; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_BuktiPengeluaran    SET Kode_Mata_Uang = 'IDR' WHERE Kurs =  1; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_BuktiPengeluaran    SET Kode_Mata_Uang = 'USD' WHERE Kurs >  1; " & Enter1Baris
 
         'Pembuatan Tabel : tbl_kursakhirbulan
-        QueryUpdate &= " ALTER TABLE    tbl_SaldoAwalCOA    CHANGE  Saldo_Awal     Saldo_Awal      Decimal(21,2)   Not NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_SaldoAwalCOA    CHANGE  Saldo_Awal     Saldo_Awal      Decimal(21,2)   Not NULL; " & Enter1Baris
         QueryUpdate &=
             "  CREATE TABLE `tbl_kursakhirbulan` (" &
             " `Kode_Mata_Uang`      varchar(9) NOT NULL, " &
@@ -838,13 +838,13 @@ Module mdl_UpdateDatabase
             " `Desember`            decimal(21,2) NOT NULL DEFAULT '0.00'  " &
             " ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; "
         QueryUpdate &= " ALTER TABLE `tbl_kursakhirbulan` ADD PRIMARY KEY (`Kode_Mata_Uang`), ADD UNIQUE KEY (`Kode_Mata_Uang`); "
-        QueryUpdate &= " INSERT INTO tbl_kursakhirbulan ( Kode_Mata_Uang ) VALUES  " & vbCrLf
-        QueryUpdate &= " ( '" & KodeMataUang_USD & "' ), " & vbCrLf
-        QueryUpdate &= " ( '" & KodeMataUang_AUD & "' ), " & vbCrLf
-        QueryUpdate &= " ( '" & KodeMataUang_JPY & "' ), " & vbCrLf
-        QueryUpdate &= " ( '" & KodeMataUang_CNY & "' ), " & vbCrLf
-        QueryUpdate &= " ( '" & KodeMataUang_EUR & "' ), " & vbCrLf
-        QueryUpdate &= " ( '" & KodeMataUang_SGD & "' ); " & vbCrLf
+        QueryUpdate &= " INSERT INTO tbl_kursakhirbulan ( Kode_Mata_Uang ) VALUES  " & Enter1Baris
+        QueryUpdate &= " ( '" & KodeMataUang_USD & "' ), " & Enter1Baris
+        QueryUpdate &= " ( '" & KodeMataUang_AUD & "' ), " & Enter1Baris
+        QueryUpdate &= " ( '" & KodeMataUang_JPY & "' ), " & Enter1Baris
+        QueryUpdate &= " ( '" & KodeMataUang_CNY & "' ), " & Enter1Baris
+        QueryUpdate &= " ( '" & KodeMataUang_EUR & "' ), " & Enter1Baris
+        QueryUpdate &= " ( '" & KodeMataUang_SGD & "' ); " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -870,7 +870,7 @@ Module mdl_UpdateDatabase
         'Jika sudah dipublish, maka jangan ada lagi yang dirubah...!!!
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_38 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_38 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -911,23 +911,23 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Update Tabel : tbl_Pemindahbukuan :
-        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  MODIFY  Tanggal_Transaksi                   DATETIME        NOT NULL AFTER Tanggal_BPPB; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  CHANGE  Jumlah_Transaksi    Jumlah_Kredit   DECIMAL(21,2)   NOT NULL AFTER COA_Kredit; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Kurs_Bank_Kredit                    DECIMAL(21,2)   NOT NULL AFTER COA_Kredit; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Kurs_BI_Kredit                      DECIMAL(21,2)   NOT NULL AFTER COA_Kredit; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Kode_Mata_Uang_Kredit               VARCHAR(9)      NOT NULL AFTER COA_Kredit; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Jumlah_Debet                        DECIMAL(21,2)   NOT NULL AFTER COA_Debet ; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Kurs_Bank_Debet                     DECIMAL(21,2)   NOT NULL AFTER COA_Debet ; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Kurs_BI_Debet                       DECIMAL(21,2)   NOT NULL AFTER COA_Debet ; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Kode_Mata_Uang_Debet                VARCHAR(9)      NOT NULL AFTER COA_Debet ; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  MODIFY  Tanggal_Transaksi                   DATETIME        NOT NULL AFTER Tanggal_BPPB; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  CHANGE  Jumlah_Transaksi    Jumlah_Kredit   DECIMAL(21,2)   NOT NULL AFTER COA_Kredit; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Kurs_Bank_Kredit                    DECIMAL(21,2)   NOT NULL AFTER COA_Kredit; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Kurs_BI_Kredit                      DECIMAL(21,2)   NOT NULL AFTER COA_Kredit; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Kode_Mata_Uang_Kredit               VARCHAR(9)      NOT NULL AFTER COA_Kredit; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Jumlah_Debet                        DECIMAL(21,2)   NOT NULL AFTER COA_Debet ; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Kurs_Bank_Debet                     DECIMAL(21,2)   NOT NULL AFTER COA_Debet ; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Kurs_BI_Debet                       DECIMAL(21,2)   NOT NULL AFTER COA_Debet ; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  ADD     Kode_Mata_Uang_Debet                VARCHAR(9)      NOT NULL AFTER COA_Debet ; " & Enter1Baris
 
-        QueryUpdate &= " UPDATE tbl_Pemindahbukuan  SET Kurs_BI_Kredit      = 1; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_Pemindahbukuan  SET Kurs_Bank_Kredit    = 1; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_Pemindahbukuan  SET Kurs_BI_Debet       = 1; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_Pemindahbukuan  SET Kurs_Bank_Debet     = 1; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_Pemindahbukuan  SET Kurs_BI_Kredit      = 1; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_Pemindahbukuan  SET Kurs_Bank_Kredit    = 1; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_Pemindahbukuan  SET Kurs_BI_Debet       = 1; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_Pemindahbukuan  SET Kurs_Bank_Debet     = 1; " & Enter1Baris
 
-        QueryUpdate &= " UPDATE tbl_Pemindahbukuan  SET Kode_Mata_Uang_Kredit = 'IDR'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_Pemindahbukuan  SET Kode_Mata_Uang_Debet  = 'IDR'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_Pemindahbukuan  SET Kode_Mata_Uang_Kredit = 'IDR'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_Pemindahbukuan  SET Kode_Mata_Uang_Debet  = 'IDR'; " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -954,7 +954,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_40 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_40 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -980,18 +980,18 @@ Module mdl_UpdateDatabase
         QueryUpdate &= " ( '11216', 'Kas (SGD)',    'SGD',  'KREDIT',   'Tidak' ); " '<-- Ujung, jangan pakai kome (,)
 
         'Update Nama Akun :
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Hutang Usaha - Impor (USD)'   WHERE COA =  '21111'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Hutang Usaha - Impor (AUD)'   WHERE COA =  '21112'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Hutang Usaha - Impor (JPY)'   WHERE COA =  '21113'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Hutang Usaha - Impor (CNY)'   WHERE COA =  '21114'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Hutang Usaha - Impor (EUR)'   WHERE COA =  '21115'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Hutang Usaha - Impor (SGD)'   WHERE COA =  '21116'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Piutang Usaha - Ekspor (USD)' WHERE COA =  '11511'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Piutang Usaha - Ekspor (AUD)' WHERE COA =  '11512'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Piutang Usaha - Ekspor (JPY)' WHERE COA =  '11513'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Piutang Usaha - Ekspor (CNY)' WHERE COA =  '11514'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Piutang Usaha - Ekspor (EUR)' WHERE COA =  '11515'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Piutang Usaha - Ekspor (SGD)' WHERE COA =  '11516'; " & vbCrLf
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Hutang Usaha - Impor (USD)'   WHERE COA =  '21111'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Hutang Usaha - Impor (AUD)'   WHERE COA =  '21112'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Hutang Usaha - Impor (JPY)'   WHERE COA =  '21113'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Hutang Usaha - Impor (CNY)'   WHERE COA =  '21114'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Hutang Usaha - Impor (EUR)'   WHERE COA =  '21115'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Hutang Usaha - Impor (SGD)'   WHERE COA =  '21116'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Piutang Usaha - Ekspor (USD)' WHERE COA =  '11511'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Piutang Usaha - Ekspor (AUD)' WHERE COA =  '11512'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Piutang Usaha - Ekspor (JPY)' WHERE COA =  '11513'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Piutang Usaha - Ekspor (CNY)' WHERE COA =  '11514'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Piutang Usaha - Ekspor (EUR)' WHERE COA =  '11515'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Piutang Usaha - Ekspor (SGD)' WHERE COA =  '11516'; " & Enter1Baris
 
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
@@ -1007,7 +1007,7 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Update Invoice Pembelian :
-        QueryUpdate &= " ALTER TABLE `tbl_pembelian_invoice` ADD `Kurs_KMK` DECIMAL(21,2) NOT NULL AFTER `Bea_Masuk`; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE `tbl_pembelian_invoice` ADD `Kurs_KMK` DECIMAL(21,2) NOT NULL AFTER `Bea_Masuk`; " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -1033,7 +1033,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_41 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_41 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1050,8 +1050,8 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Update Tabel Pemindahbukuan :
-        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  MODIFY  User    VARCHAR(63)     NOT NULL    AFTER   Nomor_JV; " & vbCrLf
-        QueryUpdate &= " UPDATE         tbl_Pemindahbukuan  SET     User    = '" & UserAktif & "' ; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Pemindahbukuan  MODIFY  User    VARCHAR(63)     NOT NULL    AFTER   Nomor_JV; " & Enter1Baris
+        QueryUpdate &= " UPDATE         tbl_Pemindahbukuan  SET     User    = '" & UserAktif & "' ; " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -1077,7 +1077,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_42 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_42 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1094,19 +1094,19 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Update Nama Akun :
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Persediaan Bahan Baku - Impor'                WHERE COA =  '11805'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Pajak Dibayar Dimuka - PPh Pasal 22 - Impor'  WHERE COA =  '11903'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'PPN Masukan - Impor'                          WHERE COA =  '11908'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Retur Pembelian Bahan Baku - Impor'           WHERE COA =  '51201'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya Asuransi Impor'                         WHERE COA =  '51202'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Bea Masuk Impor'                              WHERE COA =  '51204'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya Transportasi Impor'                     WHERE COA =  '51205'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya Jasa Pergudangan Impor'                 WHERE COA =  '51206'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya Pengurusan Dokumen Impor'               WHERE COA =  '51207'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya BB Impor-8'                             WHERE COA =  '51208'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya Pembelian Bahan Baku Lainnya - Impor'   WHERE COA =  '51209'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya Pemakaian Bahan Baku - Impor'           WHERE COA =  '51299'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Pembelian Bahan Baku - Impor'                 WHERE COA =  '58812'; " & vbCrLf
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Persediaan Bahan Baku - Impor'                WHERE COA =  '11805'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Pajak Dibayar Dimuka - PPh Pasal 22 - Impor'  WHERE COA =  '11903'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'PPN Masukan - Impor'                          WHERE COA =  '11908'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Retur Pembelian Bahan Baku - Impor'           WHERE COA =  '51201'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya Asuransi Impor'                         WHERE COA =  '51202'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Bea Masuk Impor'                              WHERE COA =  '51204'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya Transportasi Impor'                     WHERE COA =  '51205'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya Jasa Pergudangan Impor'                 WHERE COA =  '51206'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya Pengurusan Dokumen Impor'               WHERE COA =  '51207'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya BB Impor-8'                             WHERE COA =  '51208'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya Pembelian Bahan Baku Lainnya - Impor'   WHERE COA =  '51209'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Biaya Pemakaian Bahan Baku - Impor'           WHERE COA =  '51299'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Pembelian Bahan Baku - Impor'                 WHERE COA =  '58812'; " & Enter1Baris
 
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
@@ -1122,8 +1122,8 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Update Tabel Pemindahbukuan :
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   MODIFY  Bea_Masuk           BIGINT(27)     NOT NULL    AFTER   Freight; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   MODIFY  Biaya_Transportasi  BIGINT(27)     NOT NULL    AFTER   Ditanggung_Oleh; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   MODIFY  Bea_Masuk           BIGINT(27)     NOT NULL    AFTER   Freight; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   MODIFY  Biaya_Transportasi  BIGINT(27)     NOT NULL    AFTER   Ditanggung_Oleh; " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -1152,7 +1152,7 @@ Module mdl_UpdateDatabase
         'SUB INI JANGAN DIJADIKAN TEMPLATE....!!! ADA KESALAHAN FATAL...!!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_43 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf 'Ini Kesalahan. Harusnya 44 malah 43 Tapi jangan dirubah....!!!! Sudah kelewat...!!! Kalau dirubah, bahaya...!!!
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_43 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris 'Ini Kesalahan. Harusnya 44 malah 43 Tapi jangan dirubah....!!!! Sudah kelewat...!!! Kalau dirubah, bahaya...!!!
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1169,8 +1169,8 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Update Tabel Pemindahbukuan :
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   MODIFY  Retur_PPN           BIGINT(27)     NOT NULL    AFTER   Biaya_Materai; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   MODIFY  Retur_DPP           BIGINT(27)     NOT NULL    AFTER   Biaya_Materai; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   MODIFY  Retur_PPN           BIGINT(27)     NOT NULL    AFTER   Biaya_Materai; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   MODIFY  Retur_DPP           BIGINT(27)     NOT NULL    AFTER   Biaya_Materai; " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -1201,7 +1201,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_45 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_45 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1219,10 +1219,10 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Update Tabel Dummy (Karena kesalahan pada update 44) :
-        QueryUpdate &= " ALTER TABLE tbl_dummy ADD Upd_44 varchar(9) NOT NULL AFTER Upd_45; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE tbl_dummy ADD Upd_44 varchar(9) NOT NULL AFTER Upd_45; " & Enter1Baris
 
         'Update Nama Akun :
-        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Pembelian Bahan Baku - Impor'                 WHERE COA =  '58812'; " & vbCrLf
+        QueryUpdate &= " UPDATE     tbl_COA     SET     Nama_Akun =  'Pembelian Bahan Baku - Impor'                 WHERE COA =  '58812'; " & Enter1Baris
 
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
@@ -1239,25 +1239,25 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Tabel Transaksi
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     Nama_Akun =  'Pembelian Bahan Baku - Impor'     WHERE COA =  '58812'; " & vbCrLf
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     Nama_Akun =  'Pembelian Bahan Baku - Impor'     WHERE COA =  '58812'; " & Enter1Baris
 
         'Update Tabel Invoice Pembelian :
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Loko                        VARCHAR(27)     NOT NULL                            AFTER   Tanggal_Diterima_SJ_BAST_Produk; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Tanggal_Serah_Terima        DATETIME        NOT NULL    DEFAULT '1900-01-01'    AFTER   Tanggal_Diterima_SJ_BAST_Produk; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Nomor_JV_Bayar_Pajak_Impor  BIGINT(27)      NOT NULL                            AFTER   Nomor_JV_Bukti_Potong; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Tanggal_Bayar_Pajak_Impor   DATETIME        NOT NULL    DEFAULT '1900-01-01'    AFTER   Nomor_JV_Bukti_Potong; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   MODIFY  Biaya_Transportasi          BIGINT(27)      NOT NULL                            AFTER   Ditanggung_Oleh; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Loko                        VARCHAR(27)     NOT NULL                            AFTER   Tanggal_Diterima_SJ_BAST_Produk; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Tanggal_Serah_Terima        DATETIME        NOT NULL    DEFAULT '1900-01-01'    AFTER   Tanggal_Diterima_SJ_BAST_Produk; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Nomor_JV_Bayar_Pajak_Impor  BIGINT(27)      NOT NULL                            AFTER   Nomor_JV_Bukti_Potong; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_pembelian_invoice   ADD     Tanggal_Bayar_Pajak_Impor   DATETIME        NOT NULL    DEFAULT '1900-01-01'    AFTER   Nomor_JV_Bukti_Potong; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   MODIFY  Biaya_Transportasi          BIGINT(27)      NOT NULL                            AFTER   Ditanggung_Oleh; " & Enter1Baris
 
         'Update kolom-kolom Jenis Pajak/PPh :
-        QueryUpdate &= " ALTER TABLE    tbl_BuktiPenerimaan             CHANGE  Jenis_Pajak     Jenis_Pajak     VARCHAR(27) Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_BuktiPengeluaran            CHANGE  Jenis_Pajak     Jenis_Pajak     VARCHAR(27) Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_PO                CHANGE  Jenis_PPN       Jenis_PPN       VARCHAR(27) Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_PO                CHANGE  Jenis_PPh       Jenis_PPh       VARCHAR(27) Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Retur             CHANGE  Jenis_PPN       Jenis_PPN       VARCHAR(27) Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_PO                CHANGE  Jenis_PPN       Jenis_PPN       VARCHAR(27) Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_PO                CHANGE  Jenis_PPh       Jenis_PPh       VARCHAR(27) Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Retur             CHANGE  Jenis_PPN       Jenis_PPN       VARCHAR(27) Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_PengawasanPelaporanPajak    CHANGE  Jenis_Pajak     Jenis_Pajak     VARCHAR(27) Not NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_BuktiPenerimaan             CHANGE  Jenis_Pajak     Jenis_Pajak     VARCHAR(27) Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_BuktiPengeluaran            CHANGE  Jenis_Pajak     Jenis_Pajak     VARCHAR(27) Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_PO                CHANGE  Jenis_PPN       Jenis_PPN       VARCHAR(27) Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_PO                CHANGE  Jenis_PPh       Jenis_PPh       VARCHAR(27) Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Retur             CHANGE  Jenis_PPN       Jenis_PPN       VARCHAR(27) Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_PO                CHANGE  Jenis_PPN       Jenis_PPN       VARCHAR(27) Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_PO                CHANGE  Jenis_PPh       Jenis_PPh       VARCHAR(27) Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Retur             CHANGE  Jenis_PPN       Jenis_PPN       VARCHAR(27) Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_PengawasanPelaporanPajak    CHANGE  Jenis_Pajak     Jenis_Pajak     VARCHAR(27) Not NULL; " & Enter1Baris
 
 
         'Susur Database Transaksi :
@@ -1285,7 +1285,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_46 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_46 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1301,15 +1301,15 @@ Module mdl_UpdateDatabase
 
         'Database General :
         QueryUpdate = Kosongan
-        QueryUpdate &= " UPDATE tbl_coa     SET     Nama_Akun       = 'Biaya Dibayar Dimuka (USD)'  WHERE COA =  '11704'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_coa     SET     Kode_Mata_Uang  = 'USD'                         WHERE COA =  '11704'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_coa     SET     COA             = '11711'                       WHERE COA =  '11704'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_coa     SET     Nama_Akun       = 'Biaya Dibayar Dimuka (USD)'  WHERE COA =  '11704'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_coa     SET     Kode_Mata_Uang  = 'USD'                         WHERE COA =  '11704'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_coa     SET     COA             = '11711'                       WHERE COA =  '11704'; " & Enter1Baris
         QueryUpdate &= " INSERT INTO tbl_COA ( COA, Nama_Akun, Kode_Mata_Uang, D_K, Visibilitas ) VALUES "
         QueryUpdate &= " ( '11712', 'Biaya Dibayar Dimuka (AUD)',   'AUD',  'DEBET',  'Tidak' ), "
         QueryUpdate &= " ( '11713', 'Biaya Dibayar Dimuka (JPY)',   'JPY',  'DEBET',  'Tidak' ), "
         QueryUpdate &= " ( '11714', 'Biaya Dibayar Dimuka (CNY)',   'CNY',  'DEBET',  'Tidak' ), "
         QueryUpdate &= " ( '11715', 'Biaya Dibayar Dimuka (EUR)',   'EUR',  'DEBET',  'Tidak' ), "
-        QueryUpdate &= " ( '11716', 'Biaya Dibayar Dimuka (SGD)',   'SGD',  'DEBET',  'Tidak' ); " & vbCrLf  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
+        QueryUpdate &= " ( '11716', 'Biaya Dibayar Dimuka (SGD)',   'SGD',  'DEBET',  'Tidak' ); " & Enter1Baris  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
 
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
@@ -1326,18 +1326,18 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'tbl_Transaksi :
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     Nama_Akun       = 'Biaya Dibayar Dimuka (USD)'  WHERE COA =  '11704'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     Kode_Mata_Uang  = 'USD'                         WHERE COA =  '11704'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA             = '11711'                       WHERE COA =  '11704'; " & vbCrLf
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     Nama_Akun       = 'Biaya Dibayar Dimuka (USD)'  WHERE COA =  '11704'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     Kode_Mata_Uang  = 'USD'                         WHERE COA =  '11704'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA             = '11711'                       WHERE COA =  '11704'; " & Enter1Baris
 
         'Tabel Bukti Pengeluaran :
-        QueryUpdate &= " UPDATE tbl_BuktiPengeluaran    SET     COA_Debet  = '11711'    WHERE COA_Debet  =  '11704'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_BuktiPengeluaran    SET     COA_Debet  = '11711'    WHERE COA_Debet  =  '11704'; " & Enter1Baris
 
         'Tabel Bukti Penerimaan:
-        QueryUpdate &= " UPDATE tbl_BuktiPenerimaan     SET     COA_Kredit = '11711'    WHERE COA_Kredit =  '11704'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_BuktiPenerimaan     SET     COA_Kredit = '11711'    WHERE COA_Kredit =  '11704'; " & Enter1Baris
 
         'tbl_SaldoAwalCOA :
-        QueryUpdate &= " UPDATE tbl_saldoawalcoa        SET     COA = '11711'           WHERE COA =  '11704'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_saldoawalcoa        SET     COA = '11711'           WHERE COA =  '11704'; " & Enter1Baris
         QueryUpdate &= " INSERT INTO tbl_saldoawalcoa VALUES ( '11712', '0' ); "
         QueryUpdate &= " INSERT INTO tbl_saldoawalcoa VALUES ( '11713', '0' ); "
         QueryUpdate &= " INSERT INTO tbl_saldoawalcoa VALUES ( '11714', '0' ); "
@@ -1388,7 +1388,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_47 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_47 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1405,36 +1405,36 @@ Module mdl_UpdateDatabase
         'Database General :
         QueryUpdate = Kosongan
 
-        QueryUpdate &= " UPDATE tbl_COA     SET     Kode_Mata_Uang  = 'SGD'                     WHERE COA =  '11516'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Kode_Mata_Uang  = 'SGD'                     WHERE COA =  '21116'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_COA     SET     Kode_Mata_Uang  = 'SGD'                     WHERE COA =  '11516'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Kode_Mata_Uang  = 'SGD'                     WHERE COA =  '21116'; " & Enter1Baris
 
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Uang Muka Pembelian - Impor (USD)'   WHERE COA =  '11702'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Kode_Mata_Uang  = 'USD'                                 WHERE COA =  '11702'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Uang Muka Pembelian - Impor (USD)'   WHERE COA =  '11702'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Kode_Mata_Uang  = 'USD'                                 WHERE COA =  '11702'; " & Enter1Baris
 
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Uang Muka Penjualan - Ekspor (USD)'  WHERE COA =  '21502'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Kode_Mata_Uang  = 'USD'                                 WHERE COA =  '21502'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Uang Muka Penjualan - Ekspor (USD)'  WHERE COA =  '21502'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Kode_Mata_Uang  = 'USD'                                 WHERE COA =  '21502'; " & Enter1Baris
 
-        QueryUpdate &= " UPDATE tbl_COA     SET     COA             = '11700'                   WHERE COA =  '11701'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     COA             = '11701'                   WHERE COA =  '11702'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     COA             = '11710'                   WHERE COA =  '11703'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_COA     SET     COA             = '11700'                   WHERE COA =  '11701'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     COA             = '11701'                   WHERE COA =  '11702'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     COA             = '11710'                   WHERE COA =  '11703'; " & Enter1Baris
 
-        QueryUpdate &= " UPDATE tbl_COA     SET     COA             = '21500'                   WHERE COA =  '21501'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     COA             = '21501'                   WHERE COA =  '21502'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     COA             = '21510'                   WHERE COA =  '21503'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_COA     SET     COA             = '21500'                   WHERE COA =  '21501'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     COA             = '21501'                   WHERE COA =  '21502'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     COA             = '21510'                   WHERE COA =  '21503'; " & Enter1Baris
 
         QueryUpdate &= " INSERT INTO tbl_COA ( COA, Nama_Akun, Kode_Mata_Uang, D_K, Visibilitas ) VALUES "
         QueryUpdate &= " ( '11702', 'Uang Muka Pembelian - Impor (AUD)',   'AUD',  'DEBET',  'Tidak' ), "
         QueryUpdate &= " ( '11703', 'Uang Muka Pembelian - Impor (JPY)',   'JPY',  'DEBET',  'Tidak' ), "
         QueryUpdate &= " ( '11704', 'Uang Muka Pembelian - Impor (CNY)',   'CNY',  'DEBET',  'Tidak' ), "
         QueryUpdate &= " ( '11705', 'Uang Muka Pembelian - Impor (EUR)',   'EUR',  'DEBET',  'Tidak' ), "
-        QueryUpdate &= " ( '11706', 'Uang Muka Pembelian - Impor (SGD)',   'SGD',  'DEBET',  'Tidak' ); " & vbCrLf  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
+        QueryUpdate &= " ( '11706', 'Uang Muka Pembelian - Impor (SGD)',   'SGD',  'DEBET',  'Tidak' ); " & Enter1Baris  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
 
         QueryUpdate &= " INSERT INTO tbl_COA ( COA, Nama_Akun, Kode_Mata_Uang, D_K, Visibilitas ) VALUES "
         QueryUpdate &= " ( '21502', 'Uang Muka Penjualan - Ekspor (AUD)',  'AUD',  'DEBET',  'Tidak' ), "
         QueryUpdate &= " ( '21503', 'Uang Muka Penjualan - Ekspor (JPY)',  'JPY',  'DEBET',  'Tidak' ), "
         QueryUpdate &= " ( '21504', 'Uang Muka Penjualan - Ekspor (CNY)',  'CNY',  'DEBET',  'Tidak' ), "
         QueryUpdate &= " ( '21505', 'Uang Muka Penjualan - Ekspor (EUR)',  'EUR',  'DEBET',  'Tidak' ), "
-        QueryUpdate &= " ( '21506', 'Uang Muka Penjualan - Ekspor (SGD)',  'SGD',  'DEBET',  'Tidak' ); " & vbCrLf  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
+        QueryUpdate &= " ( '21506', 'Uang Muka Penjualan - Ekspor (SGD)',  'SGD',  'DEBET',  'Tidak' ); " & Enter1Baris  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
 
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
@@ -1451,22 +1451,22 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'tbl_Transaksi :
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11700'   WHERE COA =  '11701'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11701'   WHERE COA =  '11702'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11710'   WHERE COA =  '11703'; " & vbCrLf
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11700'   WHERE COA =  '11701'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11701'   WHERE COA =  '11702'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '11710'   WHERE COA =  '11703'; " & Enter1Baris
 
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '21500'   WHERE COA =  '21501'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '21501'   WHERE COA =  '21502'; " & vbCrLf
-        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '21510'   WHERE COA =  '21503'; " & vbCrLf
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '21500'   WHERE COA =  '21501'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '21501'   WHERE COA =  '21502'; " & Enter1Baris
+        QueryUpdate &= " UPDATE     tbl_Transaksi       SET     COA = '21510'   WHERE COA =  '21503'; " & Enter1Baris
 
         'tbl_SaldoAwalCOA :
-        QueryUpdate &= " UPDATE tbl_saldoawalcoa        SET     COA = '11700'           WHERE COA =  '11701'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_SaldoAwalCOA        SET     COA = '11701'           WHERE COA =  '11702'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_saldoawalcoa        SET     COA = '11710'           WHERE COA =  '11703'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_saldoawalcoa        SET     COA = '11700'           WHERE COA =  '11701'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_SaldoAwalCOA        SET     COA = '11701'           WHERE COA =  '11702'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_saldoawalcoa        SET     COA = '11710'           WHERE COA =  '11703'; " & Enter1Baris
 
-        QueryUpdate &= " UPDATE tbl_saldoawalcoa        SET     COA = '21500'           WHERE COA =  '21501'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_SaldoAwalCOA        SET     COA = '21501'           WHERE COA =  '21502'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_saldoawalcoa        SET     COA = '21510'           WHERE COA =  '21503'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_saldoawalcoa        SET     COA = '21500'           WHERE COA =  '21501'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_SaldoAwalCOA        SET     COA = '21501'           WHERE COA =  '21502'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_saldoawalcoa        SET     COA = '21510'           WHERE COA =  '21503'; " & Enter1Baris
 
         QueryUpdate &= " INSERT INTO tbl_saldoawalcoa VALUES ( '11702', '0' ); "
         QueryUpdate &= " INSERT INTO tbl_saldoawalcoa VALUES ( '11703', '0' ); "
@@ -1504,7 +1504,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_51 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_51 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1521,29 +1521,29 @@ Module mdl_UpdateDatabase
         'Database General :
         QueryUpdate = Kosongan
 
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Hutang Usaha (USD)'                  WHERE COA =  '21111'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Hutang Usaha (AUD)'                  WHERE COA =  '21112'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Hutang Usaha (JPY)'                  WHERE COA =  '21113'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Hutang Usaha (CNY)'                  WHERE COA =  '21114'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Hutang Usaha (EUR)'                  WHERE COA =  '21115'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Hutang Usaha (SGD)'                  WHERE COA =  '21116'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Hutang Usaha (USD)'                  WHERE COA =  '21111'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Hutang Usaha (AUD)'                  WHERE COA =  '21112'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Hutang Usaha (JPY)'                  WHERE COA =  '21113'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Hutang Usaha (CNY)'                  WHERE COA =  '21114'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Hutang Usaha (EUR)'                  WHERE COA =  '21115'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Hutang Usaha (SGD)'                  WHERE COA =  '21116'; " & Enter1Baris
 
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Piutang Usaha (USD)'                 WHERE COA =  '11511'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Piutang Usaha (AUD)'                 WHERE COA =  '11512'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Piutang Usaha (JPY)'                 WHERE COA =  '11513'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Piutang Usaha (CNY)'                 WHERE COA =  '11514'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Piutang Usaha (EUR)'                 WHERE COA =  '11515'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Piutang Usaha (SGD)'                 WHERE COA =  '11516'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Piutang Usaha (USD)'                 WHERE COA =  '11511'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Piutang Usaha (AUD)'                 WHERE COA =  '11512'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Piutang Usaha (JPY)'                 WHERE COA =  '11513'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Piutang Usaha (CNY)'                 WHERE COA =  '11514'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Piutang Usaha (EUR)'                 WHERE COA =  '11515'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Piutang Usaha (SGD)'                 WHERE COA =  '11516'; " & Enter1Baris
 
         'Koreksi Kesalahan Update 46 :
-        QueryUpdate &= " UPDATE tbl_coa     SET     Nama_Akun       = 'Biaya Dibayar Dimuka (CNY)'          WHERE COA =  '11704'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_coa     SET     Kode_Mata_Uang  = 'CNY'                                 WHERE COA =  '11704'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_coa     SET     Nama_Akun       = 'Biaya Dibayar Dimuka (CNY)'          WHERE COA =  '11704'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_coa     SET     Kode_Mata_Uang  = 'CNY'                                 WHERE COA =  '11704'; " & Enter1Baris
 
         'Koreksi Kesalahan Update 47 :
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Uang Muka Pembelian - Impor (AUD)'   WHERE COA =  '11702'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Kode_Mata_Uang  = 'AUD'                                 WHERE COA =  '11702'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Uang Muka Penjualan - Ekspor (AUD)'  WHERE COA =  '21502'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_COA     SET     Kode_Mata_Uang  = 'AUD'                                 WHERE COA =  '21502'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Uang Muka Pembelian - Impor (AUD)'   WHERE COA =  '11702'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Kode_Mata_Uang  = 'AUD'                                 WHERE COA =  '11702'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Nama_Akun       = 'Uang Muka Penjualan - Ekspor (AUD)'  WHERE COA =  '21502'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_COA     SET     Kode_Mata_Uang  = 'AUD'                                 WHERE COA =  '21502'; " & Enter1Baris
 
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
@@ -1564,7 +1564,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_68 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_68 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1581,8 +1581,8 @@ Module mdl_UpdateDatabase
         'Database Transaksi :
         QueryUpdate = Kosongan
 
-        QueryUpdate &= " ALTER TABLE    tbl_PengawasanGaji  ADD BPJS_Kesehatan_Produksi_Dibayar_Karyawan        BIGINT(27)  NOT NULL    AFTER   BPJS_TK_JHT_IP_Produksi_Dibayar_Karyawan; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_PengawasanGaji  ADD BPJS_Kesehatan_Administrasi_Dibayar_Karyawan    BIGINT(27)  NOT NULL    AFTER   BPJS_TK_JHT_IP_Administrasi_Dibayar_Karyawan; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_PengawasanGaji  ADD BPJS_Kesehatan_Produksi_Dibayar_Karyawan        BIGINT(27)  NOT NULL    AFTER   BPJS_TK_JHT_IP_Produksi_Dibayar_Karyawan; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_PengawasanGaji  ADD BPJS_Kesehatan_Administrasi_Dibayar_Karyawan    BIGINT(27)  NOT NULL    AFTER   BPJS_TK_JHT_IP_Administrasi_Dibayar_Karyawan; " & Enter1Baris
 
 
         'Susur Database Transaksi :
@@ -1611,7 +1611,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_75 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_75 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1629,7 +1629,7 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         QueryUpdate &= " INSERT INTO tbl_COA ( COA, Nama_Akun, Kode_Mata_Uang, D_K, Visibilitas ) VALUES "
-        QueryUpdate &= " ( '21130', 'Hutang Deposit',   'IDR',  'KREDIT',  'Tidak' ); " & vbCrLf  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
+        QueryUpdate &= " ( '21130', 'Hutang Deposit',   'IDR',  'KREDIT',  'Tidak' ); " & Enter1Baris  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
 
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
@@ -1648,7 +1648,7 @@ Module mdl_UpdateDatabase
         'tbl_SaldoAwalCOA :
         QueryUpdate &= " INSERT INTO tbl_saldoawalcoa VALUES ( '21130', '0' ); "
 
-        QueryUpdate &= " ALTER TABLE    tbl_DepositOperasional  ADD Nomor_JV    BIGINT(27)  NOT NULL    AFTER   Keterangan; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_DepositOperasional  ADD Nomor_JV    BIGINT(27)  NOT NULL    AFTER   Keterangan; " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -1675,7 +1675,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_78 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_78 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1691,7 +1691,7 @@ Module mdl_UpdateDatabase
 
         'Database General :
         QueryUpdate = Kosongan
-        QueryUpdate &= " ALTER TABLE    tbl_AmortisasiBiaya     ADD     Tanggal_Mulai       datetime NOT NULL DEFAULT '1900-01-01 00:00:00'  AFTER   Tanggal_Transaksi; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_AmortisasiBiaya     ADD     Tanggal_Mulai       datetime NOT NULL DEFAULT '1900-01-01 00:00:00'  AFTER   Tanggal_Transaksi; " & Enter1Baris
 
         AksesDatabase_General(Buka)
         cmd = New OdbcCommand(" SELECT * FROM tbl_AmortisasiBiaya ", KoneksiDatabaseGeneral)
@@ -1705,7 +1705,7 @@ Module mdl_UpdateDatabase
             TanggalMulai = AmbilTanggalAkhirBulan_BerdasarkanTanggalLengkap(TanggalTransaksi)
             QueryUpdate &=
                 " UPDATE tbl_AmortisasiBiaya SET Tanggal_Mulai = '" & TanggalFormatSimpan(TanggalMulai) & "' " &
-                " WHERE Nomor_ID = '" & NomorID & "' ; " & vbCrLf
+                " WHERE Nomor_ID = '" & NomorID & "' ; " & Enter1Baris
         Loop
         AksesDatabase_General(Tutup)
 
@@ -1731,7 +1731,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_82 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_82 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1747,7 +1747,7 @@ Module mdl_UpdateDatabase
 
         'Database General :
         QueryUpdate = Kosongan
-        QueryUpdate &= " ALTER TABLE    tbl_AmortisasiBiaya     ADD     Nama_Produk VARCHAR(99) NOT NULL    AFTER   Nama_Akun_Amortisasi; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_AmortisasiBiaya     ADD     Nama_Produk VARCHAR(99) NOT NULL    AFTER   Nama_Akun_Amortisasi; " & Enter1Baris
 
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
@@ -1770,7 +1770,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_88 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_88 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1788,7 +1788,7 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
 
-        QueryUpdate &= " ALTER TABLE    tbl_Transaksi   ADD Valid   VARCHAR(9)  NOT NULL    AFTER   Status_Approve; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Transaksi   ADD Valid   VARCHAR(9)  NOT NULL    AFTER   Status_Approve; " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -1815,7 +1815,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_90 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_90 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1833,34 +1833,34 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Tabel PO Penjualan :
-        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_PO        ADD Basis_Perhitungan_Termin    VARCHAR(33) NOT NULL        AFTER  Metode_Pembayaran; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_po        CHANGE  Uang_Muka_Persen        Uang_Muka   DECIMAL(27,2)   NOT NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_po        CHANGE  Termin_1_Persen         Termin_1    DECIMAL(27,2)   NOT NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_po        CHANGE  Termin_2_Persen         Termin_2    DECIMAL(27,2)   NOT NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_po        CHANGE  Pelunasan_Persen        Pelunasan   DECIMAL(27,2)   NOT NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_PO        ADD Basis_Perhitungan_Termin    VARCHAR(33) NOT NULL        AFTER  Metode_Pembayaran; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_po        CHANGE  Uang_Muka_Persen        Uang_Muka   DECIMAL(27,2)   NOT NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_po        CHANGE  Termin_1_Persen         Termin_1    DECIMAL(27,2)   NOT NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_po        CHANGE  Termin_2_Persen         Termin_2    DECIMAL(27,2)   NOT NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_po        CHANGE  Pelunasan_Persen        Pelunasan   DECIMAL(27,2)   NOT NULL; " & Enter1Baris
         QueryUpdate &= " UPDATE         tbl_Penjualan_PO        SET Basis_Perhitungan_Termin    = '" & BasisPerhitunganTermin_Prosentase & "' "
-        QueryUpdate &= " WHERE          Metode_Pembayaran       = '" & MetodePembayaran_Termin & "' ; " & vbCrLf
+        QueryUpdate &= " WHERE          Metode_Pembayaran       = '" & MetodePembayaran_Termin & "' ; " & Enter1Baris
 
         'Tabel Invoice Penjualan :
-        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice   ADD Basis_Perhitungan_Termin    VARCHAR(33)  NOT NULL    AFTER  Metode_Pembayaran; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_penjualan_Invoice   CHANGE  Termin_Persen       Termin      DECIMAL(27,2)   NOT NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice   ADD Basis_Perhitungan_Termin    VARCHAR(33)  NOT NULL    AFTER  Metode_Pembayaran; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_penjualan_Invoice   CHANGE  Termin_Persen       Termin      DECIMAL(27,2)   NOT NULL; " & Enter1Baris
         QueryUpdate &= " UPDATE         tbl_Penjualan_Invoice   SET Basis_Perhitungan_Termin    = '" & BasisPerhitunganTermin_Prosentase & "' "
-        QueryUpdate &= " WHERE          Metode_Pembayaran       = '" & MetodePembayaran_Termin & "' ; " & vbCrLf
+        QueryUpdate &= " WHERE          Metode_Pembayaran       = '" & MetodePembayaran_Termin & "' ; " & Enter1Baris
 
         'Tabel PO Pembelian :
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_PO        ADD Basis_Perhitungan_Termin    VARCHAR(33) NOT NULL        AFTER  Metode_Pembayaran; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_po        CHANGE  Uang_Muka_Persen        Uang_Muka   DECIMAL(27,2)   NOT NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_po        CHANGE  Termin_1_Persen         Termin_1    DECIMAL(27,2)   NOT NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_po        CHANGE  Termin_2_Persen         Termin_2    DECIMAL(27,2)   NOT NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_po        CHANGE  Pelunasan_Persen        Pelunasan   DECIMAL(27,2)   NOT NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_PO        ADD Basis_Perhitungan_Termin    VARCHAR(33) NOT NULL        AFTER  Metode_Pembayaran; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_po        CHANGE  Uang_Muka_Persen        Uang_Muka   DECIMAL(27,2)   NOT NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_po        CHANGE  Termin_1_Persen         Termin_1    DECIMAL(27,2)   NOT NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_po        CHANGE  Termin_2_Persen         Termin_2    DECIMAL(27,2)   NOT NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_po        CHANGE  Pelunasan_Persen        Pelunasan   DECIMAL(27,2)   NOT NULL; " & Enter1Baris
         QueryUpdate &= " UPDATE         tbl_Pembelian_PO        SET Basis_Perhitungan_Termin    = '" & BasisPerhitunganTermin_Prosentase & "' "
-        QueryUpdate &= " WHERE          Metode_Pembayaran       = '" & MetodePembayaran_Termin & "' ; " & vbCrLf
+        QueryUpdate &= " WHERE          Metode_Pembayaran       = '" & MetodePembayaran_Termin & "' ; " & Enter1Baris
 
         'Tabel Invoice Pembelian :
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   ADD Basis_Perhitungan_Termin    VARCHAR(33)  NOT NULL    AFTER  Metode_Pembayaran; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   CHANGE  Termin_Persen       Termin      DECIMAL(27,2)   NOT NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   ADD Basis_Perhitungan_Termin    VARCHAR(33)  NOT NULL    AFTER  Metode_Pembayaran; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   CHANGE  Termin_Persen       Termin      DECIMAL(27,2)   NOT NULL; " & Enter1Baris
         QueryUpdate &= " UPDATE         tbl_Pembelian_Invoice   SET Basis_Perhitungan_Termin    = '" & BasisPerhitunganTermin_Prosentase & "' "
-        QueryUpdate &= " WHERE          Metode_Pembayaran       = '" & MetodePembayaran_Termin & "' ; " & vbCrLf
+        QueryUpdate &= " WHERE          Metode_Pembayaran       = '" & MetodePembayaran_Termin & "' ; " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -1887,7 +1887,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_110 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_110 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1905,19 +1905,19 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Tabel Bukti Pengeluaran :
-        QueryUpdate &= " ALTER TABLE    tbl_BuktiPengeluaran    CHANGE  PPh_Terutang    PPh_Terutang    BIGINT(27)  Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_BuktiPengeluaran    CHANGE  PPh_Ditanggung  PPh_Ditanggung  BIGINT(27)  Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_BuktiPengeluaran    CHANGE  PPh_Dipotong    PPh_Dipotong    BIGINT(27)  Not NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_BuktiPengeluaran    CHANGE  PPh_Terutang    PPh_Terutang    BIGINT(27)  Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_BuktiPengeluaran    CHANGE  PPh_Ditanggung  PPh_Ditanggung  BIGINT(27)  Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_BuktiPengeluaran    CHANGE  PPh_Dipotong    PPh_Dipotong    BIGINT(27)  Not NULL; " & Enter1Baris
 
         'Tabel Invoice Pembelian :
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   CHANGE  PPh_Terutang    PPh_Terutang    BIGINT(27)  Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   CHANGE  PPh_Ditanggung  PPh_Ditanggung  BIGINT(27)  Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   CHANGE  PPh_Dipotong    PPh_Dipotong    BIGINT(27)  Not NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   CHANGE  PPh_Terutang    PPh_Terutang    BIGINT(27)  Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   CHANGE  PPh_Ditanggung  PPh_Ditanggung  BIGINT(27)  Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Pembelian_Invoice   CHANGE  PPh_Dipotong    PPh_Dipotong    BIGINT(27)  Not NULL; " & Enter1Baris
 
         'Tabel Invoice Penjualan :
-        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice   CHANGE  PPh_Terutang    PPh_Terutang    BIGINT(27)  Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice   CHANGE  PPh_Ditanggung  PPh_Ditanggung  BIGINT(27)  Not NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice   CHANGE  PPh_Dipotong    PPh_Dipotong    BIGINT(27)  Not NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice   CHANGE  PPh_Terutang    PPh_Terutang    BIGINT(27)  Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice   CHANGE  PPh_Ditanggung  PPh_Ditanggung  BIGINT(27)  Not NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice   CHANGE  PPh_Dipotong    PPh_Dipotong    BIGINT(27)  Not NULL; " & Enter1Baris
 
         'Susur Database Transaksi :
         AksesDatabase_General(Buka)
@@ -1944,7 +1944,7 @@ Module mdl_UpdateDatabase
         'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
 
         '-------------------------------------------------------------------------------------------------------
-        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_129 varchar(9) NOT NULL AFTER Upd_99999; " & vbCrLf
+        Dim QueryUpdate As String = " ALTER TABLE tbl_dummy ADD Upd_129 varchar(9) NOT NULL AFTER Upd_99999; " & Enter1Baris
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
         Try
@@ -1960,9 +1960,9 @@ Module mdl_UpdateDatabase
 
         'Database General :
         QueryUpdate = Kosongan
-        QueryUpdate &= " UPDATE tbl_COA SET COA = '51100' WHERE COA = '58811'; " & vbCrLf   '(Pembelian Bahan Baku - Lokal)
-        QueryUpdate &= " UPDATE tbl_COA SET COA = '51200' WHERE COA = '58812'; " & vbCrLf   '(Pembelian Bahan Baku - Impor)
-        QueryUpdate &= " UPDATE tbl_COA SET COA = '53100' WHERE COA = '58821'; " & vbCrLf   '(Pembelian Bahan Penolong)
+        QueryUpdate &= " UPDATE tbl_COA SET COA = '51100' WHERE COA = '58811'; " & Enter1Baris   '(Pembelian Bahan Baku - Lokal)
+        QueryUpdate &= " UPDATE tbl_COA SET COA = '51200' WHERE COA = '58812'; " & Enter1Baris   '(Pembelian Bahan Baku - Impor)
+        QueryUpdate &= " UPDATE tbl_COA SET COA = '53100' WHERE COA = '58821'; " & Enter1Baris   '(Pembelian Bahan Penolong)
 
         BukaDatabaseGeneral_MySQL()
         cmdMySQL = New MySqlCommand(QueryUpdate, KoneksiDatabaseGeneral_MySQL)
@@ -1980,15 +1980,15 @@ Module mdl_UpdateDatabase
         QueryUpdate = Kosongan
 
         'Tabel Transaksi :
-        QueryUpdate &= " UPDATE tbl_Transaksi SET COA = '51100' WHERE COA = '58811'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_Transaksi SET COA = '51200' WHERE COA = '58812'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_Transaksi SET COA = '53100' WHERE COA = '58821'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_Transaksi SET COA = '51100' WHERE COA = '58811'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_Transaksi SET COA = '51200' WHERE COA = '58812'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_Transaksi SET COA = '53100' WHERE COA = '58821'; " & Enter1Baris
 
 
         'Tabel Invoice Pembelian :
-        QueryUpdate &= " UPDATE tbl_Pembelian_Invoice SET COA_Produk =  '51100' WHERE COA_Produk =  '58811'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_Pembelian_Invoice SET COA_Produk =  '51200' WHERE COA_Produk =  '58812'; " & vbCrLf
-        QueryUpdate &= " UPDATE tbl_Pembelian_Invoice SET COA_Produk =  '53100' WHERE COA_Produk =  '58821'; " & vbCrLf
+        QueryUpdate &= " UPDATE tbl_Pembelian_Invoice SET COA_Produk =  '51100' WHERE COA_Produk =  '58811'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_Pembelian_Invoice SET COA_Produk =  '51200' WHERE COA_Produk =  '58812'; " & Enter1Baris
+        QueryUpdate &= " UPDATE tbl_Pembelian_Invoice SET COA_Produk =  '53100' WHERE COA_Produk =  '58821'; " & Enter1Baris
 
 
         'Susur Database Transaksi :
@@ -2030,7 +2030,7 @@ Module mdl_UpdateDatabase
         QueryUpdate &= " ( '11707', 'Uang Muka Pembelian - Impor (GBP)',    'GBP',  'DEBET',    'Tidak' ), "
         QueryUpdate &= " ( '11717', 'Biaya Dibayar Dimuka (GBP)',           'GBP',  'DEBET',    'Tidak' ), "
         QueryUpdate &= " ( '21117', 'Hutang Usaha (GBP)',                   'GBP',  'DEBET',    'Tidak' ), "
-        QueryUpdate &= " ( '21507', 'Uang Muka Penjualan - Ekspor (GBP)',   'GBP',  'DEBET',    'Tidak' ); " & vbCrLf  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
+        QueryUpdate &= " ( '21507', 'Uang Muka Penjualan - Ekspor (GBP)',   'GBP',  'DEBET',    'Tidak' ); " & Enter1Baris  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
 
         UpdateDatabaseGeneral(QueryUpdate, NomorUpdate)
 
@@ -2044,7 +2044,7 @@ Module mdl_UpdateDatabase
         QueryUpdate &= " ( '11707', '0' ), "
         QueryUpdate &= " ( '11717', '0' ), "
         QueryUpdate &= " ( '21117', '0' ), "
-        QueryUpdate &= " ( '21507', '0' ); " & vbCrLf  '<-- Ujurng Query, tidak pakai koma..!
+        QueryUpdate &= " ( '21507', '0' ); " & Enter1Baris  '<-- Ujurng Query, tidak pakai koma..!
 
         UpdateDatabaseTransaksi(QueryUpdate, NomorUpdate)
 
@@ -2065,9 +2065,9 @@ Module mdl_UpdateDatabase
         '------------------------------------------------------------------------------------------------------------------------------------------------
         'Database Transaksi :
         QueryUpdate = Kosongan
-        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice MODIFY    DPP_Barang              bigint(27) NOT NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice MODIFY    DPP_Jasa                bigint(27) NOT NULL; " & vbCrLf
-        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice MODIFY    Dasar_Pengenaan_Pajak   bigint(27) NOT NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice MODIFY    DPP_Barang              bigint(27) NOT NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice MODIFY    DPP_Jasa                bigint(27) NOT NULL; " & Enter1Baris
+        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice MODIFY    Dasar_Pengenaan_Pajak   bigint(27) NOT NULL; " & Enter1Baris
 
         UpdateDatabaseTransaksi(QueryUpdate, NomorUpdate)
 
@@ -2090,7 +2090,7 @@ Module mdl_UpdateDatabase
         '------------------------------------------------------------------------------------------------------------------------------------------------
         'Database Transaksi :
         QueryUpdate = Kosongan
-        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice MODIFY    PPN         bigint(27) NOT NULL; " & vbCrLf
+        QueryUpdate &= " ALTER TABLE    tbl_Penjualan_Invoice MODIFY    PPN         bigint(27) NOT NULL; " & Enter1Baris
 
         UpdateDatabaseTransaksi(QueryUpdate, NomorUpdate)
 
@@ -2113,7 +2113,7 @@ Module mdl_UpdateDatabase
         '------------------------------------------------------------------------------------------------------------------------------------------------
         'Database Transaksi :
         QueryUpdate = Kosongan
-        QueryUpdate &= " INSERT INTO tbl_kursakhirbulan (Kode_Mata_Uang) VALUES ('GBP'); " & vbCrLf
+        QueryUpdate &= " INSERT INTO tbl_kursakhirbulan (Kode_Mata_Uang) VALUES ('GBP'); " & Enter1Baris
 
         UpdateDatabaseTransaksi(QueryUpdate, NomorUpdate)
 
@@ -2134,8 +2134,8 @@ Module mdl_UpdateDatabase
         '------------------------------------------------------------------------------------------------------------------------------------------------
         'Database Transaksi :
         QueryUpdate = Kosongan
-        QueryUpdate &= " Update tbl_Pembelian_Invoice SET Termin = 100 WHERE Metode_Pembayaran = 'Normal'; " & vbCrLf
-        QueryUpdate &= " Update tbl_Penjualan_Invoice SET Termin = 100 WHERE Metode_Pembayaran = 'Normal'; " & vbCrLf
+        QueryUpdate &= " Update tbl_Pembelian_Invoice SET Termin = 100 WHERE Metode_Pembayaran = 'Normal'; " & Enter1Baris
+        QueryUpdate &= " Update tbl_Penjualan_Invoice SET Termin = 100 WHERE Metode_Pembayaran = 'Normal'; " & Enter1Baris
 
         UpdateDatabaseTransaksi(QueryUpdate, NomorUpdate)
 

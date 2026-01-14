@@ -54,7 +54,7 @@ Public Class wpfUsc_LaporanLabaRugi
         If StatusTrialBalance = True Then
             TampilkanData()
         Else
-            MsgBox("Telah terjadi perubahan data pada Jurnal." &
+            Pesan_Peringatan("Telah terjadi perubahan data pada Jurnal." &
             Enter2Baris & "Silakan klik tombol 'Trial Balance' terlebih dahulu.")
             Return
         End If

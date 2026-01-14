@@ -192,13 +192,13 @@ Public Class wpfUsc_BukuPengawasanBuktiPenerimaanBankCash
                 If NomorInvoice = Kosongan Then
                     NomorInvoice = dr.Item("Nomor_Invoice")
                 Else
-                    NomorInvoice &= SlashGanda_Pemisah & Chr(13) & dr.Item("Nomor_Invoice")
+                    NomorInvoice &= SlashGanda_Pemisah & Convert.ToChar(13) & dr.Item("Nomor_Invoice")
                 End If
                 If TanggalInvoice = Kosongan Then
                     TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
                     If TanggalInvoice = TanggalKosong Then TanggalInvoice = Kosongan
                 Else
-                    TanggalInvoice &= SlashGanda_Pemisah & Chr(13) & TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
+                    TanggalInvoice &= SlashGanda_Pemisah & Convert.ToChar(13) & TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
                 End If
             End If
             JumlahTagihan += dr.Item("Jumlah_Tagihan")

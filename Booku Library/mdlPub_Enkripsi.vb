@@ -116,14 +116,14 @@ Public Module mdlPub_Enkripsi
 
     'ENKRIPSI TEKS :
     Public Function EnkripsiTeks(ByVal value As String) As String
-        Dim PanjangTeks = Microsoft.VisualBasic.Len(value)
-        value = Microsoft.VisualBasic.StrReverse(value)
+        Dim PanjangTeks = value.Length
+        value = New String(value.Reverse().ToArray())
         Dim TeksTerenkripsi As String = AcakKarakter(123)
         If PanjangTeks > 0 Then
             Dim Baris = 0
             Do While Baris < PanjangTeks
                 Baris = Baris + 1
-                TeksTerenkripsi = TeksTerenkripsi & Microsoft.VisualBasic.Mid(value, Baris, 1) & AcakKarakter(9)
+                TeksTerenkripsi = TeksTerenkripsi & value(Baris - 1).ToString() & AcakKarakter(9)
             Loop
         Else
             TeksTerenkripsi = "&dfd87&*^&565%434!~24325)_898Hjkdfb/dyuh-f&*^(*&DRFH*&^&%|}{Pmkdfnjk2022dfUH(*^ERDjkdf/khHJGHJd89^&FDEHJFFJjkdfhd(*^^5464$335(&*8fhhdfkjd-fh2023edf5536/45%^%^%632025/4820430-348(*&*&*34937d2024klfjd34jgey^&%6defhdjk"
@@ -135,14 +135,14 @@ Public Module mdlPub_Enkripsi
     Public Function DekripsiTeks(ByVal value As String) As String
         Dim TeksTerDekripsi As String = Nothing
         If value <> "&dfd87&*^&565%434!~24325)_898Hjkdfb/dyuh-f&*^(*&DRFH*&^&%|}{Pmkdfnjk2022dfUH(*^ERDjkdf/khHJGHJd89^&FDEHJFFJjkdfhd(*^^5464$335(&*8fhhdfkjd-fh2023edf5536/45%^%^%632025/4820430-348(*&*&*34937d2024klfjd34jgey^&%6defhdjk" Then
-            value = Microsoft.VisualBasic.StrReverse(value)
-            Dim PanjangTeks = (Microsoft.VisualBasic.Len(value) - 123) / 10
+            value = New String(value.Reverse().ToArray())
+            Dim PanjangTeks = (value.Length - 123) / 10
             Dim Baris = 0
             Dim LacakKarakter = 123
             Do While Baris < PanjangTeks
                 Baris += 1
                 LacakKarakter = (Baris * 10)
-                TeksTerDekripsi = TeksTerDekripsi & Microsoft.VisualBasic.Mid(value, LacakKarakter, 1)
+                TeksTerDekripsi = TeksTerDekripsi & value(LacakKarakter - 1).ToString()
             Loop
         End If
         Return TeksTerDekripsi
@@ -151,13 +151,13 @@ Public Module mdlPub_Enkripsi
     'ENKRIPSI ANGKA
     Public Function EnkripsiAngka(ByVal value As String) As String
         Dim AngkaAsli_String As String = value.ToString
-        Dim JumlahDigit = Microsoft.VisualBasic.Len(AngkaAsli_String)
+        Dim JumlahDigit = AngkaAsli_String.Length
         Dim AngkaTerenkripsi_String As String = AcakKarakter(180)
         Dim SusurKarakter
         Dim Hitung = 0
         Do While Hitung <= JumlahDigit
             Hitung = Hitung + 1
-            SusurKarakter = Microsoft.VisualBasic.Mid(AngkaAsli_String, Hitung, 1)
+            SusurKarakter = AngkaAsli_String(Hitung - 1).ToString()
             AngkaTerenkripsi_String = AngkaTerenkripsi_String & KonversiAngkaKeTigaHuruf(SusurKarakter) & AcakKarakter(27)
         Loop
         AngkaTerenkripsi_String = AngkaTerenkripsi_String & AcakKarakter(99)
@@ -171,10 +171,10 @@ Public Module mdlPub_Enkripsi
         Dim AngkaTerDekripsi As Int64 = 0
         Dim AngkaTerDekripsi_String As String = Nothing
         Dim SusurKarakter As String
-        Dim UjungHitung = AmbilAngka(Microsoft.VisualBasic.Len(value)) - 99 - 27
+        Dim UjungHitung = AmbilAngka(value.Length) - 99 - 27
         Dim Hitung = 180
         Do While Hitung < UjungHitung
-            SusurKarakter = Microsoft.VisualBasic.Mid(value, Hitung + 1, 3)
+            SusurKarakter = value.Substring(Hitung, 3)
             Select Case SusurKarakter
                 Case "aWb"
                     SusurKarakter = "1"
@@ -209,13 +209,13 @@ Public Module mdlPub_Enkripsi
 
     'ENKRIPSI TANGGAL
     Public Function EnkripsiTanggal(ByVal value As String) As String
-        Dim TanggalAsli As String = Microsoft.VisualBasic.Left(value, 10)
+        Dim TanggalAsli As String = value.Substring(0, 10)
         Dim TanggalTerenkripsi As String = AcakKarakter(2)
         Dim SusurKarakter
         Dim Hitung = 0
         Do While Hitung <= 10
             Hitung = Hitung + 1
-            SusurKarakter = Microsoft.VisualBasic.Mid(TanggalAsli, Hitung, 1)
+            SusurKarakter = TanggalAsli(Hitung - 1).ToString()
             TanggalTerenkripsi = TanggalTerenkripsi & AcakKarakter(27) & KonversiAngkaKeTigaHuruf(SusurKarakter)
         Loop
         TanggalTerenkripsi = TanggalTerenkripsi & AcakKarakter(63)
@@ -231,7 +231,7 @@ Public Module mdlPub_Enkripsi
         Dim Hitung = 0
         Do While Hitung <= 270
             Hitung = Hitung + 30
-            SusurKarakter = Microsoft.VisualBasic.Mid(value, Hitung, 3)
+            SusurKarakter = value.Substring(Hitung - 1, 3)
             Select Case SusurKarakter
                 Case "aWb"
                     SusurKarakter = "1"
@@ -325,7 +325,7 @@ Public Module mdlPub_Enkripsi
         If value Is Nothing Then Return 0
         Dim valueString As String = value.ToString
         Dim PlusMinus = pm_PLUS
-        If Left(valueString, 1) = "-" Then PlusMinus = pm_MINUS
+        If valueString(0) = "-"c Then PlusMinus = pm_MINUS
         Dim HasilString As String = Kosongan
         If valueString = "" Or valueString = Kosongan Or valueString = Nothing Then valueString = "xyZ0"
         Dim coll As MatchCollection = Regex.Matches(valueString, "\d+")
@@ -397,6 +397,44 @@ Public Module mdlPub_Enkripsi
             ProsesAmbilAngkaDesimal = False
         End Try
         Return HasilAngka
+    End Function
+
+
+    ' =================================================================
+    ' HELPER FUNCTIONS: PENGGANTI MICROSOFT.VISUALBASIC STRING FUNCTIONS
+    ' =================================================================
+
+    ''' <summary>
+    ''' Mengambil n karakter dari kiri string. Pengganti Microsoft.VisualBasic.Left()
+    ''' </summary>
+    Public Function AmbilKiri(value As Object, length As Integer) As String
+        If value Is Nothing Then Return String.Empty
+        Dim s = value.ToString()
+        If s.Length <= length Then Return s
+        Return s.Substring(0, length)
+    End Function
+
+    ''' <summary>
+    ''' Mengambil substring dari posisi tertentu. Pengganti Microsoft.VisualBasic.Mid()
+    ''' PERHATIAN: Start index dimulai dari 1 (seperti VB6/VBA), bukan 0
+    ''' </summary>
+    Public Function AmbilTengah(value As Object, start As Integer, Optional length As Integer = -1) As String
+        If value Is Nothing Then Return String.Empty
+        Dim s = value.ToString()
+        Dim startIndex = start - 1 ' Konversi dari 1-based ke 0-based
+        If startIndex < 0 OrElse startIndex >= s.Length Then Return String.Empty
+        If length < 0 Then Return s.Substring(startIndex)
+        Dim maxLength = Math.Min(length, s.Length - startIndex)
+        Return s.Substring(startIndex, maxLength)
+    End Function
+
+    ''' <summary>
+    ''' Membalik urutan karakter dalam string. Pengganti Microsoft.VisualBasic.StrReverse()
+    ''' </summary>
+    Public Function BalikTeks(value As Object) As String
+        If value Is Nothing Then Return String.Empty
+        Dim s = value.ToString()
+        Return New String(s.Reverse().ToArray())
     End Function
 
 

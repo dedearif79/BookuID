@@ -140,11 +140,11 @@ Public Class wpfWin_Pengaturan
 
         If StatusKoneksiTesKoneksiDbSAT = True Then
             btn_SimpanPerubahanKoneksiDatabase.IsEnabled = True
-            MsgBox("Koneksi SUKSES tersambung." & Enter2Baris & "Silakan simpan perubahan konfigurasi.")
+            Pesan_Sukses("Koneksi SUKSES tersambung." & Enter2Baris & "Silakan simpan perubahan konfigurasi.")
             StatusKoneksiTesKoneksiDbSAT = False 'StatusKoneksi dikembalikan lagi ke FALSE karena harus disimpan dulu. Setelah disimpan, baru benar-benar TRUE.
         Else
             btn_SimpanPerubahanKoneksiDatabase.IsEnabled = False
-            MsgBox("Koneksi GAGAL.")
+            Pesan_Gagal("Koneksi GAGAL.")
         End If
 
     End Sub
@@ -178,11 +178,11 @@ Public Class wpfWin_Pengaturan
             EnkripsiTeks(PasswordDatabaseTesKoneksiDbSAT) &
             FooterConfig
         Try
-            My.Computer.FileSystem.WriteAllText(FilePathDataKoneksi, DataKoneksi, False)
-            MsgBox("Konfigurasi Koneksi BERHASIL disimpan.")
+            IO.File.WriteAllText(FilePathDataKoneksi, DataKoneksi)
+            Pesan_Sukses("Konfigurasi Koneksi BERHASIL disimpan.")
             StatusKoneksiTesKoneksiDbSAT = True
         Catch ex As Exception
-            MsgBox("Konfigurasi Koneksi GAGAL disimpan..!!!")
+            Pesan_Gagal("Konfigurasi Koneksi GAGAL disimpan..!!!")
             StatusKoneksiTesKoneksiDbSAT = False
         End Try
 

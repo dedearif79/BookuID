@@ -281,7 +281,7 @@ Public Class wpfUsc_LaporanTrialBalance
                 Case Halaman_MENUUTAMA
                 Case Halaman_TUTUPBUKU
                     If usc_TutupBuku.StatusAktif Then usc_TutupBuku.TampilkanData()
-                    MsgBox("Silakan periksa data dengan teliti sebelum melakukan 'Tutup Buku'")
+                    Pesan_Informasi("Silakan periksa data dengan teliti sebelum melakukan 'Tutup Buku'")
                     TutupHalaman()
                 Case Halaman_LAPORANLABARUGI
                     'X_frm_Laporan_LabaRugi_X.TampilkanData()
@@ -295,7 +295,7 @@ Public Class wpfUsc_LaporanTrialBalance
         Else
             LoopingTrialBalance = False 'Keluar dari looping dan BackgroundWorker
             datatabelUtama.Rows.Clear()
-            MsgBox("Trial Balance GAGAL." & Enter2Baris & teks_SilakanCobaLagi_Database)
+            Pesan_Gagal("Trial Balance GAGAL." & Enter2Baris & teks_SilakanCobaLagi_Database)
             datatabelUtama.Rows.Clear() 'Kenapa coding ini harus dua kali..? Karena kita bekerja di BackgroundWorker. Jadi, yang terakhir ini untuk menyapu sisa-sisa baris yang masih ada. Intinya : BARIS INI JANGAN DIHAPUS...!!!
             If JalurMasuk <> Halaman_MENUUTAMA Then TutupHalaman()
         End If

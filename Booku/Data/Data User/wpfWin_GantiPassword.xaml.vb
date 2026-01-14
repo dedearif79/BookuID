@@ -62,7 +62,7 @@ Public Class wpfWin_GantiPassword
             Return
         End If
 
-        If Microsoft.VisualBasic.Len(txt_PasswordBaru.Password) < 8 Then
+        If txt_PasswordBaru.Password.Length < 8 Then
             PesanPeringatan("Karakter Password jangan kurang dari 8 digit.")
             txt_PasswordBaru.Focus()
             Return

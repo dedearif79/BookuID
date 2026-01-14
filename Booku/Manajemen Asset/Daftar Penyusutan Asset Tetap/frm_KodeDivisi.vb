@@ -73,7 +73,7 @@ Public Class frm_KodeDivisi
         cmd = New OdbcCommand(" SELECT * FROM tbl_DivisiAsset WHERE Divisi = '" & Divisi & "' ", KoneksiDatabaseGeneral)
         dr = cmd.ExecuteReader
         If dr.HasRows Then
-            MsgBox("Divisi '" & Divisi & "' sudah ada." & Enter2Baris & "Silakan ketik nama yang lain.")
+            Pesan_Peringatan("Divisi '" & Divisi & "' sudah ada." & Enter2Baris & "Silakan ketik nama yang lain.")
             txt_Divisi.Text = Nothing
             txt_Divisi.Focus()
             Return
@@ -99,9 +99,9 @@ Public Class frm_KodeDivisi
             SistemPenomoranOtomatis_KodeDivisi()
             txt_Divisi.Text = Nothing
             TampilkanData()
-            MsgBox("Kode Divisi berhasil disimpan.")
+            Pesan_Sukses("Kode Divisi berhasil disimpan.")
         Else
-            MsgBox("Kode Divisi gagal disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
+            Pesan_Gagal("Kode Divisi gagal disimpan." & Enter2Baris & teks_SilakanCobaLagi_Database)
         End If
 
     End Sub

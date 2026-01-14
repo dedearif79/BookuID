@@ -1317,7 +1317,7 @@ Public Class wpfUsc_Adjusment_PenyusutanAsset
                 If jur_StatusPenyimpananJurnal_Lengkap = True Then
                     JumlahJurnalTerposting += 1
                 Else
-                    MsgBox("Ups... Terjadi kesalahan pada proses penyimpanan..!")
+                    Pesan_Gagal("Ups... Terjadi kesalahan pada proses penyimpanan..!")
                     Exit Do
                 End If
             End If
@@ -1340,17 +1340,17 @@ Public Class wpfUsc_Adjusment_PenyusutanAsset
 
         If jur_StatusPenyimpananJurnal_PerBaris = True Then
             If JumlahJurnalTerposting = 1 Then
-                MsgBox("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi &
+                Pesan_Sukses("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi &
                        "' Bulan " & BulanTerceklis_Awal & " BERHASIL diposting.")
             Else
-                MsgBox("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi &
+                Pesan_Sukses("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi &
                        "' BERHASIL diposting untuk Bulan " & BulanTerceklis_Awal & " - " & BulanTerceklis_Akhir & ".")
             End If
         Else
             If JumlahJurnalTerposting > 0 Then
-                MsgBox("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi & "' hanya terposting sebagian." & Enter2Baris & teks_SilakanUlangiLagi_Database)
+                Pesan_Gagal("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi & "' hanya terposting sebagian." & Enter2Baris & teks_SilakanUlangiLagi_Database)
             Else
-                MsgBox("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi & "' GAGAL diposting." & Enter2Baris & teks_SilakanUlangiLagi_Database)
+                Pesan_Gagal("'Jurnal Penyusutan' Akun '" & NamaAkunBiayaPenyusutan_Terseleksi & "' GAGAL diposting." & Enter2Baris & teks_SilakanUlangiLagi_Database)
             End If
         End If
 
@@ -1435,7 +1435,7 @@ Public Class wpfUsc_Adjusment_PenyusutanAsset
         If AdaJurnal > 0 Then
             win_PilihJurnal_DataAsset.ShowDialog()
         Else
-            MsgBox("Tidak/Belum ada Jurnal pada Tahun Buku ini untuk data terpilih.")
+            Pesan_Informasi("Tidak/Belum ada Jurnal pada Tahun Buku ini untuk data terpilih.")
         End If
     End Sub
 

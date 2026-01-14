@@ -560,10 +560,10 @@ Module mdl_IsiTabelCOA
 
         If StatusSuntingDatabase = True Then
             HasilPembuatanDatabaseGeneral = True
-            MsgBox("Pengisian Data 'COA' Berhasil.")
+            Pesan_Sukses("Pengisian Data 'COA' Berhasil.")
         Else
             HasilPembuatanDatabaseGeneral = False
-            MsgBox("Pengisian Data 'COA' Gagal.")
+            Pesan_Gagal("Pengisian Data 'COA' Gagal.")
         End If
 
     End Sub

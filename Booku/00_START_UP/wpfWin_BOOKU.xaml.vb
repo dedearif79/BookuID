@@ -1587,7 +1587,7 @@ Public Class wpfWin_BOOKU
             StatusMenuPosisiLogout()
             TutupSemuaTab()
             KeluarDariSemuaModul()
-            MsgBox("Anda telah LOGOUT dari sistem.")
+            Pesan_Informasi("Anda telah LOGOUT dari sistem.")
         End If
     End Sub
 
