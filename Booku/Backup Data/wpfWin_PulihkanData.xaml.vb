@@ -116,7 +116,7 @@ Public Class wpfWin_PulihkanData
         Else
             pgb_Progress.Value = 0
             lbl_Progress.Text = "Pemulihan database gagal."
-            pgb_Progress.Foreground = WarnaPeringatan_WPF
+            pgb_Progress.Foreground = clrWarning
             Terabas()
             Jeda(999)
             btn_Pulihkan.Content = "Ulangi"

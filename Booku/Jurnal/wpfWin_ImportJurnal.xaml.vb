@@ -339,8 +339,8 @@ Public Class wpfWin_ImportJurnal
                 Title = "Sukses..!"
                 lbl_Baris_01.Text = "Sukses..!"
                 lbl_Baris_02.Text = "Data Jurnal berhasil diposting seluruhnya."
-                lbl_Baris_01.Foreground = WarnaTeksStandar_WPF
-                lbl_Baris_02.Foreground = WarnaTeksStandar_WPF
+                lbl_Baris_01.Foreground = clrTeksPrimer
+                lbl_Baris_02.Foreground = clrTeksPrimer
                 LaporanHasilPostingJurnal &= Enter2Baris & "Data berhasil diposting seluruhnya."
                 btn_Terapkan.Focus()
             End If
@@ -348,8 +348,8 @@ Public Class wpfWin_ImportJurnal
                 Title = "Peringatan..!"
                 lbl_Baris_01.Text = "Hasil posting bermasalah..!"
                 lbl_Baris_02.Text = "Silakan periksa laporan."
-                lbl_Baris_01.Foreground = WarnaPeringatan_WPF
-                lbl_Baris_02.Foreground = WarnaPeringatan_WPF
+                lbl_Baris_01.Foreground = clrWarning
+                lbl_Baris_02.Foreground = clrWarning
                 btn_Buang.Focus()
             End If
         End If

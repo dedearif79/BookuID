@@ -1312,12 +1312,12 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
     End Sub
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
         If AmbilAngka(e.Row.Item("Nomor_JV_Pembelian")) = 0 Then
-            If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = WarnaDataTahunLalu_WPF
+            If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = clrDataTahunLalu
         Else
             If e.Row.Item("L_O_S") = los_L Then
-                e.Row.Foreground = WarnaTeksStandar_WPF
+                e.Row.Foreground = clrTeksPrimer
             Else
-                e.Row.Foreground = WarnaMerahSolid_WPF
+                e.Row.Foreground = clrError
             End If
         End If
     End Sub
@@ -1474,19 +1474,19 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
         If SisaTagihan_Terseleksi > 0 Then
             lbl_SisaHutang.Visibility = Visibility.Visible
             txt_SisaHutang.Visibility = Visibility.Visible
-            txt_SisaHutang.Foreground = WarnaPeringatan_WPF
+            txt_SisaHutang.Foreground = clrWarning
             lbl_KeteranganLunas.Visibility = Visibility.Collapsed
             txt_KeteranganLunas.Visibility = Visibility.Collapsed
             txt_KeteranganLunas.Text = StatusLunas_BelumLunas
-            txt_KeteranganLunas.Foreground = WarnaPeringatan_WPF
+            txt_KeteranganLunas.Foreground = clrWarning
         Else
             lbl_SisaHutang.Visibility = Visibility.Collapsed
             txt_SisaHutang.Visibility = Visibility.Collapsed
-            txt_SisaHutang.Foreground = WarnaTeksStandar_WPF
+            txt_SisaHutang.Foreground = clrTeksPrimer
             lbl_KeteranganLunas.Visibility = Visibility.Visible
             txt_KeteranganLunas.Visibility = Visibility.Visible
             txt_KeteranganLunas.Text = StatusLunas_Lunas
-            txt_KeteranganLunas.Foreground = WarnaTeksStandar_WPF
+            txt_KeteranganLunas.Foreground = clrTeksPrimer
         End If
 
         If PPh > 0 Then

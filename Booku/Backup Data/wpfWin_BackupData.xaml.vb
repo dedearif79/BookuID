@@ -30,8 +30,8 @@ Public Class wpfWin_BackupData
 
 
     Sub ResetForm()
-        lbl_Progress.Foreground = WarnaTeksStandar_WPF
-        pgb_Progress.Foreground = WarnaHijauProgressBar_WPF
+        lbl_Progress.Foreground = clrTeksPrimer
+        pgb_Progress.Foreground = clrPrimary
         btn_Upload.Visibility = Visibility.Collapsed
         btn_Backup.IsEnabled = True
         pgb_Progress.Value = 0
@@ -115,7 +115,7 @@ Public Class wpfWin_BackupData
         Else
             pgb_Progress.Value = 0
             lbl_Progress.Text = "Backup database gagal."
-            pgb_Progress.Foreground = WarnaPeringatan_WPF
+            pgb_Progress.Foreground = clrWarning
             Terabas()
             Jeda(999)
             btn_Backup.Content = "Ulangi"
@@ -133,8 +133,8 @@ Public Class wpfWin_BackupData
         Dim zipFilePathBackUp_Public_BAK As String = urlFolderServerBookuID_BackUpDataClient & "bak/" & NamaFileZipBackUp
         Dim zipFilePathBackUp_Public_Trash As String = urlFolderServerBookuID_BackUpDataClient & "trash/" & NamaFileZipBackUp
 
-        lbl_Progress.Foreground = WarnaTeksStandar_WPF
-        pgb_Progress.Foreground = WarnaHijauProgressBar_WPF
+        lbl_Progress.Foreground = clrTeksPrimer
+        pgb_Progress.Foreground = clrPrimary
 
         pgb_Progress.Value = 0
         ProsentaseProgress = 0
@@ -152,7 +152,7 @@ Public Class wpfWin_BackupData
             btn_Upload.IsEnabled = True
             btn_Upload.Content = "Coba upload lagi"
             lbl_Progress.Text = "Upload paket backup gagal"
-            pgb_Progress.Foreground = WarnaMerahSolid_WPF
+            pgb_Progress.Foreground = clrError
         End If
         Terabas()
         Jeda(999)
@@ -171,7 +171,7 @@ Public Class wpfWin_BackupData
             btn_Upload.Content = "Coba upload lagi"
             btn_Upload.IsEnabled = True
             lbl_Progress.Text = "Kompresi file backup gagal"
-            pgb_Progress.Foreground = WarnaMerahSolid_WPF
+            pgb_Progress.Foreground = clrError
         End If
 
         Terabas()

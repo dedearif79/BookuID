@@ -279,12 +279,12 @@ Public Class wpfUsc_BukuPengawasanAktivaLainnya
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             If AmbilAngka(e.Row.Item("Nomor_JV")) > 0 Then
-                e.Row.Foreground = WarnaTeksStandar_WPF
+                e.Row.Foreground = clrTeksPrimer
             Else
-                e.Row.Foreground = WarnaMerahSolid_WPF
+                e.Row.Foreground = clrError
             End If
         Else
-            e.Row.Foreground = WarnaTeksStandar_WPF
+            e.Row.Foreground = clrTeksPrimer
         End If
     End Sub
 

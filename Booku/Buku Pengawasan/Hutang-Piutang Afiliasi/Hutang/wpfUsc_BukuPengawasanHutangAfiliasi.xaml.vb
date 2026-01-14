@@ -468,12 +468,12 @@ Public Class wpfUsc_BukuPengawasanHutangAfiliasi
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
         If Left(e.Row.Item("Nomor_BPHA"), PanjangTeks_AwalanBPHA_PlusTahunBuku) = AwalanBPHA_PlusTahunBuku Then
             If e.Row.Item("Nomor_JV") > 0 Then
-                e.Row.Foreground = WarnaTeksStandar_WPF
+                e.Row.Foreground = clrTeksPrimer
             Else
-                If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = WarnaPudar_WPF
+                If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = clrNeutral500
             End If
         Else
-            If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = WarnaDataTahunLalu_WPF
+            If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = clrDataTahunLalu
         End If
     End Sub
 
@@ -791,9 +791,9 @@ Public Class wpfUsc_BukuPengawasanHutangAfiliasi
     End Sub
     Private Sub datagridJadwalAngsuran_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridJadwalAngsuran.LoadingRow
         If e.Row.Item("jadwal_Tanggal_Bayar") = StripKosong Then
-            e.Row.Foreground = WarnaPudar_WPF
+            e.Row.Foreground = clrNeutral500
         Else
-            e.Row.Foreground = WarnaTeksStandar_WPF
+            e.Row.Foreground = clrTeksPrimer
         End If
     End Sub
 

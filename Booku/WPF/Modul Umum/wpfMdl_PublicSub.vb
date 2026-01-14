@@ -1054,53 +1054,59 @@ Module wpfMdl_PublicSub
             Tabel.VerticalAlignment = VerticalAlignment.Top
             Tabel.HeadersVisibility = DataGridHeadersVisibility.Column
             Tabel.CanUserDeleteRows = False
-            Tabel.RowBackground = WarnaPutih_WPF                          ' clrDataGridBg #FFFFFF
             Tabel.CanUserSortColumns = False
             Tabel.CanUserReorderColumns = False
-            Tabel.CanUserDeleteRows = False
             Tabel.CanUserAddRows = False
             Tabel.CanUserResizeRows = False
             Tabel.SelectionMode = DataGridSelectionMode.Single
             Tabel.SelectionUnit = DataGridSelectionUnit.FullRow
             Tabel.BorderThickness = New Thickness(0.5)
-            Tabel.VerticalGridLinesBrush = WarnaHitam_15_WPF              ' clrDataGridGridLine #EEEEEE
-            Tabel.HorizontalGridLinesBrush = WarnaHitam_15_WPF            ' clrDataGridGridLine #EEEEEE
             Tabel.GridLinesVisibility = DataGridGridLinesVisibility.All
             Tabel.IsReadOnly = True
 
-            'Style Header Kolom :
+            ' === WARNA DARI RESOURCES ATAU FALLBACK ===
+            Tabel.RowBackground = clrDataGridBg
+            Tabel.VerticalGridLinesBrush = clrDataGridGridLine
+            Tabel.HorizontalGridLinesBrush = clrDataGridGridLine
+
+            ' === STYLE HEADER KOLOM (Programatis) ===
             Dim styleHeader As New Style(GetType(DataGridColumnHeader))
             styleHeader.Setters.Add(New Setter(DataGridColumnHeader.HorizontalContentAlignmentProperty, HorizontalAlignment.Center))
+            styleHeader.Setters.Add(New Setter(DataGridColumnHeader.BackgroundProperty, clrDataGridHeader))
+            styleHeader.Setters.Add(New Setter(DataGridColumnHeader.ForegroundProperty, clrDataGridHeaderFg))
+            styleHeader.Setters.Add(New Setter(DataGridColumnHeader.PaddingProperty, New Thickness(10, 8, 10, 8)))
+            styleHeader.Setters.Add(New Setter(DataGridColumnHeader.BorderBrushProperty, clrDataGridGridLine))
+            styleHeader.Setters.Add(New Setter(DataGridColumnHeader.BorderThicknessProperty, New Thickness(0, 0, 1, 1)))
             Tabel.ColumnHeaderStyle = styleHeader
 
-            'Style Baris :
+            ' === STYLE BARIS (Programatis) ===
             Dim rowStyle As New Style(GetType(DataGridRow))
-            rowStyle.Setters.Add(New Setter(DataGridRow.ForegroundProperty, WarnaTeksStandar_WPF))
+            rowStyle.Setters.Add(New Setter(DataGridRow.BackgroundProperty, clrDataGridBg))
+            rowStyle.Setters.Add(New Setter(DataGridRow.ForegroundProperty, clrTeksPrimer))
+            ' Trigger untuk baris terseleksi
             Dim selectedRowTrigger As New Trigger() With {
                 .Property = DataGridRow.IsSelectedProperty,
                 .Value = True
             }
-            selectedRowTrigger.Setters.Add(New Setter(DataGridRow.BackgroundProperty, WarnaHijauSolid_WPF))  ' clrPrimary #388E3C
-            selectedRowTrigger.Setters.Add(New Setter(DataGridRow.ForegroundProperty, WarnaPutih_WPF))       ' Teks putih agar terbaca
+            selectedRowTrigger.Setters.Add(New Setter(DataGridRow.BackgroundProperty, clrDataGridRowSelect))
+            selectedRowTrigger.Setters.Add(New Setter(DataGridRow.ForegroundProperty, clrDataGridRowSelectFg))
             rowStyle.Triggers.Add(selectedRowTrigger)
+            Tabel.RowStyle = rowStyle
 
-            'Style Cell (agar warna seleksi terlihat):
+            ' === STYLE CELL (Programatis) ===
             Dim cellStyle As New Style(GetType(DataGridCell))
             cellStyle.Setters.Add(New Setter(DataGridCell.BackgroundProperty, Brushes.Transparent))
-            cellStyle.Setters.Add(New Setter(DataGridCell.ForegroundProperty, WarnaTeksStandar_WPF))
             cellStyle.Setters.Add(New Setter(DataGridCell.BorderBrushProperty, Brushes.Transparent))
             cellStyle.Setters.Add(New Setter(DataGridCell.FocusVisualStyleProperty, Nothing))
+            ' Trigger untuk cell terseleksi
             Dim selectedCellTrigger As New Trigger() With {
                 .Property = DataGridCell.IsSelectedProperty,
                 .Value = True
             }
-            selectedCellTrigger.Setters.Add(New Setter(DataGridCell.BackgroundProperty, WarnaHijauSolid_WPF))   ' Hijau solid #388E3C
-            selectedCellTrigger.Setters.Add(New Setter(DataGridCell.ForegroundProperty, WarnaPutih_WPF))        ' Teks putih
+            selectedCellTrigger.Setters.Add(New Setter(DataGridCell.BackgroundProperty, clrDataGridRowSelect))
+            selectedCellTrigger.Setters.Add(New Setter(DataGridCell.ForegroundProperty, clrDataGridRowSelectFg))
             selectedCellTrigger.Setters.Add(New Setter(DataGridCell.BorderBrushProperty, Brushes.Transparent))
             cellStyle.Triggers.Add(selectedCellTrigger)
-
-            ' Terapkan Style ke DataGrid
-            Tabel.RowStyle = rowStyle
             Tabel.CellStyle = cellStyle
 
         End If
@@ -1110,7 +1116,7 @@ Module wpfMdl_PublicSub
     Public Sub StyleTabelUtama_WPF(ByRef datagridUtama As DataGrid, ByRef datatabelUtama As DataTable, ByRef dataviewUtama As DataView)
         If Proses = False Then
             StyleTabelDasar_WPF(datagridUtama)
-            datagridUtama.AlternatingRowBackground = WarnaHitam_5_WPF     ' clrDataGridBgAlt #FAFAFA
+            datagridUtama.AlternatingRowBackground = clrNeutral50     ' clrDataGridBgAlt #FAFAFA
             dataviewUtama = New DataView(datatabelUtama)
             dataviewUtama.RowFilter = Kosongan
             datagridUtama.ItemsSource = dataviewUtama
@@ -1130,7 +1136,7 @@ Module wpfMdl_PublicSub
     Public Sub StyleTabelBisaDicreate_WPF(ByRef datagridBisaDiCreate As DataGrid, ByRef datatabelBisaDiCreate As DataTable, ByRef dataviewBisaDiCreate As DataView)
         If Proses = False Then
             StyleTabelDasar_WPF(datagridBisaDiCreate)
-            datagridBisaDiCreate.AlternatingRowBackground = WarnaHitam_5_WPF   ' clrDataGridBgAlt #FAFAFA
+            datagridBisaDiCreate.AlternatingRowBackground = clrNeutral50   ' clrDataGridBgAlt #FAFAFA
             dataviewBisaDiCreate = New DataView(datatabelBisaDiCreate)
             dataviewBisaDiCreate.RowFilter = Kosongan
             datagridBisaDiCreate.ItemsSource = dataviewBisaDiCreate
@@ -1141,7 +1147,7 @@ Module wpfMdl_PublicSub
     Public Sub StyleTabelPembantu_WPF(ByRef datagridPembantu As DataGrid, ByRef datatabelPembantu As DataTable, ByRef dataviewPembantu As DataView)
         If Proses = False Then
             StyleTabelDasar_WPF(datagridPembantu)
-            datagridPembantu.AlternatingRowBackground = WarnaHitam_5_WPF      ' clrDataGridBgAlt #FAFAFA
+            datagridPembantu.AlternatingRowBackground = clrNeutral50      ' clrDataGridBgAlt #FAFAFA
             dataviewPembantu = New DataView(datatabelPembantu)
             dataviewPembantu.RowFilter = Kosongan
             datagridPembantu.ItemsSource = dataviewPembantu
@@ -1157,7 +1163,7 @@ Module wpfMdl_PublicSub
             datagridTotal.ItemsSource = dataviewTotal
             datagridTotal.HeadersVisibility = DataGridHeadersVisibility.None
             datagridTotal.CanUserResizeColumns = False
-            datagridTotal.RowBackground = WarnaHitam_5_WPF                    ' clrDataGridBgAlt #FAFAFA
+            datagridTotal.RowBackground = clrNeutral50                    ' clrDataGridBgAlt #FAFAFA
         End If
     End Sub
 
@@ -2062,11 +2068,11 @@ Module wpfMdl_PublicSub
         win_InputJurnal.datatabelUtama.Rows(NomorUrutBahanJurnal + 1)("Jumlah_Debet") = TotalDebetBahanJurnal
         win_InputJurnal.datatabelUtama.Rows(NomorUrutBahanJurnal + 1)("Jumlah_Kredit") = TotalKreditBahanJurnal
         If TotalDebetBahanJurnal = TotalKreditBahanJurnal Then
-            win_InputJurnal.lbl_StatusBalance.Foreground = WarnaHijauSolid_WPF
+            win_InputJurnal.lbl_StatusBalance.Foreground = clrPrimary
             win_InputJurnal.lbl_StatusBalance.Text = "Tidak Ada Selisih"
             win_InputJurnal.btn_Simpan.IsEnabled = True
         Else
-            win_InputJurnal.lbl_StatusBalance.Foreground = WarnaMerahSolid_WPF
+            win_InputJurnal.lbl_StatusBalance.Foreground = clrError
             win_InputJurnal.lbl_StatusBalance.Text = "Ada Selisih"
             win_InputJurnal.btn_Simpan.IsEnabled = False
         End If
@@ -2074,7 +2080,7 @@ Module wpfMdl_PublicSub
     End Sub
 
     Sub StartProgress(pgb_Progress As ProgressBar, Minimum As Int64, Maximum As Int64)
-        pgb_Progress.Foreground = WarnaHijauSolid_WPF
+        pgb_Progress.Foreground = clrPrimary
         ProgressMinimum = Minimum
         ProgressMaximum = Maximum
         ProgressValue = Minimum
@@ -2549,7 +2555,7 @@ Module wpfMdl_PublicSub
         win_InputJurnalAdjusmentForex.datatabelUtama.Rows.Add()
         win_InputJurnalAdjusmentForex.datatabelUtama.Rows(3)("Jumlah_Debet") = JumlahPenyesuaian
         win_InputJurnalAdjusmentForex.datatabelUtama.Rows(3)("Jumlah_Kredit") = JumlahPenyesuaian
-        win_InputJurnalAdjusmentForex.lbl_StatusBalance.Foreground = WarnaHijauSolid_WPF
+        win_InputJurnalAdjusmentForex.lbl_StatusBalance.Foreground = clrPrimary
         win_InputJurnalAdjusmentForex.lbl_StatusBalance.Text = "Tidak Ada Selisih"
         win_InputJurnalAdjusmentForex.dtp_TanggalJurnal.SelectedDate = AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(BulanAngka, TahunBukuAktif)
         win_InputJurnalAdjusmentForex.cmb_JenisJurnal.SelectedValue = JenisJurnal_AdjusmentForex

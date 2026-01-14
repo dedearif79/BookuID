@@ -261,9 +261,9 @@ Public Class wpfUsc_DataUser
         If item IsNot Nothing Then
             Dim status = item("Status_Aktif").ToString()
             If status = "YA" Then
-                row.Foreground = WarnaTeksStandar_WPF
+                row.Foreground = clrTeksPrimer
             Else
-                row.Foreground = WarnaPeringatan_WPF
+                row.Foreground = clrWarning
             End If
         End If
     End Sub

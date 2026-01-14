@@ -126,8 +126,8 @@ Public Class wpfWin_PenerbitUpdater
             lbl_KompressPaketBooku.Text = "Sukses"
         Else
             lbl_KompressPaketBooku.Text = "Gagal"
-            lbl_KompressPaketBooku.Foreground = WarnaPutih_WPF
-            pgb_KompressPaketBooku.Background = WarnaMerahSolid_WPF
+            lbl_KompressPaketBooku.Foreground = clrWhite
+            pgb_KompressPaketBooku.Background = clrError
         End If
 
         Jeda(999)
@@ -153,8 +153,8 @@ Public Class wpfWin_PenerbitUpdater
             lbl_UploadPaketBooku.Text = "Sukses"
         Else
             lbl_UploadPaketBooku.Text = "Gagal"
-            lbl_UploadPaketBooku.Foreground = WarnaPutih_WPF
-            pgb_UploadPaketBooku.Background = WarnaMerahSolid_WPF
+            lbl_UploadPaketBooku.Foreground = clrWhite
+            pgb_UploadPaketBooku.Background = clrError
         End If
 
         Jeda(999)
@@ -174,8 +174,8 @@ Public Class wpfWin_PenerbitUpdater
             lbl_KompressPaketUpdater.Text = "Sukses"
         Else
             lbl_KompressPaketUpdater.Text = "Gagal"
-            lbl_KompressPaketUpdater.Foreground = WarnaPutih_WPF
-            pgb_KompressPaketUpdater.Background = WarnaMerahSolid_WPF
+            lbl_KompressPaketUpdater.Foreground = clrWhite
+            pgb_KompressPaketUpdater.Background = clrError
         End If
 
         Jeda(999)
@@ -204,8 +204,8 @@ Public Class wpfWin_PenerbitUpdater
             HapusPaket()
         Else
             lbl_UploadPaketUpdater.Text = "Gagal"
-            lbl_UploadPaketUpdater.Foreground = WarnaPutih_WPF
-            pgb_UploadPaketUpdater.Background = WarnaMerahSolid_WPF
+            lbl_UploadPaketUpdater.Foreground = clrWhite
+            pgb_UploadPaketUpdater.Background = clrError
         End If
 
     End Function

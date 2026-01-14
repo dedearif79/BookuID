@@ -520,12 +520,12 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
         End Select
         If Left(e.Row.Item("Nomor_BPH"), PanjangTeks_AwalanBPH_PlusTahunBuku) = AwalanBPH_PlusTahunBuku Then
             If e.Row.Item("Nomor_JV_Pencairan") > 0 Then
-                e.Row.Foreground = WarnaTeksStandar_WPF
+                e.Row.Foreground = clrTeksPrimer
             Else
-                If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = WarnaPudar_WPF
+                If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = clrNeutral500
             End If
         Else
-            If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = WarnaDataTahunLalu_WPF
+            If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = clrDataTahunLalu
         End If
     End Sub
 
@@ -847,9 +847,9 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
     End Sub
     Private Sub datagridJadwalAngsuran_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridJadwalAngsuran.LoadingRow
         If e.Row.Item("jadwal_Tanggal_Bayar") = StripKosong Then
-            e.Row.Foreground = WarnaPudar_WPF
+            e.Row.Foreground = clrNeutral500
         Else
-            e.Row.Foreground = WarnaTeksStandar_WPF
+            e.Row.Foreground = clrTeksPrimer
         End If
     End Sub
 

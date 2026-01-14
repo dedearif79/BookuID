@@ -221,7 +221,7 @@ Public Class wpfUsc_LaporanTrialBalance
             '=========================================== SETELAH PENGECEKAN : ===========================================
             KetersediaanMenuHalaman(pnl_Halaman, True) 'Jaga-jaga ada proses yang tidak selesai. Ketersediaan UI harus dipulihkan
             If KesesuaianData_TrialBalance = False Then
-                pgb_Progress.Foreground = WarnaPeringatan_WPF
+                pgb_Progress.Foreground = clrWarning
                 pesan_DataTidakSesuai &= "." & Enter2Baris &
                     "Silakan perbaiki dan sesuaikan semua data tersebut agar proses 'Trial Balance' berjalan dengan baik." & Enter2Baris &
                     "Atau silakan klik tombol 'Yes' untuk melanjutkan 'Trial Balance'."
@@ -678,7 +678,7 @@ Public Class wpfUsc_LaporanTrialBalance
     End Sub
 
     Sub StartProgress()
-        pgb_Progress.Foreground = WarnaHijauSolid_WPF
+        pgb_Progress.Foreground = clrPrimary
         pnl_Progress.Visibility = Visibility.Visible
         pgb_Progress.Minimum = 0
         pgb_Progress.Maximum = ProgressMaximum

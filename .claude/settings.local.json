@@ -30,7 +30,8 @@
       "Bash(MSBuild.exe:*)",
       "Bash(powershell.exe:*)",
       "Bash(git add:*)",
-      "Bash(git commit:*)"
+      "Bash(git commit:*)",
+      "Bash(echo:*)"
     ]
   }
 }

@@ -88,8 +88,8 @@ Public Class wpfWin_ProgressImportDataCOA
     Sub ResetForm()
         KosongkanValueElemenRichTextBox(txt_LaporanHasilPostingCOA)
         LaporanHasilPostingCOA = Enter1Baris & "LAPORAN HASIL POSTING :"
-        lbl_Baris_01.Foreground = WarnaTeksStandar_WPF
-        lbl_Baris_02.Foreground = WarnaTeksStandar_WPF
+        lbl_Baris_01.Foreground = clrTeksPrimer
+        lbl_Baris_02.Foreground = clrTeksPrimer
         btn_Proses.Visibility = Visibility.Visible
         btn_Batal.Visibility = Visibility.Visible
         btn_Buang.Visibility = Visibility.Collapsed
@@ -313,8 +313,8 @@ Public Class wpfWin_ProgressImportDataCOA
                 Title = "Sukses..!"
                 lbl_Baris_01.Text = "Sukses..!"
                 lbl_Baris_02.Text = "Data COA berhasil diposting seluruhnya."
-                lbl_Baris_01.Foreground = WarnaTeksStandar_WPF
-                lbl_Baris_02.Foreground = WarnaTeksStandar_WPF
+                lbl_Baris_01.Foreground = clrTeksPrimer
+                lbl_Baris_02.Foreground = clrTeksPrimer
                 LaporanHasilPostingCOA &= Enter2Baris & "Data berhasil diposting seluruhnya."
                 btn_Terapkan.Focus()
             End If
@@ -322,8 +322,8 @@ Public Class wpfWin_ProgressImportDataCOA
                 Title = "Peringatan..!"
                 lbl_Baris_01.Text = "Hasil posting bermasalah..!"
                 lbl_Baris_02.Text = "Silakan periksa laporan."
-                lbl_Baris_01.Foreground = WarnaPeringatan_WPF
-                lbl_Baris_02.Foreground = WarnaPeringatan_WPF
+                lbl_Baris_01.Foreground = clrWarning
+                lbl_Baris_02.Foreground = clrWarning
                 btn_Buang.Focus()
             End If
         End If

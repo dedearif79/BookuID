@@ -176,9 +176,9 @@ Public Class wpfUsc_DataProdukApp
     End Sub
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
         If e.Row.Item("Status_Terpakai").ToString() = "1" Then
-            e.Row.Foreground = WarnaPeringatan_WPF
+            e.Row.Foreground = clrWarning
         Else
-            e.Row.Foreground = WarnaTeksStandar_WPF
+            e.Row.Foreground = clrTeksPrimer
         End If
     End Sub
 

@@ -55,15 +55,15 @@ Module wpfMdl_SaldoDanPenyesuaian
         If SaldoAwal_BerdasarkanList = SaldoAwal_BerdasarkanCOA_PlusPenyesuaian Then
             KesesuaianSaldoAwal = True
             btn_Sesuaikan.IsEnabled = False
-            txt_SaldoBerdasarkanList.Foreground = WarnaTeksStandar_WPF
-            txt_saldoBerdasarkanCOA_PlusPenyesuaian.Foreground = WarnaTeksStandar_WPF
-            txt_SelisihSaldo.Foreground = WarnaTeksStandar_WPF
+            txt_SaldoBerdasarkanList.Foreground = clrTeksPrimer
+            txt_saldoBerdasarkanCOA_PlusPenyesuaian.Foreground = clrTeksPrimer
+            txt_SelisihSaldo.Foreground = clrTeksPrimer
         Else
             KesesuaianSaldoAwal = False
             btn_Sesuaikan.IsEnabled = True
-            txt_SaldoBerdasarkanList.Foreground = WarnaPeringatan_WPF
-            txt_saldoBerdasarkanCOA_PlusPenyesuaian.Foreground = WarnaPeringatan_WPF
-            txt_SelisihSaldo.Foreground = WarnaPeringatan_WPF
+            txt_SaldoBerdasarkanList.Foreground = clrWarning
+            txt_saldoBerdasarkanCOA_PlusPenyesuaian.Foreground = clrWarning
+            txt_SelisihSaldo.Foreground = clrWarning
         End If
     End Sub
 
@@ -78,15 +78,15 @@ Module wpfMdl_SaldoDanPenyesuaian
         If SaldoAkhir_BerdasarkanList = SaldoAkhir_BerdasarkanCOA Then
             KesesuaianSaldoAkhir = True
             btn_Sesuaikan.IsEnabled = False
-            txt_SaldoBerdasarkanList.Foreground = WarnaTeksStandar_WPF
-            txt_saldoBerdasarkanCOA_PlusPenyesuaian.Foreground = WarnaTeksStandar_WPF
-            txt_SelisihSaldo.Foreground = WarnaTeksStandar_WPF
+            txt_SaldoBerdasarkanList.Foreground = clrTeksPrimer
+            txt_saldoBerdasarkanCOA_PlusPenyesuaian.Foreground = clrTeksPrimer
+            txt_SelisihSaldo.Foreground = clrTeksPrimer
         Else
             KesesuaianSaldoAkhir = False
             btn_Sesuaikan.IsEnabled = True
-            txt_SaldoBerdasarkanList.Foreground = WarnaPeringatan_WPF
-            txt_saldoBerdasarkanCOA_PlusPenyesuaian.Foreground = WarnaPeringatan_WPF
-            txt_SelisihSaldo.Foreground = WarnaPeringatan_WPF
+            txt_SaldoBerdasarkanList.Foreground = clrWarning
+            txt_saldoBerdasarkanCOA_PlusPenyesuaian.Foreground = clrWarning
+            txt_SelisihSaldo.Foreground = clrWarning
         End If
     End Sub
 
@@ -114,7 +114,7 @@ Module wpfMdl_SaldoDanPenyesuaian
             win_InputJurnal.datatabelUtama.Rows.Add()
             win_InputJurnal.datatabelUtama.Rows(3)("Jumlah_Debet") = JumlahPenyesuaian
             win_InputJurnal.datatabelUtama.Rows(3)("Jumlah_Kredit") = JumlahPenyesuaian
-            win_InputJurnal.lbl_StatusBalance.Foreground = WarnaHijauSolid_WPF
+            win_InputJurnal.lbl_StatusBalance.Foreground = clrPrimary
             win_InputJurnal.lbl_StatusBalance.Text = "Tidak Ada Selisih"
             win_InputJurnal.dtp_TanggalJurnal.Text = Kosongan
             IsiValueComboBypassTerkunci(win_InputJurnal.cmb_JenisJurnal, JenisJurnal)
@@ -154,7 +154,7 @@ Module wpfMdl_SaldoDanPenyesuaian
             win_InputJurnal.datatabelUtama.Rows.Add()
             win_InputJurnal.datatabelUtama.Rows(3)("Jumlah_Debet") = JumlahPenyesuaian
             win_InputJurnal.datatabelUtama.Rows(3)("Jumlah_Kredit") = JumlahPenyesuaian
-            win_InputJurnal.lbl_StatusBalance.Foreground = WarnaHijauSolid_WPF
+            win_InputJurnal.lbl_StatusBalance.Foreground = clrPrimary
             win_InputJurnal.lbl_StatusBalance.Text = "Tidak Ada Selisih"
             win_InputJurnal.dtp_TanggalJurnal.SelectedDate = TanggalFormatWPF(TanggalJurnal)
             win_InputJurnal.cmb_JenisJurnal.SelectedValue = JenisJurnal
@@ -209,7 +209,7 @@ Module wpfMdl_SaldoDanPenyesuaian
             win_InputJurnal.datatabelUtama.Rows.Add()
             win_InputJurnal.datatabelUtama.Rows(3)("Jumlah_Debet") = JumlahPenyesuaian
             win_InputJurnal.datatabelUtama.Rows(3)("Jumlah_Kredit") = JumlahPenyesuaian
-            win_InputJurnal.lbl_StatusBalance.Foreground = WarnaHijauSolid_WPF
+            win_InputJurnal.lbl_StatusBalance.Foreground = clrPrimary
             win_InputJurnal.lbl_StatusBalance.Text = "Tidak Ada Selisih"
             win_InputJurnal.dtp_TanggalJurnal.SelectedDate = AwalTahunBukuAktif
             win_InputJurnal.cmb_JenisJurnal.SelectedValue = JenisJurnal_AdjusmentSaldoAwal

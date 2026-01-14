@@ -197,9 +197,9 @@ Public Class wpfUsc_TutupBuku
     End Sub
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
         If AmbilAngka(e.Row.Item("Saldo_Awal")) = 0 And AmbilAngka(e.Row.Item("Saldo_Akhir")) = 0 Then
-            e.Row.Foreground = WarnaPudar_WPF
+            e.Row.Foreground = clrNeutral500
         Else
-            e.Row.Foreground = WarnaTeksStandar_WPF
+            e.Row.Foreground = clrTeksPrimer
         End If
     End Sub
 
@@ -746,7 +746,7 @@ Public Class wpfUsc_TutupBuku
     End Sub
 
     Sub StartProgress()
-        pgb_Progress.Foreground = WarnaHijauSolid_WPF
+        pgb_Progress.Foreground = clrPrimary
         pnl_Progress.Visibility = Visibility.Visible
         pgb_Progress.Minimum = 0
         pgb_Progress.Maximum = ProgressMaximum

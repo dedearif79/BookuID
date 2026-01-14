@@ -153,9 +153,9 @@ Public Class wpfWin_TautanCOA
 
         Dim statusTautan = rowView("Status_Tautan").ToString()
         If statusTautan = "Belum Tertaut" Then
-            row.Foreground = WarnaMerahSolid_WPF              ' Status error - belum tertaut
+            row.Foreground = clrError              ' Status error - belum tertaut
         Else
-            row.Foreground = WarnaTeksStandar_WPF             ' Teks normal - sudah tertaut
+            row.Foreground = clrTeksPrimer             ' Teks normal - sudah tertaut
         End If
     End Sub
 

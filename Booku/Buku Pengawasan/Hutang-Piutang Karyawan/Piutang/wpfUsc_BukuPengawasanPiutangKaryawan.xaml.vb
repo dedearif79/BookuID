@@ -485,19 +485,19 @@ Public Class wpfUsc_BukuPengawasanPiutangKaryawan
         If SaldoAkhirPerBaris_Terseleksi > 0 Then
             lbl_SaldoAkhirPerBaris.Visibility = Visibility.Visible
             txt_SaldoAkhirPerbaris.Visibility = Visibility.Visible
-            txt_SaldoAkhirPerbaris.Foreground = WarnaPeringatan_WPF
+            txt_SaldoAkhirPerbaris.Foreground = clrWarning
             lbl_KeteranganLunas.Visibility = Visibility.Collapsed
             txt_KeteranganLunas.Visibility = Visibility.Collapsed
             txt_KeteranganLunas.Text = StatusLunas_BelumLunas
-            txt_KeteranganLunas.Foreground = WarnaPeringatan_WPF
+            txt_KeteranganLunas.Foreground = clrWarning
         Else
             lbl_SaldoAkhirPerBaris.Visibility = Visibility.Collapsed
             txt_SaldoAkhirPerbaris.Visibility = Visibility.Collapsed
-            txt_SaldoAkhirPerbaris.Foreground = WarnaTeksStandar_WPF
+            txt_SaldoAkhirPerbaris.Foreground = clrTeksPrimer
             lbl_KeteranganLunas.Visibility = Visibility.Visible
             txt_KeteranganLunas.Visibility = Visibility.Visible
             txt_KeteranganLunas.Text = StatusLunas_Lunas
-            txt_KeteranganLunas.Foreground = WarnaTeksStandar_WPF
+            txt_KeteranganLunas.Foreground = clrTeksPrimer
         End If
 
     End Sub
@@ -575,12 +575,12 @@ Public Class wpfUsc_BukuPengawasanPiutangKaryawan
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
         If Left(e.Row.Item("Nomor_BPPK"), PanjangTeks_AwalanBPPK_PlusTahunBuku) = AwalanBPPK_PlusTahunBuku Then
             If e.Row.Item("Nomor_JV") > 0 Then
-                e.Row.Foreground = WarnaTeksStandar_WPF
+                e.Row.Foreground = clrTeksPrimer
             Else
-                If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = WarnaPudar_WPF
+                If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = clrNeutral500
             End If
         Else
-            If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = WarnaDataTahunLalu_WPF
+            If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = clrDataTahunLalu
         End If
     End Sub
 

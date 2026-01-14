@@ -669,18 +669,18 @@ Public Class wpfUsc_StockOpname
         btn_Edit_Click(sender, e)
     End Sub
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
-        If btn_Jurnal.Content = TombolJurnal_Dorong Then e.Row.Foreground = WarnaTeksStandar_WPF
-        If btn_Jurnal.Content = TombolJurnal_Lihat Then e.Row.Foreground = WarnaPudar_WPF
+        If btn_Jurnal.Content = TombolJurnal_Dorong Then e.Row.Foreground = clrTeksPrimer
+        If btn_Jurnal.Content = TombolJurnal_Lihat Then e.Row.Foreground = clrNeutral500
         Dim JenisData As String = Kosongan
         If Not IsDBNull(e.Row.Item("Jenis_Data")) Then JenisData = e.Row.Item("Jenis_Data")
         Select Case JenisData
             Case JenisData_Bahan
-                e.Row.Foreground = WarnaPeringatan_WPF
+                e.Row.Foreground = clrWarning
             Case JenisData_Normal
-                If NomorJV = 0 Then e.Row.Foreground = WarnaTeksStandar_WPF
-                If NomorJV > 0 Then e.Row.Foreground = WarnaPudar_WPF
+                If NomorJV = 0 Then e.Row.Foreground = clrTeksPrimer
+                If NomorJV > 0 Then e.Row.Foreground = clrNeutral500
         End Select
-        If e.Row.Item("Nomor_Urut") = Kosongan And JumlahBarisBahanData > 0 Then e.Row.Foreground = WarnaPeringatan_WPF '(Pewarnaan untuk Baris Total).
+        If e.Row.Item("Nomor_Urut") = Kosongan And JumlahBarisBahanData > 0 Then e.Row.Foreground = clrWarning '(Pewarnaan untuk Baris Total).
     End Sub
     Private Sub datagridUtama_LostFocus(sender As Object, e As RoutedEventArgs) Handles datagridUtama.LostFocus
     End Sub

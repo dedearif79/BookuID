@@ -225,10 +225,10 @@ Public Class wpfWin_InputJurnal
 
         If TotalDebet = TotalKredit Then
             StatusBalance = teks_TidakAdaSelisih
-            lbl_StatusBalance.Foreground = WarnaHijauSolid_WPF
+            lbl_StatusBalance.Foreground = clrPrimary
         Else
             StatusBalance = teks_TidakAdaSelisih
-            lbl_StatusBalance.Foreground = WarnaPeringatan_WPF
+            lbl_StatusBalance.Foreground = clrWarning
         End If
 
         lbl_StatusBalance.Text = StatusBalance
@@ -260,7 +260,7 @@ Public Class wpfWin_InputJurnal
         End If
 
         If JumlahBarisJurnal = 0 Then
-            lbl_StatusBalance.Foreground = WarnaPeringatan_WPF
+            lbl_StatusBalance.Foreground = clrWarning
             lbl_StatusBalance.Text = teks_TidakAdaTransaksi
         End If
 

@@ -536,12 +536,12 @@ Public Class wpfUsc_LaporanLabaRugi_Tahunan
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
         If IsDBNull(e.Row.Item("Kode_Akun")) Then
             e.Row.FontWeight = FontWeights.Bold
-            e.Row.Foreground = WarnaTegas_WPF
+            e.Row.Foreground = clrBlack
         Else
             If AmbilAngka(e.Row.Item("Kode_Akun")) = 0 Then
-                e.Row.Foreground = WarnaTegas_WPF
+                e.Row.Foreground = clrBlack
             Else
-                e.Row.Foreground = WarnaTeksStandar_WPF
+                e.Row.Foreground = clrTeksPrimer
             End If
         End If
     End Sub

@@ -593,19 +593,19 @@ Public Class wpfUsc_LaporanHPP
     End Sub
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
         If IsDBNull(e.Row.Item("Kode_Akun")) Then
-            e.Row.Background = WarnaHitam_10_WPF
+            e.Row.Background = clrNeutral100
             e.Row.FontWeight = FontWeights.Bold
-            e.Row.Foreground = WarnaTegas_WPF
+            e.Row.Foreground = clrBlack
         Else
             If AmbilAngka(e.Row.Item("Kode_Akun")) = 0 Then
-                e.Row.Background = WarnaHitam_5_WPF
-                e.Row.Foreground = WarnaTegas_WPF
+                e.Row.Background = clrNeutral50
+                e.Row.Foreground = clrBlack
             ElseIf e.Row.Item("Kode_Akun") = KodeTautanCOA_HargaPokokPenjualan Then
-                e.Row.Background = WarnaHitam_15_WPF
+                e.Row.Background = clrNeutral200
                 e.Row.FontWeight = FontWeights.Bold
-                e.Row.Foreground = WarnaTegas_WPF
+                e.Row.Foreground = clrBlack
             Else
-                e.Row.Foreground = WarnaTeksStandar_WPF
+                e.Row.Foreground = clrTeksPrimer
             End If
         End If
     End Sub

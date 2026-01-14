@@ -173,12 +173,12 @@ Public Class wpfWin_JurnalVoucher
 
         If TotalDebet = TotalKredit Then
             StatusBalance = "Tidak Ada Selisih"
-            lbl_StatusBalance.Foreground = WarnaHijauSolid_WPF
+            lbl_StatusBalance.Foreground = clrPrimary
             btn_Cetak.IsEnabled = True
             btn_Setujui.IsEnabled = True
         Else
             StatusBalance = "Ada Selisih"
-            lbl_StatusBalance.Foreground = WarnaMerahSolid_WPF
+            lbl_StatusBalance.Foreground = clrError
             btn_Cetak.IsEnabled = False
             btn_Setujui.IsEnabled = False
         End If
@@ -197,8 +197,8 @@ Public Class wpfWin_JurnalVoucher
                 Dim row As DataGridRow = CType(datagridUtama.ItemContainerGenerator.ContainerFromItem(item), DataGridRow)
                 If row IsNot Nothing Then
                     Dim cell As DataGridCell = CType(datagridUtama.Columns(6).GetCellContent(row).Parent, DataGridCell)
-                    If Keterangan = "Ada Selisih" Then cell.Foreground = WarnaMerahSolid_WPF
-                    If Keterangan = "Tidak Ada Selisih" Then cell.Foreground = WarnaHijauSolid_WPF
+                    If Keterangan = "Ada Selisih" Then cell.Foreground = clrError
+                    If Keterangan = "Tidak Ada Selisih" Then cell.Foreground = clrPrimary
                 End If
             End If
         Next

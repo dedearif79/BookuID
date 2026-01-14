@@ -773,9 +773,9 @@ Public Class wpfUsc_JurnalUmum
         'If LevelUserAktif = LevelUser_99_AppDeveloper Then
         If Not IsDBNull(e.Row.Item("Uraian_Transaksi")) Then
             If e.Row.Item("Uraian_Transaksi") = "Tidak Balance" Then
-                e.Row.Foreground = WarnaMerahSolid_WPF
+                e.Row.Foreground = clrError
             Else
-                e.Row.Foreground = WarnaTeksStandar_WPF
+                e.Row.Foreground = clrTeksPrimer
             End If
         End If
         'End If

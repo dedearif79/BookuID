@@ -156,11 +156,11 @@ Public Class wpfUsc_ManajemenClient
         txt_BelumUpdate.Text = JumlahClientBelumUpdate
         txt_TotalTabel.Text = JumlahClient
         If JumlahClientBelumUpdate > 0 Then
-            lbl_BelumUpdate.Foreground = WarnaPeringatan_WPF
-            txt_BelumUpdate.Foreground = WarnaPeringatan_WPF
+            lbl_BelumUpdate.Foreground = clrWarning
+            txt_BelumUpdate.Foreground = clrWarning
         Else
-            lbl_BelumUpdate.Foreground = WarnaTeksStandar_WPF
-            txt_BelumUpdate.Foreground = WarnaTeksStandar_WPF
+            lbl_BelumUpdate.Foreground = clrTeksPrimer
+            txt_BelumUpdate.Foreground = clrTeksPrimer
         End If
     End Sub
 
@@ -341,9 +341,9 @@ Public Class wpfUsc_ManajemenClient
     End Sub
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
         If e.Row.Item("Status_Update") = StatusUpdate_Update Then
-            e.Row.Foreground = WarnaTeksStandar_WPF
+            e.Row.Foreground = clrTeksPrimer
         Else
-            e.Row.Foreground = WarnaPudar_WPF
+            e.Row.Foreground = clrNeutral500
         End If
     End Sub
 

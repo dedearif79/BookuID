@@ -614,9 +614,9 @@ Public Class wpfUsc_POPembelian
     End Sub
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
         'If AmbilAngka(e.Row.Item("Nomor_JV_Pembelian")) = 0 Then
-        '    If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = WarnaDataTahunLalu_WPF
+        '    If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = clrDataTahunLalu
         'Else
-        '    e.Row.Foreground = WarnaTegas_WPF
+        '    e.Row.Foreground = clrBlack
         'End If
     End Sub
 

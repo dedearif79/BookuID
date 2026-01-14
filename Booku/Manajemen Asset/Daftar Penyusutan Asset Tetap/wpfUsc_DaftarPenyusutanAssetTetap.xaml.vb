@@ -1374,31 +1374,31 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
     Sub PewarnaanKolomBulan()
         If TahunLaporan = TahunBukuAktif Then
-            Januari_.Foreground = WarnaPudar_WPF
-            Februari_.Foreground = WarnaPudar_WPF
-            Maret_.Foreground = WarnaPudar_WPF
-            April_.Foreground = WarnaPudar_WPF
-            Mei_.Foreground = WarnaPudar_WPF
-            Juni_.Foreground = WarnaPudar_WPF
-            Juli_.Foreground = WarnaPudar_WPF
-            Agustus_.Foreground = WarnaPudar_WPF
-            September_.Foreground = WarnaPudar_WPF
-            Oktober_.Foreground = WarnaPudar_WPF
-            Nopember_.Foreground = WarnaPudar_WPF
-            Desember_.Foreground = WarnaPudar_WPF
+            Januari_.Foreground = clrNeutral500
+            Februari_.Foreground = clrNeutral500
+            Maret_.Foreground = clrNeutral500
+            April_.Foreground = clrNeutral500
+            Mei_.Foreground = clrNeutral500
+            Juni_.Foreground = clrNeutral500
+            Juli_.Foreground = clrNeutral500
+            Agustus_.Foreground = clrNeutral500
+            September_.Foreground = clrNeutral500
+            Oktober_.Foreground = clrNeutral500
+            Nopember_.Foreground = clrNeutral500
+            Desember_.Foreground = clrNeutral500
         Else
-            Januari_.Foreground = WarnaTeksStandar_WPF
-            Februari_.Foreground = WarnaTeksStandar_WPF
-            Maret_.Foreground = WarnaTeksStandar_WPF
-            April_.Foreground = WarnaTeksStandar_WPF
-            Mei_.Foreground = WarnaTeksStandar_WPF
-            Juni_.Foreground = WarnaTeksStandar_WPF
-            Juli_.Foreground = WarnaTeksStandar_WPF
-            Agustus_.Foreground = WarnaTeksStandar_WPF
-            September_.Foreground = WarnaTeksStandar_WPF
-            Oktober_.Foreground = WarnaTeksStandar_WPF
-            Nopember_.Foreground = WarnaTeksStandar_WPF
-            Desember_.Foreground = WarnaTeksStandar_WPF
+            Januari_.Foreground = clrTeksPrimer
+            Februari_.Foreground = clrTeksPrimer
+            Maret_.Foreground = clrTeksPrimer
+            April_.Foreground = clrTeksPrimer
+            Mei_.Foreground = clrTeksPrimer
+            Juni_.Foreground = clrTeksPrimer
+            Juli_.Foreground = clrTeksPrimer
+            Agustus_.Foreground = clrTeksPrimer
+            September_.Foreground = clrTeksPrimer
+            Oktober_.Foreground = clrTeksPrimer
+            Nopember_.Foreground = clrTeksPrimer
+            Desember_.Foreground = clrTeksPrimer
         End If
     End Sub
 
@@ -2334,9 +2334,9 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
             Dim drKhusus As OdbcDataReader
             Dim Warna As SolidColorBrush
             If LevelUserAktif >= LevelUser_99_AppDeveloper Then
-                Warna = WarnaMerahSolid_WPF
+                Warna = clrError
             Else
-                Warna = WarnaPudar_WPF
+                Warna = clrNeutral500
             End If
             If JenisTampilan = JenisTampilan_DETAIL_Rinci Then
                 BukaDatabaseTransaksi_Kondisional()
@@ -2391,7 +2391,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
             End If
             If JenisTampilan = JenisTampilan_GLOBAL_Rinci Then
                 If Not IsDBNull(KodeClosing) Then
-                    If KodeClosing <> Kosongan Then e.Row.Foreground = WarnaPudar_WPF
+                    If KodeClosing <> Kosongan Then e.Row.Foreground = clrNeutral500
                 End If
             End If
         End If
@@ -2418,7 +2418,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
         brd_TombolFilter.Visibility = Visibility.Collapsed
         pnl_TombolFilter.Visibility = Visibility.Collapsed
         txt_JumlahAsset.IsReadOnly = True
-        lbl_NotifikasiProses.Foreground = WarnaTeksStandar_WPF
+        lbl_NotifikasiProses.Foreground = clrTeksPrimer
     End Sub
 
 

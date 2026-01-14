@@ -456,15 +456,15 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             If Left(e.Row.Item("Nomor_BPDO"), PanjangTeks_AwalanBPDO_PlusTahunBuku) = AwalanBPDO_PlusTahunBuku Then
                 If AmbilAngka(e.Row.Item("Nomor_JV")) > 0 Then
-                    e.Row.Foreground = WarnaTeksStandar_WPF
+                    e.Row.Foreground = clrTeksPrimer
                 Else
-                    e.Row.Foreground = WarnaMerahSolid_WPF
+                    e.Row.Foreground = clrError
                 End If
             Else
-                e.Row.Foreground = WarnaDataTahunLalu_WPF
+                e.Row.Foreground = clrDataTahunLalu
             End If
         Else
-            e.Row.Foreground = WarnaTeksStandar_WPF
+            e.Row.Foreground = clrTeksPrimer
         End If
     End Sub
 

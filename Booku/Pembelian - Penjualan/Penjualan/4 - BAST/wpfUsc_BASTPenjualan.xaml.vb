@@ -423,9 +423,9 @@ Public Class wpfUsc_BASTPenjualan
     End Sub
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
         If e.Row.Item("Yang_Menerima") = StripKosong And e.Row.Item("Tanggal_Diterima") = StripKosong Then
-            e.Row.Foreground = WarnaPudar_WPF
+            e.Row.Foreground = clrNeutral500
         Else
-            e.Row.Foreground = WarnaTeksStandar_WPF
+            e.Row.Foreground = clrTeksPrimer
         End If
     End Sub
 

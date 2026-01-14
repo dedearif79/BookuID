@@ -573,14 +573,14 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
         'Belum ada coding.
     End Sub
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
-        If AmbilAngka(e.Row.Item("Jumlah_Potongan")) > 0 Then e.Row.Foreground = WarnaTeksStandar_WPF
-        If AmbilAngka(e.Row.Item("Jumlah_Potongan")) = 0 Then e.Row.Foreground = WarnaPudar_WPF
+        If AmbilAngka(e.Row.Item("Jumlah_Potongan")) > 0 Then e.Row.Foreground = clrTeksPrimer
+        If AmbilAngka(e.Row.Item("Jumlah_Potongan")) = 0 Then e.Row.Foreground = clrNeutral500
         If AmbilAngka(e.Row.Item("Selisih_")) = 0 Then
-            'PewarnaanCellFormatTeks(Selisih_, e.Row, WarnaTegas_WPF)
-            e.Row.Foreground = WarnaTeksStandar_WPF
+            'PewarnaanCellFormatTeks(Selisih_, e.Row, clrBlack)
+            e.Row.Foreground = clrTeksPrimer
         Else
-            'PewarnaanCellFormatTeks(Selisih_, e.Row, WarnaPeringatan_WPF)
-            e.Row.Foreground = WarnaPeringatan_WPF
+            'PewarnaanCellFormatTeks(Selisih_, e.Row, clrWarning)
+            e.Row.Foreground = clrWarning
         End If
     End Sub
 
@@ -706,19 +706,19 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
         If SisaPembayaran_Terseleksi > 0 Then
             lbl_SaldoAkhirPerBaris.Visibility = Visibility.Visible
             txt_SaldoAkhirPerbaris.Visibility = Visibility.Visible
-            txt_SaldoAkhirPerbaris.Foreground = WarnaPeringatan_WPF
+            txt_SaldoAkhirPerbaris.Foreground = clrWarning
             lbl_KeteranganLunas.Visibility = Visibility.Collapsed
             txt_KeteranganLunas.Visibility = Visibility.Collapsed
             txt_KeteranganLunas.Text = StatusLunas_BelumLunas
-            txt_KeteranganLunas.Foreground = WarnaPeringatan_WPF
+            txt_KeteranganLunas.Foreground = clrWarning
         Else
             lbl_SaldoAkhirPerBaris.Visibility = Visibility.Collapsed
             txt_SaldoAkhirPerbaris.Visibility = Visibility.Collapsed
-            txt_SaldoAkhirPerbaris.Foreground = WarnaTeksStandar_WPF
+            txt_SaldoAkhirPerbaris.Foreground = clrTeksPrimer
             lbl_KeteranganLunas.Visibility = Visibility.Visible
             txt_KeteranganLunas.Visibility = Visibility.Visible
             txt_KeteranganLunas.Text = StatusLunas_Lunas
-            txt_KeteranganLunas.Foreground = WarnaTeksStandar_WPF
+            txt_KeteranganLunas.Foreground = clrTeksPrimer
         End If
 
     End Sub

@@ -160,31 +160,31 @@ Public Class wpfUsc_Adjusment_Amortisasi
         'Style Tabel :
         datatabelUtama.Rows.Clear()
         If TahunLaporan = TahunBukuAktif Then
-            Januari_.Foreground = WarnaPudar_WPF
-            Februari_.Foreground = WarnaPudar_WPF
-            Maret_.Foreground = WarnaPudar_WPF
-            April_.Foreground = WarnaPudar_WPF
-            Mei_.Foreground = WarnaPudar_WPF
-            Juni_.Foreground = WarnaPudar_WPF
-            Juli_.Foreground = WarnaPudar_WPF
-            Agustus_.Foreground = WarnaPudar_WPF
-            September_.Foreground = WarnaPudar_WPF
-            Oktober_.Foreground = WarnaPudar_WPF
-            Nopember_.Foreground = WarnaPudar_WPF
-            Desember_.Foreground = WarnaPudar_WPF
+            Januari_.Foreground = clrNeutral500
+            Februari_.Foreground = clrNeutral500
+            Maret_.Foreground = clrNeutral500
+            April_.Foreground = clrNeutral500
+            Mei_.Foreground = clrNeutral500
+            Juni_.Foreground = clrNeutral500
+            Juli_.Foreground = clrNeutral500
+            Agustus_.Foreground = clrNeutral500
+            September_.Foreground = clrNeutral500
+            Oktober_.Foreground = clrNeutral500
+            Nopember_.Foreground = clrNeutral500
+            Desember_.Foreground = clrNeutral500
         Else
-            Januari_.Foreground = WarnaTeksStandar_WPF
-            Februari_.Foreground = WarnaTeksStandar_WPF
-            Maret_.Foreground = WarnaTeksStandar_WPF
-            April_.Foreground = WarnaTeksStandar_WPF
-            Mei_.Foreground = WarnaTeksStandar_WPF
-            Juni_.Foreground = WarnaTeksStandar_WPF
-            Juli_.Foreground = WarnaTeksStandar_WPF
-            Agustus_.Foreground = WarnaTeksStandar_WPF
-            September_.Foreground = WarnaTeksStandar_WPF
-            Oktober_.Foreground = WarnaTeksStandar_WPF
-            Nopember_.Foreground = WarnaTeksStandar_WPF
-            Desember_.Foreground = WarnaTeksStandar_WPF
+            Januari_.Foreground = clrTeksPrimer
+            Februari_.Foreground = clrTeksPrimer
+            Maret_.Foreground = clrTeksPrimer
+            April_.Foreground = clrTeksPrimer
+            Mei_.Foreground = clrTeksPrimer
+            Juni_.Foreground = clrTeksPrimer
+            Juli_.Foreground = clrTeksPrimer
+            Agustus_.Foreground = clrTeksPrimer
+            September_.Foreground = clrTeksPrimer
+            Oktober_.Foreground = clrTeksPrimer
+            Nopember_.Foreground = clrTeksPrimer
+            Desember_.Foreground = clrTeksPrimer
         End If
 
         'Data Tabel : 
@@ -1147,18 +1147,18 @@ Public Class wpfUsc_Adjusment_Amortisasi
     Private Sub datagridUtama_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles datagridUtama.MouseDoubleClick
     End Sub
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
-        If AmbilAngka(e.Row.Item("Januari_")) = 0 Then PewarnaanCellFormatTeks(Januari_, e.Row, WarnaPudar_WPF)
-        If AmbilAngka(e.Row.Item("Februari_")) = 0 Then PewarnaanCellFormatTeks(Februari_, e.Row, WarnaPudar_WPF)
-        If AmbilAngka(e.Row.Item("Maret_")) = 0 Then PewarnaanCellFormatTeks(Maret_, e.Row, WarnaPudar_WPF)
-        If AmbilAngka(e.Row.Item("April_")) = 0 Then PewarnaanCellFormatTeks(April_, e.Row, WarnaPudar_WPF)
-        If AmbilAngka(e.Row.Item("Mei_")) = 0 Then PewarnaanCellFormatTeks(Mei_, e.Row, WarnaPudar_WPF)
-        If AmbilAngka(e.Row.Item("Juni_")) = 0 Then PewarnaanCellFormatTeks(Juni_, e.Row, WarnaPudar_WPF)
-        If AmbilAngka(e.Row.Item("Juli_")) = 0 Then PewarnaanCellFormatTeks(Juli_, e.Row, WarnaPudar_WPF)
-        If AmbilAngka(e.Row.Item("Agustus_")) = 0 Then PewarnaanCellFormatTeks(Agustus_, e.Row, WarnaPudar_WPF)
-        If AmbilAngka(e.Row.Item("September_")) = 0 Then PewarnaanCellFormatTeks(September_, e.Row, WarnaPudar_WPF)
-        If AmbilAngka(e.Row.Item("Oktober_")) = 0 Then PewarnaanCellFormatTeks(Oktober_, e.Row, WarnaPudar_WPF)
-        If AmbilAngka(e.Row.Item("Nopember_")) = 0 Then PewarnaanCellFormatTeks(Nopember_, e.Row, WarnaPudar_WPF)
-        If AmbilAngka(e.Row.Item("Desember_")) = 0 Then PewarnaanCellFormatTeks(Desember_, e.Row, WarnaPudar_WPF)
+        If AmbilAngka(e.Row.Item("Januari_")) = 0 Then PewarnaanCellFormatTeks(Januari_, e.Row, clrNeutral500)
+        If AmbilAngka(e.Row.Item("Februari_")) = 0 Then PewarnaanCellFormatTeks(Februari_, e.Row, clrNeutral500)
+        If AmbilAngka(e.Row.Item("Maret_")) = 0 Then PewarnaanCellFormatTeks(Maret_, e.Row, clrNeutral500)
+        If AmbilAngka(e.Row.Item("April_")) = 0 Then PewarnaanCellFormatTeks(April_, e.Row, clrNeutral500)
+        If AmbilAngka(e.Row.Item("Mei_")) = 0 Then PewarnaanCellFormatTeks(Mei_, e.Row, clrNeutral500)
+        If AmbilAngka(e.Row.Item("Juni_")) = 0 Then PewarnaanCellFormatTeks(Juni_, e.Row, clrNeutral500)
+        If AmbilAngka(e.Row.Item("Juli_")) = 0 Then PewarnaanCellFormatTeks(Juli_, e.Row, clrNeutral500)
+        If AmbilAngka(e.Row.Item("Agustus_")) = 0 Then PewarnaanCellFormatTeks(Agustus_, e.Row, clrNeutral500)
+        If AmbilAngka(e.Row.Item("September_")) = 0 Then PewarnaanCellFormatTeks(September_, e.Row, clrNeutral500)
+        If AmbilAngka(e.Row.Item("Oktober_")) = 0 Then PewarnaanCellFormatTeks(Oktober_, e.Row, clrNeutral500)
+        If AmbilAngka(e.Row.Item("Nopember_")) = 0 Then PewarnaanCellFormatTeks(Nopember_, e.Row, clrNeutral500)
+        If AmbilAngka(e.Row.Item("Desember_")) = 0 Then PewarnaanCellFormatTeks(Desember_, e.Row, clrNeutral500)
         Dim KodeAsset = e.Row.Item("Kode_Asset")
         Dim KodeAkun_Biaya = e.Row.Item("COA_Biaya")
         Dim TanggalJurnalPenyusutan
@@ -1167,9 +1167,9 @@ Public Class wpfUsc_Adjusment_Amortisasi
         Dim drKhusus As OdbcDataReader
         Dim Warna As SolidColorBrush
         If LevelUserAktif >= LevelUser_99_AppDeveloper Then
-            Warna = WarnaMerahSolid_WPF
+            Warna = clrError
         Else
-            Warna = WarnaPudar_WPF
+            Warna = clrNeutral500
         End If
         BukaDatabaseTransaksi_Kondisional()
         cmdKhusus = New OdbcCommand(" SELECT * FROM tbl_Transaksi " &

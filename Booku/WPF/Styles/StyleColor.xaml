@@ -74,6 +74,11 @@
     <Color x:Key="clrOverlayLight">#B3FAFAFA</Color>
 
 
+    <!-- ===== LEGACY (untuk backward compatibility) ===== -->
+    <Color x:Key="clrDataTahunLalu">#FF3F3F80</Color>
+    <SolidColorBrush x:Key="clrTeksDataTahunLalu" Color="{StaticResource clrDataTahunLalu}"/>
+
+
     <!-- =================================================================== -->
     <!-- LAYER 2: SEMANTIC COLORS (WARNA SEMANTIK)                           -->
     <!-- =================================================================== -->

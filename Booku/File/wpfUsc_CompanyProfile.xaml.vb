@@ -81,20 +81,20 @@ Public Class wpfUsc_CompanyProfile
             dtp_TanggalSuketUMKM.Text = Kosongan
         End If
         If TanggalPKP_Perusahaan = TanggalKosong Then
-            lbl_TanggalPKP.Foreground = WarnaPudar_WPF
+            lbl_TanggalPKP.Foreground = clrNeutral500
             chk_TanggalPKP.IsChecked = False
             dtp_TanggalPKP.Text = Kosongan
         Else
-            lbl_TanggalPKP.Foreground = WarnaTeksStandar_WPF
+            lbl_TanggalPKP.Foreground = clrTeksPrimer
             chk_TanggalPKP.IsChecked = True
             dtp_TanggalPKP.SelectedDate = TanggalFormatWPF(TanggalPKP_Perusahaan)
         End If
         If TanggalExpireSEPerusahaan = TanggalTakTerbatas Then
-            lbl_TanggalExpireSE.Foreground = WarnaPudar_WPF
+            lbl_TanggalExpireSE.Foreground = clrNeutral500
             chk_TanggalExpireSE.IsChecked = False
             dtp_TanggalExpireSE.Text = Kosongan
         Else
-            lbl_TanggalExpireSE.Foreground = WarnaTeksStandar_WPF
+            lbl_TanggalExpireSE.Foreground = clrTeksPrimer
             chk_TanggalExpireSE.IsChecked = True
             dtp_TanggalExpireSE.SelectedDate = TanggalFormatWPF(TanggalExpireSEPerusahaan)
         End If
@@ -115,11 +115,11 @@ Public Class wpfUsc_CompanyProfile
                 cmb_LevelPJK.SelectedValue = Level_Besar
         End Select
         If TanggalExpireSBUPerusahaan = TanggalTakTerbatas Then
-            lbl_TanggalExpireSBU.Foreground = WarnaPudar_WPF
+            lbl_TanggalExpireSBU.Foreground = clrNeutral500
             chk_TanggalExpireSBU.IsChecked = False
             dtp_TanggalExpireSBU.Text = Kosongan
         Else
-            lbl_TanggalExpireSBU.Foreground = WarnaTeksStandar_WPF
+            lbl_TanggalExpireSBU.Foreground = clrTeksPrimer
             chk_TanggalExpireSBU.IsChecked = True
             dtp_TanggalExpireSBU.SelectedDate = TanggalFormatWPF(TanggalExpireSBUPerusahaan)
         End If
@@ -337,12 +337,12 @@ Public Class wpfUsc_CompanyProfile
 
 
     Private Sub chk_TanggalPKP_Checked(sender As Object, e As RoutedEventArgs) Handles chk_TanggalPKP.Checked
-        lbl_TanggalPKP.Foreground = WarnaTeksStandar_WPF
+        lbl_TanggalPKP.Foreground = clrTeksPrimer
         dtp_TanggalPKP.IsEnabled = True
         KondisiPerubahanForm()
     End Sub
     Private Sub chk_TanggalPKP_UnChecked(sender As Object, e As RoutedEventArgs) Handles chk_TanggalPKP.Unchecked
-        lbl_TanggalPKP.Foreground = WarnaPudar_WPF
+        lbl_TanggalPKP.Foreground = clrNeutral500
         dtp_TanggalPKP.IsEnabled = False
         dtp_TanggalPKP.Text = Kosongan
         KondisiPerubahanForm()
@@ -358,12 +358,12 @@ Public Class wpfUsc_CompanyProfile
 
 
     Private Sub chk_TanggalExpireSE_Checked(sender As Object, e As RoutedEventArgs) Handles chk_TanggalExpireSE.Checked
-        lbl_TanggalExpireSE.Foreground = WarnaTeksStandar_WPF
+        lbl_TanggalExpireSE.Foreground = clrTeksPrimer
         dtp_TanggalExpireSE.IsEnabled = True
         KondisiPerubahanForm()
     End Sub
     Private Sub chk_TanggalExpireSE_UnChecked(sender As Object, e As RoutedEventArgs) Handles chk_TanggalExpireSE.Unchecked
-        lbl_TanggalExpireSE.Foreground = WarnaPudar_WPF
+        lbl_TanggalExpireSE.Foreground = clrNeutral500
         dtp_TanggalExpireSE.IsEnabled = False
         dtp_TanggalExpireSE.Text = Kosongan
         KondisiPerubahanForm()
@@ -396,13 +396,13 @@ Public Class wpfUsc_CompanyProfile
     End Sub
 
     Private Sub chk_PJK_Checked(sender As Object, e As RoutedEventArgs) Handles chk_PJK.Checked
-        lbl_PJK.Foreground = WarnaTeksStandar_WPF
+        lbl_PJK.Foreground = clrTeksPrimer
         cmb_LevelPJK.IsEnabled = True
         chk_TanggalExpireSBU.IsEnabled = True
         KondisiPerubahanForm()
     End Sub
     Private Sub chk_PJK_UnChecked(sender As Object, e As RoutedEventArgs) Handles chk_PJK.Unchecked
-        lbl_PJK.Foreground = WarnaPudar_WPF
+        lbl_PJK.Foreground = clrNeutral500
         cmb_LevelPJK.IsEnabled = False
         cmb_LevelPJK.SelectedValue = Kosongan
         chk_TanggalExpireSBU.IsChecked = False
@@ -427,12 +427,12 @@ Public Class wpfUsc_CompanyProfile
 
 
     Private Sub chk_TanggalExpireSBU_Checked(sender As Object, e As RoutedEventArgs) Handles chk_TanggalExpireSBU.Checked
-        lbl_TanggalExpireSBU.Foreground = WarnaTeksStandar_WPF
+        lbl_TanggalExpireSBU.Foreground = clrTeksPrimer
         dtp_TanggalExpireSBU.IsEnabled = True
         KondisiPerubahanForm()
     End Sub
     Private Sub chk_TanggalExpireSBU_UnChecked(sender As Object, e As RoutedEventArgs) Handles chk_TanggalExpireSBU.Unchecked
-        lbl_TanggalExpireSBU.Foreground = WarnaPudar_WPF
+        lbl_TanggalExpireSBU.Foreground = clrNeutral500
         dtp_TanggalExpireSBU.IsEnabled = False
         dtp_TanggalExpireSBU.Text = Kosongan
         KondisiPerubahanForm()

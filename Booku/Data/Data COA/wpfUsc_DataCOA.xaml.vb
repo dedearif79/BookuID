@@ -222,14 +222,14 @@ Public Class wpfUsc_DataCOA
 
         If SelisihNeraca = 0 Then
             KeseimbanganNeraca = True
-            txt_JumlahAktiva.Foreground = WarnaTeksStandar_WPF
-            txt_JumlahPassiva.Foreground = WarnaTeksStandar_WPF
-            txt_SelisihNeraca.Foreground = WarnaTeksStandar_WPF
+            txt_JumlahAktiva.Foreground = clrTeksPrimer
+            txt_JumlahPassiva.Foreground = clrTeksPrimer
+            txt_SelisihNeraca.Foreground = clrTeksPrimer
         Else
             KeseimbanganNeraca = False
-            txt_JumlahAktiva.Foreground = WarnaPeringatan_WPF
-            txt_JumlahPassiva.Foreground = WarnaPeringatan_WPF
-            txt_SelisihNeraca.Foreground = WarnaPeringatan_WPF
+            txt_JumlahAktiva.Foreground = clrWarning
+            txt_JumlahPassiva.Foreground = clrWarning
+            txt_SelisihNeraca.Foreground = clrWarning
         End If
 
         NotifikasiKeseimbanganNeraca()
@@ -431,9 +431,9 @@ Public Class wpfUsc_DataCOA
             e.Row.FontWeight = FontWeights.Bold
         Else
             If e.Row.Item("Visibilitas_") = Pilihan_Ya Then
-                e.Row.Foreground = WarnaTeksStandar_WPF
+                e.Row.Foreground = clrTeksPrimer
             Else
-                e.Row.Foreground = WarnaPudar_WPF
+                e.Row.Foreground = clrNeutral500
             End If
         End If
     End Sub
