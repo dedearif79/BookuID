@@ -56,7 +56,7 @@
                         <TextBox    Style="{StaticResource styleTextBoxFormHalaman}"        Name="txt_CariAkun"     Margin="6 3"    Width="222"  />
                         <Border Width="2" Background="LightGray" Margin="6,3,9,3" />
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Visibilitas :"/>
-                        <ComboBox Width="069"  Margin="6 3" Name="cmb_Visibilitas" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="069"  Margin="6 3" Name="cmb_Visibilitas" />
                     </StackPanel>
                 </StackPanel>
                 <!-- Header Kanan:-->
@@ -118,7 +118,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" VerticalAlignment="Stretch">
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
-                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="666" MinHeight="33" VerticalAlignment="Stretch" />
+                        <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama" MinWidth="666" MinHeight="33" VerticalAlignment="Stretch" />
                     </StackPanel>
 
                 </StackPanel>

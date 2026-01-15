@@ -79,7 +79,7 @@
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
                         <TextBlock  Name="lbl_NotifikasiProses" Text="Harap tunggu! Sistem sedang memproses data."/>
-                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch" />
+                        <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch" />
                     </StackPanel>
 
                 </StackPanel>

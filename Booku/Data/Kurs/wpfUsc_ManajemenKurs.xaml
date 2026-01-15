@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="wpfUsc_ManajemenKurs"
+<UserControl x:Class="wpfUsc_ManajemenKurs"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -44,7 +44,7 @@
                         <!-- Filter MUA : -->
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"    Name="pnl_FilterStatusApprove" >
                             <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" MUA :" />
-                            <ComboBox Width="63"  Margin="0"  Name="cmb_KodeMataUang" />
+                            <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="63"  Margin="0"  Name="cmb_KodeMataUang" />
                         </StackPanel>
                         <!-- Filter Periode : -->
                         <Border Style="{StaticResource styleBorderHeaderSeparatorFilter}"/>
@@ -68,8 +68,8 @@
                     <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"    Name="pnl_FilterUrut" >
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Urut Berdasarkan :" />
                         <StackPanel Orientation="Horizontal">
-                            <ComboBox Width="117"  Margin="0"           Name="cmb_UrutBerdasarkan" />
-                            <ComboBox Width="057"  Margin="9 0 0 0"     Name="cmb_ASC" />
+                            <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="117"  Margin="0"           Name="cmb_UrutBerdasarkan" />
+                            <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="057"  Margin="9 0 0 0"     Name="cmb_ASC" />
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>-->
@@ -108,7 +108,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" VerticalAlignment="Stretch">
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
-                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch" />
+                        <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch" />
                     </StackPanel>
 
                 </StackPanel>

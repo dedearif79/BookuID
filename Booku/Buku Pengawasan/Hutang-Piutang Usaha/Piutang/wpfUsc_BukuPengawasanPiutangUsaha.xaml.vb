@@ -1312,12 +1312,12 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
     End Sub
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
         If AmbilAngka(e.Row.Item("Nomor_JV_Penjualan")) = 0 Then
-            If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = clrDataTahunLalu
+            If JenisTahunBuku = JenisTahunBuku_NORMAL Then e.Row.Foreground = clrTeksDataTahunLalu
         Else
             If e.Row.Item("L_O_S") = los_L Then
                 e.Row.Foreground = clrTeksPrimer
             Else
-                e.Row.Foreground = clrError
+                e.Row.Foreground = clrTeksDataBelumLunas
             End If
         End If
     End Sub
@@ -1459,7 +1459,7 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
         If SisaTagihan_Terseleksi > 0 Then
             lbl_SisaPiutang.Visibility = Visibility.Visible
             txt_SisaPiutang.Visibility = Visibility.Visible
-            txt_SisaPiutang.Foreground = clrWarning
+            txt_SisaPiutang.Foreground = clrTeksDataBelumLunas
             lbl_KeteranganLunas.Visibility = Visibility.Collapsed
             txt_KeteranganLunas.Visibility = Visibility.Collapsed
             txt_KeteranganLunas.Text = StatusLunas_BelumLunas

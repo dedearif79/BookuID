@@ -1,4 +1,4 @@
-﻿<Window x:Class="wpfWin_BukuBesarPembantu"
+<Window x:Class="wpfWin_BukuBesarPembantu"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -74,7 +74,7 @@
             <ScrollViewer Style="{StaticResource styleScrollViewerFormDialogVertikal}" MaxHeight="450" VerticalScrollBarVisibility="Auto" >
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}"  >
-                        <DataGrid Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="777" MinHeight="33" />
+                        <DataGrid Style="{StaticResource StyleDataGridFormDialog}" Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="777" MinHeight="33" />
                     </StackPanel>
 
             </ScrollViewer>

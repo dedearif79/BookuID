@@ -50,10 +50,10 @@
                     <!-- Baris Filter Data :-->
                     <StackPanel Style="{StaticResource stylePanelFormHalamanFilterData}" Name="pnl_FilterData" >
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Jenis Tampilan :" Name="lbl_FilterJenisTampilan"/>
-                        <ComboBox Width="093"  Margin="6 3"  Name="cmb_JenisTampilan" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="093"  Margin="6 3"  Name="cmb_JenisTampilan" />
                         <Border Width="2" Background="LightGray" Margin="6,3,9,3"   Name="brd_FilterSupplier"/>
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Supplier :"/>
-                        <ComboBox Width="180"  Margin="6 3" Name="cmb_Supplier" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="180"  Margin="6 3" Name="cmb_Supplier" />
                     </StackPanel>
                 </StackPanel>
                 <!-- Header Kanan:-->
@@ -93,7 +93,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" VerticalAlignment="Stretch">
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
-                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch" />
+                        <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch" />
                     </StackPanel>
 
                 </StackPanel>

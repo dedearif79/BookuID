@@ -31,7 +31,7 @@
             <!-- Baris Filter Data :-->
             <StackPanel Style="{StaticResource stylePanelFormHalamanFilterData}" Name="pnl_FilterData" >
                 <TextBlock Style="{StaticResource styleTextBlockFormHalaman}">Status : </TextBlock>
-                <ComboBox Width="100" Margin="6 3" Name="cmb_FilterStatus"></ComboBox>
+                <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="100" Margin="6 3" Name="cmb_FilterStatus"></ComboBox>
             </StackPanel>
         </StackPanel>
 
@@ -54,7 +54,7 @@
                 </StackPanel>
                 <GridSplitter Grid.Column="0" Grid.RowSpan="2" Width="3"/>
                 <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" CanVerticallyScroll="False" >
-                    <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}"/>
+                    <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama"/>
                 </StackPanel>
                 <GridSplitter Grid.Column="1" Grid.RowSpan="2" Width="3"/>
                 <StackPanel Grid.Row="0" Grid.Column="2" Style="{StaticResource stylePanelFormHalamanSidebarKanan}" Background="{StaticResource clrBgSidebar}" CanVerticallyScroll="True" Height="99" Grid.RowSpan="2" >

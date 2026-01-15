@@ -74,8 +74,8 @@
                     <Grid Style="{StaticResource styleGridFormDialogBank}" >
 
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="4*"/>
-                            <ColumnDefinition Width="6*"  />
+                            <ColumnDefinition Width="123"/>
+                            <ColumnDefinition Width="168"  />
                         </Grid.ColumnDefinitions>
 
                         <Grid.RowDefinitions>

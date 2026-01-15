@@ -29,7 +29,7 @@
                 <TextBox    Style="{StaticResource styleTextBoxFormDialog}"     Name="txt_CariAkun" Width="200" HorizontalAlignment="Left" />
             </StackPanel>
 
-            <DataGrid Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="420" MinHeight="300" MaxHeight="400" />
+            <DataGrid Style="{StaticResource StyleDataGridFormDialog}" Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="420" MinHeight="300" MaxHeight="400" />
 
             <StackPanel Margin="0 9 0 0">
                 <CheckBox   Style="{StaticResource styleCheckBoxFormDialog}"    Name="chk_TampilkanYangTersembunyi" Content="Tampilkan yang tersembunyi" />

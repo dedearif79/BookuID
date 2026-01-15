@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="wpfUsc_BukuPengawasanPiutangDividen"
+<UserControl x:Class="wpfUsc_BukuPengawasanPiutangDividen"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -36,9 +36,9 @@
             <!-- Baris Filter Data :-->
             <!--<StackPanel Style="{StaticResource stylePanelFormHalamanFilterData}" Name="pnl_FilterData" >
                 <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Kategori :"/>
-                <ComboBox Width="132"  Margin="6 3" Name="cmb_Kategori" />
+                <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="132"  Margin="6 3" Name="cmb_Kategori" />
                 <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Peruntukan:"/>
-                <ComboBox Width="234"  Margin="6 3" Name="cmb_Peruntukan" />
+                <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="234"  Margin="6 3" Name="cmb_Peruntukan" />
             </StackPanel>-->
         </StackPanel>
 
@@ -64,7 +64,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" VerticalAlignment="Stretch">
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
-                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="666" MinHeight="33" VerticalAlignment="Stretch" />
+                        <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama" MinWidth="666" MinHeight="33" VerticalAlignment="Stretch" />
                     </StackPanel>
 
                 </StackPanel>
@@ -88,7 +88,7 @@
                         </Grid.RowDefinitions>
 
                         <StackPanel Grid.Row="1" Grid.Column="0"   Style="{StaticResource stylePanelDataGridView}" Name="pnl_DataGridBayar" Margin="0 6 0 3" Grid.ColumnSpan="3" >
-                            <DataGrid Name="datagridBayar" Style="{StaticResource StyleDataGridModul}" MinWidth="286" MinHeight="33" HorizontalAlignment="Right" />
+                            <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridBayar" MinWidth="286" MinHeight="33" HorizontalAlignment="Right" />
                         </StackPanel>
 
                         <TextBlock  Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleTextBlockFormDialog}"       Name="lbl_PiutangDividen">Piutang Dividen</TextBlock>

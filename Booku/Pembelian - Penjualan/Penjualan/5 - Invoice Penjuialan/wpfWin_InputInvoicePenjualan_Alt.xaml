@@ -117,8 +117,8 @@
                             <Grid Style="{StaticResource styleGridFormDialogBank}" >
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="42*"/>
-                                    <ColumnDefinition Width="57*"  />
+                                    <ColumnDefinition Width="123"/>
+                                    <ColumnDefinition Width="192"  />
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.RowDefinitions>
@@ -153,8 +153,7 @@
                 <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Name="pnl_Kanan" >
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}"  >
-                        <DataGrid Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="555" MinHeight="33" />
-                        <!--<DataGrid Name="datagridTotal" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="555" MinHeight="21" />-->
+                        <DataGrid Style="{StaticResource StyleDataGridFormDialog}" Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="555" MinHeight="33" />
                     </StackPanel>
 
                     <DockPanel  Margin="0 9 0 0">

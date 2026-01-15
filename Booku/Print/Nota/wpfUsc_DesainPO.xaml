@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="wpfUsc_DesainPO"
+<UserControl x:Class="wpfUsc_DesainPO"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -130,7 +130,7 @@
             </StackPanel>
 
             <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" Margin="0 7 0 0">
-                <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridNOTA}" MinWidth="742" MinHeight="55" />
+                <DataGrid Style="{StaticResource StyleDataGridNOTA}" Name="datagridUtama" MinWidth="742" MinHeight="55" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="0 7 0 0" >

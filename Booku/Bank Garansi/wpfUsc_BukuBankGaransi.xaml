@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="wpfUsc_BukuBankGaransi"
+<UserControl x:Class="wpfUsc_BukuBankGaransi"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -54,7 +54,7 @@
                 </StackPanel>
                 <GridSplitter Grid.Column="0" Grid.RowSpan="2" Width="3"/>
                 <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" CanVerticallyScroll="False" >
-                    <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}"/>
+                    <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama"/>
                 </StackPanel>
                 <GridSplitter Grid.Column="1" Grid.RowSpan="2" Width="3"/>
                 <StackPanel Grid.Row="0" Grid.Column="2" Style="{StaticResource stylePanelFormHalamanSidebarKanan}" Background="{StaticResource clrBgSidebar}" CanVerticallyScroll="True" Height="99" Grid.RowSpan="2" >

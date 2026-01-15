@@ -31,6 +31,7 @@ Module wpfMdl_ClassWindow
     Public win_PilihBulan As New wpfWin_PilihBulan
     Public win_CeklisBulan As New wpfWin_CeklisBulan
     Public win_PilihJurnalAdjusment As New wpfWin_PilihJurnalAdjusment
+    Public win_PilihJenisProdukInduk As New wpfWin_PilihJenisProdukInduk
     Public win_MetodeInputBayar As New wpfWin_MetodeInputBayar
     Public win_Pengaturan As New wpfWin_Pengaturan
     Public win_Pesan As wpfWin_Pesan  ' Custom MessageBox dialog (dibuat baru setiap pemanggilan)

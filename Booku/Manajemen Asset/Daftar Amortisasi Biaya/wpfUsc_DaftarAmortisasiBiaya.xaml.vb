@@ -1240,55 +1240,55 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
     Private Sub datagridUtama_MouseDoubleClick(sender As Object, e As MouseButtonEventArgs) Handles datagridUtama.MouseDoubleClick
     End Sub
     Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
-        If AmbilAngka(e.Row.Item("Januari_")) = 0 Then PewarnaanCellFormatTeks(Januari_, e.Row, clrNeutral500)
-        If AmbilAngka(e.Row.Item("Februari_")) = 0 Then PewarnaanCellFormatTeks(Februari_, e.Row, clrNeutral500)
-        If AmbilAngka(e.Row.Item("Maret_")) = 0 Then PewarnaanCellFormatTeks(Maret_, e.Row, clrNeutral500)
-        If AmbilAngka(e.Row.Item("April_")) = 0 Then PewarnaanCellFormatTeks(April_, e.Row, clrNeutral500)
-        If AmbilAngka(e.Row.Item("Mei_")) = 0 Then PewarnaanCellFormatTeks(Mei_, e.Row, clrNeutral500)
-        If AmbilAngka(e.Row.Item("Juni_")) = 0 Then PewarnaanCellFormatTeks(Juni_, e.Row, clrNeutral500)
-        If AmbilAngka(e.Row.Item("Juli_")) = 0 Then PewarnaanCellFormatTeks(Juli_, e.Row, clrNeutral500)
-        If AmbilAngka(e.Row.Item("Agustus_")) = 0 Then PewarnaanCellFormatTeks(Agustus_, e.Row, clrNeutral500)
-        If AmbilAngka(e.Row.Item("September_")) = 0 Then PewarnaanCellFormatTeks(September_, e.Row, clrNeutral500)
-        If AmbilAngka(e.Row.Item("Oktober_")) = 0 Then PewarnaanCellFormatTeks(Oktober_, e.Row, clrNeutral500)
-        If AmbilAngka(e.Row.Item("Nopember_")) = 0 Then PewarnaanCellFormatTeks(Nopember_, e.Row, clrNeutral500)
-        If AmbilAngka(e.Row.Item("Desember_")) = 0 Then PewarnaanCellFormatTeks(Desember_, e.Row, clrNeutral500)
-        Dim KodeAsset = e.Row.Item("Kode_Asset")
-        Dim KodeAkun_Biaya = e.Row.Item("COA_Biaya")
-        Dim TanggalJurnalPenyusutan
-        Dim BulanJurnalPenyusutan
-        Dim cmdKhusus As OdbcCommand
-        Dim drKhusus As OdbcDataReader
-        Dim Warna As SolidColorBrush
-        If LevelUserAktif >= LevelUser_99_AppDeveloper Then
-            Warna = clrError
-        Else
-            Warna = clrNeutral500
-        End If
-        BukaDatabaseTransaksi_Kondisional()
-        cmdKhusus = New OdbcCommand(" SELECT * FROM tbl_Transaksi " &
-                                    " WHERE  Valid    <> '" & _X_ & "' " &
-                                    " AND Jenis_Jurnal = '" & JenisJurnal_Amortisasi & "' " &
-                                    " AND Bundelan = '" & KodeAsset & "' " &
-                                    " AND COA = '" & KodeAkun_Biaya & "' ", KoneksiDatabaseTransaksi)
-        drKhusus = cmdKhusus.ExecuteReader
-        Do While drKhusus.Read
-            TanggalJurnalPenyusutan = drKhusus.Item("Tanggal_Transaksi")
-            BulanJurnalPenyusutan = AmbilAngka(Format(TanggalJurnalPenyusutan, "MM"))
-            If BulanJurnalPenyusutan = 1 Then PewarnaanCellFormatTeks(Januari_, e.Row, Warna)
-            If BulanJurnalPenyusutan = 2 Then PewarnaanCellFormatTeks(Februari_, e.Row, Warna)
-            If BulanJurnalPenyusutan = 3 Then PewarnaanCellFormatTeks(Maret_, e.Row, Warna)
-            If BulanJurnalPenyusutan = 4 Then PewarnaanCellFormatTeks(April_, e.Row, Warna)
-            If BulanJurnalPenyusutan = 5 Then PewarnaanCellFormatTeks(Mei_, e.Row, Warna)
-            If BulanJurnalPenyusutan = 6 Then PewarnaanCellFormatTeks(Juni_, e.Row, Warna)
-            If BulanJurnalPenyusutan = 7 Then PewarnaanCellFormatTeks(Juli_, e.Row, Warna)
-            If BulanJurnalPenyusutan = 8 Then PewarnaanCellFormatTeks(Agustus_, e.Row, Warna)
-            If BulanJurnalPenyusutan = 9 Then PewarnaanCellFormatTeks(September_, e.Row, Warna)
-            If BulanJurnalPenyusutan = 10 Then PewarnaanCellFormatTeks(Oktober_, e.Row, Warna)
-            If BulanJurnalPenyusutan = 11 Then PewarnaanCellFormatTeks(Nopember_, e.Row, Warna)
-            If BulanJurnalPenyusutan = 12 Then PewarnaanCellFormatTeks(Desember_, e.Row, Warna)
-        Loop
-        TutupDatabaseTransaksi_Kondisional()
-        PewarnaanCellFormatTeks(Januari_, e.Row, Warna)
+        'If AmbilAngka(e.Row.Item("Januari_")) = 0 Then PewarnaanCellFormatTeks(Januari_, e.Row, clrNeutral500)
+        'If AmbilAngka(e.Row.Item("Februari_")) = 0 Then PewarnaanCellFormatTeks(Februari_, e.Row, clrNeutral500)
+        'If AmbilAngka(e.Row.Item("Maret_")) = 0 Then PewarnaanCellFormatTeks(Maret_, e.Row, clrNeutral500)
+        'If AmbilAngka(e.Row.Item("April_")) = 0 Then PewarnaanCellFormatTeks(April_, e.Row, clrNeutral500)
+        'If AmbilAngka(e.Row.Item("Mei_")) = 0 Then PewarnaanCellFormatTeks(Mei_, e.Row, clrNeutral500)
+        'If AmbilAngka(e.Row.Item("Juni_")) = 0 Then PewarnaanCellFormatTeks(Juni_, e.Row, clrNeutral500)
+        'If AmbilAngka(e.Row.Item("Juli_")) = 0 Then PewarnaanCellFormatTeks(Juli_, e.Row, clrNeutral500)
+        'If AmbilAngka(e.Row.Item("Agustus_")) = 0 Then PewarnaanCellFormatTeks(Agustus_, e.Row, clrNeutral500)
+        'If AmbilAngka(e.Row.Item("September_")) = 0 Then PewarnaanCellFormatTeks(September_, e.Row, clrNeutral500)
+        'If AmbilAngka(e.Row.Item("Oktober_")) = 0 Then PewarnaanCellFormatTeks(Oktober_, e.Row, clrNeutral500)
+        'If AmbilAngka(e.Row.Item("Nopember_")) = 0 Then PewarnaanCellFormatTeks(Nopember_, e.Row, clrNeutral500)
+        'If AmbilAngka(e.Row.Item("Desember_")) = 0 Then PewarnaanCellFormatTeks(Desember_, e.Row, clrNeutral500)
+        'Dim KodeAsset = e.Row.Item("Kode_Asset")
+        'Dim KodeAkun_Biaya = e.Row.Item("COA_Biaya")
+        'Dim TanggalJurnalPenyusutan
+        'Dim BulanJurnalPenyusutan
+        'Dim cmdKhusus As OdbcCommand
+        'Dim drKhusus As OdbcDataReader
+        'Dim Warna As SolidColorBrush
+        'If LevelUserAktif >= LevelUser_99_AppDeveloper Then
+        '    Warna = clrError
+        'Else
+        '    Warna = clrNeutral500
+        'End If
+        'BukaDatabaseTransaksi_Kondisional()
+        'cmdKhusus = New OdbcCommand(" SELECT * FROM tbl_Transaksi " &
+        '                            " WHERE  Valid    <> '" & _X_ & "' " &
+        '                            " AND Jenis_Jurnal = '" & JenisJurnal_Amortisasi & "' " &
+        '                            " AND Bundelan = '" & KodeAsset & "' " &
+        '                            " AND COA = '" & KodeAkun_Biaya & "' ", KoneksiDatabaseTransaksi)
+        'drKhusus = cmdKhusus.ExecuteReader
+        'Do While drKhusus.Read
+        '    TanggalJurnalPenyusutan = drKhusus.Item("Tanggal_Transaksi")
+        '    BulanJurnalPenyusutan = AmbilAngka(Format(TanggalJurnalPenyusutan, "MM"))
+        '    If BulanJurnalPenyusutan = 1 Then PewarnaanCellFormatTeks(Januari_, e.Row, Warna)
+        '    If BulanJurnalPenyusutan = 2 Then PewarnaanCellFormatTeks(Februari_, e.Row, Warna)
+        '    If BulanJurnalPenyusutan = 3 Then PewarnaanCellFormatTeks(Maret_, e.Row, Warna)
+        '    If BulanJurnalPenyusutan = 4 Then PewarnaanCellFormatTeks(April_, e.Row, Warna)
+        '    If BulanJurnalPenyusutan = 5 Then PewarnaanCellFormatTeks(Mei_, e.Row, Warna)
+        '    If BulanJurnalPenyusutan = 6 Then PewarnaanCellFormatTeks(Juni_, e.Row, Warna)
+        '    If BulanJurnalPenyusutan = 7 Then PewarnaanCellFormatTeks(Juli_, e.Row, Warna)
+        '    If BulanJurnalPenyusutan = 8 Then PewarnaanCellFormatTeks(Agustus_, e.Row, Warna)
+        '    If BulanJurnalPenyusutan = 9 Then PewarnaanCellFormatTeks(September_, e.Row, Warna)
+        '    If BulanJurnalPenyusutan = 10 Then PewarnaanCellFormatTeks(Oktober_, e.Row, Warna)
+        '    If BulanJurnalPenyusutan = 11 Then PewarnaanCellFormatTeks(Nopember_, e.Row, Warna)
+        '    If BulanJurnalPenyusutan = 12 Then PewarnaanCellFormatTeks(Desember_, e.Row, Warna)
+        'Loop
+        'TutupDatabaseTransaksi_Kondisional()
+        'PewarnaanCellFormatTeks(Januari_, e.Row, Warna)
     End Sub
 
 

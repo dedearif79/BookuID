@@ -14,13 +14,14 @@
         <Setter Property="Foreground" Value="{StaticResource clrDataGridHeaderFg}"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="FontWeight" Value="SemiBold"/>
-        <Setter Property="Padding" Value="10,8"/>
-        <Setter Property="BorderBrush" Value="{StaticResource clrDataGridGridLine}"/>
-        <Setter Property="BorderThickness" Value="0,0,1,1"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="MinHeight" Value="27"/>
+        <Setter Property="Padding" Value="3"/>
+        <Setter Property="BorderBrush" Value="{StaticResource clrDataGridLine}"/>
+        <Setter Property="BorderThickness" Value="0, 0, 1, 1"/>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Template">
+        <!--<Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="DataGridColumnHeader">
                     <Border x:Name="border"
@@ -38,7 +39,7 @@
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
-        </Setter>
+        </Setter>-->
     </Style>
 
 
@@ -46,7 +47,7 @@
     <Style x:Key="styleDataGridRow" TargetType="DataGridRow">
         <Setter Property="Background" Value="{StaticResource clrDataGridBg}"/>
         <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource clrDataGridGridLine}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource clrDataGridLine}"/>
         <Setter Property="BorderThickness" Value="0,0,0,1"/>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
@@ -73,8 +74,8 @@
 
     <!-- ===== DATAGRID CELL ===== -->
     <Style x:Key="styleDataGridCell" TargetType="DataGridCell">
-        <Setter Property="Padding" Value="8,6"/>
-        <Setter Property="BorderBrush" Value="{StaticResource clrDataGridGridLine}"/>
+        <Setter Property="Padding" Value="3"/>
+        <Setter Property="BorderBrush" Value="{StaticResource clrDataGridLine}"/>
         <Setter Property="BorderThickness" Value="0,0,1,0"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType=DataGridRow}, Path=Foreground}"/>
@@ -102,14 +103,20 @@
 
     <!-- ===== DATAGRID DASAR ===== -->
     <Style x:Key="StyleDataGridDasar" TargetType="DataGrid">
+        <Setter Property="ColumnHeaderStyle" Value="{StaticResource styleDataGridColumnHeader}"/>
+        <Setter Property="RowStyle" Value="{StaticResource styleDataGridRow}"/>
+        <Setter Property="CellStyle" Value="{StaticResource styleDataGridCell}"/>
+        <Setter Property="RowBackground" Value="{StaticResource clrDataGridBg}"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource clrDataGridLine}"/>
+        <Setter Property="VerticalGridLinesBrush" Value="{StaticResource clrDataGridLine}"/>
         <Setter Property="Background" Value="{StaticResource clrDataGridBg}"/>
         <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
         <Setter Property="BorderBrush" Value="{StaticResource clrDataGridBorder}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="GridLinesVisibility" Value="None"/>
+        <Setter Property="GridLinesVisibility" Value="All"/>
         <Setter Property="HeadersVisibility" Value="Column"/>
         <Setter Property="RowHeaderWidth" Value="0"/>
-        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontFamily" Value="Calibri Light"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="CanUserAddRows" Value="False"/>
         <Setter Property="CanUserDeleteRows" Value="False"/>
@@ -124,9 +131,6 @@
         <Setter Property="SelectionMode" Value="Single"/>
         <Setter Property="SelectionUnit" Value="FullRow"/>
         <Setter Property="AlternationCount" Value="2"/>
-        <Setter Property="ColumnHeaderStyle" Value="{StaticResource styleDataGridColumnHeader}"/>
-        <Setter Property="RowStyle" Value="{StaticResource styleDataGridRow}"/>
-        <Setter Property="CellStyle" Value="{StaticResource styleDataGridCell}"/>
     </Style>
 
 
@@ -149,7 +153,7 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Disabled"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="GridLinesVisibility" Value="Horizontal"/>
-        <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource clrDataGridGridLine}"/>
+        <Setter Property="HorizontalGridLinesBrush" Value="{StaticResource clrDataGridLine}"/>
     </Style>
 
 

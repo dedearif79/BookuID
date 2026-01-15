@@ -47,9 +47,9 @@
                     <!-- Baris Filter Data :-->
                     <StackPanel Style="{StaticResource stylePanelFormHalamanFilterData}" Name="pnl_FilterData" >
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Kategori :"/>
-                        <ComboBox Width="132"  Margin="6 3" Name="cmb_Kategori" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="132"  Margin="6 3" Name="cmb_Kategori" />
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Peruntukan:"/>
-                        <ComboBox Width="234"  Margin="6 3" Name="cmb_Peruntukan" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="234"  Margin="6 3" Name="cmb_Peruntukan" />
                     </StackPanel>
                 </StackPanel>
                 <!-- Header Kanan:-->
@@ -118,7 +118,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" VerticalAlignment="Stretch">
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
-                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="666" MinHeight="33" VerticalAlignment="Stretch" />
+                        <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama" MinWidth="666" MinHeight="33" VerticalAlignment="Stretch" />
                     </StackPanel>
 
                 </StackPanel>
@@ -128,7 +128,7 @@
                     <!--Talangan :-->
                     <GroupBox   Header="Talangan : "    Margin="9" >
                         <StackPanel   Style="{StaticResource stylePanelDataGridView}" Name="pnl_DataGridBayar" >
-                            <DataGrid Name="datagridBayar" Style="{StaticResource StyleDataGridModul}"  Margin="15 15 15 0" MinWidth="279" MinHeight="33" HorizontalAlignment="Right"    Width="Auto" />
+                            <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridBayar"  Margin="15 15 15 0" MinWidth="279" MinHeight="33" HorizontalAlignment="Right"    Width="Auto" />
                             <Grid DockPanel.Dock="Top" VerticalAlignment="Stretch"  Margin="15 9">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition   Width="Auto" />

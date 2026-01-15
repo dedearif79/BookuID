@@ -92,8 +92,8 @@
                         <Grid Style="{StaticResource styleGridFormDialogBank}" >
 
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="42*"/>
-                                <ColumnDefinition Width="57*"  />
+                                <ColumnDefinition Width="123"/>
+                                <ColumnDefinition Width="192"  />
                             </Grid.ColumnDefinitions>
 
                             <Grid.RowDefinitions>
@@ -130,7 +130,7 @@
 
             <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Name="pnl_Kanan" >
                 <StackPanel Style="{StaticResource stylePanelDataGridView}"  >
-                    <DataGrid Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="222" MinHeight="33" >
+                    <DataGrid Style="{StaticResource StyleDataGridFormDialog}" Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="222" MinHeight="33" >
                     </DataGrid>
                 </StackPanel>
                 <Button Style="{StaticResource styleButtonFormDialogSingkirkan}"    Name="btn_Singkirkan" />

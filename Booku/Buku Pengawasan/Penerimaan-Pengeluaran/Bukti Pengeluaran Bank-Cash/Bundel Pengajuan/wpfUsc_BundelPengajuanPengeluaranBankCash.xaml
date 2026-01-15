@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="wpfUsc_BundelPengajuanPengeluaranBankCash"
+<UserControl x:Class="wpfUsc_BundelPengajuanPengeluaranBankCash"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -36,9 +36,9 @@
                 <TextBlock Style="{StaticResource styleTextBlockFormHalaman}">Filter Data 1 :</TextBlock>
                 <TextBox Width="100"   Margin="6 3" Name="txt_Filter1" ></TextBox>
                 <TextBlock Style="{StaticResource styleTextBlockFormHalaman}">Filter Data 2 :</TextBlock>
-                <ComboBox Width="123"  Margin="6 3"  ></ComboBox>
+                <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="123"  Margin="6 3"  ></ComboBox>
                 <TextBlock Style="{StaticResource styleTextBlockFormHalaman}">Filter Data 3 :</TextBlock>
-                <ComboBox Width="210"  Margin="6 3"  ></ComboBox>
+                <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="210"  Margin="6 3"  ></ComboBox>
             </StackPanel>-->
         </StackPanel>
 

@@ -1,4 +1,4 @@
-﻿<Window x:Class="wpfWin_DaftarSaham"
+<Window x:Class="wpfWin_DaftarSaham"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -50,7 +50,7 @@
             </Grid>
 
             <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
-                <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinHeight="33" VerticalAlignment="Stretch" />
+                <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama" MinHeight="33" VerticalAlignment="Stretch" />
             </StackPanel>
 
 

@@ -26,7 +26,11 @@ Public Class wpfWin_BOOKU
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+
         UpdateStatusBar()
+
+        KetersediaanMenuHalaman(pnl_Halaman, True)
 
     End Sub
 

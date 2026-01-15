@@ -1,4 +1,4 @@
-﻿<Window x:Class="wpfWin_InputBundelPengajuanPengeluaranBankCash"
+<Window x:Class="wpfWin_InputBundelPengajuanPengeluaranBankCash"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -52,7 +52,7 @@
 
             <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Name="pnl_Kanan" >
                 <StackPanel Style="{StaticResource stylePanelDataGridView}"  >
-                    <DataGrid Name="datagridUtama" AutoGenerateColumns="False" />
+                    <DataGrid Style="{StaticResource StyleDataGridFormDialog}" Name="datagridUtama" AutoGenerateColumns="False" />
                 </StackPanel>
             </StackPanel>
 

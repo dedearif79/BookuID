@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="wpfUsc_BukuPengawasanHutangPPhPasal22_Impor"
+<UserControl x:Class="wpfUsc_BukuPengawasanHutangPPhPasal22_Impor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -34,9 +34,9 @@
                     <!--
                     <StackPanel Style="{StaticResource stylePanelFormHalamanFilterData}" Name="pnl_FilterData" >
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Tahun :"/>
-                        <ComboBox Width="69"  Margin="6 3" Name="cmb_TahunPajak" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="69"  Margin="6 3" Name="cmb_TahunPajak" />
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Masa Pajak:"    Name="lbl_MasaPajak"/>
-                        <ComboBox Width="123"  Margin="6 3" Name="cmb_MasaPajak" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="123"  Margin="6 3" Name="cmb_MasaPajak" />
                     </StackPanel
                     >-->
                     <!-- Baris Tombol :-->
@@ -187,7 +187,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" VerticalAlignment="Stretch">
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
-                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="333" MinHeight="33" VerticalAlignment="Stretch" />
+                        <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama" MinWidth="333" MinHeight="33" VerticalAlignment="Stretch" />
                     </StackPanel>
 
                 </StackPanel>
@@ -211,7 +211,7 @@
                             <RadioButton    Grid.Row="0" Grid.Column="2"    GroupName="rdG_KodeSetoran"      Style="{StaticResource styleRadioButtonFormDialog}"     Name="rdb_KodeSetoran_102"  Content="102"/>
                         </Grid>-->
                         <StackPanel Grid.Row="0" Grid.Column="0"    Style="{StaticResource stylePanelDataGridView}" Name="pnl_DataGridBayar"    Margin="9 6 9 6">
-                            <DataGrid Name="datagridBayar" Style="{StaticResource StyleDataGridModul}"  MinWidth="270" MinHeight="33" HorizontalAlignment="Stretch" />
+                            <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridBayar"  MinWidth="270" MinHeight="33" HorizontalAlignment="Stretch" />
                             <Grid DockPanel.Dock="Top" VerticalAlignment="Stretch"  Margin="0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition   Width="100*" />

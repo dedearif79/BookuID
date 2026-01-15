@@ -27,6 +27,7 @@
     <Color x:Key="clrPrimaryDarker">#1B5E20</Color>
     <Color x:Key="clrPrimarySurface">#E8F5E9</Color>
     <Color x:Key="clrPrimaryBorder">#A5D6A7</Color>
+    <Color x:Key="clrPrimaryLine">#FFD1EAD2</Color>
 
 
     <!-- ===== NEUTRAL (Abu-abu) ===== -->
@@ -75,8 +76,10 @@
 
 
     <!-- ===== LEGACY (untuk backward compatibility) ===== -->
-    <Color x:Key="clrDataTahunLalu">#FF3F3F80</Color>
+    <Color x:Key="clrDataTahunLalu">#FF0049AB</Color>
+    <Color x:Key="clrDataBelumLunas">#F57C00</Color>
     <SolidColorBrush x:Key="clrTeksDataTahunLalu" Color="{StaticResource clrDataTahunLalu}"/>
+    <SolidColorBrush x:Key="clrTeksDataBelumLunas" Color="{StaticResource clrDataBelumLunas}"/>
 
 
     <!-- =================================================================== -->
@@ -89,12 +92,12 @@
 
 
     <!-- ===== TEKS ===== -->
-    <SolidColorBrush x:Key="clrTeksPrimer" Color="{StaticResource clrNeutral900}"/>
+    <SolidColorBrush x:Key="clrTeksPrimer" Color="{StaticResource clrPrimaryDarker}"/>
     <SolidColorBrush x:Key="clrTeksSekunder" Color="{StaticResource clrNeutral600}"/>
     <SolidColorBrush x:Key="clrTeksDisabled" Color="{StaticResource clrNeutral400}"/>
     <SolidColorBrush x:Key="clrTeksPlaceholder" Color="{StaticResource clrNeutral500}"/>
     <SolidColorBrush x:Key="clrTeksLink" Color="{StaticResource clrPrimary}"/>
-    <SolidColorBrush x:Key="clrTeksAksen" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrTeksAksen" Color="{StaticResource clrPrimaryDark}"/>
     <SolidColorBrush x:Key="clrTeksInvers" Color="{StaticResource clrWhite}"/>
 
 
@@ -118,35 +121,35 @@
     <!-- ===== DATAGRID ===== -->
     <SolidColorBrush x:Key="clrDataGridBg" Color="{StaticResource clrWhite}"/>
     <SolidColorBrush x:Key="clrDataGridBgAlt" Color="{StaticResource clrNeutral50}"/>
-    <SolidColorBrush x:Key="clrDataGridHeader" Color="{StaticResource clrNeutral100}"/>
-    <SolidColorBrush x:Key="clrDataGridHeaderFg" Color="{StaticResource clrNeutral800}"/>
-    <SolidColorBrush x:Key="clrDataGridRowSelect" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrDataGridHeader" Color="{StaticResource clrPrimarySurface}"/>
+    <SolidColorBrush x:Key="clrDataGridHeaderFg" Color="{StaticResource clrPrimaryDark}"/>
+    <SolidColorBrush x:Key="clrDataGridRowSelect" Color="{StaticResource clrPrimaryLight}"/>
     <SolidColorBrush x:Key="clrDataGridRowSelectFg" Color="{StaticResource clrWhite}"/>
-    <SolidColorBrush x:Key="clrDataGridRowHover" Color="{StaticResource clrNeutral100}"/>
-    <SolidColorBrush x:Key="clrDataGridBorder" Color="{StaticResource clrNeutral300}"/>
-    <SolidColorBrush x:Key="clrDataGridGridLine" Color="{StaticResource clrNeutral200}"/>
+    <SolidColorBrush x:Key="clrDataGridRowHover" Color="{StaticResource clrNeutral200}"/>
+    <SolidColorBrush x:Key="clrDataGridBorder" Color="{StaticResource clrPrimaryBorder}"/>
+    <SolidColorBrush x:Key="clrDataGridLine" Color="{StaticResource clrPrimaryLine}"/>
 
 
-    <!-- ===== TOMBOL SEKUNDER (Default) ===== -->
-    <SolidColorBrush x:Key="clrBtnBg" Color="{StaticResource clrNeutral200}"/>
-    <SolidColorBrush x:Key="clrBtnBgHover" Color="{StaticResource clrNeutral300}"/>
-    <SolidColorBrush x:Key="clrBtnBgPressed" Color="{StaticResource clrNeutral400}"/>
-    <SolidColorBrush x:Key="clrBtnFg" Color="{StaticResource clrNeutral800}"/>
-    <SolidColorBrush x:Key="clrBtnBorder" Color="{StaticResource clrNeutral400}"/>
+    <!-- ===== TOMBOL SEKUNDER (Default) ===== --> 
+    <SolidColorBrush x:Key="clrBtnBg" Color="{StaticResource clrPrimarySurface}"/>
+    <SolidColorBrush x:Key="clrBtnBgHover" Color="{StaticResource clrPrimaryLighter}"/>
+    <SolidColorBrush x:Key="clrBtnBgPressed" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrBtnFg" Color="{StaticResource clrPrimaryDark}"/>
+    <SolidColorBrush x:Key="clrBtnBorder" Color="{StaticResource clrPrimaryBorder}"/>
 
 
     <!-- ===== TOMBOL PRIMER (Aksi Utama) ===== -->
     <SolidColorBrush x:Key="clrBtnPrimerBg" Color="{StaticResource clrPrimary}"/>
-    <SolidColorBrush x:Key="clrBtnPrimerBgHover" Color="{StaticResource clrPrimaryDark}"/>
+    <SolidColorBrush x:Key="clrBtnPrimerBgHover" Color="{StaticResource clrPrimaryDark }"/>
     <SolidColorBrush x:Key="clrBtnPrimerBgPressed" Color="{StaticResource clrPrimaryDarker}"/>
     <SolidColorBrush x:Key="clrBtnPrimerFg" Color="{StaticResource clrWhite}"/>
     <SolidColorBrush x:Key="clrBtnPrimerBorder" Color="{StaticResource clrPrimaryDark}"/>
 
 
     <!-- ===== TOMBOL DISABLED ===== -->
-    <SolidColorBrush x:Key="clrBtnDisabledBg" Color="{StaticResource clrNeutral200}"/>
-    <SolidColorBrush x:Key="clrBtnDisabledFg" Color="{StaticResource clrNeutral400}"/>
-    <SolidColorBrush x:Key="clrBtnDisabledBorder" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrBtnDisabledBg" Color="{StaticResource clrNeutral100}"/>
+    <SolidColorBrush x:Key="clrBtnDisabledFg" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrBtnDisabledBorder" Color="{StaticResource clrNeutral200}"/>
 
 
     <!-- ===== BORDER ===== -->
@@ -159,12 +162,12 @@
 
     <!-- ===== MENU & NAVIGASI ===== -->
     <SolidColorBrush x:Key="clrMenuBg" Color="{StaticResource clrWhite}"/>
-    <SolidColorBrush x:Key="clrMenuFg" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrMenuFg" Color="{StaticResource clrPrimaryDarker}"/>
     <SolidColorBrush x:Key="clrMenuHover" Color="{StaticResource clrPrimarySurface}"/>
     <SolidColorBrush x:Key="clrMenuActive" Color="{StaticResource clrPrimaryBorder}"/>
     <SolidColorBrush x:Key="clrMenuBorder" Color="{StaticResource clrNeutral300}"/>
     <SolidColorBrush x:Key="clrSubMenuBg" Color="{StaticResource clrWhite}"/>
-    <SolidColorBrush x:Key="clrSubMenuFg" Color="{StaticResource clrPrimary}"/>
+    <SolidColorBrush x:Key="clrSubMenuFg" Color="{StaticResource clrPrimaryDark}"/>
     <SolidColorBrush x:Key="clrSubMenuHover" Color="{StaticResource clrPrimarySurface}"/>
     <SolidColorBrush x:Key="clrSubMenuBorder" Color="{StaticResource clrPrimaryBorder}"/>
 
@@ -173,9 +176,9 @@
     <SolidColorBrush x:Key="clrTabBg" Color="{StaticResource clrNeutral100}"/>
     <SolidColorBrush x:Key="clrTabBgSelected" Color="{StaticResource clrWhite}"/>
     <SolidColorBrush x:Key="clrTabBgHover" Color="{StaticResource clrPrimarySurface}"/>
-    <SolidColorBrush x:Key="clrTabFg" Color="{StaticResource clrNeutral700}"/>
-    <SolidColorBrush x:Key="clrTabFgSelected" Color="{StaticResource clrPrimary}"/>
-    <SolidColorBrush x:Key="clrTabBorder" Color="{StaticResource clrNeutral300}"/>
+    <SolidColorBrush x:Key="clrTabFg" Color="{StaticResource clrPrimaryDark}"/>
+    <SolidColorBrush x:Key="clrTabFgSelected" Color="{StaticResource clrPrimaryDarker}"/>
+    <SolidColorBrush x:Key="clrTabBorder" Color="Transparent"/>
     <SolidColorBrush x:Key="clrTabBorderSelected" Color="{StaticResource clrPrimary}"/>
 
 
@@ -192,9 +195,9 @@
 
 
     <!-- ===== SCROLLBAR ===== -->
-    <SolidColorBrush x:Key="clrScrollbarBg" Color="{StaticResource clrNeutral100}"/>
-    <SolidColorBrush x:Key="clrScrollbarThumb" Color="{StaticResource clrNeutral400}"/>
-    <SolidColorBrush x:Key="clrScrollbarThumbHover" Color="{StaticResource clrNeutral500}"/>
+    <SolidColorBrush x:Key="clrScrollbarBg" Color="{StaticResource clrPrimarySurface}"/>
+    <SolidColorBrush x:Key="clrScrollbarThumb" Color="{StaticResource clrPrimaryLighter}"/>
+    <SolidColorBrush x:Key="clrScrollbarThumbHover" Color="{StaticResource clrPrimaryLight}"/>
 
 
     <!-- ===== GROUPBOX ===== -->

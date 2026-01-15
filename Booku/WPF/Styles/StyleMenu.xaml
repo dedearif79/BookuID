@@ -15,6 +15,11 @@
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="Padding" Value="5,4"/>
+        <Style.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{StaticResource clrTeksDisabled}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- Menu Bar Aplikasi (untuk main window) -->
@@ -24,6 +29,7 @@
         <Setter Property="DockPanel.Dock" Value="Top"/>
         <Setter Property="BorderBrush" Value="{StaticResource clrMenuBorder}"/>
         <Setter Property="BorderThickness" Value="0,0,0,1"/>
+        <Setter Property="Padding" Value="3"/>
     </Style>
 
 
@@ -38,7 +44,8 @@
                     <Border x:Name="Border"
                             Background="Transparent"
                             BorderThickness="0"
-                            Padding="{TemplateBinding Padding}">
+                            Padding="{TemplateBinding Padding}"
+                            >
                         <Grid>
                             <ContentPresenter ContentSource="Header"
                                               RecognizesAccessKey="True"

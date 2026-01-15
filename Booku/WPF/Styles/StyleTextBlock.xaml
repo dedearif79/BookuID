@@ -39,7 +39,7 @@
     <!-- TextBlock Form Halaman - Judul -->
     <Style x:Key="styleTextBlockFormHalamanJudul" BasedOn="{StaticResource styleTextBlockFormHalaman}" TargetType="TextBlock">
         <Setter Property="Margin" Value="0 9"/>
-        <Setter Property="FontSize" Value="21"/>
+        <Setter Property="FontSize" Value="17"/>
         <Setter Property="FontWeight" Value="DemiBold"/>
         <Setter Property="Foreground" Value="{StaticResource clrTeksAksen}"/>
     </Style>

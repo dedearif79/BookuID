@@ -1049,35 +1049,37 @@ Module wpfMdl_PublicSub
     ' Warna menggunakan variabel dari mdlPub_ModulUmum.vb yang selaras dengan StyleColor.xaml
     Public Sub StyleTabelDasar_WPF(ByVal Tabel As DataGrid)
         If Proses = False Then
-            Tabel.AutoGenerateColumns = False
-            Tabel.HorizontalAlignment = HorizontalAlignment.Left
-            Tabel.VerticalAlignment = VerticalAlignment.Top
-            Tabel.HeadersVisibility = DataGridHeadersVisibility.Column
-            Tabel.CanUserDeleteRows = False
-            Tabel.CanUserSortColumns = False
-            Tabel.CanUserReorderColumns = False
-            Tabel.CanUserAddRows = False
-            Tabel.CanUserResizeRows = False
-            Tabel.SelectionMode = DataGridSelectionMode.Single
-            Tabel.SelectionUnit = DataGridSelectionUnit.FullRow
-            Tabel.BorderThickness = New Thickness(0.5)
-            Tabel.GridLinesVisibility = DataGridGridLinesVisibility.All
-            Tabel.IsReadOnly = True
+
+            'Tabel.AutoGenerateColumns = False
+            'Tabel.HorizontalAlignment = HorizontalAlignment.Left
+            'Tabel.VerticalAlignment = VerticalAlignment.Top
+            'Tabel.HeadersVisibility = DataGridHeadersVisibility.Column
+            'Tabel.CanUserDeleteRows = False
+            'Tabel.CanUserSortColumns = False
+            'Tabel.CanUserReorderColumns = False
+            'Tabel.CanUserAddRows = False
+            'Tabel.CanUserResizeRows = False
+            'Tabel.SelectionMode = DataGridSelectionMode.Single
+            'Tabel.SelectionUnit = DataGridSelectionUnit.FullRow
+            'Tabel.BorderThickness = New Thickness(1)
+            'Tabel.BorderBrush = clrPrimaryBorder
+            'Tabel.GridLinesVisibility = DataGridGridLinesVisibility.All
+            'Tabel.IsReadOnly = True
 
             ' === WARNA DARI RESOURCES ATAU FALLBACK ===
-            Tabel.RowBackground = clrDataGridBg
-            Tabel.VerticalGridLinesBrush = clrDataGridGridLine
-            Tabel.HorizontalGridLinesBrush = clrDataGridGridLine
+            'Tabel.RowBackground = clrDataGridBg
+            'Tabel.VerticalGridLinesBrush = clrDataGridLine
+            'Tabel.HorizontalGridLinesBrush = clrDataGridLine  
 
-            ' === STYLE HEADER KOLOM (Programatis) ===
-            Dim styleHeader As New Style(GetType(DataGridColumnHeader))
-            styleHeader.Setters.Add(New Setter(DataGridColumnHeader.HorizontalContentAlignmentProperty, HorizontalAlignment.Center))
-            styleHeader.Setters.Add(New Setter(DataGridColumnHeader.BackgroundProperty, clrDataGridHeader))
-            styleHeader.Setters.Add(New Setter(DataGridColumnHeader.ForegroundProperty, clrDataGridHeaderFg))
-            styleHeader.Setters.Add(New Setter(DataGridColumnHeader.PaddingProperty, New Thickness(10, 8, 10, 8)))
-            styleHeader.Setters.Add(New Setter(DataGridColumnHeader.BorderBrushProperty, clrDataGridGridLine))
-            styleHeader.Setters.Add(New Setter(DataGridColumnHeader.BorderThicknessProperty, New Thickness(0, 0, 1, 1)))
-            Tabel.ColumnHeaderStyle = styleHeader
+            '' === STYLE HEADER KOLOM (Programatis) === '(Ini dinonaktifkan karena mengacaukan styling)
+            'Dim styleHeader As New Style(GetType(DataGridColumnHeader))
+            'styleHeader.Setters.Add(New Setter(DataGridColumnHeader.HorizontalContentAlignmentProperty, HorizontalAlignment.Center))
+            'styleHeader.Setters.Add(New Setter(DataGridColumnHeader.BackgroundProperty, clrDataGridHeader))
+            'styleHeader.Setters.Add(New Setter(DataGridColumnHeader.ForegroundProperty, clrDataGridHeaderFg))
+            'styleHeader.Setters.Add(New Setter(DataGridColumnHeader.PaddingProperty, New Thickness(10, 8, 10, 8)))
+            'styleHeader.Setters.Add(New Setter(DataGridColumnHeader.BorderBrushProperty, clrDataGridLine))
+            'styleHeader.Setters.Add(New Setter(DataGridColumnHeader.BorderThicknessProperty, New Thickness(0, 0, 1, 1)))
+            'Tabel.ColumnHeaderStyle = styleHeader
 
             ' === STYLE BARIS (Programatis) ===
             Dim rowStyle As New Style(GetType(DataGridRow))

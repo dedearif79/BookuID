@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="wpfUsc_DaftarAmortisasiBiaya"
+<UserControl x:Class="wpfUsc_DaftarAmortisasiBiaya"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -55,25 +55,25 @@
                         <!-- Filter Tahun Laporan : -->
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"     Name="pnl_FilterTahunLaporan" >
                             <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Tahun Laporan :" />
-                            <ComboBox Width="75"  Margin="0"    HorizontalAlignment="Left"                  Name="cmb_TahunLaporan" />
+                            <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="75"  Margin="0"    HorizontalAlignment="Left"                  Name="cmb_TahunLaporan" />
                         </StackPanel>
                         <!-- Filter Tahun Perolehan : -->
                         <Border Style="{StaticResource styleBorderHeaderSeparatorFilter}"                   Name="brd_JenisTampilan"/>
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"     Name="pnl_JenisTampilan" >
                             <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Tampilan :" />
-                            <ComboBox Width="81"  Margin="0"    HorizontalAlignment="Left"                  Name="cmb_JenisTampilan" />
+                            <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="81"  Margin="0"    HorizontalAlignment="Left"                  Name="cmb_JenisTampilan" />
                         </StackPanel>
                         <!-- Filter COA : -->
                         <Border Style="{StaticResource styleBorderHeaderSeparatorFilter}"                  Name="brd_FilterAkun"/>
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"    Name="pnl_FilterAkun" >
                             <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Akun :" />
-                            <ComboBox Width="270"  Margin="0"  Name="cmb_FilterCOA" />
+                            <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="270"  Margin="0"  Name="cmb_FilterCOA" />
                         </StackPanel>
                         <!-- Filter Tahun Perolehan : -->
                         <Border Style="{StaticResource styleBorderHeaderSeparatorFilter}"                   Name="brd_FilterTahunPerolehan"/>
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"     Name="pnl_FilterTahunPerolehan" >
                             <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Tahun Perolehan :" />
-                            <ComboBox Width="75"  Margin="0"    HorizontalAlignment="Left"                  Name="cmb_FilterTahunPerolehan" />
+                            <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="75"  Margin="0"    HorizontalAlignment="Left"                  Name="cmb_FilterTahunPerolehan" />
                         </StackPanel>
                         <!-- Tombol Filter : -->
                         <Border Style="{StaticResource styleBorderHeaderSeparatorFilter}"               Name="brd_TombolFilter"/>
@@ -120,7 +120,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" VerticalAlignment="Stretch">
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
-                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch"   />
+                        <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch"   />
                     </StackPanel>
 
                 </StackPanel>

@@ -230,9 +230,11 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             NomorPembelian = AwalanPEMB_PlusTahunBuku & AngkaInvoice
             If JenisTahunBuku = JenisTahunBuku_LAMPAU Then
                 JenisProduk_Induk = Kosongan
-                frm_PilihJenisProdukInduk.ShowDialog()
-                JenisProduk_Induk = frm_PilihJenisProdukInduk.JenisProduk_Induk
-                If frm_PilihJenisProdukInduk.Lanjutkan = False Then Me.Close()
+                win_PilihJenisProdukInduk = New wpfWin_PilihJenisProdukInduk
+                win_PilihJenisProdukInduk.ResetForm()
+                win_PilihJenisProdukInduk.ShowDialog()
+                JenisProduk_Induk = win_PilihJenisProdukInduk.JenisProduk_Induk
+                If win_PilihJenisProdukInduk.Lanjutkan = False Then Me.Close()
             End If
             If (JenisProduk_Induk = Kosongan Or JenisProduk_Induk = JenisProduk_Semua) _
                 And InvoiceDenganPO = False _

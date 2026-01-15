@@ -112,7 +112,9 @@
                             <Button Style="{StaticResource styleButtonFormDialogPlus }"     Name="btn_TambahSJBAST"/>
                             <Button Style="{StaticResource styleButtonFormDialogMinus}"     Name="btn_SingkirkanSJBAST" />
                         </StackPanel>
-                        <DataGrid       Grid.Row="9"  Grid.Column="0"   Name="datagridSJBAST"   Grid.ColumnSpan="2" VerticalAlignment="Top" AutoGenerateColumns="False" MinHeight="27"   Margin="0 0 0 12"/>
+                        <DataGrid       Grid.Row="9"  Grid.Column="0"   Name="datagridSJBAST"   Grid.ColumnSpan="2" VerticalAlignment="Top" AutoGenerateColumns="False" MinHeight="27"   Margin="0 0 0 12"
+                                        HorizontalAlignment="Stretch"
+                                        Style="{StaticResource StyleDataGridFormDialog}" />
                         <StackPanel     Grid.Row="10" Grid.Column="1"   Style="{StaticResource stylePanelFormDialogKolom}"  >
                             <TextBox    Width="115"                     Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NomorPO" />
                             <Button                                     Style="{StaticResource styleButtonFormDialogPilihKode}"     Name="btn_PilihPO"/>
@@ -147,8 +149,8 @@
                             <Grid Style="{StaticResource styleGridFormDialogBank}" >
 
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="41*"/>
-                                    <ColumnDefinition Width="59*"  />
+                                    <ColumnDefinition Width="123"/>
+                                    <ColumnDefinition Width="152"  />
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.RowDefinitions>
@@ -183,8 +185,7 @@
                 <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Name="pnl_Kanan" >
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}"  >
-                        <DataGrid Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="555" MinHeight="33" />
-                        <!--<DataGrid Name="datagridTotal" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="555" MinHeight="21" />-->
+                        <DataGrid Style="{StaticResource StyleDataGridFormDialog}" Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="555" MinHeight="33" />
                     </StackPanel>
 
                     <DockPanel  Margin="0 9 0 0">

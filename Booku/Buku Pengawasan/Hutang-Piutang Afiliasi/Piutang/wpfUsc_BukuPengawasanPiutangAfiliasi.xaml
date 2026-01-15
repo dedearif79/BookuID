@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="wpfUsc_BukuPengawasanPiutangAfiliasi"
+<UserControl x:Class="wpfUsc_BukuPengawasanPiutangAfiliasi"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -48,16 +48,16 @@
                     <!-- Baris Filter Data :-->
                     <!--<StackPanel Style="{StaticResource stylePanelFormHalamanFilterData}" Name="pnl_FilterData" >
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Jenis Relasi :" Name="lbl_FilterJenisRelasi"/>
-                        <ComboBox Width="093"  Margin="6 3"  Name="cmb_JenisRelasi" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="093"  Margin="6 3"  Name="cmb_JenisRelasi" />
                         <Border Width="2" Background="LightGray" Margin="6,3,9,3"   Name="brd_FilterJenisProduk" />
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Jenis Produk :"/>
-                        <ComboBox Width="117"  Margin="6 3" Name="cmb_JenisProduk_Induk" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="117"  Margin="6 3" Name="cmb_JenisProduk_Induk" />
                         <Border Width="2" Background="LightGray" Margin="6,3,9,3"   Name="brd_FilterSupplier"/>
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Supplier :"/>
-                        <ComboBox Width="180"  Margin="6 3" Name="cmb_Supplier" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="180"  Margin="6 3" Name="cmb_Supplier" />
                         <Border Width="2" Background="LightGray" Margin="6,3,9,3"   Name="brd_FilterJatuhTempo" />
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Jatuh Tempo :"/>
-                        <ComboBox Width="063"  Margin="6 3" Name="cmb_JatuhTempo" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="063"  Margin="6 3" Name="cmb_JatuhTempo" />
                     </StackPanel>-->
                 </StackPanel>
                 <!-- Header Kanan:-->
@@ -126,7 +126,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" VerticalAlignment="Stretch">
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
-                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="666" MinHeight="33" VerticalAlignment="Stretch" />
+                        <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama" MinWidth="666" MinHeight="33" VerticalAlignment="Stretch" />
                     </StackPanel>
 
                 </StackPanel>

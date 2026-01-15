@@ -24,13 +24,21 @@
   <ItemGroup>
     <Compile Remove="App Admin\**" />
     <Compile Remove="Logger\**" />
+    <Compile Remove="Menu Tambahan\**" />
+    <Compile Remove="WPF\Styles\Class Window\**" />
     <Compile Remove="My Project\Application.Designer.vb" />
     <EmbeddedResource Remove="App Admin\**" />
     <EmbeddedResource Remove="Logger\**" />
+    <EmbeddedResource Remove="Menu Tambahan\**" />
+    <EmbeddedResource Remove="WPF\Styles\Class Window\**" />
     <None Remove="App Admin\**" />
     <None Remove="Logger\**" />
+    <None Remove="Menu Tambahan\**" />
+    <None Remove="WPF\Styles\Class Window\**" />
     <Page Remove="App Admin\**" />
     <Page Remove="Logger\**" />
+    <Page Remove="Menu Tambahan\**" />
+    <Page Remove="WPF\Styles\Class Window\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -118,7 +126,6 @@
   <ItemGroup>
     <Folder Include="App IT\phpMyAdmin\" />
     <Folder Include="Buku Pengawasan\Hutang Pajak\09 - PPh Pasal 29\" />
-    <Folder Include="Menu Tambahan\" />
     <Folder Include="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\" />
     <Folder Include="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\" />
     <Folder Include="Pembelian - Penjualan\Pembelian\X-Trash\" />
@@ -126,7 +133,6 @@
     <Folder Include="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Tanpa PO\" />
     <Folder Include="Pembelian - Penjualan\Penjualan\X-Trash\" />
     <Folder Include="Resources\" />
-    <Folder Include="WPF\Styles\Class Window\" />
   </ItemGroup>
 
   <!-- App.xaml: WPF SDK auto-detect sebagai ApplicationDefinition -->

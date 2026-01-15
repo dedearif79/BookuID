@@ -24,7 +24,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <DockPanel LastChildFill="True">
+    <DockPanel LastChildFill="True" Name="pnl_Halaman">
 
         <!-- Menu Bar -->
         <Menu DockPanel.Dock="Top" Style="{StaticResource styleMenuBarAplikasi}">
@@ -546,6 +546,7 @@
 
                     <!-- DataGrid Notifikasi -->
                     <DataGrid Name="datagridNotifikasi"
+                              Style="{StaticResource StyleDataGridModul}"
                               AutoGenerateColumns="False"
                               IsReadOnly="True"
                               SelectionMode="Single"

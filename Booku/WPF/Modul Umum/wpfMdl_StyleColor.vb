@@ -47,6 +47,7 @@ Public Module wpfMdl_StyleColor
         _fallbackColors.Add("clrPrimaryDarker", Color.FromRgb(&H1B, &H5E, &H20))
         _fallbackColors.Add("clrPrimarySurface", Color.FromRgb(&HE8, &HF5, &HE9))
         _fallbackColors.Add("clrPrimaryBorder", Color.FromRgb(&HA5, &HD6, &HA7))
+        _fallbackColors.Add("clrPrimaryLine", Color.FromArgb(&HFF, &HD1, &HEA, &HD2))
 
         ' NEUTRAL (Abu-abu)
         _fallbackColors.Add("clrNeutral50", Color.FromRgb(&HFA, &HFA, &HFA))
@@ -89,7 +90,7 @@ Public Module wpfMdl_StyleColor
         _fallbackColors.Add("clrOverlayLight", Color.FromArgb(&HB3, &HFA, &HFA, &HFA))
 
         ' LEGACY
-        _fallbackColors.Add("clrDataTahunLalu", Color.FromArgb(&HFF, &H3F, &H3F, &H80))
+        _fallbackColors.Add("clrDataTahunLalu", Color.FromArgb(&HFF, &H0, &H49, &HAB))
 
         ' =================================================================
         ' LAYER 2: SEMANTIC COLORS (WARNA SEMANTIK)
@@ -103,7 +104,8 @@ Public Module wpfMdl_StyleColor
         _fallbackColors.Add("clrTeksLink", Color.FromRgb(&H38, &H8E, &H3C))
         _fallbackColors.Add("clrTeksAksen", Color.FromRgb(&H38, &H8E, &H3C))
         _fallbackColors.Add("clrTeksInvers", Colors.White)
-        _fallbackColors.Add("clrTeksDataTahunLalu", Color.FromArgb(&HFF, &H3F, &H3F, &H80))
+        _fallbackColors.Add("clrTeksDataTahunLalu", Color.FromArgb(&HFF, &H0, &H49, &HAB))
+        _fallbackColors.Add("clrTeksDataBelumLunas", Color.FromRgb(&HF5, &H7C, &H0))
 
         ' BACKGROUND
         _fallbackColors.Add("clrBgWindow", Color.FromRgb(&HF5, &HF5, &HF5))
@@ -128,7 +130,7 @@ Public Module wpfMdl_StyleColor
         _fallbackColors.Add("clrDataGridRowSelectFg", Colors.White)
         _fallbackColors.Add("clrDataGridRowHover", Color.FromRgb(&HF5, &HF5, &HF5))
         _fallbackColors.Add("clrDataGridBorder", Color.FromRgb(&HE0, &HE0, &HE0))
-        _fallbackColors.Add("clrDataGridGridLine", Color.FromRgb(&HEE, &HEE, &HEE))
+        _fallbackColors.Add("clrDataGridLine", Color.FromRgb(&HEE, &HEE, &HEE))
 
         ' TOMBOL SEKUNDER (Default)
         _fallbackColors.Add("clrBtnBg", Color.FromRgb(&HEE, &HEE, &HEE))
@@ -363,6 +365,11 @@ Public Module wpfMdl_StyleColor
         End Get
     End Property
 
+    Public ReadOnly Property clrPrimaryLine As SolidColorBrush
+        Get
+            Return GetColorBrush("clrPrimaryLine")
+        End Get
+    End Property
 
     ' ===== NEUTRAL (Abu-abu) =====
     Public ReadOnly Property clrNeutral50 As SolidColorBrush
@@ -538,6 +545,19 @@ Public Module wpfMdl_StyleColor
     Public ReadOnly Property clrDataTahunLalu As SolidColorBrush
         Get
             Return GetBrush("clrTeksDataTahunLalu")
+        End Get
+    End Property
+
+    Public ReadOnly Property clrTeksDataTahunLalu As SolidColorBrush
+        Get
+            Return GetBrush("clrTeksDataTahunLalu")
+        End Get
+    End Property
+
+
+    Public ReadOnly Property clrTeksDataBelumLunas As SolidColorBrush
+        Get
+            Return GetBrush("clrTeksDataBelumLunas")
         End Get
     End Property
 
@@ -723,9 +743,9 @@ Public Module wpfMdl_StyleColor
         End Get
     End Property
 
-    Public ReadOnly Property clrDataGridGridLine As SolidColorBrush
+    Public ReadOnly Property clrDataGridLine As SolidColorBrush
         Get
-            Return GetBrush("clrDataGridGridLine")
+            Return GetBrush("clrDataGridLine")
         End Get
     End Property
 
@@ -1279,17 +1299,6 @@ Public Module wpfMdl_StyleColor
     Public ReadOnly Property clrBgSidebar As SolidColorBrush
         Get
             Return GetBrush("clrBgSidebar")
-        End Get
-    End Property
-
-
-    ' =================================================================
-    ' LEGACY (untuk backward compatibility)
-    ' =================================================================
-
-    Public ReadOnly Property clrTeksDataTahunLalu As SolidColorBrush
-        Get
-            Return GetBrush("clrTeksDataTahunLalu")
         End Get
     End Property
 

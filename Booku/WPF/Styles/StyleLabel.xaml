@@ -33,7 +33,7 @@
 
     <!-- Label Form Halaman - Header/Judul -->
     <Style x:Key="styleLabelFormHalamanHeader" BasedOn="{StaticResource styleLabelFormHalaman}" TargetType="Label">
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontSize" Value="13"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="Foreground" Value="{StaticResource clrTeksAksen}"/>
         <Setter Property="Margin" Value="0 0 0 10"/>

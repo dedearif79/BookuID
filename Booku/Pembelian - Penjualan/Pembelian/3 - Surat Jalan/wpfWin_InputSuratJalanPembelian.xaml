@@ -92,7 +92,7 @@
                 <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Name="pnl_Kanan" >
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}"  >
-                        <DataGrid Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="555" MinHeight="33" />
+                        <DataGrid Style="{StaticResource StyleDataGridFormDialog}" Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="555" MinHeight="33" />
                     </StackPanel>
 
                     <DockPanel  Margin="0 9 0 0">

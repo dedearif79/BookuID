@@ -80,7 +80,7 @@
 
             <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Name="pnl_Kanan" >
                 <StackPanel Style="{StaticResource stylePanelDataGridView}"  >
-                    <DataGrid Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="333" MinHeight="33" />
+                    <DataGrid Style="{StaticResource StyleDataGridFormDialog}" Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="333" MinHeight="33" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"    Margin="0 9 0 0"    HorizontalAlignment="Left" VerticalAlignment="Top" >
                     <Button Style="{StaticResource styleButtonFormDialogPlus}"      Name="btn_Tambahkan" />

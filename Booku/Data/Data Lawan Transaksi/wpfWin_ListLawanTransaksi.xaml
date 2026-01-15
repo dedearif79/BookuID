@@ -39,7 +39,7 @@
                 </StackPanel>
             </StackPanel>
 
-            <DataGrid Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="500" MinHeight="300" MaxHeight="400" />
+            <DataGrid Style="{StaticResource StyleDataGridFormDialog}" Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="500" MinHeight="300" MaxHeight="400" />
 
         </StackPanel>
 

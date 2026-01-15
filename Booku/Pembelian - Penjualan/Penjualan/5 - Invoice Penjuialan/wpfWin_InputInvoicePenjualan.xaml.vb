@@ -206,8 +206,10 @@ Public Class wpfWin_InputInvoicePenjualan
             If JenisTahunBuku = JenisTahunBuku_LAMPAU Then
                 JenisProduk_Induk = Kosongan
                 Do While JenisProduk_Induk = Kosongan
-                    frm_PilihJenisProdukInduk.ShowDialog()
-                    JenisProduk_Induk = frm_PilihJenisProdukInduk.JenisProduk_Induk
+                    win_PilihJenisProdukInduk = New wpfWin_PilihJenisProdukInduk
+                    win_PilihJenisProdukInduk.ResetForm()
+                    win_PilihJenisProdukInduk.ShowDialog()
+                    JenisProduk_Induk = win_PilihJenisProdukInduk.JenisProduk_Induk
                     If JenisProduk_Induk = Kosongan Then
                         Pesan_Peringatan("Silakan pilih Jenis Produk!")
                     End If

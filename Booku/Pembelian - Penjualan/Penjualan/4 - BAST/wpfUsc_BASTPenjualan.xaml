@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="wpfUsc_BASTPenjualan"
+<UserControl x:Class="wpfUsc_BASTPenjualan"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -45,10 +45,10 @@
                     <!-- Baris Filter Data :-->
                     <StackPanel Style="{StaticResource stylePanelFormHalamanFilterData}" Name="pnl_FilterData" >
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Kontrol :"/>
-                        <ComboBox Width="75"  Margin="6 3" Name="cmb_Kontrol" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="75"  Margin="6 3" Name="cmb_Kontrol" />
                         <Border Width="2" Background="LightGray" Margin="6,3,9,3" />
                         <TextBlock Style="{StaticResource styleTextBlockFormHalaman}" Text="Customer :"/>
-                        <ComboBox Width="180"  Margin="6 3" Name="cmb_Customer" />
+                        <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="180"  Margin="6 3" Name="cmb_Customer" />
                     </StackPanel>
                 </StackPanel>
                 <!-- Header Kanan:-->
@@ -85,7 +85,7 @@
                 <StackPanel Grid.Row="0" Grid.Column="1" Style="{StaticResource stylePanelFormHalamanKonten}" VerticalAlignment="Stretch">
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
-                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch" />
+                        <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch" />
                     </StackPanel>
 
                 </StackPanel>

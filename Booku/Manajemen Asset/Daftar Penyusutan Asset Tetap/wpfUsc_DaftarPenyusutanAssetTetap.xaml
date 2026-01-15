@@ -65,25 +65,25 @@
                         <!-- Filter Tahun Laporan : -->
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"    Name="pnl_FilterTahunLaporan" >
                             <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Tahun Laporan :" />
-                            <ComboBox Width="75"  Margin="0"    HorizontalAlignment="Left"  Name="cmb_TahunLaporan" />
+                            <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="75"  Margin="0"    HorizontalAlignment="Left"  Name="cmb_TahunLaporan" />
                         </StackPanel>
                         <!-- Filter COA : -->
                         <Border Style="{StaticResource styleBorderHeaderSeparatorFilter}"/>
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"    Name="pnl_FilterAkun" >
                             <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Akun :" />
-                            <ComboBox Width="270"  Margin="0"  Name="cmb_FilterCOA" />
+                            <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="270"  Margin="0"  Name="cmb_FilterCOA" />
                         </StackPanel>
                         <!-- Filter Kelompok Harta : -->
                         <Border Style="{StaticResource styleBorderHeaderSeparatorFilter}"/>
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"    Name="pnl_FilterKelompokHarta" >
                             <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Kelompok Harta :" />
-                            <ComboBox Width="150"  Margin="0"  Name="cmb_FilterKelompokHarta" />
+                            <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="150"  Margin="0"  Name="cmb_FilterKelompokHarta" />
                         </StackPanel>
                         <!-- Filter Tahun Perolehan : -->
                         <Border Style="{StaticResource styleBorderHeaderSeparatorFilter}"/>
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"    Name="pnl_FilterTahunPerolehan" >
                             <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Tahun Perolehan :" />
-                            <ComboBox Width="75"  Margin="0"    HorizontalAlignment="Left"  Name="cmb_FilterTahunPerolehan" />
+                            <ComboBox Style="{StaticResource styleComboBoxFormHalaman}" Width="75"  Margin="0"    HorizontalAlignment="Left"  Name="cmb_FilterTahunPerolehan" />
                         </StackPanel>
                         <!-- Tombol Filter : -->
                         <Border Style="{StaticResource styleBorderHeaderSeparatorFilter}"               Name="brd_TombolFilter"/>
@@ -131,7 +131,7 @@
 
                     <StackPanel Style="{StaticResource stylePanelDataGridView}" VerticalAlignment="Stretch" Name="pnl_DataGridUtama" >
                         <TextBlock  Name="lbl_NotifikasiProses" Text="Harap tunggu! Sistem sedang memproses data."/>
-                        <DataGrid Name="datagridUtama" Style="{StaticResource StyleDataGridModul}" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch" />
+                        <DataGrid Style="{StaticResource StyleDataGridModul}" Name="datagridUtama" MinWidth="999" MinHeight="33" VerticalAlignment="Stretch" />
                     </StackPanel>
 
                 </StackPanel>
