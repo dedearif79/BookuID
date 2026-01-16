@@ -31,7 +31,8 @@
       "Bash(powershell.exe:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(echo:*)"
+      "Bash(echo:*)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\Booku\\\\Booku.vbproj\" -t:Clean,Build -verbosity:minimal)"
     ]
   }
 }

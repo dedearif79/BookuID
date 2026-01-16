@@ -274,9 +274,10 @@ Public Class wpfUsc_TutupBuku
         TahunPajak = TahunBukuAktif 'Ini penting untuk ditentukan di awal. Untuk kepentingan Kesesuaian Saldo Awal Semua Jenis PPh.
 
 
-        frm_ProgressLoadingData.lbl_Baris_01.Text = "Harap Tunggu..."
-        frm_ProgressLoadingData.lbl_Baris_02.Text = "Sistem sedang mengecek kesesuaian data."
-        frm_ProgressLoadingData.lbl_ProgressReport.Text = "Jangan memutus proses ini..!"
+        win_ProgressLoadingData = New wpfWin_ProgressLoadingData
+        win_ProgressLoadingData.lbl_Baris_01.Text = "Harap Tunggu..."
+        win_ProgressLoadingData.lbl_Baris_02.Text = "Sistem sedang mengecek kesesuaian data."
+        win_ProgressLoadingData.lbl_ProgressReport.Text = "Jangan memutus proses ini..!"
         CekKesesuaianData()
 
         'Buat Tahun Buku Berikutnya :

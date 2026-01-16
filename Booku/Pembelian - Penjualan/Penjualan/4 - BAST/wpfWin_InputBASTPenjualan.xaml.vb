@@ -567,17 +567,18 @@ Public Class wpfWin_InputBASTPenjualan
 
 
     Private Sub btn_Perbaiki_Click(sender As Object, e As RoutedEventArgs) Handles btn_Perbaiki.Click
-        frm_InputProduk_SJBAST.ResetForm()
-        frm_InputProduk_SJBAST.FungsiForm = FungsiForm_EDIT
-        frm_InputProduk_SJBAST.txt_NomorUrut.Text = NomorUrutProduk_Terseleksi
-        frm_InputProduk_SJBAST.txt_NamaProduk.Text = NamaProduk_Terseleksi
-        frm_InputProduk_SJBAST.txt_DeskripsiProduk.Text = DeskripsiProduk_Terseleksi
-        frm_InputProduk_SJBAST.txt_JumlahProduk.Text = JumlahProduk_Terseleksi
-        frm_InputProduk_SJBAST.JumlahProduk_Maksimal = JumlahProduk_Maksimal_Terseleksi
-        frm_InputProduk_SJBAST.txt_Satuan.Text = SatuanProduk_Terseleksi
-        frm_InputProduk_SJBAST.txt_Keterangan.Text = KeteranganProduk_Terseleksi
-        frm_InputProduk_SJBAST.JalurMasuk = Form_INPUTBASTPENJUALAN
-        frm_InputProduk_SJBAST.ShowDialog()
+        win_InputProduk_SJBAST = New wpfWin_InputProduk_SJBAST
+        win_InputProduk_SJBAST.ResetForm()
+        win_InputProduk_SJBAST.FungsiForm = FungsiForm_EDIT
+        win_InputProduk_SJBAST.txt_NomorUrut.Text = NomorUrutProduk_Terseleksi
+        win_InputProduk_SJBAST.txt_NamaProduk.Text = NamaProduk_Terseleksi
+        win_InputProduk_SJBAST.txt_DeskripsiProduk.Text = DeskripsiProduk_Terseleksi
+        win_InputProduk_SJBAST.txt_JumlahProduk.Text = JumlahProduk_Terseleksi
+        win_InputProduk_SJBAST.JumlahProduk_Maksimal = JumlahProduk_Maksimal_Terseleksi
+        win_InputProduk_SJBAST.txt_Satuan.Text = SatuanProduk_Terseleksi
+        win_InputProduk_SJBAST.txt_Keterangan.Text = KeteranganProduk_Terseleksi
+        win_InputProduk_SJBAST.JalurMasuk = Form_INPUTBASTPENJUALAN
+        win_InputProduk_SJBAST.ShowDialog()
         KondisiFormSetelahPerubahan()
     End Sub
 

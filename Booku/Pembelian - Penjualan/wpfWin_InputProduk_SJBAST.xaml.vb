@@ -1,45 +1,60 @@
-﻿Imports bcomm
+Imports System.Windows
+Imports System.Windows.Controls
+Imports bcomm
+
+Public Class wpfWin_InputProduk_SJBAST
+
+    ' === PUBLIC PROPERTIES ===
+    Public Property JudulForm As String
+    Public Property FungsiForm As String
+    Public Property JalurMasuk As String
+    Public Property NomorUrutProduk As Integer
+    Public Property JumlahProduk_Maksimal As Decimal
+
+    ' === GUARD FLAGS ===
+    Dim ProsesLoadingForm As Boolean
+    Dim ProsesResetForm As Boolean
+
+    ' === VARIABEL NILAI ===
+    Dim NamaProduk As String
+    Dim DeskripsiProduk As String
+    Dim JumlahProduk As Decimal
+    Dim SatuanProduk As String
+    Dim Keterangan As String
+
+    Dim TabelNota As DataTable
 
 
-Public Class frm_InputProduk_SJBAST
+    Sub New()
+        InitializeComponent()
+        StyleWindowDialogWPF_Dasar(Me)
+    End Sub
 
-    Public JudulForm
-    Public FungsiForm
-    Public JalurMasuk
-    Public NomorUrutProduk
-    Dim NamaProduk
-    Dim DeskripsiProduk
-    Dim JumlahProduk
-    Dim SatuanProduk
-    Dim Keterangan
 
-    Dim TabelNota As New DataTable
-
-    Public JumlahProduk_Maksimal
-
-    Private Sub form_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
         ProsesLoadingForm = True
 
         If FungsiForm = FungsiForm_TAMBAH Then
             JudulForm = "Input Barang/Jasa"
-            btn_Tambahkan.Text = "Tambahkan"
+            btn_Tambahkan.Content = "Tambahkan"
         End If
 
         If FungsiForm = FungsiForm_EDIT Then
             JudulForm = "Edit Barang/Jasa"
-            btn_Tambahkan.Text = "Perbarui"
+            btn_Tambahkan.Content = "Perbarui"
         End If
 
-        Me.Text = JudulForm
+        Title = JudulForm
 
-        BeginInvoke(Sub() txt_NamaProduk.Focus())
+        txt_NamaProduk.Focus()
 
         ProsesLoadingForm = False
 
     End Sub
 
-    Sub ResetForm()
+
+    Public Sub ResetForm()
 
         ProsesResetForm = True
 
@@ -51,52 +66,58 @@ Public Class frm_InputProduk_SJBAST
         txt_Satuan.Text = Kosongan
         txt_Keterangan.Text = Kosongan
 
+        NomorUrutProduk = 0
+        NamaProduk = Kosongan
+        DeskripsiProduk = Kosongan
+        JumlahProduk = 0
+        SatuanProduk = Kosongan
+        Keterangan = Kosongan
+        JumlahProduk_Maksimal = 0
+
         ProsesResetForm = False
 
     End Sub
 
-    Private Sub txt_NomorUrut_TextChanged(sender As Object, e As EventArgs) Handles txt_NomorUrut.TextChanged
+
+    Private Sub txt_NomorUrut_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_NomorUrut.TextChanged
+        If ProsesLoadingForm OrElse ProsesResetForm Then Return
         NomorUrutProduk = AmbilAngka(txt_NomorUrut.Text)
     End Sub
-    Private Sub txt_NomorUrut_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_NomorUrut.KeyPress
-        KunciTotalInputan(sender, e)
-    End Sub
 
-    Private Sub txt_NamaProduk_TextChanged(sender As Object, e As EventArgs) Handles txt_NamaProduk.TextChanged
+
+    Private Sub txt_NamaProduk_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_NamaProduk.TextChanged
+        If ProsesLoadingForm OrElse ProsesResetForm Then Return
         NamaProduk = txt_NamaProduk.Text
     End Sub
-    Private Sub txt_NamaProduk_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_NamaProduk.KeyPress
-        KunciTotalInputan(sender, e)
-    End Sub
 
-    Private Sub txt_DeskripsiProduk_TextChanged(sender As Object, e As EventArgs) Handles txt_DeskripsiProduk.TextChanged
+
+    Private Sub txt_DeskripsiProduk_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_DeskripsiProduk.TextChanged
+        If ProsesLoadingForm OrElse ProsesResetForm Then Return
         DeskripsiProduk = txt_DeskripsiProduk.Text
     End Sub
-    Private Sub txt_DeskripsiProduk_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_DeskripsiProduk.KeyPress
-        KunciTotalInputan(sender, e)
-    End Sub
 
-    Private Sub txt_JumlahProduk_TextChanged(sender As Object, e As EventArgs) Handles txt_JumlahProduk.TextChanged
+
+    Private Sub txt_JumlahProduk_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_JumlahProduk.TextChanged
+        If ProsesLoadingForm OrElse ProsesResetForm Then Return
         JumlahProduk = AmbilAngka(txt_JumlahProduk.Text)
-        PemecahRibuanUntukTextBox(txt_JumlahProduk)
-    End Sub
-    Private Sub txt_JumlahProduk_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_JumlahProduk.KeyPress
-        HanyaBolehInputAngkaPlus(sender, e)
     End Sub
 
-    Private Sub txt_Satuan_TextChanged(sender As Object, e As EventArgs) Handles txt_Satuan.TextChanged
+
+    Private Sub txt_Satuan_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Satuan.TextChanged
+        If ProsesLoadingForm OrElse ProsesResetForm Then Return
         SatuanProduk = txt_Satuan.Text
     End Sub
-    Private Sub txt_Satuan_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txt_Satuan.KeyPress
-        KunciTotalInputan(sender, e)
-    End Sub
 
-    Private Sub txt_Keterangan_TextChanged(sender As Object, e As EventArgs) Handles txt_Keterangan.TextChanged
+
+    Private Sub txt_Keterangan_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Keterangan.TextChanged
+        If ProsesLoadingForm OrElse ProsesResetForm Then Return
         Keterangan = txt_Keterangan.Text
     End Sub
 
-    Private Sub btn_Tambahkan_Click(sender As Object, e As EventArgs) Handles btn_Tambahkan.Click
 
+    Private Sub btn_Tambahkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Tambahkan.Click
+
+        ' === VALIDASI INPUT ===
         If NamaProduk = Kosongan Then
             Pesan_Peringatan("Silakan isi kolom 'Nama Barang/Jasa'.")
             txt_NamaProduk.Focus()
@@ -119,6 +140,7 @@ Public Class frm_InputProduk_SJBAST
             Return
         End If
 
+        ' === TENTUKAN TABEL NOTA ===
         Select Case JalurMasuk
             Case Form_INPUTSURATJALANPENJUALAN
                 TabelNota = win_InputSuratJalanPenjualan.datatabelUtama
@@ -133,7 +155,7 @@ Public Class frm_InputProduk_SJBAST
                 Return
         End Select
 
-
+        ' === UPDATE DATA KE TABEL ===
         If FungsiForm = FungsiForm_EDIT Then
             TabelNota.Rows(NomorUrutProduk - 1)("Nama_Produk") = NamaProduk
             TabelNota.Rows(NomorUrutProduk - 1)("Deskripsi_Produk") = DeskripsiProduk
@@ -147,7 +169,8 @@ Public Class frm_InputProduk_SJBAST
 
     End Sub
 
-    Private Sub btn_Batal_Click(sender As Object, e As EventArgs) Handles btn_Batal.Click
+
+    Private Sub btn_Batal_Click(sender As Object, e As RoutedEventArgs) Handles btn_Batal.Click
         ResetForm()
         Me.Close()
     End Sub

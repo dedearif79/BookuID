@@ -1,0 +1,22 @@
+<Window x:Class="wpfWin_phpMyAdmin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="phpMyAdmin"
+        Width="1024"
+        Height="768"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid x:Name="pnl_Konten">
+        <!-- wpfUsc_WebBrowser akan di-load di code-behind -->
+    </Grid>
+
+</Window>

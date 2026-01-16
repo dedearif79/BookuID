@@ -5,9 +5,6 @@
     <Compile Update="00_START_UP\wpfWin_StartUp.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="App Developer\frm_TryApp.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="App Developer\Manajemen Aplikasi\wpfUsc_ManajemenAplikasi.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
@@ -22,9 +19,6 @@
     </Compile>
     <Compile Update="App Developer\Tab\wpfUsc_TabPokok.xaml.vb">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="App IT\phpMyAdmin\frm_phpMyAdmin.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Backup Data\wpfWin_BackupData.xaml.vb">
       <SubType>Code</SubType>
@@ -233,15 +227,6 @@
     <Compile Update="Page1.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pembelian - Penjualan\frm_InputProduk_SJBAST.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Progress\frm_ProgressLoadingData.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Registrasi\frm_RegistrasiPerangkat.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <DesignData Update="Data\Data Project\wpfUsc_DataProject.xaml.vb">
       <SubType>Code</SubType>
     </DesignData>
@@ -319,9 +304,6 @@
     </Compile>
     <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfWin_InputDataAsset.xaml.vb">
       <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Manajemen Asset\Daftar Penyusutan Asset Tetap\frm_KodeDivisi.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Update="Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\wpfUsc_BukuPembelian.xaml.vb">
       <SubType>Code</SubType>

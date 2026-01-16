@@ -1,0 +1,200 @@
+<Window x:Class="wpfWin_TryApp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Halaman App Developer - Tombol Sakti"
+        Width="1280"
+        Height="750"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Normal">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+        <Grid Margin="15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- ═══════════════════════════════════════════════════════════════════ -->
+            <!-- KOLOM 1 -->
+            <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+            <!-- Tombol Sakti Umum -->
+            <GroupBox Grid.Row="0" Grid.Column="0" Header="Tombol Sakti Umum" Margin="5">
+                <WrapPanel Margin="10">
+                    <Button x:Name="Button1" Content="Button1" Width="100" Height="45" Margin="3"/>
+                    <Button x:Name="Button2" Content="Button2" Width="100" Height="45" Margin="3"/>
+                    <Button x:Name="Button3" Content="Button3" Width="100" Height="45" Margin="3"/>
+                    <Button x:Name="Button4" Content="Button4" Width="100" Height="45" Margin="3"/>
+                    <Button x:Name="Button5" Content="Button5" Width="100" Height="45" Margin="3"/>
+                    <Button x:Name="Button10" Content="Button10" Width="100" Height="45" Margin="3"/>
+                    <Button x:Name="Button11" Content="Button11" Width="100" Height="45" Margin="3"/>
+                    <Button x:Name="Button12" Content="Button12" Width="100" Height="45" Margin="3"/>
+                </WrapPanel>
+            </GroupBox>
+
+            <!-- App Expire -->
+            <GroupBox Grid.Row="1" Grid.Column="0" Header="App Expire" Margin="5">
+                <StackPanel Margin="10">
+                    <TextBlock Text="Tanggal Expire:" Margin="0,0,0,5"/>
+                    <DatePicker x:Name="dtp_AppExpire" Width="150" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+                    <Button x:Name="btn_SimpanDataExpire" Content="Simpan Data Expire" Width="150" Height="40" HorizontalAlignment="Left"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Database Tools -->
+            <GroupBox Grid.Row="2" Grid.Column="0" Header="Database Tools" Margin="5">
+                <WrapPanel Margin="10">
+                    <Button x:Name="btn_IsiKolomNamaAkun" Content="Isi Kolom Nama Akun" Width="140" Height="45" Margin="3"/>
+                    <Button x:Name="btn_IsiTabelTautanCOA" Content="Isi Tabel Tautan COA" Width="140" Height="45" Margin="3"/>
+                    <Button x:Name="btn_UpdateDatabase" Content="Update Database" Width="140" Height="45" Margin="3"/>
+                    <Button x:Name="btn_BakcupDatabase" Content="Backup dB" Width="100" Height="45" Margin="3"/>
+                    <Button x:Name="btn_BikinTabelBaru" Content="Bikin Tabel Baru" Width="120" Height="45" Margin="3"/>
+                    <Button x:Name="btn_ResetCOA" Content="Reset Saldo Awal COA" Width="150" Height="45" Margin="3"/>
+                    <Button x:Name="btn_PulihkanBuku" Content="Pulihkan Buku" Width="120" Height="45" Margin="3"/>
+                </WrapPanel>
+            </GroupBox>
+
+            <!-- ═══════════════════════════════════════════════════════════════════ -->
+            <!-- KOLOM 2 -->
+            <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+            <!-- Enkripsi Angka -->
+            <GroupBox Grid.Row="0" Grid.Column="1" Header="Enkripsi Angka" Margin="5">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox x:Name="txt_Angka" Grid.Row="0" Grid.Column="0" Width="120" Margin="3"/>
+                    <Button x:Name="btn_EnkripsiAngka" Grid.Row="0" Grid.Column="1" Content="Enkripsi" Width="80" Margin="3"/>
+                    <TextBox x:Name="txt_AngkaTerEnkripsi" Grid.Row="0" Grid.Column="2" Width="120" Margin="3"/>
+
+                    <TextBox x:Name="txt_EnkripsiAngka" Grid.Row="1" Grid.Column="0" Width="120" Margin="3"/>
+                    <Button x:Name="btn_DekripsiAngka" Grid.Row="1" Grid.Column="1" Content="Dekripsi" Width="80" Margin="3"/>
+                    <TextBox x:Name="txt_AngkaTerDekripsi" Grid.Row="1" Grid.Column="2" Width="120" Margin="3"/>
+                </Grid>
+            </GroupBox>
+
+            <!-- Enkripsi Teks -->
+            <GroupBox Grid.Row="1" Grid.Column="1" Header="Enkripsi Teks" Margin="5">
+                <Grid Margin="10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBox x:Name="txt_Teks" Grid.Row="0" Grid.Column="0" Width="120" Margin="3"/>
+                    <Button x:Name="btn_EnkripsiTeks" Grid.Row="0" Grid.Column="1" Content="Enkripsi" Width="80" Margin="3"/>
+                    <TextBox x:Name="txt_TeksTerenkripsi" Grid.Row="0" Grid.Column="2" Width="120" Margin="3"/>
+
+                    <TextBox x:Name="txt_EnkripsiTeks" Grid.Row="1" Grid.Column="0" Width="120" Margin="3"/>
+                    <Button x:Name="btn_DekripsiTeks" Grid.Row="1" Grid.Column="1" Content="Dekripsi" Width="80" Margin="3"/>
+                    <TextBox x:Name="txt_TeksTerdekripsi" Grid.Row="1" Grid.Column="2" Width="120" Margin="3"/>
+                </Grid>
+            </GroupBox>
+
+            <!-- Konversi Terbilang -->
+            <GroupBox Grid.Row="2" Grid.Column="1" Header="Konversi Angka Terbilang" Margin="5">
+                <StackPanel Margin="10">
+                    <TextBox x:Name="txt_Nomor" Width="200" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+                    <Button x:Name="btn_Konversi" Content="Konversi" Width="100" Height="35" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+                    <TextBox x:Name="txt_Terbilang" Height="60" TextWrapping="Wrap" AcceptsReturn="True" IsReadOnly="True"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- ═══════════════════════════════════════════════════════════════════ -->
+            <!-- KOLOM 3 -->
+            <!-- ═══════════════════════════════════════════════════════════════════ -->
+
+            <!-- Info Labels -->
+            <GroupBox Grid.Row="0" Grid.Column="2" Header="Info" Margin="5">
+                <StackPanel Margin="10">
+                    <TextBlock x:Name="Label4" Text="Label4" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="Label5" Text="Label5" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="Label6" Text="Label6" Margin="0,0,0,5"/>
+                    <TextBlock x:Name="lblStatus" Text="Status" Margin="0,0,0,5"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Download Tools -->
+            <GroupBox Grid.Row="1" Grid.Column="2" Header="Download Tools" Margin="5">
+                <StackPanel Margin="10">
+                    <WrapPanel Margin="0,0,0,10">
+                        <Button x:Name="btn_DownloadFolder" Content="Download Folder" Width="130" Height="40" Margin="3"/>
+                        <Button x:Name="btn_DownlaodFolder2" Content="Download Folder 2" Width="130" Height="40" Margin="3"/>
+                    </WrapPanel>
+                    <WrapPanel Margin="0,0,0,10">
+                        <Button x:Name="btnDownload" Content="Download" Width="100" Height="40" Margin="3"/>
+                        <Button x:Name="btnCancel" Content="Cancel" Width="100" Height="40" Margin="3"/>
+                    </WrapPanel>
+                    <ProgressBar x:Name="pgb_Progress" Height="25" Margin="0,5,0,0"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Text Viewer -->
+            <GroupBox Grid.Row="2" Grid.Column="2" Header="Text Viewer" Margin="5">
+                <StackPanel Margin="10">
+                    <Button x:Name="btn_TapilkanTeks" Content="Tampilkan Teks" Width="150" Height="35" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+                    <TextBox x:Name="txt_PenampilTeks" Height="150" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- ═══════════════════════════════════════════════════════════════════ -->
+            <!-- BARIS BAWAH (Variabel Test - optional) -->
+            <!-- ═══════════════════════════════════════════════════════════════════ -->
+            <GroupBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Header="Variable Test (X, Y, Result)" Margin="5">
+                <StackPanel Orientation="Horizontal" Margin="10">
+                    <TextBox x:Name="txt_X" Width="100" Margin="3"/>
+                    <TextBox x:Name="txt_Y" Width="100" Margin="3"/>
+                    <TextBox x:Name="txt_Result" Width="100" Margin="3" IsReadOnly="True"/>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- TabControl (jika masih diperlukan) -->
+            <GroupBox Grid.Row="3" Grid.Column="2" Header="Tab Halaman" Margin="5">
+                <TabControl x:Name="tbc_Halaman" Height="100">
+                    <TabItem Header="Utama">
+                        <WrapPanel Margin="10">
+                            <Button x:Name="Button6" Content="Button6" Width="90" Height="35" Margin="3"/>
+                            <Button x:Name="Button7" Content="Button7" Width="90" Height="35" Margin="3"/>
+                        </WrapPanel>
+                    </TabItem>
+                    <TabItem Header="Sekunder">
+                        <WrapPanel Margin="10">
+                            <Button x:Name="Button8" Content="Button8" Width="90" Height="35" Margin="3"/>
+                            <Button x:Name="Button9" Content="Button9" Width="90" Height="35" Margin="3"/>
+                        </WrapPanel>
+                    </TabItem>
+                </TabControl>
+            </GroupBox>
+
+        </Grid>
+    </ScrollViewer>
+</Window>

@@ -246,12 +246,13 @@ Public Module mdl_PublicSub
             End If
             TutupDatabasePublic()
             If ProsesRegistrasiPerangkat = True Then
-                frm_RegistrasiPerangkat.ResetForm()
-                frm_RegistrasiPerangkat.txt_NomorSeriProduk.Text = NomorSeriProduk
-                frm_RegistrasiPerangkat.txt_IDCustomer.Text = ID_Customer
-                frm_RegistrasiPerangkat.txt_JumlahPerangkat.Text = JumlahPerangkat
-                frm_RegistrasiPerangkat.txt_IDKomputer.Text = ID_CPU
-                frm_RegistrasiPerangkat.ShowDialog()
+                win_RegistrasiPerangkat = New wpfWin_RegistrasiPerangkat
+                win_RegistrasiPerangkat.ResetForm()
+                win_RegistrasiPerangkat.txt_NomorSeriProduk.Text = NomorSeriProduk
+                win_RegistrasiPerangkat.txt_IDCustomer.Text = ID_Customer
+                win_RegistrasiPerangkat.txt_JumlahPerangkat.Text = JumlahPerangkat
+                win_RegistrasiPerangkat.txt_IDKomputer.Text = ID_CPU
+                win_RegistrasiPerangkat.ShowDialog()
             End If
             If ProsesRegistrasiPerangkat = True Then
                 Pesan_Sukses("Proses registrasi perangkat berhasil.")

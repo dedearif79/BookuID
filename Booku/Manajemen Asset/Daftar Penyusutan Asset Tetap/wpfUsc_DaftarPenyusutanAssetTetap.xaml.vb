@@ -1496,7 +1496,8 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
 
     Private Sub btn_KodeDivisi_Click(sender As Object, e As RoutedEventArgs) Handles btn_KodeDivisi.Click
-        frm_KodeDivisi.ShowDialog()
+        win_InputKodeDivisi = New wpfWin_InputKodeDivisi
+        win_InputKodeDivisi.ShowDialog()
     End Sub
 
 

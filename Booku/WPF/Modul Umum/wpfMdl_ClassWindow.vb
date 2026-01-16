@@ -17,6 +17,7 @@ Module wpfMdl_ClassWindow
     Public win_Registrasi As New wpfWin_Registrasi
     Public win_Registrasi_IsiDataCompany As New wpfWin_Registrasi_IsiDataCompany
     Public win_Registrasi_IsiDataUser As New wpfWin_Registrasi_IsiDataUser
+    Public win_RegistrasiPerangkat As New wpfWin_RegistrasiPerangkat
     Public win_BuatDatabaseBukuBaru As New wpfWin_BuatDatabaseBukuBaru
     Public win_GantiTahunBuku As New wpfWin_GantiTahunBuku
 
@@ -24,6 +25,7 @@ Module wpfMdl_ClassWindow
     ' PROGRESS & LOADING
     '═══════════════════════════════════════════════════════════════════════════
     Public win_Loading As New wpfWin_Loading
+    Public win_ProgressLoadingData As New wpfWin_ProgressLoadingData
 
     '═══════════════════════════════════════════════════════════════════════════
     ' DIALOG PILIHAN / UTILITY
@@ -96,6 +98,7 @@ Module wpfMdl_ClassWindow
     '═══════════════════════════════════════════════════════════════════════════
     Public win_InputSJBASTManual As New wpfWin_InputSJBASTManual
     Public win_InputProduk_Nota As New wpfWin_InputProduk_Nota
+    Public win_InputProduk_SJBAST As New wpfWin_InputProduk_SJBAST
     Public win_DorongInvoiceKeJurnal As New wpfWin_DorongInvoiceKeJurnal
 
     '═══════════════════════════════════════════════════════════════════════════
@@ -190,6 +193,7 @@ Module wpfMdl_ClassWindow
     ' MANAJEMEN ASSET
     '═══════════════════════════════════════════════════════════════════════════
     Public win_InputDataAsset As New wpfWin_InputDataAsset
+    Public win_InputKodeDivisi As New wpfWin_InputKodeDivisi
     Public win_InputDisposalAssetTetap As New wpfWin_InputDisposalAssetTetap
     Public win_JualAsset As New wpfWin_JualAsset
     Public win_InputAmortisasiBiaya As New wpfWin_InputAmortisasiBiaya
@@ -209,8 +213,14 @@ Module wpfMdl_ClassWindow
     Public win_KloningData As New wpfWin_KloningData
 
     '═══════════════════════════════════════════════════════════════════════════
+    ' APP IT
+    '═══════════════════════════════════════════════════════════════════════════
+    Public win_phpMyAdmin As New wpfWin_phpMyAdmin
+
+    '═══════════════════════════════════════════════════════════════════════════
     ' APP DEVELOPER
     '═══════════════════════════════════════════════════════════════════════════
+    Public win_TryApp As New wpfWin_TryApp
     Public win_Updater As New wpfWin_Updater
     Public win_PenerbitInstaller As New wpfWin_PenerbitInstaller
     Public win_PenerbitUpdater As New wpfWin_PenerbitUpdater

@@ -1,15 +1,16 @@
 Imports System.Data.Odbc
 Imports System.IO
+Imports System.Windows
+Imports System.Windows.Controls
 Imports MySql.Data.MySqlClient
 Imports bcomm
 
-
-Public Class frm_TryApp
+Public Class wpfWin_TryApp
 
     Dim cobainteger As Int64
     Dim cobastring
 
-    Private Sub frm_BackUp_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
         Label4.Text = "Fnc : " & ClusterFinance
         Label5.Text = "Acc : " & ClusterAccounting
@@ -17,7 +18,7 @@ Public Class frm_TryApp
     End Sub
 
 
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+    Private Sub Button1_Click(sender As Object, e As RoutedEventArgs) Handles Button1.Click
 
         Dim QueryUpdate As String = Kosongan
 
@@ -53,7 +54,7 @@ Public Class frm_TryApp
 
 
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(sender As Object, e As RoutedEventArgs) Handles Button2.Click
         BukaDatabaseGeneral_MySQL()
         PesanUntukProgrammer("Status Koneksi : " & StatusKoneksiDatabaseGeneral_MySQL)
         cmdMySQL = New MySqlCommand(" Select * from tbl_Company ", KoneksiDatabaseGeneral_MySQL)
@@ -63,7 +64,7 @@ Public Class frm_TryApp
         TutupDatabaseGeneral_MySQL()
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+    Private Sub Button3_Click(sender As Object, e As RoutedEventArgs) Handles Button3.Click
         'Simpan Perubahan Data Expire, ke File dbsatli.TXT :
         DataKoneksi = HeaderConfig &
             AcakKarakter(213) & Enter1Baris &
@@ -87,9 +88,14 @@ Public Class frm_TryApp
         End Try
     End Sub
 
-    Private Sub btn_SimpanDataExpire_Click(sender As Object, e As EventArgs) Handles btn_SimpanDataExpire.Click
+    Private Sub btn_SimpanDataExpire_Click(sender As Object, e As RoutedEventArgs) Handles btn_SimpanDataExpire.Click
 
-        Dim TanggalExpire = AmbilKiri(dtp_AppExpire.Text, 10)
+        If dtp_AppExpire.SelectedDate Is Nothing Then
+            Pesan_Peringatan("Pilih tanggal expire terlebih dahulu.")
+            Return
+        End If
+
+        Dim TanggalExpire = dtp_AppExpire.SelectedDate.Value.ToString("dd/MM/yyyy")
         Dim TanggalExpire_Enk = EnkripsiTanggal(TanggalExpire)
         AppExpire = TanggalExpire
 
@@ -100,7 +106,7 @@ Public Class frm_TryApp
 
     End Sub
 
-    Private Sub btn_IsiKolomNamaAkun_Click(sender As Object, e As EventArgs) Handles btn_IsiKolomNamaAkun.Click
+    Private Sub btn_IsiKolomNamaAkun_Click(sender As Object, e As RoutedEventArgs) Handles btn_IsiKolomNamaAkun.Click
 
         Dim ID
         Dim COA
@@ -137,7 +143,7 @@ Public Class frm_TryApp
     End Sub
 
 
-    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+    Private Sub Button4_Click(sender As Object, e As RoutedEventArgs) Handles Button4.Click
         win_Loading = New wpfWin_Loading
         win_Loading.Show()
         Jeda(3333)
@@ -145,39 +151,39 @@ Public Class frm_TryApp
     End Sub
 
 
-    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+    Private Sub Button5_Click(sender As Object, e As RoutedEventArgs) Handles Button5.Click
 
     End Sub
 
-    Private Sub btn_EnkripsiAngka_Click(sender As Object, e As EventArgs) Handles btn_EnkripsiAngka.Click
+    Private Sub btn_EnkripsiAngka_Click(sender As Object, e As RoutedEventArgs) Handles btn_EnkripsiAngka.Click
         txt_AngkaTerEnkripsi.Text = EnkripsiAngka(txt_Angka.Text)
     End Sub
 
-    Private Sub btn_DekripsiAngka_Click(sender As Object, e As EventArgs) Handles btn_DekripsiAngka.Click
+    Private Sub btn_DekripsiAngka_Click(sender As Object, e As RoutedEventArgs) Handles btn_DekripsiAngka.Click
         txt_AngkaTerDekripsi.Text = DekripsiAngka(txt_EnkripsiAngka.Text)
     End Sub
 
-    Private Sub btn_EnkripsiTeks_Click(sender As Object, e As EventArgs) Handles btn_EnkripsiTeks.Click
+    Private Sub btn_EnkripsiTeks_Click(sender As Object, e As RoutedEventArgs) Handles btn_EnkripsiTeks.Click
         txt_TeksTerenkripsi.Text = EnkripsiTeks(txt_Teks.Text)
     End Sub
 
-    Private Sub btn_DekripsiTeks_Click(sender As Object, e As EventArgs) Handles btn_DekripsiTeks.Click
+    Private Sub btn_DekripsiTeks_Click(sender As Object, e As RoutedEventArgs) Handles btn_DekripsiTeks.Click
         txt_TeksTerdekripsi.Text = DekripsiTeks(txt_EnkripsiTeks.Text)
     End Sub
 
-    Private Sub btn_BakcupDatabase_Click(sender As Object, e As EventArgs) Handles btn_BakcupDatabase.Click
+    Private Sub btn_BakcupDatabase_Click(sender As Object, e As RoutedEventArgs) Handles btn_BakcupDatabase.Click
         'frm_BackupDatabase.ShowDialog()
     End Sub
 
-    Private Sub txt_Nomor_TextChanged(sender As Object, e As EventArgs) Handles txt_Nomor.TextChanged
-        PemecahRibuanUntukTextBox(txt_Nomor)
+    Private Sub txt_Nomor_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Nomor.TextChanged
+        PemecahRibuanUntukTextBox_WPF(txt_Nomor)
     End Sub
 
-    Private Sub btn_Konversi_Click(sender As Object, e As EventArgs) Handles btn_Konversi.Click
+    Private Sub btn_Konversi_Click(sender As Object, e As RoutedEventArgs) Handles btn_Konversi.Click
         txt_Terbilang.Text = AngkaTerbilangRupiahDenganKurung(AmbilAngka(txt_Nomor.Text))
     End Sub
 
-    Private Sub Button10_Click(sender As Object, e As EventArgs) Handles Button10.Click
+    Private Sub Button10_Click(sender As Object, e As RoutedEventArgs) Handles Button10.Click
 
         Dim QueryUpdate = " UPDATE tbl_coa SET Nama_Akun = 'Uang Muka Pembelian - Impor' WHERE tbl_coa.COA = '11702'; "
         AksesDatabase_General(Buka)
@@ -195,14 +201,14 @@ Public Class frm_TryApp
 
     End Sub
 
-    Private Sub Button11_Click(sender As Object, e As EventArgs) Handles Button11.Click
+    Private Sub Button11_Click(sender As Object, e As RoutedEventArgs) Handles Button11.Click
         CuciDebetKreditCOA()
         'Dim Tanggal As Date
         'Tanggal = New Date(2025, 1, 20)
         'JurnalAdjusment_Forex(KodeTautanCOA_HutangUsaha_USD, Tanggal)
     End Sub
 
-    Private Sub Button12_Click(sender As Object, e As EventArgs) Handles Button12.Click
+    Private Sub Button12_Click(sender As Object, e As RoutedEventArgs) Handles Button12.Click
 
         AksesDatabase_General(Buka)
         cmd = New OdbcCommand(" UPDATE tbl_InfoAplikasi SET Versi_App = '" & EnkripsiTeksAES1("1") & "', Apdet_App = '" & EnkripsiTeksAES1("1") & "' ", KoneksiDatabaseGeneral)
@@ -215,13 +221,13 @@ Public Class frm_TryApp
         VarCoba = 20
     End Sub
 
-    Private Sub btn_IsiTabelTautanCOA_Click(sender As Object, e As EventArgs) Handles btn_IsiTabelTautanCOA.Click
+    Private Sub btn_IsiTabelTautanCOA_Click(sender As Object, e As RoutedEventArgs) Handles btn_IsiTabelTautanCOA.Click
         PerbaruiTabelTautanCOA(SistemCOA_StandarAplikasi)
     End Sub
 
 
 
-    Private Sub btn_ResetCOA_Click(sender As Object, e As EventArgs) Handles btn_ResetCOA.Click
+    Private Sub btn_ResetCOA_Click(sender As Object, e As RoutedEventArgs) Handles btn_ResetCOA.Click
         Dim COA = Kosongan
         AksesDatabase_General(Buka)
         cmd = New OdbcCommand(" SELECT * FROM tbl_InfoData ", KoneksiDatabaseGeneral)
@@ -241,7 +247,7 @@ Public Class frm_TryApp
         AksesDatabase_General(Tutup)
     End Sub
 
-    Private Sub BikinTabelBaru_Click(sender As Object, e As EventArgs) Handles btn_BikinTabelBaru.Click
+    Private Sub BikinTabelBaru_Click(sender As Object, e As RoutedEventArgs) Handles btn_BikinTabelBaru.Click
 
         Dim QueryPembuatanTabel
         Dim QueryAlterTable
@@ -270,7 +276,7 @@ Public Class frm_TryApp
             NomorUrut += 1
             Bulan = BulanTerbilang(NomorUrut)
             cmdPengisianTabel = New OdbcCommand(" INSERT INTO tbl_PengawasanHutangBpjsKesehatan VALUES ( " &
-                                                    " '" & NomorUrut & "', " & 'Ini karena Nomor ID = Nomor Urut, maka mengambil value Nomor Urut saja. Sama saja.
+                                                    " '" & NomorUrut & "', " &
                                                     " '" & NomorUrut & "', " &
                                                     " '" & Bulan & "', " &
                                                     " '" & TahunBukuBaru & "', " &
@@ -304,7 +310,7 @@ Public Class frm_TryApp
             NomorUrut += 1
             Bulan = BulanTerbilang(NomorUrut)
             cmdPengisianTabel = New OdbcCommand(" INSERT INTO tbl_PengawasanHutangBpjsKetenagakerjaan VALUES ( " &
-                                                    " '" & NomorUrut & "', " & 'Ini karena Nomor ID = Nomor Urut, maka mengambil value Nomor Urut saja. Sama saja.
+                                                    " '" & NomorUrut & "', " &
                                                     " '" & NomorUrut & "', " &
                                                     " '" & Bulan & "', " &
                                                     " '" & TahunBukuBaru & "', " &
@@ -338,7 +344,7 @@ Public Class frm_TryApp
             NomorUrut += 1
             Bulan = BulanTerbilang(NomorUrut)
             cmdPengisianTabel = New OdbcCommand(" INSERT INTO tbl_PengawasanHutangKoperasiKaryawan VALUES ( " &
-                                                    " '" & NomorUrut & "', " & 'Ini karena Nomor ID = Nomor Urut, maka mengambil value Nomor Urut saja. Sama saja.
+                                                    " '" & NomorUrut & "', " &
                                                     " '" & NomorUrut & "', " &
                                                     " '" & Bulan & "', " &
                                                     " '" & TahunBukuBaru & "', " &
@@ -372,7 +378,7 @@ Public Class frm_TryApp
             NomorUrut += 1
             Bulan = BulanTerbilang(NomorUrut)
             cmdPengisianTabel = New OdbcCommand(" INSERT INTO tbl_PengawasanHutangSerikat VALUES ( " &
-                                                    " '" & NomorUrut & "', " & 'Ini karena Nomor ID = Nomor Urut, maka mengambil value Nomor Urut saja. Sama saja.
+                                                    " '" & NomorUrut & "', " &
                                                     " '" & NomorUrut & "', " &
                                                     " '" & Bulan & "', " &
                                                     " '" & TahunBukuBaru & "', " &
@@ -387,7 +393,7 @@ Public Class frm_TryApp
 
     End Sub
 
-    Private Sub btn_PulihkanBuku_Click(sender As Object, e As EventArgs) Handles btn_PulihkanBuku.Click
+    Private Sub btn_PulihkanBuku_Click(sender As Object, e As RoutedEventArgs) Handles btn_PulihkanBuku.Click
 
         If JenisTahunBuku = JenisTahunBuku_LAMPAU Then Return
 
@@ -432,25 +438,25 @@ Public Class frm_TryApp
 
 
 
-    Private Sub btnDownload_Click(sender As Object, e As EventArgs) Handles btnDownload.Click
+    Private Sub btnDownload_Click(sender As Object, e As RoutedEventArgs) Handles btnDownload.Click
 
     End Sub
 
 
-    Private Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+    Private Sub btnCancel_Click(sender As Object, e As RoutedEventArgs) Handles btnCancel.Click
 
     End Sub
 
-    Private Sub btn_UpdateDatabase_Click(sender As Object, e As EventArgs) Handles btn_UpdateDatabase.Click
+    Private Sub btn_UpdateDatabase_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateDatabase.Click
         ApdetBooku_SisiAplikasi = 151
         PesanUntukProgrammer("Tentukan Dulu Veri Updatenya...!!!" & Enter2Baris &
                              "Versi sekarang : " & ApdetBooku_SisiAplikasi)
         UpdateDatabase()
     End Sub
 
-    Private Sub btn_TapilkanTeks_Click(sender As Object, e As EventArgs) Handles btn_TapilkanTeks.Click
+    Private Sub btn_TapilkanTeks_Click(sender As Object, e As RoutedEventArgs) Handles btn_TapilkanTeks.Click
 
-        Dim path As String = "D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Client\simulcur\Backup\MySQL\bookuid_booku_simulcur_genx.sql" ' Ganti dengan path file Anda
+        Dim path As String = "D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Client\simulcur\Backup\MySQL\bookuid_booku_simulcur_genx.sql"
         Dim IsiTeks As String = Kosongan
 
         ' Pastikan file ada
@@ -482,7 +488,5 @@ Public Class frm_TryApp
         End Try
 
     End Sub
-
-
 
 End Class

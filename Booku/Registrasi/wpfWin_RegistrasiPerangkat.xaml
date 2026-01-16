@@ -1,0 +1,63 @@
+<Window x:Class="wpfWin_RegistrasiPerangkat"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Registrasi Perangkat"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}">
+
+        <!-- BODY: Input Fields -->
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}">
+            <Grid Style="{StaticResource styleGridFormDialog}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Row 0: Nomor Seri Produk -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Nomor Seri Produk"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}" x:Name="txt_NomorSeriProduk" MaxLength="27"/>
+
+                <!-- Row 1: ID Customer -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="ID Customer"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}" x:Name="txt_IDCustomer"
+                         Width="140" HorizontalAlignment="Left" IsReadOnly="True"/>
+
+                <!-- Row 2: Jumlah Perangkat -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah Perangkat"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}" x:Name="txt_JumlahPerangkat"
+                         Width="50" HorizontalAlignment="Left" IsReadOnly="True"/>
+
+                <!-- Row 3: ID Komputer -->
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="ID Komputer"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}" x:Name="txt_IDKomputer"
+                         Width="140" HorizontalAlignment="Left" IsReadOnly="True"/>
+
+            </Grid>
+        </StackPanel>
+
+        <!-- FOOTER: Tombol -->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}">
+            <Button Style="{StaticResource styleButtonFormDialogBatal}" x:Name="btn_Batal"/>
+            <Button Style="{StaticResource styleButtonFormDialog}" x:Name="btn_Kirim" Content="Kirim" Width="85"/>
+        </StackPanel>
+
+    </StackPanel>
+</Window>

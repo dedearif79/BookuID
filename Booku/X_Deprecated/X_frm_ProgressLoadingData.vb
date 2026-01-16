@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 
-Public Class frm_ProgressLoadingData
+Public Class X_frm_ProgressLoadingData
 
     Private Sub frm_ProgressLoadingData_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 

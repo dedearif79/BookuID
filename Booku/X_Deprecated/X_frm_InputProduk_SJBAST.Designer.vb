@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class frm_InputProduk_SJBAST
+Partial Class X_frm_InputProduk_SJBAST
     Inherits System.Windows.Forms.Form
 
     'Form overrides dispose to clean up the component list.

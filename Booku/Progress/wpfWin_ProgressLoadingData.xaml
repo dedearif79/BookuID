@@ -1,0 +1,39 @@
+<Window x:Class="wpfWin_ProgressLoadingData"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Proses..."
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight"
+        Background="White">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Border BorderBrush="Gray" BorderThickness="1" Padding="30,20" Background="{StaticResource clrBgPanel}">
+        <StackPanel MinWidth="450">
+
+            <!-- Label Baris 01 -->
+            <TextBlock x:Name="lbl_Baris_01" Style="{StaticResource styleTextBlockFormDialog}"
+                       Text="Baris 01" Margin="0,0,0,6"/>
+
+            <!-- Label Baris 02 -->
+            <TextBlock x:Name="lbl_Baris_02" Style="{StaticResource styleTextBlockFormDialog}"
+                       Text="Baris 02" Margin="0,0,0,12"/>
+
+            <!-- Progress Bar -->
+            <ProgressBar x:Name="pgb_Progress" Height="20" Margin="0,0,0,9"/>
+
+            <!-- Label Progress Report -->
+            <TextBlock x:Name="lbl_ProgressReport" Style="{StaticResource styleTextBlockFormDialog}"
+                       Text="Progress Report" Foreground="{StaticResource clrTeksSekunder}"/>
+
+        </StackPanel>
+    </Border>
+</Window>

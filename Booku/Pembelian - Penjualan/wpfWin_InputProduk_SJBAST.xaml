@@ -1,0 +1,81 @@
+<Window x:Class="wpfWin_InputProduk_SJBAST"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Input Barang/Jasa"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}">
+
+        <!-- BODY: Input Fields -->
+        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}">
+            <Grid Style="{StaticResource styleGridFormDialog}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="200"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Row 0: Nomor Urut -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Nomor Urut"/>
+                <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}" x:Name="txt_NomorUrut"
+                         Width="60" HorizontalAlignment="Left" TextAlignment="Right" IsReadOnly="True"/>
+
+                <!-- Row 1: Nama Barang/Jasa -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Nama Barang/Jasa"/>
+                <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}" x:Name="txt_NamaProduk"/>
+
+                <!-- Row 2: Deskripsi -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Deskripsi"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}" x:Name="txt_DeskripsiProduk"/>
+
+                <!-- Row 3: Jumlah -->
+                <TextBlock Grid.Row="3" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Jumlah"/>
+                <TextBox Grid.Row="3" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}" x:Name="txt_JumlahProduk"
+                         Width="120" HorizontalAlignment="Left"/>
+
+                <!-- Row 4: Satuan -->
+                <TextBlock Grid.Row="4" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Satuan"/>
+                <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                    <TextBox Style="{StaticResource styleTextBoxFormDialog}" x:Name="txt_Satuan" Width="70"/>
+                    <TextBlock Style="{StaticResource styleTextBlockFormDialog}" Text="(pcs, kg, meter, dll)"
+                               Foreground="{StaticResource clrTeksSekunder}" FontSize="11" Margin="6,0,0,0"/>
+                </StackPanel>
+
+                <!-- Row 5: Keterangan Label -->
+                <TextBlock Grid.Row="5" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Keterangan :"/>
+
+                <!-- Row 6: Keterangan TextBox -->
+                <TextBox Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource styleTextBoxFormDialog}"
+                         x:Name="txt_Keterangan" Height="50" TextWrapping="Wrap" AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"/>
+
+            </Grid>
+        </StackPanel>
+
+        <!-- FOOTER: Tombol -->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}">
+            <Button Style="{StaticResource styleButtonFormDialogBatal}" x:Name="btn_Batal"/>
+            <Button Style="{StaticResource styleButtonFormDialog}" x:Name="btn_Tambahkan" Content="Tambahkan" Width="100"/>
+        </StackPanel>
+
+    </StackPanel>
+</Window>

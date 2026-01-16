@@ -1,30 +1,33 @@
-﻿Imports bcomm
+Imports System.Windows
+Imports bcomm
 Imports System.Data.Odbc
 Imports MySql.Data.MySqlClient
 
-Public Class frm_RegistrasiPerangkat
+Public Class wpfWin_RegistrasiPerangkat
 
-    Private Sub frm_RegistrasiPerangkat_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
     End Sub
 
 
     Public Sub ResetForm()
-        ProsesRegistrasiPerangkat = False 'Dibikin false dulu. Jika registrasi gagal, maka ini defaultnya.
-        txt_NomorSeriProduk.Text = Nothing
-        txt_IDCustomer.Text = Nothing
-        txt_JumlahPerangkat.Text = Nothing
-        txt_IDKomputer.Text = Nothing
-        txt_NomorSeriProduk.Enabled = False
-        btn_Kirim.Enabled = True
+        ProsesRegistrasiPerangkat = False
+        txt_NomorSeriProduk.Text = Kosongan
+        txt_IDCustomer.Text = Kosongan
+        txt_JumlahPerangkat.Text = Kosongan
+        txt_IDKomputer.Text = Kosongan
+        txt_NomorSeriProduk.IsEnabled = False
+        btn_Kirim.IsEnabled = True
     End Sub
 
-    Private Sub btn_Batal_Click(sender As Object, e As EventArgs) Handles btn_Batal.Click
+
+    Private Sub btn_Batal_Click(sender As Object, e As RoutedEventArgs) Handles btn_Batal.Click
         ProsesRegistrasiPerangkat = False
         Me.Close()
     End Sub
 
-    Private Sub btn_Kirim_Click(sender As Object, e As EventArgs) Handles btn_Kirim.Click
+
+    Private Sub btn_Kirim_Click(sender As Object, e As RoutedEventArgs) Handles btn_Kirim.Click
         Dim JumlahPerangkatTerdaftar = 0
         BukaDatabasePublic()
         If StatusKoneksiDatabasePublic = True Then
@@ -40,7 +43,7 @@ Public Class frm_RegistrasiPerangkat
                 ProsesRegistrasiPerangkat = False
             End Try
             If ProsesRegistrasiPerangkat = True Then
-                If JumlahPerangkatTerdaftar >= txt_JumlahPerangkat.Text Then
+                If JumlahPerangkatTerdaftar >= AmbilAngka(txt_JumlahPerangkat.Text) Then
                     ProsesRegistrasiPerangkat = False
                     Pesan_Gagal("Registrasi Perangkat Gagal." &
                            Enter2Baris & "Jumlah perangkat pada Nomor Seri Produk '" & NomorSeriProduk & "' sudah mencapai batas." &
@@ -66,9 +69,9 @@ Public Class frm_RegistrasiPerangkat
                     TutupDatabasePublic()
                     If ProsesRegistrasiPerangkat = True Then
                         BukaDatabasePublic()
-                        cmdPublic = New MySqlCommand(" INSERT INTO tbl_perangkat VALUES ('" & _
-                                                    Nomor_ID & "', '" & _
-                                                    txt_IDKomputer.Text & "', '" & _
+                        cmdPublic = New MySqlCommand(" INSERT INTO tbl_perangkat VALUES ('" &
+                                                    Nomor_ID & "', '" &
+                                                    txt_IDKomputer.Text & "', '" &
                                                     txt_NomorSeriProduk.Text & "') ", KoneksiDatabasePublic)
                         Try
                             cmdPublic.ExecuteNonQuery()
@@ -87,7 +90,7 @@ Public Class frm_RegistrasiPerangkat
         End If
         TutupDatabasePublic()
 
-        'Daftarkan Perangkat ke tbl_perangkat di Database General di Serverl Lokal :
+        'Daftarkan Perangkat ke tbl_perangkat di Database General di Server Lokal :
         If ProsesRegistrasiPerangkat = True Then
             AksesDatabase_General(Buka)
             cmd = New OdbcCommand(" INSERT INTO tbl_perangkat VALUES ( '" & txt_IDKomputer.Text & "', '" & EnkripsiTeks(txt_IDKomputer.Text) & "') ", KoneksiDatabaseGeneral)
@@ -100,14 +103,15 @@ Public Class frm_RegistrasiPerangkat
             End Try
             TutupDatabasePublic()
         End If
-        If ProsesRegistrasiPerangkat = True Then BeriKeteranganKomputerTerdaftar() '  || Sudah benar begini formatnya
-        If ProsesRegistrasiPerangkat = False Then                              '      || Jangan pakai Else-Else-an. Nanti beda hasilnya.
+
+        If ProsesRegistrasiPerangkat = True Then BeriKeteranganKomputerTerdaftar()
+        If ProsesRegistrasiPerangkat = False Then
             'Hapus kembali Data Perangkat di server Public
             BukaDatabasePublic()
-            cmdPublic = New MySqlCommand(" DELETE FROM tbl_perangkat " & _
-                                         " WHERE Nomor_Seri_Produk = '" & txt_NomorSeriProduk.Text & "' " & _
-                                         " AND ID_Komputer = '" & ID_CPU & "' " _
-                                         , KoneksiDatabasePublic)
+            cmdPublic = New MySqlCommand(" DELETE FROM tbl_perangkat " &
+                                         " WHERE Nomor_Seri_Produk = '" & txt_NomorSeriProduk.Text & "' " &
+                                         " AND ID_Komputer = '" & ID_CPU & "' ",
+                                         KoneksiDatabasePublic)
             Try
                 cmdPublic.ExecuteNonQuery()
             Catch ex As Exception

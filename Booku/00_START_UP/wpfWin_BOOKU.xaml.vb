@@ -1627,8 +1627,9 @@ Public Class wpfWin_BOOKU
     ' TECHNICAL SUPPORT
     ' ============================================================
     Private Sub mnu_PhpMyAdmin_Click(sender As Object, e As RoutedEventArgs) Handles mnu_PhpMyAdmin.Click
-        frm_phpMyAdmin.Show()
-        frm_phpMyAdmin.Focus()
+        win_phpMyAdmin = New wpfWin_phpMyAdmin
+        win_phpMyAdmin.Show()
+        win_phpMyAdmin.Focus()
     End Sub
 
     ' ============================================================
@@ -1669,7 +1670,8 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_TryApp_Click(sender As Object, e As RoutedEventArgs) Handles mnu_TryApp.Click
-        frm_TryApp.ShowDialog()
+        win_TryApp = New wpfWin_TryApp
+        win_TryApp.Show()
     End Sub
 
 #End Region
