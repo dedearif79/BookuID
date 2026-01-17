@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -9,6 +10,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal22_Impor
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Public JudulForm
     Public JenisPajak
@@ -148,70 +150,87 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal22_Impor
     End Sub
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
+
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'Judul Halaman :
-        lbl_JudulForm.Text = JudulForm
+        Try
+            'Judul Halaman :
+            lbl_JudulForm.Text = JudulForm
 
-        KesesuaianJurnal = True
+            KesesuaianJurnal = True
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
 
-        'Data Tabel :
-        NomorUrut = 0
-        NomorID = 0 'Ini Jangan Dihapus. Ada kepentingan di balik ini.
-        TanggalTransaksi = Kosongan
-        NomorInvoice = Kosongan
-        NomorInvoice_Sebelumnya = Kosongan
-        NomorFakturPajak = Kosongan
-        NamaJasa = Kosongan
-        NPWP = Kosongan
-        KodeSupplier = Kosongan
-        NamaSupplier = Kosongan
-        Keterangan = Kosongan
+            'Data Tabel :
+            NomorUrut = 0
+            NomorID = 0 'Ini Jangan Dihapus. Ada kepentingan di balik ini.
+            TanggalTransaksi = Kosongan
+            NomorInvoice = Kosongan
+            NomorInvoice_Sebelumnya = Kosongan
+            NomorFakturPajak = Kosongan
+            NamaJasa = Kosongan
+            NPWP = Kosongan
+            KodeSupplier = Kosongan
+            NamaSupplier = Kosongan
+            Keterangan = Kosongan
 
-        TotalTagihan100 = 0
-        TotalTagihan = 0
+            TotalTagihan100 = 0
+            TotalTagihan = 0
 
-        TotalBayar100 = 0
-        TotalBayar = 0
+            TotalBayar100 = 0
+            TotalBayar = 0
 
-        TotalSisaHutang = 0
-
-
-        AksesDatabase_Transaksi(Buka)
-
-        cmd = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice " &
-                              " WHERE Kode_Mata_Uang <> '" & KodeMataUang_IDR & "' " &
-                              " AND Bea_Masuk > 0 ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
+            TotalSisaHutang = 0
 
 
-        Do While dr.Read
+            AksesDatabase_Transaksi(Buka)
 
-            NomorID = dr.Item("Nomor_ID")
-            NomorPIB = dr.Item("Nomor_Faktur_Pajak")
-            TanggalPIB = TanggalFormatTampilan(dr.Item("Tanggal_Faktur_Pajak"))
-            If TanggalPIB = TanggalKosong Then TanggalPIB = Kosongan
-            NomorInvoice = dr.Item("Nomor_Invoice")
-            TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
-            If dr.Item("Jenis_PPh") = JenisPPh_Pasal22_Impor Then
-                PPhPasal22Impor = dr.Item("PPh_Terutang")
-            Else
-                PPhPasal22Impor = 0
-            End If
-            NomorJV_Bayar = dr.Item("Nomor_JV_Bayar_Pajak_Impor")
-            TambahBaris()
+            cmd = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice " &
+                                  " WHERE Kode_Mata_Uang <> '" & KodeMataUang_IDR & "' " &
+                                  " AND Bea_Masuk > 0 ", KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
 
-            NomorInvoice_Sebelumnya = NomorInvoice
 
-        Loop
+            Do While dr.Read
 
-        BersihkanSeleksi()
+                NomorID = dr.Item("Nomor_ID")
+                NomorPIB = dr.Item("Nomor_Faktur_Pajak")
+                TanggalPIB = TanggalFormatTampilan(dr.Item("Tanggal_Faktur_Pajak"))
+                If TanggalPIB = TanggalKosong Then TanggalPIB = Kosongan
+                NomorInvoice = dr.Item("Nomor_Invoice")
+                TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
+                If dr.Item("Jenis_PPh") = JenisPPh_Pasal22_Impor Then
+                    PPhPasal22Impor = dr.Item("PPh_Terutang")
+                Else
+                    PPhPasal22Impor = 0
+                End If
+                NomorJV_Bayar = dr.Item("Nomor_JV_Bayar_Pajak_Impor")
+                TambahBaris()
 
+                NomorInvoice_Sebelumnya = NomorInvoice
+
+                Await Task.Yield()
+            Loop
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangPPhPasal22_Impor")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris()
@@ -236,7 +255,6 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal22_Impor
         btn_InputBayar.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
-        KetersediaanMenuHalaman(pnl_Halaman, True)
     End Sub
 
     Sub AmbilValue_NamaDanNPWPSupplier()

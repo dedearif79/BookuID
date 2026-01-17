@@ -3,12 +3,14 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_BASTPenjualan
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
     Public JudulForm
 
 
@@ -81,42 +83,48 @@ Public Class wpfUsc_BASTPenjualan
 
 
     Dim EksekusiTampilanData As Boolean
-    Sub TampilkanData()
+
+    Async Sub TampilkanDataAsync()
 
         If EksekusiTampilanData = False Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'Filter Data :
-        Dim FilterData = Kosongan
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'FilterKontrol
-        Dim FilterKontrol = Kosongan
-        If Pilih_Kontrol = Status_Semua Then FilterKontrol = " "
-        If Pilih_Kontrol = Status_Open Then FilterKontrol = " AND Yang_Menerima = '' "
-        If Pilih_Kontrol = Status_Closed Then FilterKontrol = " AND Yang_Menerima <> '' "
+        Try
+            'Filter Data :
+            Dim FilterData = Kosongan
 
-        'Filter Customer :
-        Dim FilterCustomer = Spasi1
-        If cmb_Customer.SelectedValue <> Pilihan_Semua Then FilterCustomer = " AND Kode_Customer = '" & Pilih_KodeCustomer & "' "
+            'FilterKontrol
+            Dim FilterKontrol = Kosongan
+            If Pilih_Kontrol = Status_Semua Then FilterKontrol = " "
+            If Pilih_Kontrol = Status_Open Then FilterKontrol = " AND Yang_Menerima = '' "
+            If Pilih_Kontrol = Status_Closed Then FilterKontrol = " AND Yang_Menerima <> '' "
 
-        FilterData = FilterKontrol & FilterCustomer
+            'Filter Customer :
+            Dim FilterCustomer = Spasi1
+            If cmb_Customer.SelectedValue <> Pilihan_Semua Then FilterCustomer = " AND Kode_Customer = '" & Pilih_KodeCustomer & "' "
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
+            FilterData = FilterKontrol & FilterCustomer
 
-        'Data Tabel :
-        NomorUrut = 0
-        AngkaBAST_Sebelumnya = 0
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
 
-        AksesDatabase_Transaksi(Buka)
+            'Data Tabel :
+            NomorUrut = 0
+            AngkaBAST_Sebelumnya = 0
 
-        cmd = New OdbcCommand(" SELECT * FROM tbl_Penjualan_BAST " &
-                              " WHERE Nomor_BAST <> 'X' " & FilterData &
-                              " ORDER BY Angka_BAST ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        If StatusKoneksiDatabase = False Then Return
+            AksesDatabase_Transaksi(Buka)
 
+            cmd = New OdbcCommand(" SELECT * FROM tbl_Penjualan_BAST " &
+                                  " WHERE Nomor_BAST <> 'X' " & FilterData &
+                                  " ORDER BY Angka_BAST ", KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
+            If StatusKoneksiDatabase = False Then Exit Try
 
-        Do While dr.Read
+            Do While dr.Read
             NomorPO = Kosongan
             NomorPO_Satuan = Kosongan
             NomorPO_Sebelumnya = Kosongan
@@ -172,13 +180,26 @@ Public Class wpfUsc_BASTPenjualan
                 End If
                 If TambahkanBaris = True Then TambahBaris()
             End If
-            AngkaBAST_Sebelumnya = AngkaBAST
-        Loop
+                AngkaBAST_Sebelumnya = AngkaBAST
+                Await Task.Yield()
+            Loop
 
-        AksesDatabase_Transaksi(Tutup)
+            AksesDatabase_Transaksi(Tutup)
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BASTPenjualan")
 
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris()

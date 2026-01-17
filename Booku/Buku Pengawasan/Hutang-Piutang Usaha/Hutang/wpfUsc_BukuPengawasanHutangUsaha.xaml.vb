@@ -3,6 +3,7 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 
@@ -10,6 +11,7 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Public JudulForm
     Public JudulForm_SaldoAkhirHutangUsaha = "Saldo Akhir Hutang Usaha"
@@ -415,102 +417,118 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
 
 
     Sub RefreshTampilanData()
-        EksekusiTampilan = False
+        EksekusiTampilanData = False
         KontenCombo_JenisRelasi()
         KontenCombo_JenisProduk_Induk()
         KontenCombo_Supplier()
         KontenCombo_JatuhTempo()
         KontenCombo_LOS()
-        EksekusiTampilan = True
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
 
-    Public EksekusiTampilan As Boolean
-    Sub TampilkanData()
+    Public EksekusiTampilanData As Boolean
 
-        If Not EksekusiTampilan Then Return
+    Async Sub TampilkanDataAsync()
+
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        KesesuaianJurnal = True
+        Try
+            KesesuaianJurnal = True
 
-        'Style Tabel :
-        Terabas()
-        datatabelUtama.Rows.Clear()
+            'Style Tabel :
+            Terabas()
+            datatabelUtama.Rows.Clear()
 
-        'Filter Jenis Produk Induk :
-        Dim FilterJenisProduk_Induk = " "
-        If cmb_JenisProduk_Induk.SelectedValue <> JenisProduk_Semua Then FilterJenisProduk_Induk = " AND Jenis_Produk_Induk = '" & Pilih_JenisProduk_Induk & "' "
+            'Filter Jenis Produk Induk :
+            Dim FilterJenisProduk_Induk = " "
+            If cmb_JenisProduk_Induk.SelectedValue <> JenisProduk_Semua Then FilterJenisProduk_Induk = " AND Jenis_Produk_Induk = '" & Pilih_JenisProduk_Induk & "' "
 
-        'Filter Supplier :
-        Dim FilterSupplier = " "
-        If cmb_Supplier.SelectedValue <> Pilihan_Semua Then FilterSupplier = " AND Kode_Supplier = '" & Pilih_KodeSupplier & "' "
+            'Filter Supplier :
+            Dim FilterSupplier = " "
+            If cmb_Supplier.SelectedValue <> Pilihan_Semua Then FilterSupplier = " AND Kode_Supplier = '" & Pilih_KodeSupplier & "' "
 
-        'Filter Data :
-        Dim FilterData = FilterJenisProduk_Induk & FilterSupplier
+            'Filter Data :
+            Dim FilterData = FilterJenisProduk_Induk & FilterSupplier
 
-        'Query Tampilan :
-        Dim SeleksiJurnal = Kosongan
-        If JenisTahunBuku = JenisTahunBuku_LAMPAU Then SeleksiJurnal = "WHERE Nomor_JV >= 0 " 'Semua (tanpa seleksi jurnal)
-        If JenisTahunBuku = JenisTahunBuku_NORMAL Then SeleksiJurnal = "WHERE Nomor_JV >  0 " 'Yang ditampilkan hanya yang sudah dijurnal
+            'Query Tampilan :
+            Dim SeleksiJurnal = Kosongan
+            If JenisTahunBuku = JenisTahunBuku_LAMPAU Then SeleksiJurnal = "WHERE Nomor_JV >= 0 " 'Semua (tanpa seleksi jurnal)
+            If JenisTahunBuku = JenisTahunBuku_NORMAL Then SeleksiJurnal = "WHERE Nomor_JV >  0 " 'Yang ditampilkan hanya yang sudah dijurnal
 
-        QueryTampilanHutangTahunLalu =
-            " SELECT * FROM tbl_Pembelian_Invoice " &
-            " WHERE Jenis_Pembelian = '" & JenisPembelian_Tempo & "' " &
-            " AND Kode_Mata_Uang = '" & KodeMataUang & "' " &
-            " AND (Tanggal_Invoice < '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') " & FilterData &
-            " ORDER BY Tanggal_Invoice "
-        QueryTampilanHutangTahunAktif =
-            " SELECT * FROM tbl_Pembelian_Invoice " & SeleksiJurnal &
-            " AND Jenis_Pembelian = '" & JenisPembelian_Tempo & "' " &
-            " AND Kode_Mata_Uang = '" & KodeMataUang & "' " &
-            " AND (Tanggal_Invoice >= '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') " & FilterData &
-            " ORDER BY Tanggal_Invoice "
+            QueryTampilanHutangTahunLalu =
+                " SELECT * FROM tbl_Pembelian_Invoice " &
+                " WHERE Jenis_Pembelian = '" & JenisPembelian_Tempo & "' " &
+                " AND Kode_Mata_Uang = '" & KodeMataUang & "' " &
+                " AND (Tanggal_Invoice < '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') " & FilterData &
+                " ORDER BY Tanggal_Invoice "
+            QueryTampilanHutangTahunAktif =
+                " SELECT * FROM tbl_Pembelian_Invoice " & SeleksiJurnal &
+                " AND Jenis_Pembelian = '" & JenisPembelian_Tempo & "' " &
+                " AND Kode_Mata_Uang = '" & KodeMataUang & "' " &
+                " AND (Tanggal_Invoice >= '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') " & FilterData &
+                " ORDER BY Tanggal_Invoice "
 
-        NomorUrut = 0
-        BarisIndex = 0
-        AngkaInvoice_Sebelumnya = 0
-        SaldoAwal_BerdasarkanList = 0
-        Total_SisaHutangUsaha = 0
+            NomorUrut = 0
+            BarisIndex = 0
+            AngkaInvoice_Sebelumnya = 0
+            SaldoAwal_BerdasarkanList = 0
+            Total_SisaHutangUsaha = 0
 
-        AksesDatabase_Transaksi(Buka)
+            AksesDatabase_Transaksi(Buka)
 
-        '---------------------------------------------------------------
-        'Data Tabel Sisa Hutang Usaha Tahun Lalu :
-        '---------------------------------------------------------------
-        QueryTampilan = QueryTampilanHutangTahunLalu
-        DataTabel()
-
-        '---------------------------------------------------------------
-        'Data Tabel BPHU Tahun Buku Aktif :
-        '---------------------------------------------------------------
-        If JudulForm <> JudulForm_SaldoAwalHutangUsaha Then
-            QueryTampilan = QueryTampilanHutangTahunAktif
+            '---------------------------------------------------------------
+            'Data Tabel Sisa Hutang Usaha Tahun Lalu :
+            '---------------------------------------------------------------
+            QueryTampilan = QueryTampilanHutangTahunLalu
             DataTabel()
-        End If
 
-        AksesDatabase_Transaksi(Tutup)
+            '---------------------------------------------------------------
+            'Data Tabel BPHU Tahun Buku Aktif :
+            '---------------------------------------------------------------
+            If JudulForm <> JudulForm_SaldoAwalHutangUsaha Then
+                QueryTampilan = QueryTampilanHutangTahunAktif
+                DataTabel()
+            End If
 
-        TotalTabel = Total_SisaHutangUsaha
+            AksesDatabase_Transaksi(Tutup)
 
-        Select Case JenisTahunBuku
-            Case JenisTahunBuku_LAMPAU
-                SaldoAkhir_BerdasarkanList = Total_SisaHutangUsaha
-                txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
-                AmbilValue_SaldoAkhirBerdasarkanCOA()
-                CekKesesuaianSaldoAkhir()
-                txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
-            Case JenisTahunBuku_NORMAL
-                txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
-                AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
-                CekKesesuaianSaldoAwal()
-                txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
-                txt_TotalTabel.Text = TotalTabel
-        End Select
+            TotalTabel = Total_SisaHutangUsaha
 
-        BersihkanSeleksi()
+            Select Case JenisTahunBuku
+                Case JenisTahunBuku_LAMPAU
+                    SaldoAkhir_BerdasarkanList = Total_SisaHutangUsaha
+                    txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
+                    AmbilValue_SaldoAkhirBerdasarkanCOA()
+                    CekKesesuaianSaldoAkhir()
+                    txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
+                Case JenisTahunBuku_NORMAL
+                    txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
+                    AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
+                    CekKesesuaianSaldoAwal()
+                    txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
+                    txt_TotalTabel.Text = TotalTabel
+            End Select
 
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangUsaha")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub DataTabel()
@@ -943,7 +961,6 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
             VisibilitasInfoSaldo(False)
         End If
         BersihkanSeleksiPembayaran()
-        KetersediaanMenuHalaman(pnl_Halaman, True)
     End Sub
 
 

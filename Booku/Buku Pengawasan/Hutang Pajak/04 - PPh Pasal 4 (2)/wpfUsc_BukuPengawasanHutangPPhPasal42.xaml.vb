@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -9,6 +10,9 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm
     Public JenisPajak
@@ -204,10 +208,10 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
     End Sub
 
     Sub RefreshTampilanData()
-        EksekusiKode = False
+        EksekusiTampilanData = False
         KontenCombo_TahunPajak() 'Sengaja pakai Sub KontenCombo, untuk me-refresh List Tahun Pajak, barangkali ada update data untuk Tahun Pajak Terlama
         cmb_MasaPajak.SelectedValue = MasaPajak_Rekap
-        EksekusiKode = True
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
@@ -248,11 +252,17 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
 
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
-        If EksekusiKode = False Then Return
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
+
+        Try
+
         VisibilitasInfoSaldo(False)
 
         'Judul Halaman :
@@ -367,6 +377,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
                         DPP = dr.Item("DPP")
                         PPh = dr.Item("Jumlah_Hutang")
                         AmbilValue_PerKodeSetoran()
+                        Await Task.Yield()
                     Loop
 
                     TutupDatabaseTransaksi_Alternatif()
@@ -404,6 +415,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
                             End If
                             AmbilValue_PerKodeSetoran()
                         End If
+                        Await Task.Yield()
                     Loop
 
                     'Dividen :
@@ -419,6 +431,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
                             SumberData = JenisJasa_Dividen
                             AmbilValue_PerKodeSetoran()
                         End If
+                        Await Task.Yield()
                     Loop
 
                     TutupDatabaseTransaksi_Alternatif()
@@ -465,6 +478,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
                                         JumlahBayar419 += dr.Item("Jumlah_Bayar")
                                 End Select
                                 If JumlahBayar >= RekapPerBulanPPh Then Exit Do
+                                Await Task.Yield()
                             Loop
                             TutupDatabaseTransaksi_Alternatif()
                         End If
@@ -577,6 +591,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
                     AmbilValue_PerKodeSetoran()
                     Keterangan = PenghapusEnter(dr.Item("Keterangan"))
                     TambahBaris()
+                    Await Task.Yield()
                 Loop
             End If
 
@@ -622,6 +637,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
                         AmbilValue_PerKodeSetoran()
                         TambahBaris()
                     End If
+                    Await Task.Yield()
                 Loop
 
                 'Dividen :
@@ -646,6 +662,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
                         AmbilValue_PerKodeSetoran()
                         TambahBaris()
                     End If
+                    Await Task.Yield()
                 Loop
 
             End If
@@ -730,6 +747,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
                         AmbilValue_PerKodeSetoran()
                         Keterangan = PenghapusEnter(dr.Item("Keterangan"))
                         TambahBaris()
+                        Await Task.Yield()
                     Loop
                 End If
 
@@ -773,6 +791,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
                             Keterangan = PenghapusEnter(dr.Item("Catatan"))
                             TambahBaris()
                         End If
+                        Await Task.Yield()
                     Loop
 
                     'Dividen :
@@ -797,6 +816,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
                             AmbilValue_PerKodeSetoran()
                             TambahBaris()
                         End If
+                        Await Task.Yield()
                     Loop
 
                 End If
@@ -918,8 +938,19 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
 
         lbl_TotalTabel.Text = "Saldo Akhir " & TahunPajak & " : "
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangPPhPasal42")
 
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris()
@@ -1008,6 +1039,10 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal42
         btn_Hapus.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
         KetersediaanMenuHalaman(pnl_Halaman, True)
     End Sub
 

@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -9,6 +10,8 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm
     Public JenisPajak
@@ -217,10 +220,10 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
     End Sub
 
     Sub RefreshTampilanData()
-        EksekusiKode = False
+        EksekusiTampilanData = False
         KontenCombo_TahunPajak() 'Sengaja pakai Sub KontenCombo, untuk me-refresh List Tahun Pajak, barangkali ada update data untuk Tahun Pajak Terlama
         cmb_MasaPajak.SelectedValue = MasaPajak_Rekap
-        EksekusiKode = True
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
@@ -261,12 +264,21 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
 
 
 
-    Sub TampilkanData()
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
 
-        If EksekusiKode = False Then Return
+    Async Sub TampilkanDataAsync()
+
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
         VisibilitasInfoSaldo(False)
+
+        Try
 
         'Judul Halaman :
         lbl_JudulForm.Text = JudulForm
@@ -519,6 +531,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
                 TotalSisaHutang += SisaHutang
 
                 TambahBaris()
+                Await Task.Yield()
 
             Loop
 
@@ -609,6 +622,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
                     AmbilValue_PerKodeSetoran()
                     Keterangan = PenghapusEnter(dr.Item("Keterangan"))
                     TambahBaris()
+                    Await Task.Yield()
                 Loop
             End If
 
@@ -653,6 +667,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
                         End If
                         AmbilValue_PerKodeSetoran()
                         TambahBaris()
+                        Await Task.Yield()
                     End If
                 Loop
 
@@ -677,6 +692,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
                         DPP = dr.Item("Jumlah_Dividen")
                         AmbilValue_PerKodeSetoran()
                         TambahBaris()
+                        Await Task.Yield()
                     End If
                 Loop
 
@@ -764,6 +780,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
                         AmbilValue_PerKodeSetoran()
                         Keterangan = PenghapusEnter(dr.Item("Keterangan"))
                         TambahBaris()
+                        Await Task.Yield()
                     Loop
                 End If
 
@@ -806,6 +823,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
                             AmbilValue_PerKodeSetoran()
                             Keterangan = PenghapusEnter(dr.Item("Catatan"))
                             TambahBaris()
+                            Await Task.Yield()
                         End If
                     Loop
 
@@ -830,6 +848,7 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
                             DPP = dr.Item("Jumlah_Dividen")
                             AmbilValue_PerKodeSetoran()
                             TambahBaris()
+                            Await Task.Yield()
                         End If
                     Loop
 
@@ -969,7 +988,14 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
 
         lbl_TotalTabel.Text = "Saldo Akhir " & TahunPajak & " : "
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangPPhPasal23")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
 
     End Sub
 
@@ -1059,6 +1085,10 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal23
         btn_Hapus.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
         KetersediaanMenuHalaman(pnl_Halaman, True)
     End Sub
 

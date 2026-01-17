@@ -4,12 +4,14 @@ Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
 Imports System.Windows.Threading
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_BukuPenjualan
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
 
     Public KesesuaianJurnal As Boolean
@@ -200,12 +202,18 @@ Public Class wpfUsc_BukuPenjualan
     End Sub
 
 
-    Dim EksekusiTampilanData
-    Sub TampilkanData()
+    Dim EksekusiTampilanData As Boolean
+
+    Async Sub TampilkanDataAsync()
 
         If EksekusiTampilanData = False Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
+
+        Try
         If JenisPenjualan = Kosongan Then JenisPenjualan = JenisPenjualan_Rutin
 
         KesesuaianJurnal = True
@@ -261,11 +269,11 @@ Public Class wpfUsc_BukuPenjualan
 
         AksesDatabase_Transaksi(Buka)
 
-        cmd = New OdbcCommand(QueryTampilan, KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        If StatusKoneksiDatabase = False Then Return
+            cmd = New OdbcCommand(QueryTampilan, KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
+            If StatusKoneksiDatabase = False Then Exit Try
 
-        Do While dr.Read
+            Do While dr.Read
             NomorPO = Kosongan
             TanggalPO = Kosongan
             NomorSJBAST = Kosongan
@@ -453,22 +461,35 @@ Public Class wpfUsc_BukuPenjualan
                     If Pilih_JatuhTempo = KeteranganJatuhTempo Then TambahBaris()
                 End If
             End If
-            NomorInvoice_Sebelumnya = NomorInvoice
-        Loop
+                NomorInvoice_Sebelumnya = NomorInvoice
+                Await Task.Yield()
+            Loop
 
-        AksesDatabase_Transaksi(Tutup)
+            AksesDatabase_Transaksi(Tutup)
 
-        If JenisTampilan = JenisTampilan_HasilAkhir Then
-            datatabelUtama.Rows.Add()
-            datatabelUtama.Rows.Add(Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan,
-                                Kosongan, Kosongan, Kosongan,
-                                Rekap_JumlahHarga, Rekap_JumlahHarga_Asing, Rekap_DiskonRp, Rekap_DiskonAsing, Rekap_DasarPengenaanPajak, Kosongan, Kosongan,
-                                Rekap_PPN, Rekap_PPhDipotong, Rekap_BiayaLainnya, Rekap_BiayaLainnya_Asing, Rekap_TagihanBruto, Rekap_TagihanBruto_Asing, Rekap_Retur, Rekap_TagihanNetto,
-                                Kosongan)
-        End If
+            If JenisTampilan = JenisTampilan_HasilAkhir Then
+                datatabelUtama.Rows.Add()
+                datatabelUtama.Rows.Add(Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan,
+                                    Kosongan, Kosongan, Kosongan,
+                                    Rekap_JumlahHarga, Rekap_JumlahHarga_Asing, Rekap_DiskonRp, Rekap_DiskonAsing, Rekap_DasarPengenaanPajak, Kosongan, Kosongan,
+                                    Rekap_PPN, Rekap_PPhDipotong, Rekap_BiayaLainnya, Rekap_BiayaLainnya_Asing, Rekap_TagihanBruto, Rekap_TagihanBruto_Asing, Rekap_Retur, Rekap_TagihanNetto,
+                                    Kosongan)
+            End If
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPenjualan")
 
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
@@ -507,7 +528,11 @@ Public Class wpfUsc_BukuPenjualan
         btn_Cetak.IsEnabled = False
         btn_DorongKeJurnal.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

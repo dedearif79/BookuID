@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -9,6 +10,7 @@ Public Class wpfUsc_BukuPengawasanKetetapanPajak
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Public JudulForm
     Public JenisPajak
@@ -154,202 +156,223 @@ Public Class wpfUsc_BukuPengawasanKetetapanPajak
     End Sub
 
     Dim EksekusiTampilanData As Boolean
-    Sub TampilkanData()
 
-        If EksekusiTampilanData = False Then Return
+    Async Sub TampilkanDataAsync()
 
-        LogikaTampilan()
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        If cmb_PilihanJenisPajak.Text = Kosongan Then Return
-        If cmb_PilihanStatusLunas.Text = Kosongan Then Return
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
+        Try
 
-        'Filter Tahun Pajak :
-        If Pilihan_TahunTunggakanPajak = Pilihan_Semua Then
-            FilterTahunPajak = Spasi1
-        Else
-            FilterTahunPajak = " AND Tahun_Pajak = '" & Pilihan_TahunTunggakanPajak & "' "
-        End If
+            LogikaTampilan()
 
-        'Filter Tahun Pajak :
-        If Pilihan_TahunPenerbitan = Pilihan_Semua Then
-            FilterTahunPenerbitan = Spasi1
-        Else
-            FilterTahunPenerbitan = " AND DATE_FORMAT(Tanggal_Ketetapan, '%Y') = '" & Pilihan_TahunPenerbitan & "' "
-        End If
+            If cmb_PilihanJenisPajak.Text = Kosongan Then Return
+            If cmb_PilihanStatusLunas.Text = Kosongan Then Return
 
-        'Filter Jenis Pajak :
-        If Pilihan_JenisPajak = Pilihan_Semua Then
-            FilterJenisPajak = Kosongan
-        Else
-            FilterJenisPajak = " AND Jenis_Pajak = '" & Pilihan_JenisPajak & "' "
-        End If
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
 
-        'Filter Data :
-        FilterData = FilterTahunPajak & FilterTahunPenerbitan & FilterJenisPajak
-
-        'Data Tabel :
-        NomorUrut = 0
-        TotalTagihan_PokokPajak = 0
-        TotalTagihan_Sanksi = 0
-        TotalTagihan_JumlahKetetapan = 0
-        TotalBayar = 0
-        Total_SisaTagihan = 0
-
-        AksesDatabase_Transaksi(Buka)
-
-        cmd = New OdbcCommand(" SELECT * FROM tbl_KetetapanPajak WHERE Nomor_ID > 0 " & FilterData, KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-
-        Do While dr.Read
-
-            NomorUrut += 1
-            NomorID = dr.Item("Nomor_ID")
-            NomorBPHP = dr.Item("Nomor_BPHP")
-            KodeAkun_PokokPajak = dr.Item("Kode_Akun_Pokok_Pajak")
-            Nomor = dr.Item("Nomor")
-            KodeJenisPajak = dr.Item("Kode_Jenis_Pajak")
-            JenisPajakPerBaris = dr.Item("Jenis_Pajak")
-            MasaPajak_Awal = dr.Item("Masa_Pajak_Awal")
-            MasaPajak_Akhir = dr.Item("Masa_Pajak_Akhir")
-            If MasaPajak_Awal = MasaPajak_Akhir Then
-                MasaPajak = MasaPajak_Awal
+            'Filter Tahun Pajak :
+            If Pilihan_TahunTunggakanPajak = Pilihan_Semua Then
+                FilterTahunPajak = Spasi1
             Else
-                MasaPajak = MasaPajak_Awal & " - " & MasaPajak_Akhir
+                FilterTahunPajak = " AND Tahun_Pajak = '" & Pilihan_TahunTunggakanPajak & "' "
             End If
-            TahunTunggakanPajak = dr.Item("Tahun_Pajak")
-            NomorKetetapan = dr.Item("Nomor_Ketetapan")
-            TanggalKetetapan = TanggalFormatTampilan(dr.Item("Tanggal_Ketetapan"))
-            TahunPenerbitan = AmbilTahun_DariTanggal(TanggalKetetapan)
-            JumlahKetetapan = dr.Item("Jumlah_Ketetapan")
-            PokokPajak = dr.Item("Pokok_Pajak")
-            Sanksi = dr.Item("Sanksi")
-            JumlahTagihan = JumlahKetetapan
 
-            'Data Pembayaran :
-            JumlahBayar = 0
-            Dim TahunTelusurPembayaran = TahunPenerbitan
-            Dim PencegahLoopingTahunPajakLampau = 0
-            Do While TahunTelusurPembayaran <= TahunBukuAktif
-                If TahunTelusurPembayaran <= TahunCutOff Then TahunBuku_Alternatif = TahunCutOff
-                If TahunTelusurPembayaran > TahunCutOff Then TahunBuku_Alternatif = TahunTelusurPembayaran
-                If TahunTelusurPembayaran > TahunCutOff Or PencegahLoopingTahunPajakLampau = 0 Then
-                    BukaDatabaseTransaksi_Alternatif(TahunBuku_Alternatif)
-                    cmdBAYAR = New OdbcCommand(" SELECT Jumlah_Bayar FROM tbl_BuktiPengeluaran " &
-                                               " WHERE Nomor_BP         = '" & NomorBPHP & "' " &
-                                               " AND Status_Invoice     = '" & Status_Dibayar & "' ",
-                                               KoneksiDatabaseTransaksi_Alternatif)
-                    drBAYAR_ExecuteReader()
-                    Do While drBAYAR.Read
-                        JumlahBayar += drBAYAR.Item("Jumlah_Bayar")
-                        If JumlahBayar >= PokokPajak Then Exit Do
-                    Loop
-                    TutupDatabaseTransaksi_Alternatif()
+            'Filter Tahun Pajak :
+            If Pilihan_TahunPenerbitan = Pilihan_Semua Then
+                FilterTahunPenerbitan = Spasi1
+            Else
+                FilterTahunPenerbitan = " AND DATE_FORMAT(Tanggal_Ketetapan, '%Y') = '" & Pilihan_TahunPenerbitan & "' "
+            End If
+
+            'Filter Jenis Pajak :
+            If Pilihan_JenisPajak = Pilihan_Semua Then
+                FilterJenisPajak = Kosongan
+            Else
+                FilterJenisPajak = " AND Jenis_Pajak = '" & Pilihan_JenisPajak & "' "
+            End If
+
+            'Filter Data :
+            FilterData = FilterTahunPajak & FilterTahunPenerbitan & FilterJenisPajak
+
+            'Data Tabel :
+            NomorUrut = 0
+            TotalTagihan_PokokPajak = 0
+            TotalTagihan_Sanksi = 0
+            TotalTagihan_JumlahKetetapan = 0
+            TotalBayar = 0
+            Total_SisaTagihan = 0
+
+            AksesDatabase_Transaksi(Buka)
+
+            cmd = New OdbcCommand(" SELECT * FROM tbl_KetetapanPajak WHERE Nomor_ID > 0 " & FilterData, KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
+
+            Do While dr.Read
+
+                NomorUrut += 1
+                NomorID = dr.Item("Nomor_ID")
+                NomorBPHP = dr.Item("Nomor_BPHP")
+                KodeAkun_PokokPajak = dr.Item("Kode_Akun_Pokok_Pajak")
+                Nomor = dr.Item("Nomor")
+                KodeJenisPajak = dr.Item("Kode_Jenis_Pajak")
+                JenisPajakPerBaris = dr.Item("Jenis_Pajak")
+                MasaPajak_Awal = dr.Item("Masa_Pajak_Awal")
+                MasaPajak_Akhir = dr.Item("Masa_Pajak_Akhir")
+                If MasaPajak_Awal = MasaPajak_Akhir Then
+                    MasaPajak = MasaPajak_Awal
+                Else
+                    MasaPajak = MasaPajak_Awal & " - " & MasaPajak_Akhir
                 End If
-                If JumlahBayar >= PokokPajak Then Exit Do
-                PencegahLoopingTahunPajakLampau += 1
-                TahunTelusurPembayaran += 1
+                TahunTunggakanPajak = dr.Item("Tahun_Pajak")
+                NomorKetetapan = dr.Item("Nomor_Ketetapan")
+                TanggalKetetapan = TanggalFormatTampilan(dr.Item("Tanggal_Ketetapan"))
+                TahunPenerbitan = AmbilTahun_DariTanggal(TanggalKetetapan)
+                JumlahKetetapan = dr.Item("Jumlah_Ketetapan")
+                PokokPajak = dr.Item("Pokok_Pajak")
+                Sanksi = dr.Item("Sanksi")
+                JumlahTagihan = JumlahKetetapan
+
+                'Data Pembayaran :
+                JumlahBayar = 0
+                Dim TahunTelusurPembayaran = TahunPenerbitan
+                Dim PencegahLoopingTahunPajakLampau = 0
+                Do While TahunTelusurPembayaran <= TahunBukuAktif
+                    If TahunTelusurPembayaran <= TahunCutOff Then TahunBuku_Alternatif = TahunCutOff
+                    If TahunTelusurPembayaran > TahunCutOff Then TahunBuku_Alternatif = TahunTelusurPembayaran
+                    If TahunTelusurPembayaran > TahunCutOff Or PencegahLoopingTahunPajakLampau = 0 Then
+                        BukaDatabaseTransaksi_Alternatif(TahunBuku_Alternatif)
+                        cmdBAYAR = New OdbcCommand(" SELECT Jumlah_Bayar FROM tbl_BuktiPengeluaran " &
+                                                   " WHERE Nomor_BP         = '" & NomorBPHP & "' " &
+                                                   " AND Status_Invoice     = '" & Status_Dibayar & "' ",
+                                                   KoneksiDatabaseTransaksi_Alternatif)
+                        drBAYAR_ExecuteReader()
+                        Do While drBAYAR.Read
+                            JumlahBayar += drBAYAR.Item("Jumlah_Bayar")
+                            If JumlahBayar >= PokokPajak Then Exit Do
+                        Loop
+                        TutupDatabaseTransaksi_Alternatif()
+                    End If
+                    If JumlahBayar >= PokokPajak Then Exit Do
+                    PencegahLoopingTahunPajakLampau += 1
+                    TahunTelusurPembayaran += 1
+                Loop
+
+                SisaTagihan = JumlahTagihan - JumlahBayar
+                If SisaTagihan = 0 Then
+                    StatusLunas = StatusLunas_Lunas
+                Else
+                    StatusLunas = StatusLunas_BelumLunas
+                End If
+                Keterangan = PenghapusEnter(dr.Item("Keterangan"))
+                NomorJV = dr.Item("Nomor_JV")
+
+                If Pilihan_StatusLunas = Pilihan_Semua Then
+                    TambahBaris()
+                Else
+                    If Pilihan_StatusLunas = StatusLunas Then TambahBaris()
+                End If
+
+                Await Task.Yield()
+
             Loop
 
-            SisaTagihan = JumlahTagihan - JumlahBayar
-            If SisaTagihan = 0 Then
-                StatusLunas = StatusLunas_Lunas
-            Else
-                StatusLunas = StatusLunas_BelumLunas
-            End If
-            Keterangan = PenghapusEnter(dr.Item("Keterangan"))
-            NomorJV = dr.Item("Nomor_JV")
+            AksesDatabase_Transaksi(Tutup)
 
-            If Pilihan_StatusLunas = Pilihan_Semua Then
-                TambahBaris()
+            If AmbilAngka(Total_SisaTagihan) <= 0 Then
+                StatusLunas = StatusLunas_LUNAS_
             Else
-                If Pilihan_StatusLunas = StatusLunas Then TambahBaris()
+                StatusLunas = Kosongan
             End If
 
-        Loop
+            'Baris Total :
+            If NomorUrut > 0 Then
+                datatabelUtama.Rows.Add()
+                datatabelUtama.Rows.Add(Kosongan, Kosongan, Kosongan, Kosongan,
+                                        Kosongan, Kosongan, Kosongan,
+                                        Kosongan, Kosongan, "   T O T A L  ",
+                                        Kosongan, Kosongan, Kosongan, Kosongan,
+                                        TotalTagihan_PokokPajak, TotalTagihan_Sanksi, TotalTagihan_JumlahKetetapan,
+                                        TotalBayar, Total_SisaTagihan,
+                                        StatusLunas, Kosongan, 0)
+            End If
 
-        AksesDatabase_Transaksi(Tutup)
+            '-----------------------------------------------------------------------------------------------------------------------------
+            AksesDatabase_Transaksi(Buka)
 
-        If AmbilAngka(Total_SisaTagihan) <= 0 Then
-            StatusLunas = StatusLunas_LUNAS_
-        Else
-            StatusLunas = Kosongan
-        End If
+            'Hitung Total Tagihan Selama Sebelum Cut Off :
+            Dim TotalTagihan_SelamaSebelumCutOff As Int64 = 0
+            cmd = New OdbcCommand(" SELECT * FROM tbl_KetetapanPajak ",
+                                  KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
+            Do While dr.Read
+                TotalTagihan_SelamaSebelumCutOff += dr.Item("Jumlah_Ketetapan")
+            Loop
 
-        'Baris Total :
-        If NomorUrut > 0 Then
-            datatabelUtama.Rows.Add()
-            datatabelUtama.Rows.Add(Kosongan, Kosongan, Kosongan, Kosongan,
-                                    Kosongan, Kosongan, Kosongan,
-                                    Kosongan, Kosongan, "   T O T A L  ",
-                                    Kosongan, Kosongan, Kosongan, Kosongan,
-                                    TotalTagihan_PokokPajak, TotalTagihan_Sanksi, TotalTagihan_JumlahKetetapan,
-                                    TotalBayar, Total_SisaTagihan,
-                                    StatusLunas, Kosongan, 0)
-        End If
+            'Hitung Total Pembayaran Selama Sebelum Cut Off :
+            Dim TotalBayar_SelamaSebelumCutOff As Int64 = 0
+            cmd = New OdbcCommand(" SELECT * FROM tbl_BuktiPengeluaran " &
+                                  " WHERE Nomor_BP   LIKE '" & AwalanBP & "%' " &
+                                  " AND Status_Invoice  = '" & Status_Dibayar & "' ",
+                                  KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
+            Do While dr.Read
+                TotalBayar_SelamaSebelumCutOff += dr.Item("Jumlah_Bayar")
+            Loop
 
-        '-----------------------------------------------------------------------------------------------------------------------------
-        AksesDatabase_Transaksi(Buka)
+            AksesDatabase_Transaksi(Tutup)
 
-        'Hitung Total Tagihan Selama Sebelum Cut Off :
-        Dim TotalTagihan_SelamaSebelumCutOff As Int64 = 0
-        cmd = New OdbcCommand(" SELECT * FROM tbl_KetetapanPajak ",
-                              KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        Do While dr.Read
-            TotalTagihan_SelamaSebelumCutOff += dr.Item("Jumlah_Ketetapan")
-        Loop
+            SisaHutang_SaatCutOff = TotalTagihan_SelamaSebelumCutOff - TotalBayar_SelamaSebelumCutOff
+            '-----------------------------------------------------------------------------------------------------------------------------
 
-        'Hitung Total Pembayaran Selama Sebelum Cut Off :
-        Dim TotalBayar_SelamaSebelumCutOff As Int64 = 0
-        cmd = New OdbcCommand(" SELECT * FROM tbl_BuktiPengeluaran " &
-                              " WHERE Nomor_BP   LIKE '" & AwalanBP & "%' " &
-                              " AND Status_Invoice  = '" & Status_Dibayar & "' ",
-                              KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        Do While dr.Read
-            TotalBayar_SelamaSebelumCutOff += dr.Item("Jumlah_Bayar")
-        Loop
+            lbl_TotalTabel.Text = "Saldo Akhir " & TahunBukuAktif & " : "
 
-        AksesDatabase_Transaksi(Tutup)
+            If DataDitampilkanSemua Then
+                VisibilitasInfoSaldo(True)
+                Select Case JenisTahunBuku
+                    Case JenisTahunBuku_LAMPAU
+                        SaldoAkhir_BerdasarkanList = SisaHutang_SaatCutOff
+                        txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
+                        AmbilValue_SaldoAkhirBerdasarkanCOA()
+                        CekKesesuaianSaldoAkhir()
+                        txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
+                    Case JenisTahunBuku_NORMAL
+                        'Penjelasan : Variabel di bawah ini untuk mendapatkan jumlah bayar atas hutang pajak tahun sebelum TahunBukuAktif,
+                        'tapi dibayarkan pada tahun ini (TahunBukuAktif).
+                        Dim TotalBayar_UntukHutangPajakTahunSebelumIni As Int64 = 0
+                        AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_Non, TotalBayar_UntukHutangPajakTahunSebelumIni)
+                        If Not TahunBukuSudahStabil(TahunBukuAktif) Then
+                            AmbilValue_SaldoAwalBerdasarkanList()
+                            AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
+                            CekKesesuaianSaldoAwal()
+                            txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
+                            txt_TotalTabel.Text = SaldoAwal_BerdasarkanList + TotalTagihan_JumlahKetetapan - (TotalBayar + TotalBayar_UntukHutangPajakTahunSebelumIni)
+                        Else
+                            txt_TotalTabel.Text = SaldoAwal_BerdasarkanCOA + TotalTagihan_JumlahKetetapan - (TotalBayar + TotalBayar_UntukHutangPajakTahunSebelumIni)
+                        End If
+                End Select
+            Else
+                VisibilitasInfoSaldo(False)
+            End If
 
-        SisaHutang_SaatCutOff = TotalTagihan_SelamaSebelumCutOff - TotalBayar_SelamaSebelumCutOff
-        '-----------------------------------------------------------------------------------------------------------------------------
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanKetetapanPajak")
 
-        lbl_TotalTabel.Text = "Saldo Akhir " & TahunBukuAktif & " : "
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
 
-        If DataDitampilkanSemua Then
-            VisibilitasInfoSaldo(True)
-            Select Case JenisTahunBuku
-                Case JenisTahunBuku_LAMPAU
-                    SaldoAkhir_BerdasarkanList = SisaHutang_SaatCutOff
-                    txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
-                    AmbilValue_SaldoAkhirBerdasarkanCOA()
-                    CekKesesuaianSaldoAkhir()
-                    txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
-                Case JenisTahunBuku_NORMAL
-                    'Penjelasan : Variabel di bawah ini untuk mendapatkan jumlah bayar atas hutang pajak tahun sebelum TahunBukuAktif,
-                    'tapi dibayarkan pada tahun ini (TahunBukuAktif).
-                    Dim TotalBayar_UntukHutangPajakTahunSebelumIni As Int64 = 0
-                    AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_Non, TotalBayar_UntukHutangPajakTahunSebelumIni)
-                    If Not TahunBukuSudahStabil(TahunBukuAktif) Then
-                        AmbilValue_SaldoAwalBerdasarkanList()
-                        AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
-                        CekKesesuaianSaldoAwal()
-                        txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
-                        txt_TotalTabel.Text = SaldoAwal_BerdasarkanList + TotalTagihan_JumlahKetetapan - (TotalBayar + TotalBayar_UntukHutangPajakTahunSebelumIni)
-                    Else
-                        txt_TotalTabel.Text = SaldoAwal_BerdasarkanCOA + TotalTagihan_JumlahKetetapan - (TotalBayar + TotalBayar_UntukHutangPajakTahunSebelumIni)
-                    End If
-            End Select
-        Else
-            VisibilitasInfoSaldo(False)
-        End If
+    End Sub
 
-        BersihkanSeleksi()
-
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris()

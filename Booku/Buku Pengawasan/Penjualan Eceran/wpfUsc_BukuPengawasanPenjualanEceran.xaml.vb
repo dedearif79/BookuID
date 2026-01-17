@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -10,6 +11,8 @@ Public Class wpfUsc_BukuPenjualanEceran
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm
     Public KesesuaianJurnal
@@ -56,40 +59,59 @@ Public Class wpfUsc_BukuPenjualanEceran
     End Sub
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
+    Async Sub TampilkanDataAsync()
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-    Sub TampilkanData()
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        KesesuaianJurnal = True
+        Try
+            KesesuaianJurnal = True
 
-        'Data Tabel :
-        datatabelUtama.Rows.Clear()
-        NomorUrut = 0
+            'Data Tabel :
+            datatabelUtama.Rows.Clear()
+            NomorUrut = 0
 
-        AksesDatabase_Transaksi(Buka)
+            AksesDatabase_Transaksi(Buka)
 
-        cmd = New OdbcCommand(" SELECT * FROM tbl_PenjualanEceran ORDER BY Tanggal_Transaksi ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
+            cmd = New OdbcCommand(" SELECT * FROM tbl_PenjualanEceran ORDER BY Tanggal_Transaksi ", KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
 
-        Do While dr.Read
-            NomorID = dr.Item("Nomor_ID")
-            TanggalTransaksi = TanggalFormatTampilan(dr.Item("Tanggal_Transaksi"))
-            JumlahKas = dr.Item("Jumlah_Kas")
-            JumlahBank = dr.Item("Jumlah_Bank")
-            JumlahTransaksi = dr.Item("Jumlah_Transaksi")
-            JumlahDPP = dr.Item("DPP")
-            JumlahPPN = dr.Item("PPN")
-            Keterangan = PenghapusEnter(dr.Item("Keterangan"))
-            NomorJV = dr.Item("Nomor_JV")
-            User = dr.Item("User")
-            TambahBaris()
-        Loop
-        AksesDatabase_Transaksi(Tutup)
+            Do While dr.Read
+                NomorID = dr.Item("Nomor_ID")
+                TanggalTransaksi = TanggalFormatTampilan(dr.Item("Tanggal_Transaksi"))
+                JumlahKas = dr.Item("Jumlah_Kas")
+                JumlahBank = dr.Item("Jumlah_Bank")
+                JumlahTransaksi = dr.Item("Jumlah_Transaksi")
+                JumlahDPP = dr.Item("DPP")
+                JumlahPPN = dr.Item("PPN")
+                Keterangan = PenghapusEnter(dr.Item("Keterangan"))
+                NomorJV = dr.Item("Nomor_JV")
+                User = dr.Item("User")
+                TambahBaris()
+                Await Task.Yield()
+            Loop
+            AksesDatabase_Transaksi(Tutup)
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanPenjualanEceran")
 
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 

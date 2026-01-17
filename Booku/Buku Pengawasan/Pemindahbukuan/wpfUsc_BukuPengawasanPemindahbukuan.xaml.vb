@@ -3,6 +3,7 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 
@@ -11,6 +12,7 @@ Public Class wpfUsc_BukuPengawasanPemindahbukuan
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Dim QueryTampilan As String
     Dim FilterDariAkun
@@ -86,87 +88,103 @@ Public Class wpfUsc_BukuPengawasanPemindahbukuan
 
 
     Dim EksekusiTampilanData As Boolean
-    Sub TampilkanData()
+
+    Async Sub TampilkanDataAsync()
 
         If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'Style Tabel :
-        Terabas()
-        datatabelUtama.Rows.Clear()
+        Try
+            'Style Tabel :
+            Terabas()
+            datatabelUtama.Rows.Clear()
 
 
-        'Filter Dari Akun :
-        If cmb_DariBuku.SelectedValue = "Semua" Then
-            FilterDariAkun = " "
-        Else
-            FilterDariAkun = " AND COA_Kredit = '" & KonversiSaranaPembayaranKeCOA(cmb_DariBuku.SelectedValue) & "' "
-        End If
-
-        'Filter Ke Akun :
-        If cmb_KeBuku.SelectedValue = "Semua" Then
-            FilterKeAkun = " "
-        Else
-            FilterKeAkun = " AND COA_Debet = '" & KonversiSaranaPembayaranKeCOA(cmb_KeBuku.SelectedValue) & "' "
-        End If
-
-        'Query Tampilan :
-        FilterData = FilterDariAkun & FilterKeAkun
-        QueryTampilan = " SELECT * FROM tbl_Pemindahbukuan WHERE Nomor_BPPB <> 'X' " & FilterData
-
-        TotalTransaksiPemindahbukuan = 0
-        NomorUrut = 0
-
-        AksesDatabase_Transaksi(Buka)
-        AksesDatabase_General(Buka)
-        cmd = New OdbcCommand(QueryTampilan & " ORDER by Nomor_ID ", KoneksiDatabaseTransaksi)
-        dr = cmd.ExecuteReader
-        Do While dr.Read
-            NomorUrut += 1
-            NomorID = dr.Item("Nomor_ID")
-            NomorBPPB = dr.Item("Nomor_BPPB")
-            TanggalBPPB = TanggalFormatTampilan(dr.Item("Tanggal_BPPB"))
-            NomorKK = AmbilValue_NomorKKBerdasarkanNomorBP(NomorBPPB)
-            COAKredit = dr.Item("COA_Kredit")
-            COADebet = dr.Item("COA_Debet")
-            DariBuku = KonversiCOAKeSaranaPembayaran(COAKredit)
-            KeBuku = KonversiCOAKeSaranaPembayaran(COADebet)
-            Penanggungjawab = dr.Item("Penanggungjawab")
-            TanggalTransaksi = TanggalFormatTampilan(dr.Item("Tanggal_Transaksi"))
-            If TanggalTransaksi = TanggalKosong Then TanggalTransaksi = StripKosong
-            JumlahTransaksi = AmbilValue_NilaiMataUang(dr.Item("Kode_Mata_Uang_Kredit"), dr.Item("Kurs_BI_Kredit"), dr.Item("Jumlah_Kredit"))
-            UraianTransaksi = PenghapusEnter(dr.Item("Uraian_Transaksi"))
-            NomorJV = dr.Item("Nomor_JV")
-            User = dr.Item("User")
-            datatabelUtama.Rows.Add(NomorUrut, NomorID, NomorBPPB, TanggalBPPB, NomorKK, TanggalTransaksi, COAKredit, COADebet, DariBuku, KeBuku, Penanggungjawab,
-                                    JumlahTransaksi, UraianTransaksi, NomorJV, User)
-            If NomorJV = 0 Then
-                'datatabelUtama.Rows(NomorUrut - 1).DefaultCellStyle.ForeColor = WarnaPudar
+            'Filter Dari Akun :
+            If cmb_DariBuku.SelectedValue = "Semua" Then
+                FilterDariAkun = " "
             Else
-                TotalTransaksiPemindahbukuan += JumlahTransaksi
-                'datatabelUtama.Rows(NomorUrut - 1).DefaultCellStyle.ForeColor = WarnaTegas
+                FilterDariAkun = " AND COA_Kredit = '" & KonversiSaranaPembayaranKeCOA(cmb_DariBuku.SelectedValue) & "' "
             End If
-        Loop
-        AksesDatabase_General(Tutup)
-        AksesDatabase_Transaksi(Tutup)
 
-        BersihkanSeleksi()
+            'Filter Ke Akun :
+            If cmb_KeBuku.SelectedValue = "Semua" Then
+                FilterKeAkun = " "
+            Else
+                FilterKeAkun = " AND COA_Debet = '" & KonversiSaranaPembayaranKeCOA(cmb_KeBuku.SelectedValue) & "' "
+            End If
 
-        'If TotalTransaksiPemindahbukuan = 0 Then
-        '    txt_TotalTransaksiPBk.Text = StripKosong
-        'Else
-        '    txt_TotalTransaksiPBk.Text = TotalTransaksiPemindahbukuan
-        'End If
+            'Query Tampilan :
+            FilterData = FilterDariAkun & FilterKeAkun
+            QueryTampilan = " SELECT * FROM tbl_Pemindahbukuan WHERE Nomor_BPPB <> 'X' " & FilterData
 
-        PesanUntukProgrammer("Pewarnaan belum...!!!")
+            TotalTransaksiPemindahbukuan = 0
+            NomorUrut = 0
 
+            AksesDatabase_Transaksi(Buka)
+            AksesDatabase_General(Buka)
+            cmd = New OdbcCommand(QueryTampilan & " ORDER by Nomor_ID ", KoneksiDatabaseTransaksi)
+            dr = cmd.ExecuteReader
+            Do While dr.Read
+                NomorUrut += 1
+                NomorID = dr.Item("Nomor_ID")
+                NomorBPPB = dr.Item("Nomor_BPPB")
+                TanggalBPPB = TanggalFormatTampilan(dr.Item("Tanggal_BPPB"))
+                NomorKK = AmbilValue_NomorKKBerdasarkanNomorBP(NomorBPPB)
+                COAKredit = dr.Item("COA_Kredit")
+                COADebet = dr.Item("COA_Debet")
+                DariBuku = KonversiCOAKeSaranaPembayaran(COAKredit)
+                KeBuku = KonversiCOAKeSaranaPembayaran(COADebet)
+                Penanggungjawab = dr.Item("Penanggungjawab")
+                TanggalTransaksi = TanggalFormatTampilan(dr.Item("Tanggal_Transaksi"))
+                If TanggalTransaksi = TanggalKosong Then TanggalTransaksi = StripKosong
+                JumlahTransaksi = AmbilValue_NilaiMataUang(dr.Item("Kode_Mata_Uang_Kredit"), dr.Item("Kurs_BI_Kredit"), dr.Item("Jumlah_Kredit"))
+                UraianTransaksi = PenghapusEnter(dr.Item("Uraian_Transaksi"))
+                NomorJV = dr.Item("Nomor_JV")
+                User = dr.Item("User")
+                datatabelUtama.Rows.Add(NomorUrut, NomorID, NomorBPPB, TanggalBPPB, NomorKK, TanggalTransaksi, COAKredit, COADebet, DariBuku, KeBuku, Penanggungjawab,
+                                        JumlahTransaksi, UraianTransaksi, NomorJV, User)
+                If NomorJV = 0 Then
+                    'datatabelUtama.Rows(NomorUrut - 1).DefaultCellStyle.ForeColor = WarnaPudar
+                Else
+                    TotalTransaksiPemindahbukuan += JumlahTransaksi
+                    'datatabelUtama.Rows(NomorUrut - 1).DefaultCellStyle.ForeColor = WarnaTegas
+                End If
+                Await Task.Yield()
+            Loop
+            AksesDatabase_General(Tutup)
+            AksesDatabase_Transaksi(Tutup)
+
+            'If TotalTransaksiPemindahbukuan = 0 Then
+            '    txt_TotalTransaksiPBk.Text = StripKosong
+            'Else
+            '    txt_TotalTransaksiPBk.Text = TotalTransaksiPemindahbukuan
+            'End If
+
+            PesanUntukProgrammer("Pewarnaan belum...!!!")
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanPemindahbukuan")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
 
     Sub BersihkanSeleksi()
-        BarisTerseleksi = -1
         JumlahBaris = datatabelUtama.Rows.Count
         BarisTerseleksi = -1
         datagridUtama.SelectedIndex = -1
@@ -176,7 +194,11 @@ Public Class wpfUsc_BukuPengawasanPemindahbukuan
         btn_Hapus.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
         btn_Ajukan.IsEnabled = False
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

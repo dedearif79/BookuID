@@ -245,6 +245,54 @@ Saat migrasi UserControl ke pattern baru, pastikan:
 | `wpfUsc_BukuPengawasanBuktiPengeluaranBankCash` | `Booku/Buku Pengawasan/Penerimaan-Pengeluaran/Bukti Pengeluaran Bank-Cash/` | 2026-01-17 |
 | `wpfUsc_DataProject` | `Booku/Data/Data Project/` | 2026-01-17 |
 | `wpfUsc_DataCOA` | `Booku/Data/Data COA/` | 2026-01-17 |
+| `wpfUsc_DataKaryawan` | `Booku/Data/Data Karyawan/` | 2026-01-17 |
+| `wpfUsc_BukuBesar` | `Booku/Buku Besar/` | 2026-01-17 |
+| `wpfUsc_DataLawanTransaksi` | `Booku/Data/Data Lawan Transaksi/` | 2026-01-17 |
+| `wpfUsc_DataUser` | `Booku/Data/Data User/` | 2026-01-17 |
+| `wpfUsc_DaftarPenyusutanAssetTetap` | `Booku/Manajemen Asset/Daftar Penyusutan Asset Tetap/` | 2026-01-17 |
+| `wpfUsc_DaftarAmortisasiBiaya` | `Booku/Manajemen Asset/Daftar Amortisasi Biaya/` | 2026-01-17 |
+| `wpfUsc_BukuPembelian` | `Booku/Pembelian - Penjualan/Pembelian/1 - Buku Pembelian/` | 2026-01-17 |
+| `wpfUsc_POPembelian` | `Booku/Pembelian - Penjualan/Pembelian/2 - PO Pembelian/` | 2026-01-17 |
+| `wpfUsc_SuratJalanPembelian` | `Booku/Pembelian - Penjualan/Pembelian/3 - Surat Jalan/` | 2026-01-17 |
+| `wpfUsc_BASTPembelian` | `Booku/Pembelian - Penjualan/Pembelian/4 - BAST/` | 2026-01-17 |
+| `wpfUsc_InvoicePembelian` | `Booku/Pembelian - Penjualan/Pembelian/5 - Invoice Pembelian/` | 2026-01-17 |
+| `wpfUsc_BukuPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/1 - Buku Penjualan/` | 2026-01-17 |
+| `wpfUsc_POPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/2 - PO Penjuialan/` | 2026-01-17 |
+| `wpfUsc_SuratJalanPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/3 - Surat Jalan/` | 2026-01-17 |
+| `wpfUsc_BASTPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/4 - BAST/` | 2026-01-17 |
+| `wpfUsc_InvoicePenjualan` | `Booku/Pembelian - Penjualan/Penjualan/5 - Invoice Penjuialan/` | 2026-01-17 |
+| `wpfUsc_BundelPengajuanPengeluaranBankCash` | `Booku/Buku Pengawasan/Penerimaan-Pengeluaran/Bukti Pengeluaran Bank-Cash/Bundel Pengajuan/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanAktivaLainnya` | `Booku/Buku Pengawasan/Aktiva Lainnya/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanBuktiPotongPPh_Paid` | `Booku/Buku Pengawasan/Bukti Potong PPh/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanBuktiPotongPPh_Prepaid` | `Booku/Buku Pengawasan/Bukti Potong PPh/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanDepositOperasional` | `Booku/Buku Pengawasan/Deposit Operasional/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanGaji` | `Booku/Buku Pengawasan/Gaji/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanTurunanGaji` | `Booku/Buku Pengawasan/Gaji/Turunan Gaji/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangBankLeasing` | `Booku/Buku Pengawasan/Hutang Bank-Leasing/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangPPhPasal21` | `Booku/Buku Pengawasan/Hutang Pajak/01 - PPh Pasal 21/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangPPhPasal22_Impor` | `Booku/Buku Pengawasan/Hutang Pajak/02 - PPh Pasal 22/Impor/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangPPhPasal23` | `Booku/Buku Pengawasan/Hutang Pajak/03 - PPh Pasal 23/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangPPhPasal42` | `Booku/Buku Pengawasan/Hutang Pajak/04 - PPh Pasal 4 (2)/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangPPhPasal25` | `Booku/Buku Pengawasan/Hutang Pajak/05 - PPh Pasal 25/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangPPhPasal26` | `Booku/Buku Pengawasan/Hutang Pajak/06 - PPh Pasal 26/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanPelaporanPPN` | `Booku/Buku Pengawasan/Hutang Pajak/10 - PPN/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanKetetapanPajak` | `Booku/Buku Pengawasan/Hutang Pajak/11 - Ketetapan Pajak/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanPajakImpor` | `Booku/Buku Pengawasan/Hutang Pajak/12 - Pajak Impor/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangUsaha` | `Booku/Buku Pengawasan/Hutang-Piutang Usaha/Hutang/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanPiutangUsaha` | `Booku/Buku Pengawasan/Hutang-Piutang Usaha/Piutang/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangPihakKetiga` | `Booku/Buku Pengawasan/Hutang-Piutang Pihak Ketiga/Hutang/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanPiutangPihakKetiga` | `Booku/Buku Pengawasan/Hutang-Piutang Pihak Ketiga/Piutang/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangKaryawan` | `Booku/Buku Pengawasan/Hutang-Piutang Karyawan/Hutang/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanPiutangKaryawan` | `Booku/Buku Pengawasan/Hutang-Piutang Karyawan/Piutang/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangAfiliasi` | `Booku/Buku Pengawasan/Hutang-Piutang Afiliasi/Hutang/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanPiutangAfiliasi` | `Booku/Buku Pengawasan/Hutang-Piutang Afiliasi/Piutang/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangPemegangSaham` | `Booku/Buku Pengawasan/Hutang-Piutang Pemegang Saham/Hutang/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanPiutangPemegangSaham` | `Booku/Buku Pengawasan/Hutang-Piutang Pemegang Saham/Piutang/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangDividen` | `Booku/Buku Pengawasan/Hutang-Piutang Dividen/Hutang/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanPiutangDividen` | `Booku/Buku Pengawasan/Hutang-Piutang Dividen/Piutang/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanBuktiPenerimaanBankCash` | `Booku/Buku Pengawasan/Penerimaan-Pengeluaran/Bukti Penerimaan Bank-Cash/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanPemindahbukuan` | `Booku/Buku Pengawasan/Pemindahbukuan/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanPenjualanEceran` | `Booku/Buku Pengawasan/Penjualan Eceran/` | 2026-01-17 |
 
 ### Belum Dimigrasi (Kandidat)
 
@@ -252,11 +300,7 @@ Saat migrasi UserControl ke pattern baru, pastikan:
 
 | UserControl | Lokasi | Catatan |
 |-------------|--------|---------|
-| `wpfUsc_BukuBesar` | `Booku/Buku Besar/` | - |
-| `wpfUsc_DataKaryawan` | `Booku/Data/Data Karyawan/` | - |
-| `wpfUsc_DataLawanTransaksi` | `Booku/Data/Data Lawan Transaksi/` | - |
-| `wpfUsc_DataUser` | `Booku/Data/Data User/` | - |
-| *(dan UserControl lainnya)* | - | - |
+| *(UserControl lainnya)* | - | - |
 
 ---
 

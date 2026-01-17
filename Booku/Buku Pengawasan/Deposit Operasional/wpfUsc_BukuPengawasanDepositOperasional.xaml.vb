@@ -3,12 +3,15 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_BukuPengawasanDepositOperasional
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm As String
     Public NamaHalaman
@@ -87,70 +90,91 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
     End Sub
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
+        ' Guard clause
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
+
+        ' Disable UI dan tampilkan loading
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        KesesuaianJurnal = True
+        Try
+            KesesuaianJurnal = True
 
-        'Style Tabel :
-        Terabas()
-        datatabelUtama.Rows.Clear()
+            'Style Tabel :
+            Terabas()
+            datatabelUtama.Rows.Clear()
 
-        QueryTampilanPiutangTahunLalu =
-            " SELECT * FROM tbl_DepositOperasional " &
-            " WHERE (Tanggal_Bukti <  '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
-        QueryTampilanPiutangTahunAktif =
-            " SELECT * FROM tbl_DepositOperasional " &
-            " WHERE (Tanggal_Bukti >= '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
+            QueryTampilanPiutangTahunLalu =
+                " SELECT * FROM tbl_DepositOperasional " &
+                " WHERE (Tanggal_Bukti <  '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
+            QueryTampilanPiutangTahunAktif =
+                " SELECT * FROM tbl_DepositOperasional " &
+                " WHERE (Tanggal_Bukti >= '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
 
-        'Data Tabel :
-        NomorUrut = 0
-        SaldoAwal_BerdasarkanList = 0
-        Total_SisaPiutang = 0
+            'Data Tabel :
+            NomorUrut = 0
+            SaldoAwal_BerdasarkanList = 0
+            Total_SisaPiutang = 0
 
-        'Data Tabel Deposit Operasional Tahun Lalu :
-        QueryTampilan = QueryTampilanPiutangTahunLalu
-        DataTabel()
+            'Data Tabel Deposit Operasional Tahun Lalu :
+            QueryTampilan = QueryTampilanPiutangTahunLalu
+            Await DataTabelAsync()
 
-        'Data Tabel Deposit Operasional Tahun Buku Aktif :
-        QueryTampilan = QueryTampilanPiutangTahunAktif
-        DataTabel()
+            'Data Tabel Deposit Operasional Tahun Buku Aktif :
+            QueryTampilan = QueryTampilanPiutangTahunAktif
+            Await DataTabelAsync()
 
-        TotalTabel = Total_SisaPiutang
+            TotalTabel = Total_SisaPiutang
 
-        Select Case JenisTahunBuku
-            Case JenisTahunBuku_LAMPAU
-                SaldoAkhir_BerdasarkanList = Total_SisaPiutang
-                txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
-                AmbilValue_SaldoAkhirBerdasarkanCOA()
-                CekKesesuaianSaldoAkhir()
-                txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
-            Case JenisTahunBuku_NORMAL
-                txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
-                AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
-                CekKesesuaianSaldoAwal()
-                txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
-                txt_TotalTabel.Text = TotalTabel
-        End Select
+            Select Case JenisTahunBuku
+                Case JenisTahunBuku_LAMPAU
+                    SaldoAkhir_BerdasarkanList = Total_SisaPiutang
+                    txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
+                    AmbilValue_SaldoAkhirBerdasarkanCOA()
+                    CekKesesuaianSaldoAkhir()
+                    txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
+                Case JenisTahunBuku_NORMAL
+                    txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
+                    AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
+                    CekKesesuaianSaldoAwal()
+                    txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
+                    txt_TotalTabel.Text = TotalTabel
+            End Select
 
-        lbl_TotalTabel.Text = "Saldo Akhir Deposit Operasional : "
+            lbl_TotalTabel.Text = "Saldo Akhir Deposit Operasional : "
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanDepositOperasional")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
 
     End Sub
 
-    Sub DataTabel()
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
+
+    Async Function DataTabelAsync() As Task
 
         AngkaBPDO_Sebelumnya = 0
         Dim i = 0
         NamaProduk = Kosongan
 
         AksesDatabase_Transaksi(Buka)
+        If StatusKoneksiDatabase = False Then Exit Function
 
         cmd = New OdbcCommand(QueryTampilan & " ORDER BY Angka_BPDO ", KoneksiDatabaseTransaksi)
         dr_ExecuteReader()
@@ -212,13 +236,14 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
             User = dr.Item("User")
             AngkaBPDO_Sebelumnya = AngkaBPDO
             i += 1
+            Await Task.Yield()
         Loop
 
         If AngkaBPDO_Sebelumnya <> 0 Then TambahBaris()
 
         AksesDatabase_Transaksi(Tutup)
 
-    End Sub
+    End Function
 
     Sub TambahBaris()
         NomorUrut += 1
@@ -244,7 +269,11 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
         btn_Cetak.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
         VisibilitasInfoSaldo(True)
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
     Private Sub btn_Refresh_Click(sender As Object, e As RoutedEventArgs) Handles btn_Refresh.Click

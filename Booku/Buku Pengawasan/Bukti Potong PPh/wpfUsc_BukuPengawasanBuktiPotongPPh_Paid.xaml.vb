@@ -1,6 +1,7 @@
 Imports bcomm
 Imports System.Data
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -10,6 +11,7 @@ Public Class wpfUsc_BukuPengawasanBuktiPotongPPh_Paid
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Public KesesuaianJurnal As Boolean
 
@@ -96,75 +98,134 @@ Public Class wpfUsc_BukuPengawasanBuktiPotongPPh_Paid
 
 
     Sub RefreshTampilanData()
-        EksekusiTampilan = False
+        EksekusiTampilanData = False
         KontenCombo_SumberData()
         KontenCombo_JenisPPh()
         KontenCombo_BuktiPotong()
-        EksekusiTampilan = True
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
 
-    Public EksekusiTampilan As Boolean
-    Public Sub TampilkanData()
+    Dim EksekusiTampilanData As Boolean
 
-        If Not EksekusiTampilan Then Return
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
+
+    Async Sub TampilkanDataAsync()
+
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        KesesuaianJurnal = True
+        Try
 
-        'Filter Sumber Data :
-        'Untuk Filter Sumber Data, ada Query-nya tersendiri.
+            KesesuaianJurnal = True
 
-        'Filter Jenis PPh :
-        If PilihanJenisPPh = Pilihan_Semua Then FilterJenisPPh = " AND " &
-            "  ( Jenis_PPh = '" & JenisPPh_Pasal21 & "' " &
-            " OR Jenis_PPh = '" & JenisPPh_Pasal23 & "' " &
-            " OR Jenis_PPh = '" & JenisPPh_Pasal42 & "' " &
-            " OR Jenis_PPh = '" & JenisPPh_Pasal26 & "' ) "
-        If PilihanJenisPPh = JenisPPh_Pasal21 Then FilterJenisPPh = " AND Jenis_PPh = '" & JenisPPh_Pasal21 & "' "
-        If PilihanJenisPPh = JenisPPh_Pasal23 Then FilterJenisPPh = " AND Jenis_PPh = '" & JenisPPh_Pasal23 & "' "
-        If PilihanJenisPPh = JenisPPh_Pasal42 Then FilterJenisPPh = " AND Jenis_PPh = '" & JenisPPh_Pasal42 & "' "
-        If PilihanJenisPPh = JenisPPh_Pasal26 Then FilterJenisPPh = " AND Jenis_PPh = '" & JenisPPh_Pasal26 & "' "
+            'Filter Sumber Data :
+            'Untuk Filter Sumber Data, ada Query-nya tersendiri.
 
-        'Filter Bukti Potong
-        If PilihanBuktiPotong = Pilihan_Semua Then FilterBuktiPotong = " "
-        If PilihanBuktiPotong = BP_SudahDilaporkan Then FilterBuktiPotong = " AND Nomor_Bukti_Potong <> '' "
-        If PilihanBuktiPotong = BP_BelumDilaporkan Then FilterBuktiPotong = " AND Nomor_Bukti_Potong = '' "
+            'Filter Jenis PPh :
+            If PilihanJenisPPh = Pilihan_Semua Then FilterJenisPPh = " AND " &
+                "  ( Jenis_PPh = '" & JenisPPh_Pasal21 & "' " &
+                " OR Jenis_PPh = '" & JenisPPh_Pasal23 & "' " &
+                " OR Jenis_PPh = '" & JenisPPh_Pasal42 & "' " &
+                " OR Jenis_PPh = '" & JenisPPh_Pasal26 & "' ) "
+            If PilihanJenisPPh = JenisPPh_Pasal21 Then FilterJenisPPh = " AND Jenis_PPh = '" & JenisPPh_Pasal21 & "' "
+            If PilihanJenisPPh = JenisPPh_Pasal23 Then FilterJenisPPh = " AND Jenis_PPh = '" & JenisPPh_Pasal23 & "' "
+            If PilihanJenisPPh = JenisPPh_Pasal42 Then FilterJenisPPh = " AND Jenis_PPh = '" & JenisPPh_Pasal42 & "' "
+            If PilihanJenisPPh = JenisPPh_Pasal26 Then FilterJenisPPh = " AND Jenis_PPh = '" & JenisPPh_Pasal26 & "' "
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
+            'Filter Bukti Potong
+            If PilihanBuktiPotong = Pilihan_Semua Then FilterBuktiPotong = " "
+            If PilihanBuktiPotong = BP_SudahDilaporkan Then FilterBuktiPotong = " AND Nomor_Bukti_Potong <> '' "
+            If PilihanBuktiPotong = BP_BelumDilaporkan Then FilterBuktiPotong = " AND Nomor_Bukti_Potong = '' "
 
-        'Data Tabel
-        NomorUrut = 0
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
 
-        AksesDatabase_Transaksi(Buka)
+            'Data Tabel
+            NomorUrut = 0
 
-        'PPh Dari Pembelian Tunai :
-        If PilihanSumberData = SumberData_Pembelian _
-            Or PilihanSumberData = Pilihan_Semua Then
-            SumberData = SumberData_Pembelian
-            cmd = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice " &
-                                  " WHERE PPh_Terutang > 0 " &
-                                  " AND Jenis_Pembelian = '" & JenisPembelian_Tunai & "' " &
-                                  FilterJenisPPh & FilterBuktiPotong, KoneksiDatabaseTransaksi)
-            dr_ExecuteReader()
-            Dim NomorPatokanSebelumnya = Kosongan
-            Do While dr.Read
-                NomorPatokan = dr.Item("Nomor_Pembelian")
-                If NomorPatokan <> NomorPatokanSebelumnya Then
+            AksesDatabase_Transaksi(Buka)
+            If StatusKoneksiDatabase = False Then Exit Try
+
+            'PPh Dari Pembelian Tunai :
+            If PilihanSumberData = SumberData_Pembelian _
+                Or PilihanSumberData = Pilihan_Semua Then
+                SumberData = SumberData_Pembelian
+                cmd = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice " &
+                                      " WHERE PPh_Terutang > 0 " &
+                                      " AND Jenis_Pembelian = '" & JenisPembelian_Tunai & "' " &
+                                      FilterJenisPPh & FilterBuktiPotong, KoneksiDatabaseTransaksi)
+                dr_ExecuteReader()
+                Dim NomorPatokanSebelumnya = Kosongan
+                Do While dr.Read
+                    NomorPatokan = dr.Item("Nomor_Pembelian")
+                    If NomorPatokan <> NomorPatokanSebelumnya Then
+                        NomorUrut += 1
+                        NomorID = dr.Item("Nomor_ID")
+                        NomorInvoice = dr.Item("Nomor_Invoice")
+                        TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
+                        NomorFakturPajak = dr.Item("Nomor_Faktur_Pajak")
+                        KodeSupplier = dr.Item("Kode_Supplier")
+                        NamaSupplier = dr.Item("Nama_Supplier")
+                        DPP = dr.Item("Dasar_Pengenaan_Pajak")
+                        JenisPPh = dr.Item("Jenis_PPh")
+                        JumlahPPh = dr.Item("PPh_Terutang")
+                        TanggalDipotong = TanggalInvoice
+                        NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
+                        TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
+                        If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
+                        If TanggalBuktiPotong = TanggalKosong Then TanggalBuktiPotong = StripKosong
+                        Keterangan = dr.Item("Keterangan_Bukti_Potong")
+                        NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
+                        TambahBaris()
+                    End If
+                    NomorPatokanSebelumnya = NomorPatokan
+                    Await Task.Yield()
+                Loop
+
+            End If
+
+            'PPh Dari Pembayaran atas Hutang Usaha :
+            If PilihanSumberData = SumberData_PembayaranHutangUsaha _
+                Or PilihanSumberData = Pilihan_Semua Then
+                SumberData = SumberData_PembayaranHutangUsaha
+                FilterJenisPajak = Replace(FilterJenisPPh, "Jenis_PPh", "Jenis_Pajak")
+                FilterJenisPajak = Replace(FilterJenisPajak, "Pasal", "PPh Pasal")
+                cmd = New OdbcCommand(" SELECT * FROM tbl_BuktiPengeluaran " &
+                                      " WHERE Peruntukan = '" & Peruntukan_PembayaranHutangUsaha_NonAfiliasi & "' AND PPh_Terutang > 0 " &
+                                      FilterJenisPajak & FilterBuktiPotong, KoneksiDatabaseTransaksi)
+                dr_ExecuteReader()
+                Do While dr.Read
                     NomorUrut += 1
                     NomorID = dr.Item("Nomor_ID")
-                    NomorInvoice = dr.Item("Nomor_Invoice")
-                    TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
-                    NomorFakturPajak = dr.Item("Nomor_Faktur_Pajak")
-                    KodeSupplier = dr.Item("Kode_Supplier")
-                    NamaSupplier = dr.Item("Nama_Supplier")
-                    DPP = dr.Item("Dasar_Pengenaan_Pajak")
-                    JenisPPh = dr.Item("Jenis_PPh")
+                    NomorPatokan = KonversiNomorBPHUKeNomorPembelian(dr.Item("Nomor_BP"))
+                    KodeSupplier = dr.Item("Kode_Lawan_Transaksi")
+                    NamaSupplier = dr.Item("Nama_Lawan_Transaksi")
+                    cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice " &
+                                                 " WHERE Nomor_Pembelian = '" & NomorPatokan & "' ", KoneksiDatabaseTransaksi)
+                    drTELUSUR_ExecuteReader()
+                    drTELUSUR.Read()
+                    Dim DPPPembelian As Int64 = 0
+                    Dim HutangUsaha As Int64 = 0
+                    If drTELUSUR.HasRows Then
+                        NomorInvoice = drTELUSUR.Item("Nomor_Invoice")
+                        TanggalInvoice = TanggalFormatTampilan(drTELUSUR.Item("Tanggal_Invoice"))
+                        NomorFakturPajak = drTELUSUR.Item("Nomor_Faktur_Pajak")
+                        DPPPembelian = drTELUSUR.Item("Dasar_Pengenaan_Pajak")
+                        HutangUsaha = drTELUSUR.Item("Jumlah_Hutang_Usaha")
+                    End If
+                    Dim JumlahBayar = dr.Item("Jumlah_Bayar")
+                    DPP = JumlahBayar * DPPPembelian / HutangUsaha
+                    JenisPPh = KonversiJenisPajakKeJenisPPh(dr.Item("Jenis_Pajak"))
                     JumlahPPh = dr.Item("PPh_Terutang")
-                    TanggalDipotong = TanggalInvoice
+                    TanggalDipotong = TanggalFormatTampilan(dr.Item("Tanggal_Bayar"))
                     NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
                     TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
                     If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
@@ -172,242 +233,208 @@ Public Class wpfUsc_BukuPengawasanBuktiPotongPPh_Paid
                     Keterangan = dr.Item("Keterangan_Bukti_Potong")
                     NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
                     TambahBaris()
-                End If
-                NomorPatokanSebelumnya = NomorPatokan
-            Loop
+                    Await Task.Yield()
+                Loop
+            End If
 
-        End If
+            'PPh Dari Pembayaran Hutang Pihak Ketiga :
+            If PilihanSumberData = SumberData_PembayaranHutangPihakKetiga _
+                Or PilihanSumberData = Pilihan_Semua Then
+                SumberData = SumberData_PembayaranHutangPihakKetiga
+                cmd = New OdbcCommand(" SELECT * FROM tbl_JadwalAngsuranHutangPihakKetiga " &
+                                      " WHERE Jumlah_PPh > 0 " &
+                                      " AND Tanggal_Bayar <> '" & TanggalKosongSimpan & "' " &
+                                      FilterJenisPPh & FilterBuktiPotong, KoneksiDatabaseTransaksi)
+                dr_ExecuteReader()
+                Do While dr.Read
+                    NomorUrut += 1
+                    NomorPatokan = dr.Item("Nomor_BPHPK")
+                    NomorID = dr.Item("Nomor_ID")
+                    cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_PengawasanHutangPihakKetiga " &
+                                             " WHERE Nomor_BPHPK = '" & NomorPatokan & "' ", KoneksiDatabaseTransaksi)
+                    drTELUSUR_ExecuteReader()
+                    drTELUSUR.Read()
+                    If drTELUSUR.HasRows Then
+                        NomorInvoice = drTELUSUR.Item("Nomor_Kontrak")
+                        TanggalInvoice = StripKosong
+                        NomorFakturPajak = StripKosong
+                    End If
+                    KodeSupplier = dr.Item("Kode_Lawan_Transaksi")
+                    NamaSupplier = AmbilValue_NamaMitra(KodeSupplier)
+                    DPP = dr.Item("Pokok")
+                    JenisPPh = dr.Item("Jenis_PPh")
+                    JumlahPPh = dr.Item("Jumlah_PPh")
+                    TanggalDipotong = TanggalFormatTampilan(dr.Item("Tanggal_Bayar"))
+                    NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
+                    TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
+                    If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
+                    If TanggalBuktiPotong = TanggalKosong Then TanggalBuktiPotong = StripKosong
+                    Keterangan = dr.Item("Keterangan_Bukti_Potong")
+                    NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
+                    TambahBaris()
+                    Await Task.Yield()
+                Loop
+            End If
 
-        'PPh Dari Pembayaran atas Hutang Usaha :
-        If PilihanSumberData = SumberData_PembayaranHutangUsaha _
-            Or PilihanSumberData = Pilihan_Semua Then
-            SumberData = SumberData_PembayaranHutangUsaha
-            FilterJenisPajak = Replace(FilterJenisPPh, "Jenis_PPh", "Jenis_Pajak")
-            FilterJenisPajak = Replace(FilterJenisPajak, "Pasal", "PPh Pasal")
-            cmd = New OdbcCommand(" SELECT * FROM tbl_BuktiPengeluaran " &
-                                  " WHERE Peruntukan = '" & Peruntukan_PembayaranHutangUsaha_NonAfiliasi & "' AND PPh_Terutang > 0 " &
-                                  FilterJenisPajak & FilterBuktiPotong, KoneksiDatabaseTransaksi)
-            dr_ExecuteReader()
-            Do While dr.Read
-                NomorUrut += 1
-                NomorID = dr.Item("Nomor_ID")
-                NomorPatokan = KonversiNomorBPHUKeNomorPembelian(dr.Item("Nomor_BP"))
-                KodeSupplier = dr.Item("Kode_Lawan_Transaksi")
-                NamaSupplier = dr.Item("Nama_Lawan_Transaksi")
-                cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice " &
-                                             " WHERE Nomor_Pembelian = '" & NomorPatokan & "' ", KoneksiDatabaseTransaksi)
-                drTELUSUR_ExecuteReader()
-                drTELUSUR.Read()
-                Dim DPPPembelian As Int64 = 0
-                Dim HutangUsaha As Int64 = 0
-                If drTELUSUR.HasRows Then
-                    NomorInvoice = drTELUSUR.Item("Nomor_Invoice")
-                    TanggalInvoice = TanggalFormatTampilan(drTELUSUR.Item("Tanggal_Invoice"))
-                    NomorFakturPajak = drTELUSUR.Item("Nomor_Faktur_Pajak")
-                    DPPPembelian = drTELUSUR.Item("Dasar_Pengenaan_Pajak")
-                    HutangUsaha = drTELUSUR.Item("Jumlah_Hutang_Usaha")
-                End If
-                Dim JumlahBayar = dr.Item("Jumlah_Bayar")
-                DPP = JumlahBayar * DPPPembelian / HutangUsaha
-                JenisPPh = KonversiJenisPajakKeJenisPPh(dr.Item("Jenis_Pajak"))
-                JumlahPPh = dr.Item("PPh_Terutang")
-                TanggalDipotong = TanggalFormatTampilan(dr.Item("Tanggal_Bayar"))
-                NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
-                TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
-                If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
-                If TanggalBuktiPotong = TanggalKosong Then TanggalBuktiPotong = StripKosong
-                Keterangan = dr.Item("Keterangan_Bukti_Potong")
-                NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
-                TambahBaris()
-            Loop
-        End If
+            'PPh Dari Pembayaran Hutang Afiliasi :
+            If PilihanSumberData = SumberData_PembayaranHutangAfiliasi _
+                Or PilihanSumberData = Pilihan_Semua Then
+                SumberData = SumberData_PembayaranHutangAfiliasi
+                cmd = New OdbcCommand(" SELECT * FROM tbl_JadwalAngsuranHutangAfiliasi " &
+                                      " WHERE Jumlah_PPh > 0 " &
+                                      " AND Tanggal_Bayar <> '" & TanggalKosongSimpan & "' " &
+                                      FilterJenisPPh & FilterBuktiPotong, KoneksiDatabaseTransaksi)
+                dr_ExecuteReader()
+                Do While dr.Read
+                    NomorUrut += 1
+                    NomorPatokan = dr.Item("Nomor_BPHA")
+                    NomorID = dr.Item("Nomor_ID")
+                    cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_PengawasanHutangAfiliasi " &
+                                             " WHERE Nomor_BPHA = '" & NomorPatokan & "' ", KoneksiDatabaseTransaksi)
+                    drTELUSUR_ExecuteReader()
+                    drTELUSUR.Read()
+                    If drTELUSUR.HasRows Then
+                        NomorInvoice = drTELUSUR.Item("Nomor_Kontrak")
+                        TanggalInvoice = StripKosong
+                        NomorFakturPajak = StripKosong
+                    End If
+                    KodeSupplier = dr.Item("Kode_Lawan_Transaksi")
+                    NamaSupplier = AmbilValue_NamaMitra(KodeSupplier)
+                    DPP = dr.Item("Pokok")
+                    JenisPPh = dr.Item("Jenis_PPh")
+                    JumlahPPh = dr.Item("Jumlah_PPh")
+                    TanggalDipotong = TanggalFormatTampilan(dr.Item("Tanggal_Bayar"))
+                    NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
+                    TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
+                    If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
+                    If TanggalBuktiPotong = TanggalKosong Then TanggalBuktiPotong = StripKosong
+                    Keterangan = dr.Item("Keterangan_Bukti_Potong")
+                    NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
+                    TambahBaris()
+                    Await Task.Yield()
+                Loop
+            End If
 
-        'PPh Dari Pembayaran Hutang Pihak Ketiga :
-        If PilihanSumberData = SumberData_PembayaranHutangPihakKetiga _
-            Or PilihanSumberData = Pilihan_Semua Then
-            SumberData = SumberData_PembayaranHutangPihakKetiga
-            cmd = New OdbcCommand(" SELECT * FROM tbl_JadwalAngsuranHutangPihakKetiga " &
-                                  " WHERE Jumlah_PPh > 0 " &
-                                  " AND Tanggal_Bayar <> '" & TanggalKosongSimpan & "' " &
-                                  FilterJenisPPh & FilterBuktiPotong, KoneksiDatabaseTransaksi)
-            dr_ExecuteReader()
-            Do While dr.Read
-                NomorUrut += 1
-                NomorPatokan = dr.Item("Nomor_BPHPK")
-                NomorID = dr.Item("Nomor_ID")
-                cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_PengawasanHutangPihakKetiga " &
-                                         " WHERE Nomor_BPHPK = '" & NomorPatokan & "' ", KoneksiDatabaseTransaksi)
-                drTELUSUR_ExecuteReader()
-                drTELUSUR.Read()
-                If drTELUSUR.HasRows Then
-                    NomorInvoice = drTELUSUR.Item("Nomor_Kontrak")
-                    TanggalInvoice = StripKosong
+            'PPh Dari Pembayaran Hutang Bank :
+            If PilihanSumberData = SumberData_PembayaranHutangBank _
+                Or PilihanSumberData = Pilihan_Semua Then
+                SumberData = SumberData_PembayaranHutangBank
+                cmd = New OdbcCommand(" SELECT * FROM tbl_JadwalAngsuranHutangBank " &
+                                      " WHERE Jumlah_PPh > 0 " &
+                                      " AND Tanggal_Bayar <> '" & TanggalKosongSimpan & "' " &
+                                      FilterJenisPPh & FilterBuktiPotong, KoneksiDatabaseTransaksi)
+                dr_ExecuteReader()
+                Do While dr.Read
+                    NomorUrut += 1
+                    NomorPatokan = dr.Item("Nomor_BPHB")
+                    NomorID = dr.Item("Nomor_ID")
+                    cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_PengawasanHutangBank " &
+                                             " WHERE Nomor_BPHB = '" & NomorPatokan & "' ", KoneksiDatabaseTransaksi)
+                    drTELUSUR_ExecuteReader()
+                    drTELUSUR.Read()
+                    If drTELUSUR.HasRows Then
+                        NomorInvoice = drTELUSUR.Item("Nomor_Kontrak")
+                        TanggalInvoice = StripKosong
+                        NomorFakturPajak = StripKosong
+                    End If
+                    KodeSupplier = dr.Item("Kode_Kreditur")
+                    NamaSupplier = AmbilValue_NamaMitra(KodeSupplier)
+                    DPP = dr.Item("Pokok")
+                    JenisPPh = dr.Item("Jenis_PPh")
+                    JumlahPPh = dr.Item("Jumlah_PPh")
+                    TanggalDipotong = TanggalFormatTampilan(dr.Item("Tanggal_Bayar"))
+                    NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
+                    TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
+                    If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
+                    If TanggalBuktiPotong = TanggalKosong Then TanggalBuktiPotong = StripKosong
+                    Keterangan = dr.Item("Keterangan_Bukti_Potong")
+                    NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
+                    TambahBaris()
+                    Await Task.Yield()
+                Loop
+            End If
+
+            'PPh Dari Pembayaran Hutang Leasing :
+            If PilihanSumberData = SumberData_PembayaranHutangLeasing _
+                Or PilihanSumberData = Pilihan_Semua Then
+                SumberData = SumberData_PembayaranHutangLeasing
+                cmd = New OdbcCommand(" SELECT * FROM tbl_JadwalAngsuranHutangLeasing " &
+                                      " WHERE Jumlah_PPh > 0 " &
+                                      " AND Tanggal_Bayar <> '" & TanggalKosongSimpan & "' " &
+                                      FilterJenisPPh & FilterBuktiPotong, KoneksiDatabaseTransaksi)
+                dr_ExecuteReader()
+                Do While dr.Read
+                    NomorUrut += 1
+                    NomorPatokan = dr.Item("Nomor_BPHL")
+                    NomorID = dr.Item("Nomor_ID")
+                    cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_PengawasanHutangLeasing " &
+                                             " WHERE Nomor_BPHL = '" & NomorPatokan & "' ", KoneksiDatabaseTransaksi)
+                    drTELUSUR_ExecuteReader()
+                    drTELUSUR.Read()
+                    If drTELUSUR.HasRows Then
+                        NomorInvoice = drTELUSUR.Item("Nomor_Kontrak")
+                        TanggalInvoice = StripKosong
+                        NomorFakturPajak = StripKosong
+                    End If
+                    KodeSupplier = dr.Item("Kode_Kreditur")
+                    NamaSupplier = AmbilValue_NamaMitra(KodeSupplier)
+                    DPP = dr.Item("Pokok")
+                    JenisPPh = dr.Item("Jenis_PPh")
+                    JumlahPPh = dr.Item("Jumlah_PPh")
+                    TanggalDipotong = TanggalFormatTampilan(dr.Item("Tanggal_Bayar"))
+                    NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
+                    TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
+                    If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
+                    If TanggalBuktiPotong = TanggalKosong Then TanggalBuktiPotong = StripKosong
+                    Keterangan = dr.Item("Keterangan_Bukti_Potong")
+                    NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
+                    TambahBaris()
+                    Await Task.Yield()
+                Loop
+            End If
+
+            'PPh Dari Hutang Dividen :
+            If PilihanSumberData = SumberData_HutangDividen _
+                Or PilihanSumberData = Pilihan_Semua Then
+                SumberData = SumberData_HutangDividen
+                cmd = New OdbcCommand(" SELECT * FROM tbl_PengawasanHutangDividen " &
+                                      " WHERE PPh_Terutang > 0 " &
+                                      FilterJenisPPh & FilterBuktiPotong, KoneksiDatabaseTransaksi)
+                dr_ExecuteReader()
+                Do While dr.Read
+                    NomorUrut += 1
+                    NomorPatokan = dr.Item("Nomor_BPHD")
+                    NomorID = dr.Item("Nomor_ID")
+                    NomorInvoice = dr.Item("Nomor_Akta_Notaris")
+                    TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Akta_Notaris"))
                     NomorFakturPajak = StripKosong
-                End If
-                KodeSupplier = dr.Item("Kode_Lawan_Transaksi")
-                NamaSupplier = AmbilValue_NamaMitra(KodeSupplier)
-                DPP = dr.Item("Pokok")
-                JenisPPh = dr.Item("Jenis_PPh")
-                JumlahPPh = dr.Item("Jumlah_PPh")
-                TanggalDipotong = TanggalFormatTampilan(dr.Item("Tanggal_Bayar"))
-                NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
-                TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
-                If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
-                If TanggalBuktiPotong = TanggalKosong Then TanggalBuktiPotong = StripKosong
-                Keterangan = dr.Item("Keterangan_Bukti_Potong")
-                NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
-                TambahBaris()
-            Loop
-        End If
+                    KodeSupplier = dr.Item("Kode_Lawan_Transaksi")
+                    NamaSupplier = AmbilValue_NamaPemegangSaham(KodeSupplier)
+                    DPP = dr.Item("Jumlah_Dividen")
+                    JenisPPh = dr.Item("Jenis_PPh")
+                    JumlahPPh = dr.Item("PPh_Terutang")
+                    TanggalDipotong = TanggalFormatTampilan(dr.Item("Tanggal_Akta_Notaris"))
+                    NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
+                    TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
+                    If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
+                    If TanggalBuktiPotong = TanggalKosong Then TanggalBuktiPotong = StripKosong
+                    Keterangan = dr.Item("Keterangan_Bukti_Potong")
+                    NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
+                    TambahBaris()
+                    Await Task.Yield()
+                Loop
+            End If
 
-        'PPh Dari Pembayaran Hutang Afiliasi :
-        If PilihanSumberData = SumberData_PembayaranHutangAfiliasi _
-            Or PilihanSumberData = Pilihan_Semua Then
-            SumberData = SumberData_PembayaranHutangAfiliasi
-            cmd = New OdbcCommand(" SELECT * FROM tbl_JadwalAngsuranHutangAfiliasi " &
-                                  " WHERE Jumlah_PPh > 0 " &
-                                  " AND Tanggal_Bayar <> '" & TanggalKosongSimpan & "' " &
-                                  FilterJenisPPh & FilterBuktiPotong, KoneksiDatabaseTransaksi)
-            dr_ExecuteReader()
-            Do While dr.Read
-                NomorUrut += 1
-                NomorPatokan = dr.Item("Nomor_BPHA")
-                NomorID = dr.Item("Nomor_ID")
-                cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_PengawasanHutangAfiliasi " &
-                                         " WHERE Nomor_BPHA = '" & NomorPatokan & "' ", KoneksiDatabaseTransaksi)
-                drTELUSUR_ExecuteReader()
-                drTELUSUR.Read()
-                If drTELUSUR.HasRows Then
-                    NomorInvoice = drTELUSUR.Item("Nomor_Kontrak")
-                    TanggalInvoice = StripKosong
-                    NomorFakturPajak = StripKosong
-                End If
-                KodeSupplier = dr.Item("Kode_Lawan_Transaksi")
-                NamaSupplier = AmbilValue_NamaMitra(KodeSupplier)
-                DPP = dr.Item("Pokok")
-                JenisPPh = dr.Item("Jenis_PPh")
-                JumlahPPh = dr.Item("Jumlah_PPh")
-                TanggalDipotong = TanggalFormatTampilan(dr.Item("Tanggal_Bayar"))
-                NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
-                TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
-                If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
-                If TanggalBuktiPotong = TanggalKosong Then TanggalBuktiPotong = StripKosong
-                Keterangan = dr.Item("Keterangan_Bukti_Potong")
-                NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
-                TambahBaris()
-            Loop
-        End If
+            AksesDatabase_Transaksi(Tutup)
 
-        'PPh Dari Pembayaran Hutang Bank :
-        If PilihanSumberData = SumberData_PembayaranHutangBank _
-            Or PilihanSumberData = Pilihan_Semua Then
-            SumberData = SumberData_PembayaranHutangBank
-            cmd = New OdbcCommand(" SELECT * FROM tbl_JadwalAngsuranHutangBank " &
-                                  " WHERE Jumlah_PPh > 0 " &
-                                  " AND Tanggal_Bayar <> '" & TanggalKosongSimpan & "' " &
-                                  FilterJenisPPh & FilterBuktiPotong, KoneksiDatabaseTransaksi)
-            dr_ExecuteReader()
-            Do While dr.Read
-                NomorUrut += 1
-                NomorPatokan = dr.Item("Nomor_BPHB")
-                NomorID = dr.Item("Nomor_ID")
-                cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_PengawasanHutangBank " &
-                                         " WHERE Nomor_BPHB = '" & NomorPatokan & "' ", KoneksiDatabaseTransaksi)
-                drTELUSUR_ExecuteReader()
-                drTELUSUR.Read()
-                If drTELUSUR.HasRows Then
-                    NomorInvoice = drTELUSUR.Item("Nomor_Kontrak")
-                    TanggalInvoice = StripKosong
-                    NomorFakturPajak = StripKosong
-                End If
-                KodeSupplier = dr.Item("Kode_Kreditur")
-                NamaSupplier = AmbilValue_NamaMitra(KodeSupplier)
-                DPP = dr.Item("Pokok")
-                JenisPPh = dr.Item("Jenis_PPh")
-                JumlahPPh = dr.Item("Jumlah_PPh")
-                TanggalDipotong = TanggalFormatTampilan(dr.Item("Tanggal_Bayar"))
-                NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
-                TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
-                If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
-                If TanggalBuktiPotong = TanggalKosong Then TanggalBuktiPotong = StripKosong
-                Keterangan = dr.Item("Keterangan_Bukti_Potong")
-                NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
-                TambahBaris()
-            Loop
-        End If
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanBuktiPotongPPh_Paid")
 
-        'PPh Dari Pembayaran Hutang Leasing :
-        If PilihanSumberData = SumberData_PembayaranHutangLeasing _
-            Or PilihanSumberData = Pilihan_Semua Then
-            SumberData = SumberData_PembayaranHutangLeasing
-            cmd = New OdbcCommand(" SELECT * FROM tbl_JadwalAngsuranHutangLeasing " &
-                                  " WHERE Jumlah_PPh > 0 " &
-                                  " AND Tanggal_Bayar <> '" & TanggalKosongSimpan & "' " &
-                                  FilterJenisPPh & FilterBuktiPotong, KoneksiDatabaseTransaksi)
-            dr_ExecuteReader()
-            Do While dr.Read
-                NomorUrut += 1
-                NomorPatokan = dr.Item("Nomor_BPHL")
-                NomorID = dr.Item("Nomor_ID")
-                cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_PengawasanHutangLeasing " &
-                                         " WHERE Nomor_BPHL = '" & NomorPatokan & "' ", KoneksiDatabaseTransaksi)
-                drTELUSUR_ExecuteReader()
-                drTELUSUR.Read()
-                If drTELUSUR.HasRows Then
-                    NomorInvoice = drTELUSUR.Item("Nomor_Kontrak")
-                    TanggalInvoice = StripKosong
-                    NomorFakturPajak = StripKosong
-                End If
-                KodeSupplier = dr.Item("Kode_Kreditur")
-                NamaSupplier = AmbilValue_NamaMitra(KodeSupplier)
-                DPP = dr.Item("Pokok")
-                JenisPPh = dr.Item("Jenis_PPh")
-                JumlahPPh = dr.Item("Jumlah_PPh")
-                TanggalDipotong = TanggalFormatTampilan(dr.Item("Tanggal_Bayar"))
-                NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
-                TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
-                If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
-                If TanggalBuktiPotong = TanggalKosong Then TanggalBuktiPotong = StripKosong
-                Keterangan = dr.Item("Keterangan_Bukti_Potong")
-                NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
-                TambahBaris()
-            Loop
-        End If
-
-        'PPh Dari Hutang Dividen :
-        If PilihanSumberData = SumberData_HutangDividen _
-            Or PilihanSumberData = Pilihan_Semua Then
-            SumberData = SumberData_HutangDividen
-            cmd = New OdbcCommand(" SELECT * FROM tbl_PengawasanHutangDividen " &
-                                  " WHERE PPh_Terutang > 0 " &
-                                  FilterJenisPPh & FilterBuktiPotong, KoneksiDatabaseTransaksi)
-            dr_ExecuteReader()
-            Do While dr.Read
-                NomorUrut += 1
-                NomorPatokan = dr.Item("Nomor_BPHD")
-                NomorID = dr.Item("Nomor_ID")
-                NomorInvoice = dr.Item("Nomor_Akta_Notaris")
-                TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Akta_Notaris"))
-                NomorFakturPajak = StripKosong
-                KodeSupplier = dr.Item("Kode_Lawan_Transaksi")
-                NamaSupplier = AmbilValue_NamaPemegangSaham(KodeSupplier)
-                DPP = dr.Item("Jumlah_Dividen")
-                JenisPPh = dr.Item("Jenis_PPh")
-                JumlahPPh = dr.Item("PPh_Terutang")
-                TanggalDipotong = TanggalFormatTampilan(dr.Item("Tanggal_Akta_Notaris"))
-                NomorBuktiPotong = dr.Item("Nomor_Bukti_Potong")
-                TanggalBuktiPotong = TanggalFormatTampilan(dr.Item("Tanggal_Bukti_Potong"))
-                If NomorBuktiPotong = Kosongan Then NomorBuktiPotong = StripKosong
-                If TanggalBuktiPotong = TanggalKosong Then TanggalBuktiPotong = StripKosong
-                Keterangan = dr.Item("Keterangan_Bukti_Potong")
-                NomorJV = dr.Item("Nomor_JV_Bukti_Potong")
-                TambahBaris()
-            Loop
-        End If
-
-        AksesDatabase_Transaksi(Tutup)
-
-        BersihkanSeleksi()
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
 
     End Sub
 
@@ -426,7 +453,11 @@ Public Class wpfUsc_BukuPengawasanBuktiPotongPPh_Paid
         btn_Input.IsEnabled = False
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

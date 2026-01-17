@@ -3,12 +3,15 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_BukuPengawasanAktivaLainnya
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm As String
     Public NamaHalaman As String
@@ -69,59 +72,84 @@ Public Class wpfUsc_BukuPengawasanAktivaLainnya
     End Sub
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = False
+        ' (Tidak ada ComboBox filter di halaman ini)
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
+        ' Guard clause
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
+
+        ' Disable UI dan tampilkan loading
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        KesesuaianJurnal = True
+        Try
+            KesesuaianJurnal = True
 
-        'Style Tabel :
-        Terabas()
-        datatabelUtama.Rows.Clear()
-
-        'Data Tabel :
-        NomorUrut = 0
-        TotalAktivaLainnya = 0
-
-        AksesDatabase_Transaksi(Buka)
-        cmd = New OdbcCommand(" SELECT * FROM tbl_AktivaLainnya ORDER BY Nomor_ID ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        Do While dr.Read
-            NomorUrut += 1
-            NomorID = dr.Item("Nomor_ID")
-            NomorBPAL = dr.Item("Nomor_BPAL")
-            NomorBukti = dr.Item("Nomor_Bukti")
-            TanggalBukti = TanggalFormatTampilan(dr.Item("Tanggal_Bukti"))
-            KodeLawanTransaksi = dr.Item("Kode_Lawan_Transaksi")
-            NamaLawanTransaksi = dr.Item("Nama_Lawan_Transaksi")
-            UraianTransaksi = dr.Item("Uraian_Transaksi")
-            COADebet = dr.Item("COA_Debet")
-            COAKredit = dr.Item("COA_Kredit")
-            NamaAkun = AmbilValue_NamaAkun(COADebet)
-            JumlahTransaksi = dr.Item("Jumlah_Transaksi")
-            TanggalPencairan = TanggalFormatTampilan(dr.Item("Tanggal_Pencairan"))
-            Keterangan = PenghapusEnter(dr.Item("Keterangan"))
-            NomorJV = dr.Item("Nomor_JV")
-            User = dr.Item("User")
-            If TanggalPencairan = TanggalKosong Then TanggalPencairan = StripKosong
-            datatabelUtama.Rows.Add(NomorUrut, NomorID, NomorBPAL, NomorBukti, TanggalBukti,
-                                    KodeLawanTransaksi, NamaLawanTransaksi, UraianTransaksi,
-                                    COADebet, COAKredit, NamaAkun, JumlahTransaksi, TanggalPencairan, Keterangan, NomorJV, User)
-            If NomorJV > 0 Then
-                TotalAktivaLainnya += JumlahTransaksi
-            End If
+            'Style Tabel :
             Terabas()
-        Loop
-        AksesDatabase_Transaksi(Tutup)
+            datatabelUtama.Rows.Clear()
 
-        txt_TotalTabel.Text = TotalAktivaLainnya
+            'Data Tabel :
+            NomorUrut = 0
+            TotalAktivaLainnya = 0
 
-        BersihkanSeleksi()
+            AksesDatabase_Transaksi(Buka)
+            cmd = New OdbcCommand(" SELECT * FROM tbl_AktivaLainnya ORDER BY Nomor_ID ", KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
+            If StatusKoneksiDatabase = False Then Exit Try
 
+            Do While dr.Read
+                NomorUrut += 1
+                NomorID = dr.Item("Nomor_ID")
+                NomorBPAL = dr.Item("Nomor_BPAL")
+                NomorBukti = dr.Item("Nomor_Bukti")
+                TanggalBukti = TanggalFormatTampilan(dr.Item("Tanggal_Bukti"))
+                KodeLawanTransaksi = dr.Item("Kode_Lawan_Transaksi")
+                NamaLawanTransaksi = dr.Item("Nama_Lawan_Transaksi")
+                UraianTransaksi = dr.Item("Uraian_Transaksi")
+                COADebet = dr.Item("COA_Debet")
+                COAKredit = dr.Item("COA_Kredit")
+                NamaAkun = AmbilValue_NamaAkun(COADebet)
+                JumlahTransaksi = dr.Item("Jumlah_Transaksi")
+                TanggalPencairan = TanggalFormatTampilan(dr.Item("Tanggal_Pencairan"))
+                Keterangan = PenghapusEnter(dr.Item("Keterangan"))
+                NomorJV = dr.Item("Nomor_JV")
+                User = dr.Item("User")
+                If TanggalPencairan = TanggalKosong Then TanggalPencairan = StripKosong
+                datatabelUtama.Rows.Add(NomorUrut, NomorID, NomorBPAL, NomorBukti, TanggalBukti,
+                                        KodeLawanTransaksi, NamaLawanTransaksi, UraianTransaksi,
+                                        COADebet, COAKredit, NamaAkun, JumlahTransaksi, TanggalPencairan, Keterangan, NomorJV, User)
+                If NomorJV > 0 Then
+                    TotalAktivaLainnya += JumlahTransaksi
+                End If
+                Terabas()
+                Await Task.Yield()
+            Loop
+            AksesDatabase_Transaksi(Tutup)
+
+            txt_TotalTabel.Text = TotalAktivaLainnya
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanAktivaLainnya")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub BersihkanSeleksi()
@@ -133,7 +161,11 @@ Public Class wpfUsc_BukuPengawasanAktivaLainnya
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
     Private Sub btn_Refresh_Click(sender As Object, e As RoutedEventArgs) Handles btn_Refresh.Click

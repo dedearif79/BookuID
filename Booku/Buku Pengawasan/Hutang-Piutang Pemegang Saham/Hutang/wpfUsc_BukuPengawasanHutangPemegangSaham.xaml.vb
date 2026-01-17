@@ -3,12 +3,15 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_BukuPengawasanHutangPemegangSaham
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm As String
     'Public JudulForm_SaldoAwalHutangPemegangSaham = "Saldo Awal Hutang Pemegang Saham"
@@ -100,64 +103,85 @@ Public Class wpfUsc_BukuPengawasanHutangPemegangSaham
     End Sub
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
+        ' Guard clause
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
+
+        ' Disable UI dan tampilkan loading
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        KesesuaianJurnal = True
+        Try
+            KesesuaianJurnal = True
 
-        'Style Tabel :
-        Terabas()
-        datatabelUtama.Rows.Clear()
+            'Style Tabel :
+            Terabas()
+            datatabelUtama.Rows.Clear()
 
-        QueryTampilanHutangTahunLalu =
-            " SELECT * FROM tbl_PengawasanHutangPemegangSaham " &
-            " WHERE (Tanggal_Transaksi <  '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
-        QueryTampilanHutangTahunAktif =
-            " SELECT * FROM tbl_PengawasanHutangPemegangSaham " &
-            " WHERE (Tanggal_Transaksi >= '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
+            QueryTampilanHutangTahunLalu =
+                " SELECT * FROM tbl_PengawasanHutangPemegangSaham " &
+                " WHERE (Tanggal_Transaksi <  '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
+            QueryTampilanHutangTahunAktif =
+                " SELECT * FROM tbl_PengawasanHutangPemegangSaham " &
+                " WHERE (Tanggal_Transaksi >= '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
 
-        'Data Tabel :
-        NomorUrut = 0
-        SaldoAwal_BerdasarkanList = 0
-        Total_SisaHutang = 0
+            'Data Tabel :
+            NomorUrut = 0
+            SaldoAwal_BerdasarkanList = 0
+            Total_SisaHutang = 0
 
-        'Data Tabel Sisa Hutang Usaha Tahun Lalu :
-        QueryTampilan = QueryTampilanHutangTahunLalu
-        DataTabel()
+            'Data Tabel Sisa Hutang Usaha Tahun Lalu :
+            QueryTampilan = QueryTampilanHutangTahunLalu
+            Await DataTabelAsync()
 
-        'Data Tabel BPHU Tahun Buku Aktif :
-        QueryTampilan = QueryTampilanHutangTahunAktif
-        DataTabel()
+            'Data Tabel BPHU Tahun Buku Aktif :
+            QueryTampilan = QueryTampilanHutangTahunAktif
+            Await DataTabelAsync()
 
-        TotalTabel = Total_SisaHutang
+            TotalTabel = Total_SisaHutang
 
-        Select Case JenisTahunBuku
-            Case JenisTahunBuku_LAMPAU
-                SaldoAkhir_BerdasarkanList = Total_SisaHutang
-                txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
-                AmbilValue_SaldoAkhirBerdasarkanCOA()
-                CekKesesuaianSaldoAkhir()
-                txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
-            Case JenisTahunBuku_NORMAL
-                txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
-                AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
-                CekKesesuaianSaldoAwal()
-                txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
-                txt_TotalTabel.Text = TotalTabel
-        End Select
+            Select Case JenisTahunBuku
+                Case JenisTahunBuku_LAMPAU
+                    SaldoAkhir_BerdasarkanList = Total_SisaHutang
+                    txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
+                    AmbilValue_SaldoAkhirBerdasarkanCOA()
+                    CekKesesuaianSaldoAkhir()
+                    txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
+                Case JenisTahunBuku_NORMAL
+                    txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
+                    AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
+                    CekKesesuaianSaldoAwal()
+                    txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
+                    txt_TotalTabel.Text = TotalTabel
+            End Select
 
-        lbl_TotalTabel.Text = "Saldo Akhir Hutang PemegangSaham : "
+            lbl_TotalTabel.Text = "Saldo Akhir Hutang PemegangSaham : "
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangPemegangSaham")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
 
     End Sub
 
-    Sub DataTabel()
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
+
+    Async Function DataTabelAsync() As Task
 
         AksesDatabase_Transaksi(Buka)
         AksesDatabase_General(Buka)
@@ -203,11 +227,18 @@ Public Class wpfUsc_BukuPengawasanHutangPemegangSaham
             datatabelUtama.Rows.Add(NomorUrut, NomorID, NomorBPHPS, KodePemegangSaham, NamaPemegangSaham, TanggalPinjam,
                                     JumlahHutang, SaldoAwalPerBaris, JumlahAngsuran, SaldoAkhirPerBaris, Keterangan, NomorJV)
 
+            Await Task.Yield()
+
         Loop
 
         AksesDatabase_General(Tutup)
         AksesDatabase_Transaksi(Tutup)
 
+    End Function
+
+    ' Wrapper untuk backward compatibility
+    Sub DataTabel()
+        DataTabelAsync().Wait()
     End Sub
 
 
@@ -225,7 +256,6 @@ Public Class wpfUsc_BukuPengawasanHutangPemegangSaham
         NomorJV_Pembayaran_Terseleksi = 0
         VisibilitasInfoSaldo(True)
         BersihkanSeleksiPembayaran()
-        KetersediaanMenuHalaman(pnl_Halaman, True)
     End Sub
 
 

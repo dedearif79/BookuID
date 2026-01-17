@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-<DockPanel Style="{StaticResource stylePanelFormHalaman}">
+<DockPanel x:Name="pnl_Halaman" Style="{StaticResource stylePanelFormHalaman}">
         <StackPanel Style="{StaticResource stylePanelFormHalamanHeader}">
             <Grid    DockPanel.Dock="Top"   HorizontalAlignment="Stretch"   VerticalAlignment="Stretch" >
                 <Grid.ColumnDefinitions>

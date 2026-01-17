@@ -1,5 +1,6 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -10,6 +11,8 @@ Public Class wpfUsc_DataUser
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm
 
@@ -52,53 +55,85 @@ Public Class wpfUsc_DataUser
 
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = False
+        ' (Tidak ada ComboBox filter untuk diisi)
+        EksekusiTampilanData = True
         TampilkanData()
-        BersihkanSeleksi()
     End Sub
 
 
-    Sub TampilkanData()
+    ''' <summary>
+    ''' Method async untuk memuat data user dengan UI responsive
+    ''' </summary>
+    Async Sub TampilkanDataAsync()
 
-        datatabelUtama.Rows.Clear()
-        NomorUrut = 0
+        ' Guard clause: Cegah loading berulang
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        AksesDatabase_General(Buka)
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)  ' Beri waktu UI render
 
-        cmd = New OdbcCommand(" SELECT * FROM tbl_User ORDER BY Level DESC ", KoneksiDatabaseGeneral)
-        dr_ExecuteReader()
+        Try
+            datatabelUtama.Rows.Clear()
+            NomorUrut = 0
 
-        Do While dr.Read
-            NomorUrut += 1
-            Username = dr.Item("Username")
-            Password = DekripsiTeks(dr.Item("Password"))
-            Level = dr.Item("Level")
-            NamaLengkap = dr.Item("Nama")
-            Jabatan = dr.Item("Jabatan")
-            ClusterFinance = dr.Item("Cluster_Finance")
-            ClusterAccounting = dr.Item("Cluster_Accounting")
+            AksesDatabase_General(Buka)
 
-            Cluster = Nothing
-            If ClusterFinance = 1 Then Cluster = Cluster & "Finance  &  "
-            If ClusterAccounting = 1 Then Cluster = Cluster & "Accounting  &  "
-            If Cluster IsNot Nothing Then
-                Dim ClusterReverse = BalikTeks(Cluster)
-                Cluster = BalikTeks(AmbilTengah(ClusterReverse, 6))
-            End If
+            cmd = New OdbcCommand(" SELECT * FROM tbl_User ORDER BY Level DESC ", KoneksiDatabaseGeneral)
+            dr_ExecuteReader()
 
-            If dr.Item("Status_Aktif") = 1 Then
-                StatusAktifUser = "YA"
-            Else
-                StatusAktifUser = "TIDAK"
-            End If
+            Do While dr.Read
+                NomorUrut += 1
+                Username = dr.Item("Username")
+                Password = DekripsiTeks(dr.Item("Password"))
+                Level = dr.Item("Level")
+                NamaLengkap = dr.Item("Nama")
+                Jabatan = dr.Item("Jabatan")
+                ClusterFinance = dr.Item("Cluster_Finance")
+                ClusterAccounting = dr.Item("Cluster_Accounting")
 
-            TambahBaris()
-        Loop
+                Cluster = Nothing
+                If ClusterFinance = 1 Then Cluster = Cluster & "Finance  &  "
+                If ClusterAccounting = 1 Then Cluster = Cluster & "Accounting  &  "
+                If Cluster IsNot Nothing Then
+                    Dim ClusterReverse = BalikTeks(Cluster)
+                    Cluster = BalikTeks(AmbilTengah(ClusterReverse, 6))
+                End If
 
-        AksesDatabase_General(Tutup)
+                If dr.Item("Status_Aktif") = 1 Then
+                    StatusAktifUser = "YA"
+                Else
+                    StatusAktifUser = "TIDAK"
+                End If
 
-        ' Row coloring berdasarkan status aktif
-        WarnaiBaris()
+                TambahBaris()
+                Await Task.Yield()  ' Beri kesempatan UI refresh
+            Loop
 
+            AksesDatabase_General(Tutup)
+
+            ' Row coloring berdasarkan status aktif
+            WarnaiBaris()
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DataUser")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    ''' <summary>
+    ''' Wrapper untuk backward compatibility
+    ''' </summary>
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
@@ -114,6 +149,9 @@ Public Class wpfUsc_DataUser
     End Sub
 
 
+    ''' <summary>
+    ''' Logika utama reset seleksi (TANPA enable UI)
+    ''' </summary>
     Sub BersihkanSeleksi()
         JumlahBaris = datatabelUtama.Rows.Count
         BarisTerseleksi = -1
@@ -123,6 +161,14 @@ Public Class wpfUsc_DataUser
         btn_Edit.IsEnabled = False
         btn_Blokir.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+    End Sub
+
+    ''' <summary>
+    ''' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    ''' </summary>
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

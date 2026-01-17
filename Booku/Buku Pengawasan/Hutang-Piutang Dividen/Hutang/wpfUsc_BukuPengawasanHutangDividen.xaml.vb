@@ -3,12 +3,15 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_BukuPengawasanHutangDividen
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
     Public KesesuaianJurnal As Boolean
 
     Dim NomorUrut
@@ -73,59 +76,83 @@ Public Class wpfUsc_BukuPengawasanHutangDividen
 
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
-        KesesuaianJurnal = True
+        ' Guard clause
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'Style Tabel :
-        Terabas()
-        datatabelUtama.Rows.Clear()
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'Data Tabel :
-        NomorUrut = 0
+        Try
+            KesesuaianJurnal = True
 
-        AksesDatabase_Transaksi(Buka)
-        cmd = New OdbcCommand(" SELECT * FROM tbl_PengawasanHutangDividen" &
-                              " ORDER BY Nomor_ID ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        Do While dr.Read
-            NomorID = dr.Item("Nomor_ID")
-            TanggalAktaNotaris = TanggalFormatTampilan(dr.Item("Tanggal_Akta_Notaris"))
-            NomorBPHD = dr.Item("Nomor_BPHD")
-            NomorAktaNotaris = dr.Item("Nomor_Akta_Notaris")
-            KodeLawanTransaksi = dr.Item("Kode_Lawan_Transaksi")
-            NamaLawanTransaksi = dr.Item("Nama_Lawan_Transaksi")
-            JumlahDividen = dr.Item("Jumlah_Dividen")
-            TarifPPh = FormatUlangDesimal_Prosentase(dr.Item("Tarif_PPh"))
-            JumlahPPh = dr.Item("PPh_Terutang")
-            PPhDitanggung = dr.Item("PPh_Ditanggung")
-            PPhDipotong = dr.Item("PPh_Dipotong")
-            HutangDividen = JumlahDividen - PPhDipotong
-            TanggalJatuhTempo = TanggalFormatTampilan(dr.Item("Tanggal_Jatuh_Tempo"))
-            TotalBayar = 0
-            cmdBAYAR = New OdbcCommand(" SELECT Jumlah_Bayar FROM tbl_BuktiPengeluaran " &
-                                       " WHERE Nomor_BP     = '" & NomorBPHD & "' " &
-                                       " AND Status_Invoice = '" & Status_Dibayar & "' ",
-                                       KoneksiDatabaseTransaksi)
-            drBAYAR_ExecuteReader()
-            Do While drBAYAR.Read
-                TotalBayar += drBAYAR.Item("Jumlah_Bayar")
+            'Style Tabel :
+            Terabas()
+            datatabelUtama.Rows.Clear()
+
+            'Data Tabel :
+            NomorUrut = 0
+
+            AksesDatabase_Transaksi(Buka)
+            cmd = New OdbcCommand(" SELECT * FROM tbl_PengawasanHutangDividen" &
+                                  " ORDER BY Nomor_ID ", KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
+            Do While dr.Read
+                NomorID = dr.Item("Nomor_ID")
+                TanggalAktaNotaris = TanggalFormatTampilan(dr.Item("Tanggal_Akta_Notaris"))
+                NomorBPHD = dr.Item("Nomor_BPHD")
+                NomorAktaNotaris = dr.Item("Nomor_Akta_Notaris")
+                KodeLawanTransaksi = dr.Item("Kode_Lawan_Transaksi")
+                NamaLawanTransaksi = dr.Item("Nama_Lawan_Transaksi")
+                JumlahDividen = dr.Item("Jumlah_Dividen")
+                TarifPPh = FormatUlangDesimal_Prosentase(dr.Item("Tarif_PPh"))
+                JumlahPPh = dr.Item("PPh_Terutang")
+                PPhDitanggung = dr.Item("PPh_Ditanggung")
+                PPhDipotong = dr.Item("PPh_Dipotong")
+                HutangDividen = JumlahDividen - PPhDipotong
+                TanggalJatuhTempo = TanggalFormatTampilan(dr.Item("Tanggal_Jatuh_Tempo"))
+                TotalBayar = 0
+                cmdBAYAR = New OdbcCommand(" SELECT Jumlah_Bayar FROM tbl_BuktiPengeluaran " &
+                                           " WHERE Nomor_BP     = '" & NomorBPHD & "' " &
+                                           " AND Status_Invoice = '" & Status_Dibayar & "' ",
+                                           KoneksiDatabaseTransaksi)
+                drBAYAR_ExecuteReader()
+                Do While drBAYAR.Read
+                    TotalBayar += drBAYAR.Item("Jumlah_Bayar")
+                Loop
+                SisaHutang = HutangDividen - TotalBayar
+                Keterangan = dr.Item("Keterangan")
+                NomorJV = dr.Item("Nomor_JV")
+                User = dr.Item("User")
+                TambahBaris()
+                Await Task.Yield()
             Loop
-            SisaHutang = HutangDividen - TotalBayar
-            Keterangan = dr.Item("Keterangan")
-            NomorJV = dr.Item("Nomor_JV")
-            User = dr.Item("User")
-            TambahBaris()
-        Loop
 
-        AksesDatabase_Transaksi(Tutup)
+            AksesDatabase_Transaksi(Tutup)
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangDividen")
 
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 

@@ -3,12 +3,14 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_POPenjualan
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
     Public JudulForm As String
 
     Public JenisProduk_Menu
@@ -142,16 +144,20 @@ Public Class wpfUsc_POPenjualan
 
 
     Dim EksekusiTampilanData As Boolean
-    Sub TampilkanData()
+
+    Async Sub TampilkanDataAsync()
 
         If EksekusiTampilanData = False Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'PesanUntukProgrammer("Jenis Produk : " & Pilih_JenisProduk_Induk & Enter2Baris &
-        '                      "Kontrol : " & Pilih_Kontrol)
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'Filter Jenis Produk Induk :
-        Dim FilterJenisProduk_Induk = " "
-        If Pilih_JenisProduk_Induk <> JenisProduk_Semua Then FilterJenisProduk_Induk = " AND Jenis_Produk_Induk = '" & Pilih_JenisProduk_Induk & "' "
+        Try
+            'Filter Jenis Produk Induk :
+            Dim FilterJenisProduk_Induk = " "
+            If Pilih_JenisProduk_Induk <> JenisProduk_Semua Then FilterJenisProduk_Induk = " AND Jenis_Produk_Induk = '" & Pilih_JenisProduk_Induk & "' "
 
         'FilterKontrol
         Dim FilterKontrol = Kosongan
@@ -180,10 +186,10 @@ Public Class wpfUsc_POPenjualan
         cmd = New OdbcCommand(" SELECT * FROM tbl_Penjualan_PO " &
                               " WHERE Nomor_PO <> 'X' " & FilterData &
                               " ORDER BY Angka_PO ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        If StatusKoneksiDatabase = False Then Return
+            dr_ExecuteReader()
+            If StatusKoneksiDatabase = False Then Exit Try
 
-        Do While dr.Read
+            Do While dr.Read
             AngkaPO = dr.Item("Angka_PO")
             NomorPO = dr.Item("Nomor_PO")
             TanggalPO = TanggalFormatTampilan(dr.Item("Tanggal_PO"))
@@ -226,13 +232,26 @@ Public Class wpfUsc_POPenjualan
                 If PenjualanLokal And Not MitraSebagaiPerusahaanLuarNegeri(KodeCustomer) Then TambahBaris()
                 If PenjualanEkspor And MitraSebagaiPerusahaanLuarNegeri(KodeCustomer) Then TambahBaris()
             End If
-            AngkaPO_Sebelumnya = AngkaPO
-        Loop
+                AngkaPO_Sebelumnya = AngkaPO
+                Await Task.Yield()
+            Loop
 
-        AksesDatabase_Transaksi(Tutup)
+            AksesDatabase_Transaksi(Tutup)
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_POPenjualan")
 
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 

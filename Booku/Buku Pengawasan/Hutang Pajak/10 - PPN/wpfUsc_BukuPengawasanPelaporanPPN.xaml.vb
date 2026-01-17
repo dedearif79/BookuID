@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -9,6 +10,9 @@ Public Class wpfUsc_BukuPengawasanPelaporanPPN
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm
     Public JenisPajak
@@ -154,10 +158,10 @@ Public Class wpfUsc_BukuPengawasanPelaporanPPN
         End If
 
         TahunPajak = TahunBukuAktif
-        EksekusiKode = False
+        EksekusiTampilanData = False
         KontenCombo_TahunPajak()
         KontenCombo_MasaPajak()
-        EksekusiKode = True
+        EksekusiTampilanData = True
 
         Sub_JenisTampilan_REKAP()
 
@@ -170,10 +174,10 @@ Public Class wpfUsc_BukuPengawasanPelaporanPPN
 
 
     Sub RefreshTampilanData()
-        EksekusiKode = False
+        EksekusiTampilanData = False
         KontenCombo_TahunPajak()
         cmb_MasaPajak.SelectedValue = MasaPajak_Rekap
-        EksekusiKode = True
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
@@ -211,153 +215,173 @@ Public Class wpfUsc_BukuPengawasanPelaporanPPN
     End Sub
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
-        If EksekusiKode = False Then Return
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
-        VisibilitasInfoSaldo(False)
+        Await Task.Delay(50)
 
-        lbl_JudulForm.Text = JudulForm
-        If MasaPajak = Nothing Then Return
+        Try
 
-        KesesuaianJurnal = True
+            VisibilitasInfoSaldo(False)
 
-        datatabelUtama.Rows.Clear()
+            lbl_JudulForm.Text = JudulForm
+            If MasaPajak = Nothing Then Return
 
-        NomorUrut = 0
-        NomorID = 0
-        Keterangan = Kosongan
-        Total_TagihanPPN = 0
-        Total_JumlahBayarPPN = 0
-        Total_SisaHutangPPN = 0
+            KesesuaianJurnal = True
 
-        If JenisTampilan = JenisTampilan_REKAP Then
+            datatabelUtama.Rows.Clear()
 
-            Index_BarisTabel = 0
-            NomorBulan = 0
+            NomorUrut = 0
+            NomorID = 0
+            Keterangan = Kosongan
+            Total_TagihanPPN = 0
+            Total_JumlahBayarPPN = 0
+            Total_SisaHutangPPN = 0
 
-            TanggalLapor = Kosongan
+            If JenisTampilan = JenisTampilan_REKAP Then
 
-            Total_ReturPenjualan = 0
-            Total_PeredaranUsaha_Lokal = 0
-            Total_PeredaranUsaha_Ekspor = 0
-            Total_PeredaranUsaha_Jumlah = 0
+                Index_BarisTabel = 0
+                NomorBulan = 0
 
-            Total_PajakKeluaran_Dibayar = 0
-            Total_PajakKeluaran_Dipungut = 0
-            Total_PajakKeluaran_TidakDipungut = 0
-            Total_PajakKeluaran_Retur = 0
-            Total_PajakKeluaran_Jumlah = 0
+                TanggalLapor = Kosongan
 
-            Total_ReturPembelian = 0
+                Total_ReturPenjualan = 0
+                Total_PeredaranUsaha_Lokal = 0
+                Total_PeredaranUsaha_Ekspor = 0
+                Total_PeredaranUsaha_Jumlah = 0
 
-            Total_PajakMasukan_Impor = 0
-            Total_PajakMasukan_DalamNegeri = 0
-            Total_PajakMasukan_KompSebelumnya = 0
-            Total_PajakMasukan_KompPembetulan = 0
-            Total_PajakMasukan_Retur = 0
-            Total_PajakMasukan_Jumlah = 0
+                Total_PajakKeluaran_Dibayar = 0
+                Total_PajakKeluaran_Dipungut = 0
+                Total_PajakKeluaran_TidakDipungut = 0
+                Total_PajakKeluaran_Retur = 0
+                Total_PajakKeluaran_Jumlah = 0
 
-            Total_PPNNKL = 0
-            Total_SelisihPembetulan_PPNNKL = 0
-            Total_PPNTidakDapatDikreditkan = 0
+                Total_ReturPembelian = 0
 
-            AksesDatabase_Transaksi(Buka)
-            If StatusKoneksiDatabaseTransaksi = False Then Return
+                Total_PajakMasukan_Impor = 0
+                Total_PajakMasukan_DalamNegeri = 0
+                Total_PajakMasukan_KompSebelumnya = 0
+                Total_PajakMasukan_KompPembetulan = 0
+                Total_PajakMasukan_Retur = 0
+                Total_PajakMasukan_Jumlah = 0
 
-            Do While AmbilAngka(NomorBulan) < 12
+                Total_PPNNKL = 0
+                Total_SelisihPembetulan_PPNNKL = 0
+                Total_PPNTidakDapatDikreditkan = 0
 
-                NomorBulan = AmbilAngka(NomorBulan) + 1
-                NamaBulan = BulanTerbilang(NomorBulan)
-                NomorBPHP = AwalanBPHPPN & TahunPajak & "-" & NomorBulan.ToString
+                AksesDatabase_Transaksi(Buka)
+                If StatusKoneksiDatabaseTransaksi = False Then Return
 
-                ResetVariabelPPN()
+                Do While AmbilAngka(NomorBulan) < 12
 
-                PajakMasukan_KompensasiSebelumnya = 0
-                If NomorBulan = 1 Then
+                    NomorBulan = AmbilAngka(NomorBulan) + 1
+                    NamaBulan = BulanTerbilang(NomorBulan)
+                    NomorBPHP = AwalanBPHPPN & TahunPajak & "-" & NomorBulan.ToString
+
+                    ResetVariabelPPN()
+
                     PajakMasukan_KompensasiSebelumnya = 0
-                Else
-                    If PPNNKL < 0 Then PajakMasukan_KompensasiSebelumnya = 0 - PPNNKL
-                End If
+                    If NomorBulan = 1 Then
+                        PajakMasukan_KompensasiSebelumnya = 0
+                    Else
+                        If PPNNKL < 0 Then PajakMasukan_KompensasiSebelumnya = 0 - PPNNKL
+                    End If
 
-                NomorBulan = KonversiAngkaKeStringDuaDigit(NomorBulan)
+                    NomorBulan = KonversiAngkaKeStringDuaDigit(NomorBulan)
 
-                If JenisTahunBuku = JenisTahunBuku_NORMAL And TahunPajak = TahunBukuAktif Then
-                    HitungDataPPN_TahunBukuNormal()
-                End If
+                    If JenisTahunBuku = JenisTahunBuku_NORMAL And TahunPajak = TahunBukuAktif Then
+                        HitungDataPPN_TahunBukuNormal()
+                    End If
 
-                HitungDataPembayaran()
+                    HitungDataPembayaran()
 
-                SisaHutang_PPN = JumlahTagihan_PPN - JumlahBayar_PPN
+                    SisaHutang_PPN = JumlahTagihan_PPN - JumlahBayar_PPN
 
-                Total_PajakKeluaran_Dibayar += PajakKeluaran_Dibayar
-                Total_PajakKeluaran_Dipungut += PajakKeluaran_Dipungut
-                Total_PajakKeluaran_TidakDipungut += PajakKeluaran_TidakDipungut
-                Total_PajakKeluaran_Retur += PajakKeluaran_Retur
-                Total_PajakKeluaran_Jumlah += PajakKeluaran_Jumlah
-                Total_PajakMasukan_Impor += PajakMasukan_Impor
-                Total_PajakMasukan_DalamNegeri += PajakMasukan_DalamNegeri
-                Total_PajakMasukan_KompSebelumnya += PajakMasukan_KompensasiSebelumnya
-                Total_PajakMasukan_KompPembetulan += PajakMasukan_KompensasiPembetulan
-                Total_PajakMasukan_Retur += PajakMasukan_Retur
-                Total_PajakMasukan_Jumlah += PajakMasukan_Jumlah
-                Total_PPNNKL += PPNNKL
-                Total_SelisihPembetulan_PPNNKL += SelisihPembetulan_PPNNKL
-                Total_PeredaranUsaha_Lokal += PeredaranUsaha_Lokal
-                Total_PeredaranUsaha_Ekspor += PeredaranUsaha_Ekspor
-                Total_ReturPenjualan += ReturPenjualan
-                Total_PeredaranUsaha_Jumlah += PeredaranUsaha_Jumlah
-                Total_PPNTidakDapatDikreditkan += PPNTidakDapatDikreditkan
-                Total_TagihanPPN += JumlahTagihan_PPN
-                Total_JumlahBayarPPN += JumlahBayar_PPN
-                Total_SisaHutangPPN += SisaHutang_PPN
+                    Total_PajakKeluaran_Dibayar += PajakKeluaran_Dibayar
+                    Total_PajakKeluaran_Dipungut += PajakKeluaran_Dipungut
+                    Total_PajakKeluaran_TidakDipungut += PajakKeluaran_TidakDipungut
+                    Total_PajakKeluaran_Retur += PajakKeluaran_Retur
+                    Total_PajakKeluaran_Jumlah += PajakKeluaran_Jumlah
+                    Total_PajakMasukan_Impor += PajakMasukan_Impor
+                    Total_PajakMasukan_DalamNegeri += PajakMasukan_DalamNegeri
+                    Total_PajakMasukan_KompSebelumnya += PajakMasukan_KompensasiSebelumnya
+                    Total_PajakMasukan_KompPembetulan += PajakMasukan_KompensasiPembetulan
+                    Total_PajakMasukan_Retur += PajakMasukan_Retur
+                    Total_PajakMasukan_Jumlah += PajakMasukan_Jumlah
+                    Total_PPNNKL += PPNNKL
+                    Total_SelisihPembetulan_PPNNKL += SelisihPembetulan_PPNNKL
+                    Total_PeredaranUsaha_Lokal += PeredaranUsaha_Lokal
+                    Total_PeredaranUsaha_Ekspor += PeredaranUsaha_Ekspor
+                    Total_ReturPenjualan += ReturPenjualan
+                    Total_PeredaranUsaha_Jumlah += PeredaranUsaha_Jumlah
+                    Total_PPNTidakDapatDikreditkan += PPNTidakDapatDikreditkan
+                    Total_TagihanPPN += JumlahTagihan_PPN
+                    Total_JumlahBayarPPN += JumlahBayar_PPN
+                    Total_SisaHutangPPN += SisaHutang_PPN
 
-                TambahBaris()
+                    TambahBaris()
 
-            Loop
+                    Await Task.Yield()
 
-            AksesDatabase_Transaksi(Tutup)
+                Loop
 
-            Baris_KetetapanPajak()
+                AksesDatabase_Transaksi(Tutup)
 
-            'Baris TOTAL :
-            datatabelUtama.Rows.Add()
-            datatabelUtama.Rows.Add(
-                Kosongan, Kosongan, Kosongan, teks_TOTAL_,
-                Kosongan, Kosongan, Kosongan, Kosongan,
-                Total_PajakKeluaran_Dibayar, Total_PajakKeluaran_Dipungut, Total_PajakKeluaran_TidakDipungut, Total_PajakKeluaran_Retur, Total_PajakKeluaran_Jumlah,
-                Total_PajakMasukan_Impor, Total_PajakMasukan_DalamNegeri, Total_PajakMasukan_Retur, Total_PajakMasukan_KompSebelumnya, Total_PajakMasukan_KompPembetulan, Total_PajakMasukan_Jumlah,
-                Total_PPNNKL, Total_SelisihPembetulan_PPNNKL, Kosongan, Total_JumlahBayarPPN, Total_SisaHutangPPN, Total_PPNTidakDapatDikreditkan,
-                Total_PeredaranUsaha_Lokal, Total_PeredaranUsaha_Ekspor, Total_ReturPenjualan, Total_PeredaranUsaha_Jumlah, Kosongan)
+                Baris_KetetapanPajak()
 
-        End If
+                'Baris TOTAL :
+                datatabelUtama.Rows.Add()
+                datatabelUtama.Rows.Add(
+                    Kosongan, Kosongan, Kosongan, teks_TOTAL_,
+                    Kosongan, Kosongan, Kosongan, Kosongan,
+                    Total_PajakKeluaran_Dibayar, Total_PajakKeluaran_Dipungut, Total_PajakKeluaran_TidakDipungut, Total_PajakKeluaran_Retur, Total_PajakKeluaran_Jumlah,
+                    Total_PajakMasukan_Impor, Total_PajakMasukan_DalamNegeri, Total_PajakMasukan_Retur, Total_PajakMasukan_KompSebelumnya, Total_PajakMasukan_KompPembetulan, Total_PajakMasukan_Jumlah,
+                    Total_PPNNKL, Total_SelisihPembetulan_PPNNKL, Kosongan, Total_JumlahBayarPPN, Total_SisaHutangPPN, Total_PPNTidakDapatDikreditkan,
+                    Total_PeredaranUsaha_Lokal, Total_PeredaranUsaha_Ekspor, Total_ReturPenjualan, Total_PeredaranUsaha_Jumlah, Kosongan)
 
-        VisibilitasInfoSaldo(True)
+            End If
 
-        Select Case JenisTahunBuku
-            Case JenisTahunBuku_LAMPAU
-                SaldoAkhir_BerdasarkanList = Total_SisaHutangPPN
-                txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
-                AmbilValue_SaldoAkhirBerdasarkanCOA()
-                CekKesesuaianSaldoAkhir()
-                txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
-            Case JenisTahunBuku_NORMAL
-                If Not TahunBukuSudahStabil(TahunBukuAktif) Then
-                    AmbilValue_SaldoAwalBerdasarkanList()
-                    AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
-                    CekKesesuaianSaldoAwal()
-                    txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
-                    txt_TotalTabel.Text = SaldoAwal_BerdasarkanList + Total_TagihanPPN - Total_JumlahBayarPPN
-                Else
-                    txt_TotalTabel.Text = SaldoAwal_BerdasarkanCOA + Total_TagihanPPN - Total_JumlahBayarPPN
-                End If
-        End Select
+            VisibilitasInfoSaldo(True)
 
-        lbl_TotalTabel.Text = "Saldo Akhir " & TahunPajak & " : "
+            Select Case JenisTahunBuku
+                Case JenisTahunBuku_LAMPAU
+                    SaldoAkhir_BerdasarkanList = Total_SisaHutangPPN
+                    txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
+                    AmbilValue_SaldoAkhirBerdasarkanCOA()
+                    CekKesesuaianSaldoAkhir()
+                    txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
+                Case JenisTahunBuku_NORMAL
+                    If Not TahunBukuSudahStabil(TahunBukuAktif) Then
+                        AmbilValue_SaldoAwalBerdasarkanList()
+                        AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
+                        CekKesesuaianSaldoAwal()
+                        txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
+                        txt_TotalTabel.Text = SaldoAwal_BerdasarkanList + Total_TagihanPPN - Total_JumlahBayarPPN
+                    Else
+                        txt_TotalTabel.Text = SaldoAwal_BerdasarkanCOA + Total_TagihanPPN - Total_JumlahBayarPPN
+                    End If
+            End Select
 
-        BersihkanSeleksi()
+            lbl_TotalTabel.Text = "Saldo Akhir " & TahunPajak & " : "
 
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanPelaporanPPN")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
@@ -594,7 +618,6 @@ Public Class wpfUsc_BukuPengawasanPelaporanPPN
         datagridUtama.SelectedCells.Clear()
         btn_LihatJurnal.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
-        KetersediaanMenuHalaman(pnl_Halaman, True)
     End Sub
 
 
@@ -619,7 +642,7 @@ Public Class wpfUsc_BukuPengawasanPelaporanPPN
             TahunPajakSamaDenganTahunBukuAktif = False
         End If
 
-        If EksekusiKode = True Then
+        If EksekusiTampilanData = True Then
             If MasaPajak = MasaPajak_Rekap Then Sub_JenisTampilan_REKAP()
             If MasaPajak <> MasaPajak_Rekap Then cmb_MasaPajak.SelectedValue = MasaPajak_Rekap
         End If
@@ -632,7 +655,7 @@ Public Class wpfUsc_BukuPengawasanPelaporanPPN
         MasaPajak = cmb_MasaPajak.SelectedValue
         MasaPajak_Angka = KonversiBulanKeAngka(MasaPajak)
 
-        If EksekusiKode = True And ProsesLoadingForm = False Then
+        If EksekusiTampilanData = True And ProsesLoadingForm = False Then
             Select Case MasaPajak
                 Case MasaPajak_All
                     Sub_JenisTampilan_ALL()

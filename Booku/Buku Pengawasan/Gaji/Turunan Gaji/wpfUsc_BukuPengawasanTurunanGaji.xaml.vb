@@ -3,12 +3,15 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_BukuPengawasanTurunanGaji
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm = Kosongan
     Public JudulForm_HutangBPJSKesehatan = "Buku Pengawasan Hutang BPJS Kesehatan"
@@ -83,147 +86,167 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
 
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = False
         KontenComboTahunTelusurData(True)
+        EksekusiTampilanData = True
+        TampilkanData()
     End Sub
 
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
-        'PesanUntukProgrammer("Eksekusi Kode : " & EksekusiKode & Enter2Baris &
+        'PesanUntukProgrammer("Eksekusi Tampilan Data : " & EksekusiTampilanData & Enter2Baris &
         '                     "Tahun Telusur Data : " & TahunTelusurData)
 
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        If EksekusiKode = False Then Return
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        KesesuaianJurnal = True
+        Try
+            KesesuaianJurnal = True
 
-        datatabelUtama.Rows.Clear()
+            datatabelUtama.Rows.Clear()
 
-        'Data Tabel :
-        Dim NomorUrut As Integer
-        Dim Bulan = Nothing
-        Dim NomorBPH
-        Dim JumlahTagihan As Int64
-        Dim JumlahPotongan As Int64
-        Dim SelisihTagihan As Int64
-        Dim KoreksiSelisihPencatatan As Int64
-        Dim Selisih As Int64
-        Dim JumlahPembayaran As Int64
-        Dim SisaPembayaran As Int64
-        Dim Keterangan
+            'Data Tabel :
+            Dim NomorUrut As Integer
+            Dim Bulan = Nothing
+            Dim NomorBPH
+            Dim JumlahTagihan As Int64
+            Dim JumlahPotongan As Int64
+            Dim SelisihTagihan As Int64
+            Dim KoreksiSelisihPencatatan As Int64
+            Dim Selisih As Int64
+            Dim JumlahPembayaran As Int64
+            Dim SisaPembayaran As Int64
+            Dim Keterangan
 
-        Dim RekapTotal_JumlahTagihan As Int64
-        Dim RekapTotal_JumlahPotongan As Int64
-        Dim RekapTotal_SelisihTagihan As Int64
-        Dim RekapTotal_KoreksiSelisih As Int64
-        Dim RekapTotal_Selisih As Int64
-        Dim RekapTotal_JumlahPembayaran As Int64
-        Dim RekapTotal_SisaPembayaran As Int64
+            Dim RekapTotal_JumlahTagihan As Int64
+            Dim RekapTotal_JumlahPotongan As Int64
+            Dim RekapTotal_SelisihTagihan As Int64
+            Dim RekapTotal_KoreksiSelisih As Int64
+            Dim RekapTotal_Selisih As Int64
+            Dim RekapTotal_JumlahPembayaran As Int64
+            Dim RekapTotal_SisaPembayaran As Int64
 
-        RekapTotal_JumlahTagihan = 0
-        RekapTotal_JumlahPotongan = 0
-        RekapTotal_SelisihTagihan = 0
-        RekapTotal_KoreksiSelisih = 0
-        RekapTotal_Selisih = 0
-        RekapTotal_JumlahPembayaran = 0
-        RekapTotal_SisaPembayaran = 0
+            RekapTotal_JumlahTagihan = 0
+            RekapTotal_JumlahPotongan = 0
+            RekapTotal_SelisihTagihan = 0
+            RekapTotal_KoreksiSelisih = 0
+            RekapTotal_Selisih = 0
+            RekapTotal_JumlahPembayaran = 0
+            RekapTotal_SisaPembayaran = 0
 
-        'Ambil Value Saldo Saldo Awal Berdasarkan List : -----------------------------------------
-        SaldoAwal_BerdasarkanList = 0
-        BukaDatabaseTransaksi_Alternatif(TahunTelusurDataSebelumnya)
-        cmdTAGIHAN = New OdbcCommand(" SELECT * FROM " & TabelPengawasan &
-                                     " WHERE Tahun <= '" & TahunTelusurDataSebelumnya & "' ",
-                                     KoneksiDatabaseTransaksi_Alternatif)
-        drTAGIHAN = cmdTAGIHAN.ExecuteReader
-        Do While drTAGIHAN.Read
-            SaldoAwal_BerdasarkanList += drTAGIHAN.Item("Jumlah_Tagihan")
-        Loop
-        TutupDatabaseTransaksi_Alternatif()
-        '-----------------------------------------------------------------------------------------
-        If TahunBukuSudahStabil(TahunTelusurData) = True Then
-            Total_SisaHutang = SaldoAwalTahunCOA(COAHutang)
-        Else
-            Total_SisaHutang = SaldoAwal_BerdasarkanList
-        End If
-
-        BukaDatabaseTransaksi_Alternatif(TahunTelusurData)
-        cmdTAGIHAN = New OdbcCommand(" SELECT * FROM " & TabelPengawasan &
-                                     " WHERE Tahun = '" & TahunTelusurData & "' ",
-                                     KoneksiDatabaseTransaksi_Alternatif)
-        drTAGIHAN = cmdTAGIHAN.ExecuteReader
-        Do While drTAGIHAN.Read
-            NomorUrut = drTAGIHAN.Item("Nomor_Urut")
-            Bulan = drTAGIHAN.Item("Bulan")
-            NomorBPH = AwalanBPH_PlusTahunBuku & NomorUrut
-            JumlahTagihan = drTAGIHAN.Item("Jumlah_Tagihan")
-            JumlahPotongan = 0
-            SelisihTagihan = 0
-            KoreksiSelisihPencatatan = 0
-            Selisih = 0
-            JumlahPembayaran = 0
-            Keterangan = drTAGIHAN.Item("Keterangan")
-            If TahunTelusurData = TahunBukuAktif And TahunTelusurData > TahunCutOff Then
-                cmd = New OdbcCommand(" SELECT * FROM tbl_PengawasanGaji WHERE Bulan = '" & Bulan & "'", KoneksiDatabaseTransaksi_Alternatif)
-                dr = cmd.ExecuteReader
-                Do While dr.Read
-                    JumlahPotongan += dr.Item(KolomPotongan)
-                Loop
-            Else
-                JumlahPotongan = JumlahTagihan
-            End If
-            SelisihTagihan = JumlahTagihan - JumlahPotongan
-            KoreksiSelisihPencatatan = drTAGIHAN.Item("Koreksi_Selisih")
-            Selisih = SelisihTagihan + KoreksiSelisihPencatatan
-            If Selisih <> 0 Then KesesuaianJurnal = False
-            RekapTotal_JumlahTagihan += JumlahTagihan
-            RekapTotal_JumlahPotongan += JumlahPotongan
-            RekapTotal_SelisihTagihan += SelisihTagihan
-            RekapTotal_KoreksiSelisih += KoreksiSelisihPencatatan
-            RekapTotal_Selisih += Selisih
-            cmdBAYAR = New OdbcCommand(" SELECT * FROM tbl_BuktiPengeluaran " &
-                                       " WHERE Nomor_BP     = '" & NomorBPH & "' " &
-                                       " AND Status_Invoice = '" & Status_Dibayar & "' ",
-                                       KoneksiDatabaseTransaksi_Alternatif)
-            drBAYAR = cmdBAYAR.ExecuteReader
-            Do While drBAYAR.Read
-                JumlahPembayaran += drBAYAR.Item("Jumlah_Bayar")
+            'Ambil Value Saldo Saldo Awal Berdasarkan List : -----------------------------------------
+            SaldoAwal_BerdasarkanList = 0
+            BukaDatabaseTransaksi_Alternatif(TahunTelusurDataSebelumnya)
+            cmdTAGIHAN = New OdbcCommand(" SELECT * FROM " & TabelPengawasan &
+                                         " WHERE Tahun <= '" & TahunTelusurDataSebelumnya & "' ",
+                                         KoneksiDatabaseTransaksi_Alternatif)
+            drTAGIHAN = cmdTAGIHAN.ExecuteReader
+            Do While drTAGIHAN.Read
+                SaldoAwal_BerdasarkanList += drTAGIHAN.Item("Jumlah_Tagihan")
             Loop
-            SisaPembayaran = JumlahTagihan - JumlahPembayaran
-            RekapTotal_JumlahPembayaran = RekapTotal_JumlahPembayaran + JumlahPembayaran
-            RekapTotal_SisaPembayaran = RekapTotal_SisaPembayaran + SisaPembayaran
-            datatabelUtama.Rows.Add(NomorUrut, Bulan, NomorBPH, JumlahTagihan, JumlahPotongan,
-                                    SelisihTagihan, KoreksiSelisihPencatatan, Selisih,
-                                    JumlahPembayaran, SisaPembayaran, Keterangan)
-            Total_SisaHutang += SisaPembayaran
-        Loop
-        TutupDatabaseTransaksi_Alternatif()
-        datatabelUtama.Rows.Add()
-        datatabelUtama.Rows.Add(Kosongan, "J U M L A H", Kosongan, RekapTotal_JumlahTagihan, RekapTotal_JumlahPotongan,
-                                RekapTotal_SelisihTagihan, RekapTotal_KoreksiSelisih, RekapTotal_Selisih,
-                                RekapTotal_JumlahPembayaran, RekapTotal_SisaPembayaran, Kosongan)
+            TutupDatabaseTransaksi_Alternatif()
+            '-----------------------------------------------------------------------------------------
+            If TahunBukuSudahStabil(TahunTelusurData) = True Then
+                Total_SisaHutang = SaldoAwalTahunCOA(COAHutang)
+            Else
+                Total_SisaHutang = SaldoAwal_BerdasarkanList
+            End If
 
-        TotalTabel = Total_SisaHutang
+            BukaDatabaseTransaksi_Alternatif(TahunTelusurData)
+            cmdTAGIHAN = New OdbcCommand(" SELECT * FROM " & TabelPengawasan &
+                                         " WHERE Tahun = '" & TahunTelusurData & "' ",
+                                         KoneksiDatabaseTransaksi_Alternatif)
+            drTAGIHAN = cmdTAGIHAN.ExecuteReader
+            Do While drTAGIHAN.Read
+                NomorUrut = drTAGIHAN.Item("Nomor_Urut")
+                Bulan = drTAGIHAN.Item("Bulan")
+                NomorBPH = AwalanBPH_PlusTahunBuku & NomorUrut
+                JumlahTagihan = drTAGIHAN.Item("Jumlah_Tagihan")
+                JumlahPotongan = 0
+                SelisihTagihan = 0
+                KoreksiSelisihPencatatan = 0
+                Selisih = 0
+                JumlahPembayaran = 0
+                Keterangan = drTAGIHAN.Item("Keterangan")
+                If TahunTelusurData = TahunBukuAktif And TahunTelusurData > TahunCutOff Then
+                    cmd = New OdbcCommand(" SELECT * FROM tbl_PengawasanGaji WHERE Bulan = '" & Bulan & "'", KoneksiDatabaseTransaksi_Alternatif)
+                    dr = cmd.ExecuteReader
+                    Do While dr.Read
+                        JumlahPotongan += dr.Item(KolomPotongan)
+                    Loop
+                Else
+                    JumlahPotongan = JumlahTagihan
+                End If
+                SelisihTagihan = JumlahTagihan - JumlahPotongan
+                KoreksiSelisihPencatatan = drTAGIHAN.Item("Koreksi_Selisih")
+                Selisih = SelisihTagihan + KoreksiSelisihPencatatan
+                If Selisih <> 0 Then KesesuaianJurnal = False
+                RekapTotal_JumlahTagihan += JumlahTagihan
+                RekapTotal_JumlahPotongan += JumlahPotongan
+                RekapTotal_SelisihTagihan += SelisihTagihan
+                RekapTotal_KoreksiSelisih += KoreksiSelisihPencatatan
+                RekapTotal_Selisih += Selisih
+                cmdBAYAR = New OdbcCommand(" SELECT * FROM tbl_BuktiPengeluaran " &
+                                           " WHERE Nomor_BP     = '" & NomorBPH & "' " &
+                                           " AND Status_Invoice = '" & Status_Dibayar & "' ",
+                                           KoneksiDatabaseTransaksi_Alternatif)
+                drBAYAR = cmdBAYAR.ExecuteReader
+                Do While drBAYAR.Read
+                    JumlahPembayaran += drBAYAR.Item("Jumlah_Bayar")
+                Loop
+                SisaPembayaran = JumlahTagihan - JumlahPembayaran
+                RekapTotal_JumlahPembayaran = RekapTotal_JumlahPembayaran + JumlahPembayaran
+                RekapTotal_SisaPembayaran = RekapTotal_SisaPembayaran + SisaPembayaran
+                datatabelUtama.Rows.Add(NomorUrut, Bulan, NomorBPH, JumlahTagihan, JumlahPotongan,
+                                        SelisihTagihan, KoreksiSelisihPencatatan, Selisih,
+                                        JumlahPembayaran, SisaPembayaran, Keterangan)
+                Total_SisaHutang += SisaPembayaran
+                Await Task.Yield()
+            Loop
+            TutupDatabaseTransaksi_Alternatif()
+            datatabelUtama.Rows.Add()
+            datatabelUtama.Rows.Add(Kosongan, "J U M L A H", Kosongan, RekapTotal_JumlahTagihan, RekapTotal_JumlahPotongan,
+                                    RekapTotal_SelisihTagihan, RekapTotal_KoreksiSelisih, RekapTotal_Selisih,
+                                    RekapTotal_JumlahPembayaran, RekapTotal_SisaPembayaran, Kosongan)
 
-        Select Case JenisTahunBuku
-            Case JenisTahunBuku_LAMPAU
-                SaldoAkhir_BerdasarkanList = Total_SisaHutang
-                txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
-                AmbilValue_SaldoAkhirBerdasarkanCOA()
-                CekKesesuaianSaldoAkhir()
-                txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
-            Case JenisTahunBuku_NORMAL
-                txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
-                AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
-                CekKesesuaianSaldoAwal()
-                txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
-        End Select
+            TotalTabel = Total_SisaHutang
 
-        txt_TotalTabel.Text = TotalTabel
-        lbl_TotalTabel.Text = "Saldo Akhir " & TahunTelusurData & " : "
+            Select Case JenisTahunBuku
+                Case JenisTahunBuku_LAMPAU
+                    SaldoAkhir_BerdasarkanList = Total_SisaHutang
+                    txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
+                    AmbilValue_SaldoAkhirBerdasarkanCOA()
+                    CekKesesuaianSaldoAkhir()
+                    txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
+                Case JenisTahunBuku_NORMAL
+                    txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
+                    AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
+                    CekKesesuaianSaldoAwal()
+                    txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
+            End Select
 
-        BersihkanSeleksi()
+            txt_TotalTabel.Text = TotalTabel
+            lbl_TotalTabel.Text = "Saldo Akhir " & TahunTelusurData & " : "
 
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanTurunanGaji")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
@@ -244,16 +267,18 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
         NomorJV_Pembayaran_Terseleksi = 0
         VisibilitasInfoSaldo(True)
         BersihkanSeleksiTabelPembayaran()
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 
-    Sub KontenComboTahunTelusurData(TampilkanData As Boolean)
+    Sub KontenComboTahunTelusurData(IsiComboSaja As Boolean)
 
         TahunTelusurDataTerlama = AmbilTahunTerlama_BerdasarkanKolomTahun(TahunCutOff, TabelPengawasan, "Tahun")
         Dim ListTahunTelusurData = TahunBukuAktif
-
-        EksekusiKode = False
 
         cmb_TahunTelusurData.Items.Clear()
         TahunTelusurData = TahunBukuAktif
@@ -262,15 +287,7 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
             ListTahunTelusurData -= 1
         Loop
 
-        If TampilkanData Then
-            EksekusiKode = True
-        Else
-            EksekusiKode = False
-        End If
-
         cmb_TahunTelusurData.SelectedValue = TahunBukuAktif
-
-        EksekusiKode = True
 
     End Sub
 
@@ -402,6 +419,7 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
     End Sub
 
     Private Sub cmb_TahunTelusurData_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cmb_TahunTelusurData.SelectionChanged
+        If Not EksekusiTampilanData Then Return
         TahunTelusurData = cmb_TahunTelusurData.SelectedValue
         If TahunTelusurData = 0 Then
             cmb_TahunTelusurData.Text = TahunTelusurDataTerlama
@@ -413,6 +431,7 @@ Public Class wpfUsc_BukuPengawasanTurunanGaji
         If TahunPengganti < TahunTelusurDataTerlama Then TahunPengganti = TahunTelusurDataTerlama
         cmb_TahunTelusurData.Text = TahunPengganti
         TahunTelusurData = TahunPengganti
+        EksekusiTampilanData = True
         PerubahanTahunTelusurData()
     End Sub
     Sub PerubahanTahunTelusurData()

@@ -1,8 +1,9 @@
-﻿Imports System.Windows.Controls
+﻿Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
-Imports System.Data.Odbc
-Imports System.Windows.Input
+Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
+Imports System.Windows.Input
 Imports System.Windows.Threading
 Imports bcomm
 
@@ -10,6 +11,7 @@ Public Class wpfUsc_BukuBesar
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
     Public KesesuaianJurnal As Boolean
 
     Public FungsiModul As String
@@ -112,172 +114,175 @@ Public Class wpfUsc_BukuBesar
 
 
     Public EksekusiTampilanData As Boolean
-    Sub TampilkanData()
 
+    ''' <summary>
+    ''' Method async untuk memuat data buku besar dengan UI responsive
+    ''' </summary>
+    Async Sub TampilkanDataAsync()
+
+        ' Guard clause: Cegah loading berulang
         If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
+        ' Disable UI dan tampilkan loading
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)  ' Beri waktu UI render
 
-        COA_BukuBesar = txt_COA.Text 'Jangan Dihapus...! Dan Jangan dipindah ke Sub RefreshTampilanData()..!!! Sudah benar di sini..!!!
+        Try
+            COA_BukuBesar = txt_COA.Text 'Jangan Dihapus...! Dan Jangan dipindah ke Sub RefreshTampilanData()..!!! Sudah benar di sini..!!!
 
-        'Mengisi Value Saldo Awal
-        AksesDatabase_General(Buka)
-        If StatusKoneksiDatabase = False Then
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            Return
-        End If
-        cmd = New OdbcCommand("SELECT * FROM tbl_COA WHERE COA = '" & COA_BukuBesar & "' ", KoneksiDatabaseGeneral)
-        dr = cmd.ExecuteReader
-        dr.Read()
-        'If dr.HasRows Then txt_SaldoAwal.Text = dr.Item("Saldo_Awal")
-        AksesDatabase_General(Tutup)
+            'Mengisi Value Saldo Awal
+            AksesDatabase_General(Buka)
+            If StatusKoneksiDatabase = False Then Return
+            cmd = New OdbcCommand("SELECT * FROM tbl_COA WHERE COA = '" & COA_BukuBesar & "' ", KoneksiDatabaseGeneral)
+            dr = cmd.ExecuteReader
+            dr.Read()
+            'If dr.HasRows Then txt_SaldoAwal.Text = dr.Item("Saldo_Awal")
+            AksesDatabase_General(Tutup)
 
 
-        datatabelUtama.Rows.Clear()
+            datatabelUtama.Rows.Clear()
 
-        FilterData = Kosongan 'Ini jangan dihapus...! Ada kepentingan logika tampilan Saldo.
+            FilterData = Kosongan 'Ini jangan dihapus...! Ada kepentingan logika tampilan Saldo.
 
-        'Filter Lawan Transaksi :
-        Select Case Pilih_KodeLawanTransaksi
-            Case Kosongan
-                FilterLawanTransaksi = Kosongan 'Ini harus kosongan..! Jangan dirubah jadi Spasi1..!
-            Case Pilihan_Semua
-                FilterLawanTransaksi = Kosongan 'Ini harus kosongan..! Jangan dirubah jadi Spasi1..!
-            Case Else
-                FilterLawanTransaksi = " AND Kode_Lawan_Transaksi = '" & Pilih_KodeLawanTransaksi & "' "
-        End Select
+            'Filter Lawan Transaksi :
+            Select Case Pilih_KodeLawanTransaksi
+                Case Kosongan
+                    FilterLawanTransaksi = Kosongan 'Ini harus kosongan..! Jangan dirubah jadi Spasi1..!
+                Case Pilihan_Semua
+                    FilterLawanTransaksi = Kosongan 'Ini harus kosongan..! Jangan dirubah jadi Spasi1..!
+                Case Else
+                    FilterLawanTransaksi = " AND Kode_Lawan_Transaksi = '" & Pilih_KodeLawanTransaksi & "' "
+            End Select
 
-        Debet_IDR.Visibility = Visibility.Visible
-        Kredit_IDR.Visibility = Visibility.Visible
-        Saldo_IDR.Visibility = Visibility.Visible
-
-        'Filter DebetKredit:
-        Select Case Pilih_DebetKredit
-            Case Kosongan
-                FilterDebetKredit = Kosongan 'Ini harus kosongan..! Jangan dirubah jadi Spasi1..!
-            Case Pilihan_Semua
-                FilterDebetKredit = Kosongan 'Ini harus kosongan..! Jangan dirubah jadi Spasi1..!
-            Case dk_Debet
-                FilterDebetKredit = " AND D_K = '" & dk_D & "' "
-                Kredit_IDR.Visibility = Visibility.Collapsed
-            Case dk_Kredit
-                FilterDebetKredit = " AND D_K = '" & dk_K & "' "
-                Debet_IDR.Visibility = Visibility.Collapsed
-        End Select
-
-        'Filter Direct:
-        Select Case Pilih_Direct
-            Case Kosongan
-                FilterDirect = Kosongan 'Ini harus kosongan..! Jangan dirubah jadi Spasi1..!
-            Case Pilihan_Semua
-                FilterDirect = Kosongan 'Ini harus kosongan..! Jangan dirubah jadi Spasi1..!
-            Case Pilihan_Ya
-                FilterDirect = " AND Direct = 1 "
-            Case Pilihan_Tidak
-                FilterDirect = " AND Direct = 0 "
-        End Select
-
-        FilterData = FilterLawanTransaksi & FilterDebetKredit & FilterDirect
-
-        If FilterData = Kosongan Then
+            Debet_IDR.Visibility = Visibility.Visible
+            Kredit_IDR.Visibility = Visibility.Visible
             Saldo_IDR.Visibility = Visibility.Visible
-        Else
-            Saldo_IDR.Visibility = Visibility.Collapsed
-        End If
 
-        'Query Tampilan :
-        QueryTampilan = " SELECT * FROM tbl_Transaksi " &
-            " WHERE Valid <> '" & _X_ & "' " &
-            " AND   COA             = '" & COA_BukuBesar & "' " &
-            " AND   Status_Approve  = 1 " &
-            FilterData
+            'Filter DebetKredit:
+            Select Case Pilih_DebetKredit
+                Case Kosongan
+                    FilterDebetKredit = Kosongan 'Ini harus kosongan..! Jangan dirubah jadi Spasi1..!
+                Case Pilihan_Semua
+                    FilterDebetKredit = Kosongan 'Ini harus kosongan..! Jangan dirubah jadi Spasi1..!
+                Case dk_Debet
+                    FilterDebetKredit = " AND D_K = '" & dk_D & "' "
+                    Kredit_IDR.Visibility = Visibility.Collapsed
+                Case dk_Kredit
+                    FilterDebetKredit = " AND D_K = '" & dk_K & "' "
+                    Debet_IDR.Visibility = Visibility.Collapsed
+            End Select
 
-        'SaldoAwal = AmbilAngka(txt_SaldoAwal.Text)
-        NomorUrut = 0
-        SaldoAwal = SaldoAwalTahunCOA(COA_BukuBesar)
-        SaldoAwalMUA = SaldoAwalTahunCOA_MUA(COA_BukuBesar)
-        SaldoAkhir = 0
-        SaldoIDR = SaldoAwal
-        SaldoMUA = SaldoAwalMUA
-        JumlahDebet = 0
-        JumlahKredit = 0
+            'Filter Direct:
+            Select Case Pilih_Direct
+                Case Kosongan
+                    FilterDirect = Kosongan 'Ini harus kosongan..! Jangan dirubah jadi Spasi1..!
+                Case Pilihan_Semua
+                    FilterDirect = Kosongan 'Ini harus kosongan..! Jangan dirubah jadi Spasi1..!
+                Case Pilihan_Ya
+                    FilterDirect = " AND Direct = 1 "
+                Case Pilihan_Tidak
+                    FilterDirect = " AND Direct = 0 "
+            End Select
 
-        AksesDatabase_Transaksi(Buka)
-        If StatusKoneksiDatabase = False Then
+            FilterData = FilterLawanTransaksi & FilterDebetKredit & FilterDirect
+
+            If FilterData = Kosongan Then
+                Saldo_IDR.Visibility = Visibility.Visible
+            Else
+                Saldo_IDR.Visibility = Visibility.Collapsed
+            End If
+
+            'Query Tampilan :
+            QueryTampilan = " SELECT * FROM tbl_Transaksi " &
+                " WHERE Valid <> '" & _X_ & "' " &
+                " AND   COA             = '" & COA_BukuBesar & "' " &
+                " AND   Status_Approve  = 1 " &
+                FilterData
+
+            'SaldoAwal = AmbilAngka(txt_SaldoAwal.Text)
+            NomorUrut = 0
+            SaldoAwal = SaldoAwalTahunCOA(COA_BukuBesar)
+            SaldoAwalMUA = SaldoAwalTahunCOA_MUA(COA_BukuBesar)
+            SaldoAkhir = 0
+            SaldoIDR = SaldoAwal
+            SaldoMUA = SaldoAwalMUA
+            JumlahDebet = 0
+            JumlahKredit = 0
+
+            AksesDatabase_Transaksi(Buka)
+            If StatusKoneksiDatabase = False Then Return
+            cmd = New OdbcCommand(QueryTampilan & " ORDER BY Tanggal_Transaksi, Nomor_JV, D_K ", KoneksiDatabaseTransaksi) 'QUERY ada di sub masing-masing Tipe Tampilan (Semua/Pencarian/Filter)
+            dr = cmd.ExecuteReader
+            Do While dr.Read
+                NomorJV = dr.Item("Nomor_JV")
+                JenisJurnal = dr.Item("Jenis_Jurnal")
+                NomorJVString = KonversiNomorJVAngkaKeString(NomorJV)
+                TanggalTransaksi = TanggalFormatTampilan(dr.Item("Tanggal_Transaksi"))
+                TanggalInvoice = dr.Item("Tanggal_Invoice")
+                NomorInvoice = dr.Item("Nomor_Invoice")
+                NomorFakturPajak = dr.Item("Nomor_Faktur_Pajak")
+                KodeLawanTransaksi = dr.Item("Kode_Lawan_Transaksi")
+                NamaLawanTransaksi = dr.Item("Nama_Lawan_Transaksi")
+                NamaProduk = dr.Item("Nama_Produk")
+                UraianTransaksi = PenghapusEnter(dr.Item("Uraian_Transaksi"))
+                Kurs = dr.Item("Kurs")
+                DK = dr.Item("D_K")
+                DebetMUA = dr.Item("Jumlah_Debet")
+                KreditMUA = dr.Item("Jumlah_Kredit")
+                NamaAkunLawan = DaftarNamaAkunLawan(NomorJV, DK)
+                DebetIDR = AmbilValue_NilaiMataUang_WithCOA(dr.Item("COA"), dr.Item("Kode_Mata_Uang"), Kurs, DebetMUA)
+                KreditIDR = AmbilValue_NilaiMataUang_WithCOA(dr.Item("COA"), dr.Item("Kode_Mata_Uang"), Kurs, KreditMUA)
+                If Kurs = 1 Then
+                    DebetMUA = 0
+                    KreditMUA = 0
+                End If
+                If COATermasukDEBET(COA_BukuBesar) Then
+                    SaldoIDR += DebetIDR - KreditIDR
+                    SaldoMUA += DebetMUA - KreditMUA
+                Else
+                    SaldoIDR += KreditIDR - DebetIDR
+                    SaldoMUA += KreditMUA - DebetMUA
+                End If
+                If dr.Item("Direct") = 1 Then
+                    Direct = "Ya"
+                Else
+                    Direct = Kosongan
+                End If
+                TambahBaris()
+                JumlahDebet += DebetIDR
+                JumlahKredit += KreditIDR
+                Await Task.Yield()  ' Beri kesempatan UI refresh
+            Loop
+            AksesDatabase_Transaksi(Tutup)
+            SaldoAkhir = SaldoIDR
+
+            JumlahBaris = datatabelUtama.Rows.Count
+
+            txt_SaldoAwal.Text = SaldoAwal
+            If FilterData = Kosongan Then
+                txt_SaldoAkhir.Text = SaldoAkhir
+            Else
+                txt_SaldoAkhir.Text = Kosongan
+            End If
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuBesar")
+
+        Finally
+            BersihkanSeleksi()
             KetersediaanMenuHalaman(pnl_Halaman, True)
-            Return
-        End If
-        cmd = New OdbcCommand(QueryTampilan & " ORDER BY Tanggal_Transaksi, Nomor_JV, D_K ", KoneksiDatabaseTransaksi) 'QUERY ada di sub masing-masing Tipe Tampilan (Semua/Pencarian/Filter)
-        dr = cmd.ExecuteReader
-        Do While dr.Read
-            NomorJV = dr.Item("Nomor_JV")
-            JenisJurnal = dr.Item("Jenis_Jurnal")
-            NomorJVString = KonversiNomorJVAngkaKeString(NomorJV)
-            TanggalTransaksi = TanggalFormatTampilan(dr.Item("Tanggal_Transaksi"))
-            TanggalInvoice = dr.Item("Tanggal_Invoice")
-            NomorInvoice = dr.Item("Nomor_Invoice")
-            NomorFakturPajak = dr.Item("Nomor_Faktur_Pajak")
-            KodeLawanTransaksi = dr.Item("Kode_Lawan_Transaksi")
-            NamaLawanTransaksi = dr.Item("Nama_Lawan_Transaksi")
-            NamaProduk = dr.Item("Nama_Produk")
-            UraianTransaksi = PenghapusEnter(dr.Item("Uraian_Transaksi"))
-            Kurs = dr.Item("Kurs")
-            DK = dr.Item("D_K")
-            DebetMUA = dr.Item("Jumlah_Debet")
-            KreditMUA = dr.Item("Jumlah_Kredit")
-            NamaAkunLawan = DaftarNamaAkunLawan(NomorJV, DK)
-            DebetIDR = AmbilValue_NilaiMataUang_WithCOA(dr.Item("COA"), dr.Item("Kode_Mata_Uang"), Kurs, DebetMUA)
-            KreditIDR = AmbilValue_NilaiMataUang_WithCOA(dr.Item("COA"), dr.Item("Kode_Mata_Uang"), Kurs, KreditMUA)
-            If Kurs = 1 Then
-                DebetMUA = 0
-                KreditMUA = 0
-            End If
-            If COATermasukDEBET(COA_BukuBesar) Then
-                SaldoIDR += DebetIDR - KreditIDR
-                SaldoMUA += DebetMUA - KreditMUA
-            Else
-                SaldoIDR += KreditIDR - DebetIDR
-                SaldoMUA += KreditMUA - DebetMUA
-            End If
-            If dr.Item("Direct") = 1 Then
-                Direct = "Ya"
-            Else
-                Direct = Kosongan
-            End If
-            TambahBaris()
-            JumlahDebet += DebetIDR
-            JumlahKredit += KreditIDR
-            Terabas()
-        Loop
-        AksesDatabase_Transaksi(Tutup)
-        SaldoAkhir = SaldoIDR
-        'txt_SaldoAwal.Text = SaldoAwal
-        'If SaldoAwal = 0 Then txt_SaldoAwal.Text = StripKosong
+            SedangMemuatData = False
+        End Try
 
-        'txt_SaldoAkhir.Text = SaldoAkhir
-        'If SaldoAkhir = 0 Then txt_SaldoAkhir.Text = StripKosong
+    End Sub
 
-        'If FungsiModul = Halaman_BUKUBANK Then
-        '    txt_JumlahDebet.Text = JumlahKredit
-        '    txt_JumlahKredit.Text = JumlahDebet
-        'Else
-        '    txt_JumlahDebet.Text = JumlahDebet
-        '    txt_JumlahKredit.Text = JumlahKredit
-        'End If
-
-        BersihkanSeleksi()
-
-        JumlahBaris = datatabelUtama.Rows.Count
-
-        'lbl_JumlahBaris.Text = "Jumlah Baris : " & JumlahBaris
-
-        txt_SaldoAwal.Text = SaldoAwal
-        If FilterData = Kosongan Then
-            txt_SaldoAkhir.Text = SaldoAkhir
-        Else
-            txt_SaldoAkhir.Text = Kosongan
-        End If
-
+    ''' <summary>
+    ''' Wrapper untuk backward compatibility
+    ''' </summary>
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris()
@@ -299,14 +304,24 @@ Public Class wpfUsc_BukuBesar
     End Sub
 
 
+    ''' <summary>
+    ''' Logika utama reset seleksi (TANPA enable UI)
+    ''' </summary>
     Sub BersihkanSeleksi()
         BersihkanSeleksi_WPF(datagridUtama, datatabelUtama, BarisTerseleksi, JumlahBaris)
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
         btn_BukuPembantu.IsEnabled = False
-        KetersediaanMenuHalaman(pnl_Halaman, True)
         TampilSemua = False
+    End Sub
+
+    ''' <summary>
+    ''' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    ''' </summary>
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

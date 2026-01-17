@@ -3,12 +3,14 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_BASTPembelian
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
     Public JudulForm
 
 
@@ -81,12 +83,19 @@ Public Class wpfUsc_BASTPembelian
 
 
     Dim EksekusiTampilanData As Boolean
-    Sub TampilkanData()
+
+    Async Sub TampilkanDataAsync()
 
         If EksekusiTampilanData = False Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'Filter Data :
-        Dim FilterData = Kosongan
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
+
+        Try
+            'Filter Data :
+            Dim FilterData = Kosongan
 
         'Filter Supplier :
         Dim FilterSupplier = Spasi1
@@ -103,14 +112,15 @@ Public Class wpfUsc_BASTPembelian
 
         AksesDatabase_Transaksi(Buka)
 
-        cmd = New OdbcCommand(" SELECT * FROM tbl_Pembelian_BAST " &
+            cmd = New OdbcCommand(" SELECT * FROM tbl_Pembelian_BAST " &
                               " WHERE Nomor_BAST <> 'X' " & FilterData &
                               " ORDER BY Angka_BAST ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        If StatusKoneksiDatabase = False Then Return
+            dr_ExecuteReader()
+            If StatusKoneksiDatabase = False Then Exit Try
 
 
-        Do While dr.Read
+            Do While dr.Read
+                Await Task.Yield()
             NomorPO = Kosongan
             NomorPO_Satuan = Kosongan
             NomorPO_Sebelumnya = Kosongan
@@ -168,10 +178,21 @@ Public Class wpfUsc_BASTPembelian
             AngkaBAST_Sebelumnya = AngkaBAST
         Loop
 
-        AksesDatabase_Transaksi(Tutup)
+            AksesDatabase_Transaksi(Tutup)
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BASTPembelian")
 
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris()

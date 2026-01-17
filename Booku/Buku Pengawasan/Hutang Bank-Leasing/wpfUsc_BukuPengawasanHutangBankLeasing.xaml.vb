@@ -3,12 +3,14 @@ Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
 Imports System.Windows.Input
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_BukuPengawasanHutangBankLeasing
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Public NamaHalaman
     Public JudulForm
@@ -117,7 +119,15 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
         TampilkanData()
     End Sub
 
-    Public Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
+
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
+
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
+
+        Try
 
         KesesuaianJurnal = True
 
@@ -141,6 +151,7 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
         'Data Tabel Sisa Hutang Tahun Lalu :
         QueryTampilan = QueryTampilanHutangTahunLalu
         DataTabel()
+        Await Task.Yield()
 
         'Data Tabel Hutang Tahun Buku Aktif :
         QueryTampilan = QueryTampilanHutangTahunAktif
@@ -165,8 +176,19 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
 
         lbl_TotalTabel.Text = "Saldo Akhir Hutang " & BankLeasing & " : "
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangBankLeasing")
 
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub DataTabel()

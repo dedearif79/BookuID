@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -10,6 +11,7 @@ Public Class wpfUsc_BukuPengawasanPajakImpor
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Public JudulForm
     Public JenisPajak
@@ -248,151 +250,171 @@ Public Class wpfUsc_BukuPengawasanPajakImpor
     End Sub
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
+
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'Judul Halaman :
-        lbl_JudulForm.Text = JudulForm
+        Try
+            'Judul Halaman :
+            lbl_JudulForm.Text = JudulForm
 
-        KesesuaianJurnal_100 = True
-        KesesuaianJurnal_101 = True
-        KesesuaianJurnal_102 = True
+            KesesuaianJurnal_100 = True
+            KesesuaianJurnal_101 = True
+            KesesuaianJurnal_102 = True
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
 
-        'Data Tabel :
-        NomorUrut = 0
-        NomorID = 0 'Ini Jangan Dihapus. Ada kepentingan di balik ini.
-        TanggalTransaksi = Kosongan
-        NomorInvoice = Kosongan
-        NomorInvoice_Sebelumnya = Kosongan
-        NomorFakturPajak = Kosongan
-        NamaJasa = Kosongan
-        NPWP = Kosongan
-        KodeSupplier = Kosongan
-        NamaSupplier = Kosongan
-        Keterangan = Kosongan
+            'Data Tabel :
+            NomorUrut = 0
+            NomorID = 0 'Ini Jangan Dihapus. Ada kepentingan di balik ini.
+            TanggalTransaksi = Kosongan
+            NomorInvoice = Kosongan
+            NomorInvoice_Sebelumnya = Kosongan
+            NomorFakturPajak = Kosongan
+            NamaJasa = Kosongan
+            NPWP = Kosongan
+            KodeSupplier = Kosongan
+            NamaSupplier = Kosongan
+            Keterangan = Kosongan
 
-        TotalTagihan100 = 0
-        TotalTagihan101 = 0
-        TotalTagihan102 = 0
-        TotalTagihan103 = 0
-        TotalTagihan104 = 0
-        TotalTagihan = 0
+            TotalTagihan100 = 0
+            TotalTagihan101 = 0
+            TotalTagihan102 = 0
+            TotalTagihan103 = 0
+            TotalTagihan104 = 0
+            TotalTagihan = 0
 
-        TotalBayar100 = 0
-        TotalBayar101 = 0
-        TotalBayar102 = 0
-        TotalBayar103 = 0
-        TotalBayar104 = 0
-        TotalBayar = 0
+            TotalBayar100 = 0
+            TotalBayar101 = 0
+            TotalBayar102 = 0
+            TotalBayar103 = 0
+            TotalBayar104 = 0
+            TotalBayar = 0
 
-        TotalSisaHutang = 0
-
-
-        AksesDatabase_Transaksi(Buka)
-
-        cmd = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice " &
-                              " WHERE Kode_Mata_Uang <> '" & KodeMataUang_IDR & "' " &
-                              " AND Bea_Masuk > 0 ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
+            TotalSisaHutang = 0
 
 
-        Do While dr.Read
+            AksesDatabase_Transaksi(Buka)
 
-            NomorID = dr.Item("Nomor_ID")
-            NomorPIB = dr.Item("Nomor_Faktur_Pajak")
-            TanggalPIB = TanggalFormatTampilan(dr.Item("Tanggal_Faktur_Pajak"))
-            If TanggalPIB = TanggalKosong Then TanggalPIB = Kosongan
-            NomorInvoice = dr.Item("Nomor_Invoice")
-            TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
-            BeaMasukImpor = dr.Item("Bea_Masuk")
-            If dr.Item("Jenis_PPh") = JenisPPh_Pasal22_Impor Then
-                PPhPasal22Impor = dr.Item("PPh_Terutang")
-            Else
-                PPhPasal22Impor = 0
-            End If
-            PPNMasukanImpor = dr.Item("PPN")
-            JumlahPajakImpor = BeaMasukImpor + PPhPasal22Impor + PPNMasukanImpor
-            TanggalBayar = TanggalFormatTampilan(dr.Item("Tanggal_Bayar_Pajak_Impor"))
-            If TanggalBayar = TanggalKosong Then TanggalBayar = StripKosong
-            NomorJV_Bayar = dr.Item("Nomor_JV_Bayar_Pajak_Impor")
+            cmd = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice " &
+                                  " WHERE Kode_Mata_Uang <> '" & KodeMataUang_IDR & "' " &
+                                  " AND Bea_Masuk > 0 ", KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
 
-            TambahBaris()
 
-            NomorInvoice_Sebelumnya = NomorInvoice
+            Do While dr.Read
 
-        Loop
+                NomorID = dr.Item("Nomor_ID")
+                NomorPIB = dr.Item("Nomor_Faktur_Pajak")
+                TanggalPIB = TanggalFormatTampilan(dr.Item("Tanggal_Faktur_Pajak"))
+                If TanggalPIB = TanggalKosong Then TanggalPIB = Kosongan
+                NomorInvoice = dr.Item("Nomor_Invoice")
+                TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
+                BeaMasukImpor = dr.Item("Bea_Masuk")
+                If dr.Item("Jenis_PPh") = JenisPPh_Pasal22_Impor Then
+                    PPhPasal22Impor = dr.Item("PPh_Terutang")
+                Else
+                    PPhPasal22Impor = 0
+                End If
+                PPNMasukanImpor = dr.Item("PPN")
+                JumlahPajakImpor = BeaMasukImpor + PPhPasal22Impor + PPNMasukanImpor
+                TanggalBayar = TanggalFormatTampilan(dr.Item("Tanggal_Bayar_Pajak_Impor"))
+                If TanggalBayar = TanggalKosong Then TanggalBayar = StripKosong
+                NomorJV_Bayar = dr.Item("Nomor_JV_Bayar_Pajak_Impor")
 
-        'Select Case JenisTahunBuku
-        '    Case JenisTahunBuku_LAMPAU
-        '        'Kode Setoran : 100
-        '        SaldoAkhir_BerdasarkanList_100 = SisaHutang_SaatCutOff_100
-        '        txt_SaldoBerdasarkanList_100.Text = SaldoAkhir_BerdasarkanList_100
-        '        AmbilValue_SaldoAkhirBerdasarkanCOA_100()
-        '        CekKesesuaianSaldoAkhir_100()
-        '        txt_SelisihSaldo_100.Text = SaldoAkhir_BerdasarkanList_100 - SaldoAkhir_BerdasarkanCOA_100
-        '        'Kode Setoran : 101
-        '        SaldoAkhir_BerdasarkanList_101 = SisaHutang_SaatCutOff_101
-        '        txt_SaldoBerdasarkanList_101.Text = SaldoAkhir_BerdasarkanList_101
-        '        AmbilValue_SaldoAkhirBerdasarkanCOA_101()
-        '        CekKesesuaianSaldoAkhir_101()
-        '        txt_SelisihSaldo_101.Text = SaldoAkhir_BerdasarkanList_101 - SaldoAkhir_BerdasarkanCOA_101
-        '        'Kode Setoran : 102
-        '        SaldoAkhir_BerdasarkanList_102 = SisaHutang_SaatCutOff_102
-        '        txt_SaldoBerdasarkanList_102.Text = SaldoAkhir_BerdasarkanList_102
-        '        AmbilValue_SaldoAkhirBerdasarkanCOA_102()
-        '        CekKesesuaianSaldoAkhir_102()
-        '        txt_SelisihSaldo_102.Text = SaldoAkhir_BerdasarkanList_102 - SaldoAkhir_BerdasarkanCOA_102
-        '    Case JenisTahunBuku_NORMAL
-        '        'Penjelasan : Variabel-variabel di bawah ini untuk mendapatkan jumlah bayar atas hutang pajak tahun sebelum TahunBukuAktif,
-        '        'tapi dibayarkan pada tahun ini (TahunBukuAktif).
-        '        Dim TotalBayar_UntukHutangPajakTahunSebelumIni_100 As Int64 = 0
-        '        Dim TotalBayar_UntukHutangPajakTahunSebelumIni_101 As Int64 = 0
-        '        Dim TotalBayar_UntukHutangPajakTahunSebelumIni_102 As Int64 = 0
-        '        Dim TotalBayar_UntukHutangPajakTahunSebelumIni_103 As Int64 = 0
-        '        Dim TotalBayar_UntukHutangPajakTahunSebelumIni_104 As Int64 = 0
-        '        AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_100, TotalBayar_UntukHutangPajakTahunSebelumIni_100)
-        '        AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_101, TotalBayar_UntukHutangPajakTahunSebelumIni_101)
-        '        AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_102, TotalBayar_UntukHutangPajakTahunSebelumIni_102)
-        '        AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_103, TotalBayar_UntukHutangPajakTahunSebelumIni_103)
-        '        AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_104, TotalBayar_UntukHutangPajakTahunSebelumIni_104)
-        '        If Not TahunBukuSudahStabil(TahunBukuAktif) Then
-        '            'Kode Setoran : 100
-        '            AmbilValue_SaldoAwalBerdasarkanList_100()
-        '            AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian_100()
-        '            CekKesesuaianSaldoAwal_100()
-        '            txt_SelisihSaldo_100.Text = SaldoAwal_BerdasarkanList_100 - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian_100
-        '            txt_TotalTabel_100.Text = SaldoAwal_BerdasarkanList_100 + TotalTagihan100 - (TotalBayar100 + TotalBayar_UntukHutangPajakTahunSebelumIni_100)
-        '            'Kode Setoran : 101
-        '            AmbilValue_SaldoAwalBerdasarkanList_101()
-        '            AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian_101()
-        '            CekKesesuaianSaldoAwal_101()
-        '            txt_SelisihSaldo_101.Text = SaldoAwal_BerdasarkanList_101 - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian_101
-        '            txt_TotalTabel_101.Text = SaldoAwal_BerdasarkanList_101 + TotalTagihan101 - (TotalBayar101 + TotalBayar_UntukHutangPajakTahunSebelumIni_101)
-        '            'Kode Setoran : 102
-        '            AmbilValue_SaldoAwalBerdasarkanList_102()
-        '            AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian_102()
-        '            CekKesesuaianSaldoAwal_102()
-        '            txt_SelisihSaldo_102.Text = SaldoAwal_BerdasarkanList_102 - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian_102
-        '            txt_TotalTabel_102.Text = SaldoAwal_BerdasarkanList_102 + TotalTagihan102 - (TotalBayar102 + TotalBayar_UntukHutangPajakTahunSebelumIni_102)
-        '        Else
-        '            txt_TotalTabel_100.Text = SaldoAwal_BerdasarkanCOA_100 + TotalTagihan100 - (TotalBayar100 + TotalBayar_UntukHutangPajakTahunSebelumIni_100)
-        '            txt_TotalTabel_101.Text = SaldoAwal_BerdasarkanCOA_101 + TotalTagihan101 - (TotalBayar101 + TotalBayar_UntukHutangPajakTahunSebelumIni_101)
-        '            txt_TotalTabel_102.Text = SaldoAwal_BerdasarkanCOA_102 + TotalTagihan102 - (TotalBayar102 + TotalBayar_UntukHutangPajakTahunSebelumIni_102)
-        '        End If
-        '        txt_TotalTabel_Total.Text _
-        '            = AmbilAngka(txt_TotalTabel_100.Text) _
-        '            + AmbilAngka(txt_TotalTabel_101.Text) _
-        '            + AmbilAngka(txt_TotalTabel_102.Text)
-        'End Select
+                TambahBaris()
 
-        'lbl_TotalTabel.Text = "Saldo Akhir " & TahunPajak & " : "
+                NomorInvoice_Sebelumnya = NomorInvoice
 
-        BersihkanSeleksi()
+                Await Task.Yield()
 
+            Loop
+
+            AksesDatabase_Transaksi(Tutup)
+
+            'Select Case JenisTahunBuku
+            '    Case JenisTahunBuku_LAMPAU
+            '        'Kode Setoran : 100
+            '        SaldoAkhir_BerdasarkanList_100 = SisaHutang_SaatCutOff_100
+            '        txt_SaldoBerdasarkanList_100.Text = SaldoAkhir_BerdasarkanList_100
+            '        AmbilValue_SaldoAkhirBerdasarkanCOA_100()
+            '        CekKesesuaianSaldoAkhir_100()
+            '        txt_SelisihSaldo_100.Text = SaldoAkhir_BerdasarkanList_100 - SaldoAkhir_BerdasarkanCOA_100
+            '        'Kode Setoran : 101
+            '        SaldoAkhir_BerdasarkanList_101 = SisaHutang_SaatCutOff_101
+            '        txt_SaldoBerdasarkanList_101.Text = SaldoAkhir_BerdasarkanList_101
+            '        AmbilValue_SaldoAkhirBerdasarkanCOA_101()
+            '        CekKesesuaianSaldoAkhir_101()
+            '        txt_SelisihSaldo_101.Text = SaldoAkhir_BerdasarkanList_101 - SaldoAkhir_BerdasarkanCOA_101
+            '        'Kode Setoran : 102
+            '        SaldoAkhir_BerdasarkanList_102 = SisaHutang_SaatCutOff_102
+            '        txt_SaldoBerdasarkanList_102.Text = SaldoAkhir_BerdasarkanList_102
+            '        AmbilValue_SaldoAkhirBerdasarkanCOA_102()
+            '        CekKesesuaianSaldoAkhir_102()
+            '        txt_SelisihSaldo_102.Text = SaldoAkhir_BerdasarkanList_102 - SaldoAkhir_BerdasarkanCOA_102
+            '    Case JenisTahunBuku_NORMAL
+            '        'Penjelasan : Variabel-variabel di bawah ini untuk mendapatkan jumlah bayar atas hutang pajak tahun sebelum TahunBukuAktif,
+            '        'tapi dibayarkan pada tahun ini (TahunBukuAktif).
+            '        Dim TotalBayar_UntukHutangPajakTahunSebelumIni_100 As Int64 = 0
+            '        Dim TotalBayar_UntukHutangPajakTahunSebelumIni_101 As Int64 = 0
+            '        Dim TotalBayar_UntukHutangPajakTahunSebelumIni_102 As Int64 = 0
+            '        Dim TotalBayar_UntukHutangPajakTahunSebelumIni_103 As Int64 = 0
+            '        Dim TotalBayar_UntukHutangPajakTahunSebelumIni_104 As Int64 = 0
+            '        AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_100, TotalBayar_UntukHutangPajakTahunSebelumIni_100)
+            '        AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_101, TotalBayar_UntukHutangPajakTahunSebelumIni_101)
+            '        AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_102, TotalBayar_UntukHutangPajakTahunSebelumIni_102)
+            '        AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_103, TotalBayar_UntukHutangPajakTahunSebelumIni_103)
+            '        AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_104, TotalBayar_UntukHutangPajakTahunSebelumIni_104)
+            '        If Not TahunBukuSudahStabil(TahunBukuAktif) Then
+            '            'Kode Setoran : 100
+            '            AmbilValue_SaldoAwalBerdasarkanList_100()
+            '            AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian_100()
+            '            CekKesesuaianSaldoAwal_100()
+            '            txt_SelisihSaldo_100.Text = SaldoAwal_BerdasarkanList_100 - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian_100
+            '            txt_TotalTabel_100.Text = SaldoAwal_BerdasarkanList_100 + TotalTagihan100 - (TotalBayar100 + TotalBayar_UntukHutangPajakTahunSebelumIni_100)
+            '            'Kode Setoran : 101
+            '            AmbilValue_SaldoAwalBerdasarkanList_101()
+            '            AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian_101()
+            '            CekKesesuaianSaldoAwal_101()
+            '            txt_SelisihSaldo_101.Text = SaldoAwal_BerdasarkanList_101 - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian_101
+            '            txt_TotalTabel_101.Text = SaldoAwal_BerdasarkanList_101 + TotalTagihan101 - (TotalBayar101 + TotalBayar_UntukHutangPajakTahunSebelumIni_101)
+            '            'Kode Setoran : 102
+            '            AmbilValue_SaldoAwalBerdasarkanList_102()
+            '            AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian_102()
+            '            CekKesesuaianSaldoAwal_102()
+            '            txt_SelisihSaldo_102.Text = SaldoAwal_BerdasarkanList_102 - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian_102
+            '            txt_TotalTabel_102.Text = SaldoAwal_BerdasarkanList_102 + TotalTagihan102 - (TotalBayar102 + TotalBayar_UntukHutangPajakTahunSebelumIni_102)
+            '        Else
+            '            txt_TotalTabel_100.Text = SaldoAwal_BerdasarkanCOA_100 + TotalTagihan100 - (TotalBayar100 + TotalBayar_UntukHutangPajakTahunSebelumIni_100)
+            '            txt_TotalTabel_101.Text = SaldoAwal_BerdasarkanCOA_101 + TotalTagihan101 - (TotalBayar101 + TotalBayar_UntukHutangPajakTahunSebelumIni_101)
+            '            txt_TotalTabel_102.Text = SaldoAwal_BerdasarkanCOA_102 + TotalTagihan102 - (TotalBayar102 + TotalBayar_UntukHutangPajakTahunSebelumIni_102)
+            '        End If
+            '        txt_TotalTabel_Total.Text _
+            '            = AmbilAngka(txt_TotalTabel_100.Text) _
+            '            + AmbilAngka(txt_TotalTabel_101.Text) _
+            '            + AmbilAngka(txt_TotalTabel_102.Text)
+            'End Select
+
+            'lbl_TotalTabel.Text = "Saldo Akhir " & TahunPajak & " : "
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanPajakImpor")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris()
@@ -416,7 +438,6 @@ Public Class wpfUsc_BukuPengawasanPajakImpor
         btn_InputBayar.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
-        KetersediaanMenuHalaman(pnl_Halaman, True)
     End Sub
 
     Sub AmbilValue_NamaDanNPWPSupplier()

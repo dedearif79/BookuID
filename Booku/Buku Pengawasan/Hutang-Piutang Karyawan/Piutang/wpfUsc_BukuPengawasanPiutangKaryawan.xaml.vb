@@ -3,12 +3,15 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_BukuPengawasanPiutangKaryawan
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm As String
     'Public JudulForm_SaldoAwalPiutangKaryawan = "Saldo Awal Piutang Karyawan"
@@ -100,64 +103,84 @@ Public Class wpfUsc_BukuPengawasanPiutangKaryawan
     End Sub
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
+    Async Sub TampilkanDataAsync()
 
-    Sub TampilkanData()
+        ' Guard clause
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
+        ' Disable UI dan tampilkan loading
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        KesesuaianJurnal = True
+        Try
 
-        'Style Tabel :
-        Terabas()
-        datatabelUtama.Rows.Clear()
+            KesesuaianJurnal = True
 
-        QueryTampilanPiutangTahunLalu =
-            " SELECT * FROM tbl_PengawasanPiutangKaryawan " &
-            " WHERE (Tanggal_Transaksi <  '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
-        QueryTampilanPiutangTahunAktif =
-            " SELECT * FROM tbl_PengawasanPiutangKaryawan " &
-            " WHERE (Tanggal_Transaksi >= '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
+            'Style Tabel :
+            Terabas()
+            datatabelUtama.Rows.Clear()
 
-        'Data Tabel :
-        NomorUrut = 0
-        SaldoAwal_BerdasarkanList = 0
-        Total_SisaPiutang = 0
+            QueryTampilanPiutangTahunLalu =
+                " SELECT * FROM tbl_PengawasanPiutangKaryawan " &
+                " WHERE (Tanggal_Transaksi <  '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
+            QueryTampilanPiutangTahunAktif =
+                " SELECT * FROM tbl_PengawasanPiutangKaryawan " &
+                " WHERE (Tanggal_Transaksi >= '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
 
-        'Data Tabel Sisa Piutang Usaha Tahun Lalu :
-        QueryTampilan = QueryTampilanPiutangTahunLalu
-        DataTabel()
+            'Data Tabel :
+            NomorUrut = 0
+            SaldoAwal_BerdasarkanList = 0
+            Total_SisaPiutang = 0
 
-        'Data Tabel BPHU Tahun Buku Aktif :
-        QueryTampilan = QueryTampilanPiutangTahunAktif
-        DataTabel()
+            'Data Tabel Sisa Piutang Usaha Tahun Lalu :
+            QueryTampilan = QueryTampilanPiutangTahunLalu
+            Await DataTabelAsync()
 
-        TotalTabel = Total_SisaPiutang
+            'Data Tabel BPHU Tahun Buku Aktif :
+            QueryTampilan = QueryTampilanPiutangTahunAktif
+            Await DataTabelAsync()
 
-        Select Case JenisTahunBuku
-            Case JenisTahunBuku_LAMPAU
-                SaldoAkhir_BerdasarkanList = Total_SisaPiutang
-                txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
-                AmbilValue_SaldoAkhirBerdasarkanCOA()
-                CekKesesuaianSaldoAkhir()
-                txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
-            Case JenisTahunBuku_NORMAL
-                txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
-                AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
-                CekKesesuaianSaldoAwal()
-                txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
-                txt_TotalTabel.Text = TotalTabel
-        End Select
+            TotalTabel = Total_SisaPiutang
 
-        lbl_TotalTabel.Text = "Saldo Akhir Piutang Karyawan : "
+            Select Case JenisTahunBuku
+                Case JenisTahunBuku_LAMPAU
+                    SaldoAkhir_BerdasarkanList = Total_SisaPiutang
+                    txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
+                    AmbilValue_SaldoAkhirBerdasarkanCOA()
+                    CekKesesuaianSaldoAkhir()
+                    txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
+                Case JenisTahunBuku_NORMAL
+                    txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
+                    AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
+                    CekKesesuaianSaldoAwal()
+                    txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
+                    txt_TotalTabel.Text = TotalTabel
+            End Select
 
-        BersihkanSeleksi()
+            lbl_TotalTabel.Text = "Saldo Akhir Piutang Karyawan : "
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanPiutangKaryawan")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
 
     End Sub
 
-    Sub DataTabel()
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
+
+    Async Function DataTabelAsync() As Task
 
         AksesDatabase_Transaksi(Buka)
         AksesDatabase_General(Buka)
@@ -203,12 +226,14 @@ Public Class wpfUsc_BukuPengawasanPiutangKaryawan
             datatabelUtama.Rows.Add(NomorUrut, NomorID, NomorBPPK, NomorIDKaryawan, NamaKaryawan, Jabatan, TanggalPinjam,
                                     JumlahPiutang, SaldoAwalPerBaris, JumlahAngsuran, SaldoAkhirPerBaris, Keterangan, NomorJV)
 
+            Await Task.Yield()
+
         Loop
 
         AksesDatabase_General(Tutup)
         AksesDatabase_Transaksi(Tutup)
 
-    End Sub
+    End Function
 
 
     Sub BersihkanSeleksi()
@@ -225,7 +250,6 @@ Public Class wpfUsc_BukuPengawasanPiutangKaryawan
         NomorJV_Pembayaran_Terseleksi = 0
         VisibilitasInfoSaldo(True)
         BersihkanSeleksiPembayaran()
-        KetersediaanMenuHalaman(pnl_Halaman, True)
     End Sub
 
 

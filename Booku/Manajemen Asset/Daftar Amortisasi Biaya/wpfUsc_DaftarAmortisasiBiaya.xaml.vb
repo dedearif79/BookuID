@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -10,6 +11,7 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Dim JudulForm
     Dim TahunLaporan
@@ -139,11 +141,22 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
 
 
     Dim EksekusiTampilanData As Boolean
-    Sub TampilkanData()
 
+    ''' <summary>
+    ''' Method async untuk memuat data amortisasi biaya dengan UI responsive
+    ''' </summary>
+    Async Sub TampilkanDataAsync()
+
+        ' Guard clause: Cegah loading berulang
         If EksekusiTampilanData = False Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
+        ' Disable UI dan tampilkan loading
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)  ' Beri waktu UI render
+
+        Try
 
         'Style Tabel :
         datatabelUtama.Rows.Clear()
@@ -541,8 +554,22 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
                                   Jml_Januari, Jml_Februari, Jml_Maret, Jml_April, Jml_Mei, Jml_Juni, Jml_Juli, Jml_Agustus, Jml_September, Jml_Oktober, Jml_Nopember, Jml_Desember)
         End If
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DaftarAmortisasiBiaya")
 
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    ''' <summary>
+    ''' Wrapper untuk backward compatibility
+    ''' </summary>
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris()
@@ -561,12 +588,22 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
         Terabas()
     End Sub
 
+    ''' <summary>
+    ''' Logika utama reset seleksi (TANPA enable UI)
+    ''' </summary>
     Sub BersihkanSeleksi()
         BersihkanSeleksi_WPF(datagridUtama, datatabelUtama, BarisTerseleksi, JumlahBaris)
         KetersediaanTombolUpdate(False)
         KetersediaanTombolLihatJurnal(False)
         KetersediaanTombolPosting(False)
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+    End Sub
+
+    ''' <summary>
+    ''' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    ''' </summary>
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

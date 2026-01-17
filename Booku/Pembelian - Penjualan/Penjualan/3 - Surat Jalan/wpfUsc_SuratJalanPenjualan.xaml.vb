@@ -3,12 +3,14 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_SuratJalanPenjualan
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
     Public JudulForm
 
 
@@ -85,12 +87,19 @@ Public Class wpfUsc_SuratJalanPenjualan
 
 
     Dim EksekusiTampilanData As Boolean
-    Sub TampilkanData()
+
+    Async Sub TampilkanDataAsync()
 
         If EksekusiTampilanData = False Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'Filter Data :
-        Dim FilterData = Kosongan
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
+
+        Try
+            'Filter Data :
+            Dim FilterData = Kosongan
 
         'FilterKontrol
         Dim FilterKontrol = Kosongan
@@ -116,11 +125,10 @@ Public Class wpfUsc_SuratJalanPenjualan
         cmd = New OdbcCommand(" SELECT * FROM tbl_Penjualan_SJ " &
                               " WHERE Nomor_SJ <> 'X' " & FilterData &
                               " ORDER BY Angka_SJ ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        If StatusKoneksiDatabase = False Then Return
+            dr_ExecuteReader()
+            If StatusKoneksiDatabase = False Then Exit Try
 
-
-        Do While dr.Read
+            Do While dr.Read
             NomorPO = Kosongan
             NomorPO_Satuan = Kosongan
             NomorPO_Sebelumnya = Kosongan
@@ -178,13 +186,26 @@ Public Class wpfUsc_SuratJalanPenjualan
                 End If
                 If TambahkanBaris = True Then TambahBaris()
             End If
-            AngkaSJ_Sebelumnya = AngkaSJ
-        Loop
+                AngkaSJ_Sebelumnya = AngkaSJ
+                Await Task.Yield()
+            Loop
 
-        AksesDatabase_Transaksi(Tutup)
+            AksesDatabase_Transaksi(Tutup)
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_SuratJalanPenjualan")
 
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris()

@@ -1,5 +1,6 @@
 ﻿Imports bcomm
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -10,6 +11,8 @@ Public Class wpfUsc_DataLawanTransaksi
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm
     Public KesesuaianJurnal
@@ -57,49 +60,80 @@ Public Class wpfUsc_DataLawanTransaksi
 
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = False
+        ' (Tidak ada ComboBox filter untuk diisi)
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
 
-    Sub TampilkanData()
+    ''' <summary>
+    ''' Method async untuk memuat data lawan transaksi dengan UI responsive
+    ''' </summary>
+    Async Sub TampilkanDataAsync()
 
-        KesesuaianJurnal = True
+        ' Guard clause: Cegah loading berulang
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'Data Tabel :
-        datatabelUtama.Rows.Clear()
-        NomorUrut = 0
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)  ' Beri waktu UI render
 
-        AksesDatabase_General(Buka)
+        Try
+            KesesuaianJurnal = True
 
-        cmd = New OdbcCommand(" SELECT * FROM tbl_LawanTransaksi ", KoneksiDatabaseGeneral)
-        dr_ExecuteReader()
+            'Data Tabel :
+            datatabelUtama.Rows.Clear()
+            NomorUrut = 0
 
-        Do While dr.Read
-            KodeLawanTransaksi = dr.Item("Kode_Mitra")
-            NamaLawanTransaksi = dr.Item("Nama_Mitra")
-            AmbilValueChecked("UMKM", UMKM)
-            AmbilValueChecked("Pemegang_Saham", PemegangSaham)
-            AmbilValueChecked("Afiliasi", Afiliasi)
-            AmbilValueChecked("Supplier", Supplier)
-            AmbilValueChecked("Customer", Customer)
-            AmbilValueChecked("Keuangan", Keuangan)
-            AmbilValueChecked("PKP", PKP)
-            AmbilValueChecked("Pemotong_PPh", PemotongPPh)
-            AmbilValueChecked("PJK", PJK)
-            NPWP = dr.Item("NPWP")
-            JenisWP = dr.Item("Jenis_WP")
-            LokasiWP = dr.Item("Lokasi_WP")
-            Alamat = PenghapusEnter(dr.Item("Alamat"))
-            Email = dr.Item("Email")
-            PIC = dr.Item("PIC")
-            RekeningBank = dr.Item("Rekening_Bank")
-            AtasNama = dr.Item("Atas_Nama")
-            TambahBaris()
-        Loop
-        AksesDatabase_General(Tutup)
+            AksesDatabase_General(Buka)
 
-        BersihkanSeleksi()
+            cmd = New OdbcCommand(" SELECT * FROM tbl_LawanTransaksi ", KoneksiDatabaseGeneral)
+            dr_ExecuteReader()
 
+            Do While dr.Read
+                KodeLawanTransaksi = dr.Item("Kode_Mitra")
+                NamaLawanTransaksi = dr.Item("Nama_Mitra")
+                AmbilValueChecked("UMKM", UMKM)
+                AmbilValueChecked("Pemegang_Saham", PemegangSaham)
+                AmbilValueChecked("Afiliasi", Afiliasi)
+                AmbilValueChecked("Supplier", Supplier)
+                AmbilValueChecked("Customer", Customer)
+                AmbilValueChecked("Keuangan", Keuangan)
+                AmbilValueChecked("PKP", PKP)
+                AmbilValueChecked("Pemotong_PPh", PemotongPPh)
+                AmbilValueChecked("PJK", PJK)
+                NPWP = dr.Item("NPWP")
+                JenisWP = dr.Item("Jenis_WP")
+                LokasiWP = dr.Item("Lokasi_WP")
+                Alamat = PenghapusEnter(dr.Item("Alamat"))
+                Email = dr.Item("Email")
+                PIC = dr.Item("PIC")
+                RekeningBank = dr.Item("Rekening_Bank")
+                AtasNama = dr.Item("Atas_Nama")
+                TambahBaris()
+                Await Task.Yield()  ' Beri kesempatan UI refresh
+            Loop
+            AksesDatabase_General(Tutup)
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DataLawanTransaksi")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    ''' <summary>
+    ''' Wrapper untuk backward compatibility
+    ''' </summary>
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub AmbilValueChecked(ByVal Kolom As String, ByRef Cek As Boolean)
@@ -117,6 +151,9 @@ Public Class wpfUsc_DataLawanTransaksi
                                 NPWP, JenisWP, LokasiWP, Alamat, Email, PIC, RekeningBank, AtasNama)
     End Sub
 
+    ''' <summary>
+    ''' Logika utama reset seleksi (TANPA enable UI)
+    ''' </summary>
     Sub BersihkanSeleksi()
         JumlahBaris = datatabelUtama.Rows.Count
         BarisTerseleksi = -1
@@ -126,6 +163,14 @@ Public Class wpfUsc_DataLawanTransaksi
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+    End Sub
+
+    ''' <summary>
+    ''' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    ''' </summary>
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

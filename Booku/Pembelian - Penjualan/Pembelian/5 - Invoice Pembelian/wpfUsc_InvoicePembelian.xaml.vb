@@ -3,12 +3,15 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_InvoicePembelian
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
     Public JudulForm As String
 
     Public KesesuaianJurnal As Boolean
@@ -182,262 +185,276 @@ Public Class wpfUsc_InvoicePembelian
 
 
     Sub RefreshTampilanData()
-        EksekusiKode = False
+        EksekusiTampilanData = False
         KontenCombo_JenisTampilan()
         KontenCombo_Supplier()
-        EksekusiKode = True
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
-        If EksekusiKode = False Then Return
+        If EksekusiTampilanData = False Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KesesuaianJurnal = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
-        If PembelianLokal Then
-            Nomor_SJ_BAST.Visibility = Visibility.Visible
-            Tanggal_SJ_BAST.Visibility = Visibility.Visible
-        End If
-        If MetodePembayaran = MetodePembayaran_Termin Then
-            Nomor_SJ_BAST.Visibility = Visibility.Collapsed
-            Tanggal_SJ_BAST.Visibility = Visibility.Collapsed
-            Prosentase_Termin.Visibility = Visibility.Visible
-        End If
-
-        'Filter Invoice Dengan PO :
-        Dim FilterInvoiceDenganPO = Spasi1
-        If MetodePembayaran = MetodePembayaran_Normal Then
-            Prosentase_Termin.Visibility = Visibility.Collapsed
-            If InvoiceDenganPO = True Then FilterInvoiceDenganPO = " AND Nomor_PO_Produk <> '' "
-            If InvoiceDenganPO = False Then FilterInvoiceDenganPO = " AND Nomor_PO_Produk = '' "
-        End If
-
-        'Filter Jenis Produk Induk :
-        Dim FilterJenisProdukInduk = Spasi1
-        If JenisProduk_Menu <> JenisProduk_Semua Then FilterJenisProdukInduk = " AND Jenis_Produk_Induk = '" & JenisProduk_Menu & "' "
-
-        'Filter Supplier :
-        Dim FilterSupplier = Spasi1
-        If cmb_Supplier.SelectedValue <> Pilihan_Semua Then FilterSupplier = " AND Kode_Supplier = '" & Pilih_KodeSupplier & "' "
-
-        'Filter Metode Pembayaran :
-        Dim FilterMetodePembayaran = Spasi1
-        If MetodePembayaran <> Pilihan_Semua Then FilterMetodePembayaran = "  AND Metode_Pembayaran = '" & MetodePembayaran & "' "
-
-        'Filter Data :
-        Dim FilterData = FilterInvoiceDenganPO & FilterJenisProdukInduk & FilterSupplier & FilterMetodePembayaran
-
-        'Data Tabel :
-        Index_BarisTabel = 0
-        NomorUrut = 0
-        NomorInvoice_Sebelumnya = Kosongan
-
-        'Total :
-        Rekap_JumlahHarga = 0
-        Rekap_DiskonRp = 0
-        Rekap_DasarPengenaanPajak = 0
-        Rekap_PPN = 0
-        Rekap_PPhDipotong = 0
-        Rekap_TagihanKotor = 0
-        Rekap_TotalTagihan = 0
-        Rekap_Retur = 0
-        'Asing :
-        Rekap_JumlahHarga_Asing = 0
-        Rekap_Diskon_Asing = 0
-        Rekap_TotalTagihan_Asing = 0
-
-        AksesDatabase_Transaksi(Buka)
-
-        cmd = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice " &
-                              " WHERE Nomor_Invoice <> 'X' " & FilterData &
-                              " ORDER BY Tanggal_Invoice ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        If StatusKoneksiDatabase = False Then
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            Return
-        End If
-
-        Do While dr.Read
-            NomorPO = Kosongan
-            TanggalPO = Kosongan
-            NamaProduk = Kosongan
-            NomorSJBAST = Kosongan
-            NomorSJBAST_Satuan = Kosongan
-            NomorSJBAST_Sebelumnya = Kosongan
-            TanggalSJBAST = Kosongan
-            AngkaInvoice = dr.Item("Angka_Invoice")
-            JenisInvoice = dr.Item("Jenis_Invoice")
-            JenisProduk = dr.Item("Jenis_Produk_Induk")
-            NomorInvoice = dr.Item("Nomor_Invoice")
-            NomorPembelian = dr.Item("Nomor_Pembelian")
-            KodeSupplier = dr.Item("Kode_Supplier")
-            NamaSupplier = dr.Item("Nama_Supplier")
-            NP = dr.Item("N_P")
-            NamaProduk = dr.Item("Nama_Produk")
-            Dim NomorInvoice_Pembetulan = Kosongan
-            Dim NP_Pembetulan = Kosongan
-            If NP = "N" Then
-                NomorInvoice_Pembetulan = NomorInvoice & "-P1"
-            Else
-                Dim PembetulanKe = AmbilAngka(NP)
-                NP_Pembetulan = "P" & (PembetulanKe + 1)
-                NomorInvoice_Pembetulan = GantiTeks(NomorInvoice, NP, NP_Pembetulan)
-            End If
-            cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice " &
-                                         " WHERE Nomor_Invoice = '" & NomorInvoice_Pembetulan & "' ", KoneksiDatabaseTransaksi)
-            drTELUSUR_ExecuteReader()
-            drTELUSUR.Read()
-            If drTELUSUR.HasRows And JenisTampilan = JenisTampilan_HasilAkhir Then Continue Do
-            TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
-            TahunInvoice = Right(TanggalInvoice, 4)
-            If NP = "N" Then
-                TanggalPembetulan = StripKosong
-            Else
-                TanggalPembetulan = TanggalFormatTampilan(dr.Item("Tanggal_Pembetulan"))
-            End If
-            Tanggallapor = TanggalFormatTampilan(dr.Item("Tanggal_Lapor"))
-            If Tanggallapor = TanggalKosong Then Tanggallapor = StripKosong
-            JatuhTempo = dr.Item("Jumlah_Hari_Jatuh_Tempo")
-            If JatuhTempo > 0 Then
-                JatuhTempo &= " hari"
-            Else
-                JatuhTempo = TanggalFormatTampilan(dr.Item("Tanggal_Jatuh_Tempo"))
-            End If
-            cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice WHERE " &
-                                         " Nomor_Invoice = '" & NomorInvoice & "' ", KoneksiDatabaseTransaksi)
-            drTELUSUR_ExecuteReader()
-            Do While drTELUSUR.Read
-                NomorSJBAST_Satuan = drTELUSUR.Item("Nomor_SJ_BAST_Produk")
-                'Surat Jalan : ---------------------------------------------------
-                cmdTELUSUR2 = New OdbcCommand(" SELECT * FROM tbl_Pembelian_SJ " &
-                                              " WHERE Nomor_SJ = '" & NomorSJBAST_Satuan & "' ", KoneksiDatabaseTransaksi)
-                drTELUSUR2_ExecuteReader()
-                drTELUSUR2.Read()
-                If drTELUSUR2.HasRows Then
-                    If NomorSJBAST_Satuan <> NomorSJBAST_Sebelumnya Then
-                        If NomorSJBAST = Kosongan Then
-                            NomorSJBAST = NomorSJBAST_Satuan
-                            TanggalSJBAST = TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_SJ"))
-                            NomorPO = drTELUSUR2.Item("Nomor_PO_Produk")
-                            TanggalPO = TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_PO_Produk"))
-                            cmdTELUSUR3 = New OdbcCommand(" SELECT * FROM tbl_Pembelian_PO " &
-                                                          " WHERE Nomor_PO = '" & NomorPO & "' ", KoneksiDatabaseTransaksi)
-                            drTELUSUR3_ExecuteReader()
-                            drTELUSUR3.Read()
-                            KodeProject = drTELUSUR3.Item("Kode_Project_Produk")
-                        Else
-                            NomorSJBAST &= SlashGanda_Pemisah & NomorSJBAST_Satuan
-                            TanggalSJBAST &= SlashGanda_Pemisah & TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_SJ"))
-                            NomorPO &= SlashGanda_Pemisah & drTELUSUR2.Item("Nomor_PO_Produk")
-                            TanggalPO &= SlashGanda_Pemisah & TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_PO_Produk"))
-                            cmdTELUSUR3 = New OdbcCommand(" SELECT * FROM tbl_Pembelian_PO " &
-                                                          " WHERE Nomor_PO = '" & drTELUSUR2.Item("Nomor_PO_Produk") & "' ", KoneksiDatabaseTransaksi)
-                            drTELUSUR3_ExecuteReader()
-                            drTELUSUR3.Read()
-                            KodeProject &= SlashGanda_Pemisah & drTELUSUR3.Item("Kode_Project_Produk")
-                        End If
-                    End If
-                End If
-                'BAST : ------------------------------------------------------------
-                cmdTELUSUR2 = New OdbcCommand(" SELECT * FROM tbl_Pembelian_BAST " &
-                                              " WHERE Nomor_BAST = '" & NomorSJBAST_Satuan & "' ", KoneksiDatabaseTransaksi)
-                drTELUSUR2_ExecuteReader()
-                drTELUSUR2.Read()
-                If drTELUSUR2.HasRows Then
-                    If NomorSJBAST_Satuan <> NomorSJBAST_Sebelumnya Then
-                        If NomorSJBAST = Kosongan Then
-                            NomorSJBAST = NomorSJBAST_Satuan
-                            TanggalSJBAST = TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_BAST"))
-                            NomorPO = drTELUSUR2.Item("Nomor_PO_Produk")
-                            TanggalPO = TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_PO_Produk"))
-                            cmdTELUSUR3 = New OdbcCommand(" SELECT * FROM tbl_Pembelian_PO " &
-                                                          " WHERE Nomor_PO = '" & NomorPO & "' ", KoneksiDatabaseTransaksi)
-                            drTELUSUR3_ExecuteReader()
-                            drTELUSUR3.Read()
-                            KodeProject = drTELUSUR3.Item("Kode_Project_Produk")
-                        Else
-                            NomorSJBAST &= SlashGanda_Pemisah & NomorSJBAST_Satuan
-                            TanggalSJBAST &= SlashGanda_Pemisah & TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_BAST"))
-                            NomorPO &= SlashGanda_Pemisah & drTELUSUR2.Item("Nomor_PO_Produk")
-                            TanggalPO &= SlashGanda_Pemisah & TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_PO_Produk"))
-                            cmdTELUSUR3 = New OdbcCommand(" SELECT * FROM tbl_Pembelian_PO " &
-                                                          " WHERE Nomor_PO = '" & drTELUSUR2.Item("Nomor_PO_Produk") & "' ", KoneksiDatabaseTransaksi)
-                            drTELUSUR3_ExecuteReader()
-                            drTELUSUR3.Read()
-                            KodeProject &= SlashGanda_Pemisah & drTELUSUR3.Item("Kode_Project_Produk")
-                        End If
-                    End If
-                End If
-                NomorSJBAST_Sebelumnya = NomorSJBAST_Satuan
-            Loop
+        Try
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
             If PembelianLokal Then
-                If NomorPO = Kosongan Or dr.Item("Metode_Pembayaran") = MetodePembayaran_Termin Then
+                Nomor_SJ_BAST.Visibility = Visibility.Visible
+                Tanggal_SJ_BAST.Visibility = Visibility.Visible
+            End If
+            If MetodePembayaran = MetodePembayaran_Termin Then
+                Nomor_SJ_BAST.Visibility = Visibility.Collapsed
+                Tanggal_SJ_BAST.Visibility = Visibility.Collapsed
+                Prosentase_Termin.Visibility = Visibility.Visible
+            End If
+
+            'Filter Invoice Dengan PO :
+            Dim FilterInvoiceDenganPO = Spasi1
+            If MetodePembayaran = MetodePembayaran_Normal Then
+                Prosentase_Termin.Visibility = Visibility.Collapsed
+                If InvoiceDenganPO = True Then FilterInvoiceDenganPO = " AND Nomor_PO_Produk <> '' "
+                If InvoiceDenganPO = False Then FilterInvoiceDenganPO = " AND Nomor_PO_Produk = '' "
+            End If
+
+            'Filter Jenis Produk Induk :
+            Dim FilterJenisProdukInduk = Spasi1
+            If JenisProduk_Menu <> JenisProduk_Semua Then FilterJenisProdukInduk = " AND Jenis_Produk_Induk = '" & JenisProduk_Menu & "' "
+
+            'Filter Supplier :
+            Dim FilterSupplier = Spasi1
+            If cmb_Supplier.SelectedValue <> Pilihan_Semua Then FilterSupplier = " AND Kode_Supplier = '" & Pilih_KodeSupplier & "' "
+
+            'Filter Metode Pembayaran :
+            Dim FilterMetodePembayaran = Spasi1
+            If MetodePembayaran <> Pilihan_Semua Then FilterMetodePembayaran = "  AND Metode_Pembayaran = '" & MetodePembayaran & "' "
+
+            'Filter Data :
+            Dim FilterData = FilterInvoiceDenganPO & FilterJenisProdukInduk & FilterSupplier & FilterMetodePembayaran
+
+            'Data Tabel :
+            Index_BarisTabel = 0
+            NomorUrut = 0
+            NomorInvoice_Sebelumnya = Kosongan
+
+            'Total :
+            Rekap_JumlahHarga = 0
+            Rekap_DiskonRp = 0
+            Rekap_DasarPengenaanPajak = 0
+            Rekap_PPN = 0
+            Rekap_PPhDipotong = 0
+            Rekap_TagihanKotor = 0
+            Rekap_TotalTagihan = 0
+            Rekap_Retur = 0
+            'Asing :
+            Rekap_JumlahHarga_Asing = 0
+            Rekap_Diskon_Asing = 0
+            Rekap_TotalTagihan_Asing = 0
+
+            AksesDatabase_Transaksi(Buka)
+
+            cmd = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice " &
+                                  " WHERE Nomor_Invoice <> 'X' " & FilterData &
+                                  " ORDER BY Tanggal_Invoice ", KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
+            If StatusKoneksiDatabase = False Then Exit Try
+
+            Do While dr.Read
+                NomorPO = Kosongan
+                TanggalPO = Kosongan
+                NamaProduk = Kosongan
+                NomorSJBAST = Kosongan
+                NomorSJBAST_Satuan = Kosongan
+                NomorSJBAST_Sebelumnya = Kosongan
+                TanggalSJBAST = Kosongan
+                AngkaInvoice = dr.Item("Angka_Invoice")
+                JenisInvoice = dr.Item("Jenis_Invoice")
+                JenisProduk = dr.Item("Jenis_Produk_Induk")
+                NomorInvoice = dr.Item("Nomor_Invoice")
+                NomorPembelian = dr.Item("Nomor_Pembelian")
+                KodeSupplier = dr.Item("Kode_Supplier")
+                NamaSupplier = dr.Item("Nama_Supplier")
+                NP = dr.Item("N_P")
+                NamaProduk = dr.Item("Nama_Produk")
+                Dim NomorInvoice_Pembetulan = Kosongan
+                Dim NP_Pembetulan = Kosongan
+                If NP = "N" Then
+                    NomorInvoice_Pembetulan = NomorInvoice & "-P1"
+                Else
+                    Dim PembetulanKe = AmbilAngka(NP)
+                    NP_Pembetulan = "P" & (PembetulanKe + 1)
+                    NomorInvoice_Pembetulan = GantiTeks(NomorInvoice, NP, NP_Pembetulan)
+                End If
+                cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice " &
+                                             " WHERE Nomor_Invoice = '" & NomorInvoice_Pembetulan & "' ", KoneksiDatabaseTransaksi)
+                drTELUSUR_ExecuteReader()
+                drTELUSUR.Read()
+                If drTELUSUR.HasRows And JenisTampilan = JenisTampilan_HasilAkhir Then Continue Do
+                TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
+                TahunInvoice = Right(TanggalInvoice, 4)
+                If NP = "N" Then
+                    TanggalPembetulan = StripKosong
+                Else
+                    TanggalPembetulan = TanggalFormatTampilan(dr.Item("Tanggal_Pembetulan"))
+                End If
+                Tanggallapor = TanggalFormatTampilan(dr.Item("Tanggal_Lapor"))
+                If Tanggallapor = TanggalKosong Then Tanggallapor = StripKosong
+                JatuhTempo = dr.Item("Jumlah_Hari_Jatuh_Tempo")
+                If JatuhTempo > 0 Then
+                    JatuhTempo &= " hari"
+                Else
+                    JatuhTempo = TanggalFormatTampilan(dr.Item("Tanggal_Jatuh_Tempo"))
+                End If
+                cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_Pembelian_Invoice WHERE " &
+                                             " Nomor_Invoice = '" & NomorInvoice & "' ", KoneksiDatabaseTransaksi)
+                drTELUSUR_ExecuteReader()
+                Do While drTELUSUR.Read
+                    NomorSJBAST_Satuan = drTELUSUR.Item("Nomor_SJ_BAST_Produk")
+                    'Surat Jalan : ---------------------------------------------------
+                    cmdTELUSUR2 = New OdbcCommand(" SELECT * FROM tbl_Pembelian_SJ " &
+                                                  " WHERE Nomor_SJ = '" & NomorSJBAST_Satuan & "' ", KoneksiDatabaseTransaksi)
+                    drTELUSUR2_ExecuteReader()
+                    drTELUSUR2.Read()
+                    If drTELUSUR2.HasRows Then
+                        If NomorSJBAST_Satuan <> NomorSJBAST_Sebelumnya Then
+                            If NomorSJBAST = Kosongan Then
+                                NomorSJBAST = NomorSJBAST_Satuan
+                                TanggalSJBAST = TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_SJ"))
+                                NomorPO = drTELUSUR2.Item("Nomor_PO_Produk")
+                                TanggalPO = TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_PO_Produk"))
+                                cmdTELUSUR3 = New OdbcCommand(" SELECT * FROM tbl_Pembelian_PO " &
+                                                              " WHERE Nomor_PO = '" & NomorPO & "' ", KoneksiDatabaseTransaksi)
+                                drTELUSUR3_ExecuteReader()
+                                drTELUSUR3.Read()
+                                KodeProject = drTELUSUR3.Item("Kode_Project_Produk")
+                            Else
+                                NomorSJBAST &= SlashGanda_Pemisah & NomorSJBAST_Satuan
+                                TanggalSJBAST &= SlashGanda_Pemisah & TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_SJ"))
+                                NomorPO &= SlashGanda_Pemisah & drTELUSUR2.Item("Nomor_PO_Produk")
+                                TanggalPO &= SlashGanda_Pemisah & TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_PO_Produk"))
+                                cmdTELUSUR3 = New OdbcCommand(" SELECT * FROM tbl_Pembelian_PO " &
+                                                              " WHERE Nomor_PO = '" & drTELUSUR2.Item("Nomor_PO_Produk") & "' ", KoneksiDatabaseTransaksi)
+                                drTELUSUR3_ExecuteReader()
+                                drTELUSUR3.Read()
+                                KodeProject &= SlashGanda_Pemisah & drTELUSUR3.Item("Kode_Project_Produk")
+                            End If
+                        End If
+                    End If
+                    'BAST : ------------------------------------------------------------
+                    cmdTELUSUR2 = New OdbcCommand(" SELECT * FROM tbl_Pembelian_BAST " &
+                                                  " WHERE Nomor_BAST = '" & NomorSJBAST_Satuan & "' ", KoneksiDatabaseTransaksi)
+                    drTELUSUR2_ExecuteReader()
+                    drTELUSUR2.Read()
+                    If drTELUSUR2.HasRows Then
+                        If NomorSJBAST_Satuan <> NomorSJBAST_Sebelumnya Then
+                            If NomorSJBAST = Kosongan Then
+                                NomorSJBAST = NomorSJBAST_Satuan
+                                TanggalSJBAST = TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_BAST"))
+                                NomorPO = drTELUSUR2.Item("Nomor_PO_Produk")
+                                TanggalPO = TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_PO_Produk"))
+                                cmdTELUSUR3 = New OdbcCommand(" SELECT * FROM tbl_Pembelian_PO " &
+                                                              " WHERE Nomor_PO = '" & NomorPO & "' ", KoneksiDatabaseTransaksi)
+                                drTELUSUR3_ExecuteReader()
+                                drTELUSUR3.Read()
+                                KodeProject = drTELUSUR3.Item("Kode_Project_Produk")
+                            Else
+                                NomorSJBAST &= SlashGanda_Pemisah & NomorSJBAST_Satuan
+                                TanggalSJBAST &= SlashGanda_Pemisah & TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_BAST"))
+                                NomorPO &= SlashGanda_Pemisah & drTELUSUR2.Item("Nomor_PO_Produk")
+                                TanggalPO &= SlashGanda_Pemisah & TanggalFormatTampilan(drTELUSUR2.Item("Tanggal_PO_Produk"))
+                                cmdTELUSUR3 = New OdbcCommand(" SELECT * FROM tbl_Pembelian_PO " &
+                                                              " WHERE Nomor_PO = '" & drTELUSUR2.Item("Nomor_PO_Produk") & "' ", KoneksiDatabaseTransaksi)
+                                drTELUSUR3_ExecuteReader()
+                                drTELUSUR3.Read()
+                                KodeProject &= SlashGanda_Pemisah & drTELUSUR3.Item("Kode_Project_Produk")
+                            End If
+                        End If
+                    End If
+                    NomorSJBAST_Sebelumnya = NomorSJBAST_Satuan
+                Loop
+                If PembelianLokal Then
+                    If NomorPO = Kosongan Or dr.Item("Metode_Pembayaran") = MetodePembayaran_Termin Then
+                        KodeProject = dr.Item("Kode_Project_Produk")
+                        TanggalSJBAST = TanggalFormatTampilan(dr.Item("Tanggal_SJ_BAST_Produk"))
+                        NomorSJBAST = dr.Item("Nomor_SJ_BAST_Produk")
+                    End If
+                Else
                     KodeProject = dr.Item("Kode_Project_Produk")
                     TanggalSJBAST = TanggalFormatTampilan(dr.Item("Tanggal_SJ_BAST_Produk"))
                     NomorSJBAST = dr.Item("Nomor_SJ_BAST_Produk")
                 End If
-            Else
-                KodeProject = dr.Item("Kode_Project_Produk")
-                TanggalSJBAST = TanggalFormatTampilan(dr.Item("Tanggal_SJ_BAST_Produk"))
-                NomorSJBAST = dr.Item("Nomor_SJ_BAST_Produk")
+                JenisPPN = dr.Item("Jenis_PPN")
+                KodeMataUang = dr.Item("Kode_Mata_Uang")
+                Kurs = dr.Item("Kurs")
+                JumlahHarga = dr.Item("Jumlah_Harga_Keseluruhan")
+                JumlahHarga_Asing = dr.Item("Jumlah_Harga_Keseluruhan")
+                Dim Termin As Decimal = dr.Item("Termin")
+                Dim TerminPersen As Decimal = Termin
+                Select Case dr.Item("Basis_Perhitungan_Termin")
+                    Case BasisPerhitunganTermin_Prosentase
+                        TerminPersen = Termin
+                    Case BasisPerhitunganTermin_Nominal
+                        If PembelianLokal Then
+                            TerminPersen = (FormatUlangInt64(Termin) / JumlahHarga) * 100
+                        Else
+                            TerminPersen = (Termin / JumlahHarga_Asing) * 100
+                        End If
+                End Select
+                DiskonRp = dr.Item("Diskon")
+                DiskonAsing = AmbilValue_DiskonAsingBerdasarkanNomorInvoicePenjualan(NomorInvoice)
+                ProsentaseTermin_String = PembulatanDesimal2Digit(TerminPersen).ToString & " % "
+                DasarPengenaanPajak = dr.Item("Dasar_Pengenaan_Pajak")
+                NomorFakturPajak = dr.Item("Nomor_Faktur_Pajak")
+                PPN = dr.Item("PPN")
+                TagihanKotor = dr.Item("Total_Tagihan_Kotor")
+                PPhDipotong = dr.Item("PPh_Dipotong")
+                TotalTagihan = dr.Item("Total_Tagihan")
+                TotalTagihan_Asing = dr.Item("Total_Tagihan")
+                ReturDPP = dr.Item("Retur_DPP")
+                ReturPPN = dr.Item("Retur_PPN")
+                Retur = ReturDPP + ReturPPN
+                Catatan = PenghapusEnter(dr.Item("Catatan"))
+                NomorJV = dr.Item("Nomor_JV")
+                If NomorInvoice <> NomorInvoice_Sebelumnya Then
+                    If PembelianLokal And Not MitraSebagaiPerusahaanLuarNegeri(KodeSupplier) Then TambahBaris()
+                    If PembelianImpor And MitraSebagaiPerusahaanLuarNegeri(KodeSupplier) Then TambahBaris()
+                End If
+                NomorInvoice_Sebelumnya = NomorInvoice
+                Await Task.Yield()
+            Loop
+
+            AksesDatabase_Transaksi(Tutup)
+
+            If JenisTampilan = JenisTampilan_HasilAkhir Then
+                datatabelUtama.Rows.Add()
+                datatabelUtama.Rows.Add(Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan,
+                                    Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan,
+                                    Rekap_JumlahHarga, Rekap_JumlahHarga_Asing, Rekap_DiskonRp, Rekap_Diskon_Asing, Kosongan, Rekap_DasarPengenaanPajak, Kosongan, Kosongan, Rekap_PPN,
+                                    Rekap_TagihanKotor, Rekap_PPhDipotong, Rekap_TotalTagihan, Rekap_TotalTagihan_Asing, 0, 0, Rekap_Retur, Kosongan)
             End If
-            JenisPPN = dr.Item("Jenis_PPN")
-            KodeMataUang = dr.Item("Kode_Mata_Uang")
-            Kurs = dr.Item("Kurs")
-            JumlahHarga = dr.Item("Jumlah_Harga_Keseluruhan")
-            JumlahHarga_Asing = dr.Item("Jumlah_Harga_Keseluruhan")
-            Dim Termin As Decimal = dr.Item("Termin")
-            Dim TerminPersen As Decimal = Termin
-            Select Case dr.Item("Basis_Perhitungan_Termin")
-                Case BasisPerhitunganTermin_Prosentase
-                    TerminPersen = Termin
-                Case BasisPerhitunganTermin_Nominal
-                    If PembelianLokal Then
-                        TerminPersen = (FormatUlangInt64(Termin) / JumlahHarga) * 100
-                    Else
-                        TerminPersen = (Termin / JumlahHarga_Asing) * 100
-                    End If
-            End Select
-            DiskonRp = dr.Item("Diskon")
-            DiskonAsing = AmbilValue_DiskonAsingBerdasarkanNomorInvoicePenjualan(NomorInvoice)
-            ProsentaseTermin_String = PembulatanDesimal2Digit(TerminPersen).ToString & " % "
-            DasarPengenaanPajak = dr.Item("Dasar_Pengenaan_Pajak")
-            NomorFakturPajak = dr.Item("Nomor_Faktur_Pajak")
-            PPN = dr.Item("PPN")
-            TagihanKotor = dr.Item("Total_Tagihan_Kotor")
-            PPhDipotong = dr.Item("PPh_Dipotong")
-            TotalTagihan = dr.Item("Total_Tagihan")
-            TotalTagihan_Asing = dr.Item("Total_Tagihan")
-            ReturDPP = dr.Item("Retur_DPP")
-            ReturPPN = dr.Item("Retur_PPN")
-            Retur = ReturDPP + ReturPPN
-            Catatan = PenghapusEnter(dr.Item("Catatan"))
-            NomorJV = dr.Item("Nomor_JV")
-            If NomorInvoice <> NomorInvoice_Sebelumnya Then
-                If PembelianLokal And Not MitraSebagaiPerusahaanLuarNegeri(KodeSupplier) Then TambahBaris()
-                If PembelianImpor And MitraSebagaiPerusahaanLuarNegeri(KodeSupplier) Then TambahBaris()
-            End If
-            NomorInvoice_Sebelumnya = NomorInvoice
-        Loop
 
-        AksesDatabase_Transaksi(Tutup)
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_InvoicePembelian")
 
-        If JenisTampilan = JenisTampilan_HasilAkhir Then
-            datatabelUtama.Rows.Add()
-            datatabelUtama.Rows.Add(Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan,
-                                Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan,
-                                Rekap_JumlahHarga, Rekap_JumlahHarga_Asing, Rekap_DiskonRp, Rekap_Diskon_Asing, Kosongan, Rekap_DasarPengenaanPajak, Kosongan, Kosongan, Rekap_PPN,
-                                Rekap_TagihanKotor, Rekap_PPhDipotong, Rekap_TotalTagihan, Rekap_TotalTagihan_Asing, 0, 0, Rekap_Retur, Kosongan)
-        End If
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
 
-        BersihkanSeleksi()
+    End Sub
 
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
@@ -546,7 +563,11 @@ Public Class wpfUsc_InvoicePembelian
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
         btn_Pembetulan.IsEnabled = False
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

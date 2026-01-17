@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -9,6 +10,8 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal25
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm
     Public JenisPajak
@@ -114,9 +117,9 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal25
     End Sub
 
     Sub RefreshTampilanData()
-        EksekusiKode = False
+        EksekusiTampilanData = False
         KontenCombo_TahunPajak() 'Sengaja pakai Sub KontenCombo, untuk me-refresh List Tahun Pajak, barangkali ada update data untuk Tahun Pajak Terlama
-        EksekusiKode = True
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
@@ -138,147 +141,169 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal25
 
 
 
-    Sub TampilkanData()
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
 
-        If EksekusiKode = False Then Return
+    Async Sub TampilkanDataAsync()
+
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
-        VisibilitasInfoSaldo(False)
+        Await Task.Delay(50)
 
-        KesesuaianJurnal = True
+        Try
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
+            VisibilitasInfoSaldo(False)
 
-        'Data Tabel :
-        NomorUrut = 0
+            KesesuaianJurnal = True
 
-        TotalTagihan = 0
-        TotalBayar = 0
-        TotalSisaHutang = 0
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
 
-        Index_BarisTabel = 0
-        NomorBulan = 0
+            'Data Tabel :
+            NomorUrut = 0
 
-        Do While AmbilAngka(NomorBulan) < 12
+            TotalTagihan = 0
+            TotalBayar = 0
+            TotalSisaHutang = 0
 
-            NomorID = 0 'Ini Jangan Dihapus. Ini bermaksud untuk me-nol-kan (0) Nomor ID pada baris bulan yang tidak ada data pajaknya.
-            TanggalTransaksi = Kosongan
-            TanggalLapor = Kosongan
-            TWTL_Lapor = Kosongan
-            NP_Lapor = Kosongan
-            Keterangan = Kosongan
-            NomorBulan = AmbilAngka(NomorBulan) + 1
-            Bulan = BulanTerbilang(NomorBulan)
-            NomorBPHP = AwalanBP & TahunPajak & "-" & NomorBulan.ToString
+            Index_BarisTabel = 0
+            NomorBulan = 0
 
-            JumlahTagihan = 0
-            JumlahBayar = 0
-            NomorJV_Hutang = 0
+            Do While AmbilAngka(NomorBulan) < 12
 
-            NomorBulan = KonversiAngkaKeStringDuaDigit(NomorBulan)
+                NomorID = 0 'Ini Jangan Dihapus. Ini bermaksud untuk me-nol-kan (0) Nomor ID pada baris bulan yang tidak ada data pajaknya.
+                TanggalTransaksi = Kosongan
+                TanggalLapor = Kosongan
+                TWTL_Lapor = Kosongan
+                NP_Lapor = Kosongan
+                Keterangan = Kosongan
+                NomorBulan = AmbilAngka(NomorBulan) + 1
+                Bulan = BulanTerbilang(NomorBulan)
+                NomorBPHP = AwalanBP & TahunPajak & "-" & NomorBulan.ToString
 
-            BukaDatabaseTransaksi_Alternatif(TahunBukuSumberData)
+                JumlahTagihan = 0
+                JumlahBayar = 0
+                NomorJV_Hutang = 0
 
-            cmd = New OdbcCommand(" SELECT * FROM tbl_HutangPajak " &
-                                  " WHERE Jenis_Pajak                           = '" & JenisPajak & "' " &
-                                  " AND DATE_FORMAT(Tanggal_Transaksi, '%Y-%m') = '" & TahunPajak & "-" & NomorBulan & "' ",
-                                  KoneksiDatabaseTransaksi_Alternatif)
-            dr_ExecuteReader()
-            Do While dr.Read
-                NomorID = dr.Item("Nomor_ID")
-                TanggalTransaksi = TanggalFormatTampilan(dr.Item("Tanggal_Transaksi"))
-                JumlahTagihan = dr.Item("Jumlah_Hutang")
-                Keterangan = PenghapusEnter(dr.Item("Keterangan"))
-                NomorJV_Hutang = dr.Item("Nomor_JV")
+                NomorBulan = KonversiAngkaKeStringDuaDigit(NomorBulan)
+
+                BukaDatabaseTransaksi_Alternatif(TahunBukuSumberData)
+
+                cmd = New OdbcCommand(" SELECT * FROM tbl_HutangPajak " &
+                                      " WHERE Jenis_Pajak                           = '" & JenisPajak & "' " &
+                                      " AND DATE_FORMAT(Tanggal_Transaksi, '%Y-%m') = '" & TahunPajak & "-" & NomorBulan & "' ",
+                                      KoneksiDatabaseTransaksi_Alternatif)
+                dr_ExecuteReader()
+                Do While dr.Read
+                    NomorID = dr.Item("Nomor_ID")
+                    TanggalTransaksi = TanggalFormatTampilan(dr.Item("Tanggal_Transaksi"))
+                    JumlahTagihan = dr.Item("Jumlah_Hutang")
+                    Keterangan = PenghapusEnter(dr.Item("Keterangan"))
+                    NomorJV_Hutang = dr.Item("Nomor_JV")
+                    Await Task.Yield()
+                Loop
+
+                TutupDatabaseTransaksi_Alternatif()
+
+                'Data Pembayaran : ---------------------------------------------------------------------------------------
+                If JumlahTagihan > 0 Then
+                    Dim TahunTelusurPembayaran = TahunPajak
+                    Dim TahunSumberDataPembayaran = 0
+                    Dim PencegahLoopingTahunPajakLampau = 0
+                    Do While TahunTelusurPembayaran <= TahunBukuAktif
+                        If TahunTelusurPembayaran <= TahunCutOff Then TahunSumberDataPembayaran = TahunCutOff
+                        If TahunTelusurPembayaran > TahunCutOff Then TahunSumberDataPembayaran = TahunTelusurPembayaran
+                        If TahunTelusurPembayaran > TahunCutOff Or PencegahLoopingTahunPajakLampau = 0 Then
+                            BukaDatabaseTransaksi_Alternatif(TahunSumberDataPembayaran)
+                            cmd = New OdbcCommand(" SELECT Jumlah_Bayar, Kode_Setoran FROM tbl_BuktiPengeluaran " &
+                                                  " WHERE Nomor_BP          = '" & NomorBPHP & "' " &
+                                                  " AND Status_Invoice      = '" & Status_Dibayar & "' ",
+                                                  KoneksiDatabaseTransaksi_Alternatif)
+                            dr_ExecuteReader()
+                            Do While dr.Read
+                                JumlahBayar += dr.Item("Jumlah_Bayar")
+                                If JumlahBayar >= JumlahTagihan Then Exit Do
+                                Await Task.Yield()
+                            Loop
+                            TutupDatabaseTransaksi_Alternatif()
+                        End If
+                        If JumlahBayar >= JumlahTagihan Then Exit Do
+                        PencegahLoopingTahunPajakLampau += 1
+                        TahunTelusurPembayaran += 1
+                    Loop
+                End If
+                'Penjelasan :
+                'Algoritma ini berfungsi untuk menelusur jumlah pembayaran atas PPh bulan tertentu (nomor bulan)
+                'dari suatu tahun pajak yang sedang ditampilkan, berdasarkan Kode Setoran masing-masing.
+                'Data pembayaran yang ditampilkan adalah dimulai dari TahunPajak itu sendiri sampai TahunBukuAktif.
+                'Misalkan, Tahun Buku Aktif-nya adalah 2023, sementara Data Pajak yang ditampilkan (TahunPajak) adalah 2022,
+                'maka data pembayarannya ditelusuri dari tahun 2022 sampai tahun 2023.
+                'Ini pentiung untuk mengetahui, berapa sisa hutang pajak pada suatu bulan di tahun tertentu.
+                '---------------------------------------------------------------------------------------------------------
+
+                SisaHutang = JumlahTagihan - JumlahBayar
+
+                TotalTagihan += JumlahTagihan
+                TotalBayar += JumlahBayar
+                TotalSisaHutang += SisaHutang
+
+                TambahBaris()
+
+                Await Task.Yield()
+
             Loop
 
-            TutupDatabaseTransaksi_Alternatif()
+            Baris_KetetapanPajak()
 
-            'Data Pembayaran : ---------------------------------------------------------------------------------------
-            If JumlahTagihan > 0 Then
-                Dim TahunTelusurPembayaran = TahunPajak
-                Dim TahunSumberDataPembayaran = 0
-                Dim PencegahLoopingTahunPajakLampau = 0
-                Do While TahunTelusurPembayaran <= TahunBukuAktif
-                    If TahunTelusurPembayaran <= TahunCutOff Then TahunSumberDataPembayaran = TahunCutOff
-                    If TahunTelusurPembayaran > TahunCutOff Then TahunSumberDataPembayaran = TahunTelusurPembayaran
-                    If TahunTelusurPembayaran > TahunCutOff Or PencegahLoopingTahunPajakLampau = 0 Then
-                        BukaDatabaseTransaksi_Alternatif(TahunSumberDataPembayaran)
-                        cmd = New OdbcCommand(" SELECT Jumlah_Bayar, Kode_Setoran FROM tbl_BuktiPengeluaran " &
-                                              " WHERE Nomor_BP          = '" & NomorBPHP & "' " &
-                                              " AND Status_Invoice      = '" & Status_Dibayar & "' ",
-                                              KoneksiDatabaseTransaksi_Alternatif)
-                        dr_ExecuteReader()
-                        Do While dr.Read
-                            JumlahBayar += dr.Item("Jumlah_Bayar")
-                            If JumlahBayar >= JumlahTagihan Then Exit Do
-                        Loop
-                        TutupDatabaseTransaksi_Alternatif()
+            'Baris TOTAL :
+            datatabelUtama.Rows.Add()
+            datatabelUtama.Rows.Add(
+                                Kosongan, Kosongan, Kosongan, teks_TOTAL_,
+                                Kosongan, Kosongan, Kosongan, Kosongan,
+                                Kosongan, TotalTagihan, TotalBayar, TotalSisaHutang, Kosongan, 0)
+
+            VisibilitasInfoSaldo(True)
+
+            SisaHutangPajak_SaatCutOff_Public(SisaHutang_SaatCutOff, AwalanBP, JenisPajak, KodeSetoran_Non)
+
+            Select Case JenisTahunBuku
+                Case JenisTahunBuku_LAMPAU
+                    SaldoAkhir_BerdasarkanList = SisaHutang_SaatCutOff
+                    txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
+                    AmbilValue_SaldoAkhirBerdasarkanCOA()
+                    CekKesesuaianSaldoAkhir()
+                    txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
+                Case JenisTahunBuku_NORMAL
+                    'Penjelasan : Variabel di bawah ini untuk mendapatkan jumlah bayar atas hutang pajak tahun sebelum TahunBukuAktif,
+                    'tapi dibayarkan pada tahun ini (TahunBukuAktif).
+                    Dim TotalBayar_UntukHutangPajakTahunSebelumIni As Int64 = 0
+                    AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_Non, TotalBayar_UntukHutangPajakTahunSebelumIni)
+                    If Not TahunBukuSudahStabil(TahunBukuAktif) Then
+                        AmbilValue_SaldoAwalBerdasarkanList()
+                        AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
+                        CekKesesuaianSaldoAwal()
+                        txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
+                        txt_TotalTabel.Text = SaldoAwal_BerdasarkanList + TotalTagihan - (TotalBayar + TotalBayar_UntukHutangPajakTahunSebelumIni)
+                    Else
+                        txt_TotalTabel.Text = SaldoAwal_BerdasarkanCOA + TotalTagihan - (TotalBayar + TotalBayar_UntukHutangPajakTahunSebelumIni)
                     End If
-                    If JumlahBayar >= JumlahTagihan Then Exit Do
-                    PencegahLoopingTahunPajakLampau += 1
-                    TahunTelusurPembayaran += 1
-                Loop
-            End If
-            'Penjelasan :
-            'Algoritma ini berfungsi untuk menelusur jumlah pembayaran atas PPh bulan tertentu (nomor bulan)
-            'dari suatu tahun pajak yang sedang ditampilkan, berdasarkan Kode Setoran masing-masing.
-            'Data pembayaran yang ditampilkan adalah dimulai dari TahunPajak itu sendiri sampai TahunBukuAktif.
-            'Misalkan, Tahun Buku Aktif-nya adalah 2023, sementara Data Pajak yang ditampilkan (TahunPajak) adalah 2022,
-            'maka data pembayarannya ditelusuri dari tahun 2022 sampai tahun 2023.
-            'Ini pentiung untuk mengetahui, berapa sisa hutang pajak pada suatu bulan di tahun tertentu.
-            '---------------------------------------------------------------------------------------------------------
+            End Select
 
-            SisaHutang = JumlahTagihan - JumlahBayar
+            lbl_TotalTabel.Text = "Saldo Akhir " & TahunPajak & " : "
 
-            TotalTagihan += JumlahTagihan
-            TotalBayar += JumlahBayar
-            TotalSisaHutang += SisaHutang
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangPPhPasal25")
 
-            TambahBaris()
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
 
-        Loop
-
-        Baris_KetetapanPajak()
-
-        'Baris TOTAL :
-        datatabelUtama.Rows.Add()
-        datatabelUtama.Rows.Add(
-                            Kosongan, Kosongan, Kosongan, teks_TOTAL_,
-                            Kosongan, Kosongan, Kosongan, Kosongan,
-                            Kosongan, TotalTagihan, TotalBayar, TotalSisaHutang, Kosongan, 0)
-
-        VisibilitasInfoSaldo(True)
-
-        SisaHutangPajak_SaatCutOff_Public(SisaHutang_SaatCutOff, AwalanBP, JenisPajak, KodeSetoran_Non)
-
-        Select Case JenisTahunBuku
-            Case JenisTahunBuku_LAMPAU
-                SaldoAkhir_BerdasarkanList = SisaHutang_SaatCutOff
-                txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
-                AmbilValue_SaldoAkhirBerdasarkanCOA()
-                CekKesesuaianSaldoAkhir()
-                txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
-            Case JenisTahunBuku_NORMAL
-                'Penjelasan : Variabel di bawah ini untuk mendapatkan jumlah bayar atas hutang pajak tahun sebelum TahunBukuAktif,
-                'tapi dibayarkan pada tahun ini (TahunBukuAktif).
-                Dim TotalBayar_UntukHutangPajakTahunSebelumIni As Int64 = 0
-                AmbilValue_JumlahBayarUntukHutangPajakTahunKemarin_Public(AwalanBP, KodeSetoran_Non, TotalBayar_UntukHutangPajakTahunSebelumIni)
-                If Not TahunBukuSudahStabil(TahunBukuAktif) Then
-                    AmbilValue_SaldoAwalBerdasarkanList()
-                    AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
-                    CekKesesuaianSaldoAwal()
-                    txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
-                    txt_TotalTabel.Text = SaldoAwal_BerdasarkanList + TotalTagihan - (TotalBayar + TotalBayar_UntukHutangPajakTahunSebelumIni)
-                Else
-                    txt_TotalTabel.Text = SaldoAwal_BerdasarkanCOA + TotalTagihan - (TotalBayar + TotalBayar_UntukHutangPajakTahunSebelumIni)
-                End If
-        End Select
-
-        lbl_TotalTabel.Text = "Saldo Akhir " & TahunPajak & " : "
-
-        BersihkanSeleksi()
+        End Try
 
     End Sub
 
@@ -343,7 +368,6 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal25
 
 
     Sub BersihkanSeleksi()
-        BarisTerseleksi = -1
         JumlahBaris = datatabelUtama.Rows.Count
         BarisTerseleksi = -1
         datagridUtama.SelectedIndex = -1
@@ -353,7 +377,6 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal25
         btn_Hapus.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
-        KetersediaanMenuHalaman(pnl_Halaman, True)
     End Sub
 
 

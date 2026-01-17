@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -9,6 +10,7 @@ Public Class wpfUsc_BukuPengawasanPiutangAfiliasi
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Public NamaHalaman
     Public JudulForm
@@ -112,58 +114,79 @@ Public Class wpfUsc_BukuPengawasanPiutangAfiliasi
 
 
     Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
 
-        KesesuaianJurnal = True
+    Async Sub TampilkanDataAsync()
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
-        pnl_SidebarKanan.Visibility = Visibility.Collapsed
+        ' Guard clause
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        QueryTampilanPiutangTahunLalu =
-            " SELECT * FROM tbl_PengawasanPiutangAfiliasi " &
-            " WHERE (Tanggal_Transaksi <  '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
-        QueryTampilanPiutangTahunAktif =
-            " SELECT * FROM tbl_PengawasanPiutangAfiliasi " &
-            " WHERE (Tanggal_Transaksi >= '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
+
+        Try
+
+            KesesuaianJurnal = True
+
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
+            pnl_SidebarKanan.Visibility = Visibility.Collapsed
+
+            QueryTampilanPiutangTahunLalu =
+                " SELECT * FROM tbl_PengawasanPiutangAfiliasi " &
+                " WHERE (Tanggal_Transaksi <  '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
+            QueryTampilanPiutangTahunAktif =
+                " SELECT * FROM tbl_PengawasanPiutangAfiliasi " &
+                " WHERE (Tanggal_Transaksi >= '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
 
 
-        'Data Tabel :
-        NomorUrut = 0
-        SaldoAwal_BerdasarkanList = 0
-        Total_SisaPiutang = 0
+            'Data Tabel :
+            NomorUrut = 0
+            SaldoAwal_BerdasarkanList = 0
+            Total_SisaPiutang = 0
 
-        'Data Tabel Sisa Piutang Tahun Lalu :
-        QueryTampilan = QueryTampilanPiutangTahunLalu
-        DataTabel()
+            'Data Tabel Sisa Piutang Tahun Lalu :
+            QueryTampilan = QueryTampilanPiutangTahunLalu
+            Await DataTabelAsync()
 
-        'Data Tabel Piutang Tahun Buku Aktif :
-        QueryTampilan = QueryTampilanPiutangTahunAktif
-        DataTabel()
+            'Data Tabel Piutang Tahun Buku Aktif :
+            QueryTampilan = QueryTampilanPiutangTahunAktif
+            Await DataTabelAsync()
 
-        TotalTabel = Total_SisaPiutang
+            TotalTabel = Total_SisaPiutang
 
-        Select Case JenisTahunBuku
-            Case JenisTahunBuku_LAMPAU
-                SaldoAkhir_BerdasarkanList = Total_SisaPiutang
-                txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
-                AmbilValue_SaldoAkhirBerdasarkanCOA()
-                CekKesesuaianSaldoAkhir()
-                txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
-            Case JenisTahunBuku_NORMAL
-                txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
-                AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
-                CekKesesuaianSaldoAwal()
-                txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
-                txt_TotalTabel.Text = TotalTabel
-        End Select
+            Select Case JenisTahunBuku
+                Case JenisTahunBuku_LAMPAU
+                    SaldoAkhir_BerdasarkanList = Total_SisaPiutang
+                    txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
+                    AmbilValue_SaldoAkhirBerdasarkanCOA()
+                    CekKesesuaianSaldoAkhir()
+                    txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
+                Case JenisTahunBuku_NORMAL
+                    txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
+                    AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
+                    CekKesesuaianSaldoAwal()
+                    txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
+                    txt_TotalTabel.Text = TotalTabel
+            End Select
 
-        lbl_TotalTabel.Text = "Saldo Akhir Piutang Afiliasi : "
+            lbl_TotalTabel.Text = "Saldo Akhir Piutang Afiliasi : "
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanPiutangAfiliasi")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
 
     End Sub
 
-    Sub DataTabel()
+    Async Function DataTabelAsync() As Task
 
         AksesDatabase_Transaksi(Buka)
 
@@ -215,11 +238,13 @@ Public Class wpfUsc_BukuPengawasanPiutangAfiliasi
             datatabelUtama.Rows.Add(NomorUrut, NomorID, NomorBPPA, KodeDebitur, NamaDebitur,
                                     TanggalPinjam, TanggalJatuhTempo, NomorKontrak,
                                     SaldoAwalPerBaris, JumlahAngsuran, SaldoAkhirPerBaris, Keterangan, NomorJV)
+
+            Await Task.Yield()
         Loop
 
         AksesDatabase_Transaksi(Tutup)
 
-    End Sub
+    End Function
 
 
 

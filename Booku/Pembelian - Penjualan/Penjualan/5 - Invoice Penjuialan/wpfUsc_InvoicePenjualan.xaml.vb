@@ -3,6 +3,7 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 
@@ -10,6 +11,8 @@ Public Class wpfUsc_InvoicePenjualan
 
     Public StatusAktif As Boolean
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
     Public JudulForm As String
 
     Public KesesuaianJurnal As Boolean
@@ -188,21 +191,26 @@ Public Class wpfUsc_InvoicePenjualan
 
 
     Sub RefreshTampilanData()
-        EksekusiKode = False
+        EksekusiTampilanData = False
         KontenCombo_JenisTampilan()
         KontenCombo_Customer()
-        EksekusiKode = True
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
-        If EksekusiKode = False Then Return
-
-        KesesuaianJurnal = True
+        If EksekusiTampilanData = False Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
+
+        Try
+
+        KesesuaianJurnal = True
 
         'Style Tabel :
         datatabelUtama.Rows.Clear()
@@ -265,10 +273,7 @@ Public Class wpfUsc_InvoicePenjualan
                               " WHERE Nomor_Invoice <> 'X' " & FilterData &
                               " ORDER BY Tanggal_Invoice ", KoneksiDatabaseTransaksi)
         dr_ExecuteReader()
-        If StatusKoneksiDatabase = False Then
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            Return
-        End If
+        If StatusKoneksiDatabase = False Then Exit Try
 
         Do While dr.Read
             NomorPO = Kosongan
@@ -441,6 +446,7 @@ Public Class wpfUsc_InvoicePenjualan
                 If PenjualanEkspor And MitraSebagaiPerusahaanLuarNegeri(KodeCustomer) Then TambahBaris()
             End If
             NomorInvoice_Sebelumnya = NomorInvoice
+            Await Task.Yield()
         Loop
 
         AksesDatabase_Transaksi(Tutup)
@@ -454,8 +460,19 @@ Public Class wpfUsc_InvoicePenjualan
                                 Rekap_TotalTagihan, Rekap_TotalTagihan_Asing, 0, 0, Rekap_Retur, Kosongan)
         End If
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_InvoicePenjualan")
 
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris()
@@ -499,7 +516,11 @@ Public Class wpfUsc_InvoicePenjualan
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
         btn_Pembetulan.IsEnabled = False
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

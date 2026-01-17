@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -12,6 +13,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Public JalurMasuk
 
@@ -122,6 +124,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = False
         ResetFilter()
         KontenComboTahunLaporan()
         JenisTampilan = JenisTampilan_GLOBAL_Rinci
@@ -131,31 +134,55 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
 
     Public EksekusiTampilanData As Boolean
-    Sub TampilkanData()
 
+    ''' <summary>
+    ''' Method async untuk memuat data penyusutan asset tetap dengan UI responsive
+    ''' </summary>
+    Async Sub TampilkanDataAsync()
+
+        ' Guard clause: Cegah loading berulang
         If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
+        ' Disable UI dan tampilkan loading
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)  ' Beri waktu UI render
 
-        JumlahAsset = 0
+        Try
+            JumlahAsset = 0
 
-        Select Case JenisTampilan
-            Case JenisTampilan_GLOBAL_Rinci
-                JudulForm = "Daftar Penyusutan Asset Tetap [Global]"
-                TampilkanData_Global_Rinci()
-            Case JenisTampilan_GLOBAL_Rekap
-                JudulForm = "Daftar Penyusutan Asset Tetap [Global]"
-                TampilkanData_Global_Rekap()
-            Case JenisTampilan_DETAIL_Rinci
-                JudulForm = "Daftar Penyusutan Asset Tetap - Tahun " & TahunLaporan
-                TampilkanData_Detail_Rinci()
-            Case JenisTampilan_DETAIL_Rekap
-                JudulForm = "Daftar Penyusutan Asset Tetap - Tahun " & TahunLaporan
-                TampilkanData_Detail_Rekap()
-        End Select
+            Select Case JenisTampilan
+                Case JenisTampilan_GLOBAL_Rinci
+                    JudulForm = "Daftar Penyusutan Asset Tetap [Global]"
+                    TampilkanData_Global_Rinci()
+                Case JenisTampilan_GLOBAL_Rekap
+                    JudulForm = "Daftar Penyusutan Asset Tetap [Global]"
+                    TampilkanData_Global_Rekap()
+                Case JenisTampilan_DETAIL_Rinci
+                    JudulForm = "Daftar Penyusutan Asset Tetap - Tahun " & TahunLaporan
+                    TampilkanData_Detail_Rinci()
+                Case JenisTampilan_DETAIL_Rekap
+                    JudulForm = "Daftar Penyusutan Asset Tetap - Tahun " & TahunLaporan
+                    TampilkanData_Detail_Rekap()
+            End Select
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DaftarPenyusutanAssetTetap")
 
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    ''' <summary>
+    ''' Wrapper untuk backward compatibility
+    ''' </summary>
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
@@ -650,6 +677,9 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
     End Sub
 
+    ''' <summary>
+    ''' Logika utama reset seleksi (TANPA enable UI)
+    ''' </summary>
     Sub BersihkanSeleksi()
         BersihkanSeleksi_WPF(datagridUtama, datatabelUtama, BarisTerseleksi, JumlahBaris)
         KetersediaanTombolUpdate(False)
@@ -657,7 +687,14 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
         KetersediaanTombolLihatInvoice(False)
         KetersediaanTombolPosting(False)
         KetersediaanTombolJualAsset(False)
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+    End Sub
+
+    ''' <summary>
+    ''' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    ''' </summary>
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

@@ -1,15 +1,18 @@
 ﻿Imports bcomm
+Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
-Imports System.Data.Odbc
-Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Windows.Input
 
 
 Public Class wpfUsc_DataKaryawan
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Dim NomorUrut
     Dim TanggalRegistrasi
@@ -43,9 +46,6 @@ Public Class wpfUsc_DataKaryawan
 
         ProsesLoadingForm = True
 
-        'lbl_JudulForm.Text = frm_DataKaryawan.JudulForm
-        KontenCombo_FilterStatus()
-
         RefreshTampilanData()
 
         ProsesLoadingForm = False
@@ -65,46 +65,79 @@ Public Class wpfUsc_DataKaryawan
 
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = False
+        KontenCombo_FilterStatus()
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
-    Sub TampilkanData()
+    ''' <summary>
+    ''' Method async untuk memuat data karyawan dengan UI responsive
+    ''' </summary>
+    Async Sub TampilkanDataAsync()
 
-        KesesuaianJurnal = True
+        ' Guard clause: Cegah loading berulang
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        AksesDatabase_General(Buka)
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)  ' Beri waktu UI render
 
-        'Data Tabel :
-        datatabelUtama.Clear()
-        NomorUrut = 0
+        Try
+            KesesuaianJurnal = True
 
-        Dim FilterStatus = ""
-        If cmb_FilterStatus.SelectedItem = Pilihan_Semua Then FilterStatus = ""
-        If cmb_FilterStatus.SelectedItem = "Aktif" Then FilterStatus = " WHERE Status_Aktif = '1' "
-        If cmb_FilterStatus.SelectedItem = "Non-Aktif" Then FilterStatus = " WHERE Status_Aktif = '0' "
+            'Data Tabel :
+            datatabelUtama.Clear()
+            NomorUrut = 0
 
-        cmd = New OdbcCommand(" SELECT * FROM tbl_DataKaryawan " & FilterStatus, KoneksiDatabaseGeneral)
-        dr_ExecuteReader()
-        Do While dr.Read
-            NomorUrut += 1
-            TanggalRegistrasi = TanggalFormatTampilan(dr.Item("Tanggal_Registrasi"))
-            NomorIDKaryawan = dr.Item("Nomor_ID_Karyawan")
-            NIK = dr.Item("NIK")
-            NamaKaryawan = dr.Item("Nama_Karyawan")
-            Jabatan = dr.Item("Jabatan")
-            RekeningBank = dr.Item("Rekening_Bank")
-            AtasNama = dr.Item("Atas_Nama")
-            Catatan = dr.Item("Catatan")
-            StatusAktifKaryawan = dr.Item("Status_Aktif")
-            datatabelUtama.Rows.Add(NomorUrut, TanggalRegistrasi, NomorIDKaryawan, NIK, NamaKaryawan, Jabatan, RekeningBank, AtasNama, Catatan, StatusAktifKaryawan)
-        Loop
+            Dim FilterStatus = ""
+            If cmb_FilterStatus.SelectedItem = Pilihan_Semua Then FilterStatus = ""
+            If cmb_FilterStatus.SelectedItem = "Aktif" Then FilterStatus = " WHERE Status_Aktif = '1' "
+            If cmb_FilterStatus.SelectedItem = "Non-Aktif" Then FilterStatus = " WHERE Status_Aktif = '0' "
 
-        AksesDatabase_General(Tutup)
+            AksesDatabase_General(Buka)
+            cmd = New OdbcCommand(" SELECT * FROM tbl_DataKaryawan " & FilterStatus, KoneksiDatabaseGeneral)
+            dr_ExecuteReader()
+            Do While dr.Read
+                NomorUrut += 1
+                TanggalRegistrasi = TanggalFormatTampilan(dr.Item("Tanggal_Registrasi"))
+                NomorIDKaryawan = dr.Item("Nomor_ID_Karyawan")
+                NIK = dr.Item("NIK")
+                NamaKaryawan = dr.Item("Nama_Karyawan")
+                Jabatan = dr.Item("Jabatan")
+                RekeningBank = dr.Item("Rekening_Bank")
+                AtasNama = dr.Item("Atas_Nama")
+                Catatan = dr.Item("Catatan")
+                StatusAktifKaryawan = dr.Item("Status_Aktif")
+                datatabelUtama.Rows.Add(NomorUrut, TanggalRegistrasi, NomorIDKaryawan, NIK, NamaKaryawan, Jabatan, RekeningBank, AtasNama, Catatan, StatusAktifKaryawan)
+                Await Task.Yield()  ' Beri kesempatan UI refresh
+            Loop
 
-        BersihkanSeleksi()
+            AksesDatabase_General(Tutup)
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DataKaryawan")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
 
     End Sub
 
+    ''' <summary>
+    ''' Wrapper untuk backward compatibility
+    ''' </summary>
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
+
+    ''' <summary>
+    ''' Logika utama reset seleksi (TANPA enable UI)
+    ''' </summary>
     Sub BersihkanSeleksi()
         JumlahBaris = datatabelUtama.Rows.Count
         BarisTerseleksi = -1
@@ -113,6 +146,14 @@ Public Class wpfUsc_DataKaryawan
         datagridUtama.SelectedCells.Clear()
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
+    End Sub
+
+    ''' <summary>
+    ''' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    ''' </summary>
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

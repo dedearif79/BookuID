@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -9,6 +10,7 @@ Public Class wpfUsc_BukuPengawasanHutangPihakKetiga
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
 
     Public NamaHalaman
@@ -112,59 +114,80 @@ Public Class wpfUsc_BukuPengawasanHutangPihakKetiga
 
 
 
-    Public Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
-        KesesuaianJurnal = True
+        ' Guard clause
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
-        pnl_SidebarKanan.Visibility = Visibility.Collapsed
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        QueryTampilanHutangTahunLalu =
-            " SELECT * FROM tbl_PengawasanHutangPihakKetiga " &
-            " WHERE (Tanggal_Transaksi <  '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
-        QueryTampilanHutangTahunAktif =
-            " SELECT * FROM tbl_PengawasanHutangPihakKetiga " &
-            " WHERE (Tanggal_Transaksi >= '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
+        Try
+
+            KesesuaianJurnal = True
+
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
+            pnl_SidebarKanan.Visibility = Visibility.Collapsed
+
+            QueryTampilanHutangTahunLalu =
+                " SELECT * FROM tbl_PengawasanHutangPihakKetiga " &
+                " WHERE (Tanggal_Transaksi <  '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
+            QueryTampilanHutangTahunAktif =
+                " SELECT * FROM tbl_PengawasanHutangPihakKetiga " &
+                " WHERE (Tanggal_Transaksi >= '" & TanggalFormatSimpan(AwalTahunBukuAktif) & "') "
 
 
-        'Data Tabel :
-        NomorUrut = 0
-        SaldoAwal_BerdasarkanList = 0
-        Total_SisaHutang = 0
+            'Data Tabel :
+            NomorUrut = 0
+            SaldoAwal_BerdasarkanList = 0
+            Total_SisaHutang = 0
 
-        'Data Tabel Sisa Hutang Tahun Lalu :
-        QueryTampilan = QueryTampilanHutangTahunLalu
-        DataTabel()
+            'Data Tabel Sisa Hutang Tahun Lalu :
+            QueryTampilan = QueryTampilanHutangTahunLalu
+            Await DataTabelAsync()
 
-        'Data Tabel Hutang Tahun Buku Aktif :
-        QueryTampilan = QueryTampilanHutangTahunAktif
-        DataTabel()
+            'Data Tabel Hutang Tahun Buku Aktif :
+            QueryTampilan = QueryTampilanHutangTahunAktif
+            Await DataTabelAsync()
 
-        TotalTabel = Total_SisaHutang
+            TotalTabel = Total_SisaHutang
 
-        Select Case JenisTahunBuku
-            Case JenisTahunBuku_LAMPAU
-                SaldoAkhir_BerdasarkanList = Total_SisaHutang
-                txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
-                AmbilValue_SaldoAkhirBerdasarkanCOA()
-                CekKesesuaianSaldoAkhir()
-                txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
-            Case JenisTahunBuku_NORMAL
-                txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
-                AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
-                CekKesesuaianSaldoAwal()
-                txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
-                txt_TotalTabel.Text = TotalTabel
-        End Select
+            Select Case JenisTahunBuku
+                Case JenisTahunBuku_LAMPAU
+                    SaldoAkhir_BerdasarkanList = Total_SisaHutang
+                    txt_SaldoBerdasarkanList.Text = SaldoAkhir_BerdasarkanList
+                    AmbilValue_SaldoAkhirBerdasarkanCOA()
+                    CekKesesuaianSaldoAkhir()
+                    txt_SelisihSaldo.Text = SaldoAkhir_BerdasarkanList - SaldoAkhir_BerdasarkanCOA
+                Case JenisTahunBuku_NORMAL
+                    txt_SaldoBerdasarkanList.Text = SaldoAwal_BerdasarkanList
+                    AmbilValue_SaldoAwalBerdasarkanCOA_PlusPenyesuaian()
+                    CekKesesuaianSaldoAwal()
+                    txt_SelisihSaldo.Text = SaldoAwal_BerdasarkanList - SaldoAwal_BerdasarkanCOA_PlusPenyesuaian
+                    txt_TotalTabel.Text = TotalTabel
+            End Select
 
-        lbl_TotalTabel.Text = "Saldo Akhir Hutang Pihak Ketiga : "
+            lbl_TotalTabel.Text = "Saldo Akhir Hutang Pihak Ketiga : "
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangPihakKetiga")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
 
     End Sub
 
-    Sub DataTabel()
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
+
+    Async Function DataTabelAsync() As Task
 
         AksesDatabase_Transaksi(Buka)
 
@@ -216,11 +239,13 @@ Public Class wpfUsc_BukuPengawasanHutangPihakKetiga
             datatabelUtama.Rows.Add(NomorUrut, NomorID, NomorBPHPK, KodeKreditur, NamaKreditur,
                                     TanggalPinjam, TanggalJatuhTempo, NomorKontrak,
                                     SaldoAwalPerBaris, JumlahAngsuran, SaldoAkhirPerBaris, Keterangan, NomorJV)
+
+            Await Task.Yield()
         Loop
 
         AksesDatabase_Transaksi(Tutup)
 
-    End Sub
+    End Function
 
 
 

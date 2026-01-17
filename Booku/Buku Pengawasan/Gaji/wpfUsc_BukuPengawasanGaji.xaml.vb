@@ -3,12 +3,14 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_BukuPengawasanGaji
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Public JudulForm = Kosongan
     Public NamaHalaman
@@ -271,89 +273,98 @@ Public Class wpfUsc_BukuPengawasanGaji
 
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = False
         KontenComboTahunTelusurData(False)
         KontenCombo_Bulan(False)
+        EksekusiTampilanData = True
         Sub_JenisTampilan_REKAP()
     End Sub
 
 
 
     Dim EksekusiTampilanData As Boolean
-    Sub TampilkanData()
 
-        If EksekusiTampilanData = False Then Return
+    Async Sub TampilkanDataAsync()
 
-        'Judul Halaman :
-        lbl_JudulForm.Text = JudulForm
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        VisibilitasKolomKolomTabel()
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
+        Try
+            'Judul Halaman :
+            lbl_JudulForm.Text = JudulForm
 
-        'Data Tabel :
+            VisibilitasKolomKolomTabel()
 
-        Dim Bulan_Tabel = Kosongan
-        NomorUrut = 0
-        MaxLooping = 0
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
 
-        RekapTotal_GajiBagianProduksi = 0
-        RekapTotal_GajiBagianProduksi2 = 0
-        RekapTotal_GajiBagianProduksi3 = 0
-        RekapTotal_GajiBagianProduksi4 = 0
-        RekapTotal_ThrBonusProduksi = 0
-        RekapTotal_TunjanganPPh21Produksi = 0
-        RekapTotal_BpjsTkJkkJkmProduksi = 0
-        RekapTotal_BpjsTkJhtIpProduksi = 0
-        RekapTotal_BpjsKesehatanProduksi = 0
-        RekapTotal_AsuransiKaryawanProduksi = 0
-        RekapTotal_PesangonKaryawanProduksi = 0
-        RekapTotal_JumlahGajiBagianProduksi = 0
-        RekapTotal_BpjsTkJhtIpProduksiDibayarKaryawan = 0
-        RekapTotal_BpjsKesehatanProduksiDibayarKaryawan = 0
+            'Data Tabel :
 
-        RekapTotal_GajiBagianAdministrasi = 0
-        RekapTotal_GajiBagianAdministrasi2 = 0
-        RekapTotal_GajiBagianAdministrasi3 = 0
-        RekapTotal_GajiBagianAdministrasi4 = 0
-        RekapTotal_ThrBonusAdministrasi = 0
-        RekapTotal_TunjanganPPh21Administrasi = 0
-        RekapTotal_BpjsTkJkkJkmAdministrasi = 0
-        RekapTotal_BpjsTkJhtIpAdministrasi = 0
-        RekapTotal_BpjsKesehatanAdministrasi = 0
-        RekapTotal_AsuransiKaryawanAdministrasi = 0
-        RekapTotal_PesangonKaryawanAdministrasi = 0
-        RekapTotal_JumlahGajiBagianAdministrasi = 0
-        RekapTotal_BpjsTkJhtIpAdministrasiDibayarKaryawan = 0
-        RekapTotal_BpjsKesehatanAdministrasiDibayarKaryawan = 0
+            Dim Bulan_Tabel = Kosongan
+            NomorUrut = 0
+            MaxLooping = 0
 
-        RekapTotal_JumlahGajiKotor = 0
-        RekapTotal_PotonganHutangBpjsKesehatan = 0
-        RekapTotal_PotonganHutangBpjsKetenagakerjaan = 0
-        RekapTotal_PotonganHutangKoperasi = 0
-        RekapTotal_PotonganHutangPPhPasal21Rutin = 0
-        RekapTotal_PotonganHutangPPhPasal21Pesangon = 0
-        RekapTotal_PotonganHutangSerikat = 0
-        RekapTotal_PotonganKasbonKaryawan = 0
-        RekapTotal_PotonganLainnya = 0
-        RekapTotal_JumlahPotongan = 0
-        RekapTotal_JumlahGajiDibayarkan = 0
-        RekapTotal_PPhDitanggungRutin = 0
-        RekapTotal_PPhDitanggungPesangon = 0
-        RekapTotal_JumlahPembayaran = 0
-        RekapTotal_SisaPembayaran = 0
+            RekapTotal_GajiBagianProduksi = 0
+            RekapTotal_GajiBagianProduksi2 = 0
+            RekapTotal_GajiBagianProduksi3 = 0
+            RekapTotal_GajiBagianProduksi4 = 0
+            RekapTotal_ThrBonusProduksi = 0
+            RekapTotal_TunjanganPPh21Produksi = 0
+            RekapTotal_BpjsTkJkkJkmProduksi = 0
+            RekapTotal_BpjsTkJhtIpProduksi = 0
+            RekapTotal_BpjsKesehatanProduksi = 0
+            RekapTotal_AsuransiKaryawanProduksi = 0
+            RekapTotal_PesangonKaryawanProduksi = 0
+            RekapTotal_JumlahGajiBagianProduksi = 0
+            RekapTotal_BpjsTkJhtIpProduksiDibayarKaryawan = 0
+            RekapTotal_BpjsKesehatanProduksiDibayarKaryawan = 0
 
-        If JenisTampilan = JenisTampilan_REKAP Or JenisTampilan = JenisTampilan_ALL Then
-            NomorBulan = 1
-            MaxLooping = 12
-        End If
+            RekapTotal_GajiBagianAdministrasi = 0
+            RekapTotal_GajiBagianAdministrasi2 = 0
+            RekapTotal_GajiBagianAdministrasi3 = 0
+            RekapTotal_GajiBagianAdministrasi4 = 0
+            RekapTotal_ThrBonusAdministrasi = 0
+            RekapTotal_TunjanganPPh21Administrasi = 0
+            RekapTotal_BpjsTkJkkJkmAdministrasi = 0
+            RekapTotal_BpjsTkJhtIpAdministrasi = 0
+            RekapTotal_BpjsKesehatanAdministrasi = 0
+            RekapTotal_AsuransiKaryawanAdministrasi = 0
+            RekapTotal_PesangonKaryawanAdministrasi = 0
+            RekapTotal_JumlahGajiBagianAdministrasi = 0
+            RekapTotal_BpjsTkJhtIpAdministrasiDibayarKaryawan = 0
+            RekapTotal_BpjsKesehatanAdministrasiDibayarKaryawan = 0
 
-        If JenisTampilan = JenisTampilan_DETAIL Then
-            NomorBulan = KonversiBulanKeAngka(Bulan)
-            MaxLooping = NomorBulan
-        End If
+            RekapTotal_JumlahGajiKotor = 0
+            RekapTotal_PotonganHutangBpjsKesehatan = 0
+            RekapTotal_PotonganHutangBpjsKetenagakerjaan = 0
+            RekapTotal_PotonganHutangKoperasi = 0
+            RekapTotal_PotonganHutangPPhPasal21Rutin = 0
+            RekapTotal_PotonganHutangPPhPasal21Pesangon = 0
+            RekapTotal_PotonganHutangSerikat = 0
+            RekapTotal_PotonganKasbonKaryawan = 0
+            RekapTotal_PotonganLainnya = 0
+            RekapTotal_JumlahPotongan = 0
+            RekapTotal_JumlahGajiDibayarkan = 0
+            RekapTotal_PPhDitanggungRutin = 0
+            RekapTotal_PPhDitanggungPesangon = 0
+            RekapTotal_JumlahPembayaran = 0
+            RekapTotal_SisaPembayaran = 0
 
-        AksesDatabase_Transaksi(Buka)
+            If JenisTampilan = JenisTampilan_REKAP Or JenisTampilan = JenisTampilan_ALL Then
+                NomorBulan = 1
+                MaxLooping = 12
+            End If
+
+            If JenisTampilan = JenisTampilan_DETAIL Then
+                NomorBulan = KonversiBulanKeAngka(Bulan)
+                MaxLooping = NomorBulan
+            End If
+
+            AksesDatabase_Transaksi(Buka)
 
         Do While NomorBulan <= MaxLooping
 
@@ -563,6 +574,8 @@ Public Class wpfUsc_BukuPengawasanGaji
                                             PotonganHutangPPhPasal21Rutin, PotonganHutangPPhPasal21Pesangon, PotonganHutangSerikat, PotonganKasbonKaryawan, PotonganLainnya, JumlahPotongan,
                                             JumlahGajiDibayarkan, PPhDitanggungRutin, PPhDitanggungPesangon, 0, 0, NomorJV_Gaji, Keterangan)
                 End If
+
+                Await Task.Yield()
             Loop
 
             cmdBAYAR = New OdbcCommand(" SELECT * FROM tbl_BuktiPengeluaran " &
@@ -734,9 +747,22 @@ Public Class wpfUsc_BukuPengawasanGaji
                                     RekapTotal_PPhDitanggungPesangon,
                                     RekapTotal_JumlahPembayaran,
                                     RekapTotal_SisaPembayaran, 0, Kosongan)
-        End If
-        BersihkanSeleksi()
+            End If
 
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanGaji")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
@@ -752,7 +778,12 @@ Public Class wpfUsc_BukuPengawasanGaji
         NomorJV_Pembayaran_Terseleksi = 0
         'VisibilitasInfoSaldo(True)
         BersihkanSeleksiTabelPembayaran()
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+    End Sub
+
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

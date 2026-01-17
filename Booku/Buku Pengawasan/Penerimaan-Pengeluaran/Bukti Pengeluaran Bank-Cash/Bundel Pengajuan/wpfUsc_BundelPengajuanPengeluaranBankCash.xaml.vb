@@ -3,6 +3,7 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 Imports bcomm
 
 
@@ -10,6 +11,12 @@ Public Class wpfUsc_BundelPengajuanPengeluaranBankCash
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+
+    ' Flag untuk mencegah multiple loading bersamaan
+    Private SedangMemuatData As Boolean = False
+
+    ' Flag untuk mencegah eksekusi TampilkanData saat ComboBox sedang diisi
+    Dim EksekusiTampilanData As Boolean
 
     'Variabel Umum :
     Public TotalPengajuan
@@ -86,47 +93,70 @@ Public Class wpfUsc_BundelPengajuanPengeluaranBankCash
 
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = True
         TampilkanData_Bundel()
     End Sub
 
-    Sub TampilkanData_Bundel()
+    Async Sub TampilkanData_BundelAsync()
+        ' Guard clause
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        KesesuaianJurnal = True
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'Data Tabel :
-        datatabelBundel.Clear()
-        Dim i = 0
-        bundel_AngkaBundel_Sebelumnya = 0
-        bundel_NomorUrut = 0
-        bundel_TotalPengajuan = 0
-        bundel_TotalDisetujui = 0
-        bundel_JumlahLembarPengajuan = 0
+        Try
+            KesesuaianJurnal = True
 
-        AksesDatabase_Transaksi(Buka)
+            'Data Tabel :
+            datatabelBundel.Clear()
+            Dim i = 0
+            bundel_AngkaBundel_Sebelumnya = 0
+            bundel_NomorUrut = 0
+            bundel_TotalPengajuan = 0
+            bundel_TotalDisetujui = 0
+            bundel_JumlahLembarPengajuan = 0
 
-        cmd = New OdbcCommand(" SELECT * FROM tbl_BundelPengajuanPengeluaran " &
-                              " ORDER BY Angka_Bundel ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
+            AksesDatabase_Transaksi(Buka)
 
-        Do While dr.Read
-            bundel_AngkaBundel = dr.Item("Angka_Bundel")
-            If i > 0 And bundel_AngkaBundel <> bundel_AngkaBundel_Sebelumnya Then TambahBaris_Bundel()
-            bundel_NomorBundel = dr.Item("Nomor_Bundel")
-            bundel_TanggalBundel = TanggalFormatTampilan(dr.Item("Tanggal_Bundel"))
-            bundel_TotalPengajuan += dr.Item("Jumlah_Pengajuan_Per_Baris")
-            bundel_TotalDisetujui += dr.Item("Jumlah_Disetujui_Per_Baris")
-            bundel_Status = dr.Item("Status")
-            bundel_JumlahLembarPengajuan += 1
-            bundel_AngkaBundel_Sebelumnya = bundel_AngkaBundel
-            i += 1
-        Loop
+            cmd = New OdbcCommand(" SELECT * FROM tbl_BundelPengajuanPengeluaran " &
+                                  " ORDER BY Angka_Bundel ", KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
 
-        If i > 0 Then TambahBaris_Bundel()
+            Do While dr.Read
+                bundel_AngkaBundel = dr.Item("Angka_Bundel")
+                If i > 0 And bundel_AngkaBundel <> bundel_AngkaBundel_Sebelumnya Then TambahBaris_Bundel()
+                bundel_NomorBundel = dr.Item("Nomor_Bundel")
+                bundel_TanggalBundel = TanggalFormatTampilan(dr.Item("Tanggal_Bundel"))
+                bundel_TotalPengajuan += dr.Item("Jumlah_Pengajuan_Per_Baris")
+                bundel_TotalDisetujui += dr.Item("Jumlah_Disetujui_Per_Baris")
+                bundel_Status = dr.Item("Status")
+                bundel_JumlahLembarPengajuan += 1
+                bundel_AngkaBundel_Sebelumnya = bundel_AngkaBundel
+                i += 1
+                Await Task.Yield()
+            Loop
 
-        AksesDatabase_Transaksi(Tutup)
+            If i > 0 Then TambahBaris_Bundel()
 
-        BersihkanSeleksi_Bundel()
+            AksesDatabase_Transaksi(Tutup)
 
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanData_BundelAsync")
+
+        Finally
+            BersihkanSeleksi_Bundel()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData_Bundel()
+        TampilkanData_BundelAsync()
     End Sub
 
     Sub TambahBaris_Bundel()
