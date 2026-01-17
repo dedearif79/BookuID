@@ -464,7 +464,7 @@ Public Class wpfWin_TryApp
             IsiTeks = File.ReadAllText(path)
             txt_PenampilTeks.Text = IsiTeks
         Else
-            MessageBox.Show("File tidak ditemukan: " & path)
+            Pesan_Peringatan("File tidak ditemukan: " & path)
         End If
 
         Dim KoneksiBackUp As MySqlConnection

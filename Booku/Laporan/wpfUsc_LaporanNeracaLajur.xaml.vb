@@ -148,9 +148,7 @@ Public Class wpfUsc_LaporanNeracaLajur
                             Kosongan)
             Return
         End If
-        Dim Pesan As String = "Yakin akan melanjutkan proses Tutup Buku?"
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin akan melanjutkan proses Tutup Buku?") Then Return
         ProsesTutupBukuBulan = True
         RefreshTampilanData()
         ProsesTutupBukuBulan = False
@@ -183,16 +181,12 @@ Public Class wpfUsc_LaporanNeracaLajur
         EksporDataTableKeEXCEL(datatabelUtama, datagridUtama)
     End Sub
     Private Sub btn_Reset_Click(sender As Object, e As RoutedEventArgs) Handles btn_Reset.Click
-        Dim Pesan As String = "Yakin akan me-reset Laporan Bulan " & BulanLaporan_String & "?"
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin akan me-reset Laporan Bulan " & BulanLaporan_String & "?") Then Return
         ResetAdjusmentAkhirBulan(BulanLaporan_Angka)
         ResetLaporan()
     End Sub
     Private Sub btn_ResetSaldoSaja_Click(sender As Object, e As RoutedEventArgs) Handles btn_ResetSaldoSaja.Click
-        Dim Pesan As String = "Yakin akan me-reset Laporan Bulan " & BulanLaporan_String & "?"
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin akan me-reset Laporan Bulan " & BulanLaporan_String & "?") Then Return
         ResetLaporan()
     End Sub
     Sub ResetLaporan()
@@ -472,14 +466,11 @@ Public Class wpfUsc_LaporanNeracaLajur
                 pgb_Progress.Foreground = clrWarning
                 pesan_DataTidakSesuai &= "." & Enter2Baris &
                     "Silakan perbaiki dan sesuaikan semua data tersebut agar proses 'Trial Balance' berjalan dengan baik." & Enter2Baris &
-                    "Atau silakan klik tombol 'Yes' untuk melanjutkan 'Trial Balance'."
+                    "Lanjutkan 'Trial Balance'?"
                 If JalurMasuk <> Halaman_MENUUTAMA Then TutupHalaman()
-                Pilihan = MessageBox.Show(pesan_DataTidakSesuai, "Perhatian..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbNo Then Return
-                If Pilihan = vbYes Then
-                    KetersediaanMenuHalaman(pnl_Halaman, False)
-                    KesesuaianData_TrialBalance = True
-                End If
+                If Not TanyaKonfirmasi(pesan_DataTidakSesuai) Then Return
+                KetersediaanMenuHalaman(pnl_Halaman, False)
+                KesesuaianData_TrialBalance = True
             End If
             '============================================================================================================
         End If

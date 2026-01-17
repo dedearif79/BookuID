@@ -258,10 +258,10 @@ Public Class wpfUsc_TutupBuku
         End If
 
 
-        Pilihan = MessageBox.Show(("Silakan periksa kembali data SALDO dengan seksama." &
-                                  Enter2Baris & "Setelah selesai Proses Tutup Buku, Anda akan keluar dari Tahun Buku ini dan tidak dapat mengeditnya lagi." &
-                                  Enter2Baris & "Yakin melanjutkan 'Tutup Buku Tahun " & TahunBukuAktif & "'..?").ToString, "PERHATIAN..!!!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then
+        Dim PesanKonfirmasi = "Silakan periksa kembali data SALDO dengan seksama." &
+                              Enter2Baris & "Setelah selesai Proses Tutup Buku, Anda akan keluar dari Tahun Buku ini dan tidak dapat mengeditnya lagi." &
+                              Enter2Baris & "Yakin melanjutkan 'Tutup Buku Tahun " & TahunBukuAktif & "'?"
+        If Not TanyaKonfirmasi(PesanKonfirmasi) Then
             KetersediaanMenuHalaman(pnl_Halaman, True)
             Return
         End If
@@ -394,7 +394,6 @@ Public Class wpfUsc_TutupBuku
             cmd_ExecuteNonQuery()
             If StatusSuntingDatabase = False Then Exit For
             row("Saldo_Awal_Tahun_Berikutnya") = SaldoAkhir_Terindeks
-            'Application.DoEvents()
             If BarisTelusur <= 9 Then System.Threading.Thread.Sleep(123) '(Untuk Dramatisasi saja.... Wkwkwk...)
         Next
         TutupDatabaseTransaksi_Alternatif()

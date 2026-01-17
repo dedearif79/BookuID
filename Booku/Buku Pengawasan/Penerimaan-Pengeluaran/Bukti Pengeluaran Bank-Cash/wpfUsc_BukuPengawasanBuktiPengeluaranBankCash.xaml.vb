@@ -1,3 +1,4 @@
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
@@ -75,6 +76,9 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
     Dim Pilih_KodeLawanTransaksi
     Dim Pilih_SaranaPembayaran
 
+    ' Flag untuk mencegah multiple loading bersamaan
+    Private SedangMemuatData As Boolean = False
+
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         If SudahDimuat Then Return
@@ -105,150 +109,176 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
 
 
     Dim EksekusiTampilanData
-    Sub TampilkanData()
 
+    ''' <summary>
+    ''' Menampilkan data dengan async pattern.
+    ''' Baris data ditampilkan satu per satu seperti sistem lama,
+    ''' dengan loading window yang tetap responsive (animasi berputar).
+    ''' </summary>
+    Async Sub TampilkanDataAsync()
+
+        ' Guard clause
         If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+
+        SedangMemuatData = True
+
+        ' Disable UI dan tampilkan loading
         KetersediaanMenuHalaman(pnl_Halaman, False)
 
-        'Style Tabel :
-        Terabas()
-        datatabelUtama.Rows.Clear()
+        ' Beri waktu UI untuk menampilkan loading window
+        Await Task.Delay(50)
 
-        'Data Tabel :
-        Dim i = 0
-        NomorUrut = 0
-        AngkaKK_Sebelumnya = 0
+        Try
+            ' Style Tabel
+            Terabas()
+            datatabelUtama.Rows.Clear()
 
-        JumlahTagihan = 0
-        JumlahPengajuan = 0
-        JumlahBayar = 0
-        JumlahInvoicePerBaris = 0
+            ' Build filter
+            Dim FilterData As String = BuildFilterQuery()
 
-        Dim FilterData As String = Kosongan
+            ' Variabel untuk grouping
+            Dim i = 0
+            NomorUrut = 0
+            AngkaKK_Sebelumnya = 0
+            JumlahTagihan = 0
+            JumlahPengajuan = 0
+            JumlahBayar = 0
+            JumlahInvoicePerBaris = 0
 
-        'Filter Kategori :
-        Dim FilterKategori As String
-        Select Case Pilih_Kategori
-            Case Kosongan
-                FilterKategori = Spasi1
-            Case Pilihan_Semua
-                FilterKategori = Spasi1
-            Case Else
-                FilterKategori = " AND Kategori = '" & Pilih_Kategori & "' "
-        End Select
+            AksesDatabase_Transaksi(Buka)
+            cmd = New OdbcCommand(" SELECT * FROM tbl_BuktiPengeluaran " &
+                                  " WHERE DATE_FORMAT(Tanggal_KK, '%Y') = '" & TahunBukuAktif & "' " & FilterData &
+                                  " ORDER BY Angka_KK ", KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
 
-        'Filter Peruntukan :
-        Dim FilterPeruntukan As String
-        Select Case Pilih_Peruntukan
-            Case Kosongan
-                FilterPeruntukan = Spasi1
-            Case Pilihan_Semua
-                FilterPeruntukan = Spasi1
-            Case Else
-                FilterPeruntukan = " AND Peruntukan = '" & Pilih_Peruntukan & "' "
-        End Select
-
-        'Filter LawanTransaksi :
-        Dim FilterLawanTransaksi As String = Kosongan
-        Select Case Pilih_KodeLawanTransaksi
-            Case Kosongan
-                FilterLawanTransaksi = Spasi1
-            Case Pilihan_Semua
-                FilterLawanTransaksi = Spasi1
-            Case Else
-                FilterLawanTransaksi = " AND Kode_Lawan_Transaksi = '" & Pilih_KodeLawanTransaksi & "' "
-        End Select
-
-        'Filter SaranaPembayaran :
-        Dim FilterSaranaPembayaran = Spasi1
-        Select Case Pilih_SaranaPembayaran
-            Case Kosongan
-                FilterSaranaPembayaran = Spasi1
-            Case Pilihan_Semua
-                FilterSaranaPembayaran = Spasi1
-            Case Else
-                FilterSaranaPembayaran = " AND COA_Kredit = '" & Pilih_SaranaPembayaran & "' "
-        End Select
-
-        FilterData = FilterKategori & FilterPeruntukan & FilterLawanTransaksi & FilterSaranaPembayaran
-
-        AksesDatabase_Transaksi(Buka)
-        cmd = New OdbcCommand(" SELECT * FROM tbl_BuktiPengeluaran " &
-                              " WHERE DATE_FORMAT(Tanggal_KK, '%Y') = '" & TahunBukuAktif & "' " & FilterData &
-                              " ORDER BY Angka_KK ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        Do While dr.Read
-            AngkaKK = dr.Item("Angka_KK")
-            If i > 0 And AngkaKK <> AngkaKK_Sebelumnya Then TambahBaris()
-            Try
-                NomorKK = dr.Item("Nomor_KK")
-            Catch ex As Exception
-                PesanUntukProgrammer("MASALAH YANG INI BELUM DISELESAIKAN....!!!!")
-                Exit Do
-            End Try
-            TanggalKK = TanggalFormatTampilan(dr.Item("Tanggal_KK"))
-            Peruntukan = dr.Item("Peruntukan")
-            NomorBundel = dr.Item("Nomor_Bundel")
-            PeruntukanPembayaran = dr.Item("Peruntukan")
-            KodeLawanTransaksi = dr.Item("Kode_Lawan_Transaksi")
-            NamaLawanTransaksi = dr.Item("Nama_Lawan_Transaksi")
-            SaranaPembayaran = KonversiCOAKeSaranaPembayaran(dr.Item("COA_Kredit"))
-            RekeningPenerima = dr.Item("Rekening_Penerima")
-            AtasNamaPenerima = dr.Item("Atas_Nama_Penerima")
-            If RekeningPenerima <> Kosongan Then
-                If AtasNamaPenerima <> Kosongan Then
-                    PenerimaPembayaran = RekeningPenerima & " a.n. " & AtasNamaPenerima
-                Else
-                    PenerimaPembayaran = RekeningPenerima
+            Do While dr.Read
+                AngkaKK = dr.Item("Angka_KK")
+                If i > 0 And AngkaKK <> AngkaKK_Sebelumnya Then
+                    TambahBaris()
+                    ' Yield untuk memberi kesempatan UI refresh (animasi loading + tampil baris)
+                    Await Task.Yield()
                 End If
-            Else
-                PenerimaPembayaran = StripKosong
-            End If
-            NomorBP = dr.Item("Nomor_BP")
-            If PeruntukanPembayaran = Peruntukan_PembayaranHutangBank _
-                Or PeruntukanPembayaran = Peruntukan_PembayaranHutangLeasing _
-                Or PeruntukanPembayaran = Peruntukan_PembayaranHutangAfiliasi _
-                Or PeruntukanPembayaran = Peruntukan_PembayaranHutangPihakKetiga _
-                Or PeruntukanPembayaran = Peruntukan_PembayaranHutangPajak _
-                Then
-                NomorInvoice = dr.Item("Nomor_Invoice")
-                TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
-            Else
-                If NomorInvoice = Kosongan Then
+
+                Try
+                    NomorKK = dr.Item("Nomor_KK")
+                Catch ex As Exception
+                    PesanUntukProgrammer("MASALAH YANG INI BELUM DISELESAIKAN....!!!!")
+                    Exit Do
+                End Try
+
+                TanggalKK = TanggalFormatTampilan(dr.Item("Tanggal_KK"))
+                Peruntukan = dr.Item("Peruntukan")
+                NomorBundel = dr.Item("Nomor_Bundel")
+                PeruntukanPembayaran = dr.Item("Peruntukan")
+                KodeLawanTransaksi = dr.Item("Kode_Lawan_Transaksi")
+                NamaLawanTransaksi = dr.Item("Nama_Lawan_Transaksi")
+                SaranaPembayaran = KonversiCOAKeSaranaPembayaran(dr.Item("COA_Kredit"))
+                RekeningPenerima = dr.Item("Rekening_Penerima")
+                AtasNamaPenerima = dr.Item("Atas_Nama_Penerima")
+
+                If RekeningPenerima <> Kosongan Then
+                    If AtasNamaPenerima <> Kosongan Then
+                        PenerimaPembayaran = RekeningPenerima & " a.n. " & AtasNamaPenerima
+                    Else
+                        PenerimaPembayaran = RekeningPenerima
+                    End If
+                Else
+                    PenerimaPembayaran = StripKosong
+                End If
+
+                NomorBP = dr.Item("Nomor_BP")
+
+                If PeruntukanPembayaran = Peruntukan_PembayaranHutangBank _
+                    Or PeruntukanPembayaran = Peruntukan_PembayaranHutangLeasing _
+                    Or PeruntukanPembayaran = Peruntukan_PembayaranHutangAfiliasi _
+                    Or PeruntukanPembayaran = Peruntukan_PembayaranHutangPihakKetiga _
+                    Or PeruntukanPembayaran = Peruntukan_PembayaranHutangPajak _
+                    Then
                     NomorInvoice = dr.Item("Nomor_Invoice")
-                Else
-                    NomorInvoice &= SlashGanda_Pemisah & dr.Item("Nomor_Invoice")
-                End If
-                If TanggalInvoice = Kosongan Then
                     TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
-                    If TanggalInvoice = TanggalKosong Then TanggalInvoice = Kosongan
                 Else
-                    TanggalInvoice &= SlashGanda_Pemisah & TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
+                    If NomorInvoice = Kosongan Then
+                        NomorInvoice = dr.Item("Nomor_Invoice")
+                    Else
+                        NomorInvoice &= SlashGanda_Pemisah & dr.Item("Nomor_Invoice")
+                    End If
+                    If TanggalInvoice = Kosongan Then
+                        TanggalInvoice = TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
+                        If TanggalInvoice = TanggalKosong Then TanggalInvoice = Kosongan
+                    Else
+                        TanggalInvoice &= SlashGanda_Pemisah & TanggalFormatTampilan(dr.Item("Tanggal_Invoice"))
+                    End If
                 End If
-            End If
-            JumlahTagihan += KonversiDesimalKeInt64BulatKeAtas(dr.Item("Kurs") * dr.Item("Jumlah_Tagihan"))
-            JumlahPengajuan += KonversiDesimalKeInt64BulatKeAtas(dr.Item("Kurs") * dr.Item("Jumlah_Pengajuan"))
-            JumlahBayar += KonversiDesimalKeInt64BulatKeAtas(dr.Item("Kurs") * dr.Item("Jumlah_Bayar"))
-            TanggalBayar = TanggalFormatTampilan(dr.Item("Tanggal_Bayar"))
-            BiayaAdministrasiBank = dr.Item("Biaya_Administrasi_Bank")
-            Denda = dr.Item("Denda")
-            KodeAkun = dr.Item("COA_Debet")
-            NamaAkun = AmbilValue_NamaAkun(KodeAkun)
-            StatusPengajuan = dr.Item("Status_Pengajuan")
-            Uraian = PenghapusEnter(dr.Item("Catatan"))
-            NomorJV = dr.Item("Nomor_JV")
-            User = dr.Item("User")
-            AngkaKK_Sebelumnya = AngkaKK
-            i += 1
-            JumlahInvoicePerBaris += 1
-        Loop
 
-        If i > 0 Then TambahBaris()
+                JumlahTagihan += KonversiDesimalKeInt64BulatKeAtas(dr.Item("Kurs") * dr.Item("Jumlah_Tagihan"))
+                JumlahPengajuan += KonversiDesimalKeInt64BulatKeAtas(dr.Item("Kurs") * dr.Item("Jumlah_Pengajuan"))
+                JumlahBayar += KonversiDesimalKeInt64BulatKeAtas(dr.Item("Kurs") * dr.Item("Jumlah_Bayar"))
+                TanggalBayar = TanggalFormatTampilan(dr.Item("Tanggal_Bayar"))
+                BiayaAdministrasiBank = dr.Item("Biaya_Administrasi_Bank")
+                Denda = dr.Item("Denda")
+                KodeAkun = dr.Item("COA_Debet")
+                NamaAkun = AmbilValue_NamaAkun(KodeAkun)
+                StatusPengajuan = dr.Item("Status_Pengajuan")
+                Uraian = PenghapusEnter(dr.Item("Catatan"))
+                NomorJV = dr.Item("Nomor_JV")
+                User = dr.Item("User")
+                AngkaKK_Sebelumnya = AngkaKK
+                i += 1
+                JumlahInvoicePerBaris += 1
+            Loop
 
-        AksesDatabase_Transaksi(Tutup)
+            If i > 0 Then TambahBaris()
 
-        BersihkanSeleksi()
+            AksesDatabase_Transaksi(Tutup)
 
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync")
+
+        Finally
+            BersihkanSeleksi()
+            ' Enable UI dan tutup loading
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
+
+    End Sub
+
+
+    ''' <summary>
+    ''' Build filter query dari variabel filter yang sudah diset.
+    ''' </summary>
+    Private Function BuildFilterQuery() As String
+        Dim FilterKategori As String = Spasi1
+        If Pilih_Kategori IsNot Nothing AndAlso Pilih_Kategori.ToString <> Kosongan AndAlso Pilih_Kategori.ToString <> Pilihan_Semua Then
+            FilterKategori = " AND Kategori = '" & Pilih_Kategori.ToString & "' "
+        End If
+
+        Dim FilterPeruntukan As String = Spasi1
+        If Pilih_Peruntukan IsNot Nothing AndAlso Pilih_Peruntukan.ToString <> Kosongan AndAlso Pilih_Peruntukan.ToString <> Pilihan_Semua Then
+            FilterPeruntukan = " AND Peruntukan = '" & Pilih_Peruntukan.ToString & "' "
+        End If
+
+        Dim FilterLawanTransaksi As String = Spasi1
+        If Pilih_KodeLawanTransaksi IsNot Nothing AndAlso Pilih_KodeLawanTransaksi.ToString <> Kosongan AndAlso Pilih_KodeLawanTransaksi.ToString <> Pilihan_Semua Then
+            FilterLawanTransaksi = " AND Kode_Lawan_Transaksi = '" & Pilih_KodeLawanTransaksi.ToString & "' "
+        End If
+
+        Dim FilterSaranaPembayaran As String = Spasi1
+        If Pilih_SaranaPembayaran IsNot Nothing AndAlso Pilih_SaranaPembayaran.ToString <> Kosongan AndAlso Pilih_SaranaPembayaran.ToString <> Pilihan_Semua Then
+            FilterSaranaPembayaran = " AND COA_Kredit = '" & Pilih_SaranaPembayaran.ToString & "' "
+        End If
+
+        Return FilterKategori & FilterPeruntukan & FilterLawanTransaksi & FilterSaranaPembayaran
+    End Function
+
+
+    ''' <summary>
+    ''' Wrapper untuk backward compatibility.
+    ''' Dipanggil dari form lain yang masih menggunakan nama lama.
+    ''' </summary>
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris()
@@ -272,6 +302,10 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
         Terabas()
     End Sub
 
+    ''' <summary>
+    ''' Membersihkan seleksi tanpa mengubah state loading.
+    ''' Digunakan oleh TampilkanDataAsync() karena loading dihandle oleh MuatDataDenganLoading().
+    ''' </summary>
     Sub BersihkanSeleksi()
         BarisTerseleksi = -1
         JumlahBaris = datatabelUtama.Rows.Count
@@ -285,7 +319,15 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
         btn_LihatJurnal.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
         btn_LihatBundelan.IsEnabled = False
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+    End Sub
+
+    ''' <summary>
+    ''' Membersihkan seleksi dan mengaktifkan kembali UI.
+    ''' Digunakan untuk backward compatibility dengan kode lama.
+    ''' </summary>
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
     Sub KontenCombo_Kategori()

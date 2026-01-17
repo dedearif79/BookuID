@@ -10,7 +10,7 @@ Public Class wpfWin_Pengaturan
     Public FungsiForm As String
     Public AdaPerubahanForm As Boolean
 
-    Private fbd_FolderXAMPP As New System.Windows.Forms.FolderBrowserDialog
+    ' FolderBrowserDialog diganti dengan wpfWin_SelectFolder (WPF murni)
 
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
@@ -65,11 +65,11 @@ Public Class wpfWin_Pengaturan
 
     Sub LogikaFormCompanyProfile()
         If AdaPerubahanForm Then
-            Pilihan = MessageBox.Show("Ada perubahan data 'Company Profile' yang belum tersimpan..!" & Enter2Baris & "Lanjutkan keluar dari halaman ini..?", "Perhatian..!", MessageBoxButton.YesNo)
-            If Pilihan = MessageBoxResult.No Then
+            If TanyaKonfirmasi("Ada perubahan data 'Company Profile' yang belum tersimpan." & Enter2Baris & "Lanjutkan keluar dari halaman ini?") Then
+                Tutup_CompanyProfile()
+            Else
                 Dispatcher.BeginInvoke(Sub() tab_Pengaturan.SelectedItem = tab_CompanyProfile)
             End If
-            If Pilihan = MessageBoxResult.Yes Then Tutup_CompanyProfile()
         Else
             Tutup_CompanyProfile()
         End If
@@ -123,8 +123,14 @@ Public Class wpfWin_Pengaturan
 
 
     Private Sub btn_BukaFolder_Click(sender As Object, e As RoutedEventArgs) Handles btn_BukaFolder.Click
-        If fbd_FolderXAMPP.ShowDialog = System.Windows.Forms.DialogResult.OK Then
-            txt_FolderXAMPP.Text = fbd_FolderXAMPP.SelectedPath
+        ' Gunakan custom WPF folder dialog (pengganti FolderBrowserDialog)
+        win_SelectFolder = New wpfWin_SelectFolder
+        win_SelectFolder.ResetForm()
+        win_SelectFolder.SelectedPath = txt_FolderXAMPP.Text ' Set path awal jika ada
+        win_SelectFolder.ShowDialog()
+
+        If win_SelectFolder.HasResult Then
+            txt_FolderXAMPP.Text = win_SelectFolder.SelectedPath
         End If
     End Sub
 

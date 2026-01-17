@@ -150,11 +150,8 @@ Public Class wpfUsc_JurnalAdjusment
         If BulanAngka_Terseleksi > 12 Then Return
         Dim Pesan As String = "Anda akan melakukan Adjusment untuk," & Enter1Baris &
             "Akun : " & NamaAkun_Terseleksi & " (" & KodeAkun_Terseleksi & ")" & Enter1Baris &
-            "Bulan : " & KonversiAngkaKeBulanString(BulanAngka_Terseleksi) & Enter2Baris &
-            "Lanjutkan proses?" & Enter1Baris &
-            ""
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+            "Bulan : " & KonversiAngkaKeBulanString(BulanAngka_Terseleksi)
+        If Not Pesan_KonfirmasiLanjutkan(Pesan) Then Return
 
         InputJurnalAdjusment()
 

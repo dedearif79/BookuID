@@ -1,9 +1,10 @@
-Imports bcomm
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports bcomm
 
 
 Public Class wpfUsc_DataProject
@@ -36,6 +37,9 @@ Public Class wpfUsc_DataProject
 
     Public KesesuaianJurnal As Boolean
 
+    ' Flag untuk mencegah multiple loading bersamaan
+    Private SedangMemuatData As Boolean = False
+
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         If SudahDimuat Then Return
 
@@ -58,38 +62,82 @@ Public Class wpfUsc_DataProject
         TampilkanData()
     End Sub
 
-    Sub TampilkanData()
 
-        KesesuaianJurnal = True
+    ''' <summary>
+    ''' Menampilkan data dengan async pattern.
+    ''' Baris data ditampilkan satu per satu seperti sistem lama,
+    ''' dengan loading window yang tetap responsive (animasi berputar).
+    ''' </summary>
+    Async Sub TampilkanDataAsync()
 
-        AksesDatabase_General(Buka)
+        ' Guard clause
+        If SedangMemuatData Then Return
 
-        'Data Tabel :
-        datatabelUtama.Clear()
-        NomorUrut = 0
+        SedangMemuatData = True
 
-        cmd = New OdbcCommand(" SELECT * FROM tbl_DataProject ", KoneksiDatabaseGeneral)
-        dr_ExecuteReader()
-        Do While dr.Read
-            NomorUrut += 1
-            NomorID = dr.Item("Nomor_ID")
-            KodeProject = dr.Item("Kode_Project")
-            NamaProject = dr.Item("Nama_Project")
-            NomorPO = dr.Item("Nomor_PO")
-            KodeCustomer = dr.Item("Kode_Customer")
-            NamaCustomer = dr.Item("Nama_Customer")
-            NilaiProject = dr.Item("Nilai_Project")
-            Keterangan = dr.Item("Keterangan")
-            Status = dr.Item("Status")
-            datatabelUtama.Rows.Add(NomorUrut, NomorID, KodeProject, NamaProject, NomorPO, KodeCustomer, NamaCustomer, NilaiProject, Keterangan, Status)
-        Loop
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
 
-        AksesDatabase_General(Tutup)
+        ' Beri waktu UI untuk menampilkan loading window
+        Await Task.Delay(50)
 
-        BersihkanSeleksi()
+        Try
+            KesesuaianJurnal = True
+
+            'Data Tabel :
+            datatabelUtama.Clear()
+            NomorUrut = 0
+
+            AksesDatabase_General(Buka)
+
+            cmd = New OdbcCommand(" SELECT * FROM tbl_DataProject ", KoneksiDatabaseGeneral)
+            dr_ExecuteReader()
+
+            Do While dr.Read
+                NomorUrut += 1
+                NomorID = dr.Item("Nomor_ID")
+                KodeProject = dr.Item("Kode_Project")
+                NamaProject = dr.Item("Nama_Project")
+                NomorPO = dr.Item("Nomor_PO")
+                KodeCustomer = dr.Item("Kode_Customer")
+                NamaCustomer = dr.Item("Nama_Customer")
+                NilaiProject = dr.Item("Nilai_Project")
+                Keterangan = dr.Item("Keterangan")
+                Status = dr.Item("Status")
+                datatabelUtama.Rows.Add(NomorUrut, NomorID, KodeProject, NamaProject, NomorPO, KodeCustomer, NamaCustomer, NilaiProject, Keterangan, Status)
+
+                ' Yield untuk memberi kesempatan UI refresh (animasi loading + tampil baris)
+                Await Task.Yield()
+            Loop
+
+            AksesDatabase_General(Tutup)
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DataProject")
+
+        Finally
+            BersihkanSeleksi()
+            ' Enable UI dan tutup loading
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
 
     End Sub
 
+
+    ''' <summary>
+    ''' Wrapper untuk backward compatibility.
+    ''' Dipanggil dari form lain yang masih menggunakan nama lama.
+    ''' </summary>
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
+
+
+    ''' <summary>
+    ''' Membersihkan seleksi tanpa mengubah state loading.
+    ''' Digunakan oleh TampilkanDataAsync() karena loading dihandle secara terpisah.
+    ''' </summary>
     Sub BersihkanSeleksi()
         JumlahBaris = datatabelUtama.Rows.Count
         BarisTerseleksi = -1
@@ -98,6 +146,15 @@ Public Class wpfUsc_DataProject
         datagridUtama.SelectedCells.Clear()
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
+    End Sub
+
+    ''' <summary>
+    ''' Membersihkan seleksi dan mengaktifkan kembali UI.
+    ''' Digunakan untuk backward compatibility dengan kode lama.
+    ''' </summary>
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
 

@@ -1,6 +1,6 @@
 ﻿Imports System.Xml
 
-Module mdl_DesainUmum
+Module X_mdl_DesainUmum
 
     'Pewarnaan :
     Public WarnaHitamSolid As Color = Color.Black

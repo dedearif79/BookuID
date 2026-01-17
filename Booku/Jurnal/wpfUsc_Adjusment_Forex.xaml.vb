@@ -356,11 +356,8 @@ Public Class wpfUsc_JurnalAdjusment_Forex
 
         Dim Pesan As String = "Anda akan melakukan Adjusment untuk" & Enter1Baris &
             "Akun : " & COA & " - " & NamaAkun & Enter1Baris &
-            "Bulan : " & KonversiAngkaKeBulanString(BulanAngka) & " " & TahunBukuAktif & Enter2Baris &
-            "Lanjutkan proses?" & Enter1Baris &
-            ""
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+            "Bulan : " & KonversiAngkaKeBulanString(BulanAngka) & " " & TahunBukuAktif
+        If Not Pesan_KonfirmasiLanjutkan(Pesan) Then Return
 
         InputJurnalAdjusmentAkhirBulan_Forex(KodeAkun_Terseleksi, BulanAngka_Terseleksi)
         If jur_StatusPenyimpananJurnal_PerBaris Then TampilkanData()

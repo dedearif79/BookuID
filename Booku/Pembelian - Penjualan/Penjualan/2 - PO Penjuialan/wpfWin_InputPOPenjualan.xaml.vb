@@ -1592,8 +1592,7 @@ Public Class wpfWin_InputPOPenjualan
 
 
     Private Sub btn_Singkirkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Singkirkan.Click
-        Pilihan = MessageBox.Show("Yakin akan menyingkirkan item terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin akan menyingkirkan item terpilih?") Then Return
         rowviewUtama.Delete()
         Dim i = 0
         For Each row As DataRow In datatabelUtama.Rows

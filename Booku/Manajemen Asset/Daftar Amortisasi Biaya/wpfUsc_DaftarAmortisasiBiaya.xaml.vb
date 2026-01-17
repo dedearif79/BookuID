@@ -687,8 +687,7 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then Return '(Untuk jaga-jaga saja...!)
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not Pesan_KonfirmasiHapus() Then Return
 
         HapusDataAmortisasi_BerdasarkanNomorID(NomorID_Terseleksi)
 
@@ -869,10 +868,8 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
 
         Dim Pesan As String =
             "Pastikan data amortisasi (jika ada) sudah terposting seluruhnya sampai bulan " & BulanTerceklis_Akhir & " " &
-            "sebelum posting jurnal...!!!" & Enter2Baris &
-            "Lanjutkan posting..?"
-        Pilihan = MessageBox.Show(Pesan, "PERHATIAN..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+            "sebelum posting jurnal."
+        If Not Pesan_KonfirmasiLanjutkan(Pesan) Then Return
 
         'SembunyikanSemuaKolomTabel()
         TampilkanData()

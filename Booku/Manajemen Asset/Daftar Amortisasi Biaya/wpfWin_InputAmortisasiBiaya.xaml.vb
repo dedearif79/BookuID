@@ -460,17 +460,17 @@ Public Class wpfWin_InputAmortisasiBiaya
     Private Sub TutupForm(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.Closing
         If ProsesKeluarAplikasi Then Return
         If Not EksekusiTutupForm Then
-            Pilihan = MessageBox.Show("Yakin ingin menutup form ini?", "PERHATIAN..!", MessageBoxButtons.YesNo)
-            If Pilihan = vbNo Then e.Cancel = True
-            If Pilihan = vbYes Then
-                If JalurMasuk = Form_INPUTINVOICEPEMBELIAN Then
-                    If txt_COA_Biaya.Text = Kosongan Or txt_MasaAmortisasi.Text = Kosongan Then
-                        PesanPeringatan("Anda belum melengkapi 'Data Amortisasi'." & Enter2Baris & "COA Amortisasi dibatalkan..!")
-                        win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("COA_Produk") = Kosongan
-                        win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("COA_Biaya") = Kosongan
-                        win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("Tanggal_Mulai_Amortisasi") = Kosongan
-                        win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("Masa_Amortisasi") = Kosongan
-                    End If
+            If Not TanyaKonfirmasi("Yakin ingin menutup form ini?") Then
+                e.Cancel = True
+                Return
+            End If
+            If JalurMasuk = Form_INPUTINVOICEPEMBELIAN Then
+                If txt_COA_Biaya.Text = Kosongan Or txt_MasaAmortisasi.Text = Kosongan Then
+                    PesanPeringatan("Anda belum melengkapi 'Data Amortisasi'." & Enter2Baris & "COA Amortisasi dibatalkan..!")
+                    win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("COA_Produk") = Kosongan
+                    win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("COA_Biaya") = Kosongan
+                    win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("Tanggal_Mulai_Amortisasi") = Kosongan
+                    win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("Masa_Amortisasi") = Kosongan
                 End If
             End If
         End If

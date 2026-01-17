@@ -651,9 +651,7 @@ Public Class wpfWin_InputJurnalAdjusmentForex
             Return
         End If
 
-        Pilihan = MessageBox.Show("Yakin data sudah benar..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        'PesanUntukProgrammer("Pilihan : " & Pilihan.ToString)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin data sudah benar?") Then Return
 
         'Jika form berfungsi untuk mengedit, maka hapus data sebelumnya :
         If FungsiForm = FungsiForm_EDIT Then
@@ -711,8 +709,7 @@ Public Class wpfWin_InputJurnalAdjusmentForex
 
 
     Private Sub btn_Reset_Click(sender As Object, e As RoutedEventArgs) Handles btn_Reset.Click
-        Pilihan = MessageBox.Show("Yakin akan me-reset..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin akan me-reset?") Then Return
         ResetForm()
     End Sub
 

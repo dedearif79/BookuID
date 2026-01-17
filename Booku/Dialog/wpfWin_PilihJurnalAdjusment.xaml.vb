@@ -26,6 +26,9 @@ Public Class wpfWin_PilihJurnalAdjusment
         AdjusmentBulanBukuAktifSudahLengkap = True
 
         'Cek Adjusment Penyusutan :
+        If host_AdjusmentPenyusutanAsset Is Nothing Then
+            host_AdjusmentPenyusutanAsset = New wpfHost_AdjusmentPenyusutanAsset
+        End If
         host_AdjusmentPenyusutanAsset.CekAdjusment()
         If usc_Adjusment_PenyusutanAsset.AdjusmentBulanBukuAktifSudahLengkap Then
             rdb_AdjusmentPenyusutan.IsEnabled = False
@@ -36,6 +39,9 @@ Public Class wpfWin_PilihJurnalAdjusment
         End If
 
         'Cek Adjusment Amortisasi :
+        If host_AdjusmentAmortisasi Is Nothing Then
+            host_AdjusmentAmortisasi = New wpfHost_AdjusmentAmortisasi
+        End If
         host_AdjusmentAmortisasi.CekAdjusment()
         If usc_Adjusment_Amortisasi.AdjusmentBulanBukuAktifSudahLengkap Then
             rdb_AdjusmentAmortisasi.IsEnabled = False
@@ -46,6 +52,9 @@ Public Class wpfWin_PilihJurnalAdjusment
         End If
 
         'Cek Adjusment Forex :
+        If host_AdjusmentForex Is Nothing Then
+            host_AdjusmentForex = New wpfHost_AdjusmentForex
+        End If
         host_AdjusmentForex.CekAdjusment()
         If usc_Adjusment_Forex.AdjusmentBulanBukuAktifSudahLengkap Then
             rdb_AdjusmentForex.IsEnabled = False
@@ -56,6 +65,9 @@ Public Class wpfWin_PilihJurnalAdjusment
         End If
 
         'Cek Adjusment HPP :
+        If host_AdjusmentHPP Is Nothing Then
+            host_AdjusmentHPP = New wpfHost_AdjusmentHPP
+        End If
         host_AdjusmentHPP.CekAdjusment()
         If usc_JurnalAdjusment_HPP.AdjusmentBulanBukuAktifSudahLengkap Then
             rdb_AdjusmentHPP.IsEnabled = False

@@ -1,14 +1,11 @@
 Imports System.Data.Odbc
 Imports System.Windows
 Imports System.Windows.Controls
-Imports System.Windows.Forms.Integration
 Imports bcomm
 
 
 ''' <summary>
 ''' WPF Application Shell untuk BOOKU (Mode Modern)
-''' - Langsung membuka WPF UserControl jika tersedia
-''' - Fallback ke WindowsFormsHost untuk form yang belum migrasi
 ''' </summary>
 Public Class wpfWin_BOOKU
 
@@ -111,18 +108,6 @@ Public Class wpfWin_BOOKU
 
     Private Sub TutupTab_Click(sender As Object, e As RoutedEventArgs)
         Dim tab = CType(CType(sender, Button).Tag, TabItem)
-
-        ' Dispose resources
-        If TypeOf tab.Content Is WindowsFormsHost Then
-            Dim host = CType(tab.Content, WindowsFormsHost)
-            Dim form = TryCast(host.Child, Form)
-            If form IsNot Nothing Then
-                form.Close()
-                form.Dispose()
-            End If
-            host.Dispose()
-        End If
-
         tab_MainContent.Items.Remove(tab)
     End Sub
 
@@ -130,19 +115,6 @@ Public Class wpfWin_BOOKU
     ''' Menutup semua tab yang aktif di WPF Shell
     ''' </summary>
     Public Sub TutupSemuaTab()
-        ' Dispose semua WindowsFormsHost terlebih dahulu
-        For Each item As TabItem In tab_MainContent.Items
-            If TypeOf item.Content Is WindowsFormsHost Then
-                Dim host = CType(item.Content, WindowsFormsHost)
-                Dim form = TryCast(host.Child, Form)
-                If form IsNot Nothing Then
-                    form.Close()
-                    form.Dispose()
-                End If
-                host.Dispose()
-            End If
-        Next
-        ' Hapus semua tab
         tab_MainContent.Items.Clear()
     End Sub
 
@@ -1868,13 +1840,7 @@ Public Class wpfWin_BOOKU
         If PaksaKeluarAplikasi Then
             e.Cancel = False
         Else
-            Dim hasil = MessageBox.Show(
-                "Yakin akan keluar dari aplikasi..?",
-                "Perhatian..!",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question)
-
-            If hasil = MessageBoxResult.No Then
+            If Not TanyaKonfirmasi("Yakin akan keluar dari aplikasi?") Then
                 e.Cancel = True
                 Return
             End If

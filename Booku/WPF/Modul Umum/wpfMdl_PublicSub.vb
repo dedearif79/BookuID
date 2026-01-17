@@ -3,6 +3,7 @@ Imports System.Globalization
 Imports System.IO
 Imports System.Net
 Imports System.Net.Http
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -91,25 +92,38 @@ Module wpfMdl_PublicSub
         ' Fungsi ini sudah tidak diperlukan setelah migrasi full WPF
     End Sub
 
-    Sub KetersediaanMenuHalaman(pnl_Halaman As Panel, Tersedia As Boolean)
+    ''' <summary>
+    ''' Mengatur ketersediaan menu halaman dan menampilkan/menyembunyikan loading.
+    ''' CATATAN: Untuk operasi async, gunakan MuatDataDenganLoading() sebagai gantinya.
+    ''' </summary>
+    ''' <param name="pnl_Halaman">Panel halaman yang akan diatur ketersediaannya</param>
+    ''' <param name="Tersedia">True untuk mengaktifkan, False untuk menonaktifkan</param>
+    ''' <param name="gunakanLoading">True untuk menampilkan/menyembunyikan window loading (default: True)</param>
+    Sub KetersediaanMenuHalaman(pnl_Halaman As Panel, Tersedia As Boolean,
+                                Optional gunakanLoading As Boolean = True)
         If Tersedia Then
             KetersediaanHalamanUtama(True)
-            TutupLoading()
+            If gunakanLoading Then TutupLoading()
             pnl_Halaman.IsEnabled = True
         Else
             KetersediaanHalamanUtama(False)
             pnl_Halaman.IsEnabled = False
-            TampilkanLoading()
+            If gunakanLoading Then TampilkanLoading()
         End If
-        Forms.Application.DoEvents()
+        ' DIHAPUS: Forms.Application.DoEvents() - tidak diperlukan dengan async pattern
     End Sub
 
-    Sub TampilkanLoading()
+    ''' <summary>
+    ''' Menampilkan window loading. Untuk kemudahan, gunakan MuatDataDenganLoading().
+    ''' </summary>
+    ''' <param name="pesan">Pesan yang ditampilkan (default: "Memuat...")</param>
+    Sub TampilkanLoading(Optional pesan As String = "Memuat...")
         Try
             If win_Loading IsNot Nothing AndAlso win_Loading.StatusAktif Then
                 win_Loading.Close()
             End If
             win_Loading = New wpfWin_Loading
+            win_Loading.txtLoading.Text = pesan
 
             ' Set owner dan posisi tengah secara manual
             Dim helper = New Interop.WindowInteropHelper(win_Loading)
@@ -127,6 +141,9 @@ Module wpfMdl_PublicSub
         End Try
     End Sub
 
+    ''' <summary>
+    ''' Menutup window loading.
+    ''' </summary>
     Sub TutupLoading()
         Try
             If win_Loading IsNot Nothing AndAlso win_Loading.IsLoaded Then
@@ -138,6 +155,44 @@ Module wpfMdl_PublicSub
             mdl_Logger.WriteException(ex, "TutupLoading")
         End Try
     End Sub
+
+
+    ' ═══════════════════════════════════════════════════════════════════
+    ' ASYNC LOADING HELPER
+    ' ═══════════════════════════════════════════════════════════════════
+
+    ''' <summary>
+    ''' Menjalankan aksi async dengan loading window.
+    ''' Loading otomatis muncul di awal dan hilang di akhir (termasuk saat error).
+    ''' </summary>
+    ''' <param name="aksiAsync">Fungsi async yang akan dijalankan</param>
+    ''' <param name="pesanLoading">Pesan yang ditampilkan (opsional)</param>
+    ''' <example>
+    ''' Await MuatDataDenganLoading(
+    '''     Async Function()
+    '''         Dim data = Await Task.Run(Function() QueryDatabase())
+    '''         UpdateUI(data)
+    '''     End Function,
+    '''     "Memuat data...")
+    ''' </example>
+    Public Async Function MuatDataDenganLoading(aksiAsync As Func(Of Task),
+                                                Optional pesanLoading As String = "Memuat...") As Task
+        Try
+            TampilkanLoading(pesanLoading)
+
+            ' Beri waktu UI untuk menampilkan loading window
+            Await Task.Delay(50)
+
+            Await aksiAsync()
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "MuatDataDenganLoading")
+            Pesan_Gagal("Terjadi kesalahan: " & ex.Message)
+
+        Finally
+            TutupLoading()
+        End Try
+    End Function
 
     Sub KontenComboJenisJurnal_Public_WPF(ByVal JenisJurnal As ComboBox)
         JenisJurnal.Items.Clear()
@@ -1182,10 +1237,6 @@ Module wpfMdl_PublicSub
         End If
     End Sub
 
-    Sub ApplicationDoEvents()
-        'Terabas()
-        'Application.Current.Terabas()
-    End Sub
 
     Sub CetakPanel(Kanvas As Panel)
 
@@ -1439,7 +1490,7 @@ Module wpfMdl_PublicSub
         Dim JumlahBarisBahanExport
         Dim NamaFileExportEXCEL
 
-        Dim sfd_Simpan As New SaveFileDialog
+        Dim sfd_Simpan As New Microsoft.Win32.SaveFileDialog
 
         JumlahBarisBahanExport = datagridBahanEkspor.RowCount
         If JumlahBarisBahanExport = 0 Then
@@ -1449,8 +1500,8 @@ Module wpfMdl_PublicSub
             'Dialog Penyimpanan (Save As) :
             sfd_Simpan.FileName = Kosongan
             sfd_Simpan.Filter = "Excel Files (*.xlsx)|*.xlsx"
-            sfd_Simpan.ShowDialog()
-            If sfd_Simpan.FileName = Kosongan Then Return
+            Dim result = sfd_Simpan.ShowDialog()
+            If result <> True Then Return
         End If
 
         NamaFileExportEXCEL = sfd_Simpan.FileName.ToString

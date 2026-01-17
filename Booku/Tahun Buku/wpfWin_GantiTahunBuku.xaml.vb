@@ -533,7 +533,6 @@ Public Class wpfWin_GantiTahunBuku
             win_BOOKU.mnu_DataAwal.Visibility = Visibility.Collapsed
         End If
 
-
         If ProsesGantiTahun = True Then
             If FungsiForm <> FungsiForm_EksekusiSub_PROSESGANTITAHUNBUKU Then Pesan_Sukses("Anda memasuki Tahun Buku " & TahunBukuAktif & ".")
             Notifikasi_AwalMasukTahunBuku()

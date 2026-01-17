@@ -250,18 +250,18 @@ Public Class wpfUsc_CompanyProfile
         KondisiPerubahanForm()
     End Sub
 
-    Dim ofd_BukaFileLogo As OpenFileDialog
+    Dim ofd_BukaFileLogo As Microsoft.Win32.OpenFileDialog
     Private Sub btn_GantiLogo_Click(sender As Object, e As RoutedEventArgs) Handles btn_GantiLogo.Click
 
         Dim ProsesGantiLogo As Boolean = True
 
-        ofd_BukaFileLogo = New OpenFileDialog
+        ofd_BukaFileLogo = New Microsoft.Win32.OpenFileDialog
         ofd_BukaFileLogo.FileName = Kosongan
         ofd_BukaFileLogo.Filter = "Gambar JPG (*.jpg;*.jpeg)|*.jpg;*.jpeg"
         ofd_BukaFileLogo.Title = "Pilih File Gambar (Hanya Format JPG)"
         ofd_BukaFileLogo.Multiselect = False
-        ofd_BukaFileLogo.ShowDialog()
-        If ofd_BukaFileLogo.FileName = Kosongan Then Return
+        Dim result = ofd_BukaFileLogo.ShowDialog()
+        If result <> True Then Return
 
         Dim FilePathBahanLogo As String = ofd_BukaFileLogo.FileName
 

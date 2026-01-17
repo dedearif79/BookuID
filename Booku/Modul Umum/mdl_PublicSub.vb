@@ -3016,16 +3016,14 @@ Public Module mdl_PublicSub
         Dim Pesan As String = "Data pembayaran tidak dapat dikelola di halaman ini." & Enter2Baris &
             "Silakan pergi ke Buku Pengawasan Bukti Penerimaan Bank-Cash untuk mengedit/hapus data ini." & Enter2Baris &
             "Lanjut ke Buku Pengawasan?"
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbYes Then win_BOOKU.BukaModul_BukuPengawasanBuktiPenerimaanBankCash()
+        If TanyaKonfirmasi(Pesan) Then win_BOOKU.BukaModul_BukuPengawasanBuktiPenerimaanBankCash()
     End Sub
 
     Public Sub KelolaDataPembayaranDiBukuPengawasanPengeluaran()
         Dim Pesan As String = "Data pembayaran tidak dapat dikelola di halaman ini." & Enter2Baris &
             "Silakan pergi ke Buku Pengawasan Bukti Pengeluaran Bank-Cash untuk mengedit/hapus data ini." & Enter2Baris &
             "Lanjut ke Buku Pengawasan?"
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbYes Then win_BOOKU.BukaModul_BukuPengawasanBuktiPengeluaranBankCash()
+        If TanyaKonfirmasi(Pesan) Then win_BOOKU.BukaModul_BukuPengawasanBuktiPengeluaranBankCash()
     End Sub
 
 
@@ -5485,16 +5483,6 @@ Public Module mdl_PublicSub
         TutupDatabaseGeneral_Kondisional()
     End Sub
 
-    Sub RefreshForm(frm As Form)
-        If frm IsNot Nothing Then
-            Dim stateAwal = frm.WindowState
-            frm.WindowState = FormWindowState.Minimized
-            Terabas()
-            frm.WindowState = stateAwal
-        End If
-    End Sub
-
-
 
     Sub BukaFormLogin()
 
@@ -5521,8 +5509,8 @@ Public Module mdl_PublicSub
                             win_GantiTahunBuku.ShowDialog()
                         Else
                             win_GantiTahunBuku.FungsiForm = FungsiForm_EksekusiSub_PROSESGANTITAHUNBUKU
-                            Pesan_Informasi("Anda memasuki Tahun Buku " & TahunBukuAktif & ".")
                             win_GantiTahunBuku.ShowDialog()
+                            Pesan_Informasi("Anda memasuki Tahun Buku " & TahunBukuAktif & ".")
                         End If
                     Else
                         Pesan_Informasi("Anda belum memiliki Database Transaksi untuk dikelola." _

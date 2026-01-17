@@ -42,7 +42,7 @@ Public Class wpfWin_ProgressImportDataCOA
     Private WithEvents bgw_Posting As BackgroundWorker
 
     ' === OPEN FILE DIALOG ===
-    Dim ofd_Import As OpenFileDialog
+    Dim ofd_Import As Microsoft.Win32.OpenFileDialog
 
     ' === LAPORAN ===
     Dim LaporanHasilPostingCOA As String
@@ -64,7 +64,7 @@ Public Class wpfWin_ProgressImportDataCOA
 
         ' Inisialisasi DataSet dan OpenFileDialog
         DsImport = New DataSet
-        ofd_Import = New OpenFileDialog
+        ofd_Import = New Microsoft.Win32.OpenFileDialog
         datatabelBahanImpor = New DataTable
     End Sub
 
@@ -103,9 +103,9 @@ Public Class wpfWin_ProgressImportDataCOA
 
         ofd_Import.FileName = Kosongan
         ofd_Import.Filter = "(*xlsx)|*xlsx|(*xls)|*xls|All Files(*.*)|*.*"
-        ofd_Import.ShowDialog()
+        Dim result = ofd_Import.ShowDialog()
 
-        If ofd_Import.FileName = Kosongan Then
+        If result <> True Then
             Me.Close()
         Else
             ConnImport = New OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & ofd_Import.FileName & ";Extended Properties='Excel 12.0 Xml;HDR=YES';")
@@ -379,12 +379,11 @@ Public Class wpfWin_ProgressImportDataCOA
 
 
     Public Sub TanyaBatalPostingCOA()
-        Dim PilihBatalPosting = MessageBox.Show("Seluruh proses posting pada event ini akan dibatalkan." & Enter2Baris &
-                                                "Yakin akan membatalkan proses posting..?", "Perhatian..!", MessageBoxButton.YesNo)
-        If PilihBatalPosting = MessageBoxResult.Yes Then
+        If TanyaKonfirmasi("Seluruh proses posting pada event ini akan dibatalkan." & Enter2Baris &
+                          "Yakin akan membatalkan proses posting?") Then
             StatusPosting = Status_BATAL
             HapusSemuaDataPostinganPadaEventIni()
-        ElseIf PilihBatalPosting = MessageBoxResult.No Then
+        Else
             StatusPosting = Status_PROSES
         End If
     End Sub
@@ -433,14 +432,9 @@ Public Class wpfWin_ProgressImportDataCOA
 
     Private Sub btn_Terapkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Terapkan.Click
         If HasilPosting = Hasil_BERMASALAH Then
-            Dim PilihTetapkanHasilPosting = MessageBox.Show("Hasil posting bermasalah..!" & Enter2Baris &
-                                                            "Yakin akan menetapkan hasil posting..?", "Perhatian..!", MessageBoxButton.YesNo)
-            If PilihTetapkanHasilPosting = MessageBoxResult.Yes Then
-                If usc_DataCOA.StatusAktif Then usc_DataCOA.TampilkanData()
-                TutupForm()
-            Else
-                Return
-            End If
+            If Not TanyaKonfirmasi("Hasil posting bermasalah." & Enter2Baris & "Yakin akan menetapkan hasil posting?") Then Return
+            If usc_DataCOA.StatusAktif Then usc_DataCOA.TampilkanData()
+            TutupForm()
         End If
         If HasilPosting = Hasil_NORMAL Then
             If usc_DataCOA.StatusAktif Then usc_DataCOA.TampilkanData()

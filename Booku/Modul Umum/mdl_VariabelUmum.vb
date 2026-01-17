@@ -202,7 +202,7 @@ Module mdl_VariabelUmum
 
     Public Lanjutkan As Boolean
 
-    Public Pilihan As DialogResult
+    Public Pilihan As System.Windows.MessageBoxResult
 
     Public StatusPosting
     Public HasilPosting

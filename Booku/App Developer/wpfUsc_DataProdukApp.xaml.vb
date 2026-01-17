@@ -118,9 +118,7 @@ Public Class wpfUsc_DataProdukApp
             Return
         End If
 
-        Dim Pesan As String = "Yakin akan menghapus Produk Nomor Seri " & NomorSeriProduk_Terseleksi & " ?"
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin akan menghapus Produk Nomor Seri " & NomorSeriProduk_Terseleksi & "?") Then Return
 
         BukaDatabasePublic()
         cmdPublic = New MySqlCommand("DELETE FROM tbl_produk WHERE Nomor_Seri_Produk = '" & NomorSeriProduk_Terseleksi & "' ", KoneksiDatabasePublic)

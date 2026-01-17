@@ -241,19 +241,17 @@ Public Class wpfUsc_ManajemenClient
 
     Private Sub btn_Edit_Click(sender As Object, e As RoutedEventArgs) Handles btn_Edit.Click
 
-        Dim WAku As New wpfwin_WhatsApp
-        WAku.ShowDialog()
+        ' DEPRECATED: WhatsApp Host sudah tidak digunakan lagi
+        ' Dim WAku As New wpfwin_WhatsApp
+        ' WAku.ShowDialog()
+        Pesan_Informasi("Fitur WhatsApp Host sudah tidak tersedia.")
 
     End Sub
 
 
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
-        Dim Pesan As String = "Yakin akan menghapus " & client_NamaPerusahaan_Terseleksi & " ?"
-
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-
-        If Pilihan = vbNo Then Return
+        If Not Pesan_KonfirmasiHapus(client_NamaPerusahaan_Terseleksi) Then Return
 
         BukaDatabasePublic()
 

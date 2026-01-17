@@ -1,5 +1,6 @@
 Imports bcomm
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -9,6 +10,7 @@ Public Class wpfUsc_DataCOA
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Dim QueryTampilan
     Dim FilterData
@@ -22,6 +24,7 @@ Public Class wpfUsc_DataCOA
     Dim KepalaCOA
     Dim CariAkun
     Dim VisibilitasCOA
+    Dim EksekusiTampilanData As Boolean
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         If SudahDimuat Then Return
@@ -65,11 +68,11 @@ Public Class wpfUsc_DataCOA
     End Sub
 
     Sub RefreshTampilanData()
-        EksekusiKode = False
+        EksekusiTampilanData = False
         txt_CariAkun.Text = Kosongan
         txt_KepalaCOA.Text = Kosongan
         KontenComboVisibilitas()
-        EksekusiKode = True
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
@@ -119,89 +122,126 @@ Public Class wpfUsc_DataCOA
 
 
 
-    Sub TampilkanData()
+    ''' <summary>
+    ''' Method async untuk memuat data COA dengan UI responsive
+    ''' </summary>
+    Async Sub TampilkanDataAsync()
 
-        If EksekusiKode = False Then Return
+        ' Guard clause: Cegah loading berulang
+        If SedangMemuatData Then Return
+        If EksekusiTampilanData = False Then Return
+        SedangMemuatData = True
 
-        datatabelUtama.Rows.Clear()
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)  ' Beri waktu UI render
 
-        'Filter Pencarian :
-        Dim FilterPencarian = " "
-        If CariAkun = Kosongan Then
-            FilterPencarian = " "
-        Else
-            Dim clm_COA = " COA LIKE '%" & CariAkun & "%' "
-            Dim clm_NamaAkun = " OR Nama_Akun LIKE '%" & CariAkun & "%' "
-            FilterPencarian = " AND ( " & clm_COA & clm_NamaAkun & " ) "
-        End If
+        Try
+            datatabelUtama.Rows.Clear()
 
-        'Filter Visibilitas :
-        Dim FilterVisibilitas
-        FilterVisibilitas = " "
-        If VisibilitasCOA = Pilihan_Semua Then FilterVisibilitas = " "
-        If VisibilitasCOA = Pilihan_Ya Then FilterVisibilitas = " AND Visibilitas = '" & Pilihan_Ya & "' "
-        If VisibilitasCOA = Pilihan_Tidak Then FilterVisibilitas = " AND Visibilitas <> '" & Pilihan_Ya & "' "
+            'Filter Pencarian :
+            Dim FilterPencarian = " "
+            If CariAkun = Kosongan Then
+                FilterPencarian = " "
+            Else
+                Dim clm_COA = " COA LIKE '%" & CariAkun & "%' "
+                Dim clm_NamaAkun = " OR Nama_Akun LIKE '%" & CariAkun & "%' "
+                FilterPencarian = " AND ( " & clm_COA & clm_NamaAkun & " ) "
+            End If
 
-        'Filter Kepala COA :
-        Dim FilterKepalaCOA
-        If KepalaCOA = Kosongan Then
-            FilterKepalaCOA = " "
-        Else
-            FilterKepalaCOA = " AND COA LIKE '" & KepalaCOA & "%' "
-        End If
+            'Filter Visibilitas :
+            Dim FilterVisibilitas
+            FilterVisibilitas = " "
+            If VisibilitasCOA = Pilihan_Semua Then FilterVisibilitas = " "
+            If VisibilitasCOA = Pilihan_Ya Then FilterVisibilitas = " AND Visibilitas = '" & Pilihan_Ya & "' "
+            If VisibilitasCOA = Pilihan_Tidak Then FilterVisibilitas = " AND Visibilitas <> '" & Pilihan_Ya & "' "
+
+            'Filter Kepala COA :
+            Dim FilterKepalaCOA
+            If KepalaCOA = Kosongan Then
+                FilterKepalaCOA = " "
+            Else
+                FilterKepalaCOA = " AND COA LIKE '" & KepalaCOA & "%' "
+            End If
 
 
-        'Query Tampilan :
-        FilterData = FilterPencarian & FilterVisibilitas & FilterKepalaCOA
-        QueryTampilan = " SELECT * FROM tbl_COA WHERE D_K <> 'X' " & FilterData
+            'Query Tampilan :
+            FilterData = FilterPencarian & FilterVisibilitas & FilterKepalaCOA
+            QueryTampilan = " SELECT * FROM tbl_COA WHERE D_K <> 'X' " & FilterData
 
-        'Data Tabel :
-        Dim COA
-        Dim NamaAkun
-        Dim KodeMataUang As String
-        Dim Kurs As Decimal
-        Dim DK
-        Dim Saldo As Int64
-        Dim Uraian
-        Dim Visibilitas
-        JumlahAktiva = 0
-        JumlahPassiva = 0
-        AksesDatabase_General(Buka)
-        cmd = New OdbcCommand(QueryTampilan & " ORDER BY COA ", KoneksiDatabaseGeneral)
-        dr = cmd.ExecuteReader
-        Do While dr.Read
-            COA = dr.Item("COA")
-            NamaAkun = dr.Item("Nama_Akun")
-            KodeMataUang = dr.Item("Kode_Mata_Uang")
-            If JenisTahunBuku = JenisTahunBuku_NORMAL Then Kurs = KursTengahBI_AkhirTahunLalu(KodeMataUang)
-            If JenisTahunBuku = JenisTahunBuku_LAMPAU Then Kurs = KursTengahBI_AkhirTahunIni(KodeMataUang)
-            DK = dr.Item("D_K")
-            Saldo = AmbilValue_NilaiMataUang(KodeMataUang, Kurs, dr.Item("Saldo_Awal"))
-            Uraian = dr.Item("Uraian")
-            Visibilitas = dr.Item("Visibilitas")
-            If Left(COA.ToString, 1) = "1" Then JumlahAktiva += AmbilAngka(Saldo)
-            If Left(COA.ToString, 1) = "2" Or Left(COA.ToString, 1) = "3" Then JumlahPassiva += AmbilAngka(Saldo)
-            datatabelUtama.Rows.Add(COA, NamaAkun, KodeMataUang, DK, Saldo, Uraian, Visibilitas)
-        Loop
+            'Data Tabel :
+            Dim COA
+            Dim NamaAkun
+            Dim KodeMataUang As String
+            Dim Kurs As Decimal
+            Dim DK
+            Dim Saldo As Int64
+            Dim Uraian
+            Dim Visibilitas
+            JumlahAktiva = 0
+            JumlahPassiva = 0
+            AksesDatabase_General(Buka)
+            cmd = New OdbcCommand(QueryTampilan & " ORDER BY COA ", KoneksiDatabaseGeneral)
+            dr = cmd.ExecuteReader
+            Do While dr.Read
+                COA = dr.Item("COA")
+                NamaAkun = dr.Item("Nama_Akun")
+                KodeMataUang = dr.Item("Kode_Mata_Uang")
+                If JenisTahunBuku = JenisTahunBuku_NORMAL Then Kurs = KursTengahBI_AkhirTahunLalu(KodeMataUang)
+                If JenisTahunBuku = JenisTahunBuku_LAMPAU Then Kurs = KursTengahBI_AkhirTahunIni(KodeMataUang)
+                DK = dr.Item("D_K")
+                Saldo = AmbilValue_NilaiMataUang(KodeMataUang, Kurs, dr.Item("Saldo_Awal"))
+                Uraian = dr.Item("Uraian")
+                Visibilitas = dr.Item("Visibilitas")
+                If Left(COA.ToString, 1) = "1" Then JumlahAktiva += AmbilAngka(Saldo)
+                If Left(COA.ToString, 1) = "2" Or Left(COA.ToString, 1) = "3" Then JumlahPassiva += AmbilAngka(Saldo)
+                datatabelUtama.Rows.Add(COA, NamaAkun, KodeMataUang, DK, Saldo, Uraian, Visibilitas)
+                Await Task.Yield()  ' Beri kesempatan UI refresh
+            Loop
 
-        AksesDatabase_General(Tutup)
+            AksesDatabase_General(Tutup)
 
-        BersihkanSeleksi()
+            If KepalaCOA <> Kosongan Or CariAkun <> Kosongan Or VisibilitasCOA = Pilihan_Tidak Then
+                grb_BalanceControl.Visibility = Visibility.Collapsed
+            Else
+                grb_BalanceControl.Visibility = Visibility.Visible
+                CekKeseimbanganNeraca()
+            End If
 
-        If KepalaCOA <> Kosongan Or CariAkun <> Kosongan Or VisibilitasCOA = Pilihan_Tidak Then
-            grb_BalanceControl.Visibility = Visibility.Collapsed
-        Else
-            grb_BalanceControl.Visibility = Visibility.Visible
-            CekKeseimbanganNeraca()
-        End If
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DataCOA")
+
+        Finally
+            BersihkanSeleksi()
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+        End Try
 
     End Sub
+
+    ''' <summary>
+    ''' Wrapper untuk backward compatibility
+    ''' </summary>
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
+    ''' <summary>
+    ''' Logika utama reset seleksi (TANPA enable UI)
+    ''' </summary>
     Sub BersihkanSeleksi()
         BersihkanSeleksi_WPF(datagridUtama, datatabelUtama, BarisTerseleksi, JumlahBaris)
         btn_Edit.IsEnabled = False
         KetersediaanTombolHapus(False)
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
         txt_TotalTabel.Text = JumlahBaris
+    End Sub
+
+    ''' <summary>
+    ''' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    ''' </summary>
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True, False)
     End Sub
 
     Sub KontenComboVisibilitas()

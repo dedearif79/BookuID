@@ -352,13 +352,13 @@ Public Class wpfWin_ProgresExport_EXCEL
     End Sub
 
 
-    Dim sfd_Simpan As New SaveFileDialog
+    Dim sfd_Simpan As New Microsoft.Win32.SaveFileDialog
     Private WithEvents Bgw_Export As BackgroundWorker
     Sub New()
         InitializeComponent()
         StyleWindowDialogWPF_Dasar(Me)
 
-        sfd_Simpan = New SaveFileDialog
+        sfd_Simpan = New Microsoft.Win32.SaveFileDialog
 
         ' Inisialisasi BackgroundWorker
         Bgw_Export = New BackgroundWorker()

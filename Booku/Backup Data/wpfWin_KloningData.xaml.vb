@@ -77,10 +77,14 @@ Public Class wpfWin_KloningData
 
     Private Sub TahapanKloning()
 
-        Dim fbd_SumberData As New FolderBrowserDialog
+        ' Gunakan custom WPF folder dialog (pengganti FolderBrowserDialog)
+        win_SelectFolder = New wpfWin_SelectFolder
+        win_SelectFolder.ResetForm()
+        win_SelectFolder.ShowDialog()
+
         Dim folderPath As String
-        If fbd_SumberData.ShowDialog() = Forms.DialogResult.OK Then
-            folderPath = fbd_SumberData.SelectedPath
+        If win_SelectFolder.HasResult Then
+            folderPath = win_SelectFolder.SelectedPath
         Else
             ResetForm()
             Return

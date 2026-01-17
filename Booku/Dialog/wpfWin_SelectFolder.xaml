@@ -1,0 +1,97 @@
+<Window x:Class="wpfWin_SelectFolder"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="Pilih Folder"
+        MinHeight="500"
+        MinWidth="450"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="CanResizeWithGrip"
+        ShowInTaskbar="False">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Background="{StaticResource clrBgPanel}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- HEADER -->
+        <Border Grid.Row="0" Padding="15,12" Background="{StaticResource clrBtnPrimerBg}">
+            <TextBlock Text="Pilih Folder"
+                       Foreground="{StaticResource clrTeksInvers}"
+                       FontSize="14"
+                       FontWeight="SemiBold"/>
+        </Border>
+
+        <!-- TREEVIEW FOLDER -->
+        <Border Grid.Row="1" Margin="15,15,15,10" BorderThickness="1" BorderBrush="{StaticResource clrBorderDefault}" Background="White">
+            <TreeView x:Name="treeViewFolder"
+                      BorderThickness="0"
+                      VirtualizingPanel.IsVirtualizing="True"
+                      VirtualizingPanel.VirtualizationMode="Recycling">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate ItemsSource="{Binding SubFolders}">
+                        <StackPanel Orientation="Horizontal" Margin="2">
+                            <!-- Folder Icon -->
+                            <Viewbox Width="16" Height="16" Margin="0,0,6,0">
+                                <Canvas Width="24" Height="24">
+                                    <Path Fill="{StaticResource clrStatusPeringatan}"
+                                          Data="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z"/>
+                                </Canvas>
+                            </Viewbox>
+                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </Border>
+
+        <!-- PATH MANUAL -->
+        <Grid Grid.Row="2" Margin="15,0,15,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Path :"
+                       VerticalAlignment="Center"
+                       Margin="0,0,10,0"
+                       Foreground="{StaticResource clrTeksPrimer}"/>
+            <TextBox x:Name="txt_Path"
+                     Grid.Column="1"
+                     Style="{StaticResource styleTextBoxFormDialog}"
+                     VerticalAlignment="Center"/>
+        </Grid>
+
+        <!-- FOOTER BUTTONS -->
+        <Border Grid.Row="3" Padding="15,12"
+                Background="{StaticResource clrBgWindow}"
+                BorderThickness="0,1,0,0"
+                BorderBrush="{StaticResource clrSeparatorLight}">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btn_OK"
+                        Content="Pilih"
+                        Style="{StaticResource styleButtonFormDialogPilih}"
+                        IsDefault="True"
+                        Margin="0,0,10,0"/>
+                <Button x:Name="btn_Batal"
+                        Content="Batal"
+                        Style="{StaticResource styleButtonFormDialogBatal}"
+                        IsCancel="True"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+
+</Window>

@@ -48,7 +48,7 @@ Public Class wpfWin_ProgressImportDataAsset
     Dim DaImport As OleDbDataAdapter
     Public DsImport As DataSet
 
-    Dim ofd_Import As OpenFileDialog
+    Dim ofd_Import As Microsoft.Win32.OpenFileDialog
     Dim datatabelBahanImpor As DataTable
 
     Dim LaporanHasilPosting As String
@@ -97,9 +97,9 @@ Public Class wpfWin_ProgressImportDataAsset
 
         ofd_Import.FileName = Kosongan
         ofd_Import.Filter = "(*xlsx)|*xlsx|(*xls)|*xls|All Files(*.*)|*.*"
-        ofd_Import.ShowDialog()
+        Dim result = ofd_Import.ShowDialog()
 
-        If ofd_Import.FileName = Kosongan Then
+        If result <> True Then
             Me.Close()
             Return
         End If
@@ -466,12 +466,11 @@ Public Class wpfWin_ProgressImportDataAsset
 
 
     Public Sub TanyaBatalPostingDataAsset()
-        Dim PilihBatalPosting = MessageBox.Show("Seluruh proses posting pada event ini akan dibatalkan." &
-                                                Enter2Baris & "Yakin akan membatalkan proses posting..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If PilihBatalPosting = vbYes Then
+        If TanyaKonfirmasi("Seluruh proses posting pada event ini akan dibatalkan." &
+                          Enter2Baris & "Yakin akan membatalkan proses posting?") Then
             StatusPosting = Status_BATAL
             HapusSemuaDataPostinganPadaEventIni()
-        ElseIf PilihBatalPosting = vbNo Then
+        Else
             StatusPosting = Status_PROSES
         End If
     End Sub
@@ -505,14 +504,9 @@ Public Class wpfWin_ProgressImportDataAsset
 
     Private Sub btn_Terapkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Terapkan.Click
         If HasilPosting = Hasil_BERMASALAH Then
-            Dim PilihTetapkanHasilPosting = MessageBox.Show("Hasil posting bermasalah..!" &
-                                                            Enter2Baris & "Yakin akan menetapkan hasil posting..?", "Perhatian..!", MessageBoxButtons.YesNo)
-            If PilihTetapkanHasilPosting = vbYes Then
-                If usc_DaftarPenyusutanAssetTetap.StatusAktif Then usc_DaftarPenyusutanAssetTetap.TampilkanData()
-                TutupForm()
-            Else
-                Return
-            End If
+            If Not TanyaKonfirmasi("Hasil posting bermasalah." & Enter2Baris & "Yakin akan menetapkan hasil posting?") Then Return
+            If usc_DaftarPenyusutanAssetTetap.StatusAktif Then usc_DaftarPenyusutanAssetTetap.TampilkanData()
+            TutupForm()
         End If
         If HasilPosting = Hasil_NORMAL Then
             If usc_DaftarPenyusutanAssetTetap.StatusAktif Then usc_DaftarPenyusutanAssetTetap.TampilkanData()
@@ -543,7 +537,7 @@ Public Class wpfWin_ProgressImportDataAsset
         Me.MaxHeight = 600
         txt_LaporanHasilPosting.IsReadOnly = True
         DsImport = New DataSet
-        ofd_Import = New OpenFileDialog
+        ofd_Import = New Microsoft.Win32.OpenFileDialog
         datatabelBahanImpor = New DataTable
     End Sub
 

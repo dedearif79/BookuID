@@ -52,7 +52,7 @@ Public Class wpfWin_ImportJurnal
 
     Dim TahunTransaksiSesuai As Boolean
 
-    Dim ofd_Import As OpenFileDialog
+    Dim ofd_Import As Microsoft.Win32.OpenFileDialog
     Dim datatabelBahanImpor As DataTable
 
     Private WithEvents bgw_ImportDataExcel As BackgroundWorker
@@ -79,12 +79,11 @@ Public Class wpfWin_ImportJurnal
 
         ofd_Import.FileName = Kosongan
         ofd_Import.Filter = "(*xlsx)|*xlsx|(*xls)|*xls|All Files(*.*)|*.*"
-        ofd_Import.ShowDialog()
+        Dim result = ofd_Import.ShowDialog()
 
-        If ofd_Import.FileName = Kosongan Then
+        If result <> True Then
             Me.Close()
         Else
-            'ConnImport = New OleDbConnection("provider=Microsoft.jet.OLEDB.4.0;data source='" & ofd_Import.FileName & "';Extended Properties=Excel 8.0;") '(Ini Versi Lama....!!!!!)
             ConnImport = New OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & ofd_Import.FileName & ";Extended Properties='Excel 12.0 Xml;HDR=YES';")
             DaImport = New OleDbDataAdapter("SELECT * FROM [Bahan Jurnal$]", ConnImport)
             bgw_ImportDataExcel.RunWorkerAsync()
@@ -457,12 +456,11 @@ Public Class wpfWin_ImportJurnal
 
 
     Public Sub TanyaBatalPostingJurnal()
-        Dim PilihBatalPosting = MessageBox.Show("Seluruh proses posting pada event ini akan dibatalkan." & Enter2Baris &
-                                                "Yakin akan membatalkan proses posting..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If PilihBatalPosting = vbYes Then
+        If TanyaKonfirmasi("Seluruh proses posting pada event ini akan dibatalkan." & Enter2Baris &
+                          "Yakin akan membatalkan proses posting?") Then
             StatusPosting = Status_BATAL
             HapusSemuaDataPostinganJurnalEventIni()
-        ElseIf PilihBatalPosting = vbNo Then
+        Else
             StatusPosting = Status_PROSES
         End If
     End Sub
@@ -546,12 +544,8 @@ Public Class wpfWin_ImportJurnal
 
     Private Sub btn_Terapkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Terapkan.Click
         If HasilPosting = Hasil_BERMASALAH Then
-            Dim PilihTetapkanHasilPosting = MessageBox.Show("Hasil posting bermasalah..!" & Enter2Baris & "Yakin akan menetapkan hasil posting..?", "Perhatian..!", MessageBoxButtons.YesNo)
-            If PilihTetapkanHasilPosting = vbYes Then
-                TutupForm()
-            Else
-                Return
-            End If
+            If Not TanyaKonfirmasi("Hasil posting bermasalah." & Enter2Baris & "Yakin akan menetapkan hasil posting?") Then Return
+            TutupForm()
         End If
         If HasilPosting = Hasil_NORMAL Then
             If usc_JurnalUmum.StatusAktif Then usc_JurnalUmum.TampilkanData()
@@ -603,7 +597,7 @@ Public Class wpfWin_ImportJurnal
         bgw_ImportDataExcel.WorkerReportsProgress = True
         bgw_ImportDataExcel.WorkerSupportsCancellation = True
         DsImport = New DataSet
-        ofd_Import = New OpenFileDialog
+        ofd_Import = New Microsoft.Win32.OpenFileDialog
         datatabelBahanImpor = New DataTable
     End Sub
 

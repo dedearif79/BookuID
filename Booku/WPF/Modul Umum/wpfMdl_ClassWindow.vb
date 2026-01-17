@@ -36,6 +36,7 @@ Module wpfMdl_ClassWindow
     Public win_PilihJenisProdukInduk As New wpfWin_PilihJenisProdukInduk
     Public win_MetodeInputBayar As New wpfWin_MetodeInputBayar
     Public win_Pengaturan As New wpfWin_Pengaturan
+    Public win_SelectFolder As New wpfWin_SelectFolder  ' Custom folder picker dialog (pengganti FolderBrowserDialog)
     Public win_Pesan As wpfWin_Pesan  ' Custom MessageBox dialog (dibuat baru setiap pemanggilan)
 
     '═══════════════════════════════════════════════════════════════════════════

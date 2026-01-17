@@ -1,33 +1,42 @@
 # Architecture
 
-## Hybrid Architecture (WinForms Entry Point + WPF UI)
+## WPF Native Architecture
 
-Aplikasi menggunakan arsitektur **hybrid**:
-- **Entry Point**: VB.NET Module dengan `Sub Main()` (pola WinForms)
+Aplikasi menggunakan arsitektur **WPF murni**:
+- **Entry Point**: `App.xaml` + `App.xaml.vb` (WPF Application class)
 - **UI**: Seluruh antarmuka menggunakan WPF (Window, UserControl, Style)
-
-> **Catatan:** Arsitektur hybrid ini adalah kondisi sementara selama masa transisi.
-> File `App.xaml.vb` sudah disiapkan untuk WPF murni tapi belum aktif.
+- **Library**: Booku Library (bcomm.dll) juga WPF murni tanpa dependency WinForms
 
 ### Konfigurasi Project (Booku.vbproj)
 
 ```xml
+<!-- Entry point menggunakan App.xaml (WPF Application class) -->
+<!-- UseWindowsForms tetap true untuk kompatibilitas library, tapi entry point sudah WPF murni -->
 <UseWindowsForms>true</UseWindowsForms>
-<MyType>WindowsFormsWithCustomSubMain</MyType>
 <UseWPF>True</UseWPF>
+<StartupObject>Booku.App</StartupObject>
 ```
 
-Setting `MyType=WindowsFormsWithCustomSubMain` menyebabkan VB.NET mencari `Sub Main()` sebagai entry point, bukan WPF Application class.
+Entry point adalah `App.Main()` di `App.xaml.vb`. VB.NET memerlukan `Shared Sub Main()` sebagai entry point, tidak seperti C# yang auto-generate. `UseWindowsForms=true` dipertahankan hanya untuk kompatibilitas dengan beberapa library.
 
 ### Entry Point dan Startup Flow
 
 ```
-wpfMdl_Program.vb (Module)               <- Entry point AKTIF
-    |-- Sub Main() [STAThread]:
+App.xaml.vb (WPF Application)               <- Entry point AKTIF
+    |
+    |-- Shared Sub Main() [Entry Point]:
+    |   |-- Dim app As New App()
+    |   +-- app.Run()
+    |
+    |-- Shared Sub New() [Static Constructor - dipanggil sebelum Main]:
     |   |-- Mutex (single instance protection)
-    |   |-- Exception handlers (AppDomain, Task)
-    |   |-- Create WPF Application instance
-    |   |-- Load StyleAplikasi.xaml ke Resources
+    |   +-- AppDomain & Task exception handlers
+    |
+    |-- Sub New() [Instance Constructor]:
+    |   +-- Manual load StyleAplikasi.xaml ke Resources
+    |
+    |-- OnStartup():
+    |   |-- WPF Dispatcher exception handler
     |   |-- Parameter awal (file paths)
     |   |-- StandarisasiSetinganAplikasi()
     |   |-- wpfWin_StartUp.ShowDialog()   <- Login/splash screen
@@ -35,27 +44,28 @@ wpfMdl_Program.vb (Module)               <- Entry point AKTIF
     |   |-- DataAwalLoadingAplikasi()
     |   |-- CekVersiDanApdetAplikasi()
     |   |-- CekStatusRegistrasiPerangkat()
-    |   |-- app.Run(win_BOOKU)            <- Main window
-    |   +-- MutexApp.ReleaseMutex()
-    +-- Exception Handlers & Single Instance Helper
+    |   +-- win_BOOKU.Show()              <- Main window
+    |
+    +-- OnExit():
+        +-- MutexApp.ReleaseMutex()
 ```
 
 ### File Entry Point
 
 | File | Status | Keterangan |
 |------|--------|------------|
-| `wpfMdl_Program.vb` | **AKTIF** | Entry point dengan `Sub Main()` |
-| `App.xaml` + `App.xaml.vb` | Tidak aktif | Disiapkan untuk migrasi WPF murni |
+| `App.xaml` + `App.xaml.vb` | **AKTIF** | Entry point WPF Application class |
+| `X_wpfMdl_Program.vb` | Deprecated | Entry point lama (hybrid) |
 
 ### Komponen Utama
 
-1. **Entry Point**: `wpfMdl_Program.vb` (VB Module) di `/Booku/WPF/Modul Umum/`
+1. **Entry Point**: `App.xaml` + `App.xaml.vb` di `/Booku/`
 2. **Main Window**: `wpfWin_BOOKU` (WPF) di `/Booku/00_START_UP/`
 3. **Startup Dialog**: `wpfWin_StartUp` (WPF) untuk login/splash
 4. **User Controls**: WPF UserControls untuk semua modul
 5. **Host Pattern**: WPF Host sebagai wrapper UserControl dengan konfigurasi spesifik
 6. **Exception Handling**: 3 handler (AppDomain, Task, WPF Dispatcher)
-7. **Resources**: Load manual di `Sub Main()` dari StyleAplikasi.xaml
+7. **Resources**: Auto-load dari `App.xaml` + manual load di constructor
 
 ## File Naming Convention
 
@@ -79,7 +89,6 @@ wpfMdl_Program.vb (Module)               <- Entry point AKTIF
 
 ## WPF Core Modules (`/Booku/WPF/Modul Umum/`)
 
-- **wpfMdl_Program.vb** - **Entry point aplikasi** dengan `Sub Main()`, Mutex, exception handlers
 - **wpfMdl_ClassWindow.vb** - Deklarasi window global (`win_BOOKU`, `win_Startup`, dll)
 - **wpfMdl_ClassUserControl.vb** - Deklarasi UserControl global (`usc_BukuBesar`, dll)
 - **wpfMdl_ClassHost.vb** - Deklarasi Host global (`host_BukuPembelian_Lokal`, dll)
@@ -88,9 +97,8 @@ wpfMdl_Program.vb (Module)               <- Entry point AKTIF
 - **wpfMdl_TutupBuku.vb** - Logic tutup buku/periode
 - **wpfMdl_SaldoDanPenyesuaian.vb** - Kalkulasi saldo dan penyesuaian
 
-> **Note:** Entry point aktif ada di `wpfMdl_Program.vb` (VB Module dengan `Sub Main()`).
-> File `App.xaml.vb` sudah disiapkan untuk migrasi WPF murni tapi belum aktif.
-> File `X_mdlWpf_Program.vb` adalah versi lama yang sudah deprecated.
+> **Note:** Entry point aktif ada di `App.xaml` + `App.xaml.vb` (WPF Application class).
+> File `X_wpfMdl_Program.vb` adalah entry point lama (hybrid) yang sudah deprecated.
 
 ## Shared Library (`/Booku Library/`)
 

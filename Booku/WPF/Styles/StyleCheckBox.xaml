@@ -127,7 +127,7 @@
 
     <!-- CheckBox Form Dialog - Base -->
     <Style x:Key="styleCheckBoxFormDialog" BasedOn="{StaticResource styleCheckBoxDasar}" TargetType="CheckBox">
-        <Setter Property="Margin" Value="0 7"/>
+        <Setter Property="Margin" Value="0 5"/>
     </Style>
 
     <!-- CheckBox Form Dialog - Kecil (tanpa label) -->

@@ -9,14 +9,16 @@ Imports System.Windows.Threading
 Imports bcomm
 
 ''' <summary>
-''' Entry point utama aplikasi BOOKU dengan WPF Application.
+''' DEPRECATED: Entry point lama (hybrid WinForms+WPF).
+''' Entry point baru ada di App.xaml.vb (WPF murni).
+'''
 ''' Menggabungkan fitur:
 ''' - Single instance protection (Mutex)
 ''' - Global exception handlers (AppDomain, Task, WPF Dispatcher)
 ''' - Startup logic (login, data loading)
 ''' - WPF Application lifecycle
 ''' </summary>
-Public Module wpfMdl_Program
+Public Module X_wpfMdl_Program
 
     Private MutexApp As Mutex
 

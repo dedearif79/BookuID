@@ -233,12 +233,6 @@
     <Compile Update="File\wpfUsc_CompanyProfile.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Host Aplikasi\wpfUsc_HostWhatsApp.xaml.vb">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Host Aplikasi\wpfwin_WhatsApp.xaml.vb">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Jurnal\wpfUsc_Adjusment.xaml.vb">
       <SubType>Code</SubType>
     </Compile>

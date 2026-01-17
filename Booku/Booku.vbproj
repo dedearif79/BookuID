@@ -4,10 +4,11 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>Booku</RootNamespace>
-    <!-- StartupObject dihapus - default ke Application (App.xaml) -->
+    <!-- Entry point menggunakan App.xaml (WPF Application class) -->
+    <!-- UseWindowsForms tetap true untuk kompatibilitas library, tapi entry point sudah WPF murni -->
     <UseWindowsForms>true</UseWindowsForms>
-    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <UseWPF>True</UseWPF>
+    <StartupObject>Booku.App</StartupObject>
     <ApplicationIcon>BookuID.ico</ApplicationIcon>
   </PropertyGroup>
 
@@ -26,7 +27,20 @@
     <Compile Remove="Logger\**" />
     <Compile Remove="Menu Tambahan\**" />
     <Compile Remove="WPF\Styles\Class Window\**" />
+    <Compile Remove="X_Deprecated\**" />
     <Compile Remove="My Project\Application.Designer.vb" />
+    <!-- Exclude deprecated files (X_ prefix) -->
+    <Compile Remove="Manajemen Asset\X_ops_PilihJurnal_DataAsset.vb" />
+    <Compile Remove="Manajemen Asset\X_ops_PilihJurnal_DataAsset.Designer.vb" />
+    <Compile Remove="Modul Umum\X_mdl_PropertiObjek.vb" />
+    <Compile Remove="Modul Umum\X_mdl_DesainUmum.vb" />
+    <Compile Remove="Modul Umum\X_mdl_DesainTombol.vb" />
+    <Compile Remove="Modul Umum\X_mdl_KomponenKhusus.vb" />
+    <Compile Remove="WPF\Modul Umum\X_wpfMdl_Program.vb" />
+    <Compile Remove="Host Aplikasi\X_wpfUsc_HostWhatsApp.xaml.vb" />
+    <Compile Remove="Host Aplikasi\X_wpfwin_WhatsApp.xaml.vb" />
+    <Page Remove="Host Aplikasi\X_wpfUsc_HostWhatsApp.xaml" />
+    <Page Remove="Host Aplikasi\X_wpfwin_WhatsApp.xaml" />
     <EmbeddedResource Remove="App Admin\**" />
     <EmbeddedResource Remove="Logger\**" />
     <EmbeddedResource Remove="Menu Tambahan\**" />
@@ -61,6 +75,11 @@
     <Import Include="System.Data" />
     <Import Include="System.Drawing" />
     <Import Include="System.Windows.Forms" />
+    <!-- Note: System.Windows.Forms masih diperlukan untuk:
+         - KeyPressEventArgs (input validation helpers)
+         - DateTimePicker (beberapa fungsi helper lama)
+         - DataGridView (ekspor ke Excel)
+         Migrasi lengkap memerlukan refactoring lebih lanjut -->
   </ItemGroup>
 
   <ItemGroup>
@@ -82,18 +101,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Buku Pengawasan\BankCash\frm_BukuBank - Copy.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Buku Pengawasan\BankCash\frm_BukuKas - Copy.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Buku Pengawasan\BankCash\frm_BukuPengawasanAktivaLainnya.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Buku Pengawasan\BankCash\frm_BukuPettyCash - Copy.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="My Project\Application.Designer.vb">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

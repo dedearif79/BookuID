@@ -8,9 +8,9 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
 ## Project Overview
 
-BookuID adalah aplikasi akuntansi enterprise berbasis VB.NET dengan arsitektur **hybrid** (WinForms entry point + WPF UI), menggunakan .NET 8.0 untuk Windows.
+BookuID adalah aplikasi akuntansi enterprise berbasis VB.NET dengan arsitektur **WPF murni**, menggunakan .NET 8.0 untuk Windows.
 
-> **Arsitektur Hybrid:** Entry point menggunakan `Sub Main()` di `wpfMdl_Program.vb` (pola WinForms), sementara seluruh UI menggunakan WPF. File `App.xaml.vb` sudah disiapkan untuk migrasi WPF murni di masa depan.
+> **Arsitektur WPF Murni:** Entry point menggunakan `App.xaml` + `App.xaml.vb` (WPF Application class). Seluruh UI menggunakan WPF (Window, UserControl, Style). Tidak ada dependency WinForms.
 
 ### Quick Reference
 
@@ -20,8 +20,12 @@ BookuID adalah aplikasi akuntansi enterprise berbasis VB.NET dengan arsitektur *
 | Arsitektur & Modul | `.claude/rules/architecture.md` |
 | WPF Styling & Warna | `.claude/rules/wpf-styling.md` |
 | WPF UserControl Pattern | `.claude/rules/wpf-usercontrol-pattern.md` |
-| WPF Window Pattern | `.claude/rules/wpf-window-pattern.md` |
+| WPF Window Pattern (Index) | `.claude/rules/wpf-window-pattern.md` |
+| ↳ Window Input/Edit | `.claude/rules/wpf-window-input-pattern.md` |
+| ↳ Window List/Picker | `.claude/rules/wpf-window-list-pattern.md` |
+| ↳ Window Common | `.claude/rules/wpf-window-common.md` |
 | WPF Host Pattern | `.claude/rules/wpf-host-pattern.md` |
+| WPF Async Loading | `.claude/rules/wpf-async-loading-pattern.md` |
 | Database | `.claude/rules/database.md` |
 | Modul & Dependencies | `.claude/rules/modules-dependencies.md` |
 

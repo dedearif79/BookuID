@@ -22,7 +22,9 @@
     </Window.Resources>
 <StackPanel Style="{StaticResource stylePanelFormDialog}" >
 
-        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+        <!-- ScrollViewer dengan MaxHeight untuk layar kecil -->
+        <ScrollViewer Style="{StaticResource styleScrollViewerFormDialogVertikal}" MaxHeight="600" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
 
 
             <Grid Style="{StaticResource styleGridFormDialog}" >
@@ -82,7 +84,8 @@
 
             </Grid>
 
-        </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
 
         <!--Tombol CRUD :-->
         <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"   Name="pnl_TombolForm">

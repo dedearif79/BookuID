@@ -1,7 +1,6 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports System.Windows
-Imports System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel
 Imports bcomm
 Imports DocumentFormat.OpenXml.Drawing.Diagrams
 Imports MySql.Data.MySqlClient
@@ -67,9 +66,7 @@ Public Class wpfWin_PulihkanData
 
     Sub TahapanPemulihan()
 
-        Dim PesanPertanyaan As String = "Anda akan melakukan pemulihan database."
-        Pilihan = MessageBox.Show(PesanPertanyaan & Enter2Baris & "Lanjutkan proses..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not Pesan_KonfirmasiLanjutkan("Anda akan melakukan pemulihan database.") Then Return
 
         VisibilitasProgressBar(True)
 

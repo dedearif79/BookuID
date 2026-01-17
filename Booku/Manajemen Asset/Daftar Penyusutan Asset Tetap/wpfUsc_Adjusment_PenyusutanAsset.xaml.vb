@@ -1184,10 +1184,8 @@ Public Class wpfUsc_Adjusment_PenyusutanAsset
 
         Dim Pesan As String =
             "Pastikan data penjualan asset (jika ada) sudah terposting seluruhnya sampai bulan " & BulanTerceklis_Akhir & " " &
-            "sebelum posting jurnal...!!!" & Enter2Baris &
-            "Lanjutkan posting..?"
-        Pilihan = MessageBox.Show(Pesan, "PERHATIAN..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+            "sebelum posting jurnal."
+        If Not Pesan_KonfirmasiLanjutkan(Pesan) Then Return
 
         Dim JenisTampilanAsal = JenisTampilan
         ProsesPostingJurnal = True

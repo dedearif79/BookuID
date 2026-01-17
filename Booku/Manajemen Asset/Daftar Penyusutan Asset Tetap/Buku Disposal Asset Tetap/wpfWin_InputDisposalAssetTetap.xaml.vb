@@ -190,9 +190,7 @@ Public Class wpfWin_InputDisposalAssetTetap
         If NomorBeritaAcaraDisposalSudahAda = True Then Return
 
 
-        Pilihan = MessageBox.Show("Lanjutkan Disposal Asset..?",
-                                  "PERHATIAN..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not Pesan_KonfirmasiLanjutkan("Lanjutkan Disposal Asset?") Then Return
 
         'Pengisian Ulang Variabel :
         Keterangan = IsiValueVariabelRichTextBox(txt_Keterangan)

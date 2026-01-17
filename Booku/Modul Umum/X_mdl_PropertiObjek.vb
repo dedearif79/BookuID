@@ -1,7 +1,7 @@
 ﻿Imports bcomm
 Imports System.Windows
 
-Module mdl_PropertiObjek
+Module X_mdl_PropertiObjek
 
     'STYLE TABEL DASAR :
     Public Sub StyleTabelDasar(ByVal Tabel As DataGridView)

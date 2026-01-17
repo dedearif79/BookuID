@@ -334,11 +334,9 @@ Public Class wpfUsc_StockOpname
         End If
 
         Dim pesan As String = "Setelah didorong ke Jurnal, seluruh data Stock Opname '" & PilihanBulan &
-                "' dikunci dan tidak dapat diedit lagi." & Enter2Baris &
-                "Lanjutkan dorong..?"
+                "' dikunci dan tidak dapat diedit lagi."
 
-        Pilihan = MessageBox.Show(pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not Pesan_KonfirmasiLanjutkan(pesan) Then Return
 
         Dim SaldoAkhir_Persediaan As Int64 = 0
         Dim BiayaPemakaianBahan As Int64 = 0
@@ -590,8 +588,7 @@ Public Class wpfUsc_StockOpname
 
 
     Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not Pesan_KonfirmasiHapus() Then Return
 
         AksesDatabase_Transaksi(Buka)
         cmd = New OdbcCommand(" DELETE FROM tbl_StockOpname WHERE Nomor_ID = '" & NomorID_Terseleksi & "' ", KoneksiDatabaseTransaksi)

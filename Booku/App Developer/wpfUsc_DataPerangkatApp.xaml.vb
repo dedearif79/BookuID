@@ -91,9 +91,7 @@ Public Class wpfUsc_DataPerangkatApp
 
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
-        Dim Pesan As String = "Yakin akan menghapus Perangkat nomor " & NomorID_Terseleksi & " ?"
-        Pilihan = MessageBox.Show(Pesan, "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin akan menghapus Perangkat nomor " & NomorID_Terseleksi & "?") Then Return
 
         BukaDatabasePublic()
         cmdPublic = New MySqlCommand("DELETE FROM tbl_perangkat WHERE Nomor_ID = '" & NomorID_Terseleksi & "' ", KoneksiDatabasePublic)

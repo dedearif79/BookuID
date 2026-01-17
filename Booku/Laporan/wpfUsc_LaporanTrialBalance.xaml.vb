@@ -224,14 +224,11 @@ Public Class wpfUsc_LaporanTrialBalance
                 pgb_Progress.Foreground = clrWarning
                 pesan_DataTidakSesuai &= "." & Enter2Baris &
                     "Silakan perbaiki dan sesuaikan semua data tersebut agar proses 'Trial Balance' berjalan dengan baik." & Enter2Baris &
-                    "Atau silakan klik tombol 'Yes' untuk melanjutkan 'Trial Balance'."
+                    "Lanjutkan 'Trial Balance'?"
                 If JalurMasuk <> Halaman_MENUUTAMA Then TutupHalaman()
-                Pilihan = MessageBox.Show(pesan_DataTidakSesuai, "Perhatian..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbNo Then Return
-                If Pilihan = vbYes Then
-                    KetersediaanMenuHalaman(pnl_Halaman, False)
-                    KesesuaianData_TrialBalance = True
-                End If
+                If Not TanyaKonfirmasi(pesan_DataTidakSesuai) Then Return
+                KetersediaanMenuHalaman(pnl_Halaman, False)
+                KesesuaianData_TrialBalance = True
             End If
             '============================================================================================================
         End If

@@ -673,8 +673,7 @@ Public Class wpfUsc_BukuBesar
 
     Private Sub btn_Hapus_Click(sender As Object, e As RoutedEventArgs) Handles btn_Hapus.Click
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data nomor " & NomorJV_String_Terseleksi.ToString & " ?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin akan menghapus data nomor " & NomorJV_String_Terseleksi & "?") Then Return
 
         AksesDatabase_Transaksi(Buka)
         If StatusKoneksiDatabaseTransaksi = False Then

@@ -2612,8 +2612,7 @@ Public Class wpfWin_InputInvoicePenjualan_Alt
 
 
     Private Sub btn_Singkirkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Singkirkan.Click
-        Pilihan = MessageBox.Show("Yakin akan menyingkirkan item terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not TanyaKonfirmasi("Yakin akan menyingkirkan item terpilih?") Then Return
         rowviewUtama.Delete()
         Dim i = 0
         For Each row As DataRow In datatabelUtama.Rows
@@ -3480,8 +3479,8 @@ Public Class wpfWin_InputInvoicePenjualan_Alt
         '    If JualAsset = True Then
         '        frm_JualAsset.NomorPenjualanAsset = NomorPenjualan
         '    Else
-        '        Pilihan = MessageBox.Show("Apakah Anda ingin mencetaknya..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        '        If Pilihan = vbYes Then Cetak(JenisFormCetak_Invoice, NomorInvoice, True, False)
+        '        Pilihan = MessageBox.Show("Apakah Anda ingin mencetaknya..?", "Perhatian..!", MessageBoxButton.YesNo, MessageBoxImage.Question)
+        '        If Pilihan = MessageBoxResult.Yes Then Cetak(JenisFormCetak_Invoice, NomorInvoice, True, False)
         '    End If
         '    ResetForm()
         '    PenyimpananInvoicePenjualan = True
@@ -3513,8 +3512,7 @@ Public Class wpfWin_InputInvoicePenjualan_Alt
             If JualAsset = True Then
                 win_JualAsset.NomorPenjualanAsset = NomorPenjualan
             Else
-                Pilihan = MessageBox.Show("Apakah Anda ingin mencetaknya..?", "Perhatian..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbYes Then Cetak(JenisFormCetak_Invoice, NomorInvoice, True, False)
+                If TanyaKonfirmasi("Apakah Anda ingin mencetaknya?") Then Cetak(JenisFormCetak_Invoice, NomorInvoice, True, False)
             End If
             ResetForm()
             PenyimpananInvoicePenjualan = True

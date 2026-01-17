@@ -69,8 +69,7 @@ Module mdl_Adjusment
         Else
             PesanPertanyaan = "Anda akan melakukan Adjusment HPP Biaya Bahan Baku untuk Bulan '" & KonversiAngkaKeBulanString(BulanAdjusment_Angka) & "'."
         End If
-        Pilihan = MessageBox.Show(PesanPertanyaan & Enter2Baris & "Lanjutkan proses..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not Pesan_KonfirmasiLanjutkan(PesanPertanyaan) Then Return
 
         win_InputJurnal.datatabelUtama.Rows(0)("Jumlah_Debet") = JumlahMutasiAdjusmentHPP    '(Koreksi Jumlah Mutasi Debet. Kenapa belakangan? Karena harus dijumlah dulu.)
         TotalDebetBahanJurnal = JumlahMutasiAdjusmentHPP                                        '(Koreksi Jumlah Mutasi Debet. Kenapa belakangan? Karena harus dijumlah dulu.)
@@ -104,9 +103,7 @@ Module mdl_Adjusment
             Return
         End If
 
-        Pilihan = MessageBox.Show("Anda akan melakukan Adjusment HPP Biaya Tenaga Kerja Langsung untuk Bulan '" & KonversiAngkaKeBulanString(BulanAdjusment_Angka) & "'." & Enter2Baris &
-                                  "Lanjutkan proses..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not Pesan_KonfirmasiLanjutkan("Anda akan melakukan Adjusment HPP Biaya Tenaga Kerja Langsung untuk Bulan '" & KonversiAngkaKeBulanString(BulanAdjusment_Angka) & "'.") Then Return
 
         win_InputJurnal.datatabelUtama.Rows(0)("Jumlah_Debet") = JumlahMutasiAdjusmentHPP    '(Koreksi Jumlah Mutasi Debet. Kenapa belakangan? Karena harus dijumlah dulu.)
         TotalDebetBahanJurnal = JumlahMutasiAdjusmentHPP                                        '(Koreksi Jumlah Mutasi Debet. Kenapa belakangan? Karena harus dijumlah dulu.)
@@ -156,8 +153,7 @@ Module mdl_Adjusment
             PesanPertanyaan = "Anda akan melakukan Adjusment HPP Biaya Overhead Pabrik untuk Bulan '" & KonversiAngkaKeBulanString(BulanAdjusment_Angka) & "'." & Enter2Baris
         End If
 
-        Pilihan = MessageBox.Show(PesanPertanyaan & Enter2Baris & "Lanjutkan proses..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not Pesan_KonfirmasiLanjutkan(PesanPertanyaan) Then Return
 
         win_InputJurnal.datatabelUtama.Rows(0)("Jumlah_Debet") = JumlahMutasiAdjusmentHPP   '(Koreksi Jumlah Mutasi Debet. Kenapa belakangan? Karena harus dijumlah dulu.)
         TotalDebetBahanJurnal = JumlahMutasiAdjusmentHPP                                    '(Koreksi Jumlah Mutasi Debet. Kenapa belakangan? Karena harus dijumlah dulu.)
@@ -193,8 +189,7 @@ Module mdl_Adjusment
         Else
             PesanPertanyaan = "Anda akan melakukan Adjusment HPP Biaya Produksi untuk Bulan '" & KonversiAngkaKeBulanString(BulanAdjusment_Angka) & "'."
         End If
-        Pilihan = MessageBox.Show(PesanPertanyaan & Enter2Baris & "Lanjutkan proses..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not Pesan_KonfirmasiLanjutkan(PesanPertanyaan) Then Return
 
         win_InputJurnal.datatabelUtama.Rows(0)("Jumlah_Debet") = JumlahMutasiAdjusmentHPP   '(Koreksi Jumlah Mutasi Debet. Kenapa belakangan? Karena harus dijumlah dulu.)
         TotalDebetBahanJurnal = JumlahMutasiAdjusmentHPP                                    '(Koreksi Jumlah Mutasi Debet. Kenapa belakangan? Karena harus dijumlah dulu.)

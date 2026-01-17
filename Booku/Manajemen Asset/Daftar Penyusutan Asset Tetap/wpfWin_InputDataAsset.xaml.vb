@@ -547,16 +547,16 @@ Public Class wpfWin_InputDataAsset
     Private Sub TutupForm(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.Closing
         If ProsesKeluarAplikasi Then Return
         If Not EksekusiTutupForm Then
-            Pilihan = MessageBox.Show("Yakin ingin menutup form ini?", "PERHATIAN..!", MessageBoxButtons.YesNo)
-            If Pilihan = vbNo Then e.Cancel = True
-            If Pilihan = vbYes Then
-                If JalurMasuk = Form_INPUTINVOICEPEMBELIAN Then
-                    If cmb_KelompokHarta.SelectedValue = Kosongan Or cmb_Divisi.SelectedValue = Kosongan Then
-                        PesanPeringatan("Anda belum melengkapi 'Data Asset'." & Enter2Baris & "COA Asset dibatalkan..!")
-                        win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("COA_Produk") = Kosongan
-                        win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("Kelompok_Asset") = Kosongan
-                        win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("Kode_Divisi_Asset") = Kosongan
-                    End If
+            If Not TanyaKonfirmasi("Yakin ingin menutup form ini?") Then
+                e.Cancel = True
+                Return
+            End If
+            If JalurMasuk = Form_INPUTINVOICEPEMBELIAN Then
+                If cmb_KelompokHarta.SelectedValue = Kosongan Or cmb_Divisi.SelectedValue = Kosongan Then
+                    PesanPeringatan("Anda belum melengkapi 'Data Asset'." & Enter2Baris & "COA Asset dibatalkan..!")
+                    win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("COA_Produk") = Kosongan
+                    win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("Kelompok_Asset") = Kosongan
+                    win_InputInvoicePembelian.datatabelUtama.Rows(win_InputInvoicePembelian.BarisTerseleksi)("Kode_Divisi_Asset") = Kosongan
                 End If
             End If
         End If

@@ -21,6 +21,19 @@ Partial Public Class App
 
     Private Shared MutexApp As Mutex
 
+#Region "Main Entry Point"
+
+    ''' <summary>
+    ''' Entry point utama aplikasi. Diperlukan untuk VB.NET WPF.
+    ''' </summary>
+    <STAThread>
+    Public Shared Sub Main()
+        Dim app As New App()
+        app.Run()
+    End Sub
+
+#End Region
+
 #Region "Instance Constructor"
 
     ''' <summary>

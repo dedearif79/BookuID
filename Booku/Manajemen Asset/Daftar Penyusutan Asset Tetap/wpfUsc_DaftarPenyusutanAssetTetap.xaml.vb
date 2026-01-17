@@ -1663,8 +1663,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then Return '(Untuk jaga-jaga saja...!)
 
-        Pilihan = MessageBox.Show("Yakin akan menghapus data terpilih..?", "Perhatian..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+        If Not Pesan_KonfirmasiHapus() Then Return
 
         HapusDataAsset_BerdasarkanNomorID(NomorID_Terseleksi)
 
@@ -1832,10 +1831,8 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
         Dim Pesan As String =
             "Pastikan data penjualan asset (jika ada) sudah terposting seluruhnya sampai bulan " & BulanTerceklis_Akhir & " " &
-            "sebelum posting jurnal...!!!" & Enter2Baris &
-            "Lanjutkan posting..?"
-        Pilihan = MessageBox.Show(Pesan, "PERHATIAN..!", MessageBoxButtons.YesNo)
-        If Pilihan = vbNo Then Return
+            "sebelum posting jurnal."
+        If Not Pesan_KonfirmasiLanjutkan(Pesan) Then Return
 
         Dim JenisTampilanAsal = JenisTampilan
         ProsesPostingJurnal = True
@@ -2109,11 +2106,9 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
         'End If
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
-            Pilihan = MessageBox.Show("Penggunaan fitur ini akan mengakibatkan Data Jurnal yang telah diposting berkaitan dengan Data Asset yang ada di tabel ini akan dihapus seluruhnya." & Enter2Baris &
-                                  "Tidak perlu khawatir, karena Anda bisa mempostingnya lagi di lain kesempatan." & Enter2Baris &
-                                  "Lanjutkan import..?",
-                                  "PERHATIAN..!", MessageBoxButtons.YesNo)
-            If Pilihan = vbNo Then Return
+            Dim PesanImport = "Penggunaan fitur ini akan mengakibatkan Data Jurnal yang telah diposting berkaitan dengan Data Asset yang ada di tabel ini akan dihapus seluruhnya." & Enter2Baris &
+                              "Tidak perlu khawatir, karena Anda bisa mempostingnya lagi di lain kesempatan."
+            If Not Pesan_KonfirmasiLanjutkan(PesanImport) Then Return
         End If
 
         'Hapus Data Jurnal Terlebih Dahulu Sebeleum Import :
@@ -2156,10 +2151,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
         If ProsesHapus = True Then
             If JumlahJurnalDihapus > 1 Then
-                Pilihan = MessageBox.Show("Seluruh data Jurnal terkait telah berhasil DIHAPUS." & Enter2Baris &
-                                          "Lanjutkan import..?",
-                                          "PERHATIAN..!", MessageBoxButtons.YesNo)
-                If Pilihan = vbNo Then Return
+                If Not Pesan_KonfirmasiLanjutkan("Seluruh data Jurnal terkait telah berhasil DIHAPUS.") Then Return
             Else
                 If JenisTahunBuku = JenisTahunBuku_NORMAL Then
                     Pesan_Informasi("Belum ada Jurnal yang perlu dihapus pada event ini." _
