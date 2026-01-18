@@ -364,9 +364,8 @@ Public Class wpfUsc_BukuPengawasanKetetapanPajak
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanKetetapanPajak")
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
+
         End Try
 
     End Sub
@@ -403,6 +402,13 @@ Public Class wpfUsc_BukuPengawasanKetetapanPajak
         btn_LihatJurnal.IsEnabled = False
         btn_DetailPembayaran.IsEnabled = True
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

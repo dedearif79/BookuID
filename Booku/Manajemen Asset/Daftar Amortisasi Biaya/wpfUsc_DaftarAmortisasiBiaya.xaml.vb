@@ -556,11 +556,10 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DaftarAmortisasiBiaya")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -596,6 +595,7 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
         KetersediaanTombolUpdate(False)
         KetersediaanTombolLihatJurnal(False)
         KetersediaanTombolPosting(False)
+        SedangMemuatData = False
     End Sub
 
     ''' <summary>
@@ -603,7 +603,8 @@ Public Class wpfUsc_DaftarAmortisasiBiaya
     ''' </summary>
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

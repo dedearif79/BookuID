@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -10,6 +11,12 @@ Public Class wpfUsc_StockOpname
 
     Public StatusAktif As Boolean
     Private SudahDimuat As Boolean = False
+
+    ' Flag untuk mencegah multiple loading bersamaan
+    Private SedangMemuatData As Boolean = False
+
+    ' Flag untuk mencegah eksekusi TampilkanData saat ComboBox sedang diisi
+    Dim EksekusiTampilanData As Boolean
     Public JudulForm
     Public KesesuaianJurnal As Boolean
 
@@ -153,75 +160,102 @@ Public Class wpfUsc_StockOpname
 
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = False
         KontenCombo_Bulan()
+        EksekusiTampilanData = True
+        TampilkanData()
     End Sub
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
-        KesesuaianJurnal = True
+        ' Guard clause: Jangan eksekusi saat ComboBox sedang diisi
+        If Not EksekusiTampilanData Then Return
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
+        ' Guard clause: Jangan eksekusi jika sedang loading
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'Data Tabel
-        JumlahBarisBahanData = 0
-        NomorJV = 0
-        NomorUrut = 0
-        TotalPersediaan = 0
-        TotalPersediaan_Lokal = 0
-        TotalPersediaan_Import = 0
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)  ' Beri waktu UI render
 
-        'Cek Keberadaan Jurnal :
-        If CekKeberadaanJurnal_DiBulanTertentu(COAPersediaan, JenisJurnal_AdjusmentHPP, PilihanBulan_Angka) = True Then
-            Sub_TombolJurnal_Lihat()
-            NomorJV = NomorJV_SaatPengecekanJurnal
-            pnl_CRUD.IsEnabled = False
-        Else
-            Sub_TombolJurnal_Dorong()
+        Try
+            KesesuaianJurnal = True
+
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
+
+            'Data Tabel
+            JumlahBarisBahanData = 0
             NomorJV = 0
-            If JenisPengecekan_Menu = JenisPengecekan_CekFisik Then
-                pnl_CRUD.IsEnabled = True
+            NomorUrut = 0
+            TotalPersediaan = 0
+            TotalPersediaan_Lokal = 0
+            TotalPersediaan_Import = 0
+
+            'Cek Keberadaan Jurnal :
+            If CekKeberadaanJurnal_DiBulanTertentu(COAPersediaan, JenisJurnal_AdjusmentHPP, PilihanBulan_Angka) = True Then
+                Sub_TombolJurnal_Lihat()
+                NomorJV = NomorJV_SaatPengecekanJurnal
+                pnl_CRUD.IsEnabled = False
+            Else
+                Sub_TombolJurnal_Dorong()
+                NomorJV = 0
+                If JenisPengecekan_Menu = JenisPengecekan_CekFisik Then
+                    pnl_CRUD.IsEnabled = True
+                End If
             End If
-        End If
 
-        AksesDatabase_Transaksi(Buka)
+            AksesDatabase_Transaksi(Buka)
 
-        Select Case JenisPengecekan_Menu
-            Case JenisPengecekan_CekFisik
-                QueryAwal = " SELECT * FROM tbl_StockOpname WHERE Jenis_Stok = '" & JenisStok_Menu & "' "
-                FilterBulan = " AND DATE_FORMAT(Tanggal_Pengecekan, '%Y-%m') = '" & TahunBukuAktif & "-" & PilihanBulan_NomorString & "' "
-            Case JenisPengecekan_TarikanData
-                QueryAwal = " SELECT * FROM tbl_Pembelian_Invoice WHERE COA_Produk LIKE '5%' "
-                FilterBulan = " AND DATE_FORMAT(Tanggal_Invoice, '%Y-%m') <= '" & TahunBukuAktif & "-" & PilihanBulan_NomorString & "' "
-        End Select
-        cmd = New OdbcCommand(QueryAwal & FilterBulan, KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        Do While dr.Read
             Select Case JenisPengecekan_Menu
                 Case JenisPengecekan_CekFisik
-                    TampilkanData_CekFisik()
+                    QueryAwal = " SELECT * FROM tbl_StockOpname WHERE Jenis_Stok = '" & JenisStok_Menu & "' "
+                    FilterBulan = " AND DATE_FORMAT(Tanggal_Pengecekan, '%Y-%m') = '" & TahunBukuAktif & "-" & PilihanBulan_NomorString & "' "
                 Case JenisPengecekan_TarikanData
-                    TampilkanData_TarikanData()
+                    QueryAwal = " SELECT * FROM tbl_Pembelian_Invoice WHERE COA_Produk LIKE '5%' "
+                    FilterBulan = " AND DATE_FORMAT(Tanggal_Invoice, '%Y-%m') <= '" & TahunBukuAktif & "-" & PilihanBulan_NomorString & "' "
             End Select
-        Loop
+            cmd = New OdbcCommand(QueryAwal & FilterBulan, KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
+            Do While dr.Read
+                Select Case JenisPengecekan_Menu
+                    Case JenisPengecekan_CekFisik
+                        TampilkanData_CekFisik()
+                    Case JenisPengecekan_TarikanData
+                        TampilkanData_TarikanData()
+                End Select
+                Await Task.Yield()  ' Beri kesempatan UI refresh
+            Loop
 
-        AksesDatabase_Transaksi(Tutup)
+            AksesDatabase_Transaksi(Tutup)
 
-        If TotalPersediaan > 0 Then
-            datatabelUtama.Rows.Add(Kosongan) 'Variabel "Kosongan" jangan dihapus. Ini diperlukan untuk menghindari dbNull. Ada kepentingan logika di situ...!!!!
-            datatabelUtama.Rows.Add(Kosongan, Kosongan, Kosongan,
-                                    Kosongan, Kosongan, 0, Kosongan, "TOTAL",
-                                    Kosongan, Kosongan, Kosongan, "TOTAL",
-                                    TotalPersediaan)
-        End If
+            If TotalPersediaan > 0 Then
+                datatabelUtama.Rows.Add(Kosongan) 'Variabel "Kosongan" jangan dihapus. Ini diperlukan untuk menghindari dbNull. Ada kepentingan logika di situ...!!!!
+                datatabelUtama.Rows.Add(Kosongan, Kosongan, Kosongan,
+                                        Kosongan, Kosongan, 0, Kosongan, "TOTAL",
+                                        Kosongan, Kosongan, Kosongan, "TOTAL",
+                                        TotalPersediaan)
+            End If
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_StockOpname")
+
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+
+        End Try
 
         Dim PR As String = "PR : " & Enter2Baris
         PR &= "- Tinjau ulang perhitungan, karena harus memperhatikan bahan yang diretur setelah pembelian...!!!" & Enter2Baris
 
-        Dispatcher.BeginInvoke(Sub() PesanUntukProgrammer(PR))
+        'Dispatcher.BeginInvoke(Sub() PesanUntukProgrammer(PR))
 
+    End Sub
+
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TampilkanData_CekFisik()
@@ -298,6 +332,13 @@ Public Class wpfUsc_StockOpname
         BersihkanSeleksi_WPF(datagridUtama, datatabelUtama, BarisTerseleksi, JumlahBaris)
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

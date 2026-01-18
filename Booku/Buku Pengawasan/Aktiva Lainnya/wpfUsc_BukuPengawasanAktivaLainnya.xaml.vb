@@ -139,11 +139,10 @@ Public Class wpfUsc_BukuPengawasanAktivaLainnya
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanAktivaLainnya")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -161,11 +160,13 @@ Public Class wpfUsc_BukuPengawasanAktivaLainnya
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
+        SedangMemuatData = False
     End Sub
 
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
     Private Sub btn_Refresh_Click(sender As Object, e As RoutedEventArgs) Handles btn_Refresh.Click

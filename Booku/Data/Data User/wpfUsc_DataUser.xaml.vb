@@ -120,11 +120,10 @@ Public Class wpfUsc_DataUser
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DataUser")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -161,6 +160,7 @@ Public Class wpfUsc_DataUser
         btn_Edit.IsEnabled = False
         btn_Blokir.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+        SedangMemuatData = False
     End Sub
 
     ''' <summary>
@@ -168,7 +168,8 @@ Public Class wpfUsc_DataUser
     ''' </summary>
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

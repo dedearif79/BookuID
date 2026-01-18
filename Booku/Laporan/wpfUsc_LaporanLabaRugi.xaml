@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-<DockPanel Style="{StaticResource stylePanelFormHalaman}">
+<DockPanel x:Name="pnl_Halaman" Style="{StaticResource stylePanelFormHalaman}">
         <StackPanel Style="{StaticResource stylePanelFormHalamanHeader}">
             <StackPanel Style="{StaticResource stylePanelFormHalamanTittle}" >
                 <TextBlock Style="{StaticResource styleTextBlockFormHalamanJudul}" Name="lbl_JudulForm" Text="Laporan Rugi-Laba" />

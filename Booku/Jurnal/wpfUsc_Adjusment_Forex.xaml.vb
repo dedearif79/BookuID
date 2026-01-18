@@ -3,12 +3,16 @@ Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
 Imports System.Windows.Input
+Imports System.Threading.Tasks
 Imports bcomm
 
 Public Class wpfUsc_JurnalAdjusment_Forex
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+
+    ' Flag untuk mencegah multiple loading bersamaan
+    Private SedangMemuatData As Boolean = False
 
     Dim COA
     Dim NamaAkun
@@ -63,48 +67,68 @@ Public Class wpfUsc_JurnalAdjusment_Forex
     Dim Kolom As String = "Tanggal_Transaksi"
     Dim TabelDanKriteria As String
     Dim BulanTertuaAngka As Integer
-    Sub TampilkanData()
 
-        AdjusmentBulanBukuAktifSudahLengkap = True
+    Async Sub TampilkanDataAsync()
 
+        ' Guard clause
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
+
+        ' Disable UI dan tampilkan loading
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        UpdateInfoBulanBukuAktif()
+        Try
+            AdjusmentBulanBukuAktifSudahLengkap = True
 
-        lbl_TombolJanuari = teks_Posting
-        lbl_TombolFebruari = teks_Posting
-        lbl_TombolMaret = teks_Posting
-        lbl_TombolApril = teks_Posting
-        lbl_TombolMei = teks_Posting
-        lbl_TombolJuni = teks_Posting
-        lbl_TombolJuli = teks_Posting
-        lbl_TombolAgustus = teks_Posting
-        lbl_TombolSeptember = teks_Posting
-        lbl_TombolOktober = teks_Posting
-        lbl_TombolNopember = teks_Posting
-        lbl_TombolDesember = teks_Posting
+            UpdateInfoBulanBukuAktif()
 
-        'Data Tabel :
-        datatabelUtama.Clear()
+            lbl_TombolJanuari = teks_Posting
+            lbl_TombolFebruari = teks_Posting
+            lbl_TombolMaret = teks_Posting
+            lbl_TombolApril = teks_Posting
+            lbl_TombolMei = teks_Posting
+            lbl_TombolJuni = teks_Posting
+            lbl_TombolJuli = teks_Posting
+            lbl_TombolAgustus = teks_Posting
+            lbl_TombolSeptember = teks_Posting
+            lbl_TombolOktober = teks_Posting
+            lbl_TombolNopember = teks_Posting
+            lbl_TombolDesember = teks_Posting
 
-        ResetTombol()
+            'Data Tabel :
+            datatabelUtama.Clear()
 
-        AksesDatabase_General(Buka)
+            ResetTombol()
 
-        cmd = New OdbcCommand(" SELECT COA, Nama_Akun FROM tbl_COA " &
-                              " WHERE   Visibilitas     = '" & Pilihan_Ya & "' " &
-                              " AND     Kode_Mata_Uang <> '" & KodeMataUang_IDR & "' ", KoneksiDatabaseGeneral)
-        dr_ExecuteReader()
-        Do While dr.Read
-            COA = dr.Item("COA")
-            NamaAkun = dr.Item("Nama_Akun")
-            TambahBaris()
-        Loop
+            AksesDatabase_General(Buka)
 
-        AksesDatabase_General(Tutup)
+            cmd = New OdbcCommand(" SELECT COA, Nama_Akun FROM tbl_COA " &
+                                  " WHERE   Visibilitas     = '" & Pilihan_Ya & "' " &
+                                  " AND     Kode_Mata_Uang <> '" & KodeMataUang_IDR & "' ", KoneksiDatabaseGeneral)
+            dr_ExecuteReader()
+            Do While dr.Read
+                COA = dr.Item("COA")
+                NamaAkun = dr.Item("Nama_Akun")
+                TambahBaris()
+                Await Task.Yield()
+            Loop
 
-        BersihkanSeleksi()
+            AksesDatabase_General(Tutup)
 
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_JurnalAdjusment_Forex")
+            SedangMemuatData = False
+
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
+    Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
@@ -282,7 +306,14 @@ Public Class wpfUsc_JurnalAdjusment_Forex
         datagridUtama.SelectedCells.Clear()
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
+        SedangMemuatData = False
+    End Sub
+
+    ' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
         KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

@@ -14,7 +14,7 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </UserControl.Resources>
-<DockPanel Style="{StaticResource stylePanelFormHalaman}">
+<DockPanel Style="{StaticResource stylePanelFormHalaman}" Name="pnl_Halaman">
         <StackPanel Style="{StaticResource stylePanelFormHalamanHeader}">
             <StackPanel Style="{StaticResource stylePanelFormHalamanTittle}" >
                 <TextBlock Style="{StaticResource styleTextBlockFormHalamanJudul}" Name="lbl_JudulForm">Jurnal Adjusment</TextBlock>

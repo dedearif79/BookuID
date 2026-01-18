@@ -338,11 +338,10 @@ Public Class wpfUsc_BukuPengawasanBuktiPotongPPh_Prepaid
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanBuktiPotongPPh_Prepaid")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -367,12 +366,14 @@ Public Class wpfUsc_BukuPengawasanBuktiPotongPPh_Prepaid
         btn_Input.IsEnabled = False
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
+        SedangMemuatData = False
     End Sub
 
 
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

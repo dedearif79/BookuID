@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -8,6 +9,8 @@ Public Class wpfUsc_LaporanTrialBalance
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
     Public JalurMasuk
 
     Dim QueryTampilan
@@ -244,6 +247,9 @@ Public Class wpfUsc_LaporanTrialBalance
 
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = False
+        ' Tidak ada ComboBox filter di form ini
+        EksekusiTampilanData = True
 
         Proses = True
         TrialBalanceDone = False
@@ -300,30 +306,51 @@ Public Class wpfUsc_LaporanTrialBalance
 
     End Sub
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
-        pnl_DataGridUtama.Visibility = Visibility.Visible
+        Await Task.Delay(50)
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
+        Try
+            pnl_DataGridUtama.Visibility = Visibility.Visible
 
-        QueryTampilan = " SELECT * FROM tbl_COA WHERE Visibilitas = '" & Pilihan_Ya & "' "
-        DataPerKategoriCOA()
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
 
-        BersihkanSeleksi()
+            QueryTampilan = " SELECT * FROM tbl_COA WHERE Visibilitas = '" & Pilihan_Ya & "' "
+            DataPerKategoriCOA()
 
-        TrialBalanceDone = True
+            TrialBalanceDone = True
 
-        If usc_TutupBuku.StatusAktif Then usc_TutupBuku.TampilkanData() 'Ini jangan dihapus. Ini dibutuhkan agar data pada Form Tutup Buku ter-refresh. Khawatir form ini sedang dibuka oleh user pada saat Trial Balance.
+            If usc_TutupBuku.StatusAktif Then usc_TutupBuku.TampilkanData() 'Ini jangan dihapus. Ini dibutuhkan agar data pada Form Tutup Buku ter-refresh. Khawatir form ini sedang dibuka oleh user pada saat Trial Balance.
 
-        KetersediaanMenuHalaman(pnl_Halaman, True)
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_LaporanTrialBalance")
+            SedangMemuatData = False
 
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
     Sub BersihkanSeleksi()
         BersihkanSeleksi_WPF(datagridUtama, datatabelUtama, BarisTerseleksi, JumlahBaris)
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

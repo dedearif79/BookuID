@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -11,6 +12,8 @@ Public Class wpfUsc_LaporanNeraca_Bulanan
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm
 
@@ -65,6 +68,12 @@ Public Class wpfUsc_LaporanNeraca_Bulanan
 
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = False
+
+        ' Tidak ada ComboBox filter di form ini
+
+        EksekusiTampilanData = True
+
         'If StatusTrialBalance Then
         '    TampilkanData()
         'Else
@@ -78,12 +87,19 @@ Public Class wpfUsc_LaporanNeraca_Bulanan
 
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
+        ' Guard clause
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
+        ' Disable UI dan tampilkan loading
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
+        Try
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
 
         Dim QueryTampilanUmum = " SELECT * FROM tbl_COA WHERE Visibilitas = '" & Pilihan_Ya & "' "
 
@@ -400,10 +416,21 @@ Public Class wpfUsc_LaporanNeraca_Bulanan
         BalanceNopember = TotalSaldoNopemberAKTIVA - TotalSaldoNopemberPASSIVA
         BalanceDesember = TotalSaldoDesemberAKTIVA - TotalSaldoDesemberPASSIVA
 
-        BarisBalance()
+            BarisBalance()
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_LaporanNeraca_Bulanan")
+            SedangMemuatData = False
 
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub DataPerKategoriCOA()
@@ -600,7 +627,13 @@ Public Class wpfUsc_LaporanNeraca_Bulanan
         datagridUtama.SelectedItem = Nothing
         datagridUtama.SelectedCells.Clear()
         btn_BukuBesar.IsEnabled = False
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
         KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -13,6 +14,7 @@ Public Class wpfUsc_Adjusment_PenyusutanAsset
 
     Public StatusAktif As Boolean
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Dim JudulForm
     Public JenisTampilan
@@ -110,18 +112,38 @@ Public Class wpfUsc_Adjusment_PenyusutanAsset
 
 
     Public EksekusiTampilanData As Boolean
-    Sub TampilkanData()
 
+    Async Sub TampilkanDataAsync()
+
+        ' Guard clause
         If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
-        Terabas()
+        Await Task.Delay(50)
 
-        JumlahAsset = 0
+        Try
+            Terabas()
 
-        TampilkanData_Detail_Rekap()
-        BersihkanSeleksi()
+            JumlahAsset = 0
 
+            TampilkanData_Detail_Rekap()
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_Adjusment_PenyusutanAsset")
+            SedangMemuatData = False
+
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
@@ -609,7 +631,13 @@ Public Class wpfUsc_Adjusment_PenyusutanAsset
         BersihkanSeleksi_WPF(datagridUtama, datatabelUtama, BarisTerseleksi, JumlahBaris)
         KetersediaanTombolLihatJurnal(False)
         KetersediaanTombolPosting(False)
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
         KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

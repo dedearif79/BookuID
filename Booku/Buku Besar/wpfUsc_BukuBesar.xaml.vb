@@ -269,11 +269,10 @@ Public Class wpfUsc_BukuBesar
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuBesar")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -314,6 +313,7 @@ Public Class wpfUsc_BukuBesar
         btn_LihatJurnal.IsEnabled = False
         btn_BukuPembantu.IsEnabled = False
         TampilSemua = False
+        SedangMemuatData = False
     End Sub
 
     ''' <summary>
@@ -321,7 +321,8 @@ Public Class wpfUsc_BukuBesar
     ''' </summary>
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

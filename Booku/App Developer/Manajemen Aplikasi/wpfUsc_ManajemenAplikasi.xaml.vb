@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -12,6 +13,7 @@ Public Class wpfUsc_ManajemenAplikasi
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Dim NomorUrut
 
@@ -67,10 +69,35 @@ Public Class wpfUsc_ManajemenAplikasi
     End Sub
 
 
-    Sub TampilkanData()
-        TampilkanDataInfoGeneral()
-        TampilkanDataInfoInstaller()
-        TampilkanDataInfoUpdater()
+    Async Sub TampilkanDataAsync()
+
+        ' Guard clause
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
+
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
+
+        Try
+            TampilkanDataInfoGeneral()
+            TampilkanDataInfoInstaller()
+            TampilkanDataInfoUpdater()
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_ManajemenAplikasi")
+            SedangMemuatData = False
+
+        Finally
+            KetersediaanMenuHalaman(pnl_Halaman, True)
+            SedangMemuatData = False
+
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 

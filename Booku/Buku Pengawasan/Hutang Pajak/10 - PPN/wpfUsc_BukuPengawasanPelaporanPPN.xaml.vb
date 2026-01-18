@@ -372,9 +372,7 @@ Public Class wpfUsc_BukuPengawasanPelaporanPPN
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanPelaporanPPN")
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
 
         End Try
 
@@ -618,6 +616,13 @@ Public Class wpfUsc_BukuPengawasanPelaporanPPN
         datagridUtama.SelectedCells.Clear()
         btn_LihatJurnal.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

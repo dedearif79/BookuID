@@ -143,9 +143,8 @@ Public Class wpfUsc_BukuPengawasanHutangDividen
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangDividen")
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
+
         End Try
 
     End Sub
@@ -176,6 +175,13 @@ Public Class wpfUsc_BukuPengawasanHutangDividen
         btn_LihatJurnal.IsEnabled = False
         btn_Bayar.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

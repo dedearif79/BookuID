@@ -3,6 +3,7 @@ Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
 Imports System.Windows.Input
+Imports System.Threading.Tasks
 Imports bcomm
 
 
@@ -10,6 +11,9 @@ Public Class wpfUsc_BukuDisposalAssetTetap
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+
+    ' Flag untuk mencegah multiple loading bersamaan
+    Private SedangMemuatData As Boolean = False
 
     Public KesesuaianJurnal As Boolean
 
@@ -61,48 +65,69 @@ Public Class wpfUsc_BukuDisposalAssetTetap
     End Sub
 
 
+    Async Sub TampilkanDataAsync()
+
+        ' Guard clause
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
+
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
+
+        Try
+            KesesuaianJurnal = True
+
+            'Data Tabel :
+            datatabelUtama.Rows.Clear()
+            NomorUrut = 0
+
+            AksesDatabase_General(Buka)
+
+            cmd = New OdbcCommand(" SELECT * FROM tbl_DataAsset " &
+                                  " WHERE Tanggal_Closing <> '" & TanggalKosongSimpan & "' " &
+                                  " AND Harga_Jual = 0 " &
+                                  " ORDER BY Nomor_JV_Closing ", KoneksiDatabaseGeneral)
+            dr_ExecuteReader()
+
+            Do While dr.Read
+
+                NomorBeritaAcara = dr.Item("Kode_Closing")
+                TanggalBeritaAcara = TanggalFormatTampilan(dr.Item("Tanggal_Closing"))
+                KodeAsset = dr.Item("Kode_Asset")
+                NamaAsset = dr.Item("Nama_Aktiva")
+                JumlahAsset = 1
+                TanggalPerolehan = TanggalFormatTampilan(dr.Item("Tanggal_Perolehan"))
+                HargaPerolehan = dr.Item("Harga_Perolehan")
+                AkumulasiPenyusutan = dr.Item("Akumulasi_Penyusutan")
+                LabaRugi = AkumulasiPenyusutan - HargaPerolehan
+                Keterangan = PenghapusEnter(dr.Item("Keterangan"))
+                NomorJV_Closing = dr.Item("Nomor_JV_Closing")
+
+                If HargaPerolehan = 0 Then HargaPerolehan = StripKosong
+                If AkumulasiPenyusutan = 0 Then AkumulasiPenyusutan = StripKosong
+                If LabaRugi = 0 Then LabaRugi = StripKosong
+
+                TambahBaris()
+                Await Task.Yield()
+
+            Loop
+
+            AksesDatabase_General(Tutup)
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuDisposalAssetTetap")
+            SedangMemuatData = False
+
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
     Sub TampilkanData()
-
-        KesesuaianJurnal = True
-
-        'Data Tabel :
-        datatabelUtama.Rows.Clear()
-        NomorUrut = 0
-
-        AksesDatabase_General(Buka)
-
-        cmd = New OdbcCommand(" SELECT * FROM tbl_DataAsset " &
-                              " WHERE Tanggal_Closing <> '" & TanggalKosongSimpan & "' " &
-                              " AND Harga_Jual = 0 " &
-                              " ORDER BY Nomor_JV_Closing ", KoneksiDatabaseGeneral)
-        dr_ExecuteReader()
-
-        Do While dr.Read
-
-            NomorBeritaAcara = dr.Item("Kode_Closing")
-            TanggalBeritaAcara = TanggalFormatTampilan(dr.Item("Tanggal_Closing"))
-            KodeAsset = dr.Item("Kode_Asset")
-            NamaAsset = dr.Item("Nama_Aktiva")
-            JumlahAsset = 1
-            TanggalPerolehan = TanggalFormatTampilan(dr.Item("Tanggal_Perolehan"))
-            HargaPerolehan = dr.Item("Harga_Perolehan")
-            AkumulasiPenyusutan = dr.Item("Akumulasi_Penyusutan")
-            LabaRugi = AkumulasiPenyusutan - HargaPerolehan
-            Keterangan = PenghapusEnter(dr.Item("Keterangan"))
-            NomorJV_Closing = dr.Item("Nomor_JV_Closing")
-
-            If HargaPerolehan = 0 Then HargaPerolehan = StripKosong
-            If AkumulasiPenyusutan = 0 Then AkumulasiPenyusutan = StripKosong
-            If LabaRugi = 0 Then LabaRugi = StripKosong
-
-            TambahBaris()
-
-        Loop
-
-        AksesDatabase_General(Tutup)
-
-        BersihkanSeleksi()
-
+        TampilkanDataAsync()
     End Sub
 
 
@@ -120,6 +145,14 @@ Public Class wpfUsc_BukuDisposalAssetTetap
         datagridUtama.SelectedItem = Nothing
         datagridUtama.SelectedCells.Clear()
         btn_LihatJurnal.IsEnabled = False
+        SedangMemuatData = False
+    End Sub
+
+    ' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

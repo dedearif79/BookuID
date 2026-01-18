@@ -177,11 +177,11 @@ Public Class wpfUsc_BukuPengawasanHutangAfiliasi
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangAfiliasi")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
+
         End Try
 
     End Sub
@@ -257,6 +257,13 @@ Public Class wpfUsc_BukuPengawasanHutangAfiliasi
         btn_HapusHutang.IsEnabled = False
         grb_JadwalAngsuran.Header = "Jadwal Angsuran Hutang Afiliasi : "
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
     Sub BersihkanSeleksi_JadwalAngsuran()

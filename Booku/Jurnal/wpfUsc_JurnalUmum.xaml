@@ -56,7 +56,7 @@
                         <!-- Filter Periode : -->
                         <Border Style="{StaticResource styleBorderHeaderSeparatorFilter}"/>
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"    Name="pnl_FilterPeriode" >
-                            <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Periode :" />
+                            <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Periode :" Margin="3 2 0 3" />
                             <StackPanel Orientation="Horizontal">
                                 <DatePicker     Grid.Row="2" Grid.Column="1"    Style="{StaticResource styleDatePickerFormHalaman}"      Name="dtp_DariTanggal" />
                                 <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Margin="0 3 0 0"    Text=" s.d. " />
@@ -68,9 +68,9 @@
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"    Name="pnl_FilterNomorJV" >
                             <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Nomor JV :" />
                             <StackPanel Orientation="Horizontal">
-                                <TextBox    Style="{StaticResource styleTextBoxFormHalaman}"    Margin="0"  Height="22" Width="57"  Name="txt_DariNomorJV" />
+                                <TextBox    Style="{StaticResource styleTextBoxFormHalaman}"    Margin="0"  Width="57"  Name="txt_DariNomorJV" />
                                 <TextBlock  Style="{StaticResource styleTextBlockFormHalaman}"  HorizontalAlignment="Left"        Margin="0 3 0 0"    Text=" s.d. " />
-                                <TextBox    Style="{StaticResource styleTextBoxFormHalaman}"    Margin="0"  Height="22" Width="57"  Name="txt_SampaiNomorJV" />
+                                <TextBox    Style="{StaticResource styleTextBoxFormHalaman}"    Margin="0"  Width="57"  Name="txt_SampaiNomorJV" />
                             </StackPanel>
                         </StackPanel>
                         <!-- Filter Status Approve : -->
@@ -84,8 +84,8 @@
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"    Name="pnl_FilterCOA" >
                             <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Akun :" />
                             <StackPanel Orientation="Horizontal">
-                                <TextBox    Style="{StaticResource styleTextBoxFormHalaman}"    Margin="0"  Height="22" Width="45"  Name="txt_COA" />
-                                <Button     Margin="9 0 0 0"    Width="39"  Name="btn_PilihCOA"     Content="Pilih"/>
+                                <TextBox    Style="{StaticResource styleTextBoxFormHalaman}"    Margin="0"  Width="45"  Name="txt_COA" />
+                                <Button     Style="{StaticResource styleButtonFormDialogPilihKode}"     Margin="9 0 0 0"    Width="39"  Name="btn_PilihCOA"     Content="Pilih"/>
                             </StackPanel>
                         </StackPanel>
                         <!-- Filter Cari : -->
@@ -93,7 +93,7 @@
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"    Name="pnl_FilterCari" >
                             <TextBlock Style="{StaticResource styleTextBlockFormHalaman}"   HorizontalAlignment="Left"    Text=" Cari :" />
                             <StackPanel Orientation="Horizontal">
-                                <TextBox    Style="{StaticResource styleTextBoxFormHalaman}"    Margin="0"  Height="22" Width="180" Name="txt_Cari" />
+                                <TextBox    Style="{StaticResource styleTextBoxFormHalaman}"    Margin="0"  Width="180" Name="txt_Cari" />
                             </StackPanel>
                         </StackPanel>
                         <!-- Filter Direct : -->
@@ -105,7 +105,7 @@
                         <!-- Tombol Filter : -->
                         <Border Style="{StaticResource styleBorderHeaderSeparatorFilter}"/>
                         <StackPanel Style="{StaticResource stylePanelFormHalamanFilterDataSubVertikal}"    Name="pnl_TombolFilter" >
-                            <Button Content="Filter"    Width="51"  Height="39" Margin="0 9 0 0"    Name="btn_Filter"/>
+                            <Button Style="{StaticResource styleButtonFormHalaman}" Content="Filter"    Width="51"  Height="39" Margin="0 15 0 0"    Name="btn_Filter"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>

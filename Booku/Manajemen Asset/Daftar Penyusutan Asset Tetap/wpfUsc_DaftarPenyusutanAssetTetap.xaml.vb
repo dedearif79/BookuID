@@ -169,11 +169,10 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DaftarPenyusutanAssetTetap")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -687,6 +686,7 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
         KetersediaanTombolLihatInvoice(False)
         KetersediaanTombolPosting(False)
         KetersediaanTombolJualAsset(False)
+        SedangMemuatData = False
     End Sub
 
     ''' <summary>
@@ -694,7 +694,8 @@ Public Class wpfUsc_DaftarPenyusutanAssetTetap
     ''' </summary>
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

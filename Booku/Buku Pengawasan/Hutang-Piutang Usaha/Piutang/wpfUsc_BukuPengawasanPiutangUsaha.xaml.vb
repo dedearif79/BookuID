@@ -512,11 +512,10 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanPiutangUsaha")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -957,6 +956,14 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
             VisibilitasInfoSaldo(False)
         End If
         BersihkanSeleksiPembayaran()
+        SedangMemuatData = False
+    End Sub
+
+    ' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

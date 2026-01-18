@@ -84,11 +84,10 @@ Async Sub TampilkanDataAsync()
 
     Catch ex As Exception
         mdl_Logger.WriteException(ex, "TampilkanDataAsync")
+        SedangMemuatData = False  ' Reset flag saat error
 
     Finally
-        BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True)  ' Enable UI di Finally
-        SedangMemuatData = False
+        BersihkanSeleksi_SetelahLoading()  ' Panggil wrapper yang lengkap
     End Try
 End Sub
 
@@ -97,7 +96,7 @@ Public Sub TampilkanData()
     TampilkanDataAsync()
 End Sub
 
-' Logika utama reset seleksi (TANPA enable UI)
+' Logika utama reset seleksi dan reset flag loading
 Sub BersihkanSeleksi()
     JumlahBaris = datatabelUtama.Rows.Count
     BarisTerseleksi = -1
@@ -106,12 +105,14 @@ Sub BersihkanSeleksi()
     datagridUtama.SelectedCells.Clear()
     btn_Edit.IsEnabled = False
     btn_Hapus.IsEnabled = False
+    SedangMemuatData = False  ' Reset flag loading
 End Sub
 
-' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+' Wrapper: reset seleksi + enable UI setelah loading selesai
 Sub BersihkanSeleksi_SetelahLoading()
     BersihkanSeleksi()
-    KetersediaanMenuHalaman(pnl_Halaman, True, False)
+    KetersediaanMenuHalaman(pnl_Halaman, True)  ' Enable UI + tutup loading
+    SedangMemuatData = False  ' Pastikan flag di-reset
 End Sub
 ```
 
@@ -119,10 +120,10 @@ End Sub
 
 | Method | Fungsi | Keterangan |
 |--------|--------|------------|
-| `TampilkanDataAsync()` | Method utama dengan async pattern | Menggantikan `TampilkanData()` lama |
+| `TampilkanDataAsync()` | Method utama dengan async pattern | Finally memanggil `BersihkanSeleksi_SetelahLoading()` |
 | `TampilkanData()` | Wrapper untuk backward compatibility | Memanggil `TampilkanDataAsync()` |
-| `BersihkanSeleksi()` | Logika utama reset seleksi | TANPA enable UI |
-| `BersihkanSeleksi_SetelahLoading()` | Wrapper reset seleksi + enable UI | Untuk backward compatibility |
+| `BersihkanSeleksi()` | Reset seleksi + reset flag loading | Dipakai juga oleh event klik header kolom |
+| `BersihkanSeleksi_SetelahLoading()` | Reset seleksi + enable UI + reset flag | Dipanggil dari Finally di TampilkanDataAsync |
 
 ## Komponen yang Diperlukan
 
@@ -211,13 +212,48 @@ TampilkanDataAsync()
     │   ├── Query database
     │   └── Loop: Add rows + Await Task.Yield()
     │
-    ├── Catch: Log exception
+    ├── Catch:
+    │   ├── Log exception
+    │   └── SedangMemuatData = False    ← Reset flag saat error
     │
     └── Finally:
-        ├── BersihkanSeleksi()
-        ├── KetersediaanMenuHalaman(True)  ← Enable UI + tutup loading
-        └── SedangMemuatData = False
+        └── BersihkanSeleksi_SetelahLoading()
+            ├── BersihkanSeleksi()
+            │   ├── Reset counter & seleksi
+            │   ├── Disable tombol Edit/Hapus
+            │   └── SedangMemuatData = False
+            ├── KetersediaanMenuHalaman(pnl_Halaman, True)  ← Enable UI + TUTUP LOADING (2 param!)
+            └── SedangMemuatData = False
 ```
+
+## Alur Reset Flag `SedangMemuatData`
+
+Flag `SedangMemuatData` di-reset di beberapa tempat untuk memastikan tidak ada kondisi "stuck":
+
+| Skenario | Lokasi Reset | Keterangan |
+|----------|--------------|------------|
+| **Normal (sukses)** | `Finally` → `BersihkanSeleksi_SetelahLoading()` | Flag di-reset via `BersihkanSeleksi()` dan di akhir sub |
+| **Error/Exception** | `Catch` block | Reset langsung setelah log exception, `Finally` tetap jalan |
+| **Klik header kolom** | `BersihkanSeleksi()` | Jaga-jaga jika user klik header saat loading |
+
+**Catatan:** Reset flag di `BersihkanSeleksi()` bersifat "jaga-jaga" untuk menangani kasus edge case seperti user mengklik header kolom DataGrid saat proses loading masih berjalan.
+
+## Perbaikan Konsistensi (2026-01-18)
+
+Pada tanggal 2026-01-18, dilakukan perbaikan konsistensi untuk 25 file yang sebelumnya belum sepenuhnya mengimplementasikan pattern baru. File-file tersebut sudah memiliki `TampilkanDataAsync()` tapi:
+- Belum memiliki `BersihkanSeleksi_SetelahLoading()`
+- Penempatan flag `SedangMemuatData` belum sesuai standar
+
+**Perubahan yang dilakukan:**
+1. Menambah `SedangMemuatData = False` di akhir `BersihkanSeleksi()`
+2. Menambah sub baru `BersihkanSeleksi_SetelahLoading()` setelah `BersihkanSeleksi()`
+3. Menyederhanakan blok `Finally` di `TampilkanDataAsync()` - sekarang hanya memanggil `BersihkanSeleksi_SetelahLoading()`
+
+**Catatan Khusus:**
+- `wpfUsc_ManajemenAplikasi` tidak memerlukan perubahan karena tidak memiliki method `BersihkanSeleksi()` (menggunakan pattern yang berbeda untuk form tanpa DataGrid utama)
+- `wpfUsc_BundelPengajuanPengeluaranBankCash` menggunakan naming khusus `BersihkanSeleksi_Bundel_SetelahLoading()` karena memiliki 2 DataGrid terpisah (Bundel dan Pengajuan)
+
+---
 
 ## Checklist Migrasi
 
@@ -227,10 +263,15 @@ Saat migrasi UserControl ke pattern baru, pastikan:
 - [ ] Tambah flag `Private SedangMemuatData As Boolean = False`
 - [ ] Tambah/ganti variabel guard menjadi `Dim EksekusiTampilanData As Boolean`
 - [ ] Update `RefreshTampilanData()` untuk menggunakan `EksekusiTampilanData`
-- [ ] Ubah `TampilkanData()` menjadi `TampilkanDataAsync()` dengan async pattern
+- [ ] Ubah `TampilkanData()` menjadi `TampilkanDataAsync()` dengan async pattern:
+  - [ ] Catch: Tambah `SedangMemuatData = False` setelah log exception
+  - [ ] Finally: Panggil `BersihkanSeleksi_SetelahLoading()` saja
 - [ ] Buat wrapper `TampilkanData()` yang memanggil `TampilkanDataAsync()`
-- [ ] Pisahkan `BersihkanSeleksi()` menjadi logika utama saja (tanpa enable UI)
-- [ ] Tambah `BersihkanSeleksi_SetelahLoading()` sebagai wrapper
+- [ ] Update `BersihkanSeleksi()` - tambah `SedangMemuatData = False` di akhir
+- [ ] Tambah `BersihkanSeleksi_SetelahLoading()` dengan:
+  - [ ] Panggil `BersihkanSeleksi()`
+  - [ ] Panggil `KetersediaanMenuHalaman(pnl_Halaman, True)` - harus 2 parameter saja!
+  - [ ] Tambah `SedangMemuatData = False` di akhir
 - [ ] Pastikan XAML memiliki `x:Name="pnl_Halaman"` di root DockPanel
 - [ ] Build dan test
 
@@ -242,57 +283,81 @@ Saat migrasi UserControl ke pattern baru, pastikan:
 
 | UserControl | Lokasi | Tanggal |
 |-------------|--------|---------|
-| `wpfUsc_BukuPengawasanBuktiPengeluaranBankCash` | `Booku/Buku Pengawasan/Penerimaan-Pengeluaran/Bukti Pengeluaran Bank-Cash/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanBuktiPengeluaranBankCash` | `Booku/Buku Pengawasan/Penerimaan-Pengeluaran/Bukti Pengeluaran Bank-Cash/` | 2026-01-18 |
 | `wpfUsc_DataProject` | `Booku/Data/Data Project/` | 2026-01-17 |
 | `wpfUsc_DataCOA` | `Booku/Data/Data COA/` | 2026-01-17 |
 | `wpfUsc_DataKaryawan` | `Booku/Data/Data Karyawan/` | 2026-01-17 |
 | `wpfUsc_BukuBesar` | `Booku/Buku Besar/` | 2026-01-17 |
 | `wpfUsc_DataLawanTransaksi` | `Booku/Data/Data Lawan Transaksi/` | 2026-01-17 |
 | `wpfUsc_DataUser` | `Booku/Data/Data User/` | 2026-01-17 |
-| `wpfUsc_DaftarPenyusutanAssetTetap` | `Booku/Manajemen Asset/Daftar Penyusutan Asset Tetap/` | 2026-01-17 |
-| `wpfUsc_DaftarAmortisasiBiaya` | `Booku/Manajemen Asset/Daftar Amortisasi Biaya/` | 2026-01-17 |
-| `wpfUsc_BukuPembelian` | `Booku/Pembelian - Penjualan/Pembelian/1 - Buku Pembelian/` | 2026-01-17 |
-| `wpfUsc_POPembelian` | `Booku/Pembelian - Penjualan/Pembelian/2 - PO Pembelian/` | 2026-01-17 |
-| `wpfUsc_SuratJalanPembelian` | `Booku/Pembelian - Penjualan/Pembelian/3 - Surat Jalan/` | 2026-01-17 |
-| `wpfUsc_BASTPembelian` | `Booku/Pembelian - Penjualan/Pembelian/4 - BAST/` | 2026-01-17 |
-| `wpfUsc_InvoicePembelian` | `Booku/Pembelian - Penjualan/Pembelian/5 - Invoice Pembelian/` | 2026-01-17 |
-| `wpfUsc_BukuPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/1 - Buku Penjualan/` | 2026-01-17 |
-| `wpfUsc_POPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/2 - PO Penjuialan/` | 2026-01-17 |
-| `wpfUsc_SuratJalanPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/3 - Surat Jalan/` | 2026-01-17 |
-| `wpfUsc_BASTPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/4 - BAST/` | 2026-01-17 |
-| `wpfUsc_InvoicePenjualan` | `Booku/Pembelian - Penjualan/Penjualan/5 - Invoice Penjuialan/` | 2026-01-17 |
-| `wpfUsc_BundelPengajuanPengeluaranBankCash` | `Booku/Buku Pengawasan/Penerimaan-Pengeluaran/Bukti Pengeluaran Bank-Cash/Bundel Pengajuan/` | 2026-01-17 |
+| `wpfUsc_DaftarPenyusutanAssetTetap` | `Booku/Manajemen Asset/Daftar Penyusutan Asset Tetap/` | 2026-01-18 |
+| `wpfUsc_DaftarAmortisasiBiaya` | `Booku/Manajemen Asset/Daftar Amortisasi Biaya/` | 2026-01-18 |
+| `wpfUsc_BukuPembelian` | `Booku/Pembelian - Penjualan/Pembelian/1 - Buku Pembelian/` | 2026-01-18 |
+| `wpfUsc_POPembelian` | `Booku/Pembelian - Penjualan/Pembelian/2 - PO Pembelian/` | 2026-01-18 |
+| `wpfUsc_SuratJalanPembelian` | `Booku/Pembelian - Penjualan/Pembelian/3 - Surat Jalan/` | 2026-01-18 |
+| `wpfUsc_BASTPembelian` | `Booku/Pembelian - Penjualan/Pembelian/4 - BAST/` | 2026-01-18 |
+| `wpfUsc_InvoicePembelian` | `Booku/Pembelian - Penjualan/Pembelian/5 - Invoice Pembelian/` | 2026-01-18 |
+| `wpfUsc_BukuPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/1 - Buku Penjualan/` | 2026-01-18 |
+| `wpfUsc_POPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/2 - PO Penjuialan/` | 2026-01-18 |
+| `wpfUsc_SuratJalanPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/3 - Surat Jalan/` | 2026-01-18 |
+| `wpfUsc_BASTPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/4 - BAST/` | 2026-01-18 |
+| `wpfUsc_InvoicePenjualan` | `Booku/Pembelian - Penjualan/Penjualan/5 - Invoice Penjuialan/` | 2026-01-18 |
+| `wpfUsc_BundelPengajuanPengeluaranBankCash` | `Booku/Buku Pengawasan/Penerimaan-Pengeluaran/Bukti Pengeluaran Bank-Cash/Bundel Pengajuan/` | 2026-01-18 |
 | `wpfUsc_BukuPengawasanAktivaLainnya` | `Booku/Buku Pengawasan/Aktiva Lainnya/` | 2026-01-17 |
 | `wpfUsc_BukuPengawasanBuktiPotongPPh_Paid` | `Booku/Buku Pengawasan/Bukti Potong PPh/` | 2026-01-17 |
 | `wpfUsc_BukuPengawasanBuktiPotongPPh_Prepaid` | `Booku/Buku Pengawasan/Bukti Potong PPh/` | 2026-01-17 |
 | `wpfUsc_BukuPengawasanDepositOperasional` | `Booku/Buku Pengawasan/Deposit Operasional/` | 2026-01-17 |
 | `wpfUsc_BukuPengawasanGaji` | `Booku/Buku Pengawasan/Gaji/` | 2026-01-17 |
 | `wpfUsc_BukuPengawasanTurunanGaji` | `Booku/Buku Pengawasan/Gaji/Turunan Gaji/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanHutangBankLeasing` | `Booku/Buku Pengawasan/Hutang Bank-Leasing/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanHutangPPhPasal21` | `Booku/Buku Pengawasan/Hutang Pajak/01 - PPh Pasal 21/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanHutangPPhPasal22_Impor` | `Booku/Buku Pengawasan/Hutang Pajak/02 - PPh Pasal 22/Impor/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangBankLeasing` | `Booku/Buku Pengawasan/Hutang Bank-Leasing/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanHutangPPhPasal21` | `Booku/Buku Pengawasan/Hutang Pajak/01 - PPh Pasal 21/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanHutangPPhPasal22_Impor` | `Booku/Buku Pengawasan/Hutang Pajak/02 - PPh Pasal 22/Impor/` | 2026-01-18 |
 | `wpfUsc_BukuPengawasanHutangPPhPasal23` | `Booku/Buku Pengawasan/Hutang Pajak/03 - PPh Pasal 23/` | 2026-01-17 |
 | `wpfUsc_BukuPengawasanHutangPPhPasal42` | `Booku/Buku Pengawasan/Hutang Pajak/04 - PPh Pasal 4 (2)/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanHutangPPhPasal25` | `Booku/Buku Pengawasan/Hutang Pajak/05 - PPh Pasal 25/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanHutangPPhPasal26` | `Booku/Buku Pengawasan/Hutang Pajak/06 - PPh Pasal 26/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanPelaporanPPN` | `Booku/Buku Pengawasan/Hutang Pajak/10 - PPN/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanKetetapanPajak` | `Booku/Buku Pengawasan/Hutang Pajak/11 - Ketetapan Pajak/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanPajakImpor` | `Booku/Buku Pengawasan/Hutang Pajak/12 - Pajak Impor/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangPPhPasal25` | `Booku/Buku Pengawasan/Hutang Pajak/05 - PPh Pasal 25/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanHutangPPhPasal26` | `Booku/Buku Pengawasan/Hutang Pajak/06 - PPh Pasal 26/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanPelaporanPPN` | `Booku/Buku Pengawasan/Hutang Pajak/10 - PPN/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanKetetapanPajak` | `Booku/Buku Pengawasan/Hutang Pajak/11 - Ketetapan Pajak/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanPajakImpor` | `Booku/Buku Pengawasan/Hutang Pajak/12 - Pajak Impor/` | 2026-01-18 |
 | `wpfUsc_BukuPengawasanHutangUsaha` | `Booku/Buku Pengawasan/Hutang-Piutang Usaha/Hutang/` | 2026-01-17 |
 | `wpfUsc_BukuPengawasanPiutangUsaha` | `Booku/Buku Pengawasan/Hutang-Piutang Usaha/Piutang/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanHutangPihakKetiga` | `Booku/Buku Pengawasan/Hutang-Piutang Pihak Ketiga/Hutang/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanPiutangPihakKetiga` | `Booku/Buku Pengawasan/Hutang-Piutang Pihak Ketiga/Piutang/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanHutangKaryawan` | `Booku/Buku Pengawasan/Hutang-Piutang Karyawan/Hutang/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanPiutangKaryawan` | `Booku/Buku Pengawasan/Hutang-Piutang Karyawan/Piutang/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanHutangAfiliasi` | `Booku/Buku Pengawasan/Hutang-Piutang Afiliasi/Hutang/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanPiutangAfiliasi` | `Booku/Buku Pengawasan/Hutang-Piutang Afiliasi/Piutang/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanHutangPemegangSaham` | `Booku/Buku Pengawasan/Hutang-Piutang Pemegang Saham/Hutang/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanPiutangPemegangSaham` | `Booku/Buku Pengawasan/Hutang-Piutang Pemegang Saham/Piutang/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanHutangDividen` | `Booku/Buku Pengawasan/Hutang-Piutang Dividen/Hutang/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanPiutangDividen` | `Booku/Buku Pengawasan/Hutang-Piutang Dividen/Piutang/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanBuktiPenerimaanBankCash` | `Booku/Buku Pengawasan/Penerimaan-Pengeluaran/Bukti Penerimaan Bank-Cash/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanHutangPihakKetiga` | `Booku/Buku Pengawasan/Hutang-Piutang Pihak Ketiga/Hutang/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanPiutangPihakKetiga` | `Booku/Buku Pengawasan/Hutang-Piutang Pihak Ketiga/Piutang/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanHutangKaryawan` | `Booku/Buku Pengawasan/Hutang-Piutang Karyawan/Hutang/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanPiutangKaryawan` | `Booku/Buku Pengawasan/Hutang-Piutang Karyawan/Piutang/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanHutangAfiliasi` | `Booku/Buku Pengawasan/Hutang-Piutang Afiliasi/Hutang/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanPiutangAfiliasi` | `Booku/Buku Pengawasan/Hutang-Piutang Afiliasi/Piutang/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanHutangPemegangSaham` | `Booku/Buku Pengawasan/Hutang-Piutang Pemegang Saham/Hutang/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanPiutangPemegangSaham` | `Booku/Buku Pengawasan/Hutang-Piutang Pemegang Saham/Piutang/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanHutangDividen` | `Booku/Buku Pengawasan/Hutang-Piutang Dividen/Hutang/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanPiutangDividen` | `Booku/Buku Pengawasan/Hutang-Piutang Dividen/Piutang/` | 2026-01-18 |
+| `wpfUsc_BukuPengawasanBuktiPenerimaanBankCash` | `Booku/Buku Pengawasan/Penerimaan-Pengeluaran/Bukti Penerimaan Bank-Cash/` | 2026-01-18 |
 | `wpfUsc_BukuPengawasanPemindahbukuan` | `Booku/Buku Pengawasan/Pemindahbukuan/` | 2026-01-17 |
-| `wpfUsc_BukuPengawasanPenjualanEceran` | `Booku/Buku Pengawasan/Penjualan Eceran/` | 2026-01-17 |
+| `wpfUsc_BukuPengawasanPenjualanEceran` | `Booku/Buku Pengawasan/Penjualan Eceran/` | 2026-01-18 |
+| `wpfUsc_JurnalUmum` | `Booku/Jurnal/` | 2026-01-17 |
+| `wpfUsc_StockOpname` | `Booku/Stock Opname/` | 2026-01-18 |
+| `wpfUsc_TutupBuku` | `Booku/Tahun Buku/` | 2026-01-18 |
+| `wpfUsc_Kurs` | `Booku/Data/Kurs/` | 2026-01-18 |
+| `wpfUsc_DaftarPemegangSaham` | `Booku/Data/Daftar Pemegang Saham/` | 2026-01-18 |
+| `wpfUsc_BukuBankGaransi` | `Booku/Bank Garansi/` | 2026-01-18 |
+| `wpfUsc_BukuDisposalAssetTetap` | `Booku/Manajemen Asset/Daftar Penyusutan Asset Tetap/Buku Disposal Asset Tetap/` | 2026-01-18 |
+| `wpfUsc_JurnalAdjusment` | `Booku/Jurnal/` | 2026-01-18 |
+| `wpfUsc_JurnalAdjusment_Forex` | `Booku/Jurnal/` | 2026-01-18 |
+| `wpfUsc_LaporanLabaRugi` | `Booku/Laporan/` | 2026-01-18 |
+| `wpfUsc_LaporanLabaRugi_Bulanan` | `Booku/Laporan/` | 2026-01-18 |
+| `wpfUsc_LaporanLabaRugi_Tahunan` | `Booku/Laporan/` | 2026-01-18 |
+| `wpfUsc_LaporanNeraca` | `Booku/Laporan/` | 2026-01-18 |
+| `wpfUsc_LaporanNeraca_Bulanan` | `Booku/Laporan/` | 2026-01-18 |
+| `wpfUsc_LaporanNeraca_Tahunan` | `Booku/Laporan/` | 2026-01-18 |
+| `wpfUsc_LaporanHPP` | `Booku/Laporan/` | 2026-01-18 |
+| `wpfUsc_LaporanTrialBalance` | `Booku/Laporan/` | 2026-01-18 |
+| `wpfUsc_Adjusment_HPP` | `Booku/Jurnal/` | 2026-01-18 |
+| `wpfUsc_Adjusment_Amortisasi` | `Booku/Manajemen Asset/Daftar Amortisasi Biaya/` | 2026-01-18 |
+| `wpfUsc_Adjusment_PenyusutanAsset` | `Booku/Manajemen Asset/Daftar Penyusutan Asset Tetap/` | 2026-01-18 |
+| `wpfUsc_DataProdukApp` | `Booku/App Developer/` | 2026-01-18 |
+| `wpfUsc_DataPerangkatApp` | `Booku/App Developer/` | 2026-01-18 |
+| `wpfUsc_ManajemenAplikasi` | `Booku/App Developer/Manajemen Aplikasi/` | 2026-01-18 |
+| `wpfUsc_ManajemenClient` | `Booku/App Developer/Manajemen Klien/` | 2026-01-18 |
 
 ### Belum Dimigrasi (Kandidat)
 

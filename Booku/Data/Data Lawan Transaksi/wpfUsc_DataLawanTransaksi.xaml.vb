@@ -120,11 +120,10 @@ Public Class wpfUsc_DataLawanTransaksi
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DataLawanTransaksi")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -163,6 +162,7 @@ Public Class wpfUsc_DataLawanTransaksi
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+        SedangMemuatData = False
     End Sub
 
     ''' <summary>
@@ -170,7 +170,8 @@ Public Class wpfUsc_DataLawanTransaksi
     ''' </summary>
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

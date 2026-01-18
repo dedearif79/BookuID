@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -9,6 +10,8 @@ Public Class wpfUsc_JurnalAdjusment_HPP
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+    Dim EksekusiTampilanData As Boolean
 
     Dim KodeAkun
     Dim NamaAkun
@@ -80,6 +83,9 @@ Public Class wpfUsc_JurnalAdjusment_HPP
 
 
     Sub RefreshTampilanData()
+        EksekusiTampilanData = False
+        ' Tidak ada ComboBox filter di form ini
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
@@ -87,45 +93,62 @@ Public Class wpfUsc_JurnalAdjusment_HPP
     Dim Kolom As String = "Tanggal_Transaksi"
     Dim TabelDanKriteria As String
     Dim BulanTertuaAngka As Integer
-    Sub TampilkanData()
 
-        AdjusmentBulanBukuAktifSudahLengkap = True
+    Async Sub TampilkanDataAsync()
+        ' Guard clause
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        UpdateInfoBulanBukuAktif()
+        Try
+            AdjusmentBulanBukuAktifSudahLengkap = True
 
-        'Data Tabel :
-        datatabelUtama.Clear()
+            UpdateInfoBulanBukuAktif()
 
-        ResetTombol()
+            'Data Tabel :
+            datatabelUtama.Clear()
 
-        'Pemakaian Bahan Penolong :
-        TambahBarisAdjusment(Adjusment_PemakaianBahanPenolong, KodeTautanCOA_PersediaanBahanPenolong)
+            ResetTombol()
 
-        'Pemakaian Bahan Baku :
-        TambahBarisAdjusment(Adjusment_PemakaianBahanBaku, KodeTautanCOA_PersediaanBahanBaku_Lokal)
+            'Pemakaian Bahan Penolong :
+            TambahBarisAdjusment(Adjusment_PemakaianBahanPenolong, KodeTautanCOA_PersediaanBahanPenolong)
 
-        'Biaya Bahan Baku : 
-        TambahBarisAdjusment(Adjusment_BiayaBahanBaku, KodeTautanCOA_BiayaBahanBaku)
+            'Pemakaian Bahan Baku :
+            TambahBarisAdjusment(Adjusment_PemakaianBahanBaku, KodeTautanCOA_PersediaanBahanBaku_Lokal)
 
-        'Biaya Tenaga Kerja Langsung :
-        TambahBarisAdjusment(Adjusment_BiayaTenagaKerjaLangsung, KodeTautanCOA_BiayaTenagaKerjaLangsung)
+            'Biaya Bahan Baku :
+            TambahBarisAdjusment(Adjusment_BiayaBahanBaku, KodeTautanCOA_BiayaBahanBaku)
 
-        'Biaya Overhead Pabrik :
-        TambahBarisAdjusment(Adjusment_BiayaOverheadPabrik, KodeTautanCOA_BiayaOverheadPabrik)
+            'Biaya Tenaga Kerja Langsung :
+            TambahBarisAdjusment(Adjusment_BiayaTenagaKerjaLangsung, KodeTautanCOA_BiayaTenagaKerjaLangsung)
 
-        'Biaya Produksi :
-        TambahBarisAdjusment(Adjusment_BiayaProduksi, KodeTautanCOA_BiayaProduksi)
+            'Biaya Overhead Pabrik :
+            TambahBarisAdjusment(Adjusment_BiayaOverheadPabrik, KodeTautanCOA_BiayaOverheadPabrik)
 
-        'Harga Pokok Produksi :
-        TambahBarisAdjusment(Adjusment_HargaPokokProduksi, KodeTautanCOA_HargaPokokProduksi)
+            'Biaya Produksi :
+            TambahBarisAdjusment(Adjusment_BiayaProduksi, KodeTautanCOA_BiayaProduksi)
 
-        'Harga Pokok Penjualan :
-        TambahBarisAdjusment(Adjusment_HargaPokokPenjualan, KodeTautanCOA_HargaPokokPenjualan)
+            'Harga Pokok Produksi :
+            TambahBarisAdjusment(Adjusment_HargaPokokProduksi, KodeTautanCOA_HargaPokokProduksi)
 
-        BersihkanSeleksi()
+            'Harga Pokok Penjualan :
+            TambahBarisAdjusment(Adjusment_HargaPokokPenjualan, KodeTautanCOA_HargaPokokPenjualan)
 
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_Adjusment_HPP")
+            SedangMemuatData = False
+
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
@@ -303,7 +326,13 @@ Public Class wpfUsc_JurnalAdjusment_HPP
         datagridUtama.SelectedCells.Clear()
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
         KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

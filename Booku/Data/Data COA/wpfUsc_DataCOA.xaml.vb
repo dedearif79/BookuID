@@ -210,11 +210,10 @@ Public Class wpfUsc_DataCOA
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DataCOA")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -234,6 +233,7 @@ Public Class wpfUsc_DataCOA
         KetersediaanTombolHapus(False)
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
         txt_TotalTabel.Text = JumlahBaris
+        SedangMemuatData = False
     End Sub
 
     ''' <summary>
@@ -241,7 +241,8 @@ Public Class wpfUsc_DataCOA
     ''' </summary>
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
     Sub KontenComboVisibilitas()

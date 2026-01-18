@@ -4,12 +4,16 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 
 Public Class wpfUsc_JurnalAdjusment
 
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+
+    ' Flag untuk mencegah multiple loading bersamaan
+    Private SedangMemuatData As Boolean = False
 
     Dim KodeAkun
     Dim NamaAkun
@@ -47,45 +51,65 @@ Public Class wpfUsc_JurnalAdjusment
         TampilkanData()
     End Sub
 
+    Async Sub TampilkanDataAsync()
+
+        ' Guard clause
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
+
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
+
+        Try
+            KesesuaianJurnal = True
+
+            Dim COA
+            Dim NamaAkun
+
+            'Data Tabel :
+            datatabelUtama.Clear()
+
+            AksesDatabase_General(Buka)
+
+            cmd = New OdbcCommand(" SELECT COA, Nama_Akun FROM tbl_COA WHERE Kode_Mata_Uang <> '" & KodeMataUang_IDR & "' ", KoneksiDatabaseGeneral)
+            dr_ExecuteReader()
+            Do While dr.Read
+                COA = dr.Item("COA")
+                NamaAkun = dr.Item("Nama_Akun")
+                datatabelUtama.Rows.Add(COA, NamaAkun)
+                Await Task.Yield()
+            Loop
+
+            AksesDatabase_General(Tutup)
+
+            TambahBaris_Manual(KodeTautanCOA_HutangUsaha_USD)
+            TambahBaris_Manual(KodeTautanCOA_HutangUsaha_AUD)
+            TambahBaris_Manual(KodeTautanCOA_HutangUsaha_JPY)
+            TambahBaris_Manual(KodeTautanCOA_HutangUsaha_CNY)
+            TambahBaris_Manual(KodeTautanCOA_HutangUsaha_EUR)
+            TambahBaris_Manual(KodeTautanCOA_HutangUsaha_SGD)
+
+            TambahBaris_Manual(KodeTautanCOA_PiutangUsaha_USD)
+            TambahBaris_Manual(KodeTautanCOA_PiutangUsaha_AUD)
+            TambahBaris_Manual(KodeTautanCOA_PiutangUsaha_JPY)
+            TambahBaris_Manual(KodeTautanCOA_PiutangUsaha_CNY)
+            TambahBaris_Manual(KodeTautanCOA_PiutangUsaha_EUR)
+            TambahBaris_Manual(KodeTautanCOA_PiutangUsaha_SGD)
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_JurnalAdjusment")
+            SedangMemuatData = False
+
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
     Sub TampilkanData()
-
-        KesesuaianJurnal = True
-
-        Dim COA
-        Dim NamaAkun
-
-        'Data Tabel :
-        datatabelUtama.Clear()
-
-        AksesDatabase_General(Buka)
-
-        cmd = New OdbcCommand(" SELECT COA, Nama_Akun FROM tbl_COA WHERE Kode_Mata_Uang <> '" & KodeMataUang_IDR & "' ", KoneksiDatabaseGeneral)
-        dr_ExecuteReader()
-        Do While dr.Read
-            COA = dr.Item("COA")
-            NamaAkun = dr.Item("Nama_Akun")
-            datatabelUtama.Rows.Add(COA, NamaAkun)
-        Loop
-
-        AksesDatabase_General(Tutup)
-
-        TambahBaris_Manual(KodeTautanCOA_HutangUsaha_USD)
-        TambahBaris_Manual(KodeTautanCOA_HutangUsaha_AUD)
-        TambahBaris_Manual(KodeTautanCOA_HutangUsaha_JPY)
-        TambahBaris_Manual(KodeTautanCOA_HutangUsaha_CNY)
-        TambahBaris_Manual(KodeTautanCOA_HutangUsaha_EUR)
-        TambahBaris_Manual(KodeTautanCOA_HutangUsaha_SGD)
-
-        TambahBaris_Manual(KodeTautanCOA_PiutangUsaha_USD)
-        TambahBaris_Manual(KodeTautanCOA_PiutangUsaha_AUD)
-        TambahBaris_Manual(KodeTautanCOA_PiutangUsaha_JPY)
-        TambahBaris_Manual(KodeTautanCOA_PiutangUsaha_CNY)
-        TambahBaris_Manual(KodeTautanCOA_PiutangUsaha_EUR)
-        TambahBaris_Manual(KodeTautanCOA_PiutangUsaha_SGD)
-
-
-        BersihkanSeleksi()
-
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris_Manual(COA As String)
@@ -100,6 +124,14 @@ Public Class wpfUsc_JurnalAdjusment
         datagridUtama.SelectedCells.Clear()
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
+        SedangMemuatData = False
+    End Sub
+
+    ' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

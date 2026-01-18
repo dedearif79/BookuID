@@ -487,14 +487,14 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
             'Data Tabel Sisa Hutang Usaha Tahun Lalu :
             '---------------------------------------------------------------
             QueryTampilan = QueryTampilanHutangTahunLalu
-            DataTabel()
+            Await DataTabelAsync()
 
             '---------------------------------------------------------------
             'Data Tabel BPHU Tahun Buku Aktif :
             '---------------------------------------------------------------
             If JudulForm <> JudulForm_SaldoAwalHutangUsaha Then
                 QueryTampilan = QueryTampilanHutangTahunAktif
-                DataTabel()
+                Await DataTabelAsync()
             End If
 
             AksesDatabase_Transaksi(Tutup)
@@ -518,11 +518,10 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangUsaha")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -531,7 +530,7 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
         TampilkanDataAsync()
     End Sub
 
-    Sub DataTabel()
+    Async Function DataTabelAsync() As Task
 
         cmd = New OdbcCommand(QueryTampilan, KoneksiDatabaseTransaksi)
         dr_ExecuteReader()
@@ -809,9 +808,11 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
 
             AngkaInvoice_Sebelumnya = AngkaInvoice
 
+            Await Task.Yield()
+
         Loop
 
-    End Sub
+    End Function
 
     Sub TambahBaris()
         If Not Pilih_LOS = Pilihan_Semua Then
@@ -961,6 +962,14 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
             VisibilitasInfoSaldo(False)
         End If
         BersihkanSeleksiPembayaran()
+        SedangMemuatData = False
+    End Sub
+
+    ' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

@@ -478,11 +478,10 @@ Public Class wpfUsc_BukuPenjualan
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPenjualan")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -528,11 +527,13 @@ Public Class wpfUsc_BukuPenjualan
         btn_Cetak.IsEnabled = False
         btn_DorongKeJurnal.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
+        SedangMemuatData = False
     End Sub
 
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

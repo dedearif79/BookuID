@@ -182,9 +182,8 @@ Public Class wpfUsc_SuratJalanPembelian
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_SuratJalanPembelian")
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
+
         End Try
 
     End Sub
@@ -204,6 +203,13 @@ Public Class wpfUsc_SuratJalanPembelian
         'btn_Cetak.IsEnabled = False
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

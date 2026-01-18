@@ -443,11 +443,10 @@ Public Class wpfUsc_InvoicePembelian
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_InvoicePembelian")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -563,11 +562,13 @@ Public Class wpfUsc_InvoicePembelian
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
         btn_Pembetulan.IsEnabled = False
+        SedangMemuatData = False
     End Sub
 
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

@@ -751,11 +751,10 @@ Public Class wpfUsc_BukuPengawasanGaji
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanGaji")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -778,12 +777,14 @@ Public Class wpfUsc_BukuPengawasanGaji
         NomorJV_Pembayaran_Terseleksi = 0
         'VisibilitasInfoSaldo(True)
         BersihkanSeleksiTabelPembayaran()
+        SedangMemuatData = False
     End Sub
 
 
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

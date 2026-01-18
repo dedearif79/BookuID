@@ -154,11 +154,10 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanDepositOperasional")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -269,11 +268,13 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
         btn_Cetak.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
         VisibilitasInfoSaldo(True)
+        SedangMemuatData = False
     End Sub
 
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
     Private Sub btn_Refresh_Click(sender As Object, e As RoutedEventArgs) Handles btn_Refresh.Click

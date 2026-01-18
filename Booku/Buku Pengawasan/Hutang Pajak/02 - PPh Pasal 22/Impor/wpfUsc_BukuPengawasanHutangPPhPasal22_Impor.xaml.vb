@@ -222,9 +222,8 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal22_Impor
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanHutangPPhPasal22_Impor")
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
+
         End Try
 
     End Sub
@@ -255,6 +254,13 @@ Public Class wpfUsc_BukuPengawasanHutangPPhPasal22_Impor
         btn_InputBayar.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
     Sub AmbilValue_NamaDanNPWPSupplier()

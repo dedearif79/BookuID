@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -10,6 +11,9 @@ Public Class wpfUsc_DaftarPemegangSaham
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+
+    ' Flag untuk mencegah multiple loading bersamaan
+    Private SedangMemuatData As Boolean = False
 
     Public JudulForm
     Public KesesuaianJurnal
@@ -66,48 +70,69 @@ Public Class wpfUsc_DaftarPemegangSaham
     End Sub
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
-        KesesuaianJurnal = True
+        ' Guard clause: Jangan eksekusi jika sedang loading
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'Data Tabel :
-        datatabelUtama.Rows.Clear()
-        NomorUrut = 0
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        AksesDatabase_General(Buka)
+        Try
+            KesesuaianJurnal = True
 
-        cmd = New OdbcCommand(" SELECT * FROM tbl_LawanTransaksi ", KoneksiDatabaseGeneral)
-        dr_ExecuteReader()
+            'Data Tabel :
+            datatabelUtama.Rows.Clear()
+            NomorUrut = 0
 
-        Do While dr.Read
-            KodePemegangSaham = dr.Item("Kode_Mitra")
-            cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_Modal " &
-                                         " WHERE Kode_Pemegang_Saham = '" & KodePemegangSaham & "' ", KoneksiDatabaseGeneral)
-            drTELUSUR_ExecuteReader()
-            JumlahLembar = 0
-            JumlahSaham = 0
-            Do While drTELUSUR.Read
-                Dim JumlahLembarPerBaris = drTELUSUR.Item("Jumlah_Lembar")
-                HargaPerLembar = drTELUSUR.Item("Harga_Per_Lembar")
-                Dim JumlahSahamPerBaris = JumlahLembarPerBaris * HargaPerLembar
-                JumlahLembar += JumlahLembarPerBaris
-                JumlahSaham += JumlahSahamPerBaris
+            AksesDatabase_General(Buka)
+
+            cmd = New OdbcCommand(" SELECT * FROM tbl_LawanTransaksi ", KoneksiDatabaseGeneral)
+            dr_ExecuteReader()
+
+            Do While dr.Read
+                KodePemegangSaham = dr.Item("Kode_Mitra")
+                cmdTELUSUR = New OdbcCommand(" SELECT * FROM tbl_Modal " &
+                                             " WHERE Kode_Pemegang_Saham = '" & KodePemegangSaham & "' ", KoneksiDatabaseGeneral)
+                drTELUSUR_ExecuteReader()
+                JumlahLembar = 0
+                JumlahSaham = 0
+                Do While drTELUSUR.Read
+                    Dim JumlahLembarPerBaris = drTELUSUR.Item("Jumlah_Lembar")
+                    HargaPerLembar = drTELUSUR.Item("Harga_Per_Lembar")
+                    Dim JumlahSahamPerBaris = JumlahLembarPerBaris * HargaPerLembar
+                    JumlahLembar += JumlahLembarPerBaris
+                    JumlahSaham += JumlahSahamPerBaris
+                Loop
+                If JumlahSaham > 0 Then
+                    NamaPemegangSaham = dr.Item("Nama_Mitra")
+                    NPWP = dr.Item("NPWP")
+                    Alamat = PenghapusEnter(dr.Item("Alamat"))
+                    JenisPS = dr.Item("Jenis_WP")
+                    LokasiPS = dr.Item("Lokasi_WP")
+                    RekeningBank = dr.Item("Rekening_Bank")
+                    AtasNama = dr.Item("Atas_Nama")
+                    TambahBaris()
+                End If
+                Await Task.Yield()
             Loop
-            If JumlahSaham > 0 Then
-                NamaPemegangSaham = dr.Item("Nama_Mitra")
-                NPWP = dr.Item("NPWP")
-                Alamat = PenghapusEnter(dr.Item("Alamat"))
-                JenisPS = dr.Item("Jenis_WP")
-                LokasiPS = dr.Item("Lokasi_WP")
-                RekeningBank = dr.Item("Rekening_Bank")
-                AtasNama = dr.Item("Atas_Nama")
-                TambahBaris()
-            End If
-        Loop
-        AksesDatabase_General(Tutup)
+            AksesDatabase_General(Tutup)
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DaftarPemegangSaham")
+            SedangMemuatData = False
 
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris()
@@ -125,6 +150,14 @@ Public Class wpfUsc_DaftarPemegangSaham
         datagridUtama.SelectedCells.Clear()
         btn_LihatJurnal.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+        SedangMemuatData = False
+    End Sub
+
+    ' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

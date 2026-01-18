@@ -145,11 +145,11 @@ Public Class wpfUsc_BundelPengajuanPengeluaranBankCash
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanData_BundelAsync")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi_Bundel()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_Bundel_SetelahLoading()
+
         End Try
 
     End Sub
@@ -179,8 +179,14 @@ Public Class wpfUsc_BundelPengajuanPengeluaranBankCash
         btn_Hapus.IsEnabled = False
         btn_Cetak.IsEnabled = False
         pnl_Pengajuan.Visibility = Visibility.Collapsed
+        SedangMemuatData = False
     End Sub
 
+    Sub BersihkanSeleksi_Bundel_SetelahLoading()
+        BersihkanSeleksi_Bundel()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
+    End Sub
 
     Sub TampilkanData_Pengajuan()
 

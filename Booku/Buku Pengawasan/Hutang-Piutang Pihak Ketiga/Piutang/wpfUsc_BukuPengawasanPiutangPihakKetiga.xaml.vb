@@ -178,9 +178,8 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanPiutangPihakKetiga")
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
+
         End Try
 
     End Sub
@@ -256,6 +255,13 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
         btn_HapusPiutang.IsEnabled = False
         grb_JadwalAngsuran.Header = "Jadwal Angsuran Piutang Pihak Ketiga : "
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
     Sub BersihkanSeleksi_JadwalAngsuran()

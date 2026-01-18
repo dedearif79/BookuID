@@ -1,4 +1,5 @@
 ﻿Imports bcomm
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
@@ -11,6 +12,9 @@ Public Class wpfUsc_Kurs
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+
+    ' Flag untuk mencegah multiple loading bersamaan
+    Private SedangMemuatData As Boolean = False
 
     Dim NomorID
     Dim KodeMataUang As String
@@ -100,7 +104,7 @@ Public Class wpfUsc_Kurs
         Else
             UpdateDataKursAkhirBulan()
             If StatusKoneksiDatabaseTransaksi_MySQL Then
-                TampilkanData_SisiClient()
+                TampilkanData()
             Else
                 PesanPeringatan("Update Gagal." & Enter2Baris & teks_SilakanCobaLagi_Database)
             End If
@@ -108,19 +112,39 @@ Public Class wpfUsc_Kurs
     End Sub
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
-        If LevelUserAktif = LevelUser_99_AppDeveloper Then
-            TampilkanData_SisiServer()
-        Else
-            TampilkanData_SisiClient()
-        End If
+        ' Guard clause: Jangan eksekusi jika sedang loading
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        BersihkanSeleksi()
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
+
+        Try
+            If LevelUserAktif = LevelUser_99_AppDeveloper Then
+                Await TampilkanData_SisiServerAsync()
+            Else
+                Await TampilkanData_SisiClientAsync()
+            End If
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_Kurs")
+            SedangMemuatData = False
+
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
 
     End Sub
 
-    Sub TampilkanData_SisiServer()
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
+
+    Async Function TampilkanData_SisiServerAsync() As Task
 
         BukaDatabasePublic()
 
@@ -152,13 +176,14 @@ Public Class wpfUsc_Kurs
                 drPublic.Item("Nopember"),
                 drPublic.Item("Desember")}
             TambahBaris()
+            Await Task.Yield()
         Loop
 
         TutupDatabasePublic()
 
-    End Sub
+    End Function
 
-    Sub TampilkanData_SisiClient()
+    Async Function TampilkanData_SisiClientAsync() As Task
 
         'Data Tabel :
         datatabelUtama.Clear()
@@ -185,11 +210,12 @@ Public Class wpfUsc_Kurs
                 dr.Item("Nopember"),
                 dr.Item("Desember")}
             TambahBaris()
+            Await Task.Yield()
         Loop
 
         AksesDatabase_Transaksi(Tutup)
 
-    End Sub
+    End Function
 
     Sub TambahBaris()
         datatabelUtama.Rows.Add(NomorID, KodeMataUang, KursAkhirBulan(0), KursAkhirBulan(1), KursAkhirBulan(2), KursAkhirBulan(3), KursAkhirBulan(4), KursAkhirBulan(5), KursAkhirBulan(6),
@@ -203,6 +229,14 @@ Public Class wpfUsc_Kurs
         datagridUtama.SelectedItem = Nothing
         datagridUtama.SelectedCells.Clear()
         btn_Edit.IsEnabled = False
+        SedangMemuatData = False
+    End Sub
+
+    ' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

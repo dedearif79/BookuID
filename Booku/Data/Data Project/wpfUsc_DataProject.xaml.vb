@@ -114,12 +114,10 @@ Public Class wpfUsc_DataProject
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DataProject")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            ' Enable UI dan tutup loading
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -135,8 +133,7 @@ Public Class wpfUsc_DataProject
 
 
     ''' <summary>
-    ''' Membersihkan seleksi tanpa mengubah state loading.
-    ''' Digunakan oleh TampilkanDataAsync() karena loading dihandle secara terpisah.
+    ''' Membersihkan seleksi dan mereset flag loading.
     ''' </summary>
     Sub BersihkanSeleksi()
         JumlahBaris = datatabelUtama.Rows.Count
@@ -146,15 +143,16 @@ Public Class wpfUsc_DataProject
         datagridUtama.SelectedCells.Clear()
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
+        SedangMemuatData = False
     End Sub
 
     ''' <summary>
-    ''' Membersihkan seleksi dan mengaktifkan kembali UI.
-    ''' Digunakan untuk backward compatibility dengan kode lama.
+    ''' Membersihkan seleksi dan mengaktifkan kembali UI setelah loading selesai.
     ''' </summary>
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

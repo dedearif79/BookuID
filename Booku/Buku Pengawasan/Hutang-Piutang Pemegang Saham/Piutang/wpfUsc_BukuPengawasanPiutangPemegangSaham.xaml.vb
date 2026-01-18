@@ -166,9 +166,8 @@ Public Class wpfUsc_BukuPengawasanPiutangPemegangSaham
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanPiutangPemegangSaham")
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
+
         End Try
 
     End Sub
@@ -247,6 +246,13 @@ Public Class wpfUsc_BukuPengawasanPiutangPemegangSaham
         NomorJV_Pembayaran_Terseleksi = 0
         VisibilitasInfoSaldo(True)
         BersihkanSeleksiPembayaran()
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

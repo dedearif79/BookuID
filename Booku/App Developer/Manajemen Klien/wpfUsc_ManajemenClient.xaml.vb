@@ -1,4 +1,5 @@
 ﻿Imports System.IO
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -10,6 +11,7 @@ Public Class wpfUsc_ManajemenClient
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Dim NomorUrut
 
@@ -87,63 +89,83 @@ Public Class wpfUsc_ManajemenClient
 
 
     Public EksekusiTampilanData As Boolean
-    Sub TampilkanData()
 
+    Async Sub TampilkanDataAsync()
+
+        ' Guard clause
         If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'Data Tabel :
-        datatabelUtama.Clear()
-        NomorUrut = 0
-        JumlahClientSudahUpdate = 0
-        JumlahClientBelumUpdate = 0
-        Terabas()
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'Filter Update :
-        Select Case PilihanStatusUpdate
-            Case Pilihan_Semua
-                FilterStatusUpdate = Spasi1
-            Case StatusUpdate_Update
-                FilterStatusUpdate = " AND Versi_App = '" & VersiBooku_SisiPublic & "' AND Apdet_App = '" & ApdetBooku_SisiPublic & "' "
-            Case StatusUpdate_Belum
-                FilterStatusUpdate = " AND ( Versi_App < '" & VersiBooku_SisiPublic & "' OR Apdet_App < '" & ApdetBooku_SisiPublic & "' ) "
-        End Select
-
-        FilterData = FilterStatusUpdate
-
-        BukaDatabasePublic()
-
-        cmdPublic = New MySqlCommand(" SELECT * FROM tbl_customer WHERE ID_Customer <> 'X' " & FilterData, KoneksiDatabasePublic)
-        drPublic_ExecuteReader()
-        If Not StatusKoneksiDatabase Then Return
-
-        Do While drPublic.Read
-
-            NomorUrut += 1
-            client_SerialNumber = drPublic.Item("Nomor_Seri_Produk")
-            client_ID = drPublic.Item("ID_Customer")
-            client_NamaPerusahaan = drPublic.Item("Nama_Perusahaan")
-            client_VersiApp = drPublic.Item("Versi_App")
-            client_ApdetApp = drPublic.Item("Apdet_App")
-            client_PIC = drPublic.Item("PIC")
-            client_TanggalExpire = TanggalFormatTampilan(drPublic.Item("Expire"))
-            If client_VersiApp = VersiBooku_SisiPublic And client_ApdetApp = ApdetBooku_SisiPublic Then
-                client_StatusUpdate = StatusUpdate_Update
-                JumlahClientSudahUpdate += 1
-            Else
-                client_StatusUpdate = StatusUpdate_Belum
-                JumlahClientBelumUpdate += 1
-            End If
-
-            datatabelUtama.Rows.Add(NomorUrut, client_SerialNumber, client_ID, client_NamaPerusahaan, client_VersiApp, client_ApdetApp,
-                                    client_PIC, client_TanggalExpire, client_StatusUpdate)
+        Try
+            'Data Tabel :
+            datatabelUtama.Clear()
+            NomorUrut = 0
+            JumlahClientSudahUpdate = 0
+            JumlahClientBelumUpdate = 0
             Terabas()
 
-        Loop
+            'Filter Update :
+            Select Case PilihanStatusUpdate
+                Case Pilihan_Semua
+                    FilterStatusUpdate = Spasi1
+                Case StatusUpdate_Update
+                    FilterStatusUpdate = " AND Versi_App = '" & VersiBooku_SisiPublic & "' AND Apdet_App = '" & ApdetBooku_SisiPublic & "' "
+                Case StatusUpdate_Belum
+                    FilterStatusUpdate = " AND ( Versi_App < '" & VersiBooku_SisiPublic & "' OR Apdet_App < '" & ApdetBooku_SisiPublic & "' ) "
+            End Select
 
-        TutupDatabasePublic()
+            FilterData = FilterStatusUpdate
 
-        BersihkanSeleksi()
+            BukaDatabasePublic()
 
+            cmdPublic = New MySqlCommand(" SELECT * FROM tbl_customer WHERE ID_Customer <> 'X' " & FilterData, KoneksiDatabasePublic)
+            drPublic_ExecuteReader()
+            If Not StatusKoneksiDatabase Then Return
+
+            Do While drPublic.Read
+
+                NomorUrut += 1
+                client_SerialNumber = drPublic.Item("Nomor_Seri_Produk")
+                client_ID = drPublic.Item("ID_Customer")
+                client_NamaPerusahaan = drPublic.Item("Nama_Perusahaan")
+                client_VersiApp = drPublic.Item("Versi_App")
+                client_ApdetApp = drPublic.Item("Apdet_App")
+                client_PIC = drPublic.Item("PIC")
+                client_TanggalExpire = TanggalFormatTampilan(drPublic.Item("Expire"))
+                If client_VersiApp = VersiBooku_SisiPublic And client_ApdetApp = ApdetBooku_SisiPublic Then
+                    client_StatusUpdate = StatusUpdate_Update
+                    JumlahClientSudahUpdate += 1
+                Else
+                    client_StatusUpdate = StatusUpdate_Belum
+                    JumlahClientBelumUpdate += 1
+                End If
+
+                datatabelUtama.Rows.Add(NomorUrut, client_SerialNumber, client_ID, client_NamaPerusahaan, client_VersiApp, client_ApdetApp,
+                                        client_PIC, client_TanggalExpire, client_StatusUpdate)
+                Terabas()
+
+            Loop
+
+            TutupDatabasePublic()
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_ManajemenClient")
+            SedangMemuatData = False
+
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
@@ -162,6 +184,13 @@ Public Class wpfUsc_ManajemenClient
             lbl_BelumUpdate.Foreground = clrTeksPrimer
             txt_BelumUpdate.Foreground = clrTeksPrimer
         End If
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

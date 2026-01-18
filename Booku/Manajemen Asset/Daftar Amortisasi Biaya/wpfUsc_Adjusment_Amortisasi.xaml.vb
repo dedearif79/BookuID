@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -10,6 +11,7 @@ Public Class wpfUsc_Adjusment_Amortisasi
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Dim JudulForm
     Dim TahunLaporan
@@ -150,12 +152,18 @@ Public Class wpfUsc_Adjusment_Amortisasi
 
 
     Dim EksekusiTampilanData As Boolean
-    Sub TampilkanData()
 
-        If EksekusiTampilanData = False Then Return
+    Async Sub TampilkanDataAsync()
+        ' Guard clause
+        If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
         KetersediaanMenuHalaman(pnl_Halaman, False)
-        Terabas()
+        Await Task.Delay(50)
+
+        Try
+            Terabas()
 
         'Style Tabel :
         datatabelUtama.Rows.Clear()
@@ -597,17 +605,27 @@ Public Class wpfUsc_Adjusment_Amortisasi
         '    "Adjusment sudah lengkap : " & AdjusmentBulanBukuAktifSudahLengkap & Enter2Baris &
         '    "")
 
-        If JumlahBaris > 0 Then
-            datatabelUtama.Rows.Add()
-            datatabelUtama.Rows.Add(Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, "      J U M L A H", Kosongan, Kosongan,
-                                    Jml_JumlahTransaksi, Kosongan, 0, 0, 0,
-                                    0, Jml_SaldoAwal, Jml_PenambahanPengurangan, Jml_SaldoAwalSiapUntukDiamortisasi,
-                                    Jml_AkumulasiAmortisasiTahunLaporan, Jml_AkumulasiAmortisasiSampaiDengan, Jml_SaldoAkhir, 0,
-                                    Jml_Januari, Jml_Februari, Jml_Maret, Jml_April, Jml_Mei, Jml_Juni, Jml_Juli, Jml_Agustus, Jml_September, Jml_Oktober, Jml_Nopember, Jml_Desember)
-        End If
+            If JumlahBaris > 0 Then
+                datatabelUtama.Rows.Add()
+                datatabelUtama.Rows.Add(Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, "      J U M L A H", Kosongan, Kosongan,
+                                        Jml_JumlahTransaksi, Kosongan, 0, 0, 0,
+                                        0, Jml_SaldoAwal, Jml_PenambahanPengurangan, Jml_SaldoAwalSiapUntukDiamortisasi,
+                                        Jml_AkumulasiAmortisasiTahunLaporan, Jml_AkumulasiAmortisasiSampaiDengan, Jml_SaldoAkhir, 0,
+                                        Jml_Januari, Jml_Februari, Jml_Maret, Jml_April, Jml_Mei, Jml_Juni, Jml_Juli, Jml_Agustus, Jml_September, Jml_Oktober, Jml_Nopember, Jml_Desember)
+            End If
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_Adjusment_Amortisasi")
+            SedangMemuatData = False
 
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
+
+    End Sub
+
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub TambahBaris_Detail()
@@ -639,7 +657,13 @@ Public Class wpfUsc_Adjusment_Amortisasi
         BersihkanSeleksi_WPF(datagridUtama, datatabelUtama, BarisTerseleksi, JumlahBaris)
         KetersediaanTombolLihatJurnal(False)
         KetersediaanTombolPosting(False)
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
         KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

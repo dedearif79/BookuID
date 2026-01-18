@@ -232,9 +232,8 @@ Public Class wpfUsc_BukuPengawasanBuktiPenerimaanBankCash
             mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuPengawasanBuktiPenerimaanBankCash")
 
         Finally
-            BersihkanSeleksi()
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
+
         End Try
 
     End Sub
@@ -328,6 +327,13 @@ Public Class wpfUsc_BukuPengawasanBuktiPenerimaanBankCash
         btn_Hapus.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
         btn_LihatBundelan.IsEnabled = False
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
     Sub KontenCombo_Kategori()

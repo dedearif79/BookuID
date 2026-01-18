@@ -4,12 +4,16 @@ Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
 Imports System.Windows.Controls.Primitives
+Imports System.Threading.Tasks
 
 
 Public Class wpfUsc_BukuBankGaransi
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+
+    ' Flag untuk mencegah multiple loading bersamaan
+    Private SedangMemuatData As Boolean = False
 
     Dim NomorUrut
     Dim NomorID
@@ -70,45 +74,66 @@ Public Class wpfUsc_BukuBankGaransi
         TampilkanData()
     End Sub
 
+    Async Sub TampilkanDataAsync()
+
+        ' Guard clause
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
+
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
+
+        Try
+            KesesuaianJurnal = True
+
+            AksesDatabase_Transaksi(Buka)
+
+            'Data Tabel :
+            datatabelUtama.Clear()
+            NomorUrut = 0
+
+            cmd = New OdbcCommand(" SELECT * FROM tbl_BankGaransi ", KoneksiDatabaseTransaksi)
+            dr_ExecuteReader()
+            Do While dr.Read
+                NomorUrut += 1
+                NomorID = dr.Item("Nomor_ID")
+                NomorBPBG = dr.Item("Nomor_BPBG")
+                NomorKontrak = dr.Item("Nomor_Kontrak")
+                TanggalTransaksi = TanggalFormatTampilan(dr.Item("Tanggal_Transaksi"))
+                NamaBank = dr.Item("Nama_Bank")
+                Keperluan = dr.Item("Keperluan")
+                KodeLawanTransaksi = dr.Item("Kode_Lawan_Transaksi")
+                NamaLawanTransaksi = dr.Item("Nama_Lawan_Transaksi")
+                JumlahTransaksi = dr.Item("Jumlah_Transaksi")
+                BiayaProvisi = dr.Item("Biaya_Provisi")
+                TanggalPencairan = TanggalFormatTampilan(dr.Item("Tanggal_Pencairan"))
+                If TanggalPencairan = TanggalKosong Then TanggalPencairan = StripKosong
+                Keterangan = dr.Item("Keterangan")
+                NomorJV_Transaksi = dr.Item("Nomor_JV_Transaksi")
+                NomorJV_Pencairan = dr.Item("Nomor_JV_Pencairan")
+                User = dr.Item("User")
+                datatabelUtama.Rows.Add(NomorUrut, NomorID, NomorBPBG, NomorKontrak, TanggalTransaksi, NamaBank, Keperluan,
+                                        KodeLawanTransaksi, NamaLawanTransaksi, JumlahTransaksi, BiayaProvisi,
+                                        TanggalPencairan, Keterangan, NomorJV_Transaksi, NomorJV_Pencairan, User)
+                Await Task.Yield()
+            Loop
+
+            AksesDatabase_Transaksi(Tutup)
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_BukuBankGaransi")
+            SedangMemuatData = False
+
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
     Public Sub TampilkanData()
-
-        KesesuaianJurnal = True
-
-        AksesDatabase_Transaksi(Buka)
-
-        'Data Tabel :
-        datatabelUtama.Clear()
-        NomorUrut = 0
-
-        cmd = New OdbcCommand(" SELECT * FROM tbl_BankGaransi ", KoneksiDatabaseTransaksi)
-        dr_ExecuteReader()
-        Do While dr.Read
-            NomorUrut += 1
-            NomorID = dr.Item("Nomor_ID")
-            NomorBPBG = dr.Item("Nomor_BPBG")
-            NomorKontrak = dr.Item("Nomor_Kontrak")
-            TanggalTransaksi = TanggalFormatTampilan(dr.Item("Tanggal_Transaksi"))
-            NamaBank = dr.Item("Nama_Bank")
-            Keperluan = dr.Item("Keperluan")
-            KodeLawanTransaksi = dr.Item("Kode_Lawan_Transaksi")
-            NamaLawanTransaksi = dr.Item("Nama_Lawan_Transaksi")
-            JumlahTransaksi = dr.Item("Jumlah_Transaksi")
-            BiayaProvisi = dr.Item("Biaya_Provisi")
-            TanggalPencairan = TanggalFormatTampilan(dr.Item("Tanggal_Pencairan"))
-            If TanggalPencairan = TanggalKosong Then TanggalPencairan = StripKosong
-            Keterangan = dr.Item("Keterangan")
-            NomorJV_Transaksi = dr.Item("Nomor_JV_Transaksi")
-            NomorJV_Pencairan = dr.Item("Nomor_JV_Pencairan")
-            User = dr.Item("User")
-            datatabelUtama.Rows.Add(NomorUrut, NomorID, NomorBPBG, NomorKontrak, TanggalTransaksi, NamaBank, Keperluan,
-                                    KodeLawanTransaksi, NamaLawanTransaksi, JumlahTransaksi, BiayaProvisi,
-                                    TanggalPencairan, Keterangan, NomorJV_Transaksi, NomorJV_Pencairan, User)
-        Loop
-
-        AksesDatabase_Transaksi(Tutup)
-
-        BersihkanSeleksi()
-
+        TampilkanDataAsync()
     End Sub
 
     Sub BersihkanSeleksi()
@@ -121,6 +146,14 @@ Public Class wpfUsc_BukuBankGaransi
         btn_Hapus.IsEnabled = False
         btn_LihatJurnalTransaksi.IsEnabled = False
         btn_LihatJurnalPencairan.IsEnabled = False
+        SedangMemuatData = False
+    End Sub
+
+    ' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

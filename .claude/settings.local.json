@@ -49,7 +49,19 @@
       "Bash(xargs:*)",
       "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"/mnt/d/vb .net project/BookuID/Booku/Booku.vbproj\")",
       "Bash(\"/mnt/c/Program Files/dotnet/dotnet.exe\" build \"Booku/Booku.vbproj\")",
-      "Bash(\"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe\" -Command \"cd ''''D:\\\\vb .net project\\\\BookuID''''; & ''''C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\MSBuild\\\\Current\\\\Bin\\\\MSBuild.exe'''' ''''Booku\\\\Booku.vbproj'''' /t:Build /verbosity:minimal\")"
+      "Bash(\"/mnt/c/Windows/System32/WindowsPowerShell/v1.0/powershell.exe\" -Command \"cd ''''D:\\\\vb .net project\\\\BookuID''''; & ''''C:\\\\Program Files\\\\Microsoft Visual Studio\\\\2022\\\\Community\\\\MSBuild\\\\Current\\\\Bin\\\\MSBuild.exe'''' ''''Booku\\\\Booku.vbproj'''' /t:Build /verbosity:minimal\")",
+      "WebSearch",
+      "WebFetch(domain:antonymale.co.uk)",
+      "Bash(dotnet restore:*)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"BookuID.sln\" -t:Restore,Build -verbosity:minimal)",
+      "Bash(while read f)",
+      "Bash(do if ! grep -q 'Async Sub TampilkanDataAsync\\(\\)' $f)",
+      "Bash(then echo $f)",
+      "Bash(while IFS= read -r file)",
+      "Bash(do if ! grep -q \"BersihkanSeleksi_SetelahLoading\" \"$file\")",
+      "Bash(then echo \"$file\" fi done)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\Booku\\\\Booku.vbproj\" /t:Build /verbosity:minimal)",
+      "Bash(comm:*)"
     ]
   }
 }

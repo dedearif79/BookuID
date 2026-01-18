@@ -234,12 +234,10 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
 
         Catch ex As Exception
             mdl_Logger.WriteException(ex, "TampilkanDataAsync")
+            SedangMemuatData = False
 
         Finally
-            BersihkanSeleksi()
-            ' Enable UI dan tutup loading
-            KetersediaanMenuHalaman(pnl_Halaman, True)
-            SedangMemuatData = False
+            BersihkanSeleksi_SetelahLoading()
         End Try
 
     End Sub
@@ -319,6 +317,7 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
         btn_LihatJurnal.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
         btn_LihatBundelan.IsEnabled = False
+        SedangMemuatData = False
     End Sub
 
     ''' <summary>
@@ -327,7 +326,8 @@ Public Class wpfUsc_BukuPengawasanBuktiPengeluaranBankCash
     ''' </summary>
     Sub BersihkanSeleksi_SetelahLoading()
         BersihkanSeleksi()
-        KetersediaanMenuHalaman(pnl_Halaman, True, False)
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
     Sub KontenCombo_Kategori()

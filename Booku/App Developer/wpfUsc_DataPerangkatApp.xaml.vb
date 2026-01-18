@@ -1,4 +1,5 @@
-﻿Imports System.Windows
+﻿Imports System.Threading.Tasks
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
 Imports System.Windows.Input
@@ -9,6 +10,7 @@ Public Class wpfUsc_DataPerangkatApp
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
 
     Dim NomorUrut
 
@@ -42,38 +44,58 @@ Public Class wpfUsc_DataPerangkatApp
 
 
     Public EksekusiTampilanData As Boolean
-    Sub TampilkanData()
 
+    Async Sub TampilkanDataAsync()
+
+        ' Guard clause
         If Not EksekusiTampilanData Then Return
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'Data Tabel :
-        datatabelUtama.Clear()
-        NomorUrut = 0
-        Terabas()
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        BukaDatabasePublic()
-        If StatusKoneksiDatabase = False Then Return
-
-        cmdPublic = New MySqlCommand(" SELECT * FROM tbl_perangkat WHERE Nomor_Seri_Produk <> 'X' ", KoneksiDatabasePublic)
-        drPublic_ExecuteReader()
-        If Not StatusKoneksiDatabase Then Return
-
-        Do While drPublic.Read
-
-            NomorUrut += 1
-            Dim NomorID = drPublic.Item("Nomor_ID")
-            Dim IDKomputer = drPublic.Item("ID_Komputer")
-            Dim NomorSeriProduk = drPublic.Item("Nomor_Seri_Produk")
-
-            datatabelUtama.Rows.Add(NomorUrut, NomorID, IDKomputer, NomorSeriProduk)
+        Try
+            'Data Tabel :
+            datatabelUtama.Clear()
+            NomorUrut = 0
             Terabas()
 
-        Loop
+            BukaDatabasePublic()
+            If StatusKoneksiDatabase = False Then Return
 
-        TutupDatabasePublic()
+            cmdPublic = New MySqlCommand(" SELECT * FROM tbl_perangkat WHERE Nomor_Seri_Produk <> 'X' ", KoneksiDatabasePublic)
+            drPublic_ExecuteReader()
+            If Not StatusKoneksiDatabase Then Return
 
-        BersihkanSeleksi()
+            Do While drPublic.Read
 
+                NomorUrut += 1
+                Dim NomorID = drPublic.Item("Nomor_ID")
+                Dim IDKomputer = drPublic.Item("ID_Komputer")
+                Dim NomorSeriProduk = drPublic.Item("Nomor_Seri_Produk")
+
+                datatabelUtama.Rows.Add(NomorUrut, NomorID, IDKomputer, NomorSeriProduk)
+                Terabas()
+
+            Loop
+
+            TutupDatabasePublic()
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_DataPerangkatApp")
+            SedangMemuatData = False
+
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
 
@@ -81,6 +103,13 @@ Public Class wpfUsc_DataPerangkatApp
         BersihkanSeleksi_WPF(datagridUtama, datatabelUtama, BarisTerseleksi, JumlahBaris)
         pnl_CRUD.IsEnabled = False
         txt_TotalTabel.Text = JumlahBaris
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

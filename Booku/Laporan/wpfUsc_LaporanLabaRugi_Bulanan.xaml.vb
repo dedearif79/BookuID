@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -9,6 +10,9 @@ Public Class wpfUsc_LaporanLabaRugi_Bulanan
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+    Private SedangMemuatData As Boolean = False
+
+    Dim EksekusiTampilanData As Boolean
 
     Public JudulForm
 
@@ -80,12 +84,19 @@ Public Class wpfUsc_LaporanLabaRugi_Bulanan
 
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
+        ' Guard clause
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
+
+        ' Disable UI dan tampilkan loading
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
+        Try
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
 
         Dim QueryTampilanUmum = " SELECT * FROM tbl_COA WHERE Visibilitas = '" & Pilihan_Ya & "' "
 
@@ -370,25 +381,36 @@ Public Class wpfUsc_LaporanLabaRugi_Bulanan
         Dim LabaRugiBersihNopember As Int64 = LabaRugiUsahaNopember + TotalSaldoNopemberPendapatanDiLuarUsaha - TotalSaldoNopemberBiayaDiLuarUsaha
         Dim LabaRugiBersihDesember As Int64 = LabaRugiUsahaDesember + TotalSaldoDesemberPendapatanDiLuarUsaha - TotalSaldoDesemberBiayaDiLuarUsaha
         Dim TotalLabaRugiBersih As Int64 = TotalLabaRugiUsaha + TotalSaldoKeseluruhanPendapatanDiLuarUsaha - TotalSaldoKeseluruhanBiayaDiLuarUsaha
-        datatabelUtama.Rows.Add(
-            "Laba/Rugi Sebelum Pajak", "",
-            LabaRugiBersihJanuari,
-            LabaRugiBersihFebruari,
-            LabaRugiBersihMaret,
-            LabaRugiBersihApril,
-            LabaRugiBersihMei,
-            LabaRugiBersihJuni,
-            LabaRugiBersihJuli,
-            LabaRugiBersihAgustus,
-            LabaRugiBersihSeptember,
-            LabaRugiBersihOktober,
-            LabaRugiBersihNopember,
-            LabaRugiBersihDesember,
-            TotalLabaRugiBersih)
-        'datatabelUtama.Rows.Add()
+            datatabelUtama.Rows.Add(
+                "Laba/Rugi Sebelum Pajak", "",
+                LabaRugiBersihJanuari,
+                LabaRugiBersihFebruari,
+                LabaRugiBersihMaret,
+                LabaRugiBersihApril,
+                LabaRugiBersihMei,
+                LabaRugiBersihJuni,
+                LabaRugiBersihJuli,
+                LabaRugiBersihAgustus,
+                LabaRugiBersihSeptember,
+                LabaRugiBersihOktober,
+                LabaRugiBersihNopember,
+                LabaRugiBersihDesember,
+                TotalLabaRugiBersih)
+            'datatabelUtama.Rows.Add()
 
-        BersihkanSeleksi()
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_LaporanLabaRugi_Bulanan")
+            SedangMemuatData = False
 
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub DataPerKategoriCOA()
@@ -475,7 +497,13 @@ Public Class wpfUsc_LaporanLabaRugi_Bulanan
         datagridUtama.SelectedItem = Nothing
         datagridUtama.SelectedCells.Clear()
         btn_BukuBesar.IsEnabled = False
+        SedangMemuatData = False
+    End Sub
+
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
         KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

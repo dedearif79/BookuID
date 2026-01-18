@@ -1,4 +1,5 @@
 ﻿Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -9,6 +10,12 @@ Public Class wpfUsc_JurnalUmum
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+
+    ' Flag untuk mencegah multiple loading bersamaan
+    Private SedangMemuatData As Boolean = False
+
+    ' Flag untuk mencegah eksekusi TampilkanData saat ComboBox sedang diisi
+    Dim EksekusiTampilanData As Boolean
 
     Dim QueryTampilan
     Dim FilterData
@@ -68,7 +75,7 @@ Public Class wpfUsc_JurnalUmum
 
     Sub RefreshTampilanData()
         ProsesResetForm = True
-        EksekusiKode = False
+        EksekusiTampilanData = False
         dtp_DariTanggal.SelectedDate = Today
         dtp_SampaiTanggal.SelectedDate = Today
         txt_DariNomorJV.Text = Kosongan
@@ -82,251 +89,251 @@ Public Class wpfUsc_JurnalUmum
         KontenComboASC()
         'CheckBoxHeader.Checked = False
         ProsesResetForm = False
-        EksekusiKode = True
+        EksekusiTampilanData = True
         TampilkanData()
     End Sub
 
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
-        If ProsesResetForm = True Then Return
-        If EksekusiKode = False Then Return
+        ' Guard clause: Jangan eksekusi saat ComboBox sedang diisi
+        If Not EksekusiTampilanData Then Return
 
-        AdaPembuanganSampahJurnal = False
+        ' Guard clause: Jangan eksekusi jika sedang loading
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'PesanUntukProgrammer("Eksekusi Sub : TampilkanData()")
-
+        ' Disable UI dan tampilkan loading
         KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)  ' Beri waktu UI render
 
-        JumlahListJV = 0
+        Try
+            AdaPembuanganSampahJurnal = False
 
-        'Style Tabel :
-        datatabelUtama.Rows.Clear()
+            JumlahListJV = 0
 
-        'Filter Jenis Jurnal :
-        Dim FilterJenisJurnal
-        If PilihanJenisJurnal = "Semua" Then
-            FilterJenisJurnal = Spasi1
-        Else
-            FilterJenisJurnal = " AND Jenis_Jurnal = '" & PilihanJenisJurnal & "' "
-        End If
+            'Style Tabel :
+            datatabelUtama.Rows.Clear()
 
-        'Filter Periode :
-        Dim FilterPeriode As String = Spasi1
-        Dim DariTanggal_String As String = Kosongan
-        Dim SampaiTanggal_String As String = Kosongan
-        If dtp_DariTanggal.Text <> Kosongan And dtp_SampaiTanggal.Text <> Kosongan Then
-            If dtp_DariTanggal.Text <> Kosongan Then DariTanggal_String = TanggalFormatSimpan(dtp_DariTanggal.SelectedDate)
-            If dtp_SampaiTanggal.Text <> Kosongan Then SampaiTanggal_String = TanggalFormatSimpan(dtp_SampaiTanggal.SelectedDate)
-            FilterPeriode = " AND Tanggal_Transaksi BETWEEN '" & DariTanggal_String & "' AND '" & SampaiTanggal_String & "' "
-        End If
-
-        'Filter Nomor JV :
-        Dim FilterNomorJV = Spasi1
-        If txt_DariNomorJV.Text <> Kosongan And txt_SampaiNomorJV.Text = Kosongan Then
-            FilterNomorJV = " AND Nomor_JV = '" & DariNomorJV & "' "
-            FilterPeriode = Spasi1 '(Filter periode tidak berlaku saat user menggunakan filter Nomor JV)
-        End If
-        If txt_DariNomorJV.Text = Kosongan And txt_SampaiNomorJV.Text <> Kosongan Then
-            FilterNomorJV = " AND Nomor_JV = '" & SampaiNomorJV & "' "
-            FilterPeriode = Spasi1 '(Filter periode tidak berlaku saat user menggunakan filter Nomor JV)
-        End If
-        If txt_DariNomorJV.Text <> Kosongan And txt_SampaiNomorJV.Text <> Kosongan Then
-            FilterNomorJV = " AND NOMOR_JV BETWEEN '" & DariNomorJV & "' AND '" & SampaiNomorJV & "' "
-            FilterPeriode = Spasi1 '(Filter periode tidak berlaku saat user menggunakan filter Nomor JV)
-        End If
-
-        'Filter Status Approve :
-        Dim FilterStatusApprove = Spasi1
-        If cmb_StatusApprove.SelectedValue = Pilihan_ALL_ Then FilterStatusApprove = Spasi1
-        If cmb_StatusApprove.SelectedValue = Pilihan_CLOSED_ Then FilterStatusApprove = " AND Status_Approve = 1 "
-        If cmb_StatusApprove.SelectedValue = Pilihan_OPEN_ Then FilterStatusApprove = " AND Status_Approve = 0 "
-
-        'Filter Direct :
-        Dim FilterDirect = Spasi1
-        Select Case PilihanDirect
-            Case Pilihan_Semua
-                FilterDirect = Spasi1
-            Case Pilihan_Ya
-                FilterDirect = " AND Direct = 1 "
-            Case Pilihan_Tidak
-                FilterDirect = " AND Direct = 0 "
-        End Select
-
-
-        'Filter COA :
-        Dim FilterCOA = Spasi1
-        If PilihanCOA <> Kosongan Then
-            FilterCOA = " AND COA = '" & PilihanCOA & "' "
-        End If
-
-        'Filter Pencarian :
-        Dim FilterPencarian = Spasi1
-        If Cari <> Kosongan Then
-            FilterPencarian = " AND ( " &
-                " COA                       LIKE '%" & Cari & "%' OR " &
-                " Nama_Akun                 LIKE '%" & Cari & "%' OR " &
-                " Jenis_Jurnal              LIKE '%" & Cari & "%' OR " &
-                " Kode_Dokumen              LIKE '%" & Cari & "%' OR " &
-                " Nomor_PO                  LIKE '%" & Cari & "%' OR " &
-                " Kode_Project              LIKE '%" & Cari & "%' OR " &
-                " Nama_Akun                 LIKE '%" & Cari & "%' OR " &
-                " Referensi                 LIKE '%" & Cari & "%' OR " &
-                " Bundelan                  LIKE '%" & Cari & "%' OR " &
-                " Nomor_Invoice             LIKE '%" & Cari & "%' OR " &
-                " Nomor_Faktur_Pajak        LIKE '%" & Cari & "%' OR " &
-                " Kode_Lawan_Transaksi      LIKE '%" & Cari & "%' OR " &
-                " Nama_Lawan_Transaksi      LIKE '%" & Cari & "%' OR " &
-                " Uraian_Transaksi          LIKE '%" & Cari & "%' ) "
-        End If
-
-        'Pengurutan Data :
-        If PilihanUrutan = "Nomor Voucher" Then KolomUrut = " ORDER BY Nomor_ID, Nomor_JV, Tanggal_Transaksi "
-        If PilihanUrutan = "Tanggal Jurnal" Then KolomUrut = " ORDER BY Nomor_ID, Tanggal_Transaksi, Nomor_JV "
-
-        'Query Tampilan :
-        FilterData = FilterJenisJurnal & FilterPeriode & FilterNomorJV & FilterStatusApprove & FilterCOA & FilterPencarian & FilterDirect
-        PengurutanData = KolomUrut & PilihanASC
-        QueryTampilan = " SELECT * FROM tbl_Transaksi WHERE Valid <> '" & _X_ & "' " & FilterData & PengurutanData
-
-        'Data Tabel :
-        Dim NomorUrut = 0
-        Dim AngkaNomorJV = 0
-        Dim AngkaNomorJV_Sebelumnya = 0
-        Dim NomorJV
-        Dim NomorJVSebelumnya = Kosongan
-        Dim TanggalJurnal
-        Dim JenisJurnal
-        Dim KodeDokumen
-        Dim NomorPO
-        Dim KodeProject
-        Dim NamaProduk
-        Dim Referensi
-        Dim TanggalInvoice
-        Dim NomorInvoice
-        Dim NomorFakturPajak
-        Dim LawanTransaksi
-        Dim COA
-        Dim KodeAkun
-        Dim NamaAkun
-        Dim KodeMataUang As String
-        Dim Kurs As Decimal
-        Dim DK
-        Dim JumlahDebet As Int64
-        Dim JumlahKredit As Int64
-        Dim UraianTransaksi
-        Dim Direct
-        Dim StatusApprove As Int64
-        Dim clm_Pilih As CheckBox = Nothing
-        Dim KoneksiCOA As Boolean = True
-
-        AksesDatabase_Transaksi(Buka)
-        cmd = New OdbcCommand(QueryTampilan, KoneksiDatabaseTransaksi)
-        dr = cmd.ExecuteReader
-        Dim TotalDebetPerJurnal As Int64 = 0
-        Dim TotalKreditPerJurnal As Int64 = 0
-        Do While dr.Read
-            NomorUrut += 1
-            AngkaNomorJV = dr.Item("Nomor_JV")
-            NomorJV = AwalanNomorJV & AngkaNomorJV
-            If NomorJVSebelumnya <> NomorJV Then
-                If Not TotalDebetPerJurnal = TotalKreditPerJurnal Then
-                    ''If LevelUserAktif = LevelUser_99_AppDeveloper Then
-                    'datatabelUtama.Rows.Add(Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan,
-                    '                        TotalDebetPerJurnal, TotalKreditPerJurnal,
-                    '                        "tidak balance", Kosongan, Kosongan)
-                    ''End If
-                    'BuangJurnal_BerdasarkanNomorJV(AngkaNomorJV_Sebelumnya)
-                    'AdaPembuanganSampahJurnal = True
-                End If
-                datatabelUtama.Rows.Add()
-                TotalDebetPerJurnal = 0
-                TotalKreditPerJurnal = 0
-                JumlahListJV += 1
-            End If
-            TanggalJurnal = TanggalFormatTampilan(dr.Item("Tanggal_Transaksi"))
-            JenisJurnal = dr.Item("Jenis_Jurnal")
-            KodeDokumen = dr.Item("Kode_Dokumen")
-            NomorPO = dr.Item("Nomor_PO")
-            KodeProject = dr.Item("Kode_Project")
-            NamaProduk = dr.Item("Nama_Produk")
-            Referensi = dr.Item("Referensi")
-            TanggalInvoice = dr.Item("Tanggal_Invoice")
-            NomorInvoice = dr.Item("Nomor_Invoice")
-            NomorFakturPajak = dr.Item("Nomor_Faktur_Pajak")
-            LawanTransaksi = dr.Item("Nama_Lawan_Transaksi")
-            COA = dr.Item("COA")
-            KodeAkun = COA
-            NamaAkun = dr.Item("Nama_Akun")
-            KodeMataUang = dr.Item("Kode_Mata_Uang")
-            Kurs = dr.Item("Kurs")
-            DK = dr.Item("D_K")
-            If DK = dk_K Then NamaAkun = PenjorokNamaAkun & NamaAkun
-            JumlahDebet = AmbilValue_NilaiMataUang_WithCOA(COA, KodeMataUang, Kurs, dr.Item("Jumlah_Debet"))
-            JumlahKredit = AmbilValue_NilaiMataUang_WithCOA(COA, KodeMataUang, Kurs, dr.Item("Jumlah_Kredit"))
-            TotalDebetPerJurnal += JumlahDebet
-            TotalKreditPerJurnal += JumlahKredit
-            UraianTransaksi = PenghapusEnter(dr.Item("Uraian_Transaksi"))
-            If dr.Item("Direct") = 1 Then
-                Direct = Pilihan_Ya
+            'Filter Jenis Jurnal :
+            Dim FilterJenisJurnal
+            If PilihanJenisJurnal = "Semua" Then
+                FilterJenisJurnal = Spasi1
             Else
-                Direct = Kosongan
+                FilterJenisJurnal = " AND Jenis_Jurnal = '" & PilihanJenisJurnal & "' "
             End If
-            StatusApprove = dr.Item("Status_Approve")
-            If JenisJurnal = Kosongan Then JenisJurnal = StripKosong
-            If KodeDokumen = Kosongan Then KodeDokumen = StripKosong
-            If NomorPO = Kosongan Then NomorPO = StripKosong
-            If KodeProject = Kosongan Then KodeProject = StripKosong
-            If NamaProduk = Kosongan Then NamaProduk = StripKosong
-            If Referensi = Kosongan Then Referensi = StripKosong
-            If TanggalInvoice = Kosongan Then TanggalInvoice = StripKosong
-            If NomorInvoice = Kosongan Then NomorInvoice = StripKosong
-            If NomorFakturPajak = Kosongan Then NomorFakturPajak = StripKosong
-            If LawanTransaksi = Kosongan Then LawanTransaksi = StripKosong
-            If UraianTransaksi = Kosongan Then UraianTransaksi = StripKosong
 
-            If Not (JumlahDebet = 0 And JumlahKredit = 0) Then
-                datatabelUtama.Rows.Add(AngkaNomorJV, TanggalJurnal,
-                                    JenisJurnal, KodeDokumen, NomorPO, KodeProject, NamaProduk,
-                                    Referensi, TanggalInvoice, NomorInvoice, NomorFakturPajak, LawanTransaksi, NamaAkun,
-                                    KodeAkun, DK, JumlahDebet, JumlahKredit,
-                                    UraianTransaksi, Direct, StatusApprove)
+            'Filter Periode :
+            Dim FilterPeriode As String = Spasi1
+            Dim DariTanggal_String As String = Kosongan
+            Dim SampaiTanggal_String As String = Kosongan
+            If dtp_DariTanggal.Text <> Kosongan And dtp_SampaiTanggal.Text <> Kosongan Then
+                If dtp_DariTanggal.Text <> Kosongan Then DariTanggal_String = TanggalFormatSimpan(dtp_DariTanggal.SelectedDate)
+                If dtp_SampaiTanggal.Text <> Kosongan Then SampaiTanggal_String = TanggalFormatSimpan(dtp_SampaiTanggal.SelectedDate)
+                FilterPeriode = " AND Tanggal_Transaksi BETWEEN '" & DariTanggal_String & "' AND '" & SampaiTanggal_String & "' "
             End If
-            AngkaNomorJV_Sebelumnya = AngkaNomorJV
-            NomorJVSebelumnya = NomorJV
-            Terabas()
-            txt_JumlahList.Text = JumlahListJV
-        Loop
-        AksesDatabase_Transaksi(Tutup)
 
-        datatabelUtama.Rows.Add()
+            'Filter Nomor JV :
+            Dim FilterNomorJV = Spasi1
+            If txt_DariNomorJV.Text <> Kosongan And txt_SampaiNomorJV.Text = Kosongan Then
+                FilterNomorJV = " AND Nomor_JV = '" & DariNomorJV & "' "
+                FilterPeriode = Spasi1 '(Filter periode tidak berlaku saat user menggunakan filter Nomor JV)
+            End If
+            If txt_DariNomorJV.Text = Kosongan And txt_SampaiNomorJV.Text <> Kosongan Then
+                FilterNomorJV = " AND Nomor_JV = '" & SampaiNomorJV & "' "
+                FilterPeriode = Spasi1 '(Filter periode tidak berlaku saat user menggunakan filter Nomor JV)
+            End If
+            If txt_DariNomorJV.Text <> Kosongan And txt_SampaiNomorJV.Text <> Kosongan Then
+                FilterNomorJV = " AND NOMOR_JV BETWEEN '" & DariNomorJV & "' AND '" & SampaiNomorJV & "' "
+                FilterPeriode = Spasi1 '(Filter periode tidak berlaku saat user menggunakan filter Nomor JV)
+            End If
 
-        BersihkanSeleksi()
+            'Filter Status Approve :
+            Dim FilterStatusApprove = Spasi1
+            If cmb_StatusApprove.SelectedValue = Pilihan_ALL_ Then FilterStatusApprove = Spasi1
+            If cmb_StatusApprove.SelectedValue = Pilihan_CLOSED_ Then FilterStatusApprove = " AND Status_Approve = 1 "
+            If cmb_StatusApprove.SelectedValue = Pilihan_OPEN_ Then FilterStatusApprove = " AND Status_Approve = 0 "
 
-        'Dim NomorJV_Telusur = kosongan
-        'Dim NomorJV_Sebelumnya = kosongan
-        'For Each row As DataRow In datatabelUtama.Rows
-        '    NomorJV_Telusur = row("Nomor_JV")
-        '    'row.isReadOnly = True
-        '    If row("Status_Approve") = 0 Then
-        '        'row.DefaultCellStyle.ForeColor = Color.DarkSlateGray
-        '        If NomorJV_Telusur <> kosongan And NomorJV_Telusur <> NomorJV_Sebelumnya Then
-        '            'row.ReadOnly = False
-        '        End If
-        '    End If
-        '    If row("Nama_Akun") = teks_CoaBelumTerdaftar Or row("Nama_Akun") = PenjorokNamaAkun & teks_CoaBelumTerdaftar Then
-        '        'row.DefaultCellStyle.ForeColor = Color.Red
-        '    End If
-        '    NomorJV_Sebelumnya = NomorJV_Telusur
-        'Next
+            'Filter Direct :
+            Dim FilterDirect = Spasi1
+            Select Case PilihanDirect
+                Case Pilihan_Semua
+                    FilterDirect = Spasi1
+                Case Pilihan_Ya
+                    FilterDirect = " AND Direct = 1 "
+                Case Pilihan_Tidak
+                    FilterDirect = " AND Direct = 0 "
+            End Select
+
+
+            'Filter COA :
+            Dim FilterCOA = Spasi1
+            If PilihanCOA <> Kosongan Then
+                FilterCOA = " AND COA = '" & PilihanCOA & "' "
+            End If
+
+            'Filter Pencarian :
+            Dim FilterPencarian = Spasi1
+            If Cari <> Kosongan Then
+                FilterPencarian = " AND ( " &
+                    " COA                       LIKE '%" & Cari & "%' OR " &
+                    " Nama_Akun                 LIKE '%" & Cari & "%' OR " &
+                    " Jenis_Jurnal              LIKE '%" & Cari & "%' OR " &
+                    " Kode_Dokumen              LIKE '%" & Cari & "%' OR " &
+                    " Nomor_PO                  LIKE '%" & Cari & "%' OR " &
+                    " Kode_Project              LIKE '%" & Cari & "%' OR " &
+                    " Nama_Akun                 LIKE '%" & Cari & "%' OR " &
+                    " Referensi                 LIKE '%" & Cari & "%' OR " &
+                    " Bundelan                  LIKE '%" & Cari & "%' OR " &
+                    " Nomor_Invoice             LIKE '%" & Cari & "%' OR " &
+                    " Nomor_Faktur_Pajak        LIKE '%" & Cari & "%' OR " &
+                    " Kode_Lawan_Transaksi      LIKE '%" & Cari & "%' OR " &
+                    " Nama_Lawan_Transaksi      LIKE '%" & Cari & "%' OR " &
+                    " Uraian_Transaksi          LIKE '%" & Cari & "%' ) "
+            End If
+
+            'Pengurutan Data :
+            If PilihanUrutan = "Nomor Voucher" Then KolomUrut = " ORDER BY Nomor_ID, Nomor_JV, Tanggal_Transaksi "
+            If PilihanUrutan = "Tanggal Jurnal" Then KolomUrut = " ORDER BY Nomor_ID, Tanggal_Transaksi, Nomor_JV "
+
+            'Query Tampilan :
+            FilterData = FilterJenisJurnal & FilterPeriode & FilterNomorJV & FilterStatusApprove & FilterCOA & FilterPencarian & FilterDirect
+            PengurutanData = KolomUrut & PilihanASC
+            QueryTampilan = " SELECT * FROM tbl_Transaksi WHERE Valid <> '" & _X_ & "' " & FilterData & PengurutanData
+
+            'Data Tabel :
+            Dim NomorUrut = 0
+            Dim AngkaNomorJV = 0
+            Dim AngkaNomorJV_Sebelumnya = 0
+            Dim NomorJV
+            Dim NomorJVSebelumnya = Kosongan
+            Dim TanggalJurnal
+            Dim JenisJurnal
+            Dim KodeDokumen
+            Dim NomorPO
+            Dim KodeProject
+            Dim NamaProduk
+            Dim Referensi
+            Dim TanggalInvoice
+            Dim NomorInvoice
+            Dim NomorFakturPajak
+            Dim LawanTransaksi
+            Dim COA
+            Dim KodeAkun
+            Dim NamaAkun
+            Dim KodeMataUang As String
+            Dim Kurs As Decimal
+            Dim DK
+            Dim JumlahDebet As Int64
+            Dim JumlahKredit As Int64
+            Dim UraianTransaksi
+            Dim Direct
+            Dim StatusApprove As Int64
+            Dim clm_Pilih As CheckBox = Nothing
+            Dim KoneksiCOA As Boolean = True
+
+            AksesDatabase_Transaksi(Buka)
+            cmd = New OdbcCommand(QueryTampilan, KoneksiDatabaseTransaksi)
+            dr = cmd.ExecuteReader
+            Dim TotalDebetPerJurnal As Int64 = 0
+            Dim TotalKreditPerJurnal As Int64 = 0
+            Do While dr.Read
+                NomorUrut += 1
+                AngkaNomorJV = dr.Item("Nomor_JV")
+                NomorJV = AwalanNomorJV & AngkaNomorJV
+                If NomorJVSebelumnya <> NomorJV Then
+                    If Not TotalDebetPerJurnal = TotalKreditPerJurnal Then
+                        ''If LevelUserAktif = LevelUser_99_AppDeveloper Then
+                        'datatabelUtama.Rows.Add(Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan, Kosongan,
+                        '                        TotalDebetPerJurnal, TotalKreditPerJurnal,
+                        '                        "tidak balance", Kosongan, Kosongan)
+                        ''End If
+                        'BuangJurnal_BerdasarkanNomorJV(AngkaNomorJV_Sebelumnya)
+                        'AdaPembuanganSampahJurnal = True
+                    End If
+                    datatabelUtama.Rows.Add()
+                    TotalDebetPerJurnal = 0
+                    TotalKreditPerJurnal = 0
+                    JumlahListJV += 1
+                End If
+                TanggalJurnal = TanggalFormatTampilan(dr.Item("Tanggal_Transaksi"))
+                JenisJurnal = dr.Item("Jenis_Jurnal")
+                KodeDokumen = dr.Item("Kode_Dokumen")
+                NomorPO = dr.Item("Nomor_PO")
+                KodeProject = dr.Item("Kode_Project")
+                NamaProduk = dr.Item("Nama_Produk")
+                Referensi = dr.Item("Referensi")
+                TanggalInvoice = dr.Item("Tanggal_Invoice")
+                NomorInvoice = dr.Item("Nomor_Invoice")
+                NomorFakturPajak = dr.Item("Nomor_Faktur_Pajak")
+                LawanTransaksi = dr.Item("Nama_Lawan_Transaksi")
+                COA = dr.Item("COA")
+                KodeAkun = COA
+                NamaAkun = dr.Item("Nama_Akun")
+                KodeMataUang = dr.Item("Kode_Mata_Uang")
+                Kurs = dr.Item("Kurs")
+                DK = dr.Item("D_K")
+                If DK = dk_K Then NamaAkun = PenjorokNamaAkun & NamaAkun
+                JumlahDebet = AmbilValue_NilaiMataUang_WithCOA(COA, KodeMataUang, Kurs, dr.Item("Jumlah_Debet"))
+                JumlahKredit = AmbilValue_NilaiMataUang_WithCOA(COA, KodeMataUang, Kurs, dr.Item("Jumlah_Kredit"))
+                TotalDebetPerJurnal += JumlahDebet
+                TotalKreditPerJurnal += JumlahKredit
+                UraianTransaksi = PenghapusEnter(dr.Item("Uraian_Transaksi"))
+                If dr.Item("Direct") = 1 Then
+                    Direct = Pilihan_Ya
+                Else
+                    Direct = Kosongan
+                End If
+                StatusApprove = dr.Item("Status_Approve")
+                If JenisJurnal = Kosongan Then JenisJurnal = StripKosong
+                If KodeDokumen = Kosongan Then KodeDokumen = StripKosong
+                If NomorPO = Kosongan Then NomorPO = StripKosong
+                If KodeProject = Kosongan Then KodeProject = StripKosong
+                If NamaProduk = Kosongan Then NamaProduk = StripKosong
+                If Referensi = Kosongan Then Referensi = StripKosong
+                If TanggalInvoice = Kosongan Then TanggalInvoice = StripKosong
+                If NomorInvoice = Kosongan Then NomorInvoice = StripKosong
+                If NomorFakturPajak = Kosongan Then NomorFakturPajak = StripKosong
+                If LawanTransaksi = Kosongan Then LawanTransaksi = StripKosong
+                If UraianTransaksi = Kosongan Then UraianTransaksi = StripKosong
+
+                If Not (JumlahDebet = 0 And JumlahKredit = 0) Then
+                    datatabelUtama.Rows.Add(AngkaNomorJV, TanggalJurnal,
+                                        JenisJurnal, KodeDokumen, NomorPO, KodeProject, NamaProduk,
+                                        Referensi, TanggalInvoice, NomorInvoice, NomorFakturPajak, LawanTransaksi, NamaAkun,
+                                        KodeAkun, DK, JumlahDebet, JumlahKredit,
+                                        UraianTransaksi, Direct, StatusApprove)
+                End If
+                AngkaNomorJV_Sebelumnya = AngkaNomorJV
+                NomorJVSebelumnya = NomorJV
+                Await Task.Yield()  ' Beri kesempatan UI refresh
+                txt_JumlahList.Text = JumlahListJV
+            Loop
+            AksesDatabase_Transaksi(Tutup)
+
+            datatabelUtama.Rows.Add()
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_JurnalUmum")
+            SedangMemuatData = False
+
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
 
         If AdaPembuanganSampahJurnal Then
-            TampilkanData()
+            TampilkanDataAsync()
         End If
 
     End Sub
 
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
+    End Sub
 
+
+    ' Logika utama reset seleksi (TANPA enable UI)
     Sub BersihkanSeleksi()
         JumlahBaris = datatabelUtama.Rows.Count
         BarisTerseleksi = -1
@@ -335,7 +342,14 @@ Public Class wpfUsc_JurnalUmum
         datagridUtama.SelectedCells.Clear()
         KetersediaanTombolUpdate(False)
         KetersediaanTombolJurnalVoucher(False)
+        SedangMemuatData = False
+    End Sub
+
+    ' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
         KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 

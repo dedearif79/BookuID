@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Controls.Primitives
@@ -10,6 +11,9 @@ Public Class wpfUsc_TutupBuku
 
     Public StatusAktif As Boolean = False
     Private SudahDimuat As Boolean = False
+
+    ' Flag untuk mencegah multiple loading bersamaan
+    Private SedangMemuatData As Boolean = False
 
     Public JudulForm
     Dim COATerseleksi
@@ -87,73 +91,95 @@ Public Class wpfUsc_TutupBuku
         Kredit_.Visibility = Visibility.Visible
     End Sub
 
-    Sub TampilkanData()
+    Async Sub TampilkanDataAsync()
 
-        datatabelUtama.Rows.Clear()
+        ' Guard clause: Jangan eksekusi jika sedang loading
+        If SedangMemuatData Then Return
+        SedangMemuatData = True
 
-        'Data Tabel : 
-        Dim NomorUrut = 0
-        Dim KodeAkun
-        Dim NamaAkun
-        Dim SaldoAwal As Int64
-        Dim Debet As Int64
-        Dim Kredit As Int64
-        Dim SaldoAkhir As Int64
+        ' Disable UI dan tampilkan loading
+        KetersediaanMenuHalaman(pnl_Halaman, False)
+        Await Task.Delay(50)
 
-        AksesDatabase_General(Buka)
-        If StatusKoneksiDatabase = False Then Return
-        cmd = New OdbcCommand(" SELECT * FROM tbl_COA WHERE COA < '" & AwalAkunBiaya & "' AND Visibilitas = '" & Pilihan_Ya & "' ",
-                              KoneksiDatabaseGeneral)
-        dr_ExecuteReader()
+        Try
+            datatabelUtama.Rows.Clear()
 
-        Do While dr.Read
+            'Data Tabel :
+            Dim NomorUrut = 0
+            Dim KodeAkun
+            Dim NamaAkun
+            Dim SaldoAwal As Int64
+            Dim Debet As Int64
+            Dim Kredit As Int64
+            Dim SaldoAkhir As Int64
 
-            NomorUrut += 1
-            KodeAkun = dr.Item("COA")
-            NamaAkun = dr.Item("Nama_Akun")
-            SaldoAwal = dr.Item("Saldo_Awal")
-            Debet =
-                dr.Item("Debet_Januari") +
-                dr.Item("Debet_Februari") +
-                dr.Item("Debet_Maret") +
-                dr.Item("Debet_April") +
-                dr.Item("Debet_Mei") +
-                dr.Item("Debet_Juni") +
-                dr.Item("Debet_Juli") +
-                dr.Item("Debet_Agustus") +
-                dr.Item("Debet_September") +
-                dr.Item("Debet_Oktober") +
-                dr.Item("Debet_Nopember") +
-                dr.Item("Debet_Desember")
-            Kredit =
-                dr.Item("Kredit_Januari") +
-                dr.Item("Kredit_Februari") +
-                dr.Item("Kredit_Maret") +
-                dr.Item("Kredit_April") +
-                dr.Item("Kredit_Mei") +
-                dr.Item("Kredit_Juni") +
-                dr.Item("Kredit_Juli") +
-                dr.Item("Kredit_Agustus") +
-                dr.Item("Kredit_September") +
-                dr.Item("Kredit_Oktober") +
-                dr.Item("Kredit_Nopember") +
-                dr.Item("Kredit_Desember")
-            If JenisTahunBuku = JenisTahunBuku_LAMPAU Then
-                SaldoAkhir = SaldoAwal
-            Else
-                SaldoAkhir = dr.Item("Saldo_Desember")
-            End If
+            AksesDatabase_General(Buka)
+            If StatusKoneksiDatabase = False Then Return
+            cmd = New OdbcCommand(" SELECT * FROM tbl_COA WHERE COA < '" & AwalAkunBiaya & "' AND Visibilitas = '" & Pilihan_Ya & "' ",
+                                  KoneksiDatabaseGeneral)
+            dr_ExecuteReader()
 
-            datatabelUtama.Rows.Add(NomorUrut, KodeAkun, NamaAkun, SaldoAwal, Debet, Kredit, SaldoAkhir, 0)
+            Do While dr.Read
 
-        Loop
+                NomorUrut += 1
+                KodeAkun = dr.Item("COA")
+                NamaAkun = dr.Item("Nama_Akun")
+                SaldoAwal = dr.Item("Saldo_Awal")
+                Debet =
+                    dr.Item("Debet_Januari") +
+                    dr.Item("Debet_Februari") +
+                    dr.Item("Debet_Maret") +
+                    dr.Item("Debet_April") +
+                    dr.Item("Debet_Mei") +
+                    dr.Item("Debet_Juni") +
+                    dr.Item("Debet_Juli") +
+                    dr.Item("Debet_Agustus") +
+                    dr.Item("Debet_September") +
+                    dr.Item("Debet_Oktober") +
+                    dr.Item("Debet_Nopember") +
+                    dr.Item("Debet_Desember")
+                Kredit =
+                    dr.Item("Kredit_Januari") +
+                    dr.Item("Kredit_Februari") +
+                    dr.Item("Kredit_Maret") +
+                    dr.Item("Kredit_April") +
+                    dr.Item("Kredit_Mei") +
+                    dr.Item("Kredit_Juni") +
+                    dr.Item("Kredit_Juli") +
+                    dr.Item("Kredit_Agustus") +
+                    dr.Item("Kredit_September") +
+                    dr.Item("Kredit_Oktober") +
+                    dr.Item("Kredit_Nopember") +
+                    dr.Item("Kredit_Desember")
+                If JenisTahunBuku = JenisTahunBuku_LAMPAU Then
+                    SaldoAkhir = SaldoAwal
+                Else
+                    SaldoAkhir = dr.Item("Saldo_Desember")
+                End If
 
-        AksesDatabase_General(Tutup)
+                datatabelUtama.Rows.Add(NomorUrut, KodeAkun, NamaAkun, SaldoAwal, Debet, Kredit, SaldoAkhir, 0)
 
-        BersihkanSeleksi()
+                Await Task.Yield()
 
-        If TahunBukuAktif < TahunIni Then btn_TransferSaldoDanTutupBuku.IsEnabled = True
+            Loop
 
+            AksesDatabase_General(Tutup)
+
+            If TahunBukuAktif < TahunIni Then btn_TransferSaldoDanTutupBuku.IsEnabled = True
+
+        Catch ex As Exception
+            mdl_Logger.WriteException(ex, "TampilkanDataAsync - wpfUsc_TutupBuku")
+            SedangMemuatData = False
+
+        Finally
+            BersihkanSeleksi_SetelahLoading()
+        End Try
+
+    End Sub
+
+    ' Wrapper untuk backward compatibility
+    Public Sub TampilkanData()
+        TampilkanDataAsync()
     End Sub
 
     Sub BersihkanSeleksi()
@@ -163,6 +189,14 @@ Public Class wpfUsc_TutupBuku
         datagridUtama.SelectedItem = Nothing
         datagridUtama.SelectedCells.Clear()
         btn_EditSaldo.IsEnabled = False
+        SedangMemuatData = False
+    End Sub
+
+    ' Wrapper: reset seleksi + enable UI (untuk backward compatibility)
+    Sub BersihkanSeleksi_SetelahLoading()
+        BersihkanSeleksi()
+        KetersediaanMenuHalaman(pnl_Halaman, True)
+        SedangMemuatData = False
     End Sub
 
 
