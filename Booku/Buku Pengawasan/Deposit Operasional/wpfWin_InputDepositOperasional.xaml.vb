@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -44,9 +44,13 @@ Public Class wpfWin_InputDepositOperasional
             SistemPenomoranOtomatis()
         End If
 
-        If FungsiForm = FungsiForm_EDIT Then
+        If FungsiForm = FungsiForm_EDIT Or FungsiForm = FungsiForm_LIHAT Then
             JudulForm = "Edit Deposit Operasional"
             TampilkanData()
+        End If
+
+        If FungsiForm = FungsiForm_LIHAT Then
+            btn_Simpan.IsEnabled = False
         End If
 
         If FungsiForm = Kosongan Then PesanUntukProgrammer("Fungsi Form belum ditentukan...!!!")
@@ -78,7 +82,7 @@ Public Class wpfWin_InputDepositOperasional
         datatabelUtama.Rows.Clear()
         txt_JumlahTransaksi.Text = Kosongan
         KosongkanValueElemenRichTextBox(txt_Keterangan)
-
+        btn_Simpan.IsEnabled = True
         JumlahBaris = 0
 
         ProsesResetForm = False

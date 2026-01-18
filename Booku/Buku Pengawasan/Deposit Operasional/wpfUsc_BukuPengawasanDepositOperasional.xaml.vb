@@ -264,6 +264,7 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
         datagridUtama.SelectedCells.Clear()
         btn_Edit.IsEnabled = False
         btn_Hapus.IsEnabled = False
+        btn_Lihat.IsEnabled = False
         btn_LihatJurnal.IsEnabled = False
         btn_Cetak.IsEnabled = False
         pnl_SidebarKanan.Visibility = Visibility.Collapsed
@@ -372,17 +373,7 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
         win_InputDepositOperasional = New wpfWin_InputDepositOperasional
         win_InputDepositOperasional.ResetForm()
         win_InputDepositOperasional.FungsiForm = FungsiForm_EDIT
-        win_InputDepositOperasional.AngkaBPDO = AngkaBPDO_Terseleksi
-        win_InputDepositOperasional.NomorJV = NomorJV_Terseleksi
-        win_InputDepositOperasional.txt_NomorBPDO.Text = NomorBPDO_Terseleksi
-        win_InputDepositOperasional.txt_NomorBukti.Text = NomorBukti_Terseleksi
-        win_InputDepositOperasional.dtp_TanggalBukti.SelectedDate = TanggalFormatWPF(TanggalBukti_Terseleksi)
-        win_InputDepositOperasional.txt_NomorFakturPajak.Text = NomorFakturPajak_Terseleksi
-        win_InputDepositOperasional.txt_KodeLawanTransaksi.Text = KodeLawanTransaksi_Terseleksi
-        win_InputDepositOperasional.txt_NamaLawanTransaksi.Text = NamaLawanTransaksi_Terseleksi
-        win_InputDepositOperasional.txt_KodeCustomer.Text = KodeCustomer_Terseleksi
-        win_InputDepositOperasional.txt_NamaCustomer.Text = NamaCustomer_Terseleksi
-        IsiValueElemenRichTextBox(win_InputDepositOperasional.txt_Keterangan, Keterangan_Terseleksi)
+        IsiValueForm()
         win_InputDepositOperasional.ShowDialog()
 
     End Sub
@@ -414,6 +405,30 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
     End Sub
 
 
+    Private Sub btn_Lihat_Click(sender As Object, e As RoutedEventArgs) Handles btn_Lihat.Click
+
+        win_InputDepositOperasional = New wpfWin_InputDepositOperasional
+        win_InputDepositOperasional.ResetForm()
+        win_InputDepositOperasional.FungsiForm = FungsiForm_LIHAT
+        IsiValueForm()
+        win_InputDepositOperasional.ShowDialog()
+
+    End Sub
+
+
+    Sub IsiValueForm()
+        win_InputDepositOperasional.AngkaBPDO = AngkaBPDO_Terseleksi
+        win_InputDepositOperasional.NomorJV = NomorJV_Terseleksi
+        win_InputDepositOperasional.txt_NomorBPDO.Text = NomorBPDO_Terseleksi
+        win_InputDepositOperasional.txt_NomorBukti.Text = NomorBukti_Terseleksi
+        win_InputDepositOperasional.dtp_TanggalBukti.SelectedDate = TanggalFormatWPF(TanggalBukti_Terseleksi)
+        win_InputDepositOperasional.txt_NomorFakturPajak.Text = NomorFakturPajak_Terseleksi
+        win_InputDepositOperasional.txt_KodeLawanTransaksi.Text = KodeLawanTransaksi_Terseleksi
+        win_InputDepositOperasional.txt_NamaLawanTransaksi.Text = NamaLawanTransaksi_Terseleksi
+        win_InputDepositOperasional.txt_KodeCustomer.Text = KodeCustomer_Terseleksi
+        win_InputDepositOperasional.txt_NamaCustomer.Text = NamaCustomer_Terseleksi
+        IsiValueElemenRichTextBox(win_InputDepositOperasional.txt_Keterangan, Keterangan_Terseleksi)
+    End Sub
 
     Private Sub datagridUtama_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles datagridUtama.SelectionChanged
     End Sub
@@ -455,10 +470,12 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
             TampilkanSidebarKanan()
             btn_Edit.IsEnabled = True
             btn_Hapus.IsEnabled = True
+            btn_Lihat.IsEnabled = True
             btn_Cetak.IsEnabled = True
         Else
             btn_Edit.IsEnabled = False
             btn_Hapus.IsEnabled = False
+            btn_Lihat.IsEnabled = False
             btn_Cetak.IsEnabled = False
         End If
 
@@ -467,6 +484,8 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
 
         If Tahun_TanggalBukti <> TahunBukuAktif Then
             btn_Edit.IsEnabled = False
+            btn_Cetak.IsEnabled = False
+            btn_Lihat.IsEnabled = False
         End If
 
         NomorJVBayar_Terseleksi = 0
@@ -1005,6 +1024,7 @@ Public Class wpfUsc_BukuPengawasanDepositOperasional
     Private Sub txt_TotalTabel_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_TotalTabel.TextChanged
         PemecahRibuanUntukTextBox_WPF(txt_TotalTabel)
     End Sub
+
 
 
     '=======================================================================================================================================

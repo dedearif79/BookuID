@@ -40,6 +40,8 @@
                         <Button Style="{StaticResource styleButtonFormHalamanCrudEdit}"         Name="btn_Edit" />
                         <Button Style="{StaticResource styleButtonFormHalamanCrudHapus}"        Name="btn_Hapus" />
                         <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
+                        <Button Style="{StaticResource styleButtonFormHalamanLihat}"            Name="btn_Lihat" />
+                        <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
                         <Button Style="{StaticResource styleButtonFormHalamanCetak}"            Name="btn_Cetak" />
                         <Border Style="{StaticResource styleBorderHeaderSeparatorTombol}" />
                         <Button Style="{StaticResource styleButtonFormHalamanExport }"          Name="btn_Export" />

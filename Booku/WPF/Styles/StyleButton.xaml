@@ -170,6 +170,12 @@
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
+    <!-- Button Form Halaman - Lihat -->
+    <Style x:Key="styleButtonFormHalamanLihat" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
+        <Setter Property="Content" Value="Lihat"/>
+        <Setter Property="Padding" Value="15 0"/>
+    </Style>
+
     <!-- Button Form Halaman - Pratinjau -->
     <Style x:Key="styleButtonFormHalamanPratinjau" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Pratinjau"/>
