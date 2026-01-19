@@ -6,9 +6,25 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
-## Project Overview
+## Terminologi
 
-BookuID adalah aplikasi akuntansi enterprise berbasis VB.NET dengan arsitektur **WPF murni**, menggunakan .NET 8.0 untuk Windows.
+| Istilah | Mengacu Kepada |
+|---------|----------------|
+| **BookuID** | Keseluruhan Solution (berisi 8 project) |
+| **Booku** / **Project Booku** | Project utama di folder `BookuID/Booku/` |
+
+> **PENTING:** Jangan keliru antara "BookuID" (solution) dan "Booku" (project utama). Jika disebut "project Booku", artinya mengacu kepada project yang ada di folder `BookuID/Booku/`, bukan keseluruhan solution.
+
+## Solution Overview
+
+**BookuID** adalah sebuah Solution berbasis VB.NET dengan arsitektur **WPF murni** untuk Windows, menggunakan .NET 8.0. Solution ini berisi beberapa project pendukung yang saling terintegrasi.
+
+**Booku** (project utama) adalah aplikasi **Sistem Akuntansi Terpadu** yang memadukan:
+- Sisi **Finance** (pengelolaan keuangan)
+- Sisi **Akuntansi** (pembukuan)
+- **Perhitungan Pajak** otomatis sesuai peraturan perpajakan Indonesia
+
+**Multicurrency:** Mendukung 8 mata uang — IDR (Rupiah) + 7 mata uang asing: **USD, AUD, JPY, CNY, EUR, SGD, GBP**. Dapat ditambah sesuai kebutuhan klien.
 
 > **Arsitektur WPF Murni:** Entry point menggunakan `App.xaml` + `App.xaml.vb` (WPF Application class). Seluruh UI menggunakan WPF (Window, UserControl, Style). Tidak ada dependency WinForms.
 

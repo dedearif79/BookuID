@@ -1,8 +1,17 @@
 # Architecture
 
+## Terminologi
+
+| Istilah | Mengacu Kepada |
+|---------|----------------|
+| **BookuID** | Keseluruhan Solution (berisi 8 project) |
+| **Booku** / **Project Booku** | Project utama di folder `BookuID/Booku/` |
+
+> **PENTING:** Dokumentasi arsitektur di file ini fokus pada **project Booku** (project utama). Untuk daftar lengkap semua project dalam solution BookuID, lihat `modules-dependencies.md`.
+
 ## WPF Native Architecture
 
-Aplikasi menggunakan arsitektur **WPF murni**:
+Project Booku menggunakan arsitektur **WPF murni**:
 - **Entry Point**: `App.xaml` + `App.xaml.vb` (WPF Application class)
 - **UI**: Seluruh antarmuka menggunakan WPF (Window, UserControl, Style)
 - **Library**: Booku Library (bcomm.dll) juga WPF murni tanpa dependency WinForms
