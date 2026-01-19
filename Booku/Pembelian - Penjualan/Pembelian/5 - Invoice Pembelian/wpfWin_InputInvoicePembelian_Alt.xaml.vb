@@ -910,7 +910,7 @@ Public Class wpfWin_InputInvoicePembelian_Alt
             If JenisTahunBuku = JenisTahunBuku_LAMPAU Then
                 txt_Kurs.Text = KursTengahBI_AkhirTahunIni(KodeMataUang)
             Else
-                If Not ProsesLoadingForm Then txt_Kurs.Text = AmbilValue_KursTengahBI(KodeMataUang, TanggalInvoice)
+                If Not ProsesLoadingForm Then txt_Kurs.Text = AmbilValue_KursTengahBI(KodeMataUang, TanggalInvoice, txt_Kurs)
             End If
         End If
     End Sub

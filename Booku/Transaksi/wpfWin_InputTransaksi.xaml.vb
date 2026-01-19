@@ -186,7 +186,7 @@ Public Class wpfWin_InputTransaksi
             txt_BiayaAdministrasiBank.Style = CType(Me.FindResource(style_TextBoxFormDialogAngkaAsingPlus), Style)
             txt_JumlahTransfer.Style = CType(Me.FindResource(style_TextBoxFormDialogAngkaAsingPlusReadOnly), Style)
             txt_TotalBank.Style = CType(Me.FindResource(style_TextBoxFormDialogAngkaAsingPlusReadOnly), Style)
-            If dtp_TanggalTransaksi.Text <> Kosongan Then txt_Kurs.Text = AmbilValue_KursTengahBI(KodeMataUang, TanggalTransaksi)
+            If dtp_TanggalTransaksi.Text <> Kosongan Then txt_Kurs.Text = AmbilValue_KursTengahBI(KodeMataUang, TanggalTransaksi, txt_Kurs)
         End If
     End Sub
 

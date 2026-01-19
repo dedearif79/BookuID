@@ -152,7 +152,7 @@ Public Class wpfWin_BukuBesarPembantu
         If KodeMataUang = KodeMataUang_IDR Then
             SaldoAkhirIDR = SaldoIDR
         Else
-            txt_KursTerakhirTransaksi.Text = AmbilValue_KursTengahBI(KodeMataUang, TanggalTerakhirTransaksi_Date)
+            txt_KursTerakhirTransaksi.Text = AmbilValue_KursTengahBI(KodeMataUang, TanggalTerakhirTransaksi_Date, txt_KursTerakhirTransaksi)
             lbl_TanggalTerakhirTransaksi.Text = "(" & TanggalFormatTampilan(TanggalTerakhirTransaksi_Date) & ")"
             If Not KodeMataUang = KodeMataUang_IDR Then
                 MutasiDebetIDR = AmbilValue_NilaiMataUang(KodeMataUang, KursTerakhirTransaksi, MutasiDebetMUA)

@@ -185,7 +185,7 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
             PenjualanLokal = False
             PenjualanEkspor = True
             If JenisTahunBuku = JenisTahunBuku_LAMPAU Then txt_KursHariIni.Text = KursTengahBI_AkhirTahunIni(KodeMataUang)
-            If JenisTahunBuku = JenisTahunBuku_NORMAL Then txt_KursHariIni.Text = AmbilValue_KursTengahBI(KodeMataUang, Today)
+            If JenisTahunBuku = JenisTahunBuku_NORMAL Then txt_KursHariIni.Text = AmbilValue_KursTengahBI(KodeMataUang, Today, txt_KursHariIni)
         End If
 
         LogikaDestinasiPenjualan()

@@ -95,7 +95,7 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirTahunLalu = AmbilAngka_Desimal(txt_KursAkhirTahunLalu.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirTahunLalu_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirTahunLalu.Click
-        txt_KursAkhirTahunLalu.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(12, TahunKurs - 1))
+        txt_KursAkhirTahunLalu.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(12, TahunKurs - 1), txt_KursAkhirTahunLalu)
     End Sub
 
 
@@ -103,7 +103,7 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirJanuari = AmbilAngka_Desimal(txt_KursAkhirJanuari.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirJanuari_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirJanuari.Click
-        txt_KursAkhirJanuari.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(1, TahunKurs))
+        txt_KursAkhirJanuari.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(1, TahunKurs), txt_KursAkhirJanuari)
     End Sub
 
 
@@ -111,7 +111,7 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirFebruari = AmbilAngka_Desimal(txt_KursAkhirFebruari.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirFebruari_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirFebruari.Click
-        txt_KursAkhirFebruari.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(2, TahunKurs))
+        txt_KursAkhirFebruari.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(2, TahunKurs), txt_KursAkhirFebruari)
     End Sub
 
 
@@ -119,7 +119,7 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirMaret = AmbilAngka_Desimal(txt_KursAkhirMaret.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirMaret_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirMaret.Click
-        txt_KursAkhirMaret.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(3, TahunKurs))
+        txt_KursAkhirMaret.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(3, TahunKurs), txt_KursAkhirMaret)
     End Sub
 
 
@@ -127,7 +127,7 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirApril = AmbilAngka_Desimal(txt_KursAkhirApril.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirApril_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirApril.Click
-        txt_KursAkhirApril.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(4, TahunKurs))
+        txt_KursAkhirApril.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(4, TahunKurs), txt_KursAkhirApril)
     End Sub
 
 
@@ -135,7 +135,7 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirMei = AmbilAngka_Desimal(txt_KursAkhirMei.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirMei_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirMei.Click
-        txt_KursAkhirMei.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(5, TahunKurs))
+        txt_KursAkhirMei.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(5, TahunKurs), txt_KursAkhirMei)
     End Sub
 
 
@@ -143,7 +143,7 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirJuni = AmbilAngka_Desimal(txt_KursAkhirJuni.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirJuni_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirJuni.Click
-        txt_KursAkhirJuni.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(6, TahunKurs))
+        txt_KursAkhirJuni.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(6, TahunKurs), txt_KursAkhirJuni)
     End Sub
 
 
@@ -151,7 +151,7 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirJuli = AmbilAngka_Desimal(txt_KursAkhirJuli.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirJuli_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirJuli.Click
-        txt_KursAkhirJuli.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(7, TahunKurs))
+        txt_KursAkhirJuli.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(7, TahunKurs), txt_KursAkhirJuli)
     End Sub
 
 
@@ -159,7 +159,7 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirAgustus = AmbilAngka_Desimal(txt_KursAkhirAgustus.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirAgustus_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirAgustus.Click
-        txt_KursAkhirAgustus.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(8, TahunKurs))
+        txt_KursAkhirAgustus.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(8, TahunKurs), txt_KursAkhirAgustus)
     End Sub
 
 
@@ -167,7 +167,7 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirSeptember = AmbilAngka_Desimal(txt_KursAkhirSeptember.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirSeptember_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirSeptember.Click
-        txt_KursAkhirSeptember.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(9, TahunKurs))
+        txt_KursAkhirSeptember.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(9, TahunKurs), txt_KursAkhirSeptember)
     End Sub
 
 
@@ -175,7 +175,7 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirOktober = AmbilAngka_Desimal(txt_KursAkhirOktober.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirOktober_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirOktober.Click
-        txt_KursAkhirOktober.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(10, TahunKurs))
+        txt_KursAkhirOktober.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(10, TahunKurs), txt_KursAkhirOktober)
     End Sub
 
 
@@ -183,7 +183,7 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirNopember = AmbilAngka_Desimal(txt_KursAkhirNopember.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirNopember_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirNopember.Click
-        txt_KursAkhirNopember.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(11, TahunKurs))
+        txt_KursAkhirNopember.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(11, TahunKurs), txt_KursAkhirNopember)
     End Sub
 
 
@@ -191,37 +191,37 @@ Public Class wpfWin_UpdateKurs_Bulanan
         KursAkhirDesember = AmbilAngka_Desimal(txt_KursAkhirDesember.Text)
     End Sub
     Private Sub btn_UpdateKursAkhirDesember_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateKursAkhirDesember.Click
-        txt_KursAkhirDesember.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(12, TahunKurs))
+        txt_KursAkhirDesember.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(12, TahunKurs), txt_KursAkhirDesember)
     End Sub
 
 
     Sub UpdateKursTengah_BI()
 
-        txt_KursAkhirTahunLalu.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(12, TahunKurs - 1))
+        txt_KursAkhirTahunLalu.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(12, TahunKurs - 1), txt_KursAkhirTahunLalu)
         Jeda(333)
-        txt_KursAkhirJanuari.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(1, TahunKurs))
+        txt_KursAkhirJanuari.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(1, TahunKurs), txt_KursAkhirJanuari)
         Jeda(333)
-        txt_KursAkhirFebruari.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(2, TahunKurs))
+        txt_KursAkhirFebruari.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(2, TahunKurs), txt_KursAkhirFebruari)
         Jeda(333)
-        txt_KursAkhirMaret.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(3, TahunKurs))
+        txt_KursAkhirMaret.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(3, TahunKurs), txt_KursAkhirMaret)
         Jeda(333)
-        txt_KursAkhirApril.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(4, TahunKurs))
+        txt_KursAkhirApril.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(4, TahunKurs), txt_KursAkhirApril)
         Jeda(333)
-        txt_KursAkhirMei.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(5, TahunKurs))
+        txt_KursAkhirMei.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(5, TahunKurs), txt_KursAkhirMei)
         Jeda(333)
-        txt_KursAkhirJuni.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(6, TahunKurs))
+        txt_KursAkhirJuni.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(6, TahunKurs), txt_KursAkhirJuni)
         Jeda(333)
-        txt_KursAkhirJuli.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(7, TahunKurs))
+        txt_KursAkhirJuli.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(7, TahunKurs), txt_KursAkhirJuli)
         Jeda(333)
-        txt_KursAkhirAgustus.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(8, TahunKurs))
+        txt_KursAkhirAgustus.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(8, TahunKurs), txt_KursAkhirAgustus)
         Jeda(333)
-        txt_KursAkhirSeptember.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(9, TahunKurs))
+        txt_KursAkhirSeptember.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(9, TahunKurs), txt_KursAkhirSeptember)
         Jeda(333)
-        txt_KursAkhirOktober.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(10, TahunKurs))
+        txt_KursAkhirOktober.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(10, TahunKurs), txt_KursAkhirOktober)
         Jeda(333)
-        txt_KursAkhirNopember.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(11, TahunKurs))
+        txt_KursAkhirNopember.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(11, TahunKurs), txt_KursAkhirNopember)
         Jeda(333)
-        txt_KursAkhirDesember.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(12, TahunKurs))
+        txt_KursAkhirDesember.Text = AmbilValue_KursTengahBI(KodeMataUang, AmbilTanggalAkhirBulan_BerdasarkanBulanDanTahun(12, TahunKurs), txt_KursAkhirDesember)
 
     End Sub
 

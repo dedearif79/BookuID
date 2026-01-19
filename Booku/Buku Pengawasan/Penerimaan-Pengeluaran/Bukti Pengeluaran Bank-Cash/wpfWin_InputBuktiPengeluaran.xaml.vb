@@ -1645,7 +1645,7 @@ Public Class wpfWin_InputBuktiPengeluaran
                 If KodeMataUang = KodeMataUang_IDR Then
                     txt_Kurs.Text = 1
                 Else
-                    txt_Kurs.Text = AmbilValue_KursTengahBI(KodeMataUang, TanggalKK)
+                    txt_Kurs.Text = AmbilValue_KursTengahBI(KodeMataUang, TanggalKK, txt_Kurs)
                 End If
             End If
         End If

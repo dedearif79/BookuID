@@ -272,7 +272,7 @@ Public Class wpfWin_InputPemindahbukuan
                 txt_JumlahKreditIDR.Visibility = Visibility.Collapsed
                 txt_JumlahKredit.Style = CType(Me.FindResource(style_TextBoxFormDialogAngkaSeparatePlus), Style)
             Else
-                If Not ProsesLoadingForm Then txt_KursBI_Kredit.Text = AmbilValue_KursTengahBI(KodeMataUang_Kredit, TanggalBPPB)
+                If Not ProsesLoadingForm Then txt_KursBI_Kredit.Text = AmbilValue_KursTengahBI(KodeMataUang_Kredit, TanggalBPPB, txt_KursBI_Kredit)
                 txt_KursBank_Kredit.Text = Kosongan
                 lbl_KursBI_Kredit.Visibility = Visibility.Visible
                 lbl_KursBank_Kredit.Visibility = Visibility.Visible
@@ -354,7 +354,7 @@ Public Class wpfWin_InputPemindahbukuan
                     txt_JumlahDebet.Text = JumlahKredit_IDR
                 End If
             Else
-                If Not ProsesLoadingForm Then txt_KursBI_Debet.Text = AmbilValue_KursTengahBI(KodeMataUang_Debet, TanggalBPPB)
+                If Not ProsesLoadingForm Then txt_KursBI_Debet.Text = AmbilValue_KursTengahBI(KodeMataUang_Debet, TanggalBPPB, txt_KursBI_Debet)
                 txt_KursBank_Debet.Text = Kosongan
                 lbl_KursBI_Debet.Visibility = Visibility.Visible
                 lbl_KursBank_Debet.Visibility = Visibility.Visible

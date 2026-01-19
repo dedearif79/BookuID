@@ -92,7 +92,8 @@
                             <Button Style="{StaticResource styleButtonFormDialogPlus }"     Name="btn_TambahSJBAST"/>
                             <Button Style="{StaticResource styleButtonFormDialogMinus}"     Name="btn_SingkirkanSJBAST" />
                         </StackPanel>
-                        <DataGrid       Grid.Row="9"  Grid.Column="0"   Name="datagridSJBAST"   Grid.ColumnSpan="2" VerticalAlignment="Top" AutoGenerateColumns="False" MinHeight="27"  Margin="0 0 0 12"/>
+                        <DataGrid       Grid.Row="9"  Grid.Column="0"   Name="datagridSJBAST"   Grid.ColumnSpan="2" VerticalAlignment="Top" AutoGenerateColumns="False" MinHeight="27"  Margin="0 0 0 12"
+                                        Style="{StaticResource StyleDataGridFormDialog}"/>
                         <StackPanel     Grid.Row="10" Grid.Column="1"   Style="{StaticResource stylePanelFormDialogKolom}"  >
                             <TextBox    Width="135"                     Style="{StaticResource styleTextBoxFormDialog}"        Name="txt_NomorPO" />
                             <Button                                     Style="{StaticResource styleButtonFormDialogPilihKode}"     Name="btn_PilihPO"/>

@@ -2557,7 +2557,12 @@ Module wpfMdl_PublicSub
     End Sub
 
 
-    Public Function AmbilValue_KursTengahBI(KodeMataUang As String, tanggal As DateTime) As Decimal
+    Public Function AmbilValue_KursTengahBI(KodeMataUang As String, tanggal As DateTime, Optional txt_Kurs As TextBox = Nothing) As Decimal
+
+        If Not IsNothing(txt_Kurs) Then
+            Dim foundStyle = txt_Kurs.TryFindResource(style_TextBoxFormDialogAngkaAsingPlusReadOnly)
+            If foundStyle IsNot Nothing Then txt_Kurs.Style = CType(foundStyle, Style)
+        End If
 
         Dim KursTengah As Decimal = 0
 
@@ -2568,10 +2573,23 @@ Module wpfMdl_PublicSub
             Return 0
         End If
 
+        Dim Pesan As String =
+            "Sistem tidak dapat mengakses Data Kurs" & Enter2Baris &
+            teks_SilakanCobaLagi_Internet
+
         BukaDatabasePublic()
 
         If Not StatusKoneksiDatabasePublic Then
-            PesanPeringatan("Sistem tidak dapat mengakses Data Kurs" & Enter2Baris & teks_SilakanCobaLagi_Internet)
+            If IsNothing(txt_Kurs) Then
+                PesanPeringatan(Pesan)
+            Else
+                PesanPeringatan(Pesan & Enter2Baris &
+                                "Atau silakan isi manual data kurs.")
+                Dim foundStyle = txt_Kurs.TryFindResource(style_TextBoxFormDialogAngkaAsingPlus)
+                If foundStyle IsNot Nothing Then txt_Kurs.Style = CType(foundStyle, Style)
+                txt_Kurs.IsEnabled = True
+                txt_Kurs.Focus()
+            End If
             Return 0
         End If
 
