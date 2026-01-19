@@ -759,7 +759,7 @@ Public Class wpfUsc_InvoicePembelian
             win_InputInvoicePembelian_Alt.NomorPembelian = NomorPembelian_Terseleksi
             If AmbilTeksKanan(JatuhTempo_Terseleksi, 2) = "ri" Then
                 win_InputInvoicePembelian_Alt.txt_JumlahHariJatuhTempo.Text = AmbilAngka(JatuhTempo_Terseleksi)
-                win_InputInvoicePembelian_Alt.dtp_TanggalJatuhTempo.Text = Kosongan
+                KosongkanDatePicker(win_InputInvoicePembelian_Alt.dtp_TanggalJatuhTempo)
                 win_InputInvoicePembelian_Alt.rdb_JumlahHariJatuhTempo.IsChecked = True
             Else
                 win_InputInvoicePembelian_Alt.txt_JumlahHariJatuhTempo.Text = Kosongan
@@ -791,7 +791,8 @@ Public Class wpfUsc_InvoicePembelian
             win_InputInvoicePembelian.NomorPembelian = NomorPembelian_Terseleksi
             If AmbilTeksKanan(JatuhTempo_Terseleksi, 2) = "ri" Then
                 win_InputInvoicePembelian.txt_JumlahHariJatuhTempo.Text = AmbilAngka(JatuhTempo_Terseleksi)
-                win_InputInvoicePembelian.dtp_TanggalJatuhTempo.Text = Kosongan
+                KosongkanDatePicker(win_InputInvoicePembelian.dtp_TanggalJatuhTempo)
+
                 win_InputInvoicePembelian.rdb_JumlahHariJatuhTempo.IsChecked = True
             Else
                 win_InputInvoicePembelian.txt_JumlahHariJatuhTempo.Text = Kosongan

@@ -335,13 +335,13 @@
     <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\wpfUsc_BukuPenjualan.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\wpfUsc_POPenjualan.xaml.vb">
+    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjualan\wpfUsc_POPenjualan.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\wpfWin_InputPOPenjualan.xaml.vb">
+    <Compile Update="Pembelian - Penjualan\Penjualan\2 - PO Penjualan\wpfWin_InputPOPenjualan.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfWin_InputInvoicePenjualan_Alt.xaml.vb">
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\wpfWin_InputInvoicePenjualan_Alt.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfUsc_SuratJalanPenjualan.xaml.vb">
@@ -356,16 +356,16 @@
     <Compile Update="Pembelian - Penjualan\Penjualan\4 - BAST\wpfWin_InputBASTPenjualan.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfUsc_InvoicePenjualan.xaml.vb">
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\wpfUsc_InvoicePenjualan.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfWin_InputInvoicePenjualan.xaml.vb">
+    <Compile Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\wpfWin_InputInvoicePenjualan.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\wpfUsc_ReturPenjualan.xaml.vb">
+    <Compile Update="Pembelian - Penjualan\Penjualan\6 - Retur Penjualan\wpfUsc_ReturPenjualan.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\wpfWin_InputReturPenjualan.xaml.vb">
+    <Compile Update="Pembelian - Penjualan\Penjualan\6 - Retur Penjualan\wpfWin_InputReturPenjualan.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Pembelian - Penjualan\wpfWin_InputProduk_Nota.xaml.vb">
@@ -670,7 +670,7 @@
     <Page Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\wpfUsc_BukuPenjualan.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\wpfWin_InputPOPenjualan.xaml">
+    <Page Update="Pembelian - Penjualan\Penjualan\2 - PO Penjualan\wpfWin_InputPOPenjualan.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfWin_InputSuratJalanPenjualan.xaml">
@@ -679,13 +679,13 @@
     <Page Update="Pembelian - Penjualan\Penjualan\4 - BAST\wpfWin_InputBASTPenjualan.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfUsc_InvoicePenjualan.xaml">
+    <Page Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\wpfUsc_InvoicePenjualan.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfWin_InputInvoicePenjualan.xaml">
+    <Page Update="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\wpfWin_InputInvoicePenjualan.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\wpfWin_InputReturPenjualan.xaml">
+    <Page Update="Pembelian - Penjualan\Penjualan\6 - Retur Penjualan\wpfWin_InputReturPenjualan.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Pembelian - Penjualan\wpfWin_InputProduk_Nota.xaml">

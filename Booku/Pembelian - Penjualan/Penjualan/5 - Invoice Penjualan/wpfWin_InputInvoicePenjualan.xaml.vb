@@ -2354,7 +2354,7 @@ Public Class wpfWin_InputInvoicePenjualan
         Dim NomorSJBAST_UntukDihapus = rowviewSJBAST("Nomor_SJ_BAST")
         rowviewSJBAST.Delete()
         BersihkanSeleksi_TabelSJBAST()
-        Dim BarisUntukDihapus As New List(Of DataGridViewRow)
+        Dim BarisUntukDihapus As New List(Of DataGridRow)
         For i As Integer = datatabelUtama.Rows.Count - 1 To 0 Step -1
             Dim row As DataRow = datatabelUtama.Rows(i)
             If row("Nomor_SJ_BAST_Produk") = NomorSJBAST_UntukDihapus Then

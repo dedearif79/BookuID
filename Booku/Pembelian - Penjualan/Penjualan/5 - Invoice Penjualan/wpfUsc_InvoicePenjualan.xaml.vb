@@ -686,7 +686,7 @@ Public Class wpfUsc_InvoicePenjualan
             win_InputInvoicePenjualan_Alt.NomorPenjualan = NomorPenjualan_Terseleksi
             If AmbilTeksKanan(JatuhTempo_Terseleksi, 2) = "ri" Then
                 win_InputInvoicePenjualan_Alt.txt_JumlahHariJatuhTempo.Text = AmbilAngka(JatuhTempo_Terseleksi)
-                win_InputInvoicePenjualan_Alt.dtp_TanggalJatuhTempo.Text = Kosongan
+                KosongkanDatePicker(win_InputInvoicePenjualan_Alt.dtp_TanggalJatuhTempo)
                 win_InputInvoicePenjualan_Alt.rdb_JumlahHariJatuhTempo.IsChecked = True
             Else
                 win_InputInvoicePenjualan_Alt.txt_JumlahHariJatuhTempo.Text = Kosongan
@@ -718,7 +718,7 @@ Public Class wpfUsc_InvoicePenjualan
             win_InputInvoicePenjualan.NomorPenjualan = NomorPenjualan_Terseleksi
             If AmbilTeksKanan(JatuhTempo_Terseleksi, 2) = "ri" Then
                 win_InputInvoicePenjualan.txt_JumlahHariJatuhTempo.Text = AmbilAngka(JatuhTempo_Terseleksi)
-                win_InputInvoicePenjualan.dtp_TanggalJatuhTempo.Text = Kosongan
+                KosongkanDatePicker(win_InputInvoicePenjualan.dtp_TanggalJatuhTempo)
                 win_InputInvoicePenjualan.rdb_JumlahHariJatuhTempo.IsChecked = True
             Else
                 win_InputInvoicePenjualan.txt_JumlahHariJatuhTempo.Text = Kosongan

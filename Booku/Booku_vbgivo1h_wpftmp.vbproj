@@ -124,8 +124,8 @@
     <Folder Include="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\" />
     <Folder Include="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\" />
     <Folder Include="Pembelian - Penjualan\Pembelian\X-Trash\" />
-    <Folder Include="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Dengan PO\" />
-    <Folder Include="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Tanpa PO\" />
+    <Folder Include="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Dengan PO\" />
+    <Folder Include="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Tanpa PO\" />
     <Folder Include="Pembelian - Penjualan\Penjualan\X-Trash\" />
     <Folder Include="Resources\" />
   </ItemGroup>
@@ -529,17 +529,17 @@
     <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfUsc_ReturPembelian.g.vb" />
     <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfWin_InputReturPembelian.g.vb" />
     <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\wpfUsc_BukuPenjualan.g.vb" />
-    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\wpfUsc_POPenjualan.g.vb" />
-    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\2 - PO Penjuialan\wpfWin_InputPOPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\2 - PO Penjualan\wpfUsc_POPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\2 - PO Penjualan\wpfWin_InputPOPenjualan.g.vb" />
     <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfUsc_SuratJalanPenjualan.g.vb" />
     <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfWin_InputSuratJalanPenjualan.g.vb" />
     <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\4 - BAST\wpfUsc_BASTPenjualan.g.vb" />
     <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\4 - BAST\wpfWin_InputBASTPenjualan.g.vb" />
-    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfUsc_InvoicePenjualan.g.vb" />
-    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfWin_InputInvoicePenjualan.g.vb" />
-    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\wpfWin_InputInvoicePenjualan_Alt.g.vb" />
-    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\wpfUsc_ReturPenjualan.g.vb" />
-    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\6 - Retur Penjuialan\wpfWin_InputReturPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\wpfUsc_InvoicePenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\wpfWin_InputInvoicePenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\wpfWin_InputInvoicePenjualan_Alt.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\6 - Retur Penjualan\wpfUsc_ReturPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\6 - Retur Penjualan\wpfWin_InputReturPenjualan.g.vb" />
     <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_DorongInvoiceKeJurnal.g.vb" />
     <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_InputProduk_Nota.g.vb" />
     <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_InputProduk_SJBAST.g.vb" />

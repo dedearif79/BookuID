@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Input
@@ -33,6 +33,7 @@ Public Class wpfWin_InputPemindahbukuan
     Public NomorJV
     Public DenganPengajuan As Boolean
     Public TahunBukuNormalTanpaPengajuan As Boolean
+    Public BukaFormMeodeInput As Boolean
 
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded

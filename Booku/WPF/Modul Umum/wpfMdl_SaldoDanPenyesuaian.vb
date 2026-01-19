@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 Imports System.Windows.Controls
 
@@ -116,7 +116,7 @@ Module wpfMdl_SaldoDanPenyesuaian
             win_InputJurnal.datatabelUtama.Rows(3)("Jumlah_Kredit") = JumlahPenyesuaian
             win_InputJurnal.lbl_StatusBalance.Foreground = clrPrimary
             win_InputJurnal.lbl_StatusBalance.Text = "Tidak Ada Selisih"
-            win_InputJurnal.dtp_TanggalJurnal.Text = Kosongan
+            KosongkanDatePicker(win_InputJurnal.dtp_TanggalJurnal)
             IsiValueComboBypassTerkunci(win_InputJurnal.cmb_JenisJurnal, JenisJurnal)
             win_InputJurnal.dtp_TanggalJurnal.IsEnabled = True
             win_InputJurnal.grb_Transaksi.IsEnabled = False

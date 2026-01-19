@@ -144,16 +144,20 @@ Public Class wpfWin_InputBuktiPengeluaran
     Public KodeMataUang As String
     Public MataUang_IDR As Boolean
 
+    Public BukaFormMetodeInput As Boolean
+
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
         ProsesLoadingForm = True
 
         If JenisTahunBuku = JenisTahunBuku_NORMAL Then
             If FungsiForm = FungsiForm_TAMBAH Then
-                win_MetodeInputBayar = New wpfWin_MetodeInputBayar
-                win_MetodeInputBayar.ShowDialog()
-                DenganPengajuan = win_MetodeInputBayar.DenganPengajuan
-                If Not win_MetodeInputBayar.LanjutkanProses Then Close()
+                If BukaFormMetodeInput Then
+                    win_MetodeInputBayar = New wpfWin_MetodeInputBayar
+                    win_MetodeInputBayar.ShowDialog()
+                    DenganPengajuan = win_MetodeInputBayar.DenganPengajuan
+                    If Not win_MetodeInputBayar.LanjutkanProses Then Close()
+                End If
             Else
                 AksesDatabase_Transaksi(Buka)
                 cmd = New OdbcCommand(" SELECT Nomor_Bundel, Status_Invoice FROM tbl_BuktiPengeluaran " &
@@ -689,6 +693,8 @@ Public Class wpfWin_InputBuktiPengeluaran
         BiayaProvisi = 0
 
         AdaPenyimpanan = False
+
+        BukaFormMetodeInput = True
 
         ProsesResetForm = False
 

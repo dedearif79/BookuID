@@ -26,6 +26,13 @@
     <Compile Remove="App Admin\**" />
     <Compile Remove="Logger\**" />
     <Compile Remove="Menu Tambahan\**" />
+    <Compile Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\**" />
+    <Compile Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\**" />
+    <Compile Remove="Pembelian - Penjualan\Pembelian\X-Trash\**" />
+    <Compile Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Dengan PO\**" />
+    <Compile Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Tanpa PO\**" />
+    <Compile Remove="Pembelian - Penjualan\Penjualan\X-Trash\**" />
+    <Compile Remove="Resources\**" />
     <Compile Remove="WPF\Styles\Class Window\**" />
     <Compile Remove="X_Deprecated\**" />
     <Compile Remove="My Project\Application.Designer.vb" />
@@ -44,14 +51,35 @@
     <EmbeddedResource Remove="App Admin\**" />
     <EmbeddedResource Remove="Logger\**" />
     <EmbeddedResource Remove="Menu Tambahan\**" />
+    <EmbeddedResource Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\**" />
+    <EmbeddedResource Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\**" />
+    <EmbeddedResource Remove="Pembelian - Penjualan\Pembelian\X-Trash\**" />
+    <EmbeddedResource Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Dengan PO\**" />
+    <EmbeddedResource Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Tanpa PO\**" />
+    <EmbeddedResource Remove="Pembelian - Penjualan\Penjualan\X-Trash\**" />
+    <EmbeddedResource Remove="Resources\**" />
     <EmbeddedResource Remove="WPF\Styles\Class Window\**" />
     <None Remove="App Admin\**" />
     <None Remove="Logger\**" />
     <None Remove="Menu Tambahan\**" />
+    <None Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\**" />
+    <None Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\**" />
+    <None Remove="Pembelian - Penjualan\Pembelian\X-Trash\**" />
+    <None Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Dengan PO\**" />
+    <None Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Tanpa PO\**" />
+    <None Remove="Pembelian - Penjualan\Penjualan\X-Trash\**" />
+    <None Remove="Resources\**" />
     <None Remove="WPF\Styles\Class Window\**" />
     <Page Remove="App Admin\**" />
     <Page Remove="Logger\**" />
     <Page Remove="Menu Tambahan\**" />
+    <Page Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\**" />
+    <Page Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\**" />
+    <Page Remove="Pembelian - Penjualan\Pembelian\X-Trash\**" />
+    <Page Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Dengan PO\**" />
+    <Page Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Tanpa PO\**" />
+    <Page Remove="Pembelian - Penjualan\Penjualan\X-Trash\**" />
+    <Page Remove="Resources\**" />
     <Page Remove="WPF\Styles\Class Window\**" />
   </ItemGroup>
 
@@ -133,13 +161,6 @@
   <ItemGroup>
     <Folder Include="App IT\phpMyAdmin\" />
     <Folder Include="Buku Pengawasan\Hutang Pajak\09 - PPh Pasal 29\" />
-    <Folder Include="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\" />
-    <Folder Include="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\" />
-    <Folder Include="Pembelian - Penjualan\Pembelian\X-Trash\" />
-    <Folder Include="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Dengan PO\" />
-    <Folder Include="Pembelian - Penjualan\Penjualan\5 - Invoice Penjuialan\Tanpa PO\" />
-    <Folder Include="Pembelian - Penjualan\Penjualan\X-Trash\" />
-    <Folder Include="Resources\" />
   </ItemGroup>
 
   <!-- App.xaml: WPF SDK auto-detect sebagai ApplicationDefinition -->

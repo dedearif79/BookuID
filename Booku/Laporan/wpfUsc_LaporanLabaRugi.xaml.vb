@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
@@ -81,33 +81,33 @@ Public Class wpfUsc_LaporanLabaRugi
             'Style Tabel :
             datatabelUtama.Rows.Clear()
 
-        Dim QueryTampilanUmum = " SELECT * FROM tbl_COA WHERE Visibilitas = '" & Pilihan_Ya & "' "
+            Dim QueryTampilanUmum = " SELECT * FROM tbl_COA WHERE Visibilitas = '" & Pilihan_Ya & "' "
 
-        '-----------------------------------------------------------
-        'Pendapatan
-        '-----------------------------------------------------------
-        datatabelUtama.Rows.Add("Pendapatan")
+            '-----------------------------------------------------------
+            'Pendapatan
+            '-----------------------------------------------------------
+            datatabelUtama.Rows.Add("Pendapatan")
 
-        'Penjualan :
-        'DataGridView.Rows.Add("Penjualan")
-        QueryTampilan = QueryTampilanUmum & " AND COA LIKE '4%' "
-        DataPerKategoriCOA()
+            'Penjualan :
+            'DataGridView.Rows.Add("Penjualan")
+            QueryTampilan = QueryTampilanUmum & " AND COA LIKE '4%' "
+            DataPerKategoriCOA()
 
-        'Total Pendapatan
-        Dim TotalSaldoJanuariPendapatan As Int64 = TotalSaldoJanuari
-        Dim TotalSaldoFebruariPendapatan As Int64 = TotalSaldoFebruari
-        Dim TotalSaldoMaretPendapatan As Int64 = TotalSaldoMaret
-        Dim TotalSaldoAprilPendapatan As Int64 = TotalSaldoApril
-        Dim TotalSaldoMeiPendapatan As Int64 = TotalSaldoMei
-        Dim TotalSaldoJuniPendapatan As Int64 = TotalSaldoJuni
-        Dim TotalSaldoJuliPendapatan As Int64 = TotalSaldoJuli
-        Dim TotalSaldoAgustusPendapatan As Int64 = TotalSaldoAgustus
-        Dim TotalSaldoSeptemberPendapatan As Int64 = TotalSaldoSeptember
-        Dim TotalSaldoOktoberPendapatan As Int64 = TotalSaldoOktober
-        Dim TotalSaldoNopemberPendapatan As Int64 = TotalSaldoNopember
-        Dim TotalSaldoDesemberPendapatan As Int64 = TotalSaldoDesember
-        Dim TotalSaldoKeseluruhanPendapatan As Int64 = TotalSaldoKeseluruhan
-        datatabelUtama.Rows.Add(
+            'Total Pendapatan
+            Dim TotalSaldoJanuariPendapatan As Int64 = TotalSaldoJanuari
+            Dim TotalSaldoFebruariPendapatan As Int64 = TotalSaldoFebruari
+            Dim TotalSaldoMaretPendapatan As Int64 = TotalSaldoMaret
+            Dim TotalSaldoAprilPendapatan As Int64 = TotalSaldoApril
+            Dim TotalSaldoMeiPendapatan As Int64 = TotalSaldoMei
+            Dim TotalSaldoJuniPendapatan As Int64 = TotalSaldoJuni
+            Dim TotalSaldoJuliPendapatan As Int64 = TotalSaldoJuli
+            Dim TotalSaldoAgustusPendapatan As Int64 = TotalSaldoAgustus
+            Dim TotalSaldoSeptemberPendapatan As Int64 = TotalSaldoSeptember
+            Dim TotalSaldoOktoberPendapatan As Int64 = TotalSaldoOktober
+            Dim TotalSaldoNopemberPendapatan As Int64 = TotalSaldoNopember
+            Dim TotalSaldoDesemberPendapatan As Int64 = TotalSaldoDesember
+            Dim TotalSaldoKeseluruhanPendapatan As Int64 = TotalSaldoKeseluruhan
+            datatabelUtama.Rows.Add(
             "Total Pendapatan", "",
             TotalSaldoJanuariPendapatan,
             TotalSaldoFebruariPendapatan,
@@ -122,31 +122,31 @@ Public Class wpfUsc_LaporanLabaRugi
             TotalSaldoNopemberPendapatan,
             TotalSaldoDesemberPendapatan,
             TotalSaldoKeseluruhanPendapatan)
-        'datatabelUtama.Rows.Add()
+            'datatabelUtama.Rows.Add()
 
-        '-----------------------------------------------------------
-        'Harga Pokok Produksi
-        '-----------------------------------------------------------
-        datatabelUtama.Rows.Add("Harga Pokok Penjualan", "")
+            '-----------------------------------------------------------
+            'Harga Pokok Produksi
+            '-----------------------------------------------------------
+            datatabelUtama.Rows.Add("Harga Pokok Penjualan", "")
 
-        QueryTampilan = QueryTampilanUmum & " AND COA LIKE '5%' "
-        DataPerKategoriCOA()
+            QueryTampilan = QueryTampilanUmum & " AND COA LIKE '5%' "
+            DataPerKategoriCOA()
 
-        'Total Beban Pokok Penjualan
-        Dim TotalSaldoJanuariBebanPokokPenjualan As Int64 = TotalSaldoJanuari
-        Dim TotalSaldoFebruariBebanPokokPenjualan As Int64 = TotalSaldoFebruari
-        Dim TotalSaldoMaretBebanPokokPenjualan As Int64 = TotalSaldoMaret
-        Dim TotalSaldoAprilBebanPokokPenjualan As Int64 = TotalSaldoApril
-        Dim TotalSaldoMeiBebanPokokPenjualan As Int64 = TotalSaldoMei
-        Dim TotalSaldoJuniBebanPokokPenjualan As Int64 = TotalSaldoJuni
-        Dim TotalSaldoJuliBebanPokokPenjualan As Int64 = TotalSaldoJuli
-        Dim TotalSaldoAgustusBebanPokokPenjualan As Int64 = TotalSaldoAgustus
-        Dim TotalSaldoSeptemberBebanPokokPenjualan As Int64 = TotalSaldoSeptember
-        Dim TotalSaldoOktoberBebanPokokPenjualan As Int64 = TotalSaldoOktober
-        Dim TotalSaldoNopemberBebanPokokPenjualan As Int64 = TotalSaldoNopember
-        Dim TotalSaldoDesemberBebanPokokPenjualan As Int64 = TotalSaldoDesember
-        Dim TotalSaldoKeseluruhanBebanPokokPenjualan As Int64 = TotalSaldoKeseluruhan
-        datatabelUtama.Rows.Add(
+            'Total Beban Pokok Penjualan
+            Dim TotalSaldoJanuariBebanPokokPenjualan As Int64 = TotalSaldoJanuari
+            Dim TotalSaldoFebruariBebanPokokPenjualan As Int64 = TotalSaldoFebruari
+            Dim TotalSaldoMaretBebanPokokPenjualan As Int64 = TotalSaldoMaret
+            Dim TotalSaldoAprilBebanPokokPenjualan As Int64 = TotalSaldoApril
+            Dim TotalSaldoMeiBebanPokokPenjualan As Int64 = TotalSaldoMei
+            Dim TotalSaldoJuniBebanPokokPenjualan As Int64 = TotalSaldoJuni
+            Dim TotalSaldoJuliBebanPokokPenjualan As Int64 = TotalSaldoJuli
+            Dim TotalSaldoAgustusBebanPokokPenjualan As Int64 = TotalSaldoAgustus
+            Dim TotalSaldoSeptemberBebanPokokPenjualan As Int64 = TotalSaldoSeptember
+            Dim TotalSaldoOktoberBebanPokokPenjualan As Int64 = TotalSaldoOktober
+            Dim TotalSaldoNopemberBebanPokokPenjualan As Int64 = TotalSaldoNopember
+            Dim TotalSaldoDesemberBebanPokokPenjualan As Int64 = TotalSaldoDesember
+            Dim TotalSaldoKeseluruhanBebanPokokPenjualan As Int64 = TotalSaldoKeseluruhan
+            datatabelUtama.Rows.Add(
             "Total Beban Pokok Penjualan", "",
             TotalSaldoJanuariBebanPokokPenjualan,
             TotalSaldoFebruariBebanPokokPenjualan,
@@ -161,23 +161,23 @@ Public Class wpfUsc_LaporanLabaRugi
             TotalSaldoNopemberBebanPokokPenjualan,
             TotalSaldoDesemberBebanPokokPenjualan,
             TotalSaldoKeseluruhanBebanPokokPenjualan)
-        'datatabelUtama.Rows.Add()
+            'datatabelUtama.Rows.Add()
 
-        'Laba/Rugi Bruto
-        Dim LabaRugiBrutoJanuari As Int64 = TotalSaldoJanuariPendapatan - TotalSaldoJanuariBebanPokokPenjualan
-        Dim LabaRugiBrutoFebruari As Int64 = TotalSaldoFebruariPendapatan - TotalSaldoFebruariBebanPokokPenjualan
-        Dim LabaRugiBrutoMaret As Int64 = TotalSaldoMaretPendapatan - TotalSaldoMaretBebanPokokPenjualan
-        Dim LabaRugiBrutoApril As Int64 = TotalSaldoAprilPendapatan - TotalSaldoAprilBebanPokokPenjualan
-        Dim LabaRugiBrutoMei As Int64 = TotalSaldoMeiPendapatan - TotalSaldoMeiBebanPokokPenjualan
-        Dim LabaRugiBrutoJuni As Int64 = TotalSaldoJuniPendapatan - TotalSaldoJuniBebanPokokPenjualan
-        Dim LabaRugiBrutoJuli As Int64 = TotalSaldoJuliPendapatan - TotalSaldoJuliBebanPokokPenjualan
-        Dim LabaRugiBrutoAgustus As Int64 = TotalSaldoAgustusPendapatan - TotalSaldoAgustusBebanPokokPenjualan
-        Dim LabaRugiBrutoSeptember As Int64 = TotalSaldoSeptemberPendapatan - TotalSaldoSeptemberBebanPokokPenjualan
-        Dim LabaRugiBrutoOktober As Int64 = TotalSaldoOktoberPendapatan - TotalSaldoOktoberBebanPokokPenjualan
-        Dim LabaRugiBrutoNopember As Int64 = TotalSaldoNopemberPendapatan - TotalSaldoNopemberBebanPokokPenjualan
-        Dim LabaRugiBrutoDesember As Int64 = TotalSaldoDesemberPendapatan - TotalSaldoDesemberBebanPokokPenjualan
-        Dim TotalLabaRugiBruto As Int64 = TotalSaldoKeseluruhanPendapatan - TotalSaldoKeseluruhanBebanPokokPenjualan
-        datatabelUtama.Rows.Add(
+            'Laba/Rugi Bruto
+            Dim LabaRugiBrutoJanuari As Int64 = TotalSaldoJanuariPendapatan - TotalSaldoJanuariBebanPokokPenjualan
+            Dim LabaRugiBrutoFebruari As Int64 = TotalSaldoFebruariPendapatan - TotalSaldoFebruariBebanPokokPenjualan
+            Dim LabaRugiBrutoMaret As Int64 = TotalSaldoMaretPendapatan - TotalSaldoMaretBebanPokokPenjualan
+            Dim LabaRugiBrutoApril As Int64 = TotalSaldoAprilPendapatan - TotalSaldoAprilBebanPokokPenjualan
+            Dim LabaRugiBrutoMei As Int64 = TotalSaldoMeiPendapatan - TotalSaldoMeiBebanPokokPenjualan
+            Dim LabaRugiBrutoJuni As Int64 = TotalSaldoJuniPendapatan - TotalSaldoJuniBebanPokokPenjualan
+            Dim LabaRugiBrutoJuli As Int64 = TotalSaldoJuliPendapatan - TotalSaldoJuliBebanPokokPenjualan
+            Dim LabaRugiBrutoAgustus As Int64 = TotalSaldoAgustusPendapatan - TotalSaldoAgustusBebanPokokPenjualan
+            Dim LabaRugiBrutoSeptember As Int64 = TotalSaldoSeptemberPendapatan - TotalSaldoSeptemberBebanPokokPenjualan
+            Dim LabaRugiBrutoOktober As Int64 = TotalSaldoOktoberPendapatan - TotalSaldoOktoberBebanPokokPenjualan
+            Dim LabaRugiBrutoNopember As Int64 = TotalSaldoNopemberPendapatan - TotalSaldoNopemberBebanPokokPenjualan
+            Dim LabaRugiBrutoDesember As Int64 = TotalSaldoDesemberPendapatan - TotalSaldoDesemberBebanPokokPenjualan
+            Dim TotalLabaRugiBruto As Int64 = TotalSaldoKeseluruhanPendapatan - TotalSaldoKeseluruhanBebanPokokPenjualan
+            datatabelUtama.Rows.Add(
             "Laba/Rugi Bruto", "",
             LabaRugiBrutoJanuari,
             LabaRugiBrutoFebruari,
@@ -192,33 +192,32 @@ Public Class wpfUsc_LaporanLabaRugi
             LabaRugiBrutoNopember,
             LabaRugiBrutoDesember,
             TotalLabaRugiBruto)
-        'datatabelUtama.Rows.Add()
+            'datatabelUtama.Rows.Add()
 
-        '-----------------------------------------------------------
-        'Beban Usaha
-        '-----------------------------------------------------------
-        datatabelUtama.Rows.Add("Beban Usaha")
+            '-----------------------------------------------------------
+            'Beban Usaha
+            '-----------------------------------------------------------
+            datatabelUtama.Rows.Add("Beban Usaha")
 
-        'Penjualan :
-        'DataGridView.Rows.Add("Penjualan")
-        QueryTampilan = QueryTampilanUmum & " AND COA LIKE '6%' "
-        DataPerKategoriCOA()
+            'Penjualan :
+            QueryTampilan = QueryTampilanUmum & " AND COA LIKE '6%' "
+            DataPerKategoriCOA()
 
-        'Total BebanUsaha
-        Dim TotalSaldoJanuariBebanUsaha As Int64 = TotalSaldoJanuari
-        Dim TotalSaldoFebruariBebanUsaha As Int64 = TotalSaldoFebruari
-        Dim TotalSaldoMaretBebanUsaha As Int64 = TotalSaldoMaret
-        Dim TotalSaldoAprilBebanUsaha As Int64 = TotalSaldoApril
-        Dim TotalSaldoMeiBebanUsaha As Int64 = TotalSaldoMei
-        Dim TotalSaldoJuniBebanUsaha As Int64 = TotalSaldoJuni
-        Dim TotalSaldoJuliBebanUsaha As Int64 = TotalSaldoJuli
-        Dim TotalSaldoAgustusBebanUsaha As Int64 = TotalSaldoAgustus
-        Dim TotalSaldoSeptemberBebanUsaha As Int64 = TotalSaldoSeptember
-        Dim TotalSaldoOktoberBebanUsaha As Int64 = TotalSaldoOktober
-        Dim TotalSaldoNopemberBebanUsaha As Int64 = TotalSaldoNopember
-        Dim TotalSaldoDesemberBebanUsaha As Int64 = TotalSaldoDesember
-        Dim TotalSaldoKeseluruhanBebanUsaha As Int64 = TotalSaldoKeseluruhan
-        datatabelUtama.Rows.Add(
+            'Total BebanUsaha
+            Dim TotalSaldoJanuariBebanUsaha As Int64 = TotalSaldoJanuari
+            Dim TotalSaldoFebruariBebanUsaha As Int64 = TotalSaldoFebruari
+            Dim TotalSaldoMaretBebanUsaha As Int64 = TotalSaldoMaret
+            Dim TotalSaldoAprilBebanUsaha As Int64 = TotalSaldoApril
+            Dim TotalSaldoMeiBebanUsaha As Int64 = TotalSaldoMei
+            Dim TotalSaldoJuniBebanUsaha As Int64 = TotalSaldoJuni
+            Dim TotalSaldoJuliBebanUsaha As Int64 = TotalSaldoJuli
+            Dim TotalSaldoAgustusBebanUsaha As Int64 = TotalSaldoAgustus
+            Dim TotalSaldoSeptemberBebanUsaha As Int64 = TotalSaldoSeptember
+            Dim TotalSaldoOktoberBebanUsaha As Int64 = TotalSaldoOktober
+            Dim TotalSaldoNopemberBebanUsaha As Int64 = TotalSaldoNopember
+            Dim TotalSaldoDesemberBebanUsaha As Int64 = TotalSaldoDesember
+            Dim TotalSaldoKeseluruhanBebanUsaha As Int64 = TotalSaldoKeseluruhan
+            datatabelUtama.Rows.Add(
             "Total Beban Usaha", "",
             TotalSaldoJanuariBebanUsaha,
             TotalSaldoFebruariBebanUsaha,
@@ -233,23 +232,23 @@ Public Class wpfUsc_LaporanLabaRugi
             TotalSaldoNopemberBebanUsaha,
             TotalSaldoDesemberBebanUsaha,
             TotalSaldoKeseluruhanBebanUsaha)
-        'datatabelUtama.Rows.Add()
+            'datatabelUtama.Rows.Add()
 
-        'Laba/Rugi Usaha
-        Dim LabaRugiUsahaJanuari As Int64 = LabaRugiBrutoJanuari - TotalSaldoJanuariBebanUsaha
-        Dim LabaRugiUsahaFebruari As Int64 = LabaRugiBrutoFebruari - TotalSaldoFebruariBebanUsaha
-        Dim LabaRugiUsahaMaret As Int64 = LabaRugiBrutoMaret - TotalSaldoMaretBebanUsaha
-        Dim LabaRugiUsahaApril As Int64 = LabaRugiBrutoApril - TotalSaldoAprilBebanUsaha
-        Dim LabaRugiUsahaMei As Int64 = LabaRugiBrutoMei - TotalSaldoMeiBebanUsaha
-        Dim LabaRugiUsahaJuni As Int64 = LabaRugiBrutoJuni - TotalSaldoJuniBebanUsaha
-        Dim LabaRugiUsahaJuli As Int64 = LabaRugiBrutoJuli - TotalSaldoJuliBebanUsaha
-        Dim LabaRugiUsahaAgustus As Int64 = LabaRugiBrutoAgustus - TotalSaldoAgustusBebanUsaha
-        Dim LabaRugiUsahaSeptember As Int64 = LabaRugiBrutoSeptember - TotalSaldoSeptemberBebanUsaha
-        Dim LabaRugiUsahaOktober As Int64 = LabaRugiBrutoOktober - TotalSaldoOktoberBebanUsaha
-        Dim LabaRugiUsahaNopember As Int64 = LabaRugiBrutoNopember - TotalSaldoNopemberBebanUsaha
-        Dim LabaRugiUsahaDesember As Int64 = LabaRugiBrutoDesember - TotalSaldoDesemberBebanUsaha
-        Dim TotalLabaRugiUsaha As Int64 = TotalLabaRugiBruto - TotalSaldoKeseluruhanBebanUsaha
-        datatabelUtama.Rows.Add(
+            'Laba/Rugi Usaha
+            Dim LabaRugiUsahaJanuari As Int64 = LabaRugiBrutoJanuari - TotalSaldoJanuariBebanUsaha
+            Dim LabaRugiUsahaFebruari As Int64 = LabaRugiBrutoFebruari - TotalSaldoFebruariBebanUsaha
+            Dim LabaRugiUsahaMaret As Int64 = LabaRugiBrutoMaret - TotalSaldoMaretBebanUsaha
+            Dim LabaRugiUsahaApril As Int64 = LabaRugiBrutoApril - TotalSaldoAprilBebanUsaha
+            Dim LabaRugiUsahaMei As Int64 = LabaRugiBrutoMei - TotalSaldoMeiBebanUsaha
+            Dim LabaRugiUsahaJuni As Int64 = LabaRugiBrutoJuni - TotalSaldoJuniBebanUsaha
+            Dim LabaRugiUsahaJuli As Int64 = LabaRugiBrutoJuli - TotalSaldoJuliBebanUsaha
+            Dim LabaRugiUsahaAgustus As Int64 = LabaRugiBrutoAgustus - TotalSaldoAgustusBebanUsaha
+            Dim LabaRugiUsahaSeptember As Int64 = LabaRugiBrutoSeptember - TotalSaldoSeptemberBebanUsaha
+            Dim LabaRugiUsahaOktober As Int64 = LabaRugiBrutoOktober - TotalSaldoOktoberBebanUsaha
+            Dim LabaRugiUsahaNopember As Int64 = LabaRugiBrutoNopember - TotalSaldoNopemberBebanUsaha
+            Dim LabaRugiUsahaDesember As Int64 = LabaRugiBrutoDesember - TotalSaldoDesemberBebanUsaha
+            Dim TotalLabaRugiUsaha As Int64 = TotalLabaRugiBruto - TotalSaldoKeseluruhanBebanUsaha
+            datatabelUtama.Rows.Add(
             "Laba/Rugi Usaha", "",
             LabaRugiUsahaJanuari,
             LabaRugiUsahaFebruari,
@@ -264,33 +263,32 @@ Public Class wpfUsc_LaporanLabaRugi
             LabaRugiUsahaNopember,
             LabaRugiUsahaDesember,
             TotalLabaRugiUsaha)
-        'datatabelUtama.Rows.Add()
+            'datatabelUtama.Rows.Add()
 
-        '-----------------------------------------------------------
-        'Pendapatan di Luar Usaha
-        '-----------------------------------------------------------
-        datatabelUtama.Rows.Add("Pendapatan di Luar Usaha")
+            '-----------------------------------------------------------
+            'Pendapatan di Luar Usaha
+            '-----------------------------------------------------------
+            datatabelUtama.Rows.Add("Pendapatan di Luar Usaha")
 
-        'Penjualan :
-        'DataGridView.Rows.Add("Penjualan")
-        QueryTampilan = QueryTampilanUmum & " AND COA LIKE '7%' "
-        DataPerKategoriCOA()
+            'Penjualan :
+            QueryTampilan = QueryTampilanUmum & " AND COA LIKE '7%' "
+            DataPerKategoriCOA()
 
-        'Total Pendapatan di Luar Usaha
-        Dim TotalSaldoJanuariPendapatanDiLuarUsaha As Int64 = TotalSaldoJanuari
-        Dim TotalSaldoFebruariPendapatanDiLuarUsaha As Int64 = TotalSaldoFebruari
-        Dim TotalSaldoMaretPendapatanDiLuarUsaha As Int64 = TotalSaldoMaret
-        Dim TotalSaldoAprilPendapatanDiLuarUsaha As Int64 = TotalSaldoApril
-        Dim TotalSaldoMeiPendapatanDiLuarUsaha As Int64 = TotalSaldoMei
-        Dim TotalSaldoJuniPendapatanDiLuarUsaha As Int64 = TotalSaldoJuni
-        Dim TotalSaldoJuliPendapatanDiLuarUsaha As Int64 = TotalSaldoJuli
-        Dim TotalSaldoAgustusPendapatanDiLuarUsaha As Int64 = TotalSaldoAgustus
-        Dim TotalSaldoSeptemberPendapatanDiLuarUsaha As Int64 = TotalSaldoSeptember
-        Dim TotalSaldoOktoberPendapatanDiLuarUsaha As Int64 = TotalSaldoOktober
-        Dim TotalSaldoNopemberPendapatanDiLuarUsaha As Int64 = TotalSaldoNopember
-        Dim TotalSaldoDesemberPendapatanDiLuarUsaha As Int64 = TotalSaldoDesember
-        Dim TotalSaldoKeseluruhanPendapatanDiLuarUsaha As Int64 = TotalSaldoKeseluruhan
-        datatabelUtama.Rows.Add(
+            'Total Pendapatan di Luar Usaha
+            Dim TotalSaldoJanuariPendapatanDiLuarUsaha As Int64 = TotalSaldoJanuari
+            Dim TotalSaldoFebruariPendapatanDiLuarUsaha As Int64 = TotalSaldoFebruari
+            Dim TotalSaldoMaretPendapatanDiLuarUsaha As Int64 = TotalSaldoMaret
+            Dim TotalSaldoAprilPendapatanDiLuarUsaha As Int64 = TotalSaldoApril
+            Dim TotalSaldoMeiPendapatanDiLuarUsaha As Int64 = TotalSaldoMei
+            Dim TotalSaldoJuniPendapatanDiLuarUsaha As Int64 = TotalSaldoJuni
+            Dim TotalSaldoJuliPendapatanDiLuarUsaha As Int64 = TotalSaldoJuli
+            Dim TotalSaldoAgustusPendapatanDiLuarUsaha As Int64 = TotalSaldoAgustus
+            Dim TotalSaldoSeptemberPendapatanDiLuarUsaha As Int64 = TotalSaldoSeptember
+            Dim TotalSaldoOktoberPendapatanDiLuarUsaha As Int64 = TotalSaldoOktober
+            Dim TotalSaldoNopemberPendapatanDiLuarUsaha As Int64 = TotalSaldoNopember
+            Dim TotalSaldoDesemberPendapatanDiLuarUsaha As Int64 = TotalSaldoDesember
+            Dim TotalSaldoKeseluruhanPendapatanDiLuarUsaha As Int64 = TotalSaldoKeseluruhan
+            datatabelUtama.Rows.Add(
             "Total Pendapatan di Luar Usaha", "",
             TotalSaldoJanuariPendapatanDiLuarUsaha,
             TotalSaldoFebruariPendapatanDiLuarUsaha,
@@ -305,34 +303,33 @@ Public Class wpfUsc_LaporanLabaRugi
             TotalSaldoNopemberPendapatanDiLuarUsaha,
             TotalSaldoDesemberPendapatanDiLuarUsaha,
             TotalSaldoKeseluruhanPendapatanDiLuarUsaha)
-        'datatabelUtama.Rows.Add()
+            'datatabelUtama.Rows.Add()
 
 
-        '-----------------------------------------------------------
-        'Biaya di Luar Usaha
-        '-----------------------------------------------------------
-        datatabelUtama.Rows.Add("Biaya di Luar Usaha")
+            '-----------------------------------------------------------
+            'Biaya di Luar Usaha
+            '-----------------------------------------------------------
+            datatabelUtama.Rows.Add("Biaya di Luar Usaha")
 
-        'Penjualan :
-        'DataGridView.Rows.Add("Penjualan")
-        QueryTampilan = QueryTampilanUmum & " AND COA LIKE '8%' "
-        DataPerKategoriCOA()
+            'Penjualan :
+            QueryTampilan = QueryTampilanUmum & " AND COA LIKE '8%' "
+            DataPerKategoriCOA()
 
-        'Total Biaya di Luar Usaha
-        Dim TotalSaldoJanuariBiayaDiLuarUsaha As Int64 = TotalSaldoJanuari
-        Dim TotalSaldoFebruariBiayaDiLuarUsaha As Int64 = TotalSaldoFebruari
-        Dim TotalSaldoMaretBiayaDiLuarUsaha As Int64 = TotalSaldoMaret
-        Dim TotalSaldoAprilBiayaDiLuarUsaha As Int64 = TotalSaldoApril
-        Dim TotalSaldoMeiBiayaDiLuarUsaha As Int64 = TotalSaldoMei
-        Dim TotalSaldoJuniBiayaDiLuarUsaha As Int64 = TotalSaldoJuni
-        Dim TotalSaldoJuliBiayaDiLuarUsaha As Int64 = TotalSaldoJuli
-        Dim TotalSaldoAgustusBiayaDiLuarUsaha As Int64 = TotalSaldoAgustus
-        Dim TotalSaldoSeptemberBiayaDiLuarUsaha As Int64 = TotalSaldoSeptember
-        Dim TotalSaldoOktoberBiayaDiLuarUsaha As Int64 = TotalSaldoOktober
-        Dim TotalSaldoNopemberBiayaDiLuarUsaha As Int64 = TotalSaldoNopember
-        Dim TotalSaldoDesemberBiayaDiLuarUsaha As Int64 = TotalSaldoDesember
-        Dim TotalSaldoKeseluruhanBiayaDiLuarUsaha As Int64 = TotalSaldoKeseluruhan
-        datatabelUtama.Rows.Add(
+            'Total Biaya di Luar Usaha
+            Dim TotalSaldoJanuariBiayaDiLuarUsaha As Int64 = TotalSaldoJanuari
+            Dim TotalSaldoFebruariBiayaDiLuarUsaha As Int64 = TotalSaldoFebruari
+            Dim TotalSaldoMaretBiayaDiLuarUsaha As Int64 = TotalSaldoMaret
+            Dim TotalSaldoAprilBiayaDiLuarUsaha As Int64 = TotalSaldoApril
+            Dim TotalSaldoMeiBiayaDiLuarUsaha As Int64 = TotalSaldoMei
+            Dim TotalSaldoJuniBiayaDiLuarUsaha As Int64 = TotalSaldoJuni
+            Dim TotalSaldoJuliBiayaDiLuarUsaha As Int64 = TotalSaldoJuli
+            Dim TotalSaldoAgustusBiayaDiLuarUsaha As Int64 = TotalSaldoAgustus
+            Dim TotalSaldoSeptemberBiayaDiLuarUsaha As Int64 = TotalSaldoSeptember
+            Dim TotalSaldoOktoberBiayaDiLuarUsaha As Int64 = TotalSaldoOktober
+            Dim TotalSaldoNopemberBiayaDiLuarUsaha As Int64 = TotalSaldoNopember
+            Dim TotalSaldoDesemberBiayaDiLuarUsaha As Int64 = TotalSaldoDesember
+            Dim TotalSaldoKeseluruhanBiayaDiLuarUsaha As Int64 = TotalSaldoKeseluruhan
+            datatabelUtama.Rows.Add(
             "Total Biaya di Luar Usaha", "",
             TotalSaldoJanuariBiayaDiLuarUsaha,
             TotalSaldoFebruariBiayaDiLuarUsaha,
@@ -347,22 +344,22 @@ Public Class wpfUsc_LaporanLabaRugi
             TotalSaldoNopemberBiayaDiLuarUsaha,
             TotalSaldoDesemberBiayaDiLuarUsaha,
             TotalSaldoKeseluruhanBiayaDiLuarUsaha)
-        'datatabelUtama.Rows.Add()
+            'datatabelUtama.Rows.Add()
 
-        'Laba/Rugi Sebelum Pajak
-        Dim LabaRugiBersihJanuari As Int64 = LabaRugiUsahaJanuari + TotalSaldoJanuariPendapatanDiLuarUsaha - TotalSaldoJanuariBiayaDiLuarUsaha
-        Dim LabaRugiBersihFebruari As Int64 = LabaRugiUsahaFebruari + TotalSaldoFebruariPendapatanDiLuarUsaha - TotalSaldoFebruariBiayaDiLuarUsaha
-        Dim LabaRugiBersihMaret As Int64 = LabaRugiUsahaMaret + TotalSaldoMaretPendapatanDiLuarUsaha - TotalSaldoMaretBiayaDiLuarUsaha
-        Dim LabaRugiBersihApril As Int64 = LabaRugiUsahaApril + TotalSaldoAprilPendapatanDiLuarUsaha - TotalSaldoAprilBiayaDiLuarUsaha
-        Dim LabaRugiBersihMei As Int64 = LabaRugiUsahaMei + TotalSaldoMeiPendapatanDiLuarUsaha - TotalSaldoMeiBiayaDiLuarUsaha
-        Dim LabaRugiBersihJuni As Int64 = LabaRugiUsahaJuni + TotalSaldoJuniPendapatanDiLuarUsaha - TotalSaldoJuniBiayaDiLuarUsaha
-        Dim LabaRugiBersihJuli As Int64 = LabaRugiUsahaJuli + TotalSaldoJuliPendapatanDiLuarUsaha - TotalSaldoJuliBiayaDiLuarUsaha
-        Dim LabaRugiBersihAgustus As Int64 = LabaRugiUsahaAgustus + TotalSaldoAgustusPendapatanDiLuarUsaha - TotalSaldoAgustusBiayaDiLuarUsaha
-        Dim LabaRugiBersihSeptember As Int64 = LabaRugiUsahaSeptember + TotalSaldoSeptemberPendapatanDiLuarUsaha - TotalSaldoSeptemberBiayaDiLuarUsaha
-        Dim LabaRugiBersihOktober As Int64 = LabaRugiUsahaOktober + TotalSaldoOktoberPendapatanDiLuarUsaha - TotalSaldoOktoberBiayaDiLuarUsaha
-        Dim LabaRugiBersihNopember As Int64 = LabaRugiUsahaNopember + TotalSaldoNopemberPendapatanDiLuarUsaha - TotalSaldoNopemberBiayaDiLuarUsaha
-        Dim LabaRugiBersihDesember As Int64 = LabaRugiUsahaDesember + TotalSaldoDesemberPendapatanDiLuarUsaha - TotalSaldoDesemberBiayaDiLuarUsaha
-        Dim TotalLabaRugiBersih As Int64 = TotalLabaRugiUsaha + TotalSaldoKeseluruhanPendapatanDiLuarUsaha - TotalSaldoKeseluruhanBiayaDiLuarUsaha
+            'Laba/Rugi Sebelum Pajak
+            Dim LabaRugiBersihJanuari As Int64 = LabaRugiUsahaJanuari + TotalSaldoJanuariPendapatanDiLuarUsaha - TotalSaldoJanuariBiayaDiLuarUsaha
+            Dim LabaRugiBersihFebruari As Int64 = LabaRugiUsahaFebruari + TotalSaldoFebruariPendapatanDiLuarUsaha - TotalSaldoFebruariBiayaDiLuarUsaha
+            Dim LabaRugiBersihMaret As Int64 = LabaRugiUsahaMaret + TotalSaldoMaretPendapatanDiLuarUsaha - TotalSaldoMaretBiayaDiLuarUsaha
+            Dim LabaRugiBersihApril As Int64 = LabaRugiUsahaApril + TotalSaldoAprilPendapatanDiLuarUsaha - TotalSaldoAprilBiayaDiLuarUsaha
+            Dim LabaRugiBersihMei As Int64 = LabaRugiUsahaMei + TotalSaldoMeiPendapatanDiLuarUsaha - TotalSaldoMeiBiayaDiLuarUsaha
+            Dim LabaRugiBersihJuni As Int64 = LabaRugiUsahaJuni + TotalSaldoJuniPendapatanDiLuarUsaha - TotalSaldoJuniBiayaDiLuarUsaha
+            Dim LabaRugiBersihJuli As Int64 = LabaRugiUsahaJuli + TotalSaldoJuliPendapatanDiLuarUsaha - TotalSaldoJuliBiayaDiLuarUsaha
+            Dim LabaRugiBersihAgustus As Int64 = LabaRugiUsahaAgustus + TotalSaldoAgustusPendapatanDiLuarUsaha - TotalSaldoAgustusBiayaDiLuarUsaha
+            Dim LabaRugiBersihSeptember As Int64 = LabaRugiUsahaSeptember + TotalSaldoSeptemberPendapatanDiLuarUsaha - TotalSaldoSeptemberBiayaDiLuarUsaha
+            Dim LabaRugiBersihOktober As Int64 = LabaRugiUsahaOktober + TotalSaldoOktoberPendapatanDiLuarUsaha - TotalSaldoOktoberBiayaDiLuarUsaha
+            Dim LabaRugiBersihNopember As Int64 = LabaRugiUsahaNopember + TotalSaldoNopemberPendapatanDiLuarUsaha - TotalSaldoNopemberBiayaDiLuarUsaha
+            Dim LabaRugiBersihDesember As Int64 = LabaRugiUsahaDesember + TotalSaldoDesemberPendapatanDiLuarUsaha - TotalSaldoDesemberBiayaDiLuarUsaha
+            Dim TotalLabaRugiBersih As Int64 = TotalLabaRugiUsaha + TotalSaldoKeseluruhanPendapatanDiLuarUsaha - TotalSaldoKeseluruhanBiayaDiLuarUsaha
             datatabelUtama.Rows.Add(
                 "Laba/Rugi Sebelum Pajak", "",
                 LabaRugiBersihJanuari,

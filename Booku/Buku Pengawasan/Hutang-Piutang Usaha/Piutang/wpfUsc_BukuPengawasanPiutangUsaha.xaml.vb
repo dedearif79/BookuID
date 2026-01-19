@@ -1126,7 +1126,7 @@ Public Class wpfUsc_BukuPengawasanPiutangUsaha
         win_InputInvoicePenjualan.NomorPenjualan = NomorPenjualan_Terseleksi
         If AmbilTeksKanan(MasaJatuhTempo_Terseleksi, 2) = "ri" Then
             win_InputInvoicePenjualan.txt_JumlahHariJatuhTempo.Text = AmbilAngka(MasaJatuhTempo_Terseleksi)
-            win_InputInvoicePenjualan.dtp_TanggalJatuhTempo.Text = Kosongan
+            KosongkanDatePicker(win_InputInvoicePenjualan.dtp_TanggalJatuhTempo)
             win_InputInvoicePenjualan.rdb_JumlahHariJatuhTempo.IsChecked = True
         Else
             win_InputInvoicePenjualan.txt_JumlahHariJatuhTempo.Text = Kosongan

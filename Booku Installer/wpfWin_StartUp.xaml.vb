@@ -1,4 +1,4 @@
-﻿Imports System.IO
+Imports System.IO
 Imports bcomm
 Imports MySql.Data.MySqlClient
 Imports System.IO.Compression
@@ -66,14 +66,13 @@ Class MainWindow
 
         ProsesInstalasi = True
 
-        'Await AmbilValueDataPublic()
+        AmbilValueDataPublic()
 
-        'Await DownloadPaketBooku()
+        Await DownloadPaketBooku()
 
-        'Await EkstrakPaketBooku()
+        Await EkstrakPaketBooku()
 
         Await InstallXAMPP(pgb_Progress, lbl_Progress)
-
 
         Finish()
 

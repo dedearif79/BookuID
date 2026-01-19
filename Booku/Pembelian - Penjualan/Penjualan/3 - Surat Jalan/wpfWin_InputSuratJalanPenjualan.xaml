@@ -87,7 +87,8 @@
                             <Button Style="{StaticResource styleButtonFormDialogPlus }"     Name="btn_TambahPO"/>
                             <Button Style="{StaticResource styleButtonFormDialogMinus}"     Name="btn_SingkirkanPO" />
                         </StackPanel>
-                        <DataGrid       Grid.Row="12" Grid.Column="0"   Name="datagridPO"   Grid.ColumnSpan="2" VerticalAlignment="Top" AutoGenerateColumns="False" MinHeight="27"  Margin="0 0 0 9" />
+                        <DataGrid       Grid.Row="12" Grid.Column="0"   Name="datagridPO"   Grid.ColumnSpan="2" VerticalAlignment="Top" AutoGenerateColumns="False" MinHeight="27"  Margin="0 0 0 9"
+                                        Style="{StaticResource StyleDataGridFormDialog}"/>
                         <ComboBox       Grid.Row="13" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_JenisPPN" />
                         <ComboBox       Grid.Row="14" Grid.Column="1"   Style="{StaticResource styleComboBoxFormDialog}"        Name="cmb_PerlakuanPPN" />
                         <RichTextBox    Grid.Row="16" Grid.Column="0"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Catatan" Grid.ColumnSpan="2" Width="Auto"  />

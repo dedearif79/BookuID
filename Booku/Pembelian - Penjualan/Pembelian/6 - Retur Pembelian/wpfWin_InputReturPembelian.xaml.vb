@@ -560,7 +560,7 @@ Public Class wpfWin_InputReturPembelian
         Dim NomorInvoice_UntukDihapus = rowviewInvoice("Nomor_Invoice")
         rowviewInvoice.Delete()
         BersihkanSeleksi_TabelInvoice()
-        Dim BarisUntukDihapus As New List(Of DataGridViewRow)
+        Dim BarisUntukDihapus As New List(Of DataGridRow)
         For i As Integer = datatabelUtama.Rows.Count - 1 To 0 Step -1
             Dim row As DataRow = datatabelUtama.Rows(i)
             If row("Nomor_Invoice_Produk") = NomorInvoice_UntukDihapus Then

@@ -38,7 +38,6 @@ Public Class wpfWin_InputProduk_Nota
 
     Dim KunciInputanKolom
 
-    Dim Tabel As New DataGridView
     Dim TabelWPF As New DataTable
 
     Public Proses As Boolean
@@ -95,6 +94,7 @@ Public Class wpfWin_InputProduk_Nota
             And Not (JalurMasuk = Form_INPUTINVOICEPEMBELIAN And win_InputInvoicePembelian.NP <> "N") _
             And Not (JalurMasuk = Form_INPUTINVOICEPENJUALAN And win_InputInvoicePenjualan.NP <> "N") _
             And InvoiceDenganPO = True _
+            And JenisTahunBuku = JenisTahunBuku_NORMAL = True _
             Then
             KunciInputanKolom = True
         Else
@@ -510,26 +510,6 @@ Public Class wpfWin_InputProduk_Nota
                                   NamaProduk, DeskripsiProduk, JumlahProduk, SatuanProduk, HargaSatuan, HargaSatuan_Asing,
                                   JumlahHarga, JumlahHarga_Asing, (FormatUlangDesimal_Prosentase(DiskonPerItem_Persen) & " %"),
                                   DiskonPerItem_Rp, DiskonPerItem_Asing, TotalHarga, TotalHarga_Asing, KodeProject)
-            End If
-        End If
-
-        If FungsiForm = FungsiForm_EDIT And Tabel.RowCount > 0 Then
-            'Ini untuk konsep lama (WinForm).
-            Tabel.Item("Jenis_Produk_Per_Item", NomorUrutProduk - 1).Value = JenisProduk_PerItem
-            Tabel.Item("Nama_Produk", NomorUrutProduk - 1).Value = NamaProduk
-            Tabel.Item("Deskripsi_Produk", NomorUrutProduk - 1).Value = DeskripsiProduk
-            Tabel.Item("Jumlah_Produk", NomorUrutProduk - 1).Value = JumlahProduk
-            Tabel.Item("Satuan_Produk", NomorUrutProduk - 1).Value = SatuanProduk
-            Tabel.Item("Harga_Satuan", NomorUrutProduk - 1).Value = HargaSatuan
-            Tabel.Item("Jumlah_Harga_Per_Item", NomorUrutProduk - 1).Value = JumlahHarga
-            Tabel.Item("Diskon_Per_Item_Persen", NomorUrutProduk - 1).Value = (FormatUlangDesimal_Prosentase(DiskonPerItem_Persen) & " %")
-            Tabel.Item("Diskon_Per_Item_Rp", NomorUrutProduk - 1).Value = DiskonPerItem_Rp
-            Tabel.Item("Total_Harga", NomorUrutProduk - 1).Value = TotalHarga
-            Tabel.Item("Kode_Project_Produk", NomorUrutProduk - 1).Value = KodeProject
-            If JenisProduk_PerItem = JenisProduk_Jasa Then
-                For Each row As DataGridViewRow In Tabel.Rows
-                    If row.Cells("Jenis_Produk_Per_Item").Value = JenisProduk_Jasa Then row.Cells("Nama_Produk").Value = NamaProduk
-                Next
             End If
         End If
 

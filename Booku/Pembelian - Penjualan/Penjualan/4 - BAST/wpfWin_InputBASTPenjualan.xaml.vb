@@ -463,7 +463,7 @@ Public Class wpfWin_InputBASTPenjualan
         Dim NomorPO_UntukDihapus = rowviewPO("Nomor_PO")
         rowviewPO.Delete()
         BersihkanSeleksi_TabelPO()
-        Dim BarisUntukDihapus As New List(Of DataGridViewRow)
+        Dim BarisUntukDihapus As New List(Of DataGridRow)
         For i As Integer = datatabelUtama.Rows.Count - 1 To 0 Step -1
             Dim row As DataRow = datatabelUtama.Rows(i)
             If row("Nomor_PO_Produk") = NomorPO_UntukDihapus Then

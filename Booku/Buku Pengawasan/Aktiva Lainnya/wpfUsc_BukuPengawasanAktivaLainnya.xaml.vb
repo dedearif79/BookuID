@@ -226,7 +226,7 @@ Public Class wpfUsc_BukuPengawasanAktivaLainnya
         win_InputAktivaLainnya.NomorID = NomorID_Terseleksi
         win_InputAktivaLainnya.txt_NomorBPAL.Text = NomorBPAL_Terseleksi
         win_InputAktivaLainnya.txt_NomorBukti.Text = NomorBukti_Terseleksi
-        win_InputAktivaLainnya.dtp_TanggalBukti.Text = TanggalBukti_Terseleksi
+        win_InputAktivaLainnya.dtp_TanggalBukti.SelectedDate = TanggalFormatWPF(TanggalBukti_Terseleksi)
         win_InputAktivaLainnya.txt_KodeLawanTransaksi.Text = KodeLawanTransaksi_Terseleksi
         IsiValueElemenRichTextBox(win_InputAktivaLainnya.txt_UraianTransaksi, UraianTransaksi_Terseleksi)
         win_InputAktivaLainnya.txt_COADebet.Text = COADebet_Terseleksi

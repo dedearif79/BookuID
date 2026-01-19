@@ -492,7 +492,7 @@ Public Class wpfUsc_POPenjualan
         IsiValueElemenRichTextBox(win_InputPOPenjualan.txt_Catatan, Catatan_Terseleksi)
         If Right(JangkaWaktuPenyelesaian_Terseleksi, 2) = "ri" Then
             win_InputPOPenjualan.txt_JumlahHariJangkaWaktuPenyelesaian.Text = AmbilAngka(JangkaWaktuPenyelesaian_Terseleksi)
-            win_InputPOPenjualan.dtp_TanggalJangkaWaktuPenyelesaian.Text = Kosongan
+            KosongkanDatePicker(win_InputPOPenjualan.dtp_TanggalJangkaWaktuPenyelesaian)
             win_InputPOPenjualan.rdb_JumlahHariJangkaWaktuPenyelesaian.IsChecked = True
         Else
             win_InputPOPenjualan.txt_JumlahHariJangkaWaktuPenyelesaian.Text = Kosongan

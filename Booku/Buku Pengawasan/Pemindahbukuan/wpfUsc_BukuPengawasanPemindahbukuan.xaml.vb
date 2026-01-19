@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -230,6 +230,8 @@ Public Class wpfUsc_BukuPengawasanPemindahbukuan
         win_InputBuktiPengeluaran.ResetForm()
         ProsesIsiValueForm = True
         win_InputBuktiPengeluaran.FungsiForm = FungsiForm_TAMBAH
+        win_InputBuktiPengeluaran.DenganPengajuan = True
+        win_InputBuktiPengeluaran.BukaFormMetodeInput = False
         win_InputBuktiPengeluaran.dtp_TanggalKK.IsEnabled = False
         win_InputBuktiPengeluaran.dtp_TanggalKK.SelectedDate = TanggalFormatWPF(TanggalBPPB_Terseleksi)
         win_InputBuktiPengeluaran.cmb_Kategori.IsEnabled = False
@@ -364,7 +366,11 @@ Public Class wpfUsc_BukuPengawasanPemindahbukuan
                 btn_Hapus.IsEnabled = True
             End If
         Else
-            btn_Ajukan.IsEnabled = True
+            If NomorKK_Terseleksi = Kosongan Then
+                btn_Ajukan.IsEnabled = True
+            Else
+                btn_Ajukan.IsEnabled = False
+            End If
             btn_LihatJurnal.IsEnabled = False
             btn_Edit.IsEnabled = True
             btn_Hapus.IsEnabled = True
@@ -372,6 +378,13 @@ Public Class wpfUsc_BukuPengawasanPemindahbukuan
 
         If NomorID_Terseleksi = 0 Then BersihkanSeleksi()
 
+    End Sub
+    Private Sub datagridUtama_LoadingRow(sender As Object, e As DataGridRowEventArgs) Handles datagridUtama.LoadingRow
+        If AmbilAngka(e.Row.Item("Nomor_JV")) = 0 Then
+            e.Row.Foreground = clrTeksDisabled
+        Else
+            e.Row.Foreground = clrTeksPrimer
+        End If
     End Sub
 
 

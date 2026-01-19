@@ -298,10 +298,10 @@ Saat migrasi UserControl ke pattern baru, pastikan:
 | `wpfUsc_BASTPembelian` | `Booku/Pembelian - Penjualan/Pembelian/4 - BAST/` | 2026-01-18 |
 | `wpfUsc_InvoicePembelian` | `Booku/Pembelian - Penjualan/Pembelian/5 - Invoice Pembelian/` | 2026-01-18 |
 | `wpfUsc_BukuPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/1 - Buku Penjualan/` | 2026-01-18 |
-| `wpfUsc_POPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/2 - PO Penjuialan/` | 2026-01-18 |
+| `wpfUsc_POPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/2 - PO Penjualan/` | 2026-01-18 |
 | `wpfUsc_SuratJalanPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/3 - Surat Jalan/` | 2026-01-18 |
 | `wpfUsc_BASTPenjualan` | `Booku/Pembelian - Penjualan/Penjualan/4 - BAST/` | 2026-01-18 |
-| `wpfUsc_InvoicePenjualan` | `Booku/Pembelian - Penjualan/Penjualan/5 - Invoice Penjuialan/` | 2026-01-18 |
+| `wpfUsc_InvoicePenjualan` | `Booku/Pembelian - Penjualan/Penjualan/5 - Invoice Penjualan/` | 2026-01-18 |
 | `wpfUsc_BundelPengajuanPengeluaranBankCash` | `Booku/Buku Pengawasan/Penerimaan-Pengeluaran/Bukti Pengeluaran Bank-Cash/Bundel Pengajuan/` | 2026-01-18 |
 | `wpfUsc_BukuPengawasanAktivaLainnya` | `Booku/Buku Pengawasan/Aktiva Lainnya/` | 2026-01-17 |
 | `wpfUsc_BukuPengawasanBuktiPotongPPh_Paid` | `Booku/Buku Pengawasan/Bukti Potong PPh/` | 2026-01-17 |

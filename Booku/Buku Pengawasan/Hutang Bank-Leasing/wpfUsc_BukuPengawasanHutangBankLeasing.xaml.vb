@@ -404,10 +404,10 @@ Public Class wpfUsc_BukuPengawasanHutangBankLeasing
         win_InputHutangBankLeasing.txt_NomorBP.Text = NomorBPH_Terseleksi
         win_InputHutangBankLeasing.NomorJV_Persetujuan = NomorJV_Persetujuan_Terseleksi
         win_InputHutangBankLeasing.NomorJV_Pencairan = NomorJV_Pencairan_Terseleksi
-        win_InputHutangBankLeasing.dtp_TanggalPersetujuan.Text = TanggalPersetujuan_Terseleksi
+        win_InputHutangBankLeasing.dtp_TanggalPersetujuan.SelectedDate = TanggalFormatWPF(TanggalPersetujuan_Terseleksi)
         win_InputHutangBankLeasing.txt_KodeKreditur.Text = KodeKreditur_Terseleksi
         win_InputHutangBankLeasing.txt_NamaKreditur.Text = NamaKreditur_Terseleksi
-        win_InputHutangBankLeasing.dtp_TanggalJatuhTempo.Text = TanggalJatuhTempo_Terseleksi
+        win_InputHutangBankLeasing.dtp_TanggalJatuhTempo.SelectedDate = TanggalFormatWPF(TanggalJatuhTempo_Terseleksi)
         win_InputHutangBankLeasing.txt_JumlahPinjaman.Text = SaldoAwalPerBaris_Terseleksi
         win_InputHutangBankLeasing.txt_NomorKontrak.Text = NomorKontrak_Terseleksi
         IsiValueElemenRichTextBox(win_InputHutangBankLeasing.txt_Keterangan, Keterangan_Terseleksi)

@@ -37,7 +37,7 @@
                 <!-- Row 0: Nomor Urut -->
                 <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Nomor Urut"/>
                 <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource styleTextBoxFormDialog}" x:Name="txt_NomorUrut"
-                         Width="60" HorizontalAlignment="Left" TextAlignment="Right" IsReadOnly="True"/>
+                         Width="60" HorizontalAlignment="Left" TextAlignment="Right" />
 
                 <!-- Row 1: Nama Barang/Jasa -->
                 <TextBlock Grid.Row="1" Grid.Column="0" Style="{StaticResource styleTextBlockFormDialog}" Text="Nama Barang/Jasa"/>

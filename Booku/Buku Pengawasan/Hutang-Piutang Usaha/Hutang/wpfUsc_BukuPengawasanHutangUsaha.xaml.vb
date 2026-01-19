@@ -1132,7 +1132,7 @@ Public Class wpfUsc_BukuPengawasanHutangUsaha
         win_InputInvoicePembelian.NomorPembelian = NomorPembelian_Terseleksi
         If AmbilTeksKanan(MasaJatuhTempo_Terseleksi, 2) = "ri" Then
             win_InputInvoicePembelian.txt_JumlahHariJatuhTempo.Text = AmbilAngka(MasaJatuhTempo_Terseleksi)
-            win_InputInvoicePembelian.dtp_TanggalJatuhTempo.Text = Kosongan
+            win_InputInvoicePembelian.dtp_TanggalJatuhTempo.SelectedDate = TanggalFormatWPF(Kosongan)
             win_InputInvoicePembelian.rdb_JumlahHariJatuhTempo.IsChecked = True
         Else
             win_InputInvoicePembelian.txt_JumlahHariJatuhTempo.Text = Kosongan

@@ -376,10 +376,10 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
         win_InputHutangPiutangPihakKetiga.NomorID = NomorID_Terseleksi
         win_InputHutangPiutangPihakKetiga.txt_NomorBP.Text = NomorBPPPK_Terseleksi
         win_InputHutangPiutangPihakKetiga.NomorJV = NomorJV_Terseleksi
-        win_InputHutangPiutangPihakKetiga.dtp_TanggalPinjam.Text = TanggalPinjam_Terseleksi
+        win_InputHutangPiutangPihakKetiga.dtp_TanggalPinjam.SelectedDate = TanggalFormatWPF(TanggalPinjam_Terseleksi)
         win_InputHutangPiutangPihakKetiga.txt_KodeLawanTransaksi.Text = KodeDebitur_Terseleksi
         win_InputHutangPiutangPihakKetiga.txt_NamaLawanTransaksi.Text = NamaDebitur_Terseleksi
-        win_InputHutangPiutangPihakKetiga.dtp_TanggalJatuhTempo.Text = TanggalJatuhTempo_Terseleksi
+        win_InputHutangPiutangPihakKetiga.dtp_TanggalJatuhTempo.SelectedDate = TanggalFormatWPF(TanggalJatuhTempo_Terseleksi)
         win_InputHutangPiutangPihakKetiga.txt_JumlahPinjaman.Text = SaldoAwalPerBaris_Terseleksi
         win_InputHutangPiutangPihakKetiga.txt_NomorKontrak.Text = NomorKontrak_Terseleksi
         IsiValueElemenRichTextBox(win_InputHutangPiutangPihakKetiga.txt_Keterangan, Keterangan_Terseleksi)
@@ -647,7 +647,7 @@ Public Class wpfUsc_BukuPengawasanPiutangPihakKetiga
         win_InputJadwalAngsuranPihakKetiga.NomorJV = jadwal_NomorJV_Terseleksi
         win_InputJadwalAngsuranPihakKetiga.KodeLawanTransaksi = KodeDebitur_Terseleksi
         win_InputJadwalAngsuranPihakKetiga.txt_AngsuranKe.Text = jadwal_NomorUrut_Terseleksi
-        win_InputJadwalAngsuranPihakKetiga.dtp_TanggalJatuhTempo.Text = jadwal_TanggalJatuhTempo_Terseleksi
+        win_InputJadwalAngsuranPihakKetiga.dtp_TanggalJatuhTempo.SelectedDate = TanggalFormatWPF(jadwal_TanggalJatuhTempo_Terseleksi)
         win_InputJadwalAngsuranPihakKetiga.txt_Pokok.Text = jadwal_Pokok_Terseleksi
         win_InputJadwalAngsuranPihakKetiga.txt_BagiHasil.Text = jadwal_BagiHasil_Terseleksi
         win_InputJadwalAngsuranPihakKetiga.ShowDialog()

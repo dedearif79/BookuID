@@ -28,6 +28,11 @@ Public Class wpfWin_InputProduk_SJBAST
     Sub New()
         InitializeComponent()
         StyleWindowDialogWPF_Dasar(Me)
+        txt_NomorUrut.IsReadOnly = True
+        txt_NamaProduk.IsReadOnly = True
+        txt_DeskripsiProduk.IsReadOnly = True
+        txt_Satuan.IsReadOnly = True
+        txt_Keterangan.IsReadOnly = True
     End Sub
 
 

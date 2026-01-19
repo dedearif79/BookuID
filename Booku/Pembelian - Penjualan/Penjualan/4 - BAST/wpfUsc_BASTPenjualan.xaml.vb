@@ -1,4 +1,4 @@
-﻿Imports System.Windows
+Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Data.Odbc
 Imports System.Windows.Input
@@ -290,7 +290,7 @@ Public Class wpfUsc_BASTPenjualan
             win_InputBASTPenjualan.txt_NamaPenerima.Text = YangMenerima_Terseleksi
         End If
         If TanggalDiterima_Terseleksi = StripKosong Then
-            win_InputBASTPenjualan.dtp_TanggalDiterima.Text = Kosongan
+            KosongkanDatePicker(win_InputBASTPenjualan.dtp_TanggalDiterima)
         Else
             win_InputBASTPenjualan.dtp_TanggalDiterima.SelectedDate = TanggalFormatWPF(TanggalDiterima_Terseleksi)
         End If

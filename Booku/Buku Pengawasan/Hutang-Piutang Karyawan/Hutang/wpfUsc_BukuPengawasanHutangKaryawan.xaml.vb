@@ -425,7 +425,7 @@ Public Class wpfUsc_BukuPengawasanHutangKaryawan
         win_InputHutangPiutangKaryawan.NomorID = NomorID_Terseleksi
         win_InputHutangPiutangKaryawan.txt_NomorBP.Text = NomorBPHK_Terseleksi
         win_InputHutangPiutangKaryawan.NomorJV = NomorJV_Terseleksi
-        win_InputHutangPiutangKaryawan.dtp_TanggalPinjam.Text = TanggalPinjam_Terseleksi
+        win_InputHutangPiutangKaryawan.dtp_TanggalPinjam.SelectedDate = TanggalFormatWPF(TanggalPinjam_Terseleksi)
         win_InputHutangPiutangKaryawan.txt_KodeLawanTransaksi.Text = NomorIDKaryawan_Terseleksi
         win_InputHutangPiutangKaryawan.txt_NamaLawanTransaksi.Text = NamaKaryawan_Terseleksi
         win_InputHutangPiutangKaryawan.txt_JumlahPinjaman.Text = SaldoAwalPerBaris_Terseleksi

@@ -427,7 +427,7 @@ Public Class wpfUsc_BukuPengawasanPiutangPemegangSaham
         win_InputHutangPiutangPemegangSaham.NomorID = NomorID_Terseleksi
         win_InputHutangPiutangPemegangSaham.txt_NomorBP.Text = NomorBPPPS_Terseleksi
         win_InputHutangPiutangPemegangSaham.NomorJV = NomorJV_Terseleksi
-        win_InputHutangPiutangPemegangSaham.dtp_TanggalPinjam.Text = TanggalPinjam_Terseleksi
+        win_InputHutangPiutangPemegangSaham.dtp_TanggalPinjam.SelectedDate = TanggalFormatWPF(TanggalPinjam_Terseleksi)
         win_InputHutangPiutangPemegangSaham.txt_KodeLawanTransaksi.Text = KodePemegangSaham_Terseleksi
         win_InputHutangPiutangPemegangSaham.txt_NamaLawanTransaksi.Text = NamaPemegangSaham_Terseleksi
         win_InputHutangPiutangPemegangSaham.txt_JumlahPinjaman.Text = SaldoAwalPerBaris_Terseleksi
