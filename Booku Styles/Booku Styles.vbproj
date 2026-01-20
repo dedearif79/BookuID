@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <OutputType>Library</OutputType>
+    <RootNamespace>BookuID.Styles</RootNamespace>
+    <AssemblyName>BookuID.Styles</AssemblyName>
+  </PropertyGroup>
+
+  <!-- Reference ke Booku Library untuk helper functions -->
+  <ItemGroup>
+    <ProjectReference Include="..\Booku Library\Booku Library.vbproj" />
+  </ItemGroup>
+
+  <!-- XAML files are auto-detected as Page by SDK -->
+  <!-- VB files are auto-detected as Compile by SDK -->
+
+</Project>

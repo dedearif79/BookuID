@@ -6,8 +6,9 @@
 
 | Istilah | Mengacu Kepada |
 |---------|----------------|
-| **BookuID** | Keseluruhan Solution (berisi 8 project) |
+| **BookuID** | Keseluruhan Solution (berisi 9 project) |
 | **Booku** / **Project Booku** | Project utama di folder `BookuID/Booku/` |
+| **Booku Styles** | Project styling terpusat di folder `BookuID/Booku Styles/` |
 
 > **PENTING:** Dokumentasi arsitektur di file ini fokus pada **project Booku** (project utama). Untuk daftar lengkap semua project dalam solution BookuID, lihat `modules-dependencies.md`.
 
@@ -16,7 +17,18 @@
 Project Booku menggunakan arsitektur **WPF murni**:
 - **Entry Point**: `App.xaml` + `App.xaml.vb` (WPF Application class)
 - **UI**: Seluruh antarmuka menggunakan WPF (Window, UserControl, Style)
+- **Styling**: Terpusat di project Booku Styles (`BookuID.Styles.dll`)
 - **Library**: Booku Library (bcomm.dll) juga WPF murni tanpa dependency WinForms
+
+### Dependency Order
+
+```
+Booku Library (bcomm.dll)
+    ↓
+Booku Styles (BookuID.Styles.dll)
+    ↓
+Booku (Main App)
+```
 
 ### Konfigurasi Project (Booku.vbproj)
 
@@ -104,6 +116,7 @@ App.xaml.vb (WPF Application)               <- Entry point AKTIF
 - **wpfMdl_ClassUserControl.vb** - Deklarasi UserControl global (`usc_BukuBesar`, dll)
 - **wpfMdl_ClassHost.vb** - Deklarasi Host global (`host_BukuPembelian_Lokal`, dll)
 - **wpfMdl_PublicSub.vb** - Subroutine khusus WPF (styling, DataGrid helpers, dll)
+- **wpfMdl_StyleBridge.vb** - Bridge/alias ke `BookuID.Styles` untuk backward compatibility
 - **wpfMdl_Pesan.vb** - Custom message dialog WPF
 - **wpfMdl_TutupBuku.vb** - Logic tutup buku/periode
 - **wpfMdl_SaldoDanPenyesuaian.vb** - Kalkulasi saldo dan penyesuaian
@@ -118,11 +131,18 @@ App.xaml.vb (WPF Application)               <- Entry point AKTIF
 - **mdlPub_ModulUmum.vb** - Common utilities + **variabel warna WPF** (`WarnaXxx_WPF`)
 - **mdlPub_Styling.vb** - UI styling utilities
 
-## WPF Styles (`/Booku/WPF/Styles/`)
+## WPF Styles (`/Booku Styles/WPF/Styles/`)
 
-- **StyleAplikasi.xaml** - Master file yang merge semua style
-- **StyleColor.xaml** - **Definisi warna terpusat** (2-Layer Color System)
-- **StyleDataGrid.xaml** - Style DataGrid dengan warna seleksi
-- **Style[Komponen].xaml** - Style per komponen (Button, TextBox, dll)
+> **CATATAN:** File styling sudah dipindahkan ke project **Booku Styles** (post-migrasi).
 
-> Lihat `.claude/rules/Booku/wpf-styling.md` untuk dokumentasi lengkap sistem warna
+**Lokasi Aktual:**
+- **XAML Styles**: `/Booku Styles/WPF/Styles/` (StyleAplikasi.xaml, StyleColor.xaml, dll)
+- **Behaviors**: `/Booku Styles/WPF/Behaviors/` (TextBoxBehavior.vb, RichTextBoxBehavior.vb)
+- **Modules**: `/Booku Styles/WPF/Modules/` (wpfMdl_StyleColor.vb, StylingElemen.vb)
+
+**Backward Compatibility:**
+- File `wpfMdl_StyleBridge.vb` di `/Booku/WPF/Modul Umum/` menyediakan alias
+- Kode lama di Booku tetap berfungsi tanpa perubahan
+
+> Lihat `.claude/rules/Booku Styles/overview.md` untuk dokumentasi project Booku Styles
+> Lihat `.claude/rules/Booku/wpf-styling.md` untuk cara penggunaan styling

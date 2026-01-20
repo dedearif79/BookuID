@@ -40,11 +40,14 @@ Partial Public Class App
     ''' Instance constructor - manual load XAML resources karena InitializeComponent() tidak di-generate.
     ''' </summary>
     Public Sub New()
-        ' Manual load resources dari StyleAplikasi.xaml
+        ' Manual load resources
         ' Karena WPF SDK tidak generate InitializeComponent() dengan MyType setting
-        Dim resourceDict As New ResourceDictionary()
-        resourceDict.Source = New Uri("pack://application:,,,/Booku;component/WPF/Styles/StyleAplikasi.xaml", UriKind.Absolute)
-        Me.Resources.MergedDictionaries.Add(resourceDict)
+
+        ' Shared styles dari Booku Styles Class Library
+        ' (sudah include TextBoxBehavior untuk validasi input angka)
+        Dim sharedStyles As New ResourceDictionary()
+        sharedStyles.Source = New Uri("pack://application:,,,/BookuID.Styles;component/WPF/Styles/StyleAplikasi.xaml", UriKind.Absolute)
+        Me.Resources.MergedDictionaries.Add(sharedStyles)
     End Sub
 
 #End Region

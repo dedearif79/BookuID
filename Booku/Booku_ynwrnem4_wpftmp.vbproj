@@ -1,0 +1,625 @@
+<Project>
+  <PropertyGroup>
+    <AssemblyName>Booku</AssemblyName>
+    <IntermediateOutputPath>obj\Debug\</IntermediateOutputPath>
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <MSBuildProjectExtensionsPath>D:\vb .net project\BookuID\Booku\obj\</MSBuildProjectExtensionsPath>
+    <_TargetAssemblyProjectName>Booku</_TargetAssemblyProjectName>
+    <RootNamespace>Booku</RootNamespace>
+  </PropertyGroup>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <RootNamespace>Booku</RootNamespace>
+    <!-- Entry point menggunakan App.xaml (WPF Application class) -->
+    <!-- UseWindowsForms tetap true untuk kompatibilitas library, tapi entry point sudah WPF murni -->
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>True</UseWPF>
+    <StartupObject>Booku.App</StartupObject>
+    <ApplicationIcon>BookuID.ico</ApplicationIcon>
+  </PropertyGroup>
+  <!-- Release Publish Configuration -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <PublishSingleFile>true</PublishSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="App Admin\**" />
+    <Compile Remove="Logger\**" />
+    <Compile Remove="Menu Tambahan\**" />
+    <Compile Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\**" />
+    <Compile Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\**" />
+    <Compile Remove="Pembelian - Penjualan\Pembelian\X-Trash\**" />
+    <Compile Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Dengan PO\**" />
+    <Compile Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Tanpa PO\**" />
+    <Compile Remove="Pembelian - Penjualan\Penjualan\X-Trash\**" />
+    <Compile Remove="Resources\**" />
+    <Compile Remove="WPF\Styles\Class Window\**" />
+    <!-- Exclude local WPF/Styles - sekarang menggunakan Shared Project (Booku Styles) -->
+    <Compile Remove="WPF\Styles\**" />
+    <EmbeddedResource Remove="WPF\Styles\**" />
+    <None Remove="WPF\Styles\**" />
+    <Compile Remove="X_Deprecated\**" />
+    <Compile Remove="My Project\Application.Designer.vb" />
+    <!-- Exclude deprecated files (X_ prefix) -->
+    <Compile Remove="Manajemen Asset\X_ops_PilihJurnal_DataAsset.vb" />
+    <Compile Remove="Manajemen Asset\X_ops_PilihJurnal_DataAsset.Designer.vb" />
+    <Compile Remove="Modul Umum\X_mdl_PropertiObjek.vb" />
+    <Compile Remove="Modul Umum\X_mdl_DesainUmum.vb" />
+    <Compile Remove="Modul Umum\X_mdl_DesainTombol.vb" />
+    <Compile Remove="Modul Umum\X_mdl_KomponenKhusus.vb" />
+    <Compile Remove="WPF\Modul Umum\X_wpfMdl_Program.vb" />
+    <Compile Remove="Host Aplikasi\X_wpfUsc_HostWhatsApp.xaml.vb" />
+    <Compile Remove="Host Aplikasi\X_wpfwin_WhatsApp.xaml.vb" />
+    <EmbeddedResource Remove="App Admin\**" />
+    <EmbeddedResource Remove="Logger\**" />
+    <EmbeddedResource Remove="Menu Tambahan\**" />
+    <EmbeddedResource Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\**" />
+    <EmbeddedResource Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\**" />
+    <EmbeddedResource Remove="Pembelian - Penjualan\Pembelian\X-Trash\**" />
+    <EmbeddedResource Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Dengan PO\**" />
+    <EmbeddedResource Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Tanpa PO\**" />
+    <EmbeddedResource Remove="Pembelian - Penjualan\Penjualan\X-Trash\**" />
+    <EmbeddedResource Remove="Resources\**" />
+    <EmbeddedResource Remove="WPF\Styles\Class Window\**" />
+    <None Remove="App Admin\**" />
+    <None Remove="Logger\**" />
+    <None Remove="Menu Tambahan\**" />
+    <None Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Dengan PO\**" />
+    <None Remove="Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\Tanpa PO\**" />
+    <None Remove="Pembelian - Penjualan\Pembelian\X-Trash\**" />
+    <None Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Dengan PO\**" />
+    <None Remove="Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\Tanpa PO\**" />
+    <None Remove="Pembelian - Penjualan\Penjualan\X-Trash\**" />
+    <None Remove="Resources\**" />
+    <None Remove="WPF\Styles\Class Window\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Interop.Excel">
+      <WrapperTool>tlbimp</WrapperTool>
+      <VersionMinor>9</VersionMinor>
+      <VersionMajor>1</VersionMajor>
+      <Guid>00020813-0000-0000-c000-000000000046</Guid>
+      <Lcid>0</Lcid>
+      <Isolated>false</Isolated>
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BookuID.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Windows.Forms" />
+    <!-- Note: System.Windows.Forms masih diperlukan untuk:
+         - KeyPressEventArgs (input validation helpers)
+         - DateTimePicker (beberapa fungsi helper lama)
+         - DataGridView (ekspor ke Excel)
+         Migrasi lengkap memerlukan refactoring lebih lanjut -->
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.104.2" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.12.1" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3065.39" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Obfuscar" Version="2.2.38">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="System.Data.Odbc" Version="9.0.2" />
+    <PackageReference Include="System.Data.OleDb" Version="9.0.2" />
+    <PackageReference Include="System.IO" Version="4.3.0" />
+    <PackageReference Include="System.IO.Packaging" Version="9.0.2" />
+    <PackageReference Include="System.IO.Pipelines" Version="9.0.2" />
+    <PackageReference Include="System.Threading" Version="4.3.0" />
+    <PackageReference Include="System.Threading.Tasks.Extensions" Version="4.6.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="My Project\Application.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Update="My Project\Resources.Designer.vb">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Update="My Project\Settings.Designer.vb">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Update="My Project\Settings.settings">
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App IT\phpMyAdmin\" />
+    <Folder Include="Buku Pengawasan\Hutang Pajak\09 - PPh Pasal 29\" />
+  </ItemGroup>
+  <!-- App.xaml: WPF SDK auto-detect sebagai ApplicationDefinition -->
+  <!-- Resources auto-load dari XAML, startup logic di App.xaml.vb -->
+  <ItemGroup>
+    <ProjectReference Include="..\Booku Library\Booku Library.vbproj" />
+  </ItemGroup>
+  <!-- Shared Project: Booku Styles (WPF Styles yang di-share antar project) -->
+  <Import Project="..\Booku Styles\Booku Styles.projitems" Label="Shared" />
+  <ItemGroup>
+    <EmbeddedResource Update="My Project\Resources.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\Accessibility.dll" />
+    <ReferencePath Include="D:\vb .net project\BookuID\Booku Library\bin\Debug\net8.0-windows\bcomm.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\bouncycastle.cryptography\2.3.1\lib\net6.0\BouncyCastle.Cryptography.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\closedxml\0.104.2\lib\netstandard2.1\ClosedXML.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\closedxml.parser\1.2.0\lib\netstandard2.1\ClosedXML.Parser.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\documentformat.openxml\3.1.1\lib\net8.0\DocumentFormat.OpenXml.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\documentformat.openxml.framework\3.1.1\lib\net8.0\DocumentFormat.OpenXml.Framework.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\excelnumberformat\1.1.0\lib\netstandard2.0\ExcelNumberFormat.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\google.protobuf\3.26.1\lib\net5.0\Google.Protobuf.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\htmlagilitypack\1.12.1\lib\net8.0\HtmlAgilityPack.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\k4os.compression.lz4\1.3.8\lib\net6.0\K4os.Compression.LZ4.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\k4os.compression.lz4.streams\1.3.8\lib\net6.0\K4os.Compression.LZ4.Streams.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\k4os.hash.xxhash\1.0.8\lib\net6.0\K4os.Hash.xxHash.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\Microsoft.CSharp.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\Microsoft.VisualBasic.Core.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\Microsoft.VisualBasic.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\Microsoft.VisualBasic.Forms.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\microsoft.web.webview2\1.0.3065.39\lib_manual\netcoreapp3.0\Microsoft.Web.WebView2.Core.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\microsoft.web.webview2\1.0.3065.39\lib_manual\netcoreapp3.0\Microsoft.Web.WebView2.WinForms.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\microsoft.web.webview2\1.0.3065.39\lib_manual\net5.0-windows10.0.17763.0\Microsoft.Web.WebView2.Wpf.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\Microsoft.Win32.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\Microsoft.Win32.Registry.AccessControl.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\Microsoft.Win32.Registry.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\Microsoft.Win32.SystemEvents.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\mscorlib.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\mysql.data\9.2.0\lib\net8.0\MySql.Data.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\netstandard.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\newtonsoft.json\13.0.3\lib\net6.0\Newtonsoft.Json.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\PresentationCore.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\PresentationFramework.Aero.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\PresentationFramework.Aero2.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\PresentationFramework.AeroLite.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\PresentationFramework.Classic.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\PresentationFramework.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\PresentationFramework.Luna.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\PresentationFramework.Royale.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\PresentationUI.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\rbush\4.0.0\lib\net8.0\RBush.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\ReachFramework.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\sixlabors.fonts\1.0.0\lib\netcoreapp3.1\SixLabors.Fonts.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.AppContext.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Buffers.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.CodeDom.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Collections.Concurrent.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Collections.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Collections.Immutable.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Collections.NonGeneric.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Collections.Specialized.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.ComponentModel.Annotations.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.ComponentModel.DataAnnotations.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.ComponentModel.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.ComponentModel.EventBasedAsync.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.ComponentModel.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.ComponentModel.TypeConverter.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\system.configuration.configurationmanager\9.0.2\lib\net8.0\System.Configuration.ConfigurationManager.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Configuration.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Console.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Core.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Data.Common.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Data.DataSetExtensions.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Data.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\system.data.odbc\9.0.2\lib\net8.0\System.Data.Odbc.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\system.data.oledb\9.0.2\lib\net8.0\System.Data.OleDb.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Design.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Diagnostics.Contracts.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Diagnostics.Debug.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Diagnostics.DiagnosticSource.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\system.diagnostics.eventlog\9.0.2\lib\net8.0\System.Diagnostics.EventLog.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Diagnostics.FileVersionInfo.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\system.diagnostics.performancecounter\9.0.2\lib\net8.0\System.Diagnostics.PerformanceCounter.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Diagnostics.Process.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Diagnostics.StackTrace.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Diagnostics.TextWriterTraceListener.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Diagnostics.Tools.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Diagnostics.TraceSource.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Diagnostics.Tracing.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.DirectoryServices.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Drawing.Common.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Drawing.Design.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Drawing.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Drawing.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Dynamic.Runtime.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Formats.Asn1.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Formats.Tar.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Globalization.Calendars.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Globalization.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Globalization.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.Compression.Brotli.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.Compression.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.Compression.FileSystem.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.Compression.ZipFile.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.FileSystem.AccessControl.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.FileSystem.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.FileSystem.DriveInfo.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.FileSystem.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.FileSystem.Watcher.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.IsolatedStorage.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.MemoryMappedFiles.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\system.io.packaging\9.0.2\lib\net8.0\System.IO.Packaging.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\system.io.pipelines\9.0.2\lib\net8.0\System.IO.Pipelines.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.Pipes.AccessControl.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.Pipes.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.IO.UnmanagedMemoryStream.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Linq.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Linq.Expressions.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Linq.Parallel.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Linq.Queryable.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Memory.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.Http.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.Http.Json.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.HttpListener.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.Mail.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.NameResolution.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.NetworkInformation.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.Ping.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.Quic.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.Requests.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.Security.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.ServicePoint.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.Sockets.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.WebClient.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.WebHeaderCollection.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.WebProxy.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.WebSockets.Client.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Net.WebSockets.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Numerics.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Numerics.Vectors.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.ObjectModel.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Printing.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Reflection.DispatchProxy.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Reflection.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Reflection.Emit.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Reflection.Emit.ILGeneration.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Reflection.Emit.Lightweight.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Reflection.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Reflection.Metadata.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Reflection.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Reflection.TypeExtensions.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Resources.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Resources.Reader.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Resources.ResourceManager.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Resources.Writer.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.CompilerServices.Unsafe.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.CompilerServices.VisualC.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.Handles.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.InteropServices.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.InteropServices.JavaScript.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.InteropServices.RuntimeInformation.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.Intrinsics.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.Loader.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.Numerics.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.Serialization.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.Serialization.Formatters.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.Serialization.Json.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.Serialization.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Runtime.Serialization.Xml.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.AccessControl.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.Claims.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.Cryptography.Algorithms.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.Cryptography.Cng.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.Cryptography.Csp.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.Cryptography.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.Cryptography.Encoding.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.Cryptography.OpenSsl.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Security.Cryptography.Pkcs.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.Cryptography.Primitives.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\system.security.cryptography.protecteddata\9.0.2\lib\net8.0\System.Security.Cryptography.ProtectedData.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.Cryptography.X509Certificates.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Security.Cryptography.Xml.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Security.Permissions.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.Principal.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.Principal.Windows.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Security.SecureString.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.ServiceModel.Web.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.ServiceProcess.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Text.Encoding.CodePages.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Text.Encoding.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Text.Encoding.Extensions.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\system.text.encodings.web\9.0.0\lib\net8.0\System.Text.Encodings.Web.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\system.text.json\9.0.0\lib\net8.0\System.Text.Json.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Text.RegularExpressions.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Threading.AccessControl.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Threading.Channels.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Threading.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Threading.Overlapped.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Threading.Tasks.Dataflow.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Threading.Tasks.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Threading.Tasks.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Threading.Tasks.Parallel.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Threading.Thread.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Threading.ThreadPool.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Threading.Timer.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Transactions.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Transactions.Local.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.ValueTuple.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Web.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Web.HttpUtility.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Windows.Controls.Ribbon.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Windows.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Windows.Extensions.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Windows.Forms.Design.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Windows.Forms.Design.Editors.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Windows.Forms.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Windows.Forms.Primitives.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Windows.Input.Manipulations.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Windows.Presentation.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\System.Xaml.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Xml.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Xml.Linq.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Xml.ReaderWriter.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Xml.Serialization.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Xml.XDocument.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Xml.XmlDocument.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Xml.XmlSerializer.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Xml.XPath.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\8.0.23\ref\net8.0\System.Xml.XPath.XDocument.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\UIAutomationClient.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\UIAutomationClientSideProviders.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\UIAutomationProvider.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\UIAutomationTypes.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\WindowsBase.dll" />
+    <ReferencePath Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\ref\net8.0\WindowsFormsIntegration.dll" />
+    <ReferencePath Include="C:\Users\dedea\.nuget\packages\zstdsharp.port\0.8.0\lib\net8.0\ZstdSharp.dll" />
+    <ReferencePath Include="obj\Debug\net8.0-windows\Interop.Microsoft.Office.Interop.Excel.dll">
+      <EmbedInteropTypes>true</EmbedInteropTypes>
+    </ReferencePath>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\00_START_UP\wpfWin_BOOKU.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\00_START_UP\wpfWin_StartUp.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Manajemen Aplikasi\wpfUsc_ManajemenAplikasi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Manajemen Aplikasi\wpfWin_PenerbitInstaller.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Manajemen Aplikasi\wpfWin_PenerbitUpdater.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Manajemen Klien\wpfUsc_ManajemenClient.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\Tab\wpfUsc_TabPokok.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\wpfUsc_DataPerangkatApp.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\wpfUsc_DataProdukApp.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\wpfWin_InputProdukApp.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\App Developer\wpfWin_TryApp.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\App IT\phpMyAdmin\wpfWin_phpMyAdmin.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\App.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Backup Data\wpfWin_BackupData.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Backup Data\wpfWin_KloningData.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Backup Data\wpfWin_PulihkanData.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Bank Garansi\wpfUsc_BukuBankGaransi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Bank Garansi\wpfWin_InputBankGaransi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Besar\wpfUsc_BukuBesar.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Besar\wpfWin_BukuBesarPembantu.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Aktiva Lainnya\wpfUsc_BukuPengawasanAktivaLainnya.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Aktiva Lainnya\wpfWin_InputAktivaLainnya.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Bukti Potong PPh\wpfUsc_BukuPengawasanBuktiPotongPPh_Paid.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Bukti Potong PPh\wpfUsc_BukuPengawasanBuktiPotongPPh_Prepaid.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Bukti Potong PPh\wpfWin_InputBuktiPotongPPh.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Deposit Operasional\wpfUsc_BukuPengawasanDepositOperasional.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Deposit Operasional\wpfWin_InputDepositOperasional.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Deposit Operasional\wpfWin_InputProduk_DepositOperasional.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Gaji\Turunan Gaji\wpfUsc_BukuPengawasanTurunanGaji.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Gaji\Turunan Gaji\wpfWin_InputTagihanTurunanGaji.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Gaji\wpfUsc_BukuPengawasanGaji.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Gaji\wpfWin_InputGaji.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Bank-Leasing\wpfUsc_BukuPengawasanHutangBankLeasing.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Bank-Leasing\wpfWin_InputHutangBankLeasing.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Bank-Leasing\wpfWin_InputJadwalAngsuranHutangBankLeasing.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\wpfUsc_BukuPengawasanHutangPPhPasal21.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\01 - PPh Pasal 21\wpfWin_InputHutangPPhPasal21_GajiDanPesangon.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\02 - PPh Pasal 22\Impor\wpfUsc_BukuPengawasanHutangPPhPasal22_Impor.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\02 - PPh Pasal 22\Lokal\wpfUsc_BukuPengawasanHutangPPhPasal22_Lokal.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\03 - PPh Pasal 23\wpfUsc_BukuPengawasanHutangPPhPasal23.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\04 - PPh Pasal 4 (2)\wpfUsc_BukuPengawasanHutangPPhPasal42.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\05 - PPh Pasal 25\wpfUsc_BukuPengawasanHutangPPhPasal25.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\05 - PPh Pasal 25\wpfWin_InputHutangPPhPasal25.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\06 - PPh Pasal 26\wpfUsc_BukuPengawasanHutangPPhPasal26.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\10 - PPN\wpfUsc_BukuPengawasanPelaporanPPN.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\wpfUsc_BukuPengawasanKetetapanPajak.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\11 - Ketetapan Pajak\wpfWin_InputKetetapanPajak.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\12 - Pajak Impor\wpfUsc_BukuPengawasanPajakImpor.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\wpfWin_BayarPajakDengan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\wpfWin_DetailPembayaranPajak.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\wpfWin_InputHutangPajak.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang Pajak\wpfWin_InputLaporPajak.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Afiliasi\Hutang\wpfUsc_BukuPengawasanHutangAfiliasi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Afiliasi\Piutang\wpfUsc_BukuPengawasanPiutangAfiliasi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Afiliasi\wpfWin_InputHutangPiutangAfiliasi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Afiliasi\wpfWin_InputJadwalAngsuranAfiliasi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Dividen\Hutang\wpfUsc_BukuPengawasanHutangDividen.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Dividen\Piutang\wpfUsc_BukuPengawasanPiutangDividen.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Dividen\wpfWin_InputHutangPiutangDividen.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Karyawan\Hutang\wpfUsc_BukuPengawasanHutangKaryawan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Karyawan\Piutang\wpfUsc_BukuPengawasanPiutangKaryawan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Karyawan\wpfWin_InputHutangPiutangKaryawan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pemegang Saham\Hutang\wpfUsc_BukuPengawasanHutangPemegangSaham.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pemegang Saham\Piutang\wpfUsc_BukuPengawasanPiutangPemegangSaham.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pemegang Saham\wpfWin_InputHutangPiutangPemegangSaham.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pihak Ketiga\Hutang\wpfUsc_BukuPengawasanHutangPihakKetiga.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pihak Ketiga\Piutang\wpfUsc_BukuPengawasanPiutangPihakKetiga.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pihak Ketiga\wpfWin_InputHutangPiutangPihakKetiga.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Pihak Ketiga\wpfWin_InputJadwalAngsuranPihakKetiga.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Usaha\Hutang\wpfUsc_BukuPengawasanHutangUsaha.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Hutang-Piutang Usaha\Piutang\wpfUsc_BukuPengawasanPiutangUsaha.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Pemindahbukuan\wpfUsc_BukuPengawasanPemindahbukuan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Pemindahbukuan\wpfWin_InputPemindahbukuan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Penerimaan Bank-Cash\wpfUsc_BukuPengawasanBuktiPenerimaanBankCash.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Penerimaan Bank-Cash\wpfWin_InputBuktiPenerimaan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\Bundel Pengajuan\wpfUsc_BundelPengajuanPengeluaranBankCash.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\Bundel Pengajuan\wpfWin_InputBundelPengajuanPengeluaranBankCash.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\wpfUsc_BukuPengawasanBuktiPengeluaranBankCash.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\Bukti Pengeluaran Bank-Cash\wpfWin_InputBuktiPengeluaran.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penerimaan-Pengeluaran\wpfWin_InputJumlahBankCashInOut.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penjualan Eceran\wpfUsc_BukuPengawasanPenjualanEceran.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Buku Pengawasan\Penjualan Eceran\wpfWin_InputPenjualanEceran.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Daftar Pemegang Saham\wpfUsc_DaftarPemegangSaham.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Daftar Pemegang Saham\wpfWin_DaftarSaham.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data COA\wpfUsc_DataCOA.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data COA\wpfWin_InputCOA.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data COA\wpfWin_ListCOA.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data COA\wpfWin_ProgressImportDataCOA.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data COA\wpfWin_TautanCOA.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Karyawan\wpfUsc_DataKaryawan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Karyawan\wpfWin_InputDataKaryawan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Karyawan\wpfWin_ListDataKaryawan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Lawan Transaksi\wpfUsc_DataLawanTransaksi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Lawan Transaksi\wpfWin_InputLawanTransaksi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Lawan Transaksi\wpfWin_ListLawanTransaksi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Project\wpfUsc_DataProject.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Project\wpfWin_InputDataProject.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data Project\wpfWin_ListDataProject.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data User\wpfUsc_DataUser.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data User\wpfWin_GantiPassword.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data User\wpfWin_InputUser.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Data User\wpfWin_Login.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Kurs\wpfUsc_Kurs.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Kurs\wpfUsc_ManajemenKurs.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Kurs\wpfWin_UpdateKurs_Bulanan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Data\Kurs\wpfWin_UpdateKurs_Harian.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Dialog\wpfWin_CeklisBulan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Dialog\wpfWin_MetodeInputBayar.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Dialog\wpfWin_Pesan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Dialog\wpfWin_PilihJurnalAdjusment.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Dialog\wpfWin_SelectFolder.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\File\wpfUsc_CompanyProfile.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\File\wpfUsc_PengaturanUmum.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\File\wpfWin_Pengaturan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfUsc_Adjusment.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfUsc_Adjusment_Forex.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfUsc_Adjusment_HPP.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfUsc_JurnalUmum.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_ImportJurnal.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_InputJurnal.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_InputJurnalAdjusmentForex.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_InputJurnalPerTransaksi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_JurnalVoucher.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Jurnal\wpfWin_VerifikasiDataJurnal.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanHPP.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanLabaRugi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanLabaRugi_Bulanan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanLabaRugi_Tahunan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanNeraca.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanNeracaLajur.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanNeraca_Bulanan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanNeraca_Tahunan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Laporan\wpfUsc_LaporanTrialBalance.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Amortisasi Biaya\wpfUsc_Adjusment_Amortisasi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Amortisasi Biaya\wpfUsc_DaftarAmortisasiBiaya.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Amortisasi Biaya\wpfWin_InputAmortisasiBiaya.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\Buku Disposal Asset Tetap\wpfUsc_BukuDisposalAssetTetap.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\Buku Disposal Asset Tetap\wpfWin_InputDisposalAssetTetap.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfUsc_Adjusment_PenyusutanAsset.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfUsc_DaftarPenyusutanAssetTetap.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfWin_InputDataAsset.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfWin_InputKodeDivisi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfWin_JualAsset.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\Daftar Penyusutan Asset Tetap\wpfWin_ProgressImportDataAsset.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Manajemen Asset\wpfWin_PilihJurnal_DataAsset.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Page1.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\1 - Buku Pembelian\wpfUsc_BukuPembelian.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\2 - PO Pembelian\wpfUsc_POPembelian.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\2 - PO Pembelian\wpfWin_InputPOPembelian.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\3 - Surat Jalan\wpfUsc_SuratJalanPembelian.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\3 - Surat Jalan\wpfWin_InputSuratJalanPembelian.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\4 - BAST\wpfUsc_BASTPembelian.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\4 - BAST\wpfWin_InputBASTPembelian.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\wpfUsc_InvoicePembelian.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\wpfWin_InputInvoicePembelian.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\5 - Invoice Pembelian\wpfWin_InputInvoicePembelian_Alt.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfUsc_ReturPembelian.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Pembelian\6 - Retur Pembelian\wpfWin_InputReturPembelian.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\wpfUsc_BukuPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\2 - PO Penjualan\wpfUsc_POPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\2 - PO Penjualan\wpfWin_InputPOPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfUsc_SuratJalanPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\3 - Surat Jalan\wpfWin_InputSuratJalanPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\4 - BAST\wpfUsc_BASTPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\4 - BAST\wpfWin_InputBASTPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\wpfUsc_InvoicePenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\wpfWin_InputInvoicePenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\5 - Invoice Penjualan\wpfWin_InputInvoicePenjualan_Alt.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\6 - Retur Penjualan\wpfUsc_ReturPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\Penjualan\6 - Retur Penjualan\wpfWin_InputReturPenjualan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_DorongInvoiceKeJurnal.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_InputProduk_Nota.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_InputProduk_SJBAST.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_InputSJBASTManual.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_ListInvoice.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_ListPO.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_ListSJBAST.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pembelian - Penjualan\wpfWin_PilihJenisProdukInduk.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Pendukung\wpfWin_PilihBulan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Print\BankCash\wpfUsc_DesainBuktiPengeluaran.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Print\BankCash\wpfUsc_DesainBundelanPengajuanPengeluaran.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Jurnal Voucher\wpfUsc_DesainJurnalVoucher.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainBAST.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainInvoice.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainNotaDebet.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainNotaRetur.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainPO.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Print\Nota\wpfUsc_DesainSuratJalan.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Print\wpfUsc_DesainFooter.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Print\wpfUsc_DesainHeader.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Print\wpfWin_Pratinjau.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Progress\wpfUsc_Loading.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Progress\wpfWin_Loading.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Progress\wpfWin_ProgresExport_EXCEL.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Progress\wpfWin_ProgressLoadingData.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Registrasi\wpfWin_Registrasi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Registrasi\wpfWin_RegistrasiPerangkat.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Registrasi\wpfWin_Registrasi_IsiDataCompany.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Registrasi\wpfWin_Registrasi_IsiDataUser.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Security\wpfWin_KunciAkses.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Stock Opname\wpfUsc_StockOpname.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Stock Opname\wpfWin_InputStockOpname.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Tahun Buku\wpfUsc_TutupBuku.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Tahun Buku\wpfWin_BuatDatabaseBukuBaru.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Tahun Buku\wpfWin_GantiTahunBuku.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Transaksi\wpfWin_InputTransaksi.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Update\wpfWin_Updater.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Web Browser\wpfUsc_WebBrowser.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\X_Deprecated\X_wpfUsc_HostWhatsApp.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\X_Deprecated\X_wpfwin_WhatsApp.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\Booku_Content.g.vb" />
+    <Compile Include="D:\vb .net project\BookuID\Booku\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="C:\Program Files\dotnet\sdk\9.0.309\Sdks\Microsoft.NET.Sdk\targets\..\analyzers\Microsoft.CodeAnalysis.VisualBasic.NetAnalyzers.dll" />
+    <Analyzer Include="C:\Program Files\dotnet\sdk\9.0.309\Sdks\Microsoft.NET.Sdk\targets\..\analyzers\Microsoft.CodeAnalysis.NetAnalyzers.dll" />
+    <Analyzer Include="C:\Program Files\dotnet\packs\Microsoft.WindowsDesktop.App.Ref\8.0.23\analyzers/dotnet/System.Windows.Forms.Analyzers.dll" />
+  </ItemGroup>
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+</Project>

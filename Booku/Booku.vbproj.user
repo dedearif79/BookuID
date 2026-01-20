@@ -745,50 +745,5 @@
     <Page Update="Update\wpfWin_Updater.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="WPF\Styles\StyleBorder.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleButton.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleCheckBox.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleComboBox.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleDataGrid.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleGroupBox.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleLabel.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StylePanel.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleRadioButton.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleRichTextBox.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleScrollViewer.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleTextBlock.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleTextBox.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleUserControl.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="WPF\Styles\StyleWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
   </ItemGroup>
 </Project>

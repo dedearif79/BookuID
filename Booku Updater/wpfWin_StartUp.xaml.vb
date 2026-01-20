@@ -4,6 +4,7 @@ Imports System.IO.Compression
 Imports System.Net.Http
 Imports System.Runtime.InteropServices
 Imports bcomm
+Imports BookuID.Styles
 Imports MySql.Data.MySqlClient
 Imports Newtonsoft.Json.Linq
 

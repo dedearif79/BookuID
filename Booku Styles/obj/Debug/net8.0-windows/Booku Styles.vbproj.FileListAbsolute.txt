@@ -1,0 +1,43 @@
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\Booku Styles.vbproj.AssemblyReference.cache
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleAplikasi.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleBorder.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleButton.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleCheckBox.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleColor.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleComboBox.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleDataGrid.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleDatePicker.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleGrid.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleGroupBox.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleLabel.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleLainnya.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleMenu.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StylePanel.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleRadioButton.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleRichTextBox.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleScrollViewer.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleStatusBar.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleTabControl.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleTextBlock.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleUserControl.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleWindow.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\GeneratedInternalTypeHelper.g.vb
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\BookuID.Styles_MarkupCompile.cache
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\BookuID.Styles_MarkupCompile.lref
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\BookuID.Styles.dll
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\refint\BookuID.Styles.dll
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\BookuID.Styles.pdb
+D:\vb .net project\BookuID\Booku Styles\bin\Debug\net8.0-windows\BookuID.Styles.deps.json
+D:\vb .net project\BookuID\Booku Styles\bin\Debug\net8.0-windows\BookuID.Styles.dll
+D:\vb .net project\BookuID\Booku Styles\bin\Debug\net8.0-windows\BookuID.Styles.pdb
+D:\vb .net project\BookuID\Booku Styles\bin\Debug\net8.0-windows\bcomm.dll
+D:\vb .net project\BookuID\Booku Styles\bin\Debug\net8.0-windows\bcomm.pdb
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\WPF\Styles\StyleTextBox.baml
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\BookuID.Styles.g.resources
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\Booku Styles.GeneratedMSBuildEditorConfig.editorconfig
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\Booku Styles.AssemblyInfoInputs.cache
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\Booku Styles.AssemblyInfo.vb
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\Booku Styles.vbproj.CoreCompileInputs.cache
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\Booku Styles.sourcelink.json
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\Booku St.3907FF83.Up2Date
+D:\vb .net project\BookuID\Booku Styles\obj\Debug\net8.0-windows\ref\BookuID.Styles.dll

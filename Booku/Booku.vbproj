@@ -34,6 +34,11 @@
     <Compile Remove="Pembelian - Penjualan\Penjualan\X-Trash\**" />
     <Compile Remove="Resources\**" />
     <Compile Remove="WPF\Styles\Class Window\**" />
+    <!-- Exclude local WPF/Styles - sekarang SEPENUHNYA menggunakan Booku Styles Class Library -->
+    <Compile Remove="WPF\Styles\**" />
+    <Page Remove="WPF\Styles\**" />
+    <EmbeddedResource Remove="WPF\Styles\**" />
+    <None Remove="WPF\Styles\**" />
     <Compile Remove="X_Deprecated\**" />
     <Compile Remove="My Project\Application.Designer.vb" />
     <!-- Exclude deprecated files (X_ prefix) -->
@@ -168,7 +173,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Booku Library\Booku Library.vbproj" />
+    <ProjectReference Include="..\Booku Styles\Booku Styles.vbproj" />
   </ItemGroup>
+
+  <!-- Styling sekarang sepenuhnya di Booku Styles Class Library -->
+  <!-- TextBoxBehavior, StylingElemen, wpfMdl_StyleColor sudah dipindahkan ke Booku Styles -->
 
   <ItemGroup>
     <EmbeddedResource Update="My Project\Resources.resx">

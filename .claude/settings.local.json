@@ -61,7 +61,16 @@
       "Bash(do if ! grep -q \"BersihkanSeleksi_SetelahLoading\" \"$file\")",
       "Bash(then echo \"$file\" fi done)",
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\Booku\\\\Booku.vbproj\" /t:Build /verbosity:minimal)",
-      "Bash(comm:*)"
+      "Bash(comm:*)",
+      "Bash(do sed -i 's|Source=\"\"\"\"\\\\.\\\\./[^\"\"\"\"]*StyleAplikasi\\\\.xaml\"\"\"\"|Source=\"\"\"\"/WPF/Styles/StyleAplikasi.xaml\"\"\"\"|g' \"$file\")",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\":*)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:/vb .net project/BookuID/BookuID.sln\" -t:Rebuild -verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:/vb .net project/BookuID/BookuID.sln\" -t:Restore -verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"/mnt/d/vb .net project/BookuID/Booku Styles/Booku Styles.vbproj\" -t:Build -verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:/vb .net project/BookuID/Booku Styles/Booku Styles.vbproj\" /t:Build /verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:/vb .net project/BookuID/Booku Styles/Booku Styles.vbproj\" /t:Clean,Build /verbosity:normal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"/mnt/d/vb .net project/BookuID/Booku Styles/Booku Styles.vbproj\" /t:Build /verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Styles/Booku Styles.vbproj\" -t:Build -verbosity:minimal)"
     ]
   }
 }

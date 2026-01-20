@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Booku Library\Booku Library.vbproj" />
+    <ProjectReference Include="..\Booku Styles\Booku Styles.vbproj" />
   </ItemGroup>
 
 </Project>

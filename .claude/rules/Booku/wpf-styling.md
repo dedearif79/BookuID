@@ -1,8 +1,17 @@
 # WPF Styling System
 
-> **Konteks:** Dokumentasi ini khusus untuk **Project Booku** (folder `BookuID/Booku/`)
+> **Konteks:** Dokumentasi ini menjelaskan cara menggunakan WPF styling di project Booku.
 
-Lokasi: `/Booku/WPF/Styles/`
+## Lokasi File (Post-Migrasi)
+
+| Komponen | Lokasi |
+|----------|--------|
+| **XAML Styles** | `/Booku Styles/WPF/Styles/` |
+| **Behaviors** | `/Booku Styles/WPF/Behaviors/` |
+| **Modules** | `/Booku Styles/WPF/Modules/` |
+| **Bridge (backward compat)** | `/Booku/WPF/Modul Umum/wpfMdl_StyleBridge.vb` |
+
+> **CATATAN MIGRASI:** File styling sudah dipindahkan dari `/Booku/WPF/Styles/` ke project **Booku Styles**. Dokumentasi ini tetap berlaku untuk cara penggunaan.
 
 ## Arsitektur Style
 
@@ -55,8 +64,9 @@ StyleAplikasi.xaml (Master/Induk)
 ## Sistem Manajemen Warna Terpusat
 
 ### Lokasi File
-- **XAML:** `/Booku/WPF/Styles/StyleColor.xaml`
-- **Code-Behind:** `/Booku Library/mdlPub_ModulUmum.vb`
+- **XAML Colors:** `/Booku Styles/WPF/Styles/StyleColor.xaml` (post-migrasi)
+- **Code-Behind Variables:** `/Booku Library/mdlPub_ModulUmum.vb` (tidak berubah)
+- **Style Bridge:** `/Booku/WPF/Modul Umum/wpfMdl_StyleBridge.vb` (backward compatibility)
 
 ### 2-Layer Color System
 
@@ -254,11 +264,13 @@ panel.Background = Brushes.White
 
 ## Cara Membuat Style Baru
 
-1. **Buat file baru** `Style[NamaElemen].xaml` di folder `/Booku/WPF/Styles/`
+> **CATATAN:** Style baru sekarang dibuat di project **Booku Styles**, bukan di Booku.
+
+1. **Buat file baru** `Style[NamaElemen].xaml` di folder `/Booku Styles/WPF/Styles/`
 2. **Gunakan warna dari StyleColor.xaml** (jangan hardcode)
 3. **Daftarkan** di `StyleAplikasi.xaml`:
    ```xml
-   <ResourceDictionary Source="/WPF/Styles/Style[NamaElemen].xaml" />
+   <ResourceDictionary Source="pack://application:,,,/BookuID.Styles;component/WPF/Styles/Style[NamaElemen].xaml" />
    ```
 4. Style otomatis tersedia di semua Window/UserControl yang me-reference `StyleAplikasi.xaml`
 
@@ -310,6 +322,8 @@ styleButtonFormHalamanCrudTambah  <- Varian paling spesifik
 ```
 
 ## Daftar File Style
+
+> Semua file ada di `/Booku Styles/WPF/Styles/` (post-migrasi)
 
 | File Style | Komponen |
 |------------|----------|

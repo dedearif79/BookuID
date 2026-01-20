@@ -1,0 +1,199 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:BookuID.Styles">
+
+    <!-- =================================================================== -->
+    <!-- STYLE TEXTBOX                                                       -->
+    <!-- =================================================================== -->
+    <!-- Semua warna menggunakan referensi dari StyleColor.xaml              -->
+    <!-- =================================================================== -->
+
+
+    <!-- ===== TEXTBOX DASAR ===== -->
+    <Style x:Key="styleTextBoxDasar" TargetType="TextBox">
+        <Setter Property="FontFamily" Value="Segoe UI"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Height" Value="29"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Opacity" Value="1"/>
+        <Setter Property="Background" Value="{StaticResource clrBgInput}"/>
+        <Setter Property="Foreground" Value="{StaticResource clrTeksPrimer}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource clrBorderDefault}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Padding" Value="4,0"/>
+        <!-- KarakterDilarang behavior tersedia via TextBoxBehavior.KarakterDilarang -->
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="3"
+                            SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Focusable="False"
+                                      HorizontalScrollBarVisibility="Hidden"
+                                      VerticalScrollBarVisibility="Hidden"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource clrBorderFocus}"/>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource clrBorderFocus}"/>
+                        </Trigger>
+                        <Trigger Property="IsReadOnly" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource clrBgInputReadOnly}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource clrBgInputDisabled}"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource clrBorderDisabled}"/>
+                            <Setter Property="Foreground" Value="{StaticResource clrTeksDisabled}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- TEXTBOX FORM HALAMAN (UserControl)                                  -->
+    <!-- =================================================================== -->
+
+    <!-- TextBox Form Halaman - Base -->
+    <Style x:Key="styleTextBoxFormHalaman" BasedOn="{StaticResource styleTextBoxDasar}" TargetType="TextBox">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="0 5"/>
+    </Style>
+
+    <!-- TextBox Form Halaman - Footer -->
+    <Style x:Key="styleTextBoxFormHalamanFooter" BasedOn="{StaticResource styleTextBoxFormHalaman}" TargetType="TextBox">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="0 5 15 5"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- TEXTBOX FORM DIALOG (Window)                                        -->
+    <!-- =================================================================== -->
+
+    <!-- TextBox Form Dialog - Base -->
+    <Style x:Key="styleTextBoxFormDialog" BasedOn="{StaticResource styleTextBoxDasar}" TargetType="TextBox">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="DockPanel.HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Margin" Value="0 5"/>
+    </Style>
+
+    <!-- TextBox Form Dialog - Kanan -->
+    <Style x:Key="styleTextBoxFormDialogKanan" BasedOn="{StaticResource styleTextBoxFormDialog}" TargetType="TextBox">
+        <Setter Property="HorizontalAlignment" Value="Right"/>
+    </Style>
+
+    <!-- TextBox Form Dialog - Kapital -->
+    <Style x:Key="styleTextBoxFormDialogKapital" BasedOn="{StaticResource styleTextBoxFormDialog}" TargetType="TextBox">
+        <Setter Property="CharacterCasing" Value="Upper"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- TEXTBOX ANGKA (Numeric Input)                                       -->
+    <!-- =================================================================== -->
+    <!-- Input validation menggunakan TextBoxBehavior attached behavior     -->
+    <!-- =================================================================== -->
+
+    <!-- TextBox Form Dialog - Angka (hanya angka positif/negatif) -->
+    <Style x:Key="styleTextBoxFormDialogAngka" BasedOn="{StaticResource styleTextBoxFormDialog}" TargetType="TextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="MaxLength" Value="21"/>
+        <Setter Property="behaviors:TextBoxBehavior.HanyaBolehInputAngka" Value="True"/>
+    </Style>
+
+    <!-- TextBox Form Dialog - AngkaPlus (hanya angka positif) -->
+    <Style x:Key="styleTextBoxFormDialogAngkaPlus" BasedOn="{StaticResource styleTextBoxFormDialog}" TargetType="TextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="MaxLength" Value="21"/>
+        <Setter Property="behaviors:TextBoxBehavior.HanyaBolehInputAngkaPlus" Value="True"/>
+    </Style>
+
+    <!-- TextBox Form Dialog - AngkaSeparatePlus (angka positif dengan separator ribuan) -->
+    <Style x:Key="styleTextBoxFormDialogAngkaSeparatePlus" BasedOn="{StaticResource styleTextBoxFormDialog}" TargetType="TextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="MaxLength" Value="21"/>
+        <Setter Property="IsReadOnly" Value="False"/>
+        <Setter Property="behaviors:TextBoxBehavior.HanyaBolehInputAngkaSeparatePlus" Value="True"/>
+    </Style>
+
+    <!-- TextBox Form Dialog - AngkaSeparate (angka dengan separator ribuan) -->
+    <Style x:Key="styleTextBoxFormDialogAngkaSeparate" BasedOn="{StaticResource styleTextBoxFormDialog}" TargetType="TextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="MaxLength" Value="21"/>
+        <Setter Property="IsReadOnly" Value="False"/>
+        <Setter Property="behaviors:TextBoxBehavior.HanyaBolehInputAngkaSeparate" Value="True"/>
+    </Style>
+
+    <!-- TextBox Form Dialog - AngkaSeparatePlus ReadOnly -->
+    <Style x:Key="styleTextBoxFormDialogAngkaSeparatePlusReadOnly" BasedOn="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}" TargetType="TextBox">
+        <Setter Property="IsReadOnly" Value="True"/>
+    </Style>
+
+    <!-- TextBox Form Dialog - Persen -->
+    <Style x:Key="styleTextBoxFormDialogPersen" BasedOn="{StaticResource styleTextBoxFormDialog}" TargetType="TextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="Width" Value="39"/>
+        <Setter Property="MaxLength" Value="5"/>
+        <Setter Property="behaviors:TextBoxBehavior.HanyaBolehInputAngkaDesimalPlus" Value="True"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- TEXTBOX ANGKA ASING (Foreign Currency Input)                        -->
+    <!-- =================================================================== -->
+    <!-- Background berbeda untuk membedakan input mata uang asing           -->
+    <!-- Input validation menggunakan TextBoxBehavior attached behavior     -->
+    <!-- =================================================================== -->
+
+    <!-- TextBox Form Dialog - Angka Asing (Plus Minus, desimal) -->
+    <Style x:Key="styleTextBoxFormDialogAngkaAsing" BasedOn="{StaticResource styleTextBoxFormDialog}" TargetType="TextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="MaxLength" Value="15"/>
+        <Setter Property="Background" Value="{StaticResource clrStatusInfoBg}"/>
+        <Setter Property="behaviors:TextBoxBehavior.HanyaBolehInputAngkaDesimal" Value="True"/>
+    </Style>
+
+    <!-- TextBox Form Dialog - Angka Asing Plus (hanya positif, desimal) -->
+    <Style x:Key="styleTextBoxFormDialogAngkaAsingPlus" BasedOn="{StaticResource styleTextBoxFormDialog}" TargetType="TextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="MaxLength" Value="15"/>
+        <Setter Property="Background" Value="{StaticResource clrStatusInfoBg}"/>
+        <Setter Property="behaviors:TextBoxBehavior.HanyaBolehInputAngkaDesimalPlus" Value="True"/>
+    </Style>
+
+    <!-- TextBox Form Dialog - Angka Asing Plus ReadOnly -->
+    <Style x:Key="styleTextBoxFormDialogAngkaAsingPlusReadOnly" BasedOn="{StaticResource styleTextBoxFormDialog}" TargetType="TextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="MaxLength" Value="15"/>
+        <Setter Property="IsReadOnly" Value="True"/>
+        <Setter Property="Background" Value="{StaticResource clrStatusInfoBg}"/>
+        <Setter Property="behaviors:TextBoxBehavior.HanyaBolehInputAngkaDesimalPlusReadOnly" Value="True"/>
+    </Style>
+
+
+    <!-- =================================================================== -->
+    <!-- TEXTBOX NOTA (untuk form invoice/nota)                              -->
+    <!-- =================================================================== -->
+
+    <!-- TextBox Form Nota - Angka -->
+    <Style x:Key="styleTextBoxFormNotaAngka" BasedOn="{StaticResource styleTextBoxFormDialogAngkaPlus}" TargetType="TextBox">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="MaxLength" Value="21"/>
+        <Setter Property="Margin" Value="0 1"/>
+        <Setter Property="Padding" Value="2"/>
+    </Style>
+
+
+</ResourceDictionary>

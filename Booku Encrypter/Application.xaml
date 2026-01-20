@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:Booku_Encrypter"
              StartupUri="wpfWin_StartUp.xaml">
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Shared styles dari Booku Styles Class Library -->
+                <ResourceDictionary Source="pack://application:,,,/BookuID.Styles;component/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

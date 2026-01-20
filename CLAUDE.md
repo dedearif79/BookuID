@@ -10,8 +10,9 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
 | Istilah | Mengacu Kepada |
 |---------|----------------|
-| **BookuID** | Keseluruhan Solution (berisi 8 project) |
+| **BookuID** | Keseluruhan Solution (berisi 9 project) |
 | **Booku** / **Project Booku** | Project utama di folder `BookuID/Booku/` |
+| **Booku Styles** | Project styling terpusat di folder `BookuID/Booku Styles/` |
 
 > **PENTING:** Jangan keliru antara "BookuID" (solution) dan "Booku" (project utama). Jika disebut "project Booku", artinya mengacu kepada project yang ada di folder `BookuID/Booku/`, bukan keseluruhan solution.
 
@@ -26,7 +27,7 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
 **Multicurrency:** Mendukung 8 mata uang — IDR (Rupiah) + 7 mata uang asing: **USD, AUD, JPY, CNY, EUR, SGD, GBP**. Dapat ditambah sesuai kebutuhan klien.
 
-> **Arsitektur WPF Murni:** Entry point menggunakan `App.xaml` + `App.xaml.vb` (WPF Application class). Seluruh UI menggunakan WPF (Window, UserControl, Style). Tidak ada dependency WinForms.
+> **Arsitektur WPF Murni:** Entry point menggunakan `App.xaml` + `App.xaml.vb` (WPF Application class). Seluruh UI menggunakan WPF (Window, UserControl, Style). Styling terpusat di project Booku Styles (`BookuID.Styles.dll`). Tidak ada dependency WinForms.
 
 ### Quick Reference
 
@@ -51,6 +52,12 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 | ↳ Window Common | `.claude/rules/Booku/wpf-window-common.md` |
 | WPF Host Pattern | `.claude/rules/Booku/wpf-host-pattern.md` |
 | WPF Async Loading | `.claude/rules/Booku/wpf-async-loading-pattern.md` |
+
+**Dokumentasi Khusus Project Booku Styles**
+
+| Topik | File Rules |
+|-------|------------|
+| Overview & Struktur | `.claude/rules/Booku Styles/overview.md` |
 
 **Dokumentasi Khusus Project Booku Library**
 

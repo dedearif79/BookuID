@@ -4,12 +4,13 @@
 
 | Istilah | Mengacu Kepada |
 |---------|----------------|
-| **BookuID** | Keseluruhan Solution (berisi 8 project) |
+| **BookuID** | Keseluruhan Solution (berisi 9 project) |
 | **Booku** / **Project Booku** | Project utama di folder `BookuID/Booku/` |
+| **Booku Styles** | Project styling terpusat di folder `BookuID/Booku Styles/` |
 
-## Solution BookuID (8 Projects)
+## Solution BookuID (9 Projects)
 
-Solution BookuID berisi 8 project yang saling terintegrasi. Jumlah project dapat bertambah seiring waktu sesuai kebutuhan.
+Solution BookuID berisi 9 project yang saling terintegrasi. Jumlah project dapat bertambah seiring waktu sesuai kebutuhan.
 
 | No | Project | Deskripsi | Status |
 |----|---------|-----------|--------|
@@ -19,8 +20,9 @@ Solution BookuID berisi 8 project yang saling terintegrasi. Jumlah project dapat
 | 4 | **Booku Encrypter** | Sistem enkripsi dan dekripsi untuk seluruh project dalam solution BookuID. | Sudah dibuat |
 | 5 | **Booku Installer** | Sistem installer aplikasi Booku secara otomatis. | Ada, akan dirombak total |
 | 6 | **Booku Library** | Library bersama (bcomm.dll) yang dipakai oleh seluruh project dalam solution BookuID. | Sudah jalan, terus dikembangkan |
-| 7 | **Booku Uninstaller** | Sistem untuk mencabut instalasi Booku di PC klien/user. | Belum dibuat |
-| 8 | **Booku Updater** | Sistem update aplikasi Booku secara otomatis. | Sudah jalan (sederhana), akan dikembangkan |
+| 7 | **Booku Styles** | **Project Styling Terpusat.** Berisi XAML resources, behaviors, dan styling modules. Dikompilasi menjadi `BookuID.Styles.dll`. | Sudah jalan (post-migrasi) |
+| 8 | **Booku Uninstaller** | Sistem untuk mencabut instalasi Booku di PC klien/user. | Belum dibuat |
+| 9 | **Booku Updater** | Sistem update aplikasi Booku secara otomatis. | Sudah jalan (sederhana), akan dikembangkan |
 
 ### Multicurrency Project Booku
 
@@ -32,7 +34,18 @@ Jumlah mata uang dapat ditambah sesuai kebutuhan klien/user.
 
 ### Dependencies Antar Project
 
-Semua project bergantung pada **Booku Library** kecuali Booku Assistant (bergantung pada Booku Uninstaller).
+```
+Booku Library (bcomm.dll)
+    ↓
+Booku Styles (BookuID.Styles.dll)
+    ↓
+Booku (Main App) + Project lainnya
+```
+
+**Catatan Dependencies:**
+- **Booku Library**: Dipakai oleh semua project (utilities, enkripsi, database)
+- **Booku Styles**: Tergantung pada Booku Library, dipakai oleh Booku
+- **Booku Assistant**: Bergantung pada Booku Uninstaller (khusus)
 
 ## Feature Modules (`/Booku/`)
 

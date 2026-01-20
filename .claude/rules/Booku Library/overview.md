@@ -24,10 +24,10 @@ Booku Library/
 ├── mdlPub_ModulUmum.vb        # Modul utama (utilities, warna WPF)
 ├── mdlPub_Enkripsi.vb         # Enkripsi AES-256
 ├── mdlPub_KoneksiDatabase.vb  # Koneksi database public
-├── mdlPub_VariabelUmum.vb     # Konstanta umum
-├── mdlPub_Styling.vb          # Window styling helpers
-└── cls_WindowDialogWPF_TanpaX.vb  # Class untuk window tanpa tombol X
+└── mdlPub_VariabelUmum.vb     # Konstanta umum
 ```
+
+> **Catatan:** File `mdlPub_Styling.vb`, `mdlPub_WpfInputHelper.vb`, dan `cls_WindowDialogWPF_TanpaX.vb` sudah dipindahkan ke project **Booku Styles** (`/Booku Styles/WPF/Modules/`).
 
 ## Modul dan Fungsinya
 
@@ -69,7 +69,7 @@ WarnaHitam_45_WPF        ' #424242 - Neutral800
 WarnaHitam_50_WPF        ' #212121 - Neutral900
 ```
 
-> **Penting:** Warna-warna ini selaras dengan `StyleColor.xaml` di project Booku. Lihat `.claude/rules/Booku/wpf-styling.md` untuk dokumentasi lengkap sistem warna.
+> **Penting:** Warna-warna ini selaras dengan `StyleColor.xaml` di project **Booku Styles**. Lihat `.claude/rules/Booku/wpf-styling.md` untuk dokumentasi lengkap sistem warna.
 
 ### 2. mdlPub_Enkripsi.vb
 
@@ -143,26 +143,30 @@ NamaFileRegistrasiPerangkat    ' "0002.conf"
 NamaFileVersiDanApdetAplikasi  ' "0003.conf"
 ```
 
-### 5. mdlPub_Styling.vb
+## Hubungan dengan Booku Styles
 
-Helper untuk styling WPF Window:
+Booku Library dan Booku Styles adalah dua project yang saling melengkapi:
 
-```vb
-' Styling window dialog standar
-StyleWindowDialogWPF_Dasar(Jendela)      ' SizeToContent, CenterScreen, NoResize
+| Aspek | Booku Library | Booku Styles |
+|-------|---------------|--------------|
+| **Namespace** | `bcomm` | `BookuID.Styles` |
+| **Output** | `bcomm.dll` | `BookuID.Styles.dll` |
+| **Isi** | Utilities, encryption, database, warna variables | XAML styles, behaviors, styling modules |
+| **Dependency** | Tidak ada | Tergantung pada Booku Library |
 
-' Styling window tanpa tombol X (close)
-StyleWindowDialogWPF_TanpaTombolX(Jendela)
-
-' Styling window yang bisa di-resize
-StyleWindowDialogWPF_Sizable(Jendela)
+**Dependency Order:**
+```
+Booku Library (bcomm.dll)
+    ↓
+Booku Styles (BookuID.Styles.dll)
+    ↓
+Booku (Main App)
 ```
 
-### 6. cls_WindowDialogWPF_TanpaX.vb
-
-Class untuk membuat window tanpa tombol close (X):
-- Menggunakan Win32 API (`user32.dll`)
-- Menghapus system menu dari window
+**Sinkronisasi Warna:**
+- Variabel warna `WarnaXxx_WPF` ada di Booku Library (`mdlPub_ModulUmum.vb`)
+- Definisi XAML warna ada di Booku Styles (`StyleColor.xaml`)
+- Keduanya **HARUS** sinkron (hex value sama)
 
 ## Dependencies
 
@@ -178,17 +182,16 @@ Library ini otomatis ter-reference oleh project lain dalam solution. Untuk mengg
 ' Import namespace
 Imports bcomm
 
-' Contoh penggunaan
+' Contoh penggunaan enkripsi
 Dim teksEnkripsi = EnkripsiTeksAES1("teks rahasia")
 Dim teksDekripsi = DekripsiTeksAES1(teksEnkripsi)
 
 ' Penggunaan warna
 label.Foreground = WarnaHijauSolid_WPF
 panel.Background = WarnaPutih_WPF
-
-' Styling window
-StyleWindowDialogWPF_Dasar(Me)
 ```
+
+> **Catatan:** Untuk styling window (`StyleWindowDialogWPF_Dasar`, `StyleWindowDialogWPF_TanpaTombolX`), gunakan dari project **Booku Styles** (`Imports BookuID.Styles`).
 
 ## Aturan Pengembangan
 
@@ -196,4 +199,6 @@ StyleWindowDialogWPF_Dasar(Me)
 2. **Prefix**: Gunakan prefix `mdlPub_` untuk modul publik, `cls_` untuk class
 3. **Backward Compatibility**: Perubahan harus mempertahankan kompatibilitas dengan project lain
 4. **Keamanan**: Jangan expose key enkripsi atau credential database
-5. **Warna**: Sinkronkan variabel warna dengan `StyleColor.xaml` di project Booku
+5. **Warna**: Sinkronkan variabel warna `WarnaXxx_WPF` dengan `StyleColor.xaml` di project **Booku Styles**
+   - Jika ubah warna di sini, update juga di Booku Styles
+   - Jika ubah warna di Booku Styles, update juga di sini

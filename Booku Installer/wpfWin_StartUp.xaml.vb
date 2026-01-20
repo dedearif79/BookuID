@@ -1,5 +1,6 @@
 Imports System.IO
 Imports bcomm
+Imports BookuID.Styles
 Imports MySql.Data.MySqlClient
 Imports System.IO.Compression
 Imports System.Diagnostics
