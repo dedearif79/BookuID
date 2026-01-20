@@ -46,7 +46,8 @@ Public Module mdlPub_KoneksiDatabase
             ";DATABASE =" & NamaDatabase_BookuID_Booku_Public &
             ";USERNAME=" & UserDatabasePublic &
             ";PASSWORD=" & PasswordDatabasePublic &
-            ";PORT=" & PortDatabasePublic & ";"
+            ";PORT=" & PortDatabasePublic &
+            ";Connection Timeout=10" & ";"
         Try
             KoneksiDatabasePublic = New MySqlConnection(strKoneksi)
             KoneksiDatabasePublic.Open()

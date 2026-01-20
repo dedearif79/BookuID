@@ -70,7 +70,10 @@
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:/vb .net project/BookuID/Booku Styles/Booku Styles.vbproj\" /t:Build /verbosity:minimal)",
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:/vb .net project/BookuID/Booku Styles/Booku Styles.vbproj\" /t:Clean,Build /verbosity:normal)",
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"/mnt/d/vb .net project/BookuID/Booku Styles/Booku Styles.vbproj\" /t:Build /verbosity:minimal)",
-      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Styles/Booku Styles.vbproj\" -t:Build -verbosity:minimal)"
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Styles/Booku Styles.vbproj\" -t:Build -verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"/mnt/d/vb .net project/BookuID/Booku Updater/Booku Updater.vbproj\" -t:Build -p:Configuration=Debug -verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\Booku Updater\\\\Booku Updater.vbproj\" -t:Build -p:Configuration=Debug -verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\Booku Updater\\\\Booku Updater.vbproj\" -t:Rebuild -p:Configuration=Debug -verbosity:minimal)"
     ]
   }
 }

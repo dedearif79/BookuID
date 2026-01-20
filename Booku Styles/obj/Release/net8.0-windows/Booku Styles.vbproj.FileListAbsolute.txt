@@ -1,0 +1,39 @@
+D:\VB .Net Project\BookuID\Booku Styles\bin\Release\net8.0-windows\BookuID.Styles.deps.json
+D:\VB .Net Project\BookuID\Booku Styles\bin\Release\net8.0-windows\BookuID.Styles.dll
+D:\VB .Net Project\BookuID\Booku Styles\bin\Release\net8.0-windows\bcomm.dll
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\Booku Styles.vbproj.AssemblyReference.cache
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleAplikasi.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleBorder.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleButton.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleCheckBox.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleColor.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleComboBox.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleDataGrid.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleDatePicker.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleGrid.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleGroupBox.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleLabel.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleLainnya.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleMenu.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StylePanel.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleRadioButton.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleRichTextBox.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleScrollViewer.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleStatusBar.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleTabControl.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleTextBlock.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleUserControl.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleWindow.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\GeneratedInternalTypeHelper.g.vb
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\BookuID.Styles_MarkupCompile.cache
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\BookuID.Styles_MarkupCompile.lref
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleTextBox.baml
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\BookuID.Styles.g.resources
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\Booku Styles.GeneratedMSBuildEditorConfig.editorconfig
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\Booku Styles.AssemblyInfoInputs.cache
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\Booku Styles.AssemblyInfo.vb
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\Booku Styles.vbproj.CoreCompileInputs.cache
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\Booku St.3907FF83.Up2Date
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\BookuID.Styles.dll
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\refint\BookuID.Styles.dll
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\ref\BookuID.Styles.dll

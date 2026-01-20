@@ -1,4 +1,4 @@
-﻿<Window x:Class="MainWindow"
+<Window x:Class="wpfWin_StartUp"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,11 +14,14 @@
         >
 
     <Window.Resources>
-
-
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/BookuID.Styles;component/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Window.Resources>
 
-    <StackPanel   >
+    <StackPanel Style="{StaticResource stylePanelFormDialog}"   >
 
         <StackPanel Margin="15"  >
 
@@ -36,17 +39,17 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <TextBlock      Grid.Row="0"  Grid.Column="0"   Name="lbl_01"       HorizontalAlignment="Center"    Text="Baris 01" />
-                <TextBlock      Grid.Row="1"  Grid.Column="0"   Name="lbl_02"       HorizontalAlignment="Center"    Text="Baris 02" />
-                <ProgressBar    Grid.Row="2"  Grid.Column="0"   Height="33"         Margin="0 15 0 0"   Name="pgb_Progress" />
-                <TextBlock      Grid.Row="3"  Grid.Column="0"   Text="Progress"     Name="lbl_Progress"/>
+                <TextBlock      Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_01"       HorizontalAlignment="Center"    Text="Baris 01" />
+                <TextBlock      Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_02"       HorizontalAlignment="Center"    Text="Baris 02" />
+                <ProgressBar    Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleProgressBarFormDialog}" Name="pgb_Progress" Height="33"     Margin="0 15 0 0"   />
+                <TextBlock      Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_Progress" Text="Progress"         />
             </Grid>
 
         </StackPanel>
 
         <!--Tombol CRUD :-->
         <StackPanel Margin="15"   Name="pnl_TombolForm">
-            <Button Width="Auto"  Height="33" Content="Lanjutkan >>" Name="btn_Lanjutkan"   Padding="21 0"    HorizontalAlignment="Right" />
+            <Button Style="{StaticResource styleButtonFormDialogLanjutkan}" Name="btn_Lanjutkan" />
         </StackPanel>
 
     </StackPanel>

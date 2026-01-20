@@ -1,4 +1,4 @@
-﻿Imports System.IO
+Imports System.IO
 Imports System.Windows
 Imports bcomm
 
@@ -23,7 +23,9 @@ Public Class wpfWin_PenerbitUpdater
     Dim folderPathUpdater As String
     Dim zipFilePathUpdater As String
 
-    Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+    Dim folderPathProjectBookuUpdater As String
+
+    Private Async Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
         ProsesLoadingForm = True
 
@@ -34,13 +36,20 @@ Public Class wpfWin_PenerbitUpdater
         btn_Batal.Visibility = Visibility.Collapsed
 
         folderPathProjectBooku = Path.Combine("D:\VB .Net Project\BookuID\Booku\")
+        folderPathProjectBookuUpdater = Path.Combine("D:\VB .Net Project\BookuID\Booku Updater\")
         folderPathBookuFinal = Path.Combine("D:\VB .Net Project\BookuID\Booku\bin\Release\Final\")
         folderPathTempBooku = Path.Combine(FolderRootBookuID, "TempBookuZip")
         zipFilePathBooku = Path.Combine(FolderRootBookuID, NamaFileZipPaketBooku)
-        folderPathUpdater = Path.Combine("D:\VB .Net Project\BookuID\Booku Updater\bin\Debug\net8.0-windows\")
+        folderPathUpdater = Path.Combine("D:\VB .Net Project\BookuID\Booku Updater\bin\Release\Final\")
         zipFilePathUpdater = Path.Combine(FolderRootBookuID, NamaFileZipPaketUpdater)
 
-        JalankanPUBLISHER()
+        btn_Terbitkan.IsEnabled = False
+
+        Await JalankanPUBLISHER_Updater()  ' Tunggu sampai selesai
+
+        Await JalankanPUBLISHER_Booku()    ' Baru jalankan setelah Updater selesai
+
+        btn_Terbitkan.IsEnabled = True
 
         ProsesLoadingForm = False
 
@@ -61,18 +70,27 @@ Public Class wpfWin_PenerbitUpdater
     End Sub
 
 
-    Sub JalankanPUBLISHER()
-        btn_Terbitkan.IsEnabled = False
+    Async Function JalankanPUBLISHER_Updater() As Task
+        Dim po As New Process
+        po.StartInfo.FileName = Path.Combine(folderPathProjectBookuUpdater, "PUBLISH-RELEASE.bat")
+        po.StartInfo.WindowStyle = ProcessWindowStyle.Normal
+        Try
+            po.Start()
+            Await Task.Run(Sub() po.WaitForExit())  ' Tunggu sampai proses selesai
+        Catch ex As Exception
+        End Try
+    End Function
+
+    Async Function JalankanPUBLISHER_Booku() As Task
         Dim po As New Process
         po.StartInfo.FileName = Path.Combine(folderPathProjectBooku, "PUBLISH-RELEASE.bat")
         po.StartInfo.WindowStyle = ProcessWindowStyle.Normal
         Try
             po.Start()
-            Jeda(333)
+            Await Task.Run(Sub() po.WaitForExit())  ' Tunggu sampai proses selesai
         Catch ex As Exception
         End Try
-        btn_Terbitkan.IsEnabled = True
-    End Sub
+    End Function
 
     Sub LogikaProsesPenerbitanUpdater(ProsesBerhasil As Boolean)
         If ProsesBerhasil Then

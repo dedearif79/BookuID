@@ -8,7 +8,7 @@ Imports BookuID.Styles
 Imports MySql.Data.MySqlClient
 Imports Newtonsoft.Json.Linq
 
-Class MainWindow
+Class wpfWin_StartUp
 
     Dim VersiTerbaru As String
     Dim UpdateTerbaru As String
