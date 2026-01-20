@@ -1,5 +1,7 @@
 # WPF Window Input Pattern
 
+> **Konteks:** Dokumentasi ini khusus untuk **Project Booku** (folder `BookuID/Booku/`)
+
 Pattern standar untuk membuat WPF Window Input/Edit (form CRUD data).
 
 > **Lihat juga:**

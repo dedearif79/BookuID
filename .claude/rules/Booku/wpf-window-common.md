@@ -1,5 +1,7 @@
 # WPF Window Common Pattern
 
+> **Konteks:** Dokumentasi ini khusus untuk **Project Booku** (folder `BookuID/Booku/`)
+
 Pattern umum untuk WPF Window: dialog sederhana, deklarasi global, naming convention, dan best practices.
 
 > **Lihat juga:**

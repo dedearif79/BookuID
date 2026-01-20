@@ -1,6 +1,8 @@
 # WPF Window Pattern
 
-Pattern standar untuk membuat WPF Window di BookuID.
+> **Konteks:** Dokumentasi ini khusus untuk **Project Booku** (folder `BookuID/Booku/`)
+
+Pattern standar untuk membuat WPF Window di Project Booku.
 
 > **Dokumentasi ini telah dipecah menjadi 3 file terpisah untuk kemudahan navigasi.**
 

@@ -1,5 +1,7 @@
 # WPF Window List/Picker Pattern
 
+> **Konteks:** Dokumentasi ini khusus untuk **Project Booku** (folder `BookuID/Booku/`)
+
 Pattern standar untuk membuat WPF Window List/Picker (menampilkan daftar data untuk dipilih).
 
 > **Lihat juga:**

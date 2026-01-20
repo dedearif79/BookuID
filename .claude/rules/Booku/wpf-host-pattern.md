@@ -1,5 +1,7 @@
 # WPF Host Pattern
 
+> **Konteks:** Dokumentasi ini khusus untuk **Project Booku** (folder `BookuID/Booku/`)
+
 Pattern standar untuk membuat WPF Host yang membungkus UserControl dengan konfigurasi spesifik.
 
 ## Konsep Host

@@ -1,5 +1,7 @@
 # WPF Styling System
 
+> **Konteks:** Dokumentasi ini khusus untuk **Project Booku** (folder `BookuID/Booku/`)
+
 Lokasi: `/Booku/WPF/Styles/`
 
 ## Arsitektur Style

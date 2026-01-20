@@ -30,20 +30,51 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
 ### Quick Reference
 
+**Dokumentasi Umum (Semua Project)**
+
 | Topik | File Rules |
 |-------|------------|
 | Build & Release | `.claude/rules/build-commands.md` |
-| Arsitektur & Modul | `.claude/rules/architecture.md` |
-| WPF Styling & Warna | `.claude/rules/wpf-styling.md` |
-| WPF UserControl Pattern | `.claude/rules/wpf-usercontrol-pattern.md` |
-| WPF Window Pattern (Index) | `.claude/rules/wpf-window-pattern.md` |
-| ↳ Window Input/Edit | `.claude/rules/wpf-window-input-pattern.md` |
-| ↳ Window List/Picker | `.claude/rules/wpf-window-list-pattern.md` |
-| ↳ Window Common | `.claude/rules/wpf-window-common.md` |
-| WPF Host Pattern | `.claude/rules/wpf-host-pattern.md` |
-| WPF Async Loading | `.claude/rules/wpf-async-loading-pattern.md` |
 | Database | `.claude/rules/database.md` |
 | Modul & Dependencies | `.claude/rules/modules-dependencies.md` |
+
+**Dokumentasi Khusus Project Booku**
+
+| Topik | File Rules |
+|-------|------------|
+| Arsitektur & Modul | `.claude/rules/Booku/architecture.md` |
+| WPF Styling & Warna | `.claude/rules/Booku/wpf-styling.md` |
+| WPF UserControl Pattern | `.claude/rules/Booku/wpf-usercontrol-pattern.md` |
+| WPF Window Pattern (Index) | `.claude/rules/Booku/wpf-window-pattern.md` |
+| ↳ Window Input/Edit | `.claude/rules/Booku/wpf-window-input-pattern.md` |
+| ↳ Window List/Picker | `.claude/rules/Booku/wpf-window-list-pattern.md` |
+| ↳ Window Common | `.claude/rules/Booku/wpf-window-common.md` |
+| WPF Host Pattern | `.claude/rules/Booku/wpf-host-pattern.md` |
+| WPF Async Loading | `.claude/rules/Booku/wpf-async-loading-pattern.md` |
+
+**Dokumentasi Khusus Project Booku Library**
+
+| Topik | File Rules |
+|-------|------------|
+| Overview & Modul | `.claude/rules/Booku Library/overview.md` |
+
+**Dokumentasi Khusus Project Booku Updater**
+
+| Topik | File Rules |
+|-------|------------|
+| Overview & Alur Kerja | `.claude/rules/Booku Updater/overview.md` |
+
+**Dokumentasi Khusus Project Booku Backup**
+
+| Topik | File Rules |
+|-------|------------|
+| Overview & Alur Kerja | `.claude/rules/Booku Backup/overview.md` |
+
+**Dokumentasi Khusus Project Booku Encrypter**
+
+| Topik | File Rules |
+|-------|------------|
+| Overview & Fitur | `.claude/rules/Booku Encrypter/overview.md` |
 
 ## Code Conventions
 
@@ -64,7 +95,7 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
    - XAML: Gunakan `{StaticResource clrXxx}` dari `StyleColor.xaml`
    - Code-Behind: Gunakan variabel `WarnaXxx_WPF` dari `mdlPub_ModulUmum.vb`
    - **JANGAN** hardcode warna seperti `#388E3C` atau `Brushes.Red`
-   - Lihat `.claude/rules/wpf-styling.md` untuk daftar lengkap warna
+   - Lihat `.claude/rules/Booku/wpf-styling.md` untuk daftar lengkap warna
 
 ## File Naming Convention
 

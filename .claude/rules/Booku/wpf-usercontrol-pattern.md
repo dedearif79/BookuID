@@ -1,5 +1,7 @@
 # WPF UserControl Pattern
 
+> **Konteks:** Dokumentasi ini khusus untuk **Project Booku** (folder `BookuID/Booku/`)
+
 Pattern standar untuk membuat WPF UserControl dengan DataGrid, berdasarkan analisis `wpfUsc_BukuBesar`.
 
 ## 1. Struktur UI (XAML)
@@ -427,7 +429,7 @@ Button Click:
 
 ## 12. Pattern Tipe Input Field
 
-> **Dokumentasi lengkap:** Lihat file `.claude/rules/wpf-window-pattern.md` section 1a.
+> **Dokumentasi lengkap:** Lihat file `.claude/rules/Booku/wpf-window-pattern.md` section 1a.
 
 Pattern ini berlaku untuk input field di UserControl (filter, form inline, dll).
 
@@ -488,7 +490,7 @@ Keterangan = IsiValueVariabelRichTextBox(txt_Keterangan)
 
 ## 13. WPF Host Pattern
 
-> **Dokumentasi lengkap:** Lihat file `.claude/rules/wpf-host-pattern.md`
+> **Dokumentasi lengkap:** Lihat file `.claude/rules/Booku/wpf-host-pattern.md`
 
 Host adalah class wrapper untuk UserControl dengan konfigurasi spesifik. Satu UserControl dapat memiliki banyak varian Host.
 

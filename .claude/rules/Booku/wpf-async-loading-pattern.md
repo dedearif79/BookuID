@@ -1,5 +1,7 @@
 # WPF Async Loading Pattern
 
+> **Konteks:** Dokumentasi ini khusus untuk **Project Booku** (folder `BookuID/Booku/`)
+
 > **STATUS: Pattern Baru (Migrasi Bertahap)**
 >
 > Pattern ini adalah sistem loading data baru yang akan **menggantikan pattern lama secara bertahap**.

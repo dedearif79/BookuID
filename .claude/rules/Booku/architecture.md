@@ -1,5 +1,7 @@
 # Architecture
 
+> **Konteks:** Dokumentasi ini khusus untuk **Project Booku** (folder `BookuID/Booku/`)
+
 ## Terminologi
 
 | Istilah | Mengacu Kepada |
@@ -123,4 +125,4 @@ App.xaml.vb (WPF Application)               <- Entry point AKTIF
 - **StyleDataGrid.xaml** - Style DataGrid dengan warna seleksi
 - **Style[Komponen].xaml** - Style per komponen (Button, TextBox, dll)
 
-> Lihat `.claude/rules/wpf-styling.md` untuk dokumentasi lengkap sistem warna
+> Lihat `.claude/rules/Booku/wpf-styling.md` untuk dokumentasi lengkap sistem warna
