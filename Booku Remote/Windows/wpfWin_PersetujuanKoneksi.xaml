@@ -1,0 +1,107 @@
+<Window x:Class="wpfWin_PersetujuanKoneksi"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Permintaan Koneksi Masuk"
+        Height="Auto"
+        Width="400"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        SizeToContent="Height"
+        Topmost="True">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/BookuID.Styles;component/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}">
+
+        <!-- Header dengan Icon Warning -->
+        <Border Background="{StaticResource clrStatusPeringatanBg}"
+                Padding="15"
+                Margin="0,0,0,15">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="&#xE7BA;" FontFamily="Segoe MDL2 Assets" FontSize="32"
+                           Foreground="{StaticResource clrStatusPeringatan}" VerticalAlignment="Center"/>
+                <StackPanel Margin="15,0,0,0">
+                    <TextBlock Text="Permintaan Koneksi Masuk"
+                               FontSize="16"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource clrStatusPeringatan}"/>
+                    <TextBlock Name="lbl_Countdown"
+                               Text="Waktu tersisa: 30 detik"
+                               FontSize="11"
+                               Foreground="{StaticResource clrStatusPeringatan}"
+                               Margin="0,3,0,0"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Info Pengirim -->
+        <Border BorderBrush="{StaticResource clrBorderDefault}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Margin="15,0,15,15"
+                Padding="15">
+            <StackPanel>
+                <TextBlock TextWrapping="Wrap" Margin="0,0,0,10">
+                    <Run Text="Perangkat "/>
+                    <Run Name="run_NamaPengirim" Text="PC-TAMU" FontWeight="Bold"/>
+                    <Run Text=" ("/>
+                    <Run Name="run_AlamatIP" Text="192.168.1.100"/>
+                    <Run Text=") ingin terhubung ke komputer Anda."/>
+                </TextBlock>
+            </StackPanel>
+        </Border>
+
+        <!-- Izin Akses -->
+        <Border BorderBrush="{StaticResource clrBorderDefault}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Margin="15,0,15,15"
+                Padding="15">
+            <StackPanel>
+                <TextBlock Text="Izinkan akses:" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                <CheckBox Name="chk_IzinKontrol" Content="Kontrol layar dan input" IsChecked="True" Margin="0,0,0,5"/>
+                <CheckBox Name="chk_IzinTransferBerkas" Content="Transfer berkas" Margin="0,0,0,5"/>
+                <CheckBox Name="chk_IzinClipboard" Content="Akses clipboard"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Tombol -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="15,0,15,15">
+            <Button Name="btn_Terima"
+                    Style="{StaticResource styleButtonPrimer}"
+                    Width="120"
+                    Padding="10,8"
+                    Margin="0,0,10,0">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE73E;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center"/>
+                    <TextBlock Text=" Terima" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="btn_Tolak"
+                    Width="120"
+                    Padding="10,8">
+                <Button.Style>
+                    <Style TargetType="Button" BasedOn="{StaticResource styleButtonDasar}">
+                        <Setter Property="Background" Value="{StaticResource clrStatusErrorBg}"/>
+                        <Setter Property="Foreground" Value="{StaticResource clrStatusError}"/>
+                        <Setter Property="BorderBrush" Value="{StaticResource clrStatusError}"/>
+                    </Style>
+                </Button.Style>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="&#xE711;" FontFamily="Segoe MDL2 Assets" VerticalAlignment="Center"/>
+                    <TextBlock Text=" Tolak" VerticalAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
+    </StackPanel>
+</Window>

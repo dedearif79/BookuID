@@ -1,0 +1,149 @@
+<Window x:Class="wpfWin_ModeTamu"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Booku Remote - Mode Tamu"
+        Height="Auto"
+        Width="Auto"
+        MaxWidth="520"
+        MinWidth="480"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/BookuID.Styles;component/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}">
+
+        <!-- Header -->
+        <Border Background="{StaticResource clrStatusInfoBg}"
+                Padding="15"
+                Margin="0,0,0,15">
+            <StackPanel>
+                <TextBlock Text="MODE TAMU"
+                           FontSize="18"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource clrStatusInfo}"/>
+                <TextBlock Text="Cari dan sambungkan ke perangkat Host di jaringan"
+                           FontSize="12"
+                           Foreground="{StaticResource clrStatusInfo}"
+                           Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Tombol Scan -->
+        <StackPanel Orientation="Horizontal" Margin="15,0,15,15">
+            <Button Name="btn_ScanUlang"
+                    Content="&#xE72C;  Scan Ulang"
+                    FontFamily="Segoe MDL2 Assets, Segoe UI"
+                    Style="{StaticResource styleButtonPrimer}"
+                    Padding="15,8"/>
+            <TextBlock Name="lbl_StatusScan"
+                       Text=""
+                       VerticalAlignment="Center"
+                       Margin="15,0,0,0"
+                       Foreground="{StaticResource clrTeksSekunder}"/>
+        </StackPanel>
+
+        <!-- Daftar Perangkat -->
+        <Border BorderBrush="{StaticResource clrBorderDefault}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Margin="15,0,15,15"
+                Padding="10">
+            <StackPanel>
+                <TextBlock Text="Perangkat Ditemukan (LAN)" FontWeight="SemiBold" Margin="0,0,0,10"/>
+                <DataGrid Name="dgr_DaftarPerangkat"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          SelectionMode="Single"
+                          Height="150"
+                          HeadersVisibility="Column"
+                          GridLinesVisibility="Horizontal"
+                          BorderThickness="1"
+                          BorderBrush="{StaticResource clrBorderDefault}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Nama Perangkat" Binding="{Binding NamaPerangkat}" Width="*"/>
+                        <DataGridTextColumn Header="Alamat IP" Binding="{Binding AlamatIP}" Width="120"/>
+                        <DataGridTextColumn Header="Status" Binding="{Binding TeksStatus}" Width="80"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+                <TextBlock Name="lbl_TidakAdaPerangkat"
+                           Text="Tidak ada perangkat ditemukan. Klik 'Scan Ulang' untuk mencari."
+                           Foreground="{StaticResource clrTeksDisabled}"
+                           FontStyle="Italic"
+                           TextWrapping="Wrap"
+                           Margin="0,10,0,0"
+                           HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Input Manual -->
+        <Border BorderBrush="{StaticResource clrBorderDefault}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Margin="15,0,15,15"
+                Padding="15">
+            <StackPanel>
+                <TextBlock Text="Atau masukkan alamat IP secara manual:" Margin="0,0,0,10"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Name="txt_AlamatIPManual"
+                             Width="200"
+                             Padding="8,6"
+                             VerticalContentAlignment="Center"/>
+                    <TextBlock Text=" : " VerticalAlignment="Center" Margin="5,0"/>
+                    <TextBox Name="txt_PortManual"
+                             Width="70"
+                             Text="45679"
+                             Padding="8,6"
+                             VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Status Koneksi -->
+        <Border Name="bdr_StatusKoneksi"
+                BorderBrush="{StaticResource clrBorderDefault}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Margin="15,0,15,15"
+                Padding="15"
+                Visibility="Collapsed">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Name="lbl_IconStatus" Text="&#xE895;" FontFamily="Segoe MDL2 Assets" FontSize="16"
+                               Foreground="{StaticResource clrStatusPeringatan}" VerticalAlignment="Center"/>
+                    <TextBlock Name="lbl_StatusKoneksi"
+                               Text="Menunggu persetujuan dari Host..."
+                               Margin="10,0,0,0"
+                               VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+
+        <!-- Tombol -->
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center"
+                    Margin="15,0,15,15">
+            <Button Name="btn_Sambungkan"
+                    Content="Sambungkan"
+                    Style="{StaticResource styleButtonPrimer}"
+                    Width="120"
+                    Padding="10,8"
+                    Margin="0,0,10,0"
+                    IsEnabled="False"/>
+            <Button Name="btn_Kembali"
+                    Content="Kembali"
+                    Style="{StaticResource styleButtonDasar}"
+                    Width="100"
+                    Padding="10,8"/>
+        </StackPanel>
+
+    </StackPanel>
+</Window>

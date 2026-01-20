@@ -10,7 +10,7 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
 | Istilah | Mengacu Kepada |
 |---------|----------------|
-| **BookuID** | Keseluruhan Solution (berisi 9 project) |
+| **BookuID** | Keseluruhan Solution (berisi 10 project) |
 | **Booku** / **Project Booku** | Project utama di folder `BookuID/Booku/` |
 | **Booku Styles** | Project styling terpusat di folder `BookuID/Booku Styles/` |
 
@@ -82,6 +82,12 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 | Topik | File Rules |
 |-------|------------|
 | Overview & Fitur | `.claude/rules/Booku Encrypter/overview.md` |
+
+**Dokumentasi Khusus Project Booku Remote**
+
+| Topik | File Rules |
+|-------|------------|
+| Overview & Arsitektur | `.claude/rules/Booku Remote/overview.md` |
 
 ## Code Conventions
 

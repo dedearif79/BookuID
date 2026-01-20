@@ -4,13 +4,13 @@
 
 | Istilah | Mengacu Kepada |
 |---------|----------------|
-| **BookuID** | Keseluruhan Solution (berisi 9 project) |
+| **BookuID** | Keseluruhan Solution (berisi 10 project) |
 | **Booku** / **Project Booku** | Project utama di folder `BookuID/Booku/` |
 | **Booku Styles** | Project styling terpusat di folder `BookuID/Booku Styles/` |
 
-## Solution BookuID (9 Projects)
+## Solution BookuID (10 Projects)
 
-Solution BookuID berisi 9 project yang saling terintegrasi. Jumlah project dapat bertambah seiring waktu sesuai kebutuhan.
+Solution BookuID berisi 10 project yang saling terintegrasi. Jumlah project dapat bertambah seiring waktu sesuai kebutuhan.
 
 | No | Project | Deskripsi | Status |
 |----|---------|-----------|--------|
@@ -23,6 +23,7 @@ Solution BookuID berisi 9 project yang saling terintegrasi. Jumlah project dapat
 | 7 | **Booku Styles** | **Project Styling Terpusat.** Berisi XAML resources, behaviors, dan styling modules. Dikompilasi menjadi `BookuID.Styles.dll`. | Sudah jalan (post-migrasi) |
 | 8 | **Booku Uninstaller** | Sistem untuk mencabut instalasi Booku di PC klien/user. | Belum dibuat |
 | 9 | **Booku Updater** | Sistem update aplikasi Booku secara otomatis. | Sudah jalan (sederhana), akan dikembangkan |
+| 10 | **Booku Remote** | Aplikasi remote desktop untuk mengontrol PC lain dalam jaringan LAN. Mendukung screen sharing, keyboard/mouse control. | Sedang dikembangkan (Fase 2b) |
 
 ### Multicurrency Project Booku
 
@@ -44,7 +45,8 @@ Booku (Main App) + Project lainnya
 
 **Catatan Dependencies:**
 - **Booku Library**: Dipakai oleh semua project (utilities, enkripsi, database)
-- **Booku Styles**: Tergantung pada Booku Library, dipakai oleh Booku
+- **Booku Styles**: Tergantung pada Booku Library, dipakai oleh Booku dan Booku Remote
+- **Booku Remote**: Tergantung pada Booku Library dan Booku Styles
 - **Booku Assistant**: Bergantung pada Booku Uninstaller (khusus)
 
 ## Feature Modules (`/Booku/`)

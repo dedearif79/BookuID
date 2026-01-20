@@ -24,10 +24,15 @@ Public Class wpfWin_PenerbitUpdater
     Dim zipFilePathUpdater As String
 
     Dim folderPathProjectBookuUpdater As String
+    Dim folderPathProjectBookuRemote As String
 
     Private Async Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
         ProsesLoadingForm = True
+
+        chk_BuildBooku.IsChecked = True
+        chk_BuildBookuUpdater.IsChecked = False
+        chk_BuildBookuRemote.IsChecked = False
 
         chk_KompressPaketBoku.IsChecked = True
         chk_UploadPaketBoku.IsChecked = True
@@ -37,19 +42,12 @@ Public Class wpfWin_PenerbitUpdater
 
         folderPathProjectBooku = Path.Combine("D:\VB .Net Project\BookuID\Booku\")
         folderPathProjectBookuUpdater = Path.Combine("D:\VB .Net Project\BookuID\Booku Updater\")
+        folderPathProjectBookuRemote = Path.Combine("D:\VB .Net Project\BookuID\Booku Remote\")
         folderPathBookuFinal = Path.Combine("D:\VB .Net Project\BookuID\Booku\bin\Release\Final\")
         folderPathTempBooku = Path.Combine(FolderRootBookuID, "TempBookuZip")
         zipFilePathBooku = Path.Combine(FolderRootBookuID, NamaFileZipPaketBooku)
         folderPathUpdater = Path.Combine("D:\VB .Net Project\BookuID\Booku Updater\bin\Release\Final\")
         zipFilePathUpdater = Path.Combine(FolderRootBookuID, NamaFileZipPaketUpdater)
-
-        btn_Terbitkan.IsEnabled = False
-
-        Await JalankanPUBLISHER_Updater()  ' Tunggu sampai selesai
-
-        Await JalankanPUBLISHER_Booku()    ' Baru jalankan setelah Updater selesai
-
-        btn_Terbitkan.IsEnabled = True
 
         ProsesLoadingForm = False
 
@@ -70,7 +68,18 @@ Public Class wpfWin_PenerbitUpdater
     End Sub
 
 
-    Async Function JalankanPUBLISHER_Updater() As Task
+    Async Function BuildBooku() As Task
+        Dim po As New Process
+        po.StartInfo.FileName = Path.Combine(folderPathProjectBooku, "PUBLISH-RELEASE.bat")
+        po.StartInfo.WindowStyle = ProcessWindowStyle.Normal
+        Try
+            po.Start()
+            Await Task.Run(Sub() po.WaitForExit())  ' Tunggu sampai proses selesai
+        Catch ex As Exception
+        End Try
+    End Function
+
+    Async Function BuildBookuUpdater() As Task
         Dim po As New Process
         po.StartInfo.FileName = Path.Combine(folderPathProjectBookuUpdater, "PUBLISH-RELEASE.bat")
         po.StartInfo.WindowStyle = ProcessWindowStyle.Normal
@@ -81,9 +90,9 @@ Public Class wpfWin_PenerbitUpdater
         End Try
     End Function
 
-    Async Function JalankanPUBLISHER_Booku() As Task
+    Async Function BuildBookuRemote() As Task
         Dim po As New Process
-        po.StartInfo.FileName = Path.Combine(folderPathProjectBooku, "PUBLISH-RELEASE.bat")
+        po.StartInfo.FileName = Path.Combine(folderPathProjectBookuRemote, "PUBLISH-RELEASE.bat")
         po.StartInfo.WindowStyle = ProcessWindowStyle.Normal
         Try
             po.Start()
@@ -234,6 +243,16 @@ Public Class wpfWin_PenerbitUpdater
             If chk_UploadPaketBoku.IsChecked Then HapusFile(zipFilePathBooku)
             If chk_UploadPaketUpdater.IsChecked Then HapusFile(zipFilePathUpdater)
         End If
+
+    End Sub
+
+    Private Async Sub btn_Build_Click(sender As Object, e As RoutedEventArgs) Handles btn_Build.Click
+
+        btn_Build.IsEnabled = False
+        If chk_BuildBooku.IsChecked Then Await BuildBooku()
+        If chk_BuildBookuUpdater.IsChecked Then Await BuildBookuUpdater()
+        If chk_BuildBookuRemote.IsChecked Then Await BuildBookuRemote()
+        btn_Build.IsEnabled = True
 
     End Sub
 

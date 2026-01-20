@@ -10,9 +10,10 @@ Booku Installer/obj/
 Booku Library/obj/
 Booku Uninstaller/obj/
 Booku Updater/obj/
+Booku Styles/obj/
+Booku Remote/obj/
 
 Booku/bin/
-Booku/bin/Release/Final/
 Booku Assistant/bin/
 Booku Backup/bin/
 Booku Encrypter/bin/
@@ -20,4 +21,6 @@ Booku Installer/bin/
 Booku Library/bin/
 Booku Uninstaller/bin/
 Booku Updater/bin/
+Booku Styles/bin/
+Booku Remote/bin/
 

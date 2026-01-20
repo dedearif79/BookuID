@@ -1,0 +1,119 @@
+<Window x:Class="wpfWin_StartUp"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Booku Remote"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        SizeToContent="WidthAndHeight">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/BookuID.Styles;component/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}">
+
+        <!-- Header -->
+        <StackPanel Margin="20,15,20,10">
+            <TextBlock Text="BOOKU REMOTE"
+                       FontSize="24"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Foreground="{StaticResource clrBorderFocus}"/>
+            <TextBlock Text="Remote Desktop untuk LAN"
+                       FontSize="12"
+                       HorizontalAlignment="Center"
+                       Foreground="{StaticResource clrTeksSekunder}"
+                       Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- Info Perangkat -->
+        <Border BorderBrush="{StaticResource clrBorderDefault}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Margin="20,5,20,15"
+                Padding="10">
+            <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Nama Perangkat" Foreground="{StaticResource clrTeksSekunder}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Name="lbl_NamaPerangkat" Text="-" FontWeight="SemiBold"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Alamat IP" Foreground="{StaticResource clrTeksSekunder}" Margin="0,5,0,0"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Name="lbl_AlamatIP" Text="-" FontWeight="SemiBold" Margin="0,5,0,0"/>
+                </Grid>
+            </StackPanel>
+        </Border>
+
+        <!-- Mode Host -->
+        <Border BorderBrush="{StaticResource clrBorderDefault}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Margin="20,0,20,10"
+                Padding="15">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBlock Text="&#xE7EE;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                               Foreground="{StaticResource clrBorderFocus}" VerticalAlignment="Center"/>
+                    <StackPanel Margin="10,0,0,0">
+                        <TextBlock Text="Mode HOST" FontWeight="Bold" FontSize="14"/>
+                        <TextBlock Text="Izinkan perangkat lain mengendalikan komputer ini"
+                                   FontSize="11" Foreground="{StaticResource clrTeksSekunder}"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Name="btn_AktifkanHost"
+                        Content="Aktifkan Host"
+                        Style="{StaticResource styleButtonPrimer}"
+                        Width="200"
+                        Padding="10,8"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Mode Tamu -->
+        <Border BorderBrush="{StaticResource clrBorderDefault}"
+                BorderThickness="1"
+                CornerRadius="4"
+                Margin="20,0,20,15"
+                Padding="15">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBlock Text="&#xE8A7;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                               Foreground="{StaticResource clrStatusInfo}" VerticalAlignment="Center"/>
+                    <StackPanel Margin="10,0,0,0">
+                        <TextBlock Text="Mode TAMU" FontWeight="Bold" FontSize="14"/>
+                        <TextBlock Text="Kendalikan komputer lain di jaringan"
+                                   FontSize="11" Foreground="{StaticResource clrTeksSekunder}"/>
+                    </StackPanel>
+                </StackPanel>
+                <Button Name="btn_CariPerangkat"
+                        Content="Cari Perangkat"
+                        Style="{StaticResource styleButtonDasar}"
+                        Width="200"
+                        Padding="10,8"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Footer -->
+        <StackPanel Margin="20,0,20,15" HorizontalAlignment="Center">
+            <TextBlock Text="Versi 1.0 - Fase 1 (LAN)"
+                       FontSize="10"
+                       Foreground="{StaticResource clrTeksDisabled}"
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+
+    </StackPanel>
+</Window>
