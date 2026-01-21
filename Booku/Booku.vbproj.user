@@ -182,10 +182,10 @@
     <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\wpfWin_InputJumlahBankCashInOut.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Buku Pengawasan\Penjualan Eceran\wpfUsc_BukuPengawasanPenjualanEceran.xaml.vb">
+    <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\Penjualan Eceran\wpfUsc_BukuPengawasanPenjualanEceran.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Buku Pengawasan\Penjualan Eceran\wpfWin_InputPenjualanEceran.xaml.vb">
+    <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\Penjualan Eceran\wpfWin_InputPenjualanEceran.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Data\Daftar Pemegang Saham\wpfUsc_DaftarPemegangSaham.xaml.vb">
@@ -586,10 +586,10 @@
     <Page Update="Buku Pengawasan\Hutang-Piutang Usaha\Piutang\wpfUsc_BukuPengawasanPiutangUsaha.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Buku Pengawasan\Penjualan Eceran\wpfUsc_BukuPengawasanPenjualanEceran.xaml">
+    <Page Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\Penjualan Eceran\wpfUsc_BukuPengawasanPenjualanEceran.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Buku Pengawasan\Penjualan Eceran\wpfWin_InputPenjualanEceran.xaml">
+    <Page Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\Penjualan Eceran\wpfWin_InputPenjualanEceran.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Data\Daftar Pemegang Saham\wpfUsc_DaftarPemegangSaham.xaml">

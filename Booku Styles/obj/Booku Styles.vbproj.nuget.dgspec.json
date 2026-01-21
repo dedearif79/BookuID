@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\VB .Net Project\\BookuID\\Booku Styles\\Booku Styles.vbproj": {}
+    "D:\\vb .net project\\BookuID\\Booku Styles\\Booku Styles.vbproj": {}
   },
   "projects": {
-    "D:\\VB .Net Project\\BookuID\\Booku Library\\Booku Library.vbproj": {
+    "D:\\vb .net project\\BookuID\\Booku Library\\Booku Library.vbproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\VB .Net Project\\BookuID\\Booku Library\\Booku Library.vbproj",
+        "projectUniqueName": "D:\\vb .net project\\BookuID\\Booku Library\\Booku Library.vbproj",
         "projectName": "bcomm",
-        "projectPath": "D:\\VB .Net Project\\BookuID\\Booku Library\\Booku Library.vbproj",
+        "projectPath": "D:\\vb .net project\\BookuID\\Booku Library\\Booku Library.vbproj",
         "packagesPath": "C:\\Users\\dedea\\.nuget\\packages\\",
-        "outputPath": "D:\\VB .Net Project\\BookuID\\Booku Library\\obj\\",
+        "outputPath": "D:\\vb .net project\\BookuID\\Booku Library\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -26,6 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -74,18 +75,18 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.309/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\VB .Net Project\\BookuID\\Booku Styles\\Booku Styles.vbproj": {
+    "D:\\vb .net project\\BookuID\\Booku Styles\\Booku Styles.vbproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\VB .Net Project\\BookuID\\Booku Styles\\Booku Styles.vbproj",
+        "projectUniqueName": "D:\\vb .net project\\BookuID\\Booku Styles\\Booku Styles.vbproj",
         "projectName": "BookuID.Styles",
-        "projectPath": "D:\\VB .Net Project\\BookuID\\Booku Styles\\Booku Styles.vbproj",
+        "projectPath": "D:\\vb .net project\\BookuID\\Booku Styles\\Booku Styles.vbproj",
         "packagesPath": "C:\\Users\\dedea\\.nuget\\packages\\",
-        "outputPath": "D:\\VB .Net Project\\BookuID\\Booku Styles\\obj\\",
+        "outputPath": "D:\\vb .net project\\BookuID\\Booku Styles\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -100,14 +101,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows",
             "projectReferences": {
-              "D:\\VB .Net Project\\BookuID\\Booku Library\\Booku Library.vbproj": {
-                "projectPath": "D:\\VB .Net Project\\BookuID\\Booku Library\\Booku Library.vbproj"
+              "D:\\vb .net project\\BookuID\\Booku Library\\Booku Library.vbproj": {
+                "projectPath": "D:\\vb .net project\\BookuID\\Booku Library\\Booku Library.vbproj"
               }
             }
           }
@@ -146,7 +148,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.309/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.310/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

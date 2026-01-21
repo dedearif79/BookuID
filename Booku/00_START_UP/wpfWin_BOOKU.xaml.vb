@@ -1,4 +1,5 @@
 Imports System.Data.Odbc
+Imports System.IO
 Imports System.Windows
 Imports System.Windows.Controls
 Imports bcomm
@@ -858,7 +859,7 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BukuPenjualanEceran_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPenjualanEceran.Click
-        BukaModul_BukuPenjualanEceran()
+        'BukaModul_BukuPenjualanEceran()
     End Sub
     Sub BukaModul_BukuPenjualanEceran()
         host_BukuPenjualanEceran = New wpfHost_BukuPenjualanEceran
@@ -1604,6 +1605,17 @@ Public Class wpfWin_BOOKU
         win_phpMyAdmin.Focus()
     End Sub
 
+    Private Sub mnu_BookuRemote_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BookuRemote.Click
+        Dim po As New Process
+        po.StartInfo.FileName = Path.Combine(FolderRootBookuID, "Booku Remote", "Booku Remote.exe")
+        po.StartInfo.WindowStyle = ProcessWindowStyle.Normal
+        Try
+            po.Start()
+        Catch ex As Exception
+        End Try
+    End Sub
+
+
     ' ============================================================
     ' APP DEVELOPER
     ' ============================================================
@@ -1787,7 +1799,6 @@ Public Class wpfWin_BOOKU
     Sub StatusMenuLevel_9_SuperUser()
         StatusMenuLevel_81_TimIT()
         mnu_Pengaturan.IsEnabled = False
-        mnu_TechnicalSupport.Visibility = Visibility.Collapsed
         mnu_Registrasi.Visibility = Visibility.Collapsed
         mnu_BuatBukuBaru.IsEnabled = False
         mnu_GantiTahunBuku.IsEnabled = False

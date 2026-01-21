@@ -6,6 +6,8 @@ Public Class wpfWin_phpMyAdmin
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
+        PembatasanHakAkses(Me)
+
         JudulForm = "phpMyAdmin"
         Title = JudulForm
 

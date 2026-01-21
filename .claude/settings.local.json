@@ -82,7 +82,15 @@
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\Booku Remote\\\\Booku Remote.vbproj\" /t:Build /verbosity:minimal)",
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Remote/Booku Remote.vbproj\" -t:Build -p:Configuration=Debug -verbosity:minimal)",
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Remote/Booku Remote.vbproj\" -t:Build -verbosity:minimal)",
-      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Remote.vbproj\" -t:Build -verbosity:minimal)"
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Remote.vbproj\" -t:Build -verbosity:minimal)",
+      "Bash(/mnt/c/Program Files/dotnet/dotnet.exe build:*)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"/mnt/d/vb .net project/BookuID/Booku Remote/Booku Remote.vbproj\" -t:Build -p:Configuration=Debug -verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\Booku Remote\\\\Booku Remote.vbproj\" /t:Build /p:Configuration=Debug /verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\Booku Remote Android\\\\Booku Remote Android.csproj\" /t:Build /p:Configuration=Release /verbosity:minimal)",
+      "Bash(/mnt/c/Program Files/dotnet/dotnet.exe clean:*)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"/mnt/d/vb .net project/BookuID/Booku Remote/Booku Remote.vbproj\" -t:Build -p:Configuration=Release -verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Remote/Booku Remote.vbproj\" -t:Build -p:Configuration=Release -verbosity:minimal)",
+      "Bash(/mnt/c/Program Files/dotnet/dotnet.exe restore)"
     ]
   }
 }

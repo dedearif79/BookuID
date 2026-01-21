@@ -17,11 +17,11 @@ Public Module mdl_TangkapLayar
     ''' <summary>Counter nomor frame</summary>
     Private _nomorFrame As Long = 0
 
-    ''' <summary>Skala default untuk capture (0.5 = 50%)</summary>
-    Public Const SKALA_DEFAULT As Double = 0.5
+    ''' <summary>Skala default untuk capture (0.4 = 40% - optimal untuk streaming)</summary>
+    Public Const SKALA_DEFAULT As Double = 0.4
 
-    ''' <summary>Kualitas JPEG (tidak dipakai, kita pakai PNG)</summary>
-    Public Const KUALITAS_JPEG As Integer = 70
+    ''' <summary>Kualitas JPEG untuk streaming (50 = balance antara kualitas dan ukuran)</summary>
+    Public Const KUALITAS_JPEG As Integer = 50
 
 #End Region
 

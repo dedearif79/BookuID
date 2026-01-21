@@ -73,7 +73,7 @@ Public Class wpfUsc_DataCOA
         txt_KepalaCOA.Text = Kosongan
         KontenComboVisibilitas()
         EksekusiTampilanData = True
-        TampilkanData()
+        TampilkanData(True)
     End Sub
 
 
@@ -125,7 +125,7 @@ Public Class wpfUsc_DataCOA
     ''' <summary>
     ''' Method async untuk memuat data COA dengan UI responsive
     ''' </summary>
-    Async Sub TampilkanDataAsync()
+    Async Sub TampilkanDataAsync(DenganLoading As Boolean)
 
         ' Guard clause: Cegah loading berulang
         If SedangMemuatData Then Return
@@ -133,7 +133,7 @@ Public Class wpfUsc_DataCOA
         SedangMemuatData = True
 
         ' Disable UI dan tampilkan loading
-        KetersediaanMenuHalaman(pnl_Halaman, False)
+        If DenganLoading Then KetersediaanMenuHalaman(pnl_Halaman, False)
         Await Task.Delay(50)  ' Beri waktu UI render
 
         Try
@@ -221,8 +221,8 @@ Public Class wpfUsc_DataCOA
     ''' <summary>
     ''' Wrapper untuk backward compatibility
     ''' </summary>
-    Public Sub TampilkanData()
-        TampilkanDataAsync()
+    Public Sub TampilkanData(DenganLoading As Boolean)
+        TampilkanDataAsync(DenganLoading)
     End Sub
     ''' <summary>
     ''' Logika utama reset seleksi (TANPA enable UI)
@@ -297,7 +297,7 @@ Public Class wpfUsc_DataCOA
         win_InputCOA.ResetForm()
         win_InputCOA.FungsiForm = FungsiForm_TAMBAH
         win_InputCOA.ShowDialog()
-        If win_InputCOA.ProsesSuntingDatabase = True Then TampilkanData()
+        'If win_InputCOA.ProsesSuntingDatabase = True Then TampilkanData(True)  'Ini tidak perlu, karena sudah ada di sub Simpan di window Input.
     End Sub
 
 
@@ -333,7 +333,7 @@ Public Class wpfUsc_DataCOA
         win_InputCOA.cmb_Visibilitas.SelectedValue = dr.Item("Visibilitas")
         AksesDatabase_General(Tutup)
         win_InputCOA.ShowDialog()
-        If win_InputCOA.ProsesSuntingDatabase = True Then TampilkanData()
+        'If win_InputCOA.ProsesSuntingDatabase = True Then TampilkanData(True)  'Ini tidak perlu, karena sudah ada di sub Simpan di window Input.
     End Sub
 
 
@@ -366,7 +366,7 @@ Public Class wpfUsc_DataCOA
         AksesDatabase_General(Tutup)
 
         If StatusSuntingDatabase = True Then
-            TampilkanData()
+            TampilkanData(True)
             'pesan_DataTerpilihBerhasilDihapus()
         End If
 
@@ -397,7 +397,7 @@ Public Class wpfUsc_DataCOA
     Private Sub txt_KepalaCOA_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_KepalaCOA.TextChanged
         KepalaCOA = txt_KepalaCOA.Text
         txt_CariAkun.Text = Kosongan
-        TampilkanData()
+        TampilkanData(False)
     End Sub
     Private Sub txt_KepalaCOA_PreviewTextInput(sender As Object, e As TextCompositionEventArgs) Handles txt_KepalaCOA.PreviewTextInput
 
@@ -406,13 +406,13 @@ Public Class wpfUsc_DataCOA
 
     Private Sub txt_CariAkun_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_CariAkun.TextChanged
         CariAkun = txt_CariAkun.Text
-        TampilkanData()
+        TampilkanData(False)
     End Sub
 
 
     Private Sub cmb_Visibilitas_SelectionChanged(sender As Object, e As SelectionChangedEventArgs) Handles cmb_Visibilitas.SelectionChanged
         VisibilitasCOA = cmb_Visibilitas.SelectedValue
-        TampilkanData()
+        TampilkanData(True)
     End Sub
 
 

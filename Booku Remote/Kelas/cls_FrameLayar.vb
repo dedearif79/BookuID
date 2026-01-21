@@ -7,9 +7,16 @@ Imports System.Drawing.Imaging
 
 ''' <summary>
 ''' Kelas untuk model data frame layar yang dikirim dari Host ke Tamu.
-''' Frame disimpan dalam format PNG terkompresi sebagai Base64.
+''' Frame disimpan dalam format JPEG terkompresi sebagai Base64.
 ''' </summary>
 Public Class cls_FrameLayar
+
+#Region "Constants"
+
+    ''' <summary>Kualitas JPEG default (0-100). Nilai lebih rendah = ukuran lebih kecil, kualitas lebih rendah.</summary>
+    Public Const JPEG_QUALITY_DEFAULT As Integer = 30
+
+#End Region
 
 #Region "Properties"
 
@@ -39,14 +46,21 @@ Public Class cls_FrameLayar
     End Sub
 
     ''' <summary>
-    ''' Konstruktor dengan data gambar.
+    ''' Konstruktor dengan data gambar (menggunakan kualitas JPEG default).
     ''' </summary>
     Public Sub New(nomorFrame As Long, bitmap As Bitmap)
+        Me.New(nomorFrame, bitmap, JPEG_QUALITY_DEFAULT)
+    End Sub
+
+    ''' <summary>
+    ''' Konstruktor dengan data gambar dan kualitas JPEG kustom.
+    ''' </summary>
+    Public Sub New(nomorFrame As Long, bitmap As Bitmap, jpegQuality As Integer)
         Me.NomorFrame = nomorFrame
         Me.Lebar = bitmap.Width
         Me.Tinggi = bitmap.Height
         Me.Timestamp = DateTime.UtcNow.Ticks
-        Me.DataGambarBase64 = BitmapKeBase64(bitmap)
+        Me.DataGambarBase64 = BitmapKeBase64JPEG(bitmap, jpegQuality)
         Me.Checksum = HitungChecksum()
     End Sub
 
@@ -55,7 +69,51 @@ Public Class cls_FrameLayar
 #Region "Conversion Methods"
 
     ''' <summary>
-    ''' Konversi Bitmap ke string Base64 (format PNG).
+    ''' Konversi Bitmap ke string Base64 (format JPEG dengan kualitas tertentu).
+    ''' JPEG jauh lebih kecil dari PNG - cocok untuk streaming.
+    ''' </summary>
+    Public Shared Function BitmapKeBase64JPEG(bitmap As Bitmap, quality As Integer) As String
+        Try
+            ' Clamp quality ke 0-100
+            quality = Math.Max(0, Math.Min(100, quality))
+
+            ' Setup JPEG encoder dengan quality parameter
+            Dim jpegCodec = GetEncoderInfo("image/jpeg")
+            If jpegCodec Is Nothing Then
+                ' Fallback jika codec tidak ditemukan
+                Using ms As New MemoryStream()
+                    bitmap.Save(ms, ImageFormat.Jpeg)
+                    Return Convert.ToBase64String(ms.ToArray())
+                End Using
+            End If
+
+            Dim encoderParams As New EncoderParameters(1)
+            encoderParams.Param(0) = New EncoderParameter(Encoder.Quality, CLng(quality))
+
+            Using ms As New MemoryStream()
+                bitmap.Save(ms, jpegCodec, encoderParams)
+                Return Convert.ToBase64String(ms.ToArray())
+            End Using
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Mendapatkan ImageCodecInfo untuk format tertentu.
+    ''' </summary>
+    Private Shared Function GetEncoderInfo(mimeType As String) As ImageCodecInfo
+        Dim codecs = ImageCodecInfo.GetImageEncoders()
+        For Each codec In codecs
+            If codec.MimeType = mimeType Then
+                Return codec
+            End If
+        Next
+        Return Nothing
+    End Function
+
+    ''' <summary>
+    ''' Konversi Bitmap ke string Base64 (format PNG) - DEPRECATED, gunakan BitmapKeBase64JPEG.
     ''' </summary>
     Public Shared Function BitmapKeBase64(bitmap As Bitmap) As String
         Try

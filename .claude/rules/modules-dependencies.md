@@ -4,26 +4,27 @@
 
 | Istilah | Mengacu Kepada |
 |---------|----------------|
-| **BookuID** | Keseluruhan Solution (berisi 10 project) |
+| **BookuID** | Keseluruhan Solution (berisi 11 project) |
 | **Booku** / **Project Booku** | Project utama di folder `BookuID/Booku/` |
 | **Booku Styles** | Project styling terpusat di folder `BookuID/Booku Styles/` |
 
-## Solution BookuID (10 Projects)
+## Solution BookuID (11 Projects)
 
-Solution BookuID berisi 10 project yang saling terintegrasi. Jumlah project dapat bertambah seiring waktu sesuai kebutuhan.
+Solution BookuID berisi 11 project yang saling terintegrasi. Jumlah project dapat bertambah seiring waktu sesuai kebutuhan.
 
 | No | Project | Deskripsi | Status |
 |----|---------|-----------|--------|
 | 1 | **Booku** | **Project Utama.** Aplikasi Sistem Akuntansi Terpadu — memadukan finance, akuntansi, dan perhitungan pajak otomatis sesuai peraturan perpajakan Indonesia. Multicurrency (IDR + 7 mata uang asing). | Aktif, terus dikembangkan |
 | 2 | **Booku Assistant** | Aplikasi pendukung untuk project Booku. | Belum dibuat |
 | 3 | **Booku Backup** | Sistem backup folder solution BookuID secara otomatis. | Sudah jalan, terus dikembangkan |
-| 4 | **Booku Encrypter** | Sistem enkripsi dan dekripsi untuk seluruh project dalam solution BookuID. | Sudah dibuat |
+| 4 | **Booku Encrypter** | Aplikasi utilitas enkripsi/dekripsi teks untuk developer. | **Skeleton** (belum diimplementasi) |
 | 5 | **Booku Installer** | Sistem installer aplikasi Booku secara otomatis. | Ada, akan dirombak total |
 | 6 | **Booku Library** | Library bersama (bcomm.dll) yang dipakai oleh seluruh project dalam solution BookuID. | Sudah jalan, terus dikembangkan |
 | 7 | **Booku Styles** | **Project Styling Terpusat.** Berisi XAML resources, behaviors, dan styling modules. Dikompilasi menjadi `BookuID.Styles.dll`. | Sudah jalan (post-migrasi) |
 | 8 | **Booku Uninstaller** | Sistem untuk mencabut instalasi Booku di PC klien/user. | Belum dibuat |
 | 9 | **Booku Updater** | Sistem update aplikasi Booku secara otomatis. | Sudah jalan (sederhana), akan dikembangkan |
-| 10 | **Booku Remote** | Aplikasi remote desktop untuk mengontrol PC lain dalam jaringan LAN. Mendukung screen sharing, keyboard/mouse control. | Sedang dikembangkan (Fase 2b) |
+| 10 | **Booku Remote** | Aplikasi remote desktop untuk mengontrol PC lain dalam jaringan LAN maupun internet. Mendukung screen sharing, keyboard/mouse control. | Fase 1-2b selesai, Fase 3-4 belum |
+| 11 | **Booku Remote Android** | Aplikasi Android (MAUI/C#) untuk remote desktop sebagai Tamu. Menggunakan protokol yang sama dengan Booku Remote WPF. | Baru dibuat (struktur dasar) |
 
 ### Multicurrency Project Booku
 
@@ -44,9 +45,10 @@ Booku (Main App) + Project lainnya
 ```
 
 **Catatan Dependencies:**
-- **Booku Library**: Dipakai oleh semua project (utilities, enkripsi, database)
+- **Booku Library**: Dipakai oleh semua project VB.NET (utilities, enkripsi, database)
 - **Booku Styles**: Tergantung pada Booku Library, dipakai oleh Booku dan Booku Remote
 - **Booku Remote**: Tergantung pada Booku Library dan Booku Styles
+- **Booku Remote Android**: Standalone (C#/MAUI), menggunakan protokol yang sama dengan Booku Remote WPF
 - **Booku Assistant**: Bergantung pada Booku Uninstaller (khusus)
 
 ## Feature Modules (`/Booku/`)

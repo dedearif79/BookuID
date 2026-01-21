@@ -433,11 +433,11 @@ Public Class wpfWin_ProgressImportDataCOA
     Private Sub btn_Terapkan_Click(sender As Object, e As RoutedEventArgs) Handles btn_Terapkan.Click
         If HasilPosting = Hasil_BERMASALAH Then
             If Not TanyaKonfirmasi("Hasil posting bermasalah." & Enter2Baris & "Yakin akan menetapkan hasil posting?") Then Return
-            If usc_DataCOA.StatusAktif Then usc_DataCOA.TampilkanData()
+            If usc_DataCOA.StatusAktif Then usc_DataCOA.TampilkanData(True)
             TutupForm()
         End If
         If HasilPosting = Hasil_NORMAL Then
-            If usc_DataCOA.StatusAktif Then usc_DataCOA.TampilkanData()
+            If usc_DataCOA.StatusAktif Then usc_DataCOA.TampilkanData(True)
             TutupForm()
         End If
     End Sub

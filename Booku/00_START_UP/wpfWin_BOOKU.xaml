@@ -246,7 +246,10 @@
                     <MenuItem Header="Lokal" Name="mnu_BukuPenjualan_Lokal"/>
                     <MenuItem Header="Ekspor" Name="mnu_BukuPenjualan_Ekspor"/>
                 </MenuItem>
-                <MenuItem Header="Penjualan Eceran" Name="mnu_BukuPenjualanEceran"/>
+                <MenuItem Header="Penjualan Eceran" Name="mnu_BukuPenjualanEceran">
+                    <MenuItem Header="Rekap Harian" Name="mnu_BukuPenjualanEceran_RekapHarian"/>
+                    <MenuItem Header="Rekap Bulanan" Name="mnu_BukuPenjualanEceran_RekapBulanan"/>
+                </MenuItem>
                 <MenuItem Header="Retur Penjualan" Name="mnu_BukuPengawasanReturPenjualan"/>
             </MenuItem>
 
@@ -457,6 +460,7 @@
             <!-- 18. Technical Support (BARU) -->
             <MenuItem Header="Technical _Support" Name="mnu_TechnicalSupport">
                 <MenuItem Header="phpMyAdmin" Name="mnu_PhpMyAdmin"/>
+                <MenuItem Header="Booku Remote" Name="mnu_BookuRemote"/>
             </MenuItem>
 
             <!-- 19. App Developer (BARU) -->

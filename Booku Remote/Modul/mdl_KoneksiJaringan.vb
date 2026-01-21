@@ -129,20 +129,41 @@ Public Module mdl_KoneksiJaringan
             Dim buffer(8191) As Byte
             Dim bytesRead = Await stream.ReadAsync(buffer, 0, buffer.Length)
 
+            System.Diagnostics.Debug.WriteLine($"[DEBUG] ProsesKoneksiMasukAsync: bytesRead={bytesRead}")
+
             If bytesRead > 0 Then
                 Dim json = BytesKeString(buffer, 0, bytesRead)
-                Dim paket = DeserializePaket(json)
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] JSON diterima: {json.Substring(0, Math.Min(500, json.Length))}...")
 
-                If paket IsNot Nothing AndAlso paket.TipePaket = TipePaket.PERMINTAAN_KONEKSI Then
-                    Dim permintaan = DeserializePermintaanKoneksi(paket.Payload)
-                    If permintaan IsNot Nothing Then
-                        ' Raise event untuk dialog persetujuan
-                        RaiseEvent PermintaanKoneksiMasuk(permintaan, client)
+                Dim paket = DeserializePaket(json)
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] Paket deserialize: {If(paket IsNot Nothing, "OK", "NULL")}")
+
+                If paket IsNot Nothing Then
+                    System.Diagnostics.Debug.WriteLine($"[DEBUG] TipePaket={paket.TipePaket} (expected={TipePaket.PERMINTAAN_KONEKSI})")
+
+                    If paket.TipePaket = TipePaket.PERMINTAAN_KONEKSI Then
+                        Dim permintaan = DeserializePermintaanKoneksi(paket.Payload)
+                        System.Diagnostics.Debug.WriteLine($"[DEBUG] Permintaan deserialize: {If(permintaan IsNot Nothing, "OK - " & permintaan.NamaPerangkat, "NULL")}")
+
+                        If permintaan IsNot Nothing Then
+                            ' Raise event untuk dialog persetujuan
+                            System.Diagnostics.Debug.WriteLine("[DEBUG] RaiseEvent PermintaanKoneksiMasuk...")
+                            RaiseEvent PermintaanKoneksiMasuk(permintaan, client)
+                        Else
+                            System.Diagnostics.Debug.WriteLine($"[DEBUG] GAGAL deserialize permintaan. Payload: {paket.Payload}")
+                        End If
+                    Else
+                        System.Diagnostics.Debug.WriteLine($"[DEBUG] TipePaket tidak match! Got={CInt(paket.TipePaket)}, Expected={CInt(TipePaket.PERMINTAAN_KONEKSI)}")
                     End If
+                Else
+                    System.Diagnostics.Debug.WriteLine("[DEBUG] GAGAL deserialize paket!")
                 End If
+            Else
+                System.Diagnostics.Debug.WriteLine("[DEBUG] bytesRead = 0, tidak ada data!")
             End If
 
         Catch ex As Exception
+            System.Diagnostics.Debug.WriteLine($"[DEBUG] EXCEPTION: {ex.Message}")
             RaiseEvent ErrorKoneksi($"Error memproses koneksi masuk: {ex.Message}")
             Try
                 client.Close()
@@ -388,7 +409,7 @@ Public Module mdl_KoneksiJaringan
     ''' <summary>
     ''' Mulai streaming layar ke Tamu (dipanggil oleh Host).
     ''' </summary>
-    Public Async Function MulaiStreamingLayarAsync(Optional skala As Double = 0.5, Optional targetFPS As Integer = 15) As Task
+    Public Async Function MulaiStreamingLayarAsync(Optional skala As Double = 0.35, Optional targetFPS As Integer = 20) As Task
         System.Diagnostics.Debug.WriteLine($"[DEBUG] MulaiStreamingLayarAsync dipanggil. _sedangStreaming={_sedangStreaming}, _terhubung={_terhubung}")
 
         If _sedangStreaming Then

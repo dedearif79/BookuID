@@ -16,5 +16,5 @@ false
 207402613353
 WPF\Styles\StyleAplikasi.xaml;WPF\Styles\StyleBorder.xaml;WPF\Styles\StyleButton.xaml;WPF\Styles\StyleCheckBox.xaml;WPF\Styles\StyleColor.xaml;WPF\Styles\StyleComboBox.xaml;WPF\Styles\StyleDataGrid.xaml;WPF\Styles\StyleDatePicker.xaml;WPF\Styles\StyleGrid.xaml;WPF\Styles\StyleGroupBox.xaml;WPF\Styles\StyleLabel.xaml;WPF\Styles\StyleLainnya.xaml;WPF\Styles\StyleMenu.xaml;WPF\Styles\StylePanel.xaml;WPF\Styles\StyleRadioButton.xaml;WPF\Styles\StyleRichTextBox.xaml;WPF\Styles\StyleScrollViewer.xaml;WPF\Styles\StyleStatusBar.xaml;WPF\Styles\StyleTabControl.xaml;WPF\Styles\StyleTextBlock.xaml;WPF\Styles\StyleTextBox.xaml;WPF\Styles\StyleUserControl.xaml;WPF\Styles\StyleWindow.xaml;
 
-False
+True
 

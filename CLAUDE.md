@@ -10,7 +10,7 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
 | Istilah | Mengacu Kepada |
 |---------|----------------|
-| **BookuID** | Keseluruhan Solution (berisi 10 project) |
+| **BookuID** | Keseluruhan Solution (berisi 11 project) |
 | **Booku** / **Project Booku** | Project utama di folder `BookuID/Booku/` |
 | **Booku Styles** | Project styling terpusat di folder `BookuID/Booku Styles/` |
 
@@ -55,11 +55,28 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
 **Dokumentasi Khusus Project Booku Styles**
 
+**Booku Styles** adalah project styling terpusat yang menangani semua WPF styling untuk solution BookuID. Berisi XAML resources, behaviors, dan styling modules. Dikompilasi menjadi `BookuID.Styles.dll`.
+
+| Komponen | Isi |
+|----------|-----|
+| XAML Styles | `StyleAplikasi.xaml`, `StyleColor.xaml`, dan 20+ file style komponen |
+| Behaviors | `TextBoxBehavior.vb`, `RichTextBoxBehavior.vb` |
+| Modules | `wpfMdl_StyleColor.vb`, `StylingElemen.vb`, `mdlPub_Styling.vb` |
+
 | Topik | File Rules |
 |-------|------------|
 | Overview & Struktur | `.claude/rules/Booku Styles/overview.md` |
 
 **Dokumentasi Khusus Project Booku Library**
+
+**Booku Library** adalah shared library (`bcomm.dll`) yang digunakan oleh seluruh project dalam solution BookuID. Berisi utilities, enkripsi, koneksi database, dan variabel warna WPF.
+
+| Modul | Fungsi |
+|-------|--------|
+| `mdlPub_ModulUmum.vb` | Utilities umum, variabel warna WPF (`WarnaXxx_WPF`) |
+| `mdlPub_Enkripsi.vb` | Enkripsi/dekripsi AES-256 (3 key-IV pairs) |
+| `mdlPub_KoneksiDatabase.vb` | Koneksi database public (MySQL) |
+| `mdlPub_VariabelUmum.vb` | Konstanta umum (`Kosongan`, `Enter1Baris`, dll) |
 
 | Topik | File Rules |
 |-------|------------|
@@ -67,11 +84,39 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
 **Dokumentasi Khusus Project Booku Updater**
 
+**Booku Updater** adalah aplikasi untuk mengupdate aplikasi Booku secara otomatis. Dijalankan terpisah dari aplikasi utama untuk menghindari konflik file saat proses update.
+
+| Langkah | Proses |
+|---------|--------|
+| 1 | Ambil info versi dari database public |
+| 2 | Download paket update (ZIP) dari server |
+| 3 | Ekstrak dan replace file di folder Booku |
+| 4 | Simpan versi baru ke file config |
+
+| Status | Keterangan |
+|--------|------------|
+| Saat Ini | Sudah jalan (sederhana) |
+| Rencana | Akan dikembangkan lebih lanjut |
+
 | Topik | File Rules |
 |-------|------------|
 | Overview & Alur Kerja | `.claude/rules/Booku Updater/overview.md` |
 
 **Dokumentasi Khusus Project Booku Backup**
+
+**Booku Backup** adalah aplikasi untuk mem-backup folder solution BookuID secara otomatis. Digunakan oleh developer untuk membuat backup source code dan database.
+
+| Fitur | Deskripsi |
+|-------|-----------|
+| Backup File Project | Kompres folder solution → Upload ke server |
+| Backup Database | Backup database MySQL (dalam pengembangan) |
+
+| Langkah Backup | Proses |
+|----------------|--------|
+| 1 | Hapus folder `.vs` dan backup lama |
+| 2 | Kompres project ke ZIP |
+| 3 | Copy ke Downloads |
+| 4 | Upload ke server (opsional) |
 
 | Topik | File Rules |
 |-------|------------|
@@ -79,15 +124,59 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
 **Dokumentasi Khusus Project Booku Encrypter**
 
+**Booku Encrypter** adalah aplikasi utilitas untuk enkripsi dan dekripsi teks/data. Digunakan oleh developer untuk mengenkripsi string yang akan digunakan di kode sumber.
+
+| Status | Keterangan |
+|--------|------------|
+| Saat Ini | **Skeleton / Placeholder** (belum diimplementasi) |
+| Rencana | Tool enkripsi AES1/AES2/AES3 untuk developer |
+
+| Fitur yang Direncanakan | Fungsi |
+|-------------------------|--------|
+| Enkripsi Teks | `EnkripsiTeksAES1/2/3()` |
+| Dekripsi Teks | `DekripsiTeksAES1/2/3()` |
+| Copy to Clipboard | Hasil siap paste ke kode |
+
 | Topik | File Rules |
 |-------|------------|
 | Overview & Fitur | `.claude/rules/Booku Encrypter/overview.md` |
 
 **Dokumentasi Khusus Project Booku Remote**
 
+**Booku Remote** adalah aplikasi remote desktop untuk mengontrol PC lain dalam jaringan LAN maupun internet. Mendukung screen sharing dan kontrol keyboard/mouse jarak jauh.
+
+| Fase | Deskripsi | Status |
+|------|-----------|--------|
+| Fase 1 | Discovery + Koneksi LAN | Selesai |
+| Fase 2 | View-Only Screen Streaming | Selesai |
+| Fase 2b | Kontrol Keyboard dan Mouse | Selesai |
+| Fase 3 | Transfer Berkas | Belum dimulai |
+| Fase 4 | Remote via Internet (NAT traversal, relay server) | Belum dimulai |
+
 | Topik | File Rules |
 |-------|------------|
-| Overview & Arsitektur | `.claude/rules/Booku Remote/overview.md` |
+| Overview, Arsitektur & Fase 4 Detail | `.claude/rules/Booku Remote/overview.md` |
+
+**Dokumentasi Khusus Project Booku Remote Android**
+
+**Booku Remote Android** adalah aplikasi Android berbasis .NET MAUI (C#) untuk remote desktop. Berfungsi sebagai **Tamu (client) saja** - menghubungkan ke Host yang menjalankan Booku Remote WPF di Windows.
+
+| Aspek | Keterangan |
+|-------|------------|
+| Platform | Android (MAUI) |
+| Bahasa | C# (bukan VB.NET) |
+| Peran | Tamu only (tidak bisa jadi Host) |
+| Protokol | Sama dengan Booku Remote WPF |
+
+| Fitur | Deskripsi |
+|-------|-----------|
+| Discovery | Scan Host di jaringan LAN (UDP broadcast) |
+| Streaming | Menerima frame layar dari Host |
+| Touch Input | Gesture → Mouse/Keyboard (tap, drag, pinch) |
+
+| Topik | File Rules |
+|-------|------------|
+| Overview, Struktur & Protokol | `.claude/rules/Booku Remote Android/overview.md` |
 
 ## Code Conventions
 

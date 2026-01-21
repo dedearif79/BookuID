@@ -38,7 +38,9 @@ Public Module mdl_Protokol
     Public Function DeserializePaket(json As String) As cls_PaketData
         Try
             Return JsonSerializer.Deserialize(Of cls_PaketData)(json, JsonOptions)
-        Catch
+        Catch ex As Exception
+            System.Diagnostics.Debug.WriteLine($"[DEBUG] DeserializePaket GAGAL: {ex.Message}")
+            System.Diagnostics.Debug.WriteLine($"[DEBUG] JSON input: {json.Substring(0, Math.Min(300, json.Length))}")
             Return Nothing
         End Try
     End Function

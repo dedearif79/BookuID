@@ -408,7 +408,7 @@ Public Class wpfWin_InputCOA
                 End Select
                 Me.Close()
             End If
-            If usc_DataCOA.StatusAktif Then usc_DataCOA.TampilkanData()
+            If usc_DataCOA.StatusAktif Then usc_DataCOA.TampilkanData(True)
             If usc_TutupBuku.StatusAktif Then usc_TutupBuku.TampilkanData()
         Else
             If FungsiForm = FungsiForm_TAMBAH Then

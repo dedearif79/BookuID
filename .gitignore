@@ -12,6 +12,7 @@ Booku Uninstaller/obj/
 Booku Updater/obj/
 Booku Styles/obj/
 Booku Remote/obj/
+Booku Remote Android/obj/
 
 Booku/bin/
 Booku Assistant/bin/
@@ -23,4 +24,5 @@ Booku Uninstaller/bin/
 Booku Updater/bin/
 Booku Styles/bin/
 Booku Remote/bin/
+Booku Remote Android/bin/
 

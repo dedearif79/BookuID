@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookuRemoteAndroid.Views.ViewerPage"
+             Title="Remote Viewer"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="Auto,*,Auto" BackgroundColor="Black">
+
+        <!-- Top Bar -->
+        <Grid Grid.Row="0"
+              BackgroundColor="{StaticResource Primary}"
+              Padding="12,8"
+              ColumnDefinitions="Auto,*,Auto,Auto">
+
+            <!-- Back Button -->
+            <Button Grid.Column="0"
+                    x:Name="btnBack"
+                    Text="← Kembali"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontSize="14"
+                    Clicked="OnBackClicked" />
+
+            <!-- Host Info -->
+            <VerticalStackLayout Grid.Column="1"
+                                 HorizontalOptions="Center"
+                                 VerticalOptions="Center">
+                <Label x:Name="lblHostName"
+                       Text="Host"
+                       TextColor="White"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       HorizontalOptions="Center" />
+                <Label x:Name="lblFPS"
+                       Text="FPS: --"
+                       TextColor="#CCFFFFFF"
+                       FontSize="11"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Control Toggle -->
+            <HorizontalStackLayout Grid.Column="2"
+                                   VerticalOptions="Center"
+                                   Spacing="8"
+                                   Margin="0,0,8,0">
+                <Label Text="Kontrol"
+                       TextColor="White"
+                       FontSize="12"
+                       VerticalOptions="Center" />
+                <Switch x:Name="switchControl"
+                        IsToggled="False"
+                        ThumbColor="{StaticResource White}"
+                        OnColor="{StaticResource PrimaryLight}"
+                        Toggled="OnControlToggled" />
+            </HorizontalStackLayout>
+
+            <!-- Fullscreen Button -->
+            <Button Grid.Column="3"
+                    x:Name="btnFullscreen"
+                    Text="⛶"
+                    BackgroundColor="Transparent"
+                    TextColor="White"
+                    FontSize="20"
+                    WidthRequest="40"
+                    Clicked="OnFullscreenClicked" />
+        </Grid>
+
+        <!-- Screen Viewer -->
+        <Grid Grid.Row="1" x:Name="gridViewer">
+
+            <!-- Remote Screen Images (Double Buffer untuk menghilangkan flicker) -->
+            <Image x:Name="imgScreenA"
+                   Aspect="AspectFit"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"
+                   BackgroundColor="Black" />
+            <Image x:Name="imgScreenB"
+                   Aspect="AspectFit"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"
+                   BackgroundColor="Black"
+                   IsVisible="False" />
+
+            <!-- Touch Overlay (untuk menangkap gesture) -->
+            <Grid x:Name="touchOverlay"
+                  BackgroundColor="Transparent"
+                  InputTransparent="False">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnScreenTapped" NumberOfTapsRequired="1" />
+                    <TapGestureRecognizer Tapped="OnScreenDoubleTapped" NumberOfTapsRequired="2" />
+                    <PanGestureRecognizer PanUpdated="OnScreenPanned" />
+                    <PinchGestureRecognizer PinchUpdated="OnScreenPinched" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <!-- Loading Indicator -->
+            <ActivityIndicator x:Name="activityIndicator"
+                               IsRunning="True"
+                               Color="{StaticResource Primary}"
+                               HeightRequest="48"
+                               WidthRequest="48"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+
+            <!-- No Frame Message -->
+            <Label x:Name="lblNoFrame"
+                   Text="Menunggu frame dari Host..."
+                   TextColor="{StaticResource Neutral400}"
+                   FontSize="14"
+                   IsVisible="True"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+
+        </Grid>
+
+        <!-- Bottom Bar (Keyboard Toggle) -->
+        <Grid Grid.Row="2"
+              BackgroundColor="{StaticResource Neutral900}"
+              Padding="12,8"
+              x:Name="gridBottomBar"
+              IsVisible="True">
+
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="16">
+
+                <!-- Keyboard Button -->
+                <Button x:Name="btnKeyboard"
+                        Text="⌨️ Keyboard"
+                        Style="{StaticResource ButtonSecondary}"
+                        Clicked="OnKeyboardClicked"
+                        IsEnabled="False" />
+
+                <!-- Mouse Mode Toggle -->
+                <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                    <Label Text="Touchpad Mode"
+                           TextColor="{StaticResource Neutral400}"
+                           FontSize="12"
+                           VerticalOptions="Center" />
+                    <Switch x:Name="switchTouchpad"
+                            IsToggled="False"
+                            ThumbColor="{StaticResource Neutral400}"
+                            OnColor="{StaticResource Primary}" />
+                </HorizontalStackLayout>
+
+            </HorizontalStackLayout>
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

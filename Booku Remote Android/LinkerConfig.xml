@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+  LinkerConfig.xml - Konfigurasi IL Linker/Trimmer
+  Mencegah trimmer menghapus class yang diperlukan untuk reflection/serialization
+-->
+<linker>
+  <!-- Preserve all Models for JSON serialization -->
+  <assembly fullname="Booku Remote Android">
+    <type fullname="BookuRemoteAndroid.Models.*" preserve="all" />
+    <type fullname="BookuRemoteAndroid.Services.*" preserve="all" />
+  </assembly>
+
+  <!-- Preserve System.Text.Json internals -->
+  <assembly fullname="System.Text.Json">
+    <type fullname="System.Text.Json.*" preserve="all" />
+  </assembly>
+</linker>

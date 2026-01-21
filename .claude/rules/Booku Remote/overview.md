@@ -4,7 +4,9 @@
 
 ## Deskripsi
 
-**Booku Remote** adalah aplikasi remote desktop berbasis WPF untuk mengontrol PC lain dalam jaringan LAN. Aplikasi ini memungkinkan screen sharing dan kontrol keyboard/mouse jarak jauh.
+**Booku Remote** adalah aplikasi remote desktop berbasis WPF untuk mengontrol PC lain dalam jaringan LAN maupun internet. Aplikasi ini memungkinkan screen sharing dan kontrol keyboard/mouse jarak jauh.
+
+> **Roadmap:** Saat ini fokus pengembangan adalah fitur remote dalam jaringan LAN (Fase 1-3). Setelah fitur LAN stabil, akan dikembangkan kemampuan remote melalui jaringan internet (Fase 4).
 
 ## Informasi Project
 
@@ -64,6 +66,7 @@ Booku Remote/
 | **Fase 2** | View-Only Screen Streaming | Selesai |
 | **Fase 2b** | Kontrol Keyboard dan Mouse | Selesai (testing) |
 | **Fase 3** | Transfer Berkas | Belum dimulai |
+| **Fase 4** | Remote melalui Jaringan Internet | Belum dimulai |
 
 ## Arsitektur Jaringan
 
@@ -181,6 +184,128 @@ End Enum
 │  └─────────────────┘     └─────────────────┘                     │
 └──────────────────────────────────────────────────────────────────┘
 ```
+
+### Fase 4: Remote via Internet (Rencana)
+
+**Tantangan Utama:**
+- Perangkat di belakang NAT/firewall tidak bisa diakses langsung dari internet
+- IP address dinamis (berubah-ubah)
+- Keamanan data yang melintas di jaringan publik
+
+**Arsitektur yang Direncanakan:**
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│  INFRASTRUKTUR SERVER (Cloud)                                           │
+│                                                                         │
+│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐     │
+│  │ Signaling       │    │ STUN Server     │    │ Relay Server    │     │
+│  │ Server          │    │ (NAT Discovery) │    │ (TURN/Fallback) │     │
+│  │ (WebSocket)     │    │                 │    │                 │     │
+│  └────────┬────────┘    └────────┬────────┘    └────────┬────────┘     │
+│           │                      │                      │               │
+└───────────┼──────────────────────┼──────────────────────┼───────────────┘
+            │                      │                      │
+            │ Internet             │                      │
+            │                      │                      │
+┌───────────┼──────────────────────┼──────────────────────┼───────────────┐
+│  HOST     │                      │                      │               │
+│  (NAT A)  │                      │                      │               │
+│  ┌────────┴────────┐    ┌────────┴────────┐             │               │
+│  │ 1. Register     │    │ 2. Discover     │             │               │
+│  │    & Auth       │    │    Public IP    │             │               │
+│  └─────────────────┘    └─────────────────┘             │               │
+│           │                      │                      │               │
+│           └──────────────────────┴──────────────────────┘               │
+│                                  │                                      │
+│                    ┌─────────────┴─────────────┐                        │
+│                    │ 3a. P2P Direct (UDP Hole  │                        │
+│                    │     Punching) ATAU        │◄─────────────────┐     │
+│                    │ 3b. Via Relay Server      │                  │     │
+│                    └─────────────┬─────────────┘                  │     │
+└──────────────────────────────────┼────────────────────────────────┼─────┘
+                                   │                                │
+                                   │ Internet                       │
+                                   │                                │
+┌──────────────────────────────────┼────────────────────────────────┼─────┐
+│  TAMU                            │                                │     │
+│  (NAT B)                         ▼                                │     │
+│                    ┌─────────────────────────┐                    │     │
+│                    │ 4. Terima Frame &       │                    │     │
+│                    │    Kirim Input          │────────────────────┘     │
+│                    └─────────────────────────┘                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+**Komponen Server yang Diperlukan:**
+
+| Komponen | Fungsi | Teknologi |
+|----------|--------|-----------|
+| **Signaling Server** | Koordinasi handshake, exchange SDP/ICE candidates | WebSocket + JSON |
+| **STUN Server** | Discover public IP dan tipe NAT | STUN Protocol (RFC 5389) |
+| **Relay Server (TURN)** | Fallback jika P2P gagal, relay semua traffic | TURN Protocol (RFC 5766) |
+| **Auth Server** | Registrasi perangkat, autentikasi, manajemen sesi | REST API + JWT |
+
+**Alur Koneksi Internet:**
+
+| Langkah | Deskripsi |
+|---------|-----------|
+| 1. **Registrasi** | Host & Tamu login ke Auth Server, dapat token |
+| 2. **Discovery NAT** | Kedua pihak query STUN untuk dapat public IP + port |
+| 3. **Signaling** | Tamu request koneksi via Signaling Server |
+| 4. **ICE Negotiation** | Exchange ICE candidates (STUN + TURN) |
+| 5a. **P2P Direct** | Jika NAT mendukung, koneksi langsung via UDP hole punching |
+| 5b. **Relay Fallback** | Jika P2P gagal, gunakan Relay Server |
+| 6. **Streaming** | Protokol sama dengan LAN (frame + input) |
+
+**Tipe Paket Tambahan (Rencana):**
+
+```vb
+Public Enum TipePaket
+    ' ... existing packets ...
+
+    ' Internet/Signaling (40-49)
+    REGISTER_DEVICE = 40        ' Daftarkan perangkat ke server
+    AUTH_REQUEST = 41           ' Request autentikasi
+    AUTH_RESPONSE = 42          ' Response autentikasi (token)
+    SIGNAL_OFFER = 43           ' WebRTC-style SDP offer
+    SIGNAL_ANSWER = 44          ' WebRTC-style SDP answer
+    ICE_CANDIDATE = 45          ' ICE candidate exchange
+    PEER_LIST = 46              ' Daftar perangkat online
+    KEEP_ALIVE = 47             ' Heartbeat ke signaling server
+End Enum
+```
+
+**Keamanan Tambahan untuk Internet:**
+
+| Aspek | Implementasi |
+|-------|--------------|
+| **Enkripsi Transport** | TLS 1.3 untuk signaling, DTLS untuk media |
+| **Enkripsi End-to-End** | AES-256-GCM untuk frame dan input |
+| **Autentikasi** | JWT token dengan expiry |
+| **Device Pairing** | One-time code atau QR code untuk pair pertama kali |
+| **Rate Limiting** | Mencegah brute-force dan DDoS |
+
+**File/Modul Baru yang Direncanakan:**
+
+| File | Fungsi |
+|------|--------|
+| `mdl_SignalingClient.vb` | WebSocket client ke signaling server |
+| `mdl_STUNClient.vb` | STUN protocol implementation |
+| `mdl_ICENegotiation.vb` | ICE candidate gathering & exchange |
+| `mdl_RelayClient.vb` | TURN relay client |
+| `mdl_CryptoE2E.vb` | End-to-end encryption |
+| `cls_PerangkatInternet.vb` | Model perangkat remote (bukan LAN) |
+
+**Opsi Implementasi:**
+
+| Opsi | Pro | Kontra |
+|------|-----|--------|
+| **Custom Protocol** | Full control, optimized | Development effort tinggi |
+| **WebRTC-based** | Mature, NAT traversal built-in | Dependency besar, learning curve |
+| **Third-party Relay** | Cepat deploy | Biaya, dependency eksternal |
+
+> **Catatan:** Detail implementasi akan ditentukan saat memulai Fase 4. Arsitektur di atas adalah rencana awal yang bisa berubah sesuai kebutuhan.
 
 ## Komponen Utama
 
@@ -339,6 +464,7 @@ Window Viewer di Tamu untuk melihat dan mengontrol layar Host.
 | Mouse Control | Selesai | Move, Click, Wheel |
 | File Transfer | Belum | Fase 3 |
 | Clipboard Sync | Belum | Fase 3 |
+| Internet Remote | Belum | Fase 4 - NAT traversal, relay server |
 
 ## Aturan Pengembangan
 
@@ -349,9 +475,22 @@ Window Viewer di Tamu untuk melihat dan mengontrol layar Host.
 5. **UI Thread**: Gunakan `Dispatcher.Invoke` untuk update UI dari async task
 6. **Resource Cleanup**: Dispose TCP connections dan streams dengan benar
 
+## Versi Android
+
+Terdapat versi Android dari aplikasi ini yang berfungsi sebagai **Tamu saja** (tidak bisa jadi Host):
+
+| Project | Deskripsi |
+|---------|-----------|
+| **Booku Remote Android** | Aplikasi Android (MAUI/C#) untuk remote desktop sebagai Tamu |
+
+Versi Android menggunakan protokol yang **100% kompatibel** dengan Booku Remote WPF sehingga dapat terhubung ke Host yang menjalankan versi WPF.
+
+> Lihat dokumentasi lengkap di `.claude/rules/Booku Remote Android/overview.md`
+
 ## Dokumentasi Terkait
 
 | Topik | File |
 |-------|------|
+| **Booku Remote Android** | `.claude/rules/Booku Remote Android/overview.md` |
 | Testing Guide Fase 2b | `/Booku Remote/TESTING_FASE_2B.md` |
 | Plan File | `~/.claude/plans/happy-mixing-flute.md` |

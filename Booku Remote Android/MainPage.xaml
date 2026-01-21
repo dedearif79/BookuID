@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BookuRemoteAndroid.MainPage"
+             Title="Booku Remote">
+
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="16">
+
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0" Spacing="8" Margin="0,0,0,16">
+            <Label Text="Booku Remote"
+                   Style="{StaticResource LabelTitle}" />
+            <Label Text="Hubungkan ke Host untuk memulai remote desktop"
+                   Style="{StaticResource LabelSubtitle}" />
+        </VerticalStackLayout>
+
+        <!-- Manual IP Input Section -->
+        <Frame Grid.Row="1"
+               BackgroundColor="{StaticResource Surface}"
+               BorderColor="{StaticResource Primary}"
+               CornerRadius="12"
+               Padding="16"
+               Margin="0,0,0,16"
+               HasShadow="False">
+            <VerticalStackLayout Spacing="12">
+                <Label Text="Koneksi Manual (untuk Emulator/Testing)"
+                       FontSize="14"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource Primary}" />
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <Entry Grid.Column="0"
+                           x:Name="entryManualIP"
+                           Placeholder="Masukkan IP Host (contoh: 10.0.2.2)"
+                           Keyboard="Telephone"
+                           ClearButtonVisibility="WhileEditing"
+                           TextChanged="OnManualIPTextChanged" />
+                    <Button Grid.Column="1"
+                            x:Name="btnConnectManual"
+                            Text="Sambung"
+                            WidthRequest="100"
+                            IsEnabled="False"
+                            Clicked="OnConnectManualClicked" />
+                </Grid>
+                <Label Text="💡 Untuk emulator Android, gunakan IP 10.0.2.2 untuk mengakses PC host"
+                       FontSize="11"
+                       TextColor="{StaticResource TextSecondary}" />
+            </VerticalStackLayout>
+        </Frame>
+
+        <!-- Separator -->
+        <VerticalStackLayout Grid.Row="1"
+                             Margin="0,140,0,0"
+                             IsVisible="False">
+            <BoxView HeightRequest="1" Color="{StaticResource Neutral300}" Margin="0,8" />
+            <Label Text="atau scan perangkat di jaringan"
+                   FontSize="12"
+                   TextColor="{StaticResource TextSecondary}"
+                   HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Device List -->
+        <RefreshView Grid.Row="2"
+                     x:Name="refreshView"
+                     IsRefreshing="{Binding IsScanning}"
+                     Command="{Binding ScanCommand}">
+
+            <CollectionView x:Name="collectionDevices"
+                            ItemsSource="{Binding Devices}"
+                            SelectionMode="Single"
+                            SelectionChanged="OnDeviceSelected"
+                            EmptyView="Tidak ada perangkat Host ditemukan.&#10;Tekan tombol Scan untuk mencari.">
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame Style="{StaticResource CardDevice}">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+
+                                <!-- Icon -->
+                                <Frame Grid.Column="0"
+                                       BackgroundColor="{StaticResource PrimarySurface}"
+                                       CornerRadius="8"
+                                       Padding="12"
+                                       HasShadow="False"
+                                       VerticalOptions="Center">
+                                    <Label Text="🖥️" FontSize="24" />
+                                </Frame>
+
+                                <!-- Device Info -->
+                                <VerticalStackLayout Grid.Column="1"
+                                                     VerticalOptions="Center"
+                                                     Spacing="4">
+                                    <Label Text="{Binding NamaPerangkat}"
+                                           FontSize="16"
+                                           FontAttributes="Bold"
+                                           TextColor="{StaticResource TextPrimary}" />
+                                    <Label Text="{Binding AlamatIP}"
+                                           FontSize="14"
+                                           TextColor="{StaticResource TextSecondary}" />
+                                </VerticalStackLayout>
+
+                                <!-- Status -->
+                                <Frame Grid.Column="2"
+                                       BackgroundColor="{Binding StatusColor}"
+                                       CornerRadius="12"
+                                       Padding="12,6"
+                                       HasShadow="False"
+                                       VerticalOptions="Center">
+                                    <Label Text="{Binding StatusText}"
+                                           FontSize="12"
+                                           TextColor="{StaticResource White}" />
+                                </Frame>
+
+                            </Grid>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Loading Overlay -->
+        <Grid Grid.Row="2"
+              x:Name="gridLoading"
+              IsVisible="False"
+              BackgroundColor="#80000000">
+            <VerticalStackLayout VerticalOptions="Center"
+                                 HorizontalOptions="Center"
+                                 Spacing="16">
+                <ActivityIndicator IsRunning="True"
+                                   HeightRequest="48"
+                                   WidthRequest="48"
+                                   Color="{StaticResource White}" />
+                <Label x:Name="lblLoadingStatus"
+                       Text="Menghubungkan..."
+                       TextColor="{StaticResource White}"
+                       FontSize="16"
+                       HorizontalOptions="Center" />
+            </VerticalStackLayout>
+        </Grid>
+
+        <!-- Bottom Buttons -->
+        <Grid Grid.Row="3" ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,16,0,0">
+            <Button Grid.Column="0"
+                    x:Name="btnScan"
+                    Text="🔍 Scan"
+                    Clicked="OnScanClicked" />
+            <Button Grid.Column="1"
+                    x:Name="btnConnect"
+                    Text="🔗 Sambungkan"
+                    IsEnabled="False"
+                    Clicked="OnConnectClicked" />
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

@@ -16,7 +16,7 @@ Imports System.Reflection
 <Assembly: System.Reflection.AssemblyCompanyAttribute("BookuID.Styles"),  _
  Assembly: System.Reflection.AssemblyConfigurationAttribute("Debug"),  _
  Assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0"),  _
- Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+832fab08c532c89151d9e27ced52ce2fcc832bf9"),  _
+ Assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+83d19ab83eef344d4ddf43b6f123041560c35a29"),  _
  Assembly: System.Reflection.AssemblyProductAttribute("BookuID.Styles"),  _
  Assembly: System.Reflection.AssemblyTitleAttribute("BookuID.Styles"),  _
  Assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0"),  _
