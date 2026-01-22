@@ -23,39 +23,41 @@ public static class JsonBracketParser
         bool inString = false;
         bool escapeNext = false;
         bool foundStart = false;
+        int maxBracketCount = 0;
 
         for (int i = startIndex; i < buffer.Length; i++)
         {
             char ch = (char)buffer[i];
 
-            // Handle escape sequence
+            // Handle escape sequence - skip the escaped character
             if (escapeNext)
             {
                 escapeNext = false;
                 continue;
             }
 
-            // Backslash starts escape sequence
+            // Backslash starts escape sequence (only when inside string)
             if (ch == '\\' && inString)
             {
                 escapeNext = true;
                 continue;
             }
 
-            // Toggle string mode on quote
+            // Toggle string mode on quote (only if not escaped)
             if (ch == '"')
             {
                 inString = !inString;
                 continue;
             }
 
-            // Skip if inside string
+            // Skip if inside string - brackets inside strings don't count
             if (inString) continue;
 
             // Track brackets
             if (ch == '{')
             {
                 bracketCount++;
+                if (bracketCount > maxBracketCount) maxBracketCount = bracketCount;
                 foundStart = true;
             }
             else if (ch == '}')
@@ -66,6 +68,12 @@ public static class JsonBracketParser
                     return i; // Found complete JSON object
                 }
             }
+        }
+
+        // Debug: Log parsing state if not found
+        if (buffer.Length > 1000)
+        {
+            Console.WriteLine($"[PARSER DEBUG] bufferLen={buffer.Length}, maxBracket={maxBracketCount}, finalBracket={bracketCount}, inString={inString}, escapeNext={escapeNext}");
         }
 
         return -1; // JSON belum lengkap

@@ -379,8 +379,24 @@ Class wpfWin_ModeHost
 
     Private Sub btn_SalinHostCode_Click(sender As Object, e As RoutedEventArgs) Handles btn_SalinHostCode.Click
         If HostCodeAktif <> "" AndAlso HostCodeAktif <> "------" Then
-            Clipboard.SetText(HostCodeAktif)
-            TambahRiwayat($"{DateTime.Now:HH:mm} - HostCode disalin ke clipboard")
+            ' Retry mechanism untuk clipboard (kadang gagal jika clipboard sedang digunakan)
+            Dim berhasil As Boolean = False
+            For i As Integer = 1 To 3
+                Try
+                    Clipboard.SetText(HostCodeAktif)
+                    berhasil = True
+                    Exit For
+                Catch ex As Exception
+                    ' Tunggu sebentar lalu coba lagi
+                    System.Threading.Thread.Sleep(100)
+                End Try
+            Next
+
+            If berhasil Then
+                TambahRiwayat($"{DateTime.Now:HH:mm} - HostCode disalin ke clipboard")
+            Else
+                TambahRiwayat($"{DateTime.Now:HH:mm} - Gagal menyalin ke clipboard")
+            End If
         End If
     End Sub
 

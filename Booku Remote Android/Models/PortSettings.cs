@@ -14,10 +14,10 @@ public class PortSettings
     public const int DEFAULT_PORT_KONEKSI = 45679;
 
     /// <summary>Port TCP default untuk relay server (internet)</summary>
-    public const int DEFAULT_PORT_RELAY = 443;
+    public const int DEFAULT_PORT_RELAY = 45680;
 
     /// <summary>Alamat IP default relay server</summary>
-    public const string DEFAULT_RELAY_SERVER_IP = "155.117.43.250";
+    public const string DEFAULT_RELAY_SERVER_IP = "155.117.43.209";
 
     #endregion
 

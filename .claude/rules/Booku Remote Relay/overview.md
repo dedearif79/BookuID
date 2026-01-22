@@ -15,7 +15,7 @@
 | **Namespace** | `BookuRemoteRelay` |
 | **Target Framework** | .NET 8.0 |
 | **Runtime** | win-x64 (self-contained) |
-| **Port** | 443 (HTTPS port untuk melewati firewall) |
+| **Port** | 45680 |
 
 ## Fitur Keamanan & Optimasi
 
@@ -40,7 +40,7 @@ Booku Remote Relay/
 │   └── PaketData.cs               # Struktur paket data
 │
 └── Services/                      # Business logic
-    ├── TcpListenerService.cs      # TCP listener pada port 443
+    ├── TcpListenerService.cs      # TCP listener pada port 45680
     ├── ConnectionManager.cs       # Manajemen koneksi Host & Tamu
     ├── PacketRouter.cs            # Routing paket antar Host-Tamu
     └── ProtocolService.cs         # Serialisasi/deserialisasi JSON
@@ -60,7 +60,7 @@ Booku Remote Relay/
 ```json
 {
   "RelayServer": {
-    "Port": 443,
+    "Port": 45680,
     "HostExpiryMinutes": 60,
     "HeartbeatIntervalSeconds": 30,
     "SessionTimeoutMinutes": 30,
@@ -72,7 +72,7 @@ Booku Remote Relay/
 
 | Setting | Default | Deskripsi |
 |---------|---------|-----------|
-| `Port` | 443 | Port TCP untuk listen (HTTPS port) |
+| `Port` | 45680 | Port TCP untuk listen |
 | `HostExpiryMinutes` | 60 | Waktu expired Host tanpa heartbeat |
 | `HeartbeatIntervalSeconds` | 30 | Interval heartbeat dari Host |
 | `SessionTimeoutMinutes` | 30 | Timeout sesi tanpa aktivitas |
@@ -84,7 +84,7 @@ Booku Remote Relay/
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │              RELAY SERVER (VPS)                             │
-│              IP:443                                         │
+│              IP:45680                                        │
 │                                                             │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
 │  │ Connection  │  │   Packet    │  │    Protocol         │ │
@@ -95,11 +95,11 @@ Booku Remote Relay/
 │                          │                                  │
 │              ┌───────────┴───────────┐                      │
 │              │  TcpListenerService   │                      │
-│              │      (Port 443)       │                      │
+│              │      (Port 45680)      │                      │
 │              └───────────────────────┘                      │
 └─────────────────────────────────────────────────────────────┘
          ▲                                    ▲
-         │ TCP 443                            │ TCP 443
+         │ TCP 45680                           │ TCP 45680
          │                                    │
 ┌────────┴────────┐                ┌─────────┴─────────┐
 │      HOST       │                │       TAMU        │
@@ -111,7 +111,7 @@ Booku Remote Relay/
 
 ### 1. TcpListenerService
 
-Mendengarkan koneksi TCP pada port 443.
+Mendengarkan koneksi TCP pada port 45680.
 
 | Fungsi | Deskripsi |
 |--------|-----------|
@@ -194,18 +194,18 @@ bin\Publish\Booku Remote Relay.exe (~11 MB, self-contained)
 ### Deploy ke VPS
 
 1. Copy `Booku Remote Relay.exe` ke VPS Windows
-2. Pastikan port 443 tidak digunakan aplikasi lain
-3. Jalankan sebagai **Administrator** (port 443 memerlukan admin privilege)
-4. Server akan listen pada `0.0.0.0:443`
+2. Pastikan port 45680 tidak digunakan aplikasi lain
+3. Jalankan executable
+4. Server akan listen pada `0.0.0.0:45680`
 
 ### Menjalankan Server
 
 ```cmd
-# Jalankan dengan port default (443)
+# Jalankan dengan port default (45680)
 Booku Remote Relay.exe
 
 # Jalankan dengan port custom via CLI argument
-Booku Remote Relay.exe 8443
+Booku Remote Relay.exe 8080
 ```
 
 ### Prioritas Konfigurasi Port
@@ -214,9 +214,9 @@ Server membaca port dengan prioritas berikut:
 
 | Prioritas | Sumber | Contoh |
 |-----------|--------|--------|
-| 1 (Tertinggi) | **CLI Argument** | `Booku Remote Relay.exe 8443` |
-| 2 | **appsettings.json** | `"RelayServer": { "Port": 443 }` |
-| 3 (Terendah) | **Default Constant** | `DEFAULT_PORT = 443` |
+| 1 (Tertinggi) | **CLI Argument** | `Booku Remote Relay.exe 8080` |
+| 2 | **appsettings.json** | `"RelayServer": { "Port": 45680 }` |
+| 3 (Terendah) | **Default Constant** | `DEFAULT_PORT = 45680` |
 
 Output log akan menampilkan sumber port yang digunakan: `[RELAY] Port source: CLI argument` / `appsettings.json` / `default`
 
@@ -226,7 +226,7 @@ Output log akan menampilkan sumber port yang digunakan: `[RELAY] Port source: CL
 
 ```
 HOST                           RELAY
- │ TCP Connect (443)             │
+ │ TCP Connect (45680)            │
  ├──────────────────────────────►│
  │ RELAY_REGISTER_HOST           │
  │ {NamaPerangkat, Password?}    │
@@ -271,7 +271,7 @@ TAMU                    RELAY                    HOST
 | Aspek | Implementasi |
 |-------|--------------|
 | **Single Instance** | Mutex mencegah multiple server |
-| **Port 443** | Melewati kebanyakan firewall |
+| **Port 45680** | Port kustom untuk relay |
 | **HostCode** | 6 karakter = 2.1 miliar kombinasi |
 | **Password** | Opsional, untuk akses terbatas |
 | **Rate Limiting** | MaxHostsPerIP, MaxTamusPerIP |
@@ -280,8 +280,7 @@ TAMU                    RELAY                    HOST
 
 | Masalah | Solusi |
 |---------|--------|
-| Port 443 sudah digunakan | Matikan web server lain atau gunakan port custom |
-| Access denied port 443 | Jalankan sebagai Administrator |
+| Port 45680 sudah digunakan | Matikan aplikasi lain atau gunakan port custom |
 | Host tidak terdaftar | Cek koneksi internet Host, pastikan heartbeat jalan |
 | Tamu tidak bisa connect | Verifikasi HostCode benar, Host masih online |
 

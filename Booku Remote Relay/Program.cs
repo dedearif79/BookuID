@@ -9,7 +9,7 @@ namespace BookuRemoteRelay;
 /// </summary>
 class Program
 {
-    private const int DEFAULT_PORT = 443; // Menggunakan port HTTPS agar mudah melewati firewall
+    private const int DEFAULT_PORT = 45680;
     private const string MUTEX_NAME = "Global\\BookuRemoteRelayServer";
 
     static async Task Main(string[] args)

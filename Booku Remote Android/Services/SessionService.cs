@@ -65,7 +65,11 @@ public class SessionService
     /// <summary>
     /// Memulai sesi baru (mode Relay/Internet)
     /// </summary>
-    public void MulaiSesiRelay(string hostCode, string namaHost, ResponKoneksiData respon)
+    /// <param name="hostCode">HostCode untuk identifikasi</param>
+    /// <param name="namaHost">Nama Host</param>
+    /// <param name="respon">Response data dari Host</param>
+    /// <param name="relaySessionId">Relay Session ID (IdSesi dari paket) - digunakan untuk routing di Relay</param>
+    public void MulaiSesiRelay(string hostCode, string namaHost, ResponKoneksiData respon, string? relaySessionId = null)
     {
         // Buat PerangkatLAN virtual untuk mode relay
         HostTerhubung = new PerangkatLAN
@@ -74,7 +78,11 @@ public class SessionService
             AlamatIP = "Relay:" + hostCode,
             Status = StatusPerangkat.TERSEDIA
         };
-        KunciSesi = respon.KunciSesi;
+
+        // PENTING: Untuk mode Relay, gunakan relaySessionId (dari paket.IdSesi) sebagai KunciSesi
+        // karena Relay Server routing paket berdasarkan IdSesi, bukan KunciSesi di payload
+        KunciSesi = relaySessionId ?? respon.KunciSesi;
+
         IzinKontrol = respon.IzinKontrol;
         IzinTransferBerkas = respon.IzinTransferBerkas;
         IzinClipboard = respon.IzinClipboard;

@@ -93,7 +93,7 @@ Booku Remote Android/
 |------|----------|--------|----------|
 | `45678` | UDP | LAN | Discovery broadcast |
 | `45679` | TCP | LAN | Koneksi langsung |
-| `443` | TCP | VPS | Relay Server (koneksi via internet, menggunakan port HTTPS) |
+| `45680` | TCP | VPS | Relay Server (koneksi via internet) |
 
 > **Catatan:** Semua port di atas adalah nilai **default** dan dapat dikonfigurasi melalui halaman Settings (⚙️ di toolbar). Settings disimpan menggunakan MAUI Preferences API.
 
@@ -146,8 +146,8 @@ Port jaringan dapat dikonfigurasi melalui halaman Settings yang dapat diakses vi
 |------|---------|-----------|
 | `PortDiscovery` | 45678 | UDP broadcast untuk discovery LAN |
 | `PortKoneksi` | 45679 | TCP koneksi remote LAN |
-| `PortRelay` | 443 | TCP koneksi via relay server |
-| `RelayServerIP` | 155.117.43.250 | Alamat IP relay server |
+| `PortRelay` | 45680 | TCP koneksi via relay server |
+| `RelayServerIP` | 155.117.43.209 | Alamat IP relay server |
 
 ### Cara Kerja
 
@@ -211,7 +211,7 @@ Menggunakan teknik **double buffering** untuk mengurangi flicker saat menampilka
 │  1. QUERY HOST                                                  │
 │     ├── User buka app, pilih "Mode Internet"                    │
 │     ├── Input HostCode 6 karakter                               │
-│     ├── Kirim RELAY_QUERY_HOST ke relay (155.117.43.250:443)  │
+│     ├── Kirim RELAY_QUERY_HOST ke relay (155.117.43.209:45680) │
 │     └── Tampilkan info Host (nama, status password)             │
 └─────────────────────────────────────────────────────────────────┘
                               │
@@ -300,7 +300,7 @@ bin/Release/net8.0-android/com.bookuid.remote-Signed.apk  (±28 MB)
 6. Sambungkan dan test streaming + kontrol
 
 **Mode Internet:**
-1. Jalankan **Booku Remote Relay** di VPS (155.117.43.250)
+1. Jalankan **Booku Remote Relay** di VPS (155.117.43.209)
 2. Jalankan **Booku Remote WPF** di Windows sebagai Host (pilih Mode Internet)
 3. Catat HostCode yang ditampilkan (6 karakter)
 4. Jalankan **Booku Remote Android**, pilih "Mode Internet"

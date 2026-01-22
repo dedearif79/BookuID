@@ -503,7 +503,7 @@
             </Grid.ColumnDefinitions>
 
             <!-- TabControl (Main Content) -->
-            <TabControl Name="tab_MainContent" Grid.Column="0" Style="{StaticResource styleTabControlMainContent}">
+            <TabControl Name="tab_MainContent" Grid.Column="0" Style="{StaticResource styleTabControlModern}">
 
                 <!-- Welcome Tab -->
                 <TabItem Header="Beranda" IsSelected="True">

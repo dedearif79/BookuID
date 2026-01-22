@@ -20,10 +20,10 @@ Public Class cls_SetelPort
     Public Const DEFAULT_PORT_KONEKSI As Integer = 45679
 
     ''' <summary>Port TCP default untuk relay server (internet)</summary>
-    Public Const DEFAULT_PORT_RELAY As Integer = 443
+    Public Const DEFAULT_PORT_RELAY As Integer = 45680
 
     ''' <summary>Alamat IP default relay server</summary>
-    Public Const DEFAULT_RELAY_SERVER_IP As String = "155.117.43.250"
+    Public Const DEFAULT_RELAY_SERVER_IP As String = "155.117.43.209"
 
     ''' <summary>Nama file settings</summary>
     Private Const NAMA_FILE_SETTINGS As String = "port-settings.json"

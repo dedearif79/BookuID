@@ -78,7 +78,7 @@ Booku Remote/
 |------|----------|--------|----------|
 | `45678` | UDP | LAN | Discovery perangkat (broadcast) |
 | `45679` | TCP | LAN | Koneksi langsung (data, frame, input) |
-| `443` | TCP | VPS | Relay Server (koneksi via internet, menggunakan port HTTPS) |
+| `45680` | TCP | VPS | Relay Server (koneksi via internet) |
 
 > **Catatan:** Semua port di atas adalah nilai **default** dan dapat dikonfigurasi manual melalui UI di window Host atau Tamu. Settings disimpan ke file JSON di `%AppData%\BookuID\Booku Remote\port-settings.json`.
 
@@ -213,12 +213,12 @@ Implementasi menggunakan arsitektur **Relay-Only** di mana semua traffic Host-Ta
 - Tidak perlu NAT traversal kompleks
 - Kontrol penuh atas infrastruktur
 
-**VPS:** Windows 11 Pro @ 155.117.43.250 (2 CPU, 4GB RAM, 100Mbps)
+**VPS:** Windows 11 Pro @ 155.117.43.209 (2 CPU, 4GB RAM, 100Mbps)
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │              RELAY SERVER (VPS)                             │
-│              155.117.43.250:443                           │
+│              155.117.43.209:45680                            │
 │                                                             │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
 │  │ Connection  │  │   Session   │  │   Packet Router     │ │
@@ -226,7 +226,7 @@ Implementasi menggunakan arsitektur **Relay-Only** di mana semua traffic Host-Ta
 │  └─────────────┘  └─────────────┘  └─────────────────────┘ │
 └─────────────────────────────────────────────────────────────┘
          ▲                                    ▲
-         │ TCP 443                          │ TCP 443
+         │ TCP 45680                         │ TCP 45680
          │                                    │
 ┌────────┴────────┐                ┌─────────┴─────────┐
 │      HOST       │                │       TAMU        │
@@ -285,7 +285,7 @@ TAMU                    RELAY                    HOST
 
 | Komponen | Fungsi |
 |----------|--------|
-| `TcpListenerService` | Mendengarkan koneksi TCP port 443 |
+| `TcpListenerService` | Mendengarkan koneksi TCP port 45680 |
 | `ConnectionManager` | Manajemen koneksi Host dan Tamu |
 | `SessionManager` | Manajemen sesi Host-Tamu |
 | `PacketRouter` | Routing paket antara Host-Tamu (transparent) |
@@ -304,7 +304,7 @@ Berisi konstanta, enum, dan variabel global:
 
 | Kategori | Contoh |
 |----------|--------|
-| **Konstanta Port Default** | `DEFAULT_PORT_DISCOVERY = 45678`, `DEFAULT_PORT_KONEKSI = 45679`, `DEFAULT_PORT_RELAY = 443` |
+| **Konstanta Port Default** | `DEFAULT_PORT_DISCOVERY = 45678`, `DEFAULT_PORT_KONEKSI = 45679`, `DEFAULT_PORT_RELAY = 45680` |
 | **Port Aktif (Runtime)** | `PortDiscoveryAktif`, `PortKoneksiAktif`, `PortRelayAktif`, `RelayServerIPAktif` |
 | **Settings Object** | `SetelPortAktif As cls_SetelPort` — instance untuk load/save port settings |
 | **Timeout** | `TIMEOUT_DISCOVERY = 3000ms`, `TIMEOUT_KONEKSI = 10000ms` |
@@ -380,8 +380,8 @@ Menangani koneksi ke Relay Server untuk remote via internet.
 
 | Variabel Global | Deskripsi |
 |-----------------|-----------|
-| `RelayServerIPAktif` | IP address relay server (default: 155.117.43.250, dapat dikonfigurasi) |
-| `PortRelayAktif` | Port relay server (default: 443, dapat dikonfigurasi) |
+| `RelayServerIPAktif` | IP address relay server (default: 155.117.43.209, dapat dikonfigurasi) |
+| `PortRelayAktif` | Port relay server (default: 45680, dapat dikonfigurasi) |
 | `HostCodeSaatIni` | HostCode yang didapat setelah register |
 | `StatusKoneksiRelay` | Status koneksi ke relay |
 
@@ -402,8 +402,8 @@ Port jaringan dapat dikonfigurasi manual melalui UI (Expander "Pengaturan Port" 
 |------|---------|-----------|
 | `PortDiscovery` | 45678 | UDP broadcast untuk discovery LAN |
 | `PortKoneksi` | 45679 | TCP koneksi remote LAN |
-| `PortRelay` | 443 | TCP koneksi via relay server |
-| `RelayServerIP` | 155.117.43.250 | Alamat IP relay server |
+| `PortRelay` | 45680 | TCP koneksi via relay server |
+| `RelayServerIP` | 155.117.43.209 | Alamat IP relay server |
 
 ### Cara Kerja
 
@@ -507,7 +507,7 @@ Window Viewer di Tamu untuk melihat dan mengontrol layar Host.
 |----------|--------|---------|
 | Discovery UDP | Selesai | Broadcast + Response |
 | Koneksi TCP (LAN) | Selesai | Handshake + Heartbeat |
-| Koneksi Relay (Internet) | Selesai | Via VPS 155.117.43.250:443 |
+| Koneksi Relay (Internet) | Selesai | Via VPS 155.117.43.209:45680 |
 | Screen Streaming | Selesai | JPEG compression |
 | Keyboard Control | Selesai | SendInput API |
 | Mouse Control | Selesai | Move, Click, Wheel |

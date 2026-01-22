@@ -1,6 +1,7 @@
 Option Explicit On
 Option Strict On
 
+Imports System.Diagnostics
 Imports System.IO
 Imports System.Net.Sockets
 Imports System.Text
@@ -87,6 +88,7 @@ Public Module mdl_KoneksiRelay
             TcpClientRelay = New TcpClient()
             TcpClientRelay.ReceiveBufferSize = 1024 * 1024 ' 1MB
             TcpClientRelay.SendBufferSize = 1024 * 1024
+            TcpClientRelay.NoDelay = True ' Disable Nagle's algorithm untuk mengirim data segera
 
             ' Connect dengan timeout
             Dim connectTask = TcpClientRelay.ConnectAsync(RelayServerIPAktif, PortRelayAktif)
@@ -186,19 +188,36 @@ Public Module mdl_KoneksiRelay
 
         Try
             If TcpClientRelay Is Nothing OrElse Not TcpClientRelay.Connected Then
+                Debug.WriteLine($"[RELAY-SEND] SKIP - TcpClient null atau disconnected")
                 Return False
             End If
 
             Dim jsonStr = SerializePaket(paket)
             Dim bytes = Encoding.UTF8.GetBytes(jsonStr)
+
+            ' Debug: Log ukuran paket untuk FRAME_LAYAR
+            If paket.TipePaket = TipePaket.FRAME_LAYAR Then
+                Debug.WriteLine($"[RELAY-SEND] FRAME_LAYAR: {bytes.Length} bytes, WriteAsync...")
+            End If
+
             Await StreamRelay.WriteAsync(bytes, 0, bytes.Length)
+
+            If paket.TipePaket = TipePaket.FRAME_LAYAR Then
+                Debug.WriteLine($"[RELAY-SEND] FRAME_LAYAR: WriteAsync done, FlushAsync...")
+            End If
+
             Await StreamRelay.FlushAsync()
+
+            ' Debug: Konfirmasi setelah flush untuk FRAME_LAYAR
+            If paket.TipePaket = TipePaket.FRAME_LAYAR Then
+                Debug.WriteLine($"[RELAY-SEND] FRAME_LAYAR: COMPLETED")
+            End If
 
             Return True
 
         Catch ex As Exception
-            Console.WriteLine($"[RELAY] Error kirim paket: {ex.Message}")
-            Return False
+            Debug.WriteLine($"[RELAY-SEND] ERROR ({paket.TipePaket}): {ex.GetType().Name}: {ex.Message}")
+            Throw ' Re-throw agar bisa ditangkap di streaming loop
         End Try
     End Function
 
@@ -518,6 +537,7 @@ Public Module mdl_KoneksiRelay
             TcpClientRelay = New TcpClient()
             TcpClientRelay.ReceiveBufferSize = 1024 * 1024 ' 1MB
             TcpClientRelay.SendBufferSize = 1024 * 1024
+            TcpClientRelay.NoDelay = True ' Disable Nagle's algorithm untuk mengirim data segera
 
             ' Connect dengan timeout
             Dim connectTask = TcpClientRelay.ConnectAsync(RelayServerIPAktif, PortRelayAktif)

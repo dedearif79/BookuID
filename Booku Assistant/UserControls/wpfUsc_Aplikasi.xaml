@@ -1,0 +1,211 @@
+<UserControl x:Class="wpfUsc_Aplikasi"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Booku_Assistant"
+             mc:Ignorable="d"
+             d:DesignHeight="350" d:DesignWidth="500">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/BookuID.Styles;component/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Style Card untuk Aplikasi -->
+            <Style x:Key="AppCardBorder" TargetType="Border">
+                <Setter Property="Background" Value="{StaticResource clrBgWindow}"/>
+                <Setter Property="BorderBrush" Value="{StaticResource clrBorderDefault}"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Padding" Value="16"/>
+                <Setter Property="Margin" Value="0,0,0,12"/>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="BorderBrush" Value="{StaticResource clrBorderPrimary}"/>
+                        <Setter Property="Background" Value="{StaticResource clrBgPrimarySurface}"/>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <!-- Style Tombol Jalankan -->
+            <Style x:Key="BtnJalankan" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource clrBtnPrimerBg}"/>
+                <Setter Property="Foreground" Value="{StaticResource clrBtnPrimerFg}"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Padding" Value="16,8"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="6"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBtnPrimerBgHover}"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBtnPrimerBgPressed}"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBtnDisabledBg}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource clrBtnDisabledFg}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <!-- Style Tombol Jalankan Sekunder -->
+            <Style x:Key="BtnJalankanSekunder" TargetType="Button">
+                <Setter Property="Background" Value="{StaticResource clrStatusInfoBg}"/>
+                <Setter Property="Foreground" Value="{StaticResource clrStatusInfo}"/>
+                <Setter Property="FontSize" Value="12"/>
+                <Setter Property="FontWeight" Value="SemiBold"/>
+                <Setter Property="Padding" Value="16,8"/>
+                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                                    Background="{TemplateBinding Background}"
+                                    CornerRadius="6"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrStatusInfo}"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrInfoDark}"/>
+                                    <Setter Property="Foreground" Value="White"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="border" Property="Background" Value="{StaticResource clrBtnDisabledBg}"/>
+                                    <Setter Property="Foreground" Value="{StaticResource clrBtnDisabledFg}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border Background="{StaticResource clrBgPanel}">
+        <ScrollViewer VerticalScrollBarVisibility="Auto"
+                      Margin="20,16,20,20">
+            <StackPanel x:Name="pnl_DaftarAplikasi">
+
+                <!-- ====================================== -->
+                <!-- CARD: Booku                            -->
+                <!-- ====================================== -->
+                <Border Style="{StaticResource AppCardBorder}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Icon -->
+                        <Border Grid.Column="0"
+                                Width="48" Height="48"
+                                CornerRadius="10"
+                                Background="{StaticResource clrBgPrimarySurface}"
+                                Margin="0,0,14,0">
+                            <TextBlock Text="&#xE8F1;"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="22"
+                                       Foreground="{StaticResource clrBorderFocus}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+
+                        <!-- Info -->
+                        <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="Booku"
+                                       FontSize="15"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource clrTeksPrimer}"/>
+                            <TextBlock Text="Aplikasi Sistem Akuntansi Terpadu untuk mengelola finance, akuntansi, dan perhitungan pajak."
+                                       FontSize="11"
+                                       Foreground="{StaticResource clrTeksSekunder}"
+                                       TextWrapping="Wrap"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+
+                        <!-- Button -->
+                        <Button Grid.Column="2"
+                                x:Name="btn_JalankanBooku"
+                                Content="Jalankan"
+                                Style="{StaticResource BtnJalankan}"
+                                VerticalAlignment="Center"
+                                Margin="14,0,0,0"/>
+                    </Grid>
+                </Border>
+
+                <!-- ====================================== -->
+                <!-- CARD: Booku Remote                     -->
+                <!-- ====================================== -->
+                <Border Style="{StaticResource AppCardBorder}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Icon -->
+                        <Border Grid.Column="0"
+                                Width="48" Height="48"
+                                CornerRadius="10"
+                                Background="{StaticResource clrStatusInfoBg}"
+                                Margin="0,0,14,0">
+                            <TextBlock Text="&#xE8A7;"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="22"
+                                       Foreground="{StaticResource clrStatusInfo}"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+
+                        <!-- Info -->
+                        <StackPanel Grid.Column="1"
+                                    VerticalAlignment="Center">
+                            <TextBlock Text="Booku Remote"
+                                       FontSize="15"
+                                       FontWeight="SemiBold"
+                                       Foreground="{StaticResource clrTeksPrimer}"/>
+                            <TextBlock Text="Aplikasi remote desktop untuk mengontrol PC lain dalam jaringan LAN maupun internet."
+                                       FontSize="11"
+                                       Foreground="{StaticResource clrTeksSekunder}"
+                                       TextWrapping="Wrap"
+                                       Margin="0,4,0,0"/>
+                        </StackPanel>
+
+                        <!-- Button -->
+                        <Button Grid.Column="2"
+                                x:Name="btn_JalankanBookuRemote"
+                                Content="Jalankan"
+                                Style="{StaticResource BtnJalankanSekunder}"
+                                VerticalAlignment="Center"
+                                Margin="14,0,0,0"/>
+                    </Grid>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+    </Border>
+</UserControl>

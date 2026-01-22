@@ -112,8 +112,12 @@ public class PayloadPermintaanKoneksi
 /// </summary>
 public class PayloadResponKoneksi
 {
+    /// <summary>
+    /// Hasil persetujuan (enum as int):
+    /// 0 = MENUNGGU, 1 = DITERIMA, 2 = DITOLAK, 3 = TIMEOUT
+    /// </summary>
     [JsonPropertyName("hasil")]
-    public string Hasil { get; set; } = "MENUNGGU";
+    public int Hasil { get; set; } = 0;
 
     [JsonPropertyName("kunciSesi")]
     public string KunciSesi { get; set; } = "";
@@ -131,8 +135,8 @@ public class PayloadResponKoneksi
     public bool IzinClipboard { get; set; }
 
     /// <summary>
-    /// Helper property: True jika Hasil == "DITERIMA"
+    /// Helper property: True jika Hasil == 1 (DITERIMA)
     /// </summary>
     [JsonIgnore]
-    public bool Diterima => Hasil?.ToUpper() == "DITERIMA";
+    public bool Diterima => Hasil == 1;
 }

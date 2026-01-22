@@ -113,7 +113,7 @@ public class PacketRouter
     /// </summary>
     private async Task HandleRegisterHostAsync(PaketData paket, TcpClient client, string clientIP, RouteResult result)
     {
-        var payload = _protocolService.DeserializePayload<PayloadRegisterHost>(paket.Payload);
+        var payload = _protocolService.DeserializeRegisterHost(paket.Payload);
         if (payload == null) return;
 
         // Register host
@@ -159,8 +159,16 @@ public class PacketRouter
     /// </summary>
     private async Task HandleHostResponseAsync(PaketData paket, RouteResult result)
     {
-        var payload = _protocolService.DeserializePayload<PayloadResponKoneksi>(paket.Payload);
-        if (payload == null) return;
+        Console.WriteLine($"[ROUTER] HandleHostResponseAsync: IdSesi={paket.IdSesi}");
+
+        var payload = _protocolService.DeserializeResponKoneksi(paket.Payload);
+        if (payload == null)
+        {
+            Console.WriteLine($"[ROUTER] Failed to deserialize RESPON_KONEKSI payload");
+            return;
+        }
+
+        Console.WriteLine($"[ROUTER] RESPON_KONEKSI: Hasil={payload.Hasil}, Diterima={payload.Diterima}, KunciSesi={payload.KunciSesi?.Substring(0, Math.Min(8, payload.KunciSesi?.Length ?? 0))}...");
 
         // Cari session
         var session = _connectionManager.GetSession(paket.IdSesi);
@@ -169,6 +177,8 @@ public class PacketRouter
             Console.WriteLine($"[ROUTER] Session not found: {paket.IdSesi}");
             return;
         }
+
+        Console.WriteLine($"[ROUTER] Session found: {session.SessionId}, TamuId={session.TamuConnectionId}");
 
         if (payload.Diterima)
         {
@@ -184,9 +194,17 @@ public class PacketRouter
         }
 
         // Forward response ke Tamu
+        Console.WriteLine($"[ROUTER] Checking Tamu: TcpClient={session.Tamu?.TcpClient != null}, IsValid={session.Tamu?.IsValid}, Connected={session.Tamu?.TcpClient?.Connected}");
+
         if (session.Tamu?.TcpClient != null && session.Tamu.IsValid)
         {
+            Console.WriteLine($"[ROUTER] Forwarding RESPON_KONEKSI to Tamu...");
             await SendPacketAsync(session.Tamu.TcpClient, paket);
+            Console.WriteLine($"[ROUTER] RESPON_KONEKSI forwarded successfully");
+        }
+        else
+        {
+            Console.WriteLine($"[ROUTER] WARNING: Cannot forward to Tamu - TcpClient or connection invalid!");
         }
     }
 
@@ -195,7 +213,7 @@ public class PacketRouter
     /// </summary>
     private async Task HandleQueryHostAsync(PaketData paket, TcpClient client, string clientIP, RouteResult result)
     {
-        var payload = _protocolService.DeserializePayload<PayloadQueryHost>(paket.Payload);
+        var payload = _protocolService.DeserializeQueryHost(paket.Payload);
         if (payload == null) return;
 
         // Register tamu jika belum
@@ -242,7 +260,7 @@ public class PacketRouter
     /// </summary>
     private async Task HandleConnectRequestAsync(PaketData paket, TcpClient client, string clientIP, RouteResult result)
     {
-        var payload = _protocolService.DeserializePayload<PayloadRelayConnectRequest>(paket.Payload);
+        var payload = _protocolService.DeserializeConnectRequest(paket.Payload);
         if (payload == null) return;
 
         // Pastikan tamu sudah terdaftar
@@ -318,7 +336,7 @@ public class PacketRouter
         var permintaanPacket = PaketData.Create(
             TipePaket.PERMINTAAN_KONEKSI,
             sessionId,
-            _protocolService.SerializePayload(permintaanPayload)
+            _protocolService.SerializePermintaanKoneksi(permintaanPayload)
         );
 
         if (host.TcpClient == null)
@@ -349,10 +367,26 @@ public class PacketRouter
     /// </summary>
     private async Task RelayPacketAsync(PaketData paket, RouteResult result)
     {
-        if (string.IsNullOrEmpty(paket.IdSesi)) return;
+        // Debug: Log untuk FRAME_LAYAR
+        if (paket.TipePaketEnum == TipePaket.FRAME_LAYAR)
+        {
+            Console.WriteLine($"[RELAY-FRAME] Processing FRAME_LAYAR, IdSesi={paket.IdSesi}, ClientType={result.ClientType}");
+        }
+
+        if (string.IsNullOrEmpty(paket.IdSesi))
+        {
+            if (paket.TipePaketEnum == TipePaket.FRAME_LAYAR)
+                Console.WriteLine($"[RELAY-FRAME] SKIP: IdSesi is empty!");
+            return;
+        }
 
         var session = _connectionManager.GetSession(paket.IdSesi);
-        if (session == null || !session.IsActive) return;
+        if (session == null || !session.IsActive)
+        {
+            if (paket.TipePaketEnum == TipePaket.FRAME_LAYAR)
+                Console.WriteLine($"[RELAY-FRAME] SKIP: Session null or inactive. Session={session != null}, IsActive={session?.IsActive}");
+            return;
+        }
 
         // Tentukan target berdasarkan pengirim
         TcpClient? targetClient = null;
@@ -372,12 +406,29 @@ public class PacketRouter
             session.BytesRelayedToHost += paket.Payload?.Length ?? 0;
         }
 
-        if (targetClient == null || !targetClient.Connected) return;
+        if (targetClient == null || !targetClient.Connected)
+        {
+            if (paket.TipePaketEnum == TipePaket.FRAME_LAYAR)
+                Console.WriteLine($"[RELAY-FRAME] SKIP: Target null or disconnected. Target={targetClient != null}, Connected={targetClient?.Connected}");
+            return;
+        }
+
+        // Debug: Log sebelum kirim FRAME_LAYAR
+        if (paket.TipePaketEnum == TipePaket.FRAME_LAYAR)
+        {
+            Console.WriteLine($"[RELAY-FRAME] Sending to Tamu, PayloadLen={paket.Payload?.Length ?? 0}");
+        }
 
         await SendPacketAsync(targetClient, paket);
         session.UpdateActivity();
 
-        // Log untuk frame (skip karena terlalu banyak)
+        // Debug: Log setelah kirim FRAME_LAYAR
+        if (paket.TipePaketEnum == TipePaket.FRAME_LAYAR)
+        {
+            Console.WriteLine($"[RELAY-FRAME] SENT successfully to Tamu");
+        }
+
+        // Log untuk paket lainnya (skip FRAME_LAYAR dan HEARTBEAT)
         if (paket.TipePaketEnum != TipePaket.FRAME_LAYAR && paket.TipePaketEnum != TipePaket.HEARTBEAT)
         {
             Console.WriteLine($"[RELAY] {paket.TipePaketEnum} relayed ({(isFromHost ? "Host->Tamu" : "Tamu->Host")})");

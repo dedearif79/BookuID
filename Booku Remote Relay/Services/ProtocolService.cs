@@ -6,21 +6,16 @@ namespace BookuRemoteRelay.Services;
 
 /// <summary>
 /// Service untuk serialisasi/deserialisasi paket.
+/// Menggunakan Source Generator untuk kompatibilitas dengan IL Trimming.
 /// </summary>
 public class ProtocolService
 {
-    private readonly JsonSerializerOptions _jsonOptions = new()
-    {
-        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-        WriteIndented = false
-    };
-
     /// <summary>
     /// Serialize paket ke bytes untuk dikirim.
     /// </summary>
     public byte[] Serialize(PaketData paket)
     {
-        var json = JsonSerializer.Serialize(paket, _jsonOptions);
+        var json = JsonSerializer.Serialize(paket, RelayJsonContext.Default.PaketData);
         return Encoding.UTF8.GetBytes(json);
     }
 
@@ -31,22 +26,24 @@ public class ProtocolService
     {
         try
         {
-            return JsonSerializer.Deserialize<PaketData>(json, _jsonOptions);
+            return JsonSerializer.Deserialize(json, RelayJsonContext.Default.PaketData);
         }
-        catch
+        catch (Exception ex)
         {
+            Console.WriteLine($"[PROTOCOL] Deserialize error: {ex.Message}");
+            Console.WriteLine($"[PROTOCOL] JSON (first 200 chars): {json.Substring(0, Math.Min(200, json.Length))}");
             return null;
         }
     }
 
     /// <summary>
-    /// Deserialize payload ke tipe spesifik.
+    /// Deserialize payload RELAY_REGISTER_HOST.
     /// </summary>
-    public T? DeserializePayload<T>(string payload) where T : class
+    public PayloadRegisterHost? DeserializeRegisterHost(string payload)
     {
         try
         {
-            return JsonSerializer.Deserialize<T>(payload, _jsonOptions);
+            return JsonSerializer.Deserialize(payload, RelayJsonContext.Default.PayloadRegisterHost);
         }
         catch
         {
@@ -55,11 +52,80 @@ public class ProtocolService
     }
 
     /// <summary>
-    /// Serialize payload ke JSON string.
+    /// Deserialize payload RELAY_QUERY_HOST.
     /// </summary>
-    public string SerializePayload<T>(T payload)
+    public PayloadQueryHost? DeserializeQueryHost(string payload)
     {
-        return JsonSerializer.Serialize(payload, _jsonOptions);
+        try
+        {
+            return JsonSerializer.Deserialize(payload, RelayJsonContext.Default.PayloadQueryHost);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Deserialize payload RELAY_CONNECT_REQUEST.
+    /// </summary>
+    public PayloadRelayConnectRequest? DeserializeConnectRequest(string payload)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize(payload, RelayJsonContext.Default.PayloadRelayConnectRequest);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Deserialize payload RESPON_KONEKSI.
+    /// </summary>
+    public PayloadResponKoneksi? DeserializeResponKoneksi(string payload)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize(payload, RelayJsonContext.Default.PayloadResponKoneksi);
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Serialize PayloadRegisterHostOK.
+    /// </summary>
+    public string SerializeRegisterHostOK(PayloadRegisterHostOK payload)
+    {
+        return JsonSerializer.Serialize(payload, RelayJsonContext.Default.PayloadRegisterHostOK);
+    }
+
+    /// <summary>
+    /// Serialize PayloadQueryHostResult.
+    /// </summary>
+    public string SerializeQueryHostResult(PayloadQueryHostResult payload)
+    {
+        return JsonSerializer.Serialize(payload, RelayJsonContext.Default.PayloadQueryHostResult);
+    }
+
+    /// <summary>
+    /// Serialize PayloadRelayError.
+    /// </summary>
+    public string SerializeRelayError(PayloadRelayError payload)
+    {
+        return JsonSerializer.Serialize(payload, RelayJsonContext.Default.PayloadRelayError);
+    }
+
+    /// <summary>
+    /// Serialize PayloadPermintaanKoneksi.
+    /// </summary>
+    public string SerializePermintaanKoneksi(PayloadPermintaanKoneksi payload)
+    {
+        return JsonSerializer.Serialize(payload, RelayJsonContext.Default.PayloadPermintaanKoneksi);
     }
 
     /// <summary>
@@ -72,7 +138,7 @@ public class ProtocolService
             KodeError = kodeError,
             Pesan = pesan
         };
-        return PaketData.Create(TipePaket.RELAY_ERROR, idSesi, SerializePayload(payload));
+        return PaketData.Create(TipePaket.RELAY_ERROR, idSesi, SerializeRelayError(payload));
     }
 
     /// <summary>
@@ -86,7 +152,7 @@ public class ProtocolService
             ExpiryMinutes = expiryMinutes,
             Pesan = "Registrasi berhasil"
         };
-        return PaketData.Create(TipePaket.RELAY_REGISTER_HOST_OK, "", SerializePayload(payload));
+        return PaketData.Create(TipePaket.RELAY_REGISTER_HOST_OK, "", SerializeRegisterHostOK(payload));
     }
 
     /// <summary>
@@ -101,7 +167,7 @@ public class ProtocolService
             RequiresPassword = requiresPassword,
             Pesan = pesan
         };
-        return PaketData.Create(TipePaket.RELAY_QUERY_HOST_RESULT, "", SerializePayload(payload));
+        return PaketData.Create(TipePaket.RELAY_QUERY_HOST_RESULT, "", SerializeQueryHostResult(payload));
     }
 
     /// <summary>
@@ -114,7 +180,7 @@ public class ProtocolService
             KodeError = 56,
             Pesan = pesan
         };
-        return PaketData.Create(TipePaket.RELAY_HOST_OFFLINE, "", SerializePayload(payload));
+        return PaketData.Create(TipePaket.RELAY_HOST_OFFLINE, "", SerializeRelayError(payload));
     }
 
     /// <summary>
@@ -127,6 +193,6 @@ public class ProtocolService
             KodeError = 57,
             Pesan = pesan
         };
-        return PaketData.Create(TipePaket.RELAY_INVALID_CODE, "", SerializePayload(payload));
+        return PaketData.Create(TipePaket.RELAY_INVALID_CODE, "", SerializeRelayError(payload));
     }
 }

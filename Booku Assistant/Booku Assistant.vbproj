@@ -20,7 +20,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Booku Uninstaller\Booku Uninstaller.vbproj" />
+    <ProjectReference Include="..\Booku Library\Booku Library.vbproj" />
+    <ProjectReference Include="..\Booku Styles\Booku Styles.vbproj" />
   </ItemGroup>
 
 </Project>

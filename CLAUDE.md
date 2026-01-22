@@ -122,6 +122,25 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 |-------|------------|
 | Overview & Alur Kerja | `.claude/rules/Booku Backup/overview.md` |
 
+**Dokumentasi Khusus Project Booku Assistant**
+
+**Booku Assistant** adalah aplikasi launcher untuk produk-produk BookuID. Menyediakan antarmuka terpusat untuk menjalankan berbagai aplikasi dalam ekosistem BookuID.
+
+| Fitur | Deskripsi |
+|-------|-----------|
+| Tab Beranda | Logo BookuID dan tagline |
+| Tab Aplikasi | Daftar aplikasi dengan tombol "Jalankan" |
+| Tab Pengaturan | Placeholder (belum diimplementasi) |
+
+| Aplikasi Terdaftar | Path |
+|--------------------|------|
+| Booku | `C:\BookuID\Booku\Booku.exe` |
+| Booku Remote | `C:\BookuID\Booku Remote\Booku Remote.exe` |
+
+| Topik | File Rules |
+|-------|------------|
+| Overview & Fitur | `.claude/rules/Booku Assistant/overview.md` |
+
 **Dokumentasi Khusus Project Booku Encrypter**
 
 **Booku Encrypter** adalah aplikasi utilitas untuk enkripsi dan dekripsi teks/data. Digunakan oleh developer untuk mengenkripsi string yang akan digunakan di kode sumber.
@@ -186,7 +205,7 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 |-------|------------|
 | Platform | Windows Server / VPS |
 | Bahasa | C# (.NET 8.0) |
-| Port | 443 (HTTPS port untuk melewati firewall) |
+| Port | 45680 |
 | Output | Single executable, self-contained (~11 MB) |
 
 | Fitur | Deskripsi |

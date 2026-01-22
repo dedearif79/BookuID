@@ -13,6 +13,13 @@ namespace BookuRemoteAndroid.Models;
 [JsonSerializable(typeof(InputMouse))]
 [JsonSerializable(typeof(PermintaanKoneksiData))]
 [JsonSerializable(typeof(ResponKoneksiData))]
+// Relay payload classes
+[JsonSerializable(typeof(PayloadQueryHost))]
+[JsonSerializable(typeof(PayloadQueryHostResult))]
+[JsonSerializable(typeof(PayloadRelayConnectRequest))]
+[JsonSerializable(typeof(PayloadRelayError))]
+[JsonSerializable(typeof(PayloadResponKoneksi))]
+[JsonSerializable(typeof(PayloadPermintaanKoneksi))]
 [JsonSourceGenerationOptions(
     PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
     WriteIndented = false,

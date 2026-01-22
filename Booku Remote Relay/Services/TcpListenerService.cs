@@ -79,6 +79,10 @@ public class TcpListenerService
             try
             {
                 var client = await _listener.AcceptTcpClientAsync(ct);
+
+                // Disable Nagle's algorithm untuk mengirim data segera
+                client.NoDelay = true;
+
                 var remoteEndPoint = client.Client.RemoteEndPoint as IPEndPoint;
                 var clientIP = remoteEndPoint?.Address.ToString() ?? "unknown";
 
@@ -112,30 +116,68 @@ public class TcpListenerService
         string? tamuConnectionId = null;
         TipeClient clientType = TipeClient.UNKNOWN;
 
+        int readLoopCount = 0;
+
         try
         {
             stream = client.GetStream();
 
             while (!ct.IsCancellationRequested && client.Connected)
             {
+                readLoopCount++;
+
                 // Baca data
                 int bytesRead;
                 try
                 {
+                    // Log setiap 10 read atau jika buffer besar
+                    if (readLoopCount % 10 == 1 || buffer.Count > 5000)
+                    {
+                        Console.WriteLine($"[READ LOOP #{readLoopCount}] {clientIP} ({clientType}) - Waiting for data... Buffer={buffer.Count} bytes");
+                    }
+
                     bytesRead = await stream.ReadAsync(readBuffer, 0, readBuffer.Length, ct);
                 }
-                catch (IOException)
+                catch (IOException ioEx)
                 {
+                    Console.WriteLine($"[READ LOOP #{readLoopCount}] {clientIP} - IOException: {ioEx.Message}");
+                    break; // Connection closed
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[READ LOOP #{readLoopCount}] {clientIP} - ReadAsync Exception: {ex.GetType().Name}: {ex.Message}");
+                    break;
+                }
+
+                if (bytesRead == 0)
+                {
+                    Console.WriteLine($"[READ LOOP #{readLoopCount}] {clientIP} - Connection closed (bytesRead=0)");
                     break; // Connection closed
                 }
 
-                if (bytesRead == 0) break; // Connection closed
+                // Log data diterima
+                Console.WriteLine($"[READ LOOP #{readLoopCount}] {clientIP} ({clientType}) - Received {bytesRead} bytes, Total buffer: {buffer.Count + bytesRead} bytes");
 
                 // Tambah ke buffer
                 buffer.AddRange(readBuffer.Take(bytesRead));
 
                 // Extract dan proses semua JSON lengkap
                 var jsonMessages = JsonBracketParser.ExtractAllJson(buffer);
+
+                // Log hasil extraction
+                if (jsonMessages.Count > 0)
+                {
+                    Console.WriteLine($"[READ LOOP #{readLoopCount}] {clientIP} - Extracted {jsonMessages.Count} JSON message(s), Remaining buffer: {buffer.Count} bytes");
+                }
+                else if (buffer.Count > 5000)
+                {
+                    // Debug: Log hanya untuk buffer besar (skip logging kecil untuk mengurangi spam)
+                    var firstChar = buffer.Count > 0 ? (char)buffer[0] : ' ';
+                    var last100 = buffer.Count > 100
+                        ? Encoding.UTF8.GetString(buffer.ToArray(), buffer.Count - 100, 100)
+                        : "";
+                    Console.WriteLine($"[READ LOOP #{readLoopCount}] {clientIP} - Waiting for complete JSON. Buffer={buffer.Count} bytes, firstChar='{firstChar}'");
+                }
 
                 foreach (var json in jsonMessages)
                 {
@@ -168,6 +210,8 @@ public class TcpListenerService
         }
         finally
         {
+            Console.WriteLine($"[RELAY] Connection ending ({clientIP}, {clientType}) - Total read loops: {readLoopCount}, Final buffer: {buffer.Count} bytes");
+
             // Cleanup berdasarkan tipe client
             if (clientType == TipeClient.HOST && !string.IsNullOrEmpty(hostCode))
             {

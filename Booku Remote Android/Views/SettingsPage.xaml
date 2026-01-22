@@ -80,7 +80,7 @@
                            FontSize="12"
                            TextColor="{StaticResource TextSecondary}" />
                     <Entry x:Name="entryRelayServerIP"
-                           Placeholder="155.117.43.250"
+                           Placeholder="155.117.43.209"
                            Keyboard="Telephone" />
                 </VerticalStackLayout>
             </Frame>
@@ -100,7 +100,7 @@
                            FontSize="12"
                            TextColor="{StaticResource TextSecondary}" />
                     <Entry x:Name="entryPortRelay"
-                           Placeholder="443"
+                           Placeholder="45680"
                            Keyboard="Numeric" />
                 </VerticalStackLayout>
             </Frame>

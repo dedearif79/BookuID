@@ -15,7 +15,7 @@ Solution BookuID berisi 12 project yang saling terintegrasi. Jumlah project dapa
 | No | Project | Deskripsi | Status |
 |----|---------|-----------|--------|
 | 1 | **Booku** | **Project Utama.** Aplikasi Sistem Akuntansi Terpadu — memadukan finance, akuntansi, dan perhitungan pajak otomatis sesuai peraturan perpajakan Indonesia. Multicurrency (IDR + 7 mata uang asing). | Aktif, terus dikembangkan |
-| 2 | **Booku Assistant** | Aplikasi pendukung untuk project Booku. | Belum dibuat |
+| 2 | **Booku Assistant** | Aplikasi launcher untuk produk-produk BookuID. Menyediakan antarmuka terpusat untuk menjalankan berbagai aplikasi dalam ekosistem BookuID. | Sudah jalan (launcher) |
 | 3 | **Booku Backup** | Sistem backup folder solution BookuID secara otomatis. | Sudah jalan, terus dikembangkan |
 | 4 | **Booku Encrypter** | Aplikasi utilitas enkripsi/dekripsi teks untuk developer. | **Skeleton** (belum diimplementasi) |
 | 5 | **Booku Installer** | Sistem installer aplikasi Booku secara otomatis. | Ada, akan dirombak total |
@@ -25,7 +25,7 @@ Solution BookuID berisi 12 project yang saling terintegrasi. Jumlah project dapa
 | 9 | **Booku Updater** | Sistem update aplikasi Booku secara otomatis. | Sudah jalan (sederhana), akan dikembangkan |
 | 10 | **Booku Remote** | Aplikasi remote desktop untuk mengontrol PC lain dalam jaringan LAN maupun internet. Mendukung screen sharing, keyboard/mouse control. | Fase 1, 2, 2b, 4 selesai. Fase 3 belum |
 | 11 | **Booku Remote Android** | Aplikasi Android (MAUI/C#) untuk remote desktop sebagai Tamu. Menggunakan protokol yang sama dengan Booku Remote WPF. | Sudah jalan (LAN & Internet mode) |
-| 12 | **Booku Remote Relay** | Server relay untuk koneksi remote desktop via internet. Berjalan di VPS sebagai perantara Host-Tamu. | Sudah jalan (port 443) |
+| 12 | **Booku Remote Relay** | Server relay untuk koneksi remote desktop via internet. Berjalan di VPS sebagai perantara Host-Tamu. | Sudah jalan (port 45680) |
 
 ### Multicurrency Project Booku
 
@@ -51,7 +51,7 @@ Booku (Main App) + Project lainnya
 - **Booku Remote**: Tergantung pada Booku Library dan Booku Styles
 - **Booku Remote Android**: Standalone (C#/MAUI), protokol sama dengan Booku Remote WPF
 - **Booku Remote Relay**: Standalone (C#/.NET 8), server relay di VPS untuk koneksi internet
-- **Booku Assistant**: Bergantung pada Booku Uninstaller (khusus)
+- **Booku Assistant**: Bergantung pada Booku Library dan Booku Styles
 
 ## Feature Modules (`/Booku/`)
 

@@ -107,7 +107,12 @@
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Remote Android/Booku Remote Android.csproj\" -t:Build -verbosity:minimal -nologo)",
       "Bash(dotnet sln:*)",
       "Bash(/mnt/c/Program Files/dotnet/dotnet.exe sln:*)",
-      "Bash(/mnt/c/Program Files/dotnet/dotnet.exe publish -c Release -o \"bin/Publish\")"
+      "Bash(/mnt/c/Program Files/dotnet/dotnet.exe publish -c Release -o \"bin/Publish\")",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\Booku Remote\\\\Booku Remote.vbproj\" -t:Build -verbosity:minimal)",
+      "Bash(dotnet publish:*)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"/mnt/d/vb .net project/BookuID/Booku Assistant/Booku Assistant.vbproj\" -t:Build -verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:/vb .net project/BookuID/Booku Assistant/Booku Assistant.vbproj\" -t:Build -verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"D:\\\\vb .net project\\\\BookuID\\\\Booku Assistant\\\\Booku Assistant.vbproj\" -t:Build -verbosity:minimal)"
     ]
   }
 }

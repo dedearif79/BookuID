@@ -1,0 +1,54 @@
+<UserControl x:Class="wpfUsc_Beranda"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:Booku_Assistant"
+             mc:Ignorable="d"
+             d:DesignHeight="350" d:DesignWidth="500">
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/BookuID.Styles;component/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Border Background="{StaticResource clrBgPanel}">
+        <StackPanel HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Margin="40">
+            <!-- Logo BookuID (Text-based) -->
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <TextBlock Text="BOOKU"
+                           FontSize="42"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource clrBorderFocus}"/>
+                <TextBlock Text="ID"
+                           FontSize="20"
+                           FontWeight="Bold"
+                           Foreground="{StaticResource clrTeksPrimer}"
+                           VerticalAlignment="Bottom"
+                           Margin="2,0,0,7"/>
+            </StackPanel>
+            <!-- Tagline -->
+            <TextBlock Text="Sistem Akuntansi Terpadu"
+                       FontSize="13"
+                       Foreground="{StaticResource clrTeksSekunder}"
+                       HorizontalAlignment="Center"
+                       Margin="0,6,0,0"/>
+            <!-- Divider -->
+            <Border Height="1"
+                    Width="120"
+                    Background="{StaticResource clrBorderDefault}"
+                    Margin="0,20,0,20"/>
+            <!-- Version -->
+            <TextBlock Text="Assistant v1.0"
+                       FontSize="11"
+                       Foreground="{StaticResource clrTeksDisabled}"
+                       HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Border>
+</UserControl>

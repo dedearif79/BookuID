@@ -184,4 +184,51 @@
     </Style>
 
 
+
+    <!-- =================================================================== -->
+    <!-- TAB MODERN (Underline Style - seperti Booku Assistant)              -->
+    <!-- =================================================================== -->
+
+    <!-- Tab Item Modern dengan underline indicator -->
+    <Style x:Key="styleTabItemModern" TargetType="TabItem">
+        <Setter Property="Foreground" Value="{StaticResource clrTeksSekunder}"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Padding" Value="18,10"/>
+        <Setter Property="FontSize" Value="13"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TabItem">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            Padding="{TemplateBinding Padding}"
+                            BorderThickness="0,0,0,2"
+                            BorderBrush="Transparent">
+                        <ContentPresenter ContentSource="Header"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Foreground" Value="{StaticResource clrBtnPrimerBg}"/>
+                            <Setter Property="FontWeight" Value="SemiBold"/>
+                            <Setter TargetName="border" Property="BorderBrush" Value="{StaticResource clrBtnPrimerBg}"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{StaticResource clrBgHover}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- Tab Control Modern dengan background transparan -->
+    <Style x:Key="styleTabControlModern" TargetType="TabControl">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+
 </ResourceDictionary>

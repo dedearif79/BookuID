@@ -14,6 +14,7 @@ Public Module mdl_Protokol
 
     Private ReadOnly JsonOptions As New JsonSerializerOptions With {
         .PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+        .PropertyNameCaseInsensitive = True,
         .WriteIndented = False
     }
 

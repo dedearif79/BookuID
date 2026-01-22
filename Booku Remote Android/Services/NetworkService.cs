@@ -17,8 +17,8 @@ public class NetworkService : IDisposable
     public const int MOUSE_THROTTLE_MS = 30;
 
     // Default Relay Server constants
-    public const string DEFAULT_RELAY_SERVER_IP = "155.117.43.250";
-    public const int DEFAULT_PORT_RELAY = 443; // Menggunakan port HTTPS agar mudah melewati firewall
+    public const string DEFAULT_RELAY_SERVER_IP = "155.117.43.209";
+    public const int DEFAULT_PORT_RELAY = 45680;
 
     /// <summary>
     /// Port koneksi TCP aktif (dari SettingsService)
@@ -239,9 +239,9 @@ public class NetworkService : IDisposable
             // Kirim RELAY_QUERY_HOST
             var payload = new PayloadQueryHost { HostCode = hostCode };
             var paket = PaketData.Create(TipePaket.RELAY_QUERY_HOST, string.Empty,
-                System.Text.Json.JsonSerializer.Serialize(payload));
+                System.Text.Json.JsonSerializer.Serialize(payload, BookuJsonContext.Default.PayloadQueryHost));
 
-            var json = System.Text.Json.JsonSerializer.Serialize(paket);
+            var json = System.Text.Json.JsonSerializer.Serialize(paket, BookuJsonContext.Default.PaketData);
             var bytes = Encoding.UTF8.GetBytes(json);
             await tempStream.WriteAsync(bytes, 0, bytes.Length);
             System.Diagnostics.Debug.WriteLine($"[RELAY] Sent RELAY_QUERY_HOST: {json}");
@@ -263,13 +263,13 @@ public class NetworkService : IDisposable
                 int jsonEnd = FindCompleteJsonEnd(data);
                 if (jsonEnd > 0)
                 {
-                    var jsonStr = data.Substring(0, jsonEnd);
+                    var jsonStr = data.Substring(0, jsonEnd + 1); // +1 untuk include closing brace
                     System.Diagnostics.Debug.WriteLine($"[RELAY] Received: {jsonStr}");
 
-                    var responsePaket = System.Text.Json.JsonSerializer.Deserialize<PaketData>(jsonStr);
+                    var responsePaket = System.Text.Json.JsonSerializer.Deserialize(jsonStr, BookuJsonContext.Default.PaketData);
                     if (responsePaket?.TipePaket == (int)TipePaket.RELAY_QUERY_HOST_RESULT)
                     {
-                        return System.Text.Json.JsonSerializer.Deserialize<PayloadQueryHostResult>(responsePaket.Payload);
+                        return System.Text.Json.JsonSerializer.Deserialize(responsePaket.Payload, BookuJsonContext.Default.PayloadQueryHostResult);
                     }
                     else if (responsePaket?.TipePaket == (int)TipePaket.RELAY_INVALID_CODE)
                     {
@@ -340,7 +340,7 @@ public class NetworkService : IDisposable
             };
 
             var paket = PaketData.Create(TipePaket.RELAY_CONNECT_REQUEST, string.Empty,
-                System.Text.Json.JsonSerializer.Serialize(payload));
+                System.Text.Json.JsonSerializer.Serialize(payload, BookuJsonContext.Default.PayloadRelayConnectRequest));
 
             await SendPacketAsync(paket);
             System.Diagnostics.Debug.WriteLine("[RELAY] Sent RELAY_CONNECT_REQUEST");
@@ -361,7 +361,7 @@ public class NetworkService : IDisposable
             // Handle berbagai tipe respon
             if (response.TipePaket == (int)TipePaket.RELAY_ERROR)
             {
-                var error = System.Text.Json.JsonSerializer.Deserialize<PayloadRelayError>(response.Payload);
+                var error = System.Text.Json.JsonSerializer.Deserialize(response.Payload, BookuJsonContext.Default.PayloadRelayError);
                 Disconnect();
                 return KoneksiResult.Gagal(error?.Pesan ?? "Error dari Relay Server");
             }
@@ -395,8 +395,13 @@ public class NetworkService : IDisposable
 
                 if (responData.Hasil == HasilPersetujuan.DITERIMA)
                 {
-                    // Simpan session menggunakan method khusus relay
-                    _sessionService.MulaiSesiRelay(hostCode, "Host via Relay", responData);
+                    // PENTING: Untuk mode Relay, gunakan IdSesi dari paket (Relay Session ID)
+                    // bukan KunciSesi dari payload, karena Relay routing berdasarkan IdSesi paket
+                    var relaySessionId = response.IdSesi;
+                    System.Diagnostics.Debug.WriteLine($"[RELAY] Using RelaySessionId: {relaySessionId}");
+
+                    // Simpan session menggunakan method khusus relay dengan RelaySessionId
+                    _sessionService.MulaiSesiRelay(hostCode, "Host via Relay", responData, relaySessionId);
                     RaiseConnectionStatus(StatusKoneksi.TERHUBUNG);
 
                     // Mulai receive loop dan heartbeat
@@ -600,36 +605,58 @@ public class NetworkService : IDisposable
             var buffer = new byte[1024 * 64]; // 64KB buffer
             var sb = new StringBuilder();
 
+            System.Diagnostics.Debug.WriteLine("[RECV] ReceivePacketAsync started, waiting for data...");
+
             while (!cancellationToken.IsCancellationRequested)
             {
                 var bytesRead = await _networkStream.ReadAsync(buffer, cancellationToken);
+                System.Diagnostics.Debug.WriteLine($"[RECV] ReadAsync returned: {bytesRead} bytes");
+
                 if (bytesRead == 0)
                 {
                     // Connection closed
+                    System.Diagnostics.Debug.WriteLine("[RECV] Connection closed (0 bytes)");
                     return null;
                 }
 
                 sb.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
+                var data = sb.ToString();
 
-                // Coba parse JSON langsung (Host tidak pakai delimiter)
-                var json = sb.ToString().Trim();
-                var paket = _protocolService.DeserializePaket(json);
-                if (paket != null)
+                System.Diagnostics.Debug.WriteLine($"[RECV] Buffer total: {data.Length} chars, first 300: {data.Substring(0, Math.Min(300, data.Length))}");
+
+                // Gunakan FindCompleteJsonEnd untuk konsistensi dengan StartReceiveLoop
+                int endIndex = FindCompleteJsonEnd(data);
+                if (endIndex >= 0)
                 {
-                    System.Diagnostics.Debug.WriteLine($"[RECV] TipePaket={paket.TipePaket}, Size={json.Length}");
-                    return paket;
+                    var json = data.Substring(0, endIndex + 1);
+                    System.Diagnostics.Debug.WriteLine($"[RECV] Found complete JSON, length={json.Length}");
+
+                    var paket = _protocolService.DeserializePaket(json);
+                    if (paket != null)
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[RECV] SUCCESS! TipePaket={paket.TipePaket}, IdSesi={paket.IdSesi?.Substring(0, Math.Min(8, paket.IdSesi?.Length ?? 0))}...");
+                        return paket;
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine($"[RECV] DeserializePaket returned null!");
+                    }
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine($"[RECV] No complete JSON yet, waiting for more data...");
                 }
 
-                // Jika gagal parse, mungkin data belum lengkap - lanjut baca
+                // Jika JSON belum lengkap, lanjut baca
             }
         }
         catch (OperationCanceledException)
         {
-            // Normal cancellation
+            System.Diagnostics.Debug.WriteLine("[RECV] Cancelled");
         }
         catch (Exception ex)
         {
-            System.Diagnostics.Debug.WriteLine($"Receive error: {ex.Message}");
+            System.Diagnostics.Debug.WriteLine($"[RECV] Exception: {ex.GetType().Name}: {ex.Message}");
         }
 
         return null;

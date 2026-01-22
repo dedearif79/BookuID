@@ -1,6 +1,7 @@
 Option Explicit On
 Option Strict On
 
+Imports System.Diagnostics
 Imports System.IO
 Imports System.Net
 Imports System.Net.Sockets
@@ -686,9 +687,14 @@ Public Module mdl_KoneksiJaringan
 
         System.Diagnostics.Debug.WriteLine("[RELAY] Streaming layar dimulai")
 
+        Dim frameCount = 0
+
         Try
+            Debug.WriteLine($"[RELAY-STREAM] Loop dimulai. IsStreamingAktif={SesiRemoteAktif.IsStreamingAktif()}, TerhubungKeRelay={TerhubungKeRelay}")
+
             While SesiRemoteAktif.IsStreamingAktif() AndAlso TerhubungKeRelay
 
+                frameCount += 1
                 Dim stopwatch = System.Diagnostics.Stopwatch.StartNew()
 
                 ' Tangkap frame (gunakan skala dari sesi)
@@ -698,10 +704,21 @@ Public Module mdl_KoneksiJaringan
                     ' Kirim frame via relay
                     Dim paket = BuatPaketFrameLayar(frame)
                     paket.IdSesi = KunciSesiAktif
-                    Await mdl_KoneksiRelay.KirimPaketKeRelayAsync(paket)
+
+                    Debug.WriteLine($"[RELAY-STREAM] Frame #{frameCount}: Mengirim {frame.UkuranDataKB():F1}KB...")
+
+                    Try
+                        Dim berhasil = Await mdl_KoneksiRelay.KirimPaketKeRelayAsync(paket)
+                        Debug.WriteLine($"[RELAY-STREAM] Frame #{frameCount}: Hasil = {berhasil}")
+                    Catch ioEx As IOException
+                        Debug.WriteLine($"[RELAY-STREAM] Frame #{frameCount}: IOException: {ioEx.Message}")
+                        Exit While
+                    End Try
 
                     ' Catat statistik frame
                     SesiRemoteAktif.CatatFrame(frame.NomorFrame, frame.UkuranDataKB())
+                Else
+                    Debug.WriteLine($"[RELAY-STREAM] Frame #{frameCount}: frame = Nothing!")
                 End If
 
                 stopwatch.Stop()
@@ -712,11 +729,14 @@ Public Module mdl_KoneksiJaringan
                 Await Task.Delay(actualDelay)
 
             End While
+
+            Debug.WriteLine($"[RELAY-STREAM] Loop selesai. IsStreamingAktif={SesiRemoteAktif.IsStreamingAktif()}, TerhubungKeRelay={TerhubungKeRelay}")
+
         Catch ex As Exception
-            System.Diagnostics.Debug.WriteLine($"[RELAY] Error streaming: {ex.Message}")
+            Debug.WriteLine($"[RELAY-STREAM] EXCEPTION: {ex.GetType().Name}: {ex.Message}")
         End Try
 
-        System.Diagnostics.Debug.WriteLine("[RELAY] Streaming layar berhenti")
+        Debug.WriteLine($"[RELAY-STREAM] Berhenti setelah {frameCount} frame")
     End Function
 
 #End Region
