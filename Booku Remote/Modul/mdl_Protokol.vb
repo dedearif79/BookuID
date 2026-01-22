@@ -228,6 +228,76 @@ Public Module mdl_Protokol
 
 #End Region
 
+#Region "Serialization - Relay Payloads (Fase 4)"
+
+    ''' <summary>
+    ''' Serialisasi payload register host.
+    ''' </summary>
+    Public Function SerializeRegisterHost(payload As cls_PayloadRegisterHost) As String
+        Try
+            Return JsonSerializer.Serialize(payload, JsonOptions)
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Deserialisasi payload register host OK.
+    ''' </summary>
+    Public Function DeserializeRegisterHostOK(json As String) As cls_PayloadRegisterHostOK
+        Try
+            Return JsonSerializer.Deserialize(Of cls_PayloadRegisterHostOK)(json, JsonOptions)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Serialisasi payload query host.
+    ''' </summary>
+    Public Function SerializeQueryHost(payload As cls_PayloadQueryHost) As String
+        Try
+            Return JsonSerializer.Serialize(payload, JsonOptions)
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Deserialisasi payload query host result.
+    ''' </summary>
+    Public Function DeserializeQueryHostResult(json As String) As cls_PayloadQueryHostResult
+        Try
+            Return JsonSerializer.Deserialize(Of cls_PayloadQueryHostResult)(json, JsonOptions)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Serialisasi payload relay connect request.
+    ''' </summary>
+    Public Function SerializeRelayConnectRequest(payload As cls_PayloadRelayConnectRequest) As String
+        Try
+            Return JsonSerializer.Serialize(payload, JsonOptions)
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Deserialisasi payload relay error.
+    ''' </summary>
+    Public Function DeserializeRelayError(json As String) As cls_PayloadRelayError
+        Try
+            Return JsonSerializer.Deserialize(Of cls_PayloadRelayError)(json, JsonOptions)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+#End Region
+
 #Region "Paket Builder Helper"
 
     ''' <summary>
@@ -372,6 +442,78 @@ Public Module mdl_Protokol
             .WheelDelta = wheelDelta
         }
         Return New cls_PaketData(TipePaket.INPUT_MOUSE, SerializeInputMouse(payload))
+    End Function
+
+    ''' <summary>
+    ''' Membuat paket input mouse dengan parameter lengkap (untuk relay mode).
+    ''' </summary>
+    Public Function BuatPaketInputMouse(tipeAksi As TipeAksiMouse, x As Double, y As Double,
+                                         button As Integer, isButtonDown As Boolean,
+                                         wheelDelta As Integer) As cls_PaketData
+        Dim payload As New cls_PayloadInputMouse With {
+            .TipeAksi = tipeAksi,
+            .X = x,
+            .Y = y,
+            .Button = button,
+            .IsButtonDown = isButtonDown,
+            .WheelDelta = wheelDelta
+        }
+        Return New cls_PaketData(TipePaket.INPUT_MOUSE, SerializeInputMouse(payload))
+    End Function
+
+#End Region
+
+#Region "Paket Builder Helper - Relay (Fase 4)"
+
+    ''' <summary>
+    ''' Membuat paket RELAY_REGISTER_HOST (Host mendaftar ke relay).
+    ''' </summary>
+    Public Function BuatPaketRelayRegisterHost(namaPerangkat As String, Optional password As String = "") As cls_PaketData
+        Dim payload As New cls_PayloadRegisterHost With {
+            .NamaPerangkat = namaPerangkat,
+            .VersiProtokol = VERSI_PROTOKOL,
+            .Password = password
+        }
+        Return New cls_PaketData(TipePaket.RELAY_REGISTER_HOST, SerializeRegisterHost(payload))
+    End Function
+
+    ''' <summary>
+    ''' Membuat paket RELAY_UNREGISTER_HOST (Host logout dari relay).
+    ''' </summary>
+    Public Function BuatPaketRelayUnregisterHost() As cls_PaketData
+        Return New cls_PaketData(TipePaket.RELAY_UNREGISTER_HOST, "")
+    End Function
+
+    ''' <summary>
+    ''' Membuat paket RELAY_HOST_HEARTBEAT (Host keep-alive ke relay).
+    ''' </summary>
+    Public Function BuatPaketRelayHeartbeat() As cls_PaketData
+        Return New cls_PaketData(TipePaket.RELAY_HOST_HEARTBEAT, "")
+    End Function
+
+    ''' <summary>
+    ''' Membuat paket RELAY_QUERY_HOST (Tamu mencari Host by HostCode).
+    ''' </summary>
+    Public Function BuatPaketRelayQueryHost(hostCode As String) As cls_PaketData
+        Dim payload As New cls_PayloadQueryHost With {
+            .HostCode = hostCode
+        }
+        Return New cls_PaketData(TipePaket.RELAY_QUERY_HOST, SerializeQueryHost(payload))
+    End Function
+
+    ''' <summary>
+    ''' Membuat paket RELAY_CONNECT_REQUEST (Tamu minta koneksi via relay).
+    ''' </summary>
+    Public Function BuatPaketRelayConnectRequest(hostCode As String, namaTamu As String,
+                                                   Optional password As String = "") As cls_PaketData
+        Dim payload As New cls_PayloadRelayConnectRequest With {
+            .HostCode = hostCode,
+            .NamaPerangkat = namaTamu,
+            .AlamatIP = AlamatIPLokal,
+            .VersiProtokol = VERSI_PROTOKOL,
+            .Password = password
+        }
+        Return New cls_PaketData(TipePaket.RELAY_CONNECT_REQUEST, SerializeRelayConnectRequest(payload))
     End Function
 
 #End Region

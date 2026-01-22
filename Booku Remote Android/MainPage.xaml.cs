@@ -15,6 +15,11 @@ public partial class MainPage : ContentPage
     private PerangkatLAN? _selectedDevice;
     private bool _isScanning = false;
 
+    // Mode tracking (LAN / Internet)
+    private ModeKoneksi _currentMode = ModeKoneksi.LAN;
+    private string _queryHostCode = string.Empty;
+    private PayloadQueryHostResult? _queriedHost;
+
     public MainPage()
     {
         InitializeComponent();
@@ -115,6 +120,11 @@ public partial class MainPage : ContentPage
 
     #region Button Handlers
 
+    private async void OnSettingsClicked(object? sender, EventArgs e)
+    {
+        await Shell.Current.GoToAsync(nameof(Views.SettingsPage));
+    }
+
     private async void OnScanClicked(object? sender, EventArgs e)
     {
         await ScanDevicesAsync();
@@ -148,6 +158,170 @@ public partial class MainPage : ContentPage
         };
 
         await ConnectToDeviceAsync(manualDevice);
+    }
+
+    #endregion
+
+    #region Mode Selector Handlers
+
+    private void OnModeLANClicked(object? sender, EventArgs e)
+    {
+        if (_currentMode == ModeKoneksi.LAN) return;
+
+        _currentMode = ModeKoneksi.LAN;
+
+        // Update UI
+        btnModeLAN.BackgroundColor = (Color)Application.Current!.Resources["Primary"];
+        btnModeLAN.TextColor = (Color)Application.Current!.Resources["White"];
+        btnModeInternet.BackgroundColor = (Color)Application.Current!.Resources["Surface"];
+        btnModeInternet.TextColor = (Color)Application.Current!.Resources["TextPrimary"];
+
+        // Show/Hide sections
+        frameLANMode.IsVisible = true;
+        frameInternetMode.IsVisible = false;
+        refreshView.IsVisible = true;
+
+        // Reset Internet mode state
+        entryHostCode.Text = string.Empty;
+        stackHostInfo.IsVisible = false;
+        btnConnectRelay.IsEnabled = false;
+        _queriedHost = null;
+    }
+
+    private void OnModeInternetClicked(object? sender, EventArgs e)
+    {
+        if (_currentMode == ModeKoneksi.INTERNET) return;
+
+        _currentMode = ModeKoneksi.INTERNET;
+
+        // Update UI
+        btnModeInternet.BackgroundColor = (Color)Application.Current!.Resources["Primary"];
+        btnModeInternet.TextColor = (Color)Application.Current!.Resources["White"];
+        btnModeLAN.BackgroundColor = (Color)Application.Current!.Resources["Surface"];
+        btnModeLAN.TextColor = (Color)Application.Current!.Resources["TextPrimary"];
+
+        // Show/Hide sections
+        frameLANMode.IsVisible = false;
+        frameInternetMode.IsVisible = true;
+        refreshView.IsVisible = false;
+
+        // Reset LAN mode state
+        collectionDevices.SelectedItem = null;
+        _selectedDevice = null;
+        btnConnect.IsEnabled = false;
+    }
+
+    #endregion
+
+    #region Relay Connection Handlers
+
+    private async void OnHostCodeTextChanged(object? sender, TextChangedEventArgs e)
+    {
+        var code = e.NewTextValue?.Trim().ToUpperInvariant() ?? "";
+        _queryHostCode = code;
+
+        // Reset host info
+        stackHostInfo.IsVisible = false;
+        _queriedHost = null;
+        btnConnectRelay.IsEnabled = false;
+
+        // Hanya query jika 6 karakter
+        if (code.Length == 6)
+        {
+            // Query host dari Relay Server
+            await QueryHostAsync(code);
+        }
+    }
+
+    private async void OnConnectRelayClicked(object? sender, EventArgs e)
+    {
+        if (string.IsNullOrEmpty(_queryHostCode) || _queryHostCode.Length != 6) return;
+        if (_queriedHost == null || !_queriedHost.Found) return;
+
+        await ConnectViaRelayAsync(_queryHostCode);
+    }
+
+    private async Task QueryHostAsync(string hostCode)
+    {
+        try
+        {
+            lblHostName.Text = "Mencari Host...";
+            lblHostStatus.Text = "";
+            stackHostInfo.IsVisible = true;
+
+            var result = await _networkService.QueryHostViaRelayAsync(hostCode);
+
+            if (result != null)
+            {
+                _queriedHost = result;
+
+                if (result.Found)
+                {
+                    lblHostName.Text = "🖥️ " + result.NamaHost;
+                    lblHostStatus.Text = result.RequiresPassword ? "🔒 Memerlukan password" : "✅ Siap dihubungkan";
+                    btnConnectRelay.IsEnabled = true;
+                }
+                else
+                {
+                    lblHostName.Text = "❌ Host tidak ditemukan";
+                    lblHostStatus.Text = result.Pesan ?? "Kode tidak valid atau Host offline";
+                    btnConnectRelay.IsEnabled = false;
+                }
+            }
+            else
+            {
+                lblHostName.Text = "❌ Gagal menghubungi Relay Server";
+                lblHostStatus.Text = "Periksa koneksi internet Anda";
+                btnConnectRelay.IsEnabled = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            lblHostName.Text = "❌ Error";
+            lblHostStatus.Text = ex.Message;
+            btnConnectRelay.IsEnabled = false;
+        }
+    }
+
+    private async Task ConnectViaRelayAsync(string hostCode)
+    {
+        try
+        {
+            // Show loading
+            gridLoading.IsVisible = true;
+            lblLoadingStatus.Text = "Menghubungkan via Internet...";
+            btnConnectRelay.IsEnabled = false;
+
+            // Password handling (jika diperlukan)
+            string password = "";
+            if (_queriedHost?.RequiresPassword == true)
+            {
+                password = await DisplayPromptAsync("Password", "Host memerlukan password:", "OK", "Batal", "Masukkan password");
+                if (string.IsNullOrEmpty(password))
+                {
+                    gridLoading.IsVisible = false;
+                    btnConnectRelay.IsEnabled = true;
+                    return;
+                }
+            }
+
+            // Connect via Relay
+            var result = await _networkService.ConnectViaRelayAsync(hostCode, password);
+
+            if (!result.Success)
+            {
+                gridLoading.IsVisible = false;
+                await DisplayAlert("Gagal", result.Message, "OK");
+                btnConnectRelay.IsEnabled = true;
+            }
+            // Jika berhasil, event handler akan navigate ke ViewerPage
+        }
+        catch (Exception ex)
+        {
+            gridLoading.IsVisible = false;
+            await DisplayAlert("Error", ex.Message, "OK");
+            btnConnectRelay.IsEnabled = true;
+        }
     }
 
     #endregion

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\vb .net project\\BookuID\\Booku Styles\\Booku Styles.vbproj": {}
+    "D:\\VB .Net Project\\BookuID\\Booku Styles\\Booku Styles.vbproj": {}
   },
   "projects": {
-    "D:\\vb .net project\\BookuID\\Booku Library\\Booku Library.vbproj": {
+    "D:\\VB .Net Project\\BookuID\\Booku Library\\Booku Library.vbproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\vb .net project\\BookuID\\Booku Library\\Booku Library.vbproj",
+        "projectUniqueName": "D:\\VB .Net Project\\BookuID\\Booku Library\\Booku Library.vbproj",
         "projectName": "bcomm",
-        "projectPath": "D:\\vb .net project\\BookuID\\Booku Library\\Booku Library.vbproj",
+        "projectPath": "D:\\VB .Net Project\\BookuID\\Booku Library\\Booku Library.vbproj",
         "packagesPath": "C:\\Users\\dedea\\.nuget\\packages\\",
-        "outputPath": "D:\\vb .net project\\BookuID\\Booku Library\\obj\\",
+        "outputPath": "D:\\VB .Net Project\\BookuID\\Booku Library\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -79,14 +79,14 @@
         }
       }
     },
-    "D:\\vb .net project\\BookuID\\Booku Styles\\Booku Styles.vbproj": {
+    "D:\\VB .Net Project\\BookuID\\Booku Styles\\Booku Styles.vbproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\vb .net project\\BookuID\\Booku Styles\\Booku Styles.vbproj",
+        "projectUniqueName": "D:\\VB .Net Project\\BookuID\\Booku Styles\\Booku Styles.vbproj",
         "projectName": "BookuID.Styles",
-        "projectPath": "D:\\vb .net project\\BookuID\\Booku Styles\\Booku Styles.vbproj",
+        "projectPath": "D:\\VB .Net Project\\BookuID\\Booku Styles\\Booku Styles.vbproj",
         "packagesPath": "C:\\Users\\dedea\\.nuget\\packages\\",
-        "outputPath": "D:\\vb .net project\\BookuID\\Booku Styles\\obj\\",
+        "outputPath": "D:\\VB .Net Project\\BookuID\\Booku Styles\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -108,8 +108,8 @@
           "net8.0-windows7.0": {
             "targetAlias": "net8.0-windows",
             "projectReferences": {
-              "D:\\vb .net project\\BookuID\\Booku Library\\Booku Library.vbproj": {
-                "projectPath": "D:\\vb .net project\\BookuID\\Booku Library\\Booku Library.vbproj"
+              "D:\\VB .Net Project\\BookuID\\Booku Library\\Booku Library.vbproj": {
+                "projectPath": "D:\\VB .Net Project\\BookuID\\Booku Library\\Booku Library.vbproj"
               }
             }
           }

@@ -51,6 +51,9 @@ Class wpfWin_Viewer
     ''' <summary>Alamat IP Host</summary>
     Public Property AlamatIPHost As String = ""
 
+    ''' <summary>Mode koneksi via Relay Server (True) atau LAN langsung (False)</summary>
+    Public Property ModeViaRelay As Boolean = False
+
 #End Region
 
 #Region "Constructor"
@@ -67,12 +70,23 @@ Class wpfWin_Viewer
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
         ' Update info Host
         lbl_NamaHost.Text = $"Host: {NamaHost}"
-        lbl_AlamatIPHost.Text = $"({AlamatIPHost})"
+        If ModeViaRelay Then
+            lbl_AlamatIPHost.Text = "(via Relay Server)"
+        Else
+            lbl_AlamatIPHost.Text = $"({AlamatIPHost})"
+        End If
 
-        ' Subscribe ke events
-        AddHandler mdl_KoneksiJaringan.PaketDiterima, AddressOf OnPaketDiterima
-        AddHandler mdl_KoneksiJaringan.KoneksiTerputus, AddressOf OnKoneksiTerputus
-        AddHandler mdl_KoneksiJaringan.ErrorKoneksi, AddressOf OnErrorKoneksi
+        ' Subscribe ke events berdasarkan mode koneksi
+        If ModeViaRelay Then
+            ' Mode Internet: Subscribe ke relay events
+            AddHandler mdl_KoneksiRelay.FrameDiterimaViaRelay, AddressOf OnFrameDiterimaViaRelay
+            AddHandler mdl_KoneksiRelay.ErrorDariRelay, AddressOf OnErrorDariRelay
+        Else
+            ' Mode LAN: Subscribe ke koneksi jaringan events
+            AddHandler mdl_KoneksiJaringan.PaketDiterima, AddressOf OnPaketDiterima
+            AddHandler mdl_KoneksiJaringan.KoneksiTerputus, AddressOf OnKoneksiTerputus
+            AddHandler mdl_KoneksiJaringan.ErrorKoneksi, AddressOf OnErrorKoneksi
+        End If
 
         ' Mulai timer statistik
         _timerStatistik = New DispatcherTimer()
@@ -88,10 +102,15 @@ Class wpfWin_Viewer
         ' Hentikan timer
         _timerStatistik?.Stop()
 
-        ' Unsubscribe events
-        RemoveHandler mdl_KoneksiJaringan.PaketDiterima, AddressOf OnPaketDiterima
-        RemoveHandler mdl_KoneksiJaringan.KoneksiTerputus, AddressOf OnKoneksiTerputus
-        RemoveHandler mdl_KoneksiJaringan.ErrorKoneksi, AddressOf OnErrorKoneksi
+        ' Unsubscribe events berdasarkan mode koneksi
+        If ModeViaRelay Then
+            RemoveHandler mdl_KoneksiRelay.FrameDiterimaViaRelay, AddressOf OnFrameDiterimaViaRelay
+            RemoveHandler mdl_KoneksiRelay.ErrorDariRelay, AddressOf OnErrorDariRelay
+        Else
+            RemoveHandler mdl_KoneksiJaringan.PaketDiterima, AddressOf OnPaketDiterima
+            RemoveHandler mdl_KoneksiJaringan.KoneksiTerputus, AddressOf OnKoneksiTerputus
+            RemoveHandler mdl_KoneksiJaringan.ErrorKoneksi, AddressOf OnErrorKoneksi
+        End If
 
         ' Kirim permintaan hentikan streaming
         KirimHentikanStreaming()
@@ -140,9 +159,16 @@ Class wpfWin_Viewer
 
     Private Async Sub KirimPermintaanStreaming()
         Try
-            Dim paket = BuatPaketPermintaanStreaming(KunciSesiAktif)
-            Await mdl_KoneksiJaringan.KirimPaketAsync(paket)
             lbl_StatusLoading.Text = "Mengirim permintaan streaming..."
+
+            If ModeViaRelay Then
+                ' Mode Internet: Kirim via Relay
+                Await mdl_KoneksiRelay.MintaStreamingViaRelayAsync()
+            Else
+                ' Mode LAN: Kirim langsung
+                Dim paket = BuatPaketPermintaanStreaming(KunciSesiAktif)
+                Await mdl_KoneksiJaringan.KirimPaketAsync(paket)
+            End If
         Catch ex As Exception
             lbl_StatusLoading.Text = $"Error: {ex.Message}"
         End Try
@@ -150,9 +176,18 @@ Class wpfWin_Viewer
 
     Private Async Sub KirimHentikanStreaming()
         Try
-            If mdl_KoneksiJaringan.Terhubung Then
-                Dim paket = BuatPaketHentikanStreaming(KunciSesiAktif)
-                Await mdl_KoneksiJaringan.KirimPaketAsync(paket)
+            If ModeViaRelay Then
+                ' Mode Internet: Hentikan via Relay
+                If TerhubungKeRelay Then
+                    Dim paket = BuatPaketHentikanStreaming(KunciSesiAktif)
+                    Await mdl_KoneksiRelay.KirimPaketKeRelayAsync(paket)
+                End If
+            Else
+                ' Mode LAN: Hentikan langsung
+                If mdl_KoneksiJaringan.Terhubung Then
+                    Dim paket = BuatPaketHentikanStreaming(KunciSesiAktif)
+                    Await mdl_KoneksiJaringan.KirimPaketAsync(paket)
+                End If
             End If
         Catch
             ' Ignore errors saat closing
@@ -161,7 +196,7 @@ Class wpfWin_Viewer
 
 #End Region
 
-#Region "Event Handlers - Koneksi"
+#Region "Event Handlers - Koneksi LAN"
 
     Private Sub OnPaketDiterima(paket As cls_PaketData)
         If paket.TipePaket = TipePaket.FRAME_LAYAR Then
@@ -180,6 +215,28 @@ Class wpfWin_Viewer
     Private Sub OnErrorKoneksi(pesan As String)
         Dispatcher.Invoke(Sub()
                               TampilkanError($"Error: {pesan}")
+                          End Sub)
+    End Sub
+
+#End Region
+
+#Region "Event Handlers - Relay"
+
+    ''' <summary>
+    ''' Handler untuk frame layar yang diterima via Relay.
+    ''' </summary>
+    Private Sub OnFrameDiterimaViaRelay(paket As cls_PaketData)
+        Dispatcher.Invoke(Sub()
+                              ProsesFrameLayar(paket.Payload)
+                          End Sub)
+    End Sub
+
+    ''' <summary>
+    ''' Handler untuk error dari Relay.
+    ''' </summary>
+    Private Sub OnErrorDariRelay(kodeError As Integer, pesan As String)
+        Dispatcher.Invoke(Sub()
+                              TampilkanError($"Relay Error ({kodeError}): {pesan}")
                           End Sub)
     End Sub
 
@@ -229,11 +286,13 @@ Class wpfWin_Viewer
         lbl_FrameSize.Text = $"{SesiRemoteAktif.UkuranFrameKB:0.0} KB"
         lbl_Durasi.Text = SesiRemoteAktif.DurasiSesiString()
 
-        ' Update status indicator
+        ' Update status indicator - cek koneksi berdasarkan mode
+        Dim terhubung As Boolean = If(ModeViaRelay, TerhubungKeRelay, mdl_KoneksiJaringan.Terhubung)
+
         If SesiRemoteAktif.IsStreamingAktif() Then
             elp_StatusIndicator.Fill = New SolidColorBrush(Color.FromRgb(&H4C, &HAF, &H50)) ' Green
-            lbl_StatusKoneksi.Text = "Streaming aktif"
-        ElseIf mdl_KoneksiJaringan.Terhubung Then
+            lbl_StatusKoneksi.Text = If(ModeViaRelay, "Streaming aktif (via Relay)", "Streaming aktif")
+        ElseIf terhubung Then
             elp_StatusIndicator.Fill = New SolidColorBrush(Color.FromRgb(&HFF, &H98, &H0)) ' Orange
             lbl_StatusKoneksi.Text = "Terhubung, menunggu streaming"
         Else
@@ -289,7 +348,11 @@ Class wpfWin_Viewer
         Dim result = MessageBox.Show("Apakah Anda yakin ingin memutuskan koneksi?",
                                     "Konfirmasi", MessageBoxButton.YesNo, MessageBoxImage.Question)
         If result = MessageBoxResult.Yes Then
-            mdl_KoneksiJaringan.Putuskan("User memutuskan koneksi")
+            If ModeViaRelay Then
+                mdl_KoneksiRelay.TutupKoneksiRelay()
+            Else
+                mdl_KoneksiJaringan.Putuskan("User memutuskan koneksi")
+            End If
             Me.Close()
         End If
     End Sub
@@ -421,16 +484,23 @@ Class wpfWin_Viewer
     ''' Kirim input keyboard ke Host.
     ''' </summary>
     Private Async Sub KirimInputKeyboard(key As Key, isKeyDown As Boolean, isExtended As Boolean)
-        If Not mdl_KoneksiJaringan.Terhubung Then Return
+        ' Cek koneksi berdasarkan mode
+        Dim terhubung As Boolean = If(ModeViaRelay, TerhubungKeRelay, mdl_KoneksiJaringan.Terhubung)
+        If Not terhubung Then Return
 
         Try
             ' Konversi WPF Key ke Virtual Key Code
             Dim virtualKey = KeyInterop.VirtualKeyFromKey(key)
             If virtualKey = 0 Then Return
 
-            ' Buat dan kirim paket
-            Dim paket = BuatPaketInputKeyboard(virtualKey, isKeyDown, isExtended)
-            Await mdl_KoneksiJaringan.KirimPaketAsync(paket)
+            If ModeViaRelay Then
+                ' Mode Internet: Kirim via Relay
+                Await mdl_KoneksiRelay.KirimInputKeyboardViaRelayAsync(virtualKey, isKeyDown, isExtended, 0)
+            Else
+                ' Mode LAN: Kirim langsung
+                Dim paket = BuatPaketInputKeyboard(virtualKey, isKeyDown, isExtended)
+                Await mdl_KoneksiJaringan.KirimPaketAsync(paket)
+            End If
 
         Catch ex As Exception
             System.Diagnostics.Debug.WriteLine($"Error kirim keyboard: {ex.Message}")
@@ -441,11 +511,19 @@ Class wpfWin_Viewer
     ''' Kirim input mouse move ke Host.
     ''' </summary>
     Private Async Sub KirimInputMouseMove(normalizedX As Double, normalizedY As Double)
-        If Not mdl_KoneksiJaringan.Terhubung Then Return
+        ' Cek koneksi berdasarkan mode
+        Dim terhubung As Boolean = If(ModeViaRelay, TerhubungKeRelay, mdl_KoneksiJaringan.Terhubung)
+        If Not terhubung Then Return
 
         Try
-            Dim paket = BuatPaketInputMouseMove(normalizedX, normalizedY)
-            Await mdl_KoneksiJaringan.KirimPaketAsync(paket)
+            If ModeViaRelay Then
+                ' Mode Internet: Kirim via Relay
+                Await mdl_KoneksiRelay.KirimInputMouseViaRelayAsync(TipeAksiMouse.PINDAH, normalizedX, normalizedY, 0, False, 0)
+            Else
+                ' Mode LAN: Kirim langsung
+                Dim paket = BuatPaketInputMouseMove(normalizedX, normalizedY)
+                Await mdl_KoneksiJaringan.KirimPaketAsync(paket)
+            End If
 
         Catch ex As Exception
             System.Diagnostics.Debug.WriteLine($"Error kirim mouse move: {ex.Message}")
@@ -457,11 +535,19 @@ Class wpfWin_Viewer
     ''' </summary>
     Private Async Sub KirimInputMouseClick(button As Integer, isDown As Boolean,
                                             normalizedX As Double, normalizedY As Double)
-        If Not mdl_KoneksiJaringan.Terhubung Then Return
+        ' Cek koneksi berdasarkan mode
+        Dim terhubung As Boolean = If(ModeViaRelay, TerhubungKeRelay, mdl_KoneksiJaringan.Terhubung)
+        If Not terhubung Then Return
 
         Try
-            Dim paket = BuatPaketInputMouseClick(button, isDown, normalizedX, normalizedY)
-            Await mdl_KoneksiJaringan.KirimPaketAsync(paket)
+            If ModeViaRelay Then
+                ' Mode Internet: Kirim via Relay
+                Await mdl_KoneksiRelay.KirimInputMouseViaRelayAsync(TipeAksiMouse.KLIK, normalizedX, normalizedY, button, isDown, 0)
+            Else
+                ' Mode LAN: Kirim langsung
+                Dim paket = BuatPaketInputMouseClick(button, isDown, normalizedX, normalizedY)
+                Await mdl_KoneksiJaringan.KirimPaketAsync(paket)
+            End If
 
         Catch ex As Exception
             System.Diagnostics.Debug.WriteLine($"Error kirim mouse click: {ex.Message}")
@@ -472,11 +558,19 @@ Class wpfWin_Viewer
     ''' Kirim input mouse wheel ke Host.
     ''' </summary>
     Private Async Sub KirimInputMouseWheel(delta As Integer, normalizedX As Double, normalizedY As Double)
-        If Not mdl_KoneksiJaringan.Terhubung Then Return
+        ' Cek koneksi berdasarkan mode
+        Dim terhubung As Boolean = If(ModeViaRelay, TerhubungKeRelay, mdl_KoneksiJaringan.Terhubung)
+        If Not terhubung Then Return
 
         Try
-            Dim paket = BuatPaketInputMouseWheel(delta, normalizedX, normalizedY)
-            Await mdl_KoneksiJaringan.KirimPaketAsync(paket)
+            If ModeViaRelay Then
+                ' Mode Internet: Kirim via Relay
+                Await mdl_KoneksiRelay.KirimInputMouseViaRelayAsync(TipeAksiMouse.RODA, normalizedX, normalizedY, 0, False, delta)
+            Else
+                ' Mode LAN: Kirim langsung
+                Dim paket = BuatPaketInputMouseWheel(delta, normalizedX, normalizedY)
+                Await mdl_KoneksiJaringan.KirimPaketAsync(paket)
+            End If
 
         Catch ex As Exception
             System.Diagnostics.Debug.WriteLine($"Error kirim mouse wheel: {ex.Message}")

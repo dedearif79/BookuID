@@ -48,11 +48,32 @@ public class SessionService
     public event EventHandler<StatusKoneksi>? StatusChanged;
 
     /// <summary>
-    /// Memulai sesi baru
+    /// Memulai sesi baru (mode LAN)
     /// </summary>
     public void MulaiSesi(PerangkatLAN host, ResponKoneksiData respon)
     {
         HostTerhubung = host;
+        KunciSesi = respon.KunciSesi;
+        IzinKontrol = respon.IzinKontrol;
+        IzinTransferBerkas = respon.IzinTransferBerkas;
+        IzinClipboard = respon.IzinClipboard;
+        WaktuKoneksi = DateTime.UtcNow;
+
+        SetStatus(StatusKoneksi.TERHUBUNG);
+    }
+
+    /// <summary>
+    /// Memulai sesi baru (mode Relay/Internet)
+    /// </summary>
+    public void MulaiSesiRelay(string hostCode, string namaHost, ResponKoneksiData respon)
+    {
+        // Buat PerangkatLAN virtual untuk mode relay
+        HostTerhubung = new PerangkatLAN
+        {
+            NamaPerangkat = namaHost,
+            AlamatIP = "Relay:" + hostCode,
+            Status = StatusPerangkat.TERSEDIA
+        };
         KunciSesi = respon.KunciSesi;
         IzinKontrol = respon.IzinKontrol;
         IzinTransferBerkas = respon.IzinTransferBerkas;

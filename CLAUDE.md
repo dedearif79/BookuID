@@ -10,7 +10,7 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
 | Istilah | Mengacu Kepada |
 |---------|----------------|
-| **BookuID** | Keseluruhan Solution (berisi 11 project) |
+| **BookuID** | Keseluruhan Solution (berisi 12 project) |
 | **Booku** / **Project Booku** | Project utama di folder `BookuID/Booku/` |
 | **Booku Styles** | Project styling terpusat di folder `BookuID/Booku Styles/` |
 
@@ -151,11 +151,11 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 | Fase 2 | View-Only Screen Streaming | Selesai |
 | Fase 2b | Kontrol Keyboard dan Mouse | Selesai |
 | Fase 3 | Transfer Berkas | Belum dimulai |
-| Fase 4 | Remote via Internet (NAT traversal, relay server) | Belum dimulai |
+| Fase 4 | Remote via Internet (Relay Server) | Selesai |
 
 | Topik | File Rules |
 |-------|------------|
-| Overview, Arsitektur & Fase 4 Detail | `.claude/rules/Booku Remote/overview.md` |
+| Overview, Arsitektur & Protokol | `.claude/rules/Booku Remote/overview.md` |
 
 **Dokumentasi Khusus Project Booku Remote Android**
 
@@ -170,13 +170,35 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 
 | Fitur | Deskripsi |
 |-------|-----------|
-| Discovery | Scan Host di jaringan LAN (UDP broadcast) |
-| Streaming | Menerima frame layar dari Host |
+| Mode LAN | Scan Host via UDP broadcast, koneksi langsung |
+| Mode Internet | Koneksi via Relay Server dengan HostCode |
 | Touch Input | Gesture → Mouse/Keyboard (tap, drag, pinch) |
 
 | Topik | File Rules |
 |-------|------------|
 | Overview, Struktur & Protokol | `.claude/rules/Booku Remote Android/overview.md` |
+
+**Dokumentasi Khusus Project Booku Remote Relay**
+
+**Booku Remote Relay** adalah server relay untuk koneksi remote desktop via internet. Berjalan di VPS sebagai perantara antara Host dan Tamu yang tidak berada dalam jaringan LAN yang sama.
+
+| Aspek | Keterangan |
+|-------|------------|
+| Platform | Windows Server / VPS |
+| Bahasa | C# (.NET 8.0) |
+| Port | 443 (HTTPS port untuk melewati firewall) |
+| Output | Single executable, self-contained (~11 MB) |
+
+| Fitur | Deskripsi |
+|-------|-----------|
+| Host Registration | Host mendaftar dan dapat HostCode 6 karakter |
+| Tamu Query | Tamu mencari Host berdasarkan HostCode |
+| Packet Routing | Forward paket transparan antara Host-Tamu |
+| Single Instance | Mutex mencegah multiple server instance |
+
+| Topik | File Rules |
+|-------|------------|
+| Overview, Arsitektur & Deploy | `.claude/rules/Booku Remote Relay/overview.md` |
 
 ## Code Conventions
 

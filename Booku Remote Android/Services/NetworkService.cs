@@ -10,10 +10,30 @@ namespace BookuRemoteAndroid.Services;
 /// </summary>
 public class NetworkService : IDisposable
 {
-    public const int PORT_KONEKSI = 45679;
+    // Default constants for fallback
+    public const int DEFAULT_PORT_KONEKSI = 45679;
     public const int TIMEOUT_KONEKSI_MS = 10000;
     public const int HEARTBEAT_INTERVAL_MS = 5000;
     public const int MOUSE_THROTTLE_MS = 30;
+
+    // Default Relay Server constants
+    public const string DEFAULT_RELAY_SERVER_IP = "155.117.43.250";
+    public const int DEFAULT_PORT_RELAY = 443; // Menggunakan port HTTPS agar mudah melewati firewall
+
+    /// <summary>
+    /// Port koneksi TCP aktif (dari SettingsService)
+    /// </summary>
+    public int PortKoneksi => SettingsService.Current.PortKoneksi;
+
+    /// <summary>
+    /// Port relay aktif (dari SettingsService)
+    /// </summary>
+    public int PortRelay => SettingsService.Current.PortRelay;
+
+    /// <summary>
+    /// IP relay server aktif (dari SettingsService)
+    /// </summary>
+    public string RelayServerIP => SettingsService.Current.RelayServerIP;
 
     private readonly ProtocolService _protocolService;
     private readonly SessionService _sessionService;
@@ -24,6 +44,10 @@ public class NetworkService : IDisposable
     private Task? _receiveTask;
     private Task? _heartbeatTask;
     private DateTime _lastMouseMove = DateTime.MinValue;
+
+    // Relay mode tracking
+    private ModeKoneksi _modeKoneksi = ModeKoneksi.LAN;
+    private string _hostCode = string.Empty;
 
     /// <summary>
     /// Event ketika status koneksi berubah
@@ -179,7 +203,235 @@ public class NetworkService : IDisposable
 
         _sessionService.AkhiriSesi();
         RaiseConnectionStatus(StatusKoneksi.TIDAK_TERHUBUNG);
+
+        // Reset relay mode
+        _modeKoneksi = ModeKoneksi.LAN;
+        _hostCode = string.Empty;
     }
+
+    #endregion
+
+    #region Relay Connection
+
+    /// <summary>
+    /// Query Host via Relay Server berdasarkan HostCode
+    /// </summary>
+    public async Task<PayloadQueryHostResult?> QueryHostViaRelayAsync(string hostCode)
+    {
+        TcpClient? tempClient = null;
+        NetworkStream? tempStream = null;
+
+        try
+        {
+            System.Diagnostics.Debug.WriteLine($"[RELAY] QueryHost started. HostCode={hostCode}");
+
+            tempClient = new TcpClient();
+            tempClient.ReceiveTimeout = TIMEOUT_KONEKSI_MS;
+            tempClient.SendTimeout = TIMEOUT_KONEKSI_MS;
+
+            // Connect ke Relay Server
+            using var connectCts = new CancellationTokenSource(TIMEOUT_KONEKSI_MS);
+            await tempClient.ConnectAsync(RelayServerIP, PortRelay, connectCts.Token);
+            System.Diagnostics.Debug.WriteLine("[RELAY] Connected to Relay Server");
+
+            tempStream = tempClient.GetStream();
+
+            // Kirim RELAY_QUERY_HOST
+            var payload = new PayloadQueryHost { HostCode = hostCode };
+            var paket = PaketData.Create(TipePaket.RELAY_QUERY_HOST, string.Empty,
+                System.Text.Json.JsonSerializer.Serialize(payload));
+
+            var json = System.Text.Json.JsonSerializer.Serialize(paket);
+            var bytes = Encoding.UTF8.GetBytes(json);
+            await tempStream.WriteAsync(bytes, 0, bytes.Length);
+            System.Diagnostics.Debug.WriteLine($"[RELAY] Sent RELAY_QUERY_HOST: {json}");
+
+            // Terima response
+            var buffer = new byte[8192];
+            var receivedData = new StringBuilder();
+            using var readCts = new CancellationTokenSource(TIMEOUT_KONEKSI_MS);
+
+            while (true)
+            {
+                var bytesRead = await tempStream.ReadAsync(buffer, 0, buffer.Length, readCts.Token);
+                if (bytesRead == 0) break;
+
+                receivedData.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
+                var data = receivedData.ToString();
+
+                // Cari JSON lengkap dengan bracket tracking
+                int jsonEnd = FindCompleteJsonEnd(data);
+                if (jsonEnd > 0)
+                {
+                    var jsonStr = data.Substring(0, jsonEnd);
+                    System.Diagnostics.Debug.WriteLine($"[RELAY] Received: {jsonStr}");
+
+                    var responsePaket = System.Text.Json.JsonSerializer.Deserialize<PaketData>(jsonStr);
+                    if (responsePaket?.TipePaket == (int)TipePaket.RELAY_QUERY_HOST_RESULT)
+                    {
+                        return System.Text.Json.JsonSerializer.Deserialize<PayloadQueryHostResult>(responsePaket.Payload);
+                    }
+                    else if (responsePaket?.TipePaket == (int)TipePaket.RELAY_INVALID_CODE)
+                    {
+                        return new PayloadQueryHostResult { Found = false, Pesan = "Kode Host tidak valid" };
+                    }
+                    else if (responsePaket?.TipePaket == (int)TipePaket.RELAY_HOST_OFFLINE)
+                    {
+                        return new PayloadQueryHostResult { Found = false, Pesan = "Host sedang offline" };
+                    }
+                    break;
+                }
+            }
+
+            return null;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[RELAY] QueryHost error: {ex.Message}");
+            return null;
+        }
+        finally
+        {
+            tempStream?.Close();
+            tempStream?.Dispose();
+            tempClient?.Close();
+            tempClient?.Dispose();
+        }
+    }
+
+    /// <summary>
+    /// Menghubungkan ke Host melalui Relay Server
+    /// </summary>
+    public async Task<KoneksiResult> ConnectViaRelayAsync(string hostCode, string password = "")
+    {
+        try
+        {
+            System.Diagnostics.Debug.WriteLine($"[RELAY] ConnectViaRelay started. HostCode={hostCode}");
+
+            Disconnect();
+            _cancellationTokenSource = new CancellationTokenSource();
+
+            // Connect ke Relay Server
+            _tcpClient = new TcpClient();
+            _tcpClient.ReceiveTimeout = TIMEOUT_KONEKSI_MS;
+            _tcpClient.SendTimeout = TIMEOUT_KONEKSI_MS;
+
+            using var connectCts = new CancellationTokenSource(TIMEOUT_KONEKSI_MS);
+            await _tcpClient.ConnectAsync(RelayServerIP, PortRelay, connectCts.Token);
+            System.Diagnostics.Debug.WriteLine("[RELAY] Connected to Relay Server");
+
+            _networkStream = _tcpClient.GetStream();
+
+            // Set mode relay
+            _modeKoneksi = ModeKoneksi.INTERNET;
+            _hostCode = hostCode;
+
+            // Kirim RELAY_CONNECT_REQUEST
+            var deviceName = DiscoveryService.GetDeviceName();
+            var deviceIP = DiscoveryService.GetLocalIPAddress();
+
+            var payload = new PayloadRelayConnectRequest
+            {
+                HostCode = hostCode,
+                NamaPerangkat = deviceName,
+                AlamatIP = deviceIP,
+                VersiProtokol = "1.0",
+                Password = password
+            };
+
+            var paket = PaketData.Create(TipePaket.RELAY_CONNECT_REQUEST, string.Empty,
+                System.Text.Json.JsonSerializer.Serialize(payload));
+
+            await SendPacketAsync(paket);
+            System.Diagnostics.Debug.WriteLine("[RELAY] Sent RELAY_CONNECT_REQUEST");
+
+            // Update status
+            RaiseConnectionStatus(StatusKoneksi.MENUNGGU_PERSETUJUAN);
+
+            // Tunggu respon (bisa RESPON_KONEKSI atau RELAY_ERROR)
+            var response = await ReceivePacketAsync(_cancellationTokenSource.Token);
+            if (response == null)
+            {
+                Disconnect();
+                return KoneksiResult.Gagal("Tidak ada respon dari Relay Server");
+            }
+
+            System.Diagnostics.Debug.WriteLine($"[RELAY] Response TipePaket={response.TipePaket}");
+
+            // Handle berbagai tipe respon
+            if (response.TipePaket == (int)TipePaket.RELAY_ERROR)
+            {
+                var error = System.Text.Json.JsonSerializer.Deserialize<PayloadRelayError>(response.Payload);
+                Disconnect();
+                return KoneksiResult.Gagal(error?.Pesan ?? "Error dari Relay Server");
+            }
+            else if (response.TipePaket == (int)TipePaket.RELAY_HOST_OFFLINE)
+            {
+                Disconnect();
+                return KoneksiResult.Gagal("Host sedang offline");
+            }
+            else if (response.TipePaket == (int)TipePaket.RELAY_INVALID_CODE)
+            {
+                Disconnect();
+                return KoneksiResult.Gagal("Kode Host tidak valid");
+            }
+            else if (response.TipePaket == (int)TipePaket.RESPON_KONEKSI)
+            {
+                // Parse respon koneksi dari Host (melalui Relay)
+                var responData = _protocolService.ParseResponKoneksi(response);
+                if (responData == null)
+                {
+                    Disconnect();
+                    return KoneksiResult.Gagal("Respon tidak valid dari Host");
+                }
+
+                // Hasil dari HasilPersetujuan
+                if (responData.Hasil == HasilPersetujuan.DITOLAK)
+                {
+                    Disconnect();
+                    RaiseConnectionStatus(StatusKoneksi.DITOLAK);
+                    return KoneksiResult.Gagal(responData.Pesan ?? "Koneksi ditolak oleh Host");
+                }
+
+                if (responData.Hasil == HasilPersetujuan.DITERIMA)
+                {
+                    // Simpan session menggunakan method khusus relay
+                    _sessionService.MulaiSesiRelay(hostCode, "Host via Relay", responData);
+                    RaiseConnectionStatus(StatusKoneksi.TERHUBUNG);
+
+                    // Mulai receive loop dan heartbeat
+                    StartReceiveLoop();
+                    StartHeartbeat();
+
+                    return KoneksiResult.Sukses(responData.KunciSesi, responData.IzinKontrol);
+                }
+            }
+
+            Disconnect();
+            return KoneksiResult.Gagal("Respon tidak dikenali");
+        }
+        catch (OperationCanceledException)
+        {
+            Disconnect();
+            return KoneksiResult.Gagal("Koneksi timeout");
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"[RELAY] ConnectViaRelay error: {ex.Message}");
+            Disconnect();
+            return KoneksiResult.Gagal($"Error: {ex.Message}");
+        }
+    }
+
+    /// <summary>
+    /// Property untuk cek apakah dalam mode relay
+    /// </summary>
+    public bool IsRelayMode => _modeKoneksi == ModeKoneksi.INTERNET;
+
+    /// <summary>
+    /// Property untuk mendapatkan HostCode (untuk mode relay)
+    /// </summary>
+    public string HostCode => _hostCode;
 
     #endregion
 

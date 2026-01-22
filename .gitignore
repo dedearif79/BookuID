@@ -13,6 +13,7 @@ Booku Updater/obj/
 Booku Styles/obj/
 Booku Remote/obj/
 Booku Remote Android/obj/
+Booku Remote Relay/obj/
 
 Booku/bin/
 Booku Assistant/bin/
@@ -25,4 +26,5 @@ Booku Updater/bin/
 Booku Styles/bin/
 Booku Remote/bin/
 Booku Remote Android/bin/
+Booku Remote Relay/bin/
 

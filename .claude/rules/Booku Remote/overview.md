@@ -6,7 +6,7 @@
 
 **Booku Remote** adalah aplikasi remote desktop berbasis WPF untuk mengontrol PC lain dalam jaringan LAN maupun internet. Aplikasi ini memungkinkan screen sharing dan kontrol keyboard/mouse jarak jauh.
 
-> **Roadmap:** Saat ini fokus pengembangan adalah fitur remote dalam jaringan LAN (Fase 1-3). Setelah fitur LAN stabil, akan dikembangkan kemampuan remote melalui jaringan internet (Fase 4).
+> **Status:** Fase 1-4 telah selesai diimplementasi. Aplikasi mendukung remote desktop via LAN dan Internet (melalui Relay Server).
 
 ## Informasi Project
 
@@ -32,12 +32,14 @@ Booku Remote/
 │   ├── cls_PerangkatLAN.vb       # Model perangkat di LAN
 │   ├── cls_FrameLayar.vb         # Model frame layar (screenshot)
 │   ├── cls_SesiRemote.vb         # State management sesi remote
-│   └── cls_PaketData.vb          # Payload classes untuk protokol
+│   ├── cls_PaketData.vb          # Payload classes untuk protokol
+│   └── cls_SetelPort.vb          # Konfigurasi port (load/save JSON)
 │
 ├── Modul/                        # Module files
 │   ├── mdl_VariabelUmum.vb       # Variabel global, enum, konstanta
 │   ├── mdl_PenemuanPerangkat.vb  # Discovery perangkat di LAN (UDP)
-│   ├── mdl_KoneksiJaringan.vb    # Koneksi TCP dan streaming
+│   ├── mdl_KoneksiJaringan.vb    # Koneksi TCP dan streaming (LAN)
+│   ├── mdl_KoneksiRelay.vb       # Koneksi via Relay Server (Internet)
 │   ├── mdl_Protokol.vb           # Serialisasi/deserialisasi paket
 │   ├── mdl_TangkapLayar.vb       # Screen capture
 │   └── mdl_InjeksiInput.vb       # Keyboard/mouse injection (SendInput API)
@@ -64,18 +66,21 @@ Booku Remote/
 |------|-----------|--------|
 | **Fase 1** | Discovery + Koneksi LAN | Selesai |
 | **Fase 2** | View-Only Screen Streaming | Selesai |
-| **Fase 2b** | Kontrol Keyboard dan Mouse | Selesai (testing) |
+| **Fase 2b** | Kontrol Keyboard dan Mouse | Selesai |
 | **Fase 3** | Transfer Berkas | Belum dimulai |
-| **Fase 4** | Remote melalui Jaringan Internet | Belum dimulai |
+| **Fase 4** | Remote via Internet (Relay Server) | Selesai |
 
 ## Arsitektur Jaringan
 
 ### Port yang Digunakan
 
-| Port | Protokol | Kegunaan |
-|------|----------|----------|
-| `45678` | UDP | Discovery perangkat di LAN (broadcast) |
-| `45679` | TCP | Koneksi remote (data, frame, input) |
+| Port | Protokol | Lokasi | Kegunaan |
+|------|----------|--------|----------|
+| `45678` | UDP | LAN | Discovery perangkat (broadcast) |
+| `45679` | TCP | LAN | Koneksi langsung (data, frame, input) |
+| `443` | TCP | VPS | Relay Server (koneksi via internet, menggunakan port HTTPS) |
+
+> **Catatan:** Semua port di atas adalah nilai **default** dan dapat dikonfigurasi manual melalui UI di window Host atau Tamu. Settings disimpan ke file JSON di `%AppData%\BookuID\Booku Remote\port-settings.json`.
 
 ### Tipe Paket (Protokol)
 
@@ -104,6 +109,20 @@ Public Enum TipePaket
     DATA_BERKAS = 31
     KONFIRMASI_BERKAS = 32
     DAFTAR_FOLDER = 33
+
+    ' Relay Server (40-59)
+    RELAY_REGISTER_HOST = 40      ' Host → Relay: register
+    RELAY_REGISTER_HOST_OK = 41   ' Relay → Host: confirm + HostCode
+    RELAY_UNREGISTER_HOST = 42    ' Host → Relay: unregister
+    RELAY_HOST_HEARTBEAT = 43     ' Host → Relay: keep-alive
+    RELAY_QUERY_HOST = 45         ' Tamu → Relay: cari Host by code
+    RELAY_QUERY_HOST_RESULT = 46  ' Relay → Tamu: info Host
+    RELAY_CONNECT_REQUEST = 47    ' Tamu → Relay: minta koneksi
+    RELAY_SESSION_STARTED = 52    ' Notify session dimulai
+    RELAY_SESSION_ENDED = 53      ' Notify session berakhir
+    RELAY_ERROR = 55              ' Generic error
+    RELAY_HOST_OFFLINE = 56       ' Host tidak online
+    RELAY_INVALID_CODE = 57       ' HostCode tidak valid
 End Enum
 ```
 
@@ -185,127 +204,97 @@ End Enum
 └──────────────────────────────────────────────────────────────────┘
 ```
 
-### Fase 4: Remote via Internet (Rencana)
+### Fase 4: Remote via Internet (Relay Server)
 
-**Tantangan Utama:**
-- Perangkat di belakang NAT/firewall tidak bisa diakses langsung dari internet
-- IP address dinamis (berubah-ubah)
-- Keamanan data yang melintas di jaringan publik
+**Arsitektur: Relay-Only**
 
-**Arsitektur yang Direncanakan:**
+Implementasi menggunakan arsitektur **Relay-Only** di mana semua traffic Host-Tamu melewati Relay Server di VPS. Dipilih karena:
+- Sederhana dan reliable
+- Tidak perlu NAT traversal kompleks
+- Kontrol penuh atas infrastruktur
+
+**VPS:** Windows 11 Pro @ 155.117.43.250 (2 CPU, 4GB RAM, 100Mbps)
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│  INFRASTRUKTUR SERVER (Cloud)                                           │
-│                                                                         │
-│  ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐     │
-│  │ Signaling       │    │ STUN Server     │    │ Relay Server    │     │
-│  │ Server          │    │ (NAT Discovery) │    │ (TURN/Fallback) │     │
-│  │ (WebSocket)     │    │                 │    │                 │     │
-│  └────────┬────────┘    └────────┬────────┘    └────────┬────────┘     │
-│           │                      │                      │               │
-└───────────┼──────────────────────┼──────────────────────┼───────────────┘
-            │                      │                      │
-            │ Internet             │                      │
-            │                      │                      │
-┌───────────┼──────────────────────┼──────────────────────┼───────────────┐
-│  HOST     │                      │                      │               │
-│  (NAT A)  │                      │                      │               │
-│  ┌────────┴────────┐    ┌────────┴────────┐             │               │
-│  │ 1. Register     │    │ 2. Discover     │             │               │
-│  │    & Auth       │    │    Public IP    │             │               │
-│  └─────────────────┘    └─────────────────┘             │               │
-│           │                      │                      │               │
-│           └──────────────────────┴──────────────────────┘               │
-│                                  │                                      │
-│                    ┌─────────────┴─────────────┐                        │
-│                    │ 3a. P2P Direct (UDP Hole  │                        │
-│                    │     Punching) ATAU        │◄─────────────────┐     │
-│                    │ 3b. Via Relay Server      │                  │     │
-│                    └─────────────┬─────────────┘                  │     │
-└──────────────────────────────────┼────────────────────────────────┼─────┘
-                                   │                                │
-                                   │ Internet                       │
-                                   │                                │
-┌──────────────────────────────────┼────────────────────────────────┼─────┐
-│  TAMU                            │                                │     │
-│  (NAT B)                         ▼                                │     │
-│                    ┌─────────────────────────┐                    │     │
-│                    │ 4. Terima Frame &       │                    │     │
-│                    │    Kirim Input          │────────────────────┘     │
-│                    └─────────────────────────┘                          │
-└─────────────────────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────┐
+│              RELAY SERVER (VPS)                             │
+│              155.117.43.250:443                           │
+│                                                             │
+│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
+│  │ Connection  │  │   Session   │  │   Packet Router     │ │
+│  │ Manager     │  │   Manager   │  │   (transparent)     │ │
+│  └─────────────┘  └─────────────┘  └─────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+         ▲                                    ▲
+         │ TCP 443                          │ TCP 443
+         │                                    │
+┌────────┴────────┐                ┌─────────┴─────────┐
+│      HOST       │                │       TAMU        │
+│  Register →     │                │  Input HostCode → │
+│  Get HostCode   │                │  Connect via Relay│
+└─────────────────┘                └───────────────────┘
 ```
 
-**Komponen Server yang Diperlukan:**
+**Alur Host Register ke Relay:**
 
-| Komponen | Fungsi | Teknologi |
-|----------|--------|-----------|
-| **Signaling Server** | Koordinasi handshake, exchange SDP/ICE candidates | WebSocket + JSON |
-| **STUN Server** | Discover public IP dan tipe NAT | STUN Protocol (RFC 5389) |
-| **Relay Server (TURN)** | Fallback jika P2P gagal, relay semua traffic | TURN Protocol (RFC 5766) |
-| **Auth Server** | Registrasi perangkat, autentikasi, manajemen sesi | REST API + JWT |
-
-**Alur Koneksi Internet:**
-
-| Langkah | Deskripsi |
-|---------|-----------|
-| 1. **Registrasi** | Host & Tamu login ke Auth Server, dapat token |
-| 2. **Discovery NAT** | Kedua pihak query STUN untuk dapat public IP + port |
-| 3. **Signaling** | Tamu request koneksi via Signaling Server |
-| 4. **ICE Negotiation** | Exchange ICE candidates (STUN + TURN) |
-| 5a. **P2P Direct** | Jika NAT mendukung, koneksi langsung via UDP hole punching |
-| 5b. **Relay Fallback** | Jika P2P gagal, gunakan Relay Server |
-| 6. **Streaming** | Protokol sama dengan LAN (frame + input) |
-
-**Tipe Paket Tambahan (Rencana):**
-
-```vb
-Public Enum TipePaket
-    ' ... existing packets ...
-
-    ' Internet/Signaling (40-49)
-    REGISTER_DEVICE = 40        ' Daftarkan perangkat ke server
-    AUTH_REQUEST = 41           ' Request autentikasi
-    AUTH_RESPONSE = 42          ' Response autentikasi (token)
-    SIGNAL_OFFER = 43           ' WebRTC-style SDP offer
-    SIGNAL_ANSWER = 44          ' WebRTC-style SDP answer
-    ICE_CANDIDATE = 45          ' ICE candidate exchange
-    PEER_LIST = 46              ' Daftar perangkat online
-    KEEP_ALIVE = 47             ' Heartbeat ke signaling server
-End Enum
+```
+HOST                           RELAY
+ │ TCP Connect                   │
+ ├──────────────────────────────►│
+ │ RELAY_REGISTER_HOST           │
+ │ {NamaPerangkat, Password?}    │
+ ├──────────────────────────────►│
+ │                               │ Generate HostCode "XY7K2M"
+ │ RELAY_REGISTER_HOST_OK        │
+ │ {HostCode: "XY7K2M"}          │
+ │◄──────────────────────────────┤
+ │                               │
+ │ [Tampilkan HostCode di UI]    │
+ │                               │
+ │ RELAY_HOST_HEARTBEAT (30s)    │
+ ├──────────────────────────────►│ (repeat)
 ```
 
-**Keamanan Tambahan untuk Internet:**
+**Alur Tamu Connect via Relay:**
 
-| Aspek | Implementasi |
-|-------|--------------|
-| **Enkripsi Transport** | TLS 1.3 untuk signaling, DTLS untuk media |
-| **Enkripsi End-to-End** | AES-256-GCM untuk frame dan input |
-| **Autentikasi** | JWT token dengan expiry |
-| **Device Pairing** | One-time code atau QR code untuk pair pertama kali |
-| **Rate Limiting** | Mencegah brute-force dan DDoS |
+```
+TAMU                    RELAY                    HOST
+ │ TCP Connect            │                        │
+ ├───────────────────────►│                        │
+ │ RELAY_QUERY_HOST       │                        │
+ │ {HostCode: "XY7K2M"}   │                        │
+ ├───────────────────────►│                        │
+ │ RELAY_QUERY_HOST_RESULT│                        │
+ │ {Found, NamaHost}      │                        │
+ │◄───────────────────────┤                        │
+ │                        │                        │
+ │ RELAY_CONNECT_REQUEST  │                        │
+ │ {HostCode, NamaTamu}   │                        │
+ ├───────────────────────►│ PERMINTAAN_KONEKSI    │
+ │                        ├───────────────────────►│
+ │                        │                        │ [Dialog]
+ │                        │ RESPON_KONEKSI         │
+ │                        │◄───────────────────────┤
+ │ RESPON_KONEKSI         │                        │
+ │◄───────────────────────┤                        │
+ │                        │                        │
+ │ [Streaming via Relay]  │                        │
+```
 
-**File/Modul Baru yang Direncanakan:**
+**Komponen Relay Server (Project Terpisah):**
 
-| File | Fungsi |
-|------|--------|
-| `mdl_SignalingClient.vb` | WebSocket client ke signaling server |
-| `mdl_STUNClient.vb` | STUN protocol implementation |
-| `mdl_ICENegotiation.vb` | ICE candidate gathering & exchange |
-| `mdl_RelayClient.vb` | TURN relay client |
-| `mdl_CryptoE2E.vb` | End-to-end encryption |
-| `cls_PerangkatInternet.vb` | Model perangkat remote (bukan LAN) |
+| Komponen | Fungsi |
+|----------|--------|
+| `TcpListenerService` | Mendengarkan koneksi TCP port 443 |
+| `ConnectionManager` | Manajemen koneksi Host dan Tamu |
+| `SessionManager` | Manajemen sesi Host-Tamu |
+| `PacketRouter` | Routing paket antara Host-Tamu (transparent) |
+| `HostCodeGenerator` | Generate kode unik 6 karakter |
 
-**Opsi Implementasi:**
-
-| Opsi | Pro | Kontra |
-|------|-----|--------|
-| **Custom Protocol** | Full control, optimized | Development effort tinggi |
-| **WebRTC-based** | Mature, NAT traversal built-in | Dependency besar, learning curve |
-| **Third-party Relay** | Cepat deploy | Biaya, dependency eksternal |
-
-> **Catatan:** Detail implementasi akan ditentukan saat memulai Fase 4. Arsitektur di atas adalah rencana awal yang bisa berubah sesuai kebutuhan.
+**HostCode:**
+- 6 karakter alphanumeric (A-Z, 0-9)
+- Unik per Host yang terdaftar
+- Mudah diingat dan diketik manual
 
 ## Komponen Utama
 
@@ -315,7 +304,9 @@ Berisi konstanta, enum, dan variabel global:
 
 | Kategori | Contoh |
 |----------|--------|
-| **Konstanta Port** | `PORT_DISCOVERY = 45678`, `PORT_KONEKSI = 45679` |
+| **Konstanta Port Default** | `DEFAULT_PORT_DISCOVERY = 45678`, `DEFAULT_PORT_KONEKSI = 45679`, `DEFAULT_PORT_RELAY = 443` |
+| **Port Aktif (Runtime)** | `PortDiscoveryAktif`, `PortKoneksiAktif`, `PortRelayAktif`, `RelayServerIPAktif` |
+| **Settings Object** | `SetelPortAktif As cls_SetelPort` — instance untuk load/save port settings |
 | **Timeout** | `TIMEOUT_DISCOVERY = 3000ms`, `TIMEOUT_KONEKSI = 10000ms` |
 | **Enum Status** | `StatusKoneksi`, `ModeAplikasi`, `TipeAksiMouse` |
 | **Variabel Global** | `ModeAplikasiSaatIni`, `StatusKoneksiSaatIni`, `KunciSesiAktif` |
@@ -373,6 +364,55 @@ Serialisasi dan deserialisasi paket data.
 | `SerializeInputKeyboard()` | Serialize input keyboard ke JSON |
 | `SerializeInputMouse()` | Serialize input mouse ke JSON |
 
+### 7. mdl_KoneksiRelay.vb
+
+Menangani koneksi ke Relay Server untuk remote via internet.
+
+| Fungsi | Deskripsi |
+|--------|-----------|
+| `SambungKeRelayServerAsync()` | Connect ke relay server (Host/Tamu) |
+| `RegisterHostAsync()` | Host: Register dan dapat HostCode |
+| `UnregisterHostAsync()` | Host: Unregister dari relay |
+| `QueryHostAsync()` | Tamu: Query ketersediaan Host |
+| `ConnectViaRelayAsync()` | Tamu: Request koneksi via relay |
+| `MulaiHeartbeatRelay()` | Mulai heartbeat ke relay |
+| `HentikanKoneksiRelay()` | Tutup koneksi relay |
+
+| Variabel Global | Deskripsi |
+|-----------------|-----------|
+| `RelayServerIPAktif` | IP address relay server (default: 155.117.43.250, dapat dikonfigurasi) |
+| `PortRelayAktif` | Port relay server (default: 443, dapat dikonfigurasi) |
+| `HostCodeSaatIni` | HostCode yang didapat setelah register |
+| `StatusKoneksiRelay` | Status koneksi ke relay |
+
+## Konfigurasi Port
+
+Port jaringan dapat dikonfigurasi manual melalui UI (Expander "Pengaturan Port" di window Host/Tamu).
+
+### File dan Lokasi
+
+| Komponen | Lokasi/File |
+|----------|-------------|
+| **Class Settings** | `Kelas/cls_SetelPort.vb` |
+| **File JSON** | `%AppData%\BookuID\Booku Remote\port-settings.json` |
+
+### Port yang Dapat Dikonfigurasi
+
+| Port | Default | Deskripsi |
+|------|---------|-----------|
+| `PortDiscovery` | 45678 | UDP broadcast untuk discovery LAN |
+| `PortKoneksi` | 45679 | TCP koneksi remote LAN |
+| `PortRelay` | 443 | TCP koneksi via relay server |
+| `RelayServerIP` | 155.117.43.250 | Alamat IP relay server |
+
+### Cara Kerja
+
+1. **Startup:** `MuatSetelPort()` dipanggil di `InisialisasiVariabelUmum()` untuk load settings dari file JSON
+2. **Runtime:** Variabel `PortDiscoveryAktif`, `PortKoneksiAktif`, `PortRelayAktif`, `RelayServerIPAktif` digunakan
+3. **UI:** User dapat mengubah port via Expander di window Host/Tamu
+4. **Simpan:** Perubahan disimpan ke file JSON via `SetelPortAktif.SimpanKeFile()`
+5. **Reset:** Tombol "Reset ke Default" mengembalikan ke nilai default
+
 ## Window dan UI
 
 ### wpfWin_StartUp
@@ -386,23 +426,31 @@ Menu utama untuk memilih mode aplikasi.
 
 ### wpfWin_ModeHost
 
-Window Host yang menunggu koneksi.
+Window Host yang menunggu koneksi (LAN atau Internet).
 
 | Komponen | Fungsi |
 |----------|--------|
+| `btn_ModeLAN` / `btn_ModeInternet` | Switch mode koneksi |
 | `lbl_StatusKoneksi` | Status koneksi saat ini |
-| `lbl_AlamatIP` | Alamat IP Host |
+| `lbl_AlamatIP` | Alamat IP Host (mode LAN) |
+| `lbl_HostCode` | HostCode untuk mode Internet |
+| `txt_Password` | Password opsional untuk koneksi |
 | `btn_Hentikan` | Hentikan mode Host |
+| **Expander "Pengaturan Port"** | Konfigurasi port Discovery, Koneksi, Relay, dan Relay Server IP |
 
 ### wpfWin_ModeTamu
 
-Window Tamu untuk scan dan connect ke Host.
+Window Tamu untuk scan dan connect ke Host (LAN atau Internet).
 
 | Komponen | Fungsi |
 |----------|--------|
-| `datagridUtama` | Daftar perangkat Host yang ditemukan |
+| `btn_ModeLAN` / `btn_ModeInternet` | Switch mode koneksi |
+| `datagridUtama` | Daftar perangkat Host (mode LAN) |
 | `btn_Scan` | Scan ulang perangkat di LAN |
+| `txt_HostCode` | Input HostCode (mode Internet) |
+| `lbl_HostInfo` | Info Host dari query (mode Internet) |
 | `btn_Sambungkan` | Connect ke Host terpilih |
+| **Expander "Pengaturan Lanjutan"** | Konfigurasi port Discovery, Relay Server IP, dan port Relay |
 
 ### wpfWin_PersetujuanKoneksi
 
@@ -432,9 +480,9 @@ Window Viewer di Tamu untuk melihat dan mengontrol layar Host.
 
 | Parameter | Nilai Default | Deskripsi |
 |-----------|---------------|-----------|
-| Skala Frame | 0.5 (50%) | Skala screenshot |
-| Target FPS | 15 | Frame per second |
-| JPEG Quality | 50 | Kualitas kompresi JPEG |
+| Skala Frame | 0.35 (35%) | Skala screenshot |
+| Target FPS | 20 | Frame per second |
+| JPEG Quality | 30 | Kualitas kompresi JPEG |
 | Mouse Throttle | 30ms | Interval minimum mouse move |
 
 ## Keamanan
@@ -458,13 +506,14 @@ Window Viewer di Tamu untuk melihat dan mengontrol layar Host.
 | Komponen | Status | Catatan |
 |----------|--------|---------|
 | Discovery UDP | Selesai | Broadcast + Response |
-| Koneksi TCP | Selesai | Handshake + Heartbeat |
+| Koneksi TCP (LAN) | Selesai | Handshake + Heartbeat |
+| Koneksi Relay (Internet) | Selesai | Via VPS 155.117.43.250:443 |
 | Screen Streaming | Selesai | JPEG compression |
 | Keyboard Control | Selesai | SendInput API |
 | Mouse Control | Selesai | Move, Click, Wheel |
+| **Port Settings** | Selesai | Configurable via UI, JSON persistence |
 | File Transfer | Belum | Fase 3 |
 | Clipboard Sync | Belum | Fase 3 |
-| Internet Remote | Belum | Fase 4 - NAT traversal, relay server |
 
 ## Aturan Pengembangan
 

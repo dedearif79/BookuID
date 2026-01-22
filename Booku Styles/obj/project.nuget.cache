@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NK1Qd6DVB/0=",
+  "dgSpecHash": "dA4xiGF7ROQ=",
   "success": true,
-  "projectFilePath": "D:\\vb .net project\\BookuID\\Booku Styles\\Booku Styles.vbproj",
+  "projectFilePath": "D:\\VB .Net Project\\BookuID\\Booku Styles\\Booku Styles.vbproj",
   "expectedPackageFiles": [
     "C:\\Users\\dedea\\.nuget\\packages\\bouncycastle.cryptography\\2.3.1\\bouncycastle.cryptography.2.3.1.nupkg.sha512",
     "C:\\Users\\dedea\\.nuget\\packages\\google.protobuf\\3.26.1\\google.protobuf.3.26.1.nupkg.sha512",

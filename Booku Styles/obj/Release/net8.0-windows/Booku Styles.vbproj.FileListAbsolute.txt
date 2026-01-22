@@ -37,7 +37,3 @@ D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\Booku St.3907
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\BookuID.Styles.dll
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\refint\BookuID.Styles.dll
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\ref\BookuID.Styles.dll
-D:\vb .net project\BookuID\Booku Styles\bin\Release\net8.0-windows\BookuID.Styles.pdb
-D:\vb .net project\BookuID\Booku Styles\bin\Release\net8.0-windows\bcomm.pdb
-D:\vb .net project\BookuID\Booku Styles\obj\Release\net8.0-windows\Booku Styles.sourcelink.json
-D:\vb .net project\BookuID\Booku Styles\obj\Release\net8.0-windows\BookuID.Styles.pdb

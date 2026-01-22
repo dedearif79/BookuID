@@ -145,3 +145,109 @@ Public Class cls_PayloadInputMouse
     Public Property WheelDelta As Integer = 0
 
 End Class
+
+#Region "Relay Payload Classes - Fase 4"
+
+''' <summary>
+''' Payload untuk RELAY_REGISTER_HOST (Host → Relay).
+''' Host mendaftarkan diri ke relay server.
+''' </summary>
+Public Class cls_PayloadRegisterHost
+
+    ''' <summary>Nama perangkat Host</summary>
+    Public Property NamaPerangkat As String = ""
+
+    ''' <summary>Versi protokol</summary>
+    Public Property VersiProtokol As String = VERSI_PROTOKOL
+
+    ''' <summary>Password opsional untuk koneksi ke Host ini</summary>
+    Public Property Password As String = ""
+
+End Class
+
+''' <summary>
+''' Payload untuk RELAY_REGISTER_HOST_OK (Relay → Host).
+''' Konfirmasi registrasi berhasil dengan HostCode.
+''' </summary>
+Public Class cls_PayloadRegisterHostOK
+
+    ''' <summary>HostCode 6 karakter untuk identifikasi</summary>
+    Public Property HostCode As String = ""
+
+    ''' <summary>Waktu expired dalam menit</summary>
+    Public Property ExpiryMinutes As Integer = 60
+
+    ''' <summary>Pesan dari relay server</summary>
+    Public Property Pesan As String = ""
+
+End Class
+
+''' <summary>
+''' Payload untuk RELAY_QUERY_HOST (Tamu → Relay).
+''' Tamu mencari Host berdasarkan HostCode.
+''' </summary>
+Public Class cls_PayloadQueryHost
+
+    ''' <summary>HostCode yang dicari</summary>
+    Public Property HostCode As String = ""
+
+End Class
+
+''' <summary>
+''' Payload untuk RELAY_QUERY_HOST_RESULT (Relay → Tamu).
+''' Hasil pencarian Host.
+''' </summary>
+Public Class cls_PayloadQueryHostResult
+
+    ''' <summary>True jika Host ditemukan</summary>
+    Public Property Found As Boolean = False
+
+    ''' <summary>Nama Host (jika ditemukan)</summary>
+    Public Property NamaHost As String = ""
+
+    ''' <summary>True jika Host memerlukan password</summary>
+    Public Property RequiresPassword As Boolean = False
+
+    ''' <summary>Pesan dari relay server</summary>
+    Public Property Pesan As String = ""
+
+End Class
+
+''' <summary>
+''' Payload untuk RELAY_CONNECT_REQUEST (Tamu → Relay).
+''' Tamu meminta koneksi ke Host via relay.
+''' </summary>
+Public Class cls_PayloadRelayConnectRequest
+
+    ''' <summary>HostCode tujuan</summary>
+    Public Property HostCode As String = ""
+
+    ''' <summary>Nama perangkat Tamu</summary>
+    Public Property NamaPerangkat As String = ""
+
+    ''' <summary>Alamat IP Tamu</summary>
+    Public Property AlamatIP As String = ""
+
+    ''' <summary>Versi protokol</summary>
+    Public Property VersiProtokol As String = VERSI_PROTOKOL
+
+    ''' <summary>Password (jika Host memerlukan)</summary>
+    Public Property Password As String = ""
+
+End Class
+
+''' <summary>
+''' Payload untuk RELAY_ERROR (Relay → Client).
+''' Pesan error dari relay server.
+''' </summary>
+Public Class cls_PayloadRelayError
+
+    ''' <summary>Kode error (55=generic, 56=offline, 57=invalid code)</summary>
+    Public Property KodeError As Integer = 0
+
+    ''' <summary>Pesan error</summary>
+    Public Property Pesan As String = ""
+
+End Class
+
+#End Region

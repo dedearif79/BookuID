@@ -85,3 +85,106 @@ public class KoneksiResult
         Message = message
     };
 }
+
+#region Relay Payload Classes
+
+/// <summary>
+/// Payload untuk RELAY_QUERY_HOST (Tamu → Relay)
+/// </summary>
+public class PayloadQueryHost
+{
+    [JsonPropertyName("hostCode")]
+    public string HostCode { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Payload untuk RELAY_QUERY_HOST_RESULT (Relay → Tamu)
+/// </summary>
+public class PayloadQueryHostResult
+{
+    [JsonPropertyName("found")]
+    public bool Found { get; set; }
+
+    [JsonPropertyName("namaHost")]
+    public string NamaHost { get; set; } = string.Empty;
+
+    [JsonPropertyName("requiresPassword")]
+    public bool RequiresPassword { get; set; }
+
+    [JsonPropertyName("pesan")]
+    public string Pesan { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Payload untuk RELAY_CONNECT_REQUEST (Tamu → Relay)
+/// </summary>
+public class PayloadRelayConnectRequest
+{
+    [JsonPropertyName("hostCode")]
+    public string HostCode { get; set; } = string.Empty;
+
+    [JsonPropertyName("namaPerangkat")]
+    public string NamaPerangkat { get; set; } = string.Empty;
+
+    [JsonPropertyName("alamatIP")]
+    public string AlamatIP { get; set; } = string.Empty;
+
+    [JsonPropertyName("versiProtokol")]
+    public string VersiProtokol { get; set; } = "1.0";
+
+    [JsonPropertyName("password")]
+    public string Password { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Payload untuk RELAY_ERROR (Relay → Client)
+/// </summary>
+public class PayloadRelayError
+{
+    [JsonPropertyName("kodeError")]
+    public int KodeError { get; set; }
+
+    [JsonPropertyName("pesan")]
+    public string Pesan { get; set; } = string.Empty;
+}
+
+/// <summary>
+/// Payload untuk RESPON_KONEKSI
+/// </summary>
+public class PayloadResponKoneksi
+{
+    [JsonPropertyName("hasil")]
+    public int Hasil { get; set; }
+
+    [JsonPropertyName("kunciSesi")]
+    public string KunciSesi { get; set; } = string.Empty;
+
+    [JsonPropertyName("pesan")]
+    public string Pesan { get; set; } = string.Empty;
+
+    [JsonPropertyName("izinKontrol")]
+    public bool IzinKontrol { get; set; }
+
+    [JsonPropertyName("izinTransferBerkas")]
+    public bool IzinTransferBerkas { get; set; }
+
+    [JsonPropertyName("izinClipboard")]
+    public bool IzinClipboard { get; set; }
+}
+
+/// <summary>
+/// Payload untuk PERMINTAAN_KONEKSI
+/// </summary>
+public class PayloadPermintaanKoneksi
+{
+    [JsonPropertyName("namaPerangkat")]
+    public string NamaPerangkat { get; set; } = string.Empty;
+
+    [JsonPropertyName("alamatIP")]
+    public string AlamatIP { get; set; } = string.Empty;
+
+    [JsonPropertyName("versiProtokol")]
+    public string VersiProtokol { get; set; } = "1.0";
+}
+
+#endregion

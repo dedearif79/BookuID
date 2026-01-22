@@ -8,19 +8,113 @@ Imports System.Net
 ''' </summary>
 Public Module mdl_VariabelUmum
 
-#Region "Konstanta Port Jaringan"
+#Region "Konstanta Port Default (Backward Compatibility)"
 
-    ''' <summary>Port UDP untuk discovery perangkat di LAN</summary>
-    Public Const PORT_DISCOVERY As Integer = 45678
+    ''' <summary>Port UDP default untuk discovery perangkat di LAN</summary>
+    Public Const PORT_DISCOVERY As Integer = cls_SetelPort.DEFAULT_PORT_DISCOVERY
 
-    ''' <summary>Port TCP untuk koneksi remote</summary>
-    Public Const PORT_KONEKSI As Integer = 45679
+    ''' <summary>Port TCP default untuk koneksi remote LAN</summary>
+    Public Const PORT_KONEKSI As Integer = cls_SetelPort.DEFAULT_PORT_KONEKSI
+
+    ''' <summary>Port TCP default untuk relay server (internet)</summary>
+    Public Const PORT_RELAY As Integer = cls_SetelPort.DEFAULT_PORT_RELAY
 
     ''' <summary>Magic string untuk identifikasi broadcast discovery</summary>
     Public Const MAGIC_DISCOVERY As String = "BOOKU_REMOTE_DISCOVERY"
 
     ''' <summary>Versi protokol untuk kompatibilitas</summary>
     Public Const VERSI_PROTOKOL As String = "1.0"
+
+#End Region
+
+#Region "Konstanta Relay Server Default (Backward Compatibility)"
+
+    ''' <summary>Alamat IP default relay server</summary>
+    Public Const RELAY_SERVER_IP As String = cls_SetelPort.DEFAULT_RELAY_SERVER_IP
+
+    ''' <summary>Alamat lengkap default relay server</summary>
+    Public ReadOnly RELAY_SERVER_ADDRESS As String = $"{RELAY_SERVER_IP}:{PORT_RELAY}"
+
+    ''' <summary>Interval heartbeat ke relay server (milidetik)</summary>
+    Public Const INTERVAL_HEARTBEAT_RELAY As Integer = 30000
+
+#End Region
+
+#Region "Pengaturan Port Aktif (Configurable)"
+
+    ''' <summary>
+    ''' Instance pengaturan port yang sedang aktif.
+    ''' Dimuat dari file saat aplikasi dimulai, bisa diubah via UI.
+    ''' Gunakan ini untuk semua operasi jaringan (bukan konstanta).
+    ''' </summary>
+    Public SetelPortAktif As cls_SetelPort = Nothing
+
+    ''' <summary>
+    ''' Memuat pengaturan port dari file. Panggil saat aplikasi dimulai.
+    ''' </summary>
+    Public Sub MuatSetelPort()
+        SetelPortAktif = cls_SetelPort.MuatDariFile()
+    End Sub
+
+    ''' <summary>
+    ''' Menyimpan pengaturan port ke file.
+    ''' </summary>
+    ''' <returns>True jika berhasil</returns>
+    Public Function SimpanSetelPort() As Boolean
+        If SetelPortAktif Is Nothing Then
+            SetelPortAktif = New cls_SetelPort()
+        End If
+        Return SetelPortAktif.SimpanKeFile()
+    End Function
+
+    ''' <summary>
+    ''' Mendapatkan port discovery aktif. Fallback ke default jika SetelPortAktif belum dimuat.
+    ''' </summary>
+    Public ReadOnly Property PortDiscoveryAktif As Integer
+        Get
+            If SetelPortAktif Is Nothing Then Return PORT_DISCOVERY
+            Return SetelPortAktif.PortDiscovery
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Mendapatkan port koneksi TCP aktif. Fallback ke default jika SetelPortAktif belum dimuat.
+    ''' </summary>
+    Public ReadOnly Property PortKoneksiAktif As Integer
+        Get
+            If SetelPortAktif Is Nothing Then Return PORT_KONEKSI
+            Return SetelPortAktif.PortKoneksi
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Mendapatkan port relay aktif. Fallback ke default jika SetelPortAktif belum dimuat.
+    ''' </summary>
+    Public ReadOnly Property PortRelayAktif As Integer
+        Get
+            If SetelPortAktif Is Nothing Then Return PORT_RELAY
+            Return SetelPortAktif.PortRelay
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Mendapatkan IP relay server aktif. Fallback ke default jika SetelPortAktif belum dimuat.
+    ''' </summary>
+    Public ReadOnly Property RelayServerIPAktif As String
+        Get
+            If SetelPortAktif Is Nothing Then Return RELAY_SERVER_IP
+            Return SetelPortAktif.RelayServerIP
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Mendapatkan alamat lengkap relay server aktif (IP:Port).
+    ''' </summary>
+    Public ReadOnly Property RelayServerAddressAktif As String
+        Get
+            Return $"{RelayServerIPAktif}:{PortRelayAktif}"
+        End Get
+    End Property
 
 #End Region
 
@@ -69,6 +163,32 @@ Public Module mdl_VariabelUmum
         DATA_BERKAS = 31
         KONFIRMASI_BERKAS = 32
         DAFTAR_FOLDER = 33
+
+        ' Relay / Internet (40-59) - Fase 4
+        ''' <summary>Host mendaftar ke relay server</summary>
+        RELAY_REGISTER_HOST = 40
+        ''' <summary>Relay response dengan HostCode</summary>
+        RELAY_REGISTER_HOST_OK = 41
+        ''' <summary>Host logout dari relay</summary>
+        RELAY_UNREGISTER_HOST = 42
+        ''' <summary>Host heartbeat ke relay</summary>
+        RELAY_HOST_HEARTBEAT = 43
+        ''' <summary>Tamu query host by HostCode</summary>
+        RELAY_QUERY_HOST = 45
+        ''' <summary>Relay response info host</summary>
+        RELAY_QUERY_HOST_RESULT = 46
+        ''' <summary>Tamu minta koneksi via relay</summary>
+        RELAY_CONNECT_REQUEST = 47
+        ''' <summary>Notify session dimulai</summary>
+        RELAY_SESSION_STARTED = 52
+        ''' <summary>Notify session berakhir</summary>
+        RELAY_SESSION_ENDED = 53
+        ''' <summary>Generic relay error</summary>
+        RELAY_ERROR = 55
+        ''' <summary>Host tidak online</summary>
+        RELAY_HOST_OFFLINE = 56
+        ''' <summary>HostCode tidak valid</summary>
+        RELAY_INVALID_CODE = 57
     End Enum
 
 #End Region
@@ -125,6 +245,16 @@ Public Module mdl_VariabelUmum
         RODA = 3
     End Enum
 
+    ''' <summary>
+    ''' Mode koneksi: LAN atau Internet (via Relay)
+    ''' </summary>
+    Public Enum ModeKoneksi
+        ''' <summary>Koneksi langsung dalam jaringan LAN</summary>
+        LAN = 1
+        ''' <summary>Koneksi via relay server (internet)</summary>
+        INTERNET = 2
+    End Enum
+
 #End Region
 
 #Region "Variabel Global"
@@ -146,6 +276,15 @@ Public Module mdl_VariabelUmum
 
     ''' <summary>Sesi remote aktif (state management streaming)</summary>
     Public SesiRemoteAktif As cls_SesiRemote = Nothing
+
+    ''' <summary>Mode koneksi saat ini (LAN atau Internet)</summary>
+    Public ModeKoneksiSaatIni As ModeKoneksi = ModeKoneksi.LAN
+
+    ''' <summary>HostCode untuk mode Internet (6 karakter)</summary>
+    Public HostCodeAktif As String = ""
+
+    ''' <summary>Flag apakah terhubung ke relay server</summary>
+    Public TerhubungKeRelay As Boolean = False
 
 #End Region
 
@@ -176,6 +315,9 @@ Public Module mdl_VariabelUmum
     Public Sub InisialisasiVariabelUmum()
         AlamatIPLokal = DapatkanAlamatIPLokal()
         NamaPerangkatIni = Environment.MachineName
+
+        ' Muat pengaturan port dari file
+        MuatSetelPort()
     End Sub
 
     ''' <summary>

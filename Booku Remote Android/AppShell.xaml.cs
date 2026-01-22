@@ -10,5 +10,6 @@ public partial class AppShell : Shell
 
         // Register routes untuk navigation
         Routing.RegisterRoute(nameof(ViewerPage), typeof(ViewerPage));
+        Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
     }
 }

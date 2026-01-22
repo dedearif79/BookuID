@@ -27,7 +27,33 @@ public enum TipePaket
     PERMINTAAN_BERKAS = 30,
     DATA_BERKAS = 31,
     KONFIRMASI_BERKAS = 32,
-    DAFTAR_FOLDER = 33
+    DAFTAR_FOLDER = 33,
+
+    // Relay Server (40-59) - Internet Mode
+    RELAY_REGISTER_HOST = 40,
+    RELAY_REGISTER_HOST_OK = 41,
+    RELAY_UNREGISTER_HOST = 42,
+    RELAY_HOST_HEARTBEAT = 43,
+
+    RELAY_QUERY_HOST = 45,
+    RELAY_QUERY_HOST_RESULT = 46,
+    RELAY_CONNECT_REQUEST = 47,
+
+    RELAY_SESSION_STARTED = 52,
+    RELAY_SESSION_ENDED = 53,
+
+    RELAY_ERROR = 55,
+    RELAY_HOST_OFFLINE = 56,
+    RELAY_INVALID_CODE = 57
+}
+
+/// <summary>
+/// Mode koneksi
+/// </summary>
+public enum ModeKoneksi
+{
+    LAN = 1,
+    INTERNET = 2
 }
 
 /// <summary>

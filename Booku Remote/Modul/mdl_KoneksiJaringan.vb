@@ -75,7 +75,7 @@ Public Module mdl_KoneksiJaringan
 
         Try
             _cancellationTokenSource = New CancellationTokenSource()
-            _tcpListener = New TcpListener(IPAddress.Any, PORT_KONEKSI)
+            _tcpListener = New TcpListener(IPAddress.Any, PortKoneksiAktif)
             _tcpListener.Start()
             _sedangMendengarkan = True
 
@@ -608,6 +608,116 @@ Public Module mdl_KoneksiJaringan
             System.Diagnostics.Debug.WriteLine($"Error proses input mouse: {ex.Message}")
         End Try
     End Sub
+
+#End Region
+
+#Region "Relay Mode - Internet"
+
+    ''' <summary>
+    ''' Proses paket yang masuk via relay server (mode Internet).
+    ''' Method ini dipanggil dari wpfWin_ModeHost ketika menerima paket dari relay.
+    ''' </summary>
+    ''' <param name="paket">Paket data dari relay</param>
+    Public Sub ProsesPaketMasukViaRelay(paket As cls_PaketData)
+        Try
+            Select Case paket.TipePaket
+                Case TipePaket.TUTUP_KONEKSI
+                    ' Koneksi ditutup oleh Tamu
+                    Putuskan("Koneksi ditutup oleh Tamu")
+
+                Case TipePaket.HEARTBEAT
+                    ' Respond heartbeat via relay
+                    Task.Run(Async Function()
+                                 Dim pktResp = BuatPaketHeartbeat(paket.IdSesi)
+                                 Await mdl_KoneksiRelay.KirimPaketKeRelayAsync(pktResp)
+                             End Function)
+
+                Case TipePaket.PERMINTAAN_STREAMING
+                    ' Tamu minta mulai streaming via relay
+                    System.Diagnostics.Debug.WriteLine($"[RELAY] PERMINTAAN_STREAMING diterima via relay")
+                    If ModeAplikasiSaatIni = ModeAplikasi.HOST Then
+                        ' Set flag terhubung agar streaming bisa jalan
+                        _terhubung = True
+                        StatusKoneksiSaatIni = StatusKoneksi.TERHUBUNG
+
+                        Task.Run(Async Function()
+                                     Await MulaiStreamingLayarViaRelayAsync()
+                                 End Function)
+                    End If
+
+                Case TipePaket.HENTIKAN_STREAMING
+                    ' Tamu minta stop streaming
+                    If ModeAplikasiSaatIni = ModeAplikasi.HOST Then
+                        HentikanStreamingLayar()
+                    End If
+
+                Case TipePaket.INPUT_KEYBOARD
+                    ' Proses input keyboard dari Tamu
+                    If ModeAplikasiSaatIni = ModeAplikasi.HOST Then
+                        ProsesInputKeyboard(paket.Payload)
+                    End If
+
+                Case TipePaket.INPUT_MOUSE
+                    ' Proses input mouse dari Tamu
+                    If ModeAplikasiSaatIni = ModeAplikasi.HOST Then
+                        ProsesInputMouseDariPaket(paket.Payload)
+                    End If
+
+                Case Else
+                    RaiseEvent PaketDiterima(paket)
+            End Select
+
+        Catch ex As Exception
+            System.Diagnostics.Debug.WriteLine($"[RELAY] Error proses paket: {ex.Message}")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Mulai streaming layar ke Tamu via relay server.
+    ''' </summary>
+    Private Async Function MulaiStreamingLayarViaRelayAsync() As Task
+        If SesiRemoteAktif Is Nothing Then
+            SesiRemoteAktif = New cls_SesiRemote()
+        End If
+
+        SesiRemoteAktif.MulaiStreaming()
+        SesiRemoteAktif.TargetFPS = 20
+        SesiRemoteAktif.SkalaGambar = 0.35
+
+        System.Diagnostics.Debug.WriteLine("[RELAY] Streaming layar dimulai")
+
+        Try
+            While SesiRemoteAktif.IsStreamingAktif() AndAlso TerhubungKeRelay
+
+                Dim stopwatch = System.Diagnostics.Stopwatch.StartNew()
+
+                ' Tangkap frame (gunakan skala dari sesi)
+                Dim frame = Await mdl_TangkapLayar.TangkapFrameAsync(SesiRemoteAktif.SkalaGambar)
+
+                If frame IsNot Nothing Then
+                    ' Kirim frame via relay
+                    Dim paket = BuatPaketFrameLayar(frame)
+                    paket.IdSesi = KunciSesiAktif
+                    Await mdl_KoneksiRelay.KirimPaketKeRelayAsync(paket)
+
+                    ' Catat statistik frame
+                    SesiRemoteAktif.CatatFrame(frame.NomorFrame, frame.UkuranDataKB())
+                End If
+
+                stopwatch.Stop()
+
+                ' Hitung delay untuk target FPS
+                Dim targetDelay = 1000 \ SesiRemoteAktif.TargetFPS
+                Dim actualDelay = Math.Max(1, targetDelay - CInt(stopwatch.ElapsedMilliseconds))
+                Await Task.Delay(actualDelay)
+
+            End While
+        Catch ex As Exception
+            System.Diagnostics.Debug.WriteLine($"[RELAY] Error streaming: {ex.Message}")
+        End Try
+
+        System.Diagnostics.Debug.WriteLine("[RELAY] Streaming layar berhenti")
+    End Function
 
 #End Region
 

@@ -71,7 +71,7 @@ Public Module mdl_PenemuanPerangkat
             _cancellationTokenSource = New CancellationTokenSource()
             _udpListener = New UdpClient()
             _udpListener.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, True)
-            _udpListener.Client.Bind(New IPEndPoint(IPAddress.Any, PORT_DISCOVERY))
+            _udpListener.Client.Bind(New IPEndPoint(IPAddress.Any, PortDiscoveryAktif))
 
             _sedangMendengarkan = True
 
@@ -129,7 +129,7 @@ Public Module mdl_PenemuanPerangkat
             Dim infoPerangkat As New cls_PerangkatLAN With {
                 .NamaPerangkat = NamaPerangkatIni,
                 .AlamatIP = AlamatIPLokal,
-                .PortTCP = PORT_KONEKSI,
+                .PortTCP = PortKoneksiAktif,
                 .Status = If(StatusKoneksiSaatIni = StatusKoneksi.TERHUBUNG, StatusPerangkat.SIBUK, StatusPerangkat.TERSEDIA),
                 .VersiProtokol = VERSI_PROTOKOL
             }
@@ -169,7 +169,7 @@ Public Module mdl_PenemuanPerangkat
                 Dim data = StringKeBytes(SerializePaket(paket))
 
                 ' Broadcast ke semua alamat di subnet
-                Dim broadcastEndpoint As New IPEndPoint(IPAddress.Broadcast, PORT_DISCOVERY)
+                Dim broadcastEndpoint As New IPEndPoint(IPAddress.Broadcast, PortDiscoveryAktif)
                 Await client.SendAsync(data, data.Length, broadcastEndpoint)
 
                 ' Tunggu respon dengan timeout

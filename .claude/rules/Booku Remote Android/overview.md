@@ -36,7 +36,7 @@ Booku Remote Android/
 ├── MauiProgram.cs                 # Entry point + DI registration
 ├── App.xaml / App.xaml.cs         # Application class
 ├── AppShell.xaml / AppShell.cs    # Navigation shell
-├── MainPage.xaml / MainPage.cs    # Halaman utama (discovery + connect + manual IP)
+├── MainPage.xaml / MainPage.cs    # Halaman utama (LAN/Internet mode, discovery, HostCode input)
 ├── LinkerConfig.xml               # IL Trimmer configuration
 ├── PUBLISH-RELEASE.bat            # Script build Release
 │
@@ -45,16 +45,19 @@ Booku Remote Android/
 │   ├── PerangkatLAN.cs            # Model perangkat Host
 │   ├── PaketData.cs               # Struktur paket dengan checksum
 │   ├── FrameLayar.cs              # Frame layar (Base64 PNG)
-│   └── InputData.cs               # Input keyboard/mouse + VK mapper
+│   ├── InputData.cs               # Input keyboard/mouse + VK mapper
+│   └── PortSettings.cs            # Model pengaturan port (dengan default values)
 │
 ├── Services/                      # Business logic services
 │   ├── ProtocolService.cs         # Serialisasi/deserialisasi JSON
 │   ├── DiscoveryService.cs        # UDP broadcast discovery
 │   ├── SessionService.cs          # State management sesi
+│   ├── SettingsService.cs         # Konfigurasi port (MAUI Preferences API)
 │   └── NetworkService.cs          # Koneksi TCP + streaming (tanpa newline delimiter)
 │
 ├── Views/                         # Additional pages
-│   └── ViewerPage.xaml/.cs        # Viewer layar Host + touch input
+│   ├── ViewerPage.xaml/.cs        # Viewer layar Host + touch input
+│   └── SettingsPage.xaml/.cs      # Halaman pengaturan port
 │
 ├── Resources/
 │   ├── AppIcon/                   # App icon (SVG)
@@ -86,12 +89,17 @@ Booku Remote Android/
 
 ### Port
 
-| Port | Protokol | Kegunaan |
-|------|----------|----------|
-| `45678` | UDP | Discovery broadcast |
-| `45679` | TCP | Koneksi remote |
+| Port | Protokol | Lokasi | Kegunaan |
+|------|----------|--------|----------|
+| `45678` | UDP | LAN | Discovery broadcast |
+| `45679` | TCP | LAN | Koneksi langsung |
+| `443` | TCP | VPS | Relay Server (koneksi via internet, menggunakan port HTTPS) |
+
+> **Catatan:** Semua port di atas adalah nilai **default** dan dapat dikonfigurasi melalui halaman Settings (⚙️ di toolbar). Settings disimpan menggunakan MAUI Preferences API.
 
 ### Tipe Paket yang Digunakan (Tamu)
+
+**Mode LAN:**
 
 | Enum | Nilai | Kegunaan di Android |
 |------|-------|---------------------|
@@ -104,13 +112,50 @@ Booku Remote Android/
 | `PERMINTAAN_STREAMING` | 24 | Minta streaming layar |
 | `HENTIKAN_STREAMING` | 25 | Stop streaming |
 
-### Tipe Paket yang Diterima (dari Host)
+**Mode Internet (Relay):**
+
+| Enum | Nilai | Kegunaan di Android |
+|------|-------|---------------------|
+| `RELAY_QUERY_HOST` | 45 | Query ketersediaan Host via HostCode |
+| `RELAY_CONNECT_REQUEST` | 47 | Request koneksi via relay |
+
+### Tipe Paket yang Diterima (dari Host/Relay)
 
 | Enum | Nilai | Kegunaan |
 |------|-------|----------|
-| `RESPON_DISCOVERY` | 2 | Daftar Host tersedia |
+| `RESPON_DISCOVERY` | 2 | Daftar Host tersedia (LAN) |
 | `RESPON_KONEKSI` | 11 | Hasil persetujuan koneksi |
 | `FRAME_LAYAR` | 20 | Frame screenshot |
+| `RELAY_QUERY_HOST_RESULT` | 46 | Info Host dari query (Internet) |
+
+## Konfigurasi Port
+
+Port jaringan dapat dikonfigurasi melalui halaman Settings yang dapat diakses via tombol ⚙️ di toolbar MainPage.
+
+### Komponen
+
+| File | Deskripsi |
+|------|-----------|
+| `Models/PortSettings.cs` | Model class dengan default values |
+| `Services/SettingsService.cs` | Singleton service untuk load/save via MAUI Preferences API |
+| `Views/SettingsPage.xaml/.cs` | UI halaman settings |
+
+### Port yang Dapat Dikonfigurasi
+
+| Port | Default | Deskripsi |
+|------|---------|-----------|
+| `PortDiscovery` | 45678 | UDP broadcast untuk discovery LAN |
+| `PortKoneksi` | 45679 | TCP koneksi remote LAN |
+| `PortRelay` | 443 | TCP koneksi via relay server |
+| `RelayServerIP` | 155.117.43.250 | Alamat IP relay server |
+
+### Cara Kerja
+
+1. **Startup:** `SettingsService.Instance` otomatis load settings dari MAUI Preferences
+2. **Akses:** Gunakan `SettingsService.Current` untuk mendapatkan `PortSettings` aktif
+3. **UI:** User navigasi ke SettingsPage via toolbar button (⚙️)
+4. **Simpan:** Perubahan disimpan via `SettingsService.Instance.SaveSettings()`
+5. **Reset:** Tombol "Reset Default" mengembalikan ke nilai default
 
 ## Touch to Mouse Mapping
 
@@ -122,13 +167,30 @@ Booku Remote Android/
 | Pan/Drag | Mouse Move |
 | Pinch In/Out | Scroll Wheel |
 
+## Rendering (ViewerPage)
+
+Menggunakan teknik **double buffering** untuk mengurangi flicker saat menampilkan frame:
+
+| Komponen | Fungsi |
+|----------|--------|
+| `imgScreenA` | Image buffer A |
+| `imgScreenB` | Image buffer B (awalnya tersembunyi) |
+| `_useBufferA` | Flag untuk tracking buffer aktif |
+
+**Alur Double Buffering:**
+1. Frame baru di-load ke buffer yang **tersembunyi**
+2. Setelah load selesai, swap visibility kedua buffer
+3. Toggle flag `_useBufferA` untuk frame berikutnya
+
 ## Alur Kerja
+
+### Mode LAN
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
 │  1. DISCOVERY                                                   │
-│     ├── User buka app, tekan "Scan"                             │
-│     ├── Kirim UDP broadcast ke port 45678                       │
+│     ├── User buka app, pilih "Mode LAN"                         │
+│     ├── Tekan "Scan", kirim UDP broadcast ke port 45678         │
 │     └── Tampilkan daftar Host yang merespon                     │
 └─────────────────────────────────────────────────────────────────┘
                               │
@@ -140,13 +202,38 @@ Booku Remote Android/
 │     ├── Tunggu persetujuan dari Host                            │
 │     └── Jika disetujui, navigate ke ViewerPage                  │
 └─────────────────────────────────────────────────────────────────┘
+```
+
+### Mode Internet (Relay)
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│  1. QUERY HOST                                                  │
+│     ├── User buka app, pilih "Mode Internet"                    │
+│     ├── Input HostCode 6 karakter                               │
+│     ├── Kirim RELAY_QUERY_HOST ke relay (155.117.43.250:443)  │
+│     └── Tampilkan info Host (nama, status password)             │
+└─────────────────────────────────────────────────────────────────┘
                               │
                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
+│  2. KONEKSI VIA RELAY                                           │
+│     ├── User tekan "Sambung"                                    │
+│     ├── Input password jika diperlukan                          │
+│     ├── Kirim RELAY_CONNECT_REQUEST ke relay                    │
+│     ├── Relay forward ke Host, tunggu persetujuan               │
+│     └── Jika disetujui, navigate ke ViewerPage                  │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Streaming & Input (Setelah Terhubung)
+
+```
+┌─────────────────────────────────────────────────────────────────┐
 │  3. STREAMING                                                   │
 │     ├── Kirim PERMINTAAN_STREAMING                              │
-│     ├── Terima FRAME_LAYAR (PNG Base64)                         │
-│     ├── Decode dan tampilkan di Image control                   │
+│     ├── Terima FRAME_LAYAR (JPEG Base64)                        │
+│     ├── Decode dan tampilkan via double buffering               │
 │     └── Maintain heartbeat setiap 5 detik                       │
 └─────────────────────────────────────────────────────────────────┘
                               │
@@ -204,28 +291,42 @@ bin/Release/net8.0-android/com.bookuid.remote-Signed.apk  (±28 MB)
 
 ### Test
 
-1. Jalankan **Booku Remote WPF** di Windows sebagai Host
+**Mode LAN:**
+1. Jalankan **Booku Remote WPF** di Windows sebagai Host (pilih Mode LAN)
 2. Jalankan **Booku Remote Android** di emulator/device
 3. Pastikan keduanya di jaringan yang sama (LAN)
 4. **Untuk Emulator:** Gunakan IP `10.0.2.2` (manual input) untuk terhubung ke Host di PC yang sama
-5. **Untuk Device Fisik:** Tekan "Scan" untuk menemukan Host
+5. **Untuk Device Fisik:** Pilih "Mode LAN", tekan "Scan" untuk menemukan Host
 6. Sambungkan dan test streaming + kontrol
+
+**Mode Internet:**
+1. Jalankan **Booku Remote Relay** di VPS (155.117.43.250)
+2. Jalankan **Booku Remote WPF** di Windows sebagai Host (pilih Mode Internet)
+3. Catat HostCode yang ditampilkan (6 karakter)
+4. Jalankan **Booku Remote Android**, pilih "Mode Internet"
+5. Input HostCode, tunggu query berhasil
+6. Tekan "Sambung", masukkan password jika diperlukan
+7. Setelah disetujui Host, test streaming + kontrol
 
 ## Status Pengembangan
 
 | Komponen | Status | Catatan |
 |----------|--------|---------|
 | Project Structure | Selesai | Semua file dasar dibuat |
-| Discovery Service | Selesai | UDP broadcast |
-| Network Service | Selesai | TCP + streaming (no newline delimiter) |
+| Discovery Service (LAN) | Selesai | UDP broadcast |
+| Network Service (LAN) | Selesai | TCP + streaming (no newline delimiter) |
+| Network Service (Relay) | Selesai | Koneksi via relay server |
 | Protocol Service | Selesai | JSON serialization (bracket tracking) |
 | Touch Input | Selesai | Gesture recognition |
 | Manual IP Input | Selesai | Untuk emulator (10.0.2.2) |
+| Mode Selector (LAN/Internet) | Selesai | UI untuk pilih mode koneksi |
+| HostCode Input | Selesai | Input 6 karakter + auto-query |
+| **Port Settings** | Selesai | SettingsPage, MAUI Preferences API |
 | Single Instance | Selesai | `LaunchMode.SingleTask` |
 | Obfuscation | Selesai | IL Trimming + R8 |
 | Release Build | Selesai | `PUBLISH-RELEASE.bat` |
 | UI/UX | Dasar | Perlu polish |
-| Testing | Ongoing | Koneksi + streaming tested |
+| Testing | Ongoing | LAN + Internet mode tested |
 
 ## Release Configuration
 

@@ -10,8 +10,14 @@ namespace BookuRemoteAndroid.Services;
 /// </summary>
 public class DiscoveryService
 {
-    public const int PORT_DISCOVERY = 45678;
+    // Default constants for fallback
+    public const int DEFAULT_PORT_DISCOVERY = 45678;
     public const int TIMEOUT_DISCOVERY_MS = 3000;
+
+    /// <summary>
+    /// Port discovery aktif (dari SettingsService)
+    /// </summary>
+    public int PortDiscovery => SettingsService.Current.PortDiscovery;
 
     private readonly ProtocolService _protocolService;
     private UdpClient? _udpClient;
@@ -45,7 +51,7 @@ public class DiscoveryService
             // Kirim broadcast discovery
             var paket = _protocolService.CreateDiscoveryBroadcast();
             var data = _protocolService.SerializePaketToBytes(paket);
-            var broadcastEndpoint = new IPEndPoint(IPAddress.Broadcast, PORT_DISCOVERY);
+            var broadcastEndpoint = new IPEndPoint(IPAddress.Broadcast, PortDiscovery);
 
             await _udpClient.SendAsync(data, data.Length, broadcastEndpoint);
 
