@@ -4,6 +4,7 @@ Option Strict On
 Imports System.Windows
 Imports System.Windows.Input
 Imports System.Windows.Media
+Imports System.Windows.Media.Imaging
 Imports System.Windows.Threading
 Imports BookuID.Styles
 
@@ -41,6 +42,23 @@ Class wpfWin_Viewer
     ''' <summary>Interval minimum antara mouse move events (ms)</summary>
     Private Const MOUSE_MOVE_THROTTLE_MS As Integer = 30
 
+    ' === UDP Streaming ===
+
+    ''' <summary>Flag apakah menggunakan UDP untuk menerima frame</summary>
+    Private _useUdpReceiver As Boolean = False
+
+    ''' <summary>Flag untuk double buffering (mengurangi flicker)</summary>
+    Private _useBufferA As Boolean = True
+
+    ' === H.264 Codec ===
+
+    ''' <summary>WriteableBitmap untuk render BGRA frame dari H.264 decoder</summary>
+    Private _bgraWriteableBitmap As WriteableBitmap = Nothing
+
+    ''' <summary>Resolusi terakhir dari H.264 decoder</summary>
+    Private _lastBgraWidth As Integer = 0
+    Private _lastBgraHeight As Integer = 0
+
 #End Region
 
 #Region "Public Properties"
@@ -76,17 +94,25 @@ Class wpfWin_Viewer
             lbl_AlamatIPHost.Text = $"({AlamatIPHost})"
         End If
 
+        ' Subscribe ke UDP streaming events (baik LAN maupun Internet)
+        AddHandler mdl_UdpStreaming.FrameUdpDiterima, AddressOf OnFrameUdpDiterima
+        AddHandler mdl_UdpStreaming.StatistikUdp, AddressOf OnStatistikUdp
+        AddHandler mdl_UdpStreaming.FrameBgraDiterima, AddressOf OnFrameBgraDiterima
+
         ' Subscribe ke events berdasarkan mode koneksi
         If ModeViaRelay Then
-            ' Mode Internet: Subscribe ke relay events
+            ' Mode Internet: Subscribe ke relay events untuk TCP fallback dan error handling
             AddHandler mdl_KoneksiRelay.FrameDiterimaViaRelay, AddressOf OnFrameDiterimaViaRelay
             AddHandler mdl_KoneksiRelay.ErrorDariRelay, AddressOf OnErrorDariRelay
         Else
-            ' Mode LAN: Subscribe ke koneksi jaringan events
+            ' Mode LAN: Subscribe ke TCP events untuk fallback dan kontrol
             AddHandler mdl_KoneksiJaringan.PaketDiterima, AddressOf OnPaketDiterima
             AddHandler mdl_KoneksiJaringan.KoneksiTerputus, AddressOf OnKoneksiTerputus
             AddHandler mdl_KoneksiJaringan.ErrorKoneksi, AddressOf OnErrorKoneksi
         End If
+
+        ' Mulai UDP receiver untuk menerima frame dari Host (baik LAN maupun Internet)
+        MulaiUdpReceiver()
 
         ' Mulai timer statistik
         _timerStatistik = New DispatcherTimer()
@@ -94,19 +120,99 @@ Class wpfWin_Viewer
         AddHandler _timerStatistik.Tick, AddressOf OnTimerStatistikTick
         _timerStatistik.Start()
 
-        ' Kirim permintaan streaming ke Host
+        ' Kirim permintaan streaming ke Host (via TCP)
         KirimPermintaanStreaming()
     End Sub
 
+    ''' <summary>
+    ''' Mulai UDP receiver untuk menerima frame video dari Host.
+    ''' Untuk mode Internet, juga mengirim registration packet ke relay.
+    ''' </summary>
+    Private Async Sub MulaiUdpReceiver()
+        Try
+            ' PENTING: SessionId untuk UDP routing:
+            '   - Mode LAN: hash dari KunciSesiAktif
+            '   - Mode Internet: hash dari IdSesiRelay (sama dengan yang digunakan relay server)
+            Dim sessionId As Integer
+            If ModeViaRelay Then
+                sessionId = mdl_UdpStreaming.GenerateSessionId(IdSesiRelay)
+                System.Diagnostics.Debug.WriteLine($"[UDP-TAMU] Using IdSesiRelay for SessionId: {IdSesiRelay} -> {sessionId}")
+            Else
+                sessionId = mdl_UdpStreaming.GenerateSessionId(KunciSesiAktif)
+            End If
+
+            ' Mulai UDP receiver
+            Await mdl_UdpStreaming.MulaiUdpReceiverAsync(PortUdpVideoAktif, sessionId)
+            _useUdpReceiver = True
+
+            System.Diagnostics.Debug.WriteLine($"[UDP-TAMU] UDP receiver dimulai, port={PortUdpVideoAktif}, sessionId={sessionId}")
+
+            ' Untuk mode Internet: Kirim registration packet ke relay
+            ' Ini memberitahu relay IP:Port Tamu agar bisa forward paket dari Host
+            If ModeViaRelay Then
+                Await Task.Delay(100) ' Beri waktu receiver siap
+                Dim regResult = Await mdl_UdpStreaming.KirimRegistrasiKeRelayAsync(RelayServerIPAktif, PortUdpVideoAktif, sessionId)
+                If regResult Then
+                    System.Diagnostics.Debug.WriteLine($"[UDP-TAMU] Registration ke relay berhasil")
+                    ' Mulai periodic registration
+                    MulaiPeriodicRegistration()
+                Else
+                    System.Diagnostics.Debug.WriteLine($"[UDP-TAMU] Registration ke relay gagal!")
+                End If
+            End If
+        Catch ex As Exception
+            System.Diagnostics.Debug.WriteLine($"[UDP-TAMU] Gagal mulai UDP receiver: {ex.Message}")
+            _useUdpReceiver = False
+        End Try
+    End Sub
+
+    ''' <summary>Timer untuk periodic registration ke relay</summary>
+    Private _timerRegistration As DispatcherTimer
+
+    ''' <summary>
+    ''' Mulai timer untuk kirim registration secara periodik ke relay.
+    ''' Ini memastikan relay selalu tahu endpoint Tamu.
+    ''' </summary>
+    Private Sub MulaiPeriodicRegistration()
+        If Not ModeViaRelay Then Return
+
+        _timerRegistration = New DispatcherTimer()
+        _timerRegistration.Interval = TimeSpan.FromSeconds(5) ' Kirim setiap 5 detik
+        AddHandler _timerRegistration.Tick, AddressOf OnTimerRegistrationTick
+        _timerRegistration.Start()
+    End Sub
+
+    Private Async Sub OnTimerRegistrationTick(sender As Object, e As EventArgs)
+        If ModeViaRelay AndAlso _useUdpReceiver Then
+            Await mdl_UdpStreaming.KirimRegistrasiPeriodikAsync()
+        End If
+    End Sub
+
     Private Sub wpfWin_Closing(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.Closing
-        ' Hentikan timer
+        ' Hentikan timer statistik
         _timerStatistik?.Stop()
+
+        ' Hentikan timer registration (mode Internet)
+        If _timerRegistration IsNot Nothing Then
+            _timerRegistration.Stop()
+            RemoveHandler _timerRegistration.Tick, AddressOf OnTimerRegistrationTick
+            _timerRegistration = Nothing
+        End If
+
+        ' Unsubscribe UDP events (baik LAN maupun Internet)
+        RemoveHandler mdl_UdpStreaming.FrameUdpDiterima, AddressOf OnFrameUdpDiterima
+        RemoveHandler mdl_UdpStreaming.StatistikUdp, AddressOf OnStatistikUdp
+        RemoveHandler mdl_UdpStreaming.FrameBgraDiterima, AddressOf OnFrameBgraDiterima
+
+        ' Hentikan UDP receiver
+        mdl_UdpStreaming.HentikanUdpStreaming()
 
         ' Unsubscribe events berdasarkan mode koneksi
         If ModeViaRelay Then
             RemoveHandler mdl_KoneksiRelay.FrameDiterimaViaRelay, AddressOf OnFrameDiterimaViaRelay
             RemoveHandler mdl_KoneksiRelay.ErrorDariRelay, AddressOf OnErrorDariRelay
         Else
+            ' Unsubscribe TCP events
             RemoveHandler mdl_KoneksiJaringan.PaketDiterima, AddressOf OnPaketDiterima
             RemoveHandler mdl_KoneksiJaringan.KoneksiTerputus, AddressOf OnKoneksiTerputus
             RemoveHandler mdl_KoneksiJaringan.ErrorKoneksi, AddressOf OnErrorKoneksi
@@ -242,7 +348,147 @@ Class wpfWin_Viewer
 
 #End Region
 
+#Region "Event Handlers - UDP"
+
+    ''' <summary>
+    ''' Handler untuk frame yang diterima via UDP (sudah reassembled).
+    ''' </summary>
+    Private Sub OnFrameUdpDiterima(frameData As Byte(), frameId As Integer, timestampMs As Integer)
+        Dispatcher.Invoke(Sub()
+                              ProsesFrameUdp(frameData, frameId, timestampMs)
+                          End Sub)
+    End Sub
+
+    ''' <summary>
+    ''' Handler untuk statistik UDP (packets received, dropped, fps).
+    ''' </summary>
+    Private Sub OnStatistikUdp(packetsReceived As Integer, packetsDropped As Integer, fps As Double)
+        ' Update statistik di UI jika perlu
+        System.Diagnostics.Debug.WriteLine($"[UDP] Packets: {packetsReceived}, Dropped: {packetsDropped}, FPS: {fps:F1}")
+    End Sub
+
+    ''' <summary>
+    ''' Handler untuk frame BGRA yang sudah di-decode dari H.264.
+    ''' </summary>
+    Private Sub OnFrameBgraDiterima(bgraData As Byte(), width As Integer, height As Integer)
+        Dispatcher.Invoke(Sub()
+                              ProsesFrameBgra(bgraData, width, height)
+                          End Sub)
+    End Sub
+
+#End Region
+
 #Region "Frame Processing"
+
+    ''' <summary>
+    ''' Proses frame BGRA yang sudah di-decode dari H.264.
+    ''' Data BGRA raw langsung di-render ke WriteableBitmap.
+    ''' </summary>
+    Private Sub ProsesFrameBgra(bgraData As Byte(), width As Integer, height As Integer)
+        Try
+            If bgraData Is Nothing OrElse bgraData.Length = 0 Then Return
+
+            ' Validasi ukuran data (4 bytes per pixel: BGRA)
+            Dim expectedSize = width * height * 4
+            If bgraData.Length <> expectedSize Then
+                System.Diagnostics.Debug.WriteLine($"[H264] Invalid BGRA size: {bgraData.Length} (expected {expectedSize})")
+                Return
+            End If
+
+            ' Buat atau reuse WriteableBitmap jika resolusi berubah
+            If _bgraWriteableBitmap Is Nothing OrElse
+               _lastBgraWidth <> width OrElse
+               _lastBgraHeight <> height Then
+
+                _bgraWriteableBitmap = New WriteableBitmap(width, height, 96, 96, PixelFormats.Bgra32, Nothing)
+                _lastBgraWidth = width
+                _lastBgraHeight = height
+                img_Layar.Source = _bgraWriteableBitmap
+                System.Diagnostics.Debug.WriteLine($"[H264] New WriteableBitmap: {width}x{height}")
+            End If
+
+            ' Update pixels di WriteableBitmap
+            _bgraWriteableBitmap.Lock()
+            Try
+                Dim backBuffer = _bgraWriteableBitmap.BackBuffer
+                Dim stride = _bgraWriteableBitmap.BackBufferStride
+
+                ' Copy BGRA data ke back buffer
+                System.Runtime.InteropServices.Marshal.Copy(bgraData, 0, backBuffer, bgraData.Length)
+
+                ' Mark seluruh bitmap sebagai dirty
+                _bgraWriteableBitmap.AddDirtyRect(New Int32Rect(0, 0, width, height))
+            Finally
+                _bgraWriteableBitmap.Unlock()
+            End Try
+
+            ' Sembunyikan loading overlay
+            If bdr_Loading.Visibility = Visibility.Visible Then
+                bdr_Loading.Visibility = Visibility.Collapsed
+            End If
+
+            ' Update statistik di SesiRemote
+            If SesiRemoteAktif IsNot Nothing Then
+                SesiRemoteAktif.CatatFrame(0, bgraData.Length / 1024.0)
+            End If
+
+        Catch ex As Exception
+            System.Diagnostics.Debug.WriteLine($"[H264] Error proses BGRA frame: {ex.Message}")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Proses frame yang diterima via UDP (raw JPEG bytes).
+    ''' </summary>
+    Private Sub ProsesFrameUdp(jpegData As Byte(), frameId As Integer, timestampMs As Integer)
+        Try
+            If jpegData Is Nothing OrElse jpegData.Length = 0 Then Return
+
+            ' Konversi JPEG bytes ke BitmapImage
+            Dim bitmapImage = JpegBytesToBitmapImage(jpegData)
+            If bitmapImage IsNot Nothing Then
+                img_Layar.Source = bitmapImage
+
+                ' Sembunyikan loading overlay
+                If bdr_Loading.Visibility = Visibility.Visible Then
+                    bdr_Loading.Visibility = Visibility.Collapsed
+                End If
+
+                ' Update statistik di SesiRemote
+                If SesiRemoteAktif IsNot Nothing Then
+                    SesiRemoteAktif.CatatFrame(frameId, jpegData.Length / 1024.0)
+                    ' Hitung latency dari timestamp
+                    Dim currentMs = CInt(DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() And Integer.MaxValue)
+                    Dim latency = currentMs - timestampMs
+                    If latency > 0 AndAlso latency < 10000 Then ' Sanity check
+                        SesiRemoteAktif.LatencyMs = latency
+                    End If
+                End If
+            End If
+
+        Catch ex As Exception
+            System.Diagnostics.Debug.WriteLine($"[UDP] Error proses frame: {ex.Message}")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Konversi JPEG byte array ke WPF BitmapImage.
+    ''' </summary>
+    Private Function JpegBytesToBitmapImage(jpegData As Byte()) As System.Windows.Media.Imaging.BitmapImage
+        Try
+            Dim bi As New System.Windows.Media.Imaging.BitmapImage()
+            Using ms As New System.IO.MemoryStream(jpegData)
+                bi.BeginInit()
+                bi.CacheOption = System.Windows.Media.Imaging.BitmapCacheOption.OnLoad
+                bi.StreamSource = ms
+                bi.EndInit()
+                bi.Freeze() ' Penting untuk cross-thread
+            End Using
+            Return bi
+        Catch
+            Return Nothing
+        End Try
+    End Function
 
     Private Sub ProsesFrameLayar(payload As String)
         Try

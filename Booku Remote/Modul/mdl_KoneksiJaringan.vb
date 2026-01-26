@@ -180,7 +180,8 @@ Public Module mdl_KoneksiJaringan
                                                    Optional izinKontrol As Boolean = True,
                                                    Optional izinTransfer As Boolean = False,
                                                    Optional izinClipboard As Boolean = False,
-                                                   Optional pesan As String = "") As Task(Of Boolean)
+                                                   Optional pesan As String = "",
+                                                   Optional supportedCodecs As String() = Nothing) As Task(Of Boolean)
         Try
             Dim stream = client.GetStream()
             Dim kunciSesi As String = ""
@@ -194,8 +195,11 @@ Public Module mdl_KoneksiJaringan
                 StatusKoneksiSaatIni = StatusKoneksi.TERHUBUNG
             End If
 
+            ' Tentukan codec yang akan digunakan
+            Dim selectedCodec = TentukanCodecStreaming(supportedCodecs)
+
             ' Buat dan kirim paket respon
-            Dim paketRespon = BuatPaketResponKoneksi(hasil, kunciSesi, pesan, izinKontrol, izinTransfer, izinClipboard)
+            Dim paketRespon = BuatPaketResponKoneksi(hasil, kunciSesi, pesan, izinKontrol, izinTransfer, izinClipboard, selectedCodec)
             Dim data = StringKeBytes(SerializePaket(paketRespon))
             Await stream.WriteAsync(data, 0, data.Length)
 
@@ -217,6 +221,43 @@ Public Module mdl_KoneksiJaringan
         End Try
     End Function
 
+    ''' <summary>
+    ''' Tentukan codec streaming berdasarkan ketersediaan FFmpeg dan codec yang didukung client.
+    ''' </summary>
+    ''' <param name="clientSupportedCodecs">Daftar codec yang didukung client</param>
+    ''' <returns>Codec yang dipilih ("H264" atau "JPEG")</returns>
+    Public Function TentukanCodecStreaming(clientSupportedCodecs As String()) As String
+        ' Default: JPEG (selalu didukung)
+        Dim selectedCodec = "JPEG"
+
+        ' Jika client tidak mengirim informasi codec, gunakan JPEG (backward compatible)
+        If clientSupportedCodecs Is Nothing OrElse clientSupportedCodecs.Length = 0 Then
+            System.Diagnostics.Debug.WriteLine("[CODEC] Client tidak kirim supportedCodecs, using JPEG")
+            mdl_UdpStreaming.CodecStreaming = TipeKodek.JPEG
+            Return selectedCodec
+        End If
+
+        ' Cek apakah client mendukung H.264
+        Dim clientSupportsH264 = clientSupportedCodecs.Any(Function(c) c.Equals("H264", StringComparison.OrdinalIgnoreCase))
+
+        ' Cek apakah FFmpeg tersedia di Host
+        Dim ffmpegTersedia = mdl_FFmpegManager.FFmpegTersedia
+
+        System.Diagnostics.Debug.WriteLine($"[CODEC] Client supports H264: {clientSupportsH264}, FFmpeg available: {ffmpegTersedia}")
+
+        ' Pilih H.264 jika client support DAN FFmpeg tersedia
+        If clientSupportsH264 AndAlso ffmpegTersedia Then
+            selectedCodec = "H264"
+            mdl_UdpStreaming.CodecStreaming = TipeKodek.H264
+            System.Diagnostics.Debug.WriteLine("[CODEC] Selected: H.264")
+        Else
+            mdl_UdpStreaming.CodecStreaming = TipeKodek.JPEG
+            System.Diagnostics.Debug.WriteLine("[CODEC] Selected: JPEG")
+        End If
+
+        Return selectedCodec
+    End Function
+
 #End Region
 
 #Region "Tamu Mode - Client TCP"
@@ -235,8 +276,9 @@ Public Module mdl_KoneksiJaringan
             Await _tcpClient.ConnectAsync(alamatIP, port)
             _networkStream = _tcpClient.GetStream()
 
-            ' Kirim permintaan koneksi
-            Dim paket = BuatPaketPermintaanKoneksi(NamaPerangkatIni, AlamatIPLokal)
+            ' Kirim permintaan koneksi (dengan daftar codec yang didukung)
+            Dim supportedCodecs = {"JPEG", "H264"}
+            Dim paket = BuatPaketPermintaanKoneksi(NamaPerangkatIni, AlamatIPLokal, supportedCodecs)
             Dim data = StringKeBytes(SerializePaket(paket))
             Await _networkStream.WriteAsync(data, 0, data.Length)
 
@@ -409,8 +451,11 @@ Public Module mdl_KoneksiJaringan
 
     ''' <summary>
     ''' Mulai streaming layar ke Tamu (dipanggil oleh Host).
+    ''' Menggunakan UDP untuk pengiriman frame (TCP head-of-line blocking issue solved).
+    ''' FPS diambil dari TargetFPSAktif (settings).
     ''' </summary>
-    Public Async Function MulaiStreamingLayarAsync(Optional skala As Double = 0.35, Optional targetFPS As Integer = 20) As Task
+    Public Async Function MulaiStreamingLayarAsync(Optional skala As Double = 0.4) As Task
+        Dim targetFPS As Integer = TargetFPSAktif
         System.Diagnostics.Debug.WriteLine($"[DEBUG] MulaiStreamingLayarAsync dipanggil. _sedangStreaming={_sedangStreaming}, _terhubung={_terhubung}")
 
         If _sedangStreaming Then
@@ -422,7 +467,7 @@ Public Module mdl_KoneksiJaringan
             Return
         End If
 
-        System.Diagnostics.Debug.WriteLine("[DEBUG] Memulai streaming loop...")
+        System.Diagnostics.Debug.WriteLine("[DEBUG] Memulai streaming loop dengan UDP...")
         _sedangStreaming = True
         _streamingCancellationToken = New CancellationTokenSource()
 
@@ -437,36 +482,123 @@ Public Module mdl_KoneksiJaringan
         ' Reset nomor frame
         mdl_TangkapLayar.ResetNomorFrame()
 
-        Dim delayMs = SesiRemoteAktif.IntervalDelayMs()
+        ' Mulai UDP sender untuk streaming frame
+        ' Untuk LAN: kirim langsung ke IP Tamu
+        ' Untuk Internet: kirim via Relay server (UDP)
+        ' PENTING: SessionId untuk UDP routing:
+        '   - Mode LAN: hash dari KunciSesiAktif
+        '   - Mode Internet: hash dari IdSesiRelay (sama dengan yang digunakan relay server)
+        Dim sessionId As Integer
+        If ModeKoneksiSaatIni = ModeKoneksi.INTERNET Then
+            ' Gunakan IdSesiRelay agar cocok dengan UdpSessionId di relay server
+            sessionId = mdl_UdpStreaming.GenerateSessionId(IdSesiRelay)
+            System.Diagnostics.Debug.WriteLine($"[UDP-HOST] Using IdSesiRelay for SessionId: {IdSesiRelay} -> {sessionId}")
+        Else
+            sessionId = mdl_UdpStreaming.GenerateSessionId(KunciSesiAktif)
+        End If
+
+        If ModeKoneksiSaatIni = ModeKoneksi.INTERNET Then
+            ' Mode Internet: UDP via Relay (endpoint sudah di-setup saat connect ke relay)
+            mdl_UdpStreaming.MulaiUdpSender(RelayServerIPAktif, PortUdpVideoAktif, sessionId)
+            System.Diagnostics.Debug.WriteLine($"[UDP-HOST] UDP sender dimulai via Relay {RelayServerIPAktif}:{PortUdpVideoAktif}, SessionId={sessionId}")
+        Else
+            ' Mode LAN: kirim langsung ke IP Tamu
+            Dim tamuIP = DapatkanIPTamuTerhubung()
+            If Not String.IsNullOrEmpty(tamuIP) Then
+                mdl_UdpStreaming.MulaiUdpSender(tamuIP, PortUdpVideoAktif, sessionId)
+                System.Diagnostics.Debug.WriteLine($"[UDP-HOST] UDP sender dimulai ke {tamuIP}:{PortUdpVideoAktif}")
+            Else
+                System.Diagnostics.Debug.WriteLine("[UDP-HOST] Gagal mendapatkan IP Tamu, fallback ke TCP")
+            End If
+        End If
+
+        ' === H.264 Encoder: Mulai jika codec negosiasi adalah H264 ===
+        Dim useH264 As Boolean = False
+        If mdl_UdpStreaming.CodecStreaming = TipeKodek.H264 Then
+            ' Dapatkan ukuran frame untuk encoder
+            Dim bounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds
+            Dim encoderWidth = CInt(bounds.Width * skala)
+            Dim encoderHeight = CInt(bounds.Height * skala)
+
+            ' Mulai H.264 encoder
+            useH264 = mdl_UdpStreaming.MulaiH264Encoder(encoderWidth, encoderHeight, targetFPS)
+            If useH264 Then
+                System.Diagnostics.Debug.WriteLine($"[H264] Encoder started: {encoderWidth}x{encoderHeight} @ {targetFPS}fps")
+            Else
+                System.Diagnostics.Debug.WriteLine("[H264] Encoder failed to start, fallback to JPEG")
+            End If
+        End If
+
+        Dim targetDelayMs = SesiRemoteAktif.IntervalDelayMs()
         Dim token = _streamingCancellationToken.Token
+        Dim useUdp = mdl_UdpStreaming.IsUdpStreamingActive()
 
         Dim frameCount As Integer = 0
         Try
-            System.Diagnostics.Debug.WriteLine("[DEBUG] Masuk streaming loop")
+            System.Diagnostics.Debug.WriteLine($"[DEBUG] Masuk streaming loop, UDP={useUdp}, H264={useH264}, targetFPS={SesiRemoteAktif.TargetFPS}, targetDelay={targetDelayMs}ms")
             While _sedangStreaming AndAlso _terhubung AndAlso Not token.IsCancellationRequested
                 Dim perluDelayError As Boolean = False
+                Dim stopwatch = System.Diagnostics.Stopwatch.StartNew()
 
                 Try
-                    ' Tangkap frame
-                    Dim frame = Await mdl_TangkapLayar.TangkapFrameAsync(skala)
-                    If frame IsNot Nothing AndAlso frame.IsValid() Then
-                        ' Kirim frame ke Tamu
-                        Dim paket = BuatPaketFrameLayar(frame)
-                        Await KirimPaketAsync(paket)
+                    frameCount += 1
 
-                        ' Update statistik
-                        SesiRemoteAktif.CatatFrame(frame.NomorFrame, frame.UkuranDataKB())
+                    ' === PATH H.264: Capture BGRA dan kirim ke encoder ===
+                    If useH264 AndAlso mdl_UdpStreaming.H264EncoderAktif Then
+                        ' Capture layar langsung ke BGRA untuk H.264 encoder
+                        Dim frameWidth As Integer = 0
+                        Dim frameHeight As Integer = 0
+                        Dim bgraData = mdl_TangkapLayar.TangkapLayarKeBgra(skala, frameWidth, frameHeight)
 
-                        frameCount += 1
-                        If frameCount Mod 30 = 1 Then ' Log setiap 30 frame
-                            System.Diagnostics.Debug.WriteLine($"[DEBUG] Frame #{frameCount} terkirim, size={frame.UkuranDataKB():F1}KB")
+                        If bgraData IsNot Nothing AndAlso bgraData.Length > 0 Then
+                            ' Kirim ke H.264 encoder (encoder akan trigger event DataReady -> kirim via UDP)
+                            Await mdl_UdpStreaming.KirimFrameKeEncoderAsync(bgraData)
+
+                            ' Update statistik (estimasi ukuran BGRA / 50 untuk approx H.264 size)
+                            SesiRemoteAktif.CatatFrame(frameCount, bgraData.Length / 50000.0)
+
+                            If frameCount Mod 50 = 1 Then
+                                System.Diagnostics.Debug.WriteLine($"[H264] Frame #{frameCount} sent to encoder, BGRA={bgraData.Length / 1024:F0}KB, elapsed={stopwatch.ElapsedMilliseconds}ms")
+                            End If
+                        Else
+                            System.Diagnostics.Debug.WriteLine("[H264] BGRA capture failed!")
                         End If
+
+                    ' === PATH JPEG: Capture JPEG dan kirim langsung ===
                     Else
-                        System.Diagnostics.Debug.WriteLine("[DEBUG] Frame null atau tidak valid!")
+                        ' Tangkap frame sebagai JPEG
+                        Dim frame = Await mdl_TangkapLayar.TangkapFrameAsync(skala)
+                        If frame IsNot Nothing AndAlso frame.IsValid() Then
+
+                            ' Kirim frame via UDP (preferred) atau TCP (fallback)
+                            If useUdp AndAlso mdl_UdpStreaming.IsUdpStreamingActive() Then
+                                ' UDP: Kirim raw JPEG bytes (lebih efisien)
+                                Dim jpegData = frame.DapatkanJpegBytes()
+                                If jpegData IsNot Nothing Then
+                                    Await mdl_UdpStreaming.KirimFrameUdpAsync(jpegData)
+                                End If
+                            Else
+                                ' TCP fallback: Kirim paket JSON (lama)
+                                Dim paket = BuatPaketFrameLayar(frame)
+                                Await KirimPaketAsync(paket)
+                            End If
+
+                            ' Update statistik
+                            SesiRemoteAktif.CatatFrame(frame.NomorFrame, frame.UkuranDataKB())
+
+                            If frameCount Mod 50 = 1 Then ' Log setiap 50 frame
+                                System.Diagnostics.Debug.WriteLine($"[JPEG] Frame #{frameCount} terkirim via {If(useUdp, "UDP", "TCP")}, size={frame.UkuranDataKB():F1}KB, elapsed={stopwatch.ElapsedMilliseconds}ms")
+                            End If
+                        Else
+                            System.Diagnostics.Debug.WriteLine("[JPEG] Frame null atau tidak valid!")
+                        End If
                     End If
 
-                    ' Delay untuk target FPS
-                    Await Task.Delay(delayMs, token)
+                    stopwatch.Stop()
+
+                    ' Delay dinamis untuk target FPS (dikurangi waktu operasi)
+                    Dim actualDelayMs = Math.Max(1, targetDelayMs - CInt(stopwatch.ElapsedMilliseconds))
+                    Await Task.Delay(actualDelayMs, token)
 
                 Catch ex As TaskCanceledException
                     Exit While
@@ -488,8 +620,25 @@ Public Module mdl_KoneksiJaringan
 
         Finally
             _sedangStreaming = False
+            mdl_UdpStreaming.HentikanUdpStreaming()
             SesiRemoteAktif?.HentikanStreaming()
         End Try
+    End Function
+
+    ''' <summary>
+    ''' Mendapatkan IP address Tamu yang sedang terhubung (untuk LAN mode).
+    ''' </summary>
+    Private Function DapatkanIPTamuTerhubung() As String
+        Try
+            If _clientTerhubung IsNot Nothing AndAlso _clientTerhubung.Connected Then
+                Dim endpoint = TryCast(_clientTerhubung.Client.RemoteEndPoint, IPEndPoint)
+                If endpoint IsNot Nothing Then
+                    Return endpoint.Address.ToString()
+                End If
+            End If
+        Catch
+        End Try
+        Return ""
     End Function
 
     ''' <summary>
@@ -675,6 +824,7 @@ Public Module mdl_KoneksiJaringan
 
     ''' <summary>
     ''' Mulai streaming layar ke Tamu via relay server.
+    ''' Menggunakan UDP untuk video streaming (port 45681) dan TCP untuk control (port 45680).
     ''' </summary>
     Private Async Function MulaiStreamingLayarViaRelayAsync() As Task
         If SesiRemoteAktif Is Nothing Then
@@ -682,43 +832,100 @@ Public Module mdl_KoneksiJaringan
         End If
 
         SesiRemoteAktif.MulaiStreaming()
-        SesiRemoteAktif.TargetFPS = 20
+        SesiRemoteAktif.TargetFPS = TargetFPSAktif
         SesiRemoteAktif.SkalaGambar = 0.35
 
-        System.Diagnostics.Debug.WriteLine("[RELAY] Streaming layar dimulai")
+        System.Diagnostics.Debug.WriteLine($"[RELAY] Streaming layar dimulai dengan FPS={TargetFPSAktif}")
+
+        ' Setup UDP sender untuk streaming via relay
+        ' SessionId harus sama dengan yang digunakan relay server (hash dari IdSesiRelay)
+        Dim sessionId = mdl_UdpStreaming.GenerateSessionId(IdSesiRelay)
+        mdl_UdpStreaming.MulaiUdpSender(RelayServerIPAktif, PortUdpVideoAktif, sessionId)
+        mdl_UdpStreaming.SetupRelayUdpEndpoint(RelayServerIPAktif, PortUdpVideoAktif)
+        Debug.WriteLine($"[RELAY-UDP] UDP sender dimulai ke {RelayServerIPAktif}:{PortUdpVideoAktif}, SessionId={sessionId} (dari IdSesi={IdSesiRelay})")
+
+        ' === H.264 Encoder: Mulai jika codec negosiasi adalah H264 ===
+        Dim useH264 As Boolean = False
+        If mdl_UdpStreaming.CodecStreaming = TipeKodek.H264 Then
+            Dim bounds = System.Windows.Forms.Screen.PrimaryScreen.Bounds
+            Dim encoderWidth = CInt(bounds.Width * SesiRemoteAktif.SkalaGambar)
+            Dim encoderHeight = CInt(bounds.Height * SesiRemoteAktif.SkalaGambar)
+
+            useH264 = mdl_UdpStreaming.MulaiH264Encoder(encoderWidth, encoderHeight, TargetFPSAktif)
+            If useH264 Then
+                Debug.WriteLine($"[RELAY-H264] Encoder started: {encoderWidth}x{encoderHeight} @ {TargetFPSAktif}fps")
+            Else
+                Debug.WriteLine("[RELAY-H264] Encoder failed to start, fallback to JPEG")
+            End If
+        End If
+
+        Dim useUdp = mdl_UdpStreaming.IsUdpStreamingActive()
+        Debug.WriteLine($"[RELAY-UDP] UDP aktif = {useUdp}, H264 = {useH264}")
 
         Dim frameCount = 0
 
         Try
-            Debug.WriteLine($"[RELAY-STREAM] Loop dimulai. IsStreamingAktif={SesiRemoteAktif.IsStreamingAktif()}, TerhubungKeRelay={TerhubungKeRelay}")
+            Debug.WriteLine($"[RELAY-STREAM] Loop dimulai. IsStreamingAktif={SesiRemoteAktif.IsStreamingAktif()}, TerhubungKeRelay={TerhubungKeRelay}, UseUDP={useUdp}, H264={useH264}")
 
             While SesiRemoteAktif.IsStreamingAktif() AndAlso TerhubungKeRelay
 
                 frameCount += 1
                 Dim stopwatch = System.Diagnostics.Stopwatch.StartNew()
 
-                ' Tangkap frame (gunakan skala dari sesi)
-                Dim frame = Await mdl_TangkapLayar.TangkapFrameAsync(SesiRemoteAktif.SkalaGambar)
+                ' === PATH H.264: Capture BGRA dan kirim ke encoder ===
+                If useH264 AndAlso mdl_UdpStreaming.H264EncoderAktif Then
+                    Dim frameWidth As Integer = 0
+                    Dim frameHeight As Integer = 0
+                    Dim bgraData = mdl_TangkapLayar.TangkapLayarKeBgra(SesiRemoteAktif.SkalaGambar, frameWidth, frameHeight)
 
-                If frame IsNot Nothing Then
-                    ' Kirim frame via relay
-                    Dim paket = BuatPaketFrameLayar(frame)
-                    paket.IdSesi = KunciSesiAktif
+                    If bgraData IsNot Nothing AndAlso bgraData.Length > 0 Then
+                        Await mdl_UdpStreaming.KirimFrameKeEncoderAsync(bgraData)
+                        SesiRemoteAktif.CatatFrame(frameCount, bgraData.Length / 50000.0)
 
-                    Debug.WriteLine($"[RELAY-STREAM] Frame #{frameCount}: Mengirim {frame.UkuranDataKB():F1}KB...")
+                        If frameCount Mod 50 = 1 Then
+                            Debug.WriteLine($"[RELAY-H264] Frame #{frameCount}: BGRA={bgraData.Length / 1024:F0}KB sent to encoder")
+                        End If
+                    Else
+                        Debug.WriteLine("[RELAY-H264] BGRA capture failed!")
+                    End If
 
-                    Try
-                        Dim berhasil = Await mdl_KoneksiRelay.KirimPaketKeRelayAsync(paket)
-                        Debug.WriteLine($"[RELAY-STREAM] Frame #{frameCount}: Hasil = {berhasil}")
-                    Catch ioEx As IOException
-                        Debug.WriteLine($"[RELAY-STREAM] Frame #{frameCount}: IOException: {ioEx.Message}")
-                        Exit While
-                    End Try
-
-                    ' Catat statistik frame
-                    SesiRemoteAktif.CatatFrame(frame.NomorFrame, frame.UkuranDataKB())
+                ' === PATH JPEG: Capture JPEG dan kirim langsung ===
                 Else
-                    Debug.WriteLine($"[RELAY-STREAM] Frame #{frameCount}: frame = Nothing!")
+                    Dim frame = Await mdl_TangkapLayar.TangkapFrameAsync(SesiRemoteAktif.SkalaGambar)
+
+                    If frame IsNot Nothing Then
+                        ' Kirim frame via UDP (preferred) atau TCP (fallback)
+                        If useUdp AndAlso mdl_UdpStreaming.IsUdpStreamingActive() Then
+                            ' UDP: Kirim raw JPEG bytes via relay
+                            Dim jpegData = frame.DapatkanJpegBytes()
+                            If jpegData IsNot Nothing Then
+                                Await mdl_UdpStreaming.KirimFrameViaRelayAsync(jpegData)
+                                If frameCount Mod 50 = 1 Then
+                                    Debug.WriteLine($"[RELAY-JPEG] Frame #{frameCount}: {jpegData.Length / 1024.0:F1}KB via UDP")
+                                End If
+                            End If
+                        Else
+                            ' TCP fallback: Kirim paket JSON via relay TCP
+                            Dim paket = BuatPaketFrameLayar(frame)
+                            paket.IdSesi = IdSesiRelay
+
+                            If frameCount Mod 50 = 1 Then
+                                Debug.WriteLine($"[RELAY-TCP] Frame #{frameCount}: {frame.UkuranDataKB():F1}KB via TCP (fallback)")
+                            End If
+
+                            Try
+                                Await mdl_KoneksiRelay.KirimPaketKeRelayAsync(paket)
+                            Catch ioEx As IOException
+                                Debug.WriteLine($"[RELAY-TCP] Frame #{frameCount}: IOException: {ioEx.Message}")
+                                Exit While
+                            End Try
+                        End If
+
+                        ' Catat statistik frame
+                        SesiRemoteAktif.CatatFrame(frame.NomorFrame, frame.UkuranDataKB())
+                    Else
+                        Debug.WriteLine($"[RELAY-STREAM] Frame #{frameCount}: frame = Nothing!")
+                    End If
                 End If
 
                 stopwatch.Stop()
@@ -734,6 +941,10 @@ Public Module mdl_KoneksiJaringan
 
         Catch ex As Exception
             Debug.WriteLine($"[RELAY-STREAM] EXCEPTION: {ex.GetType().Name}: {ex.Message}")
+        Finally
+            ' Hentikan UDP streaming saat selesai
+            mdl_UdpStreaming.HentikanUdpStreaming()
+            Debug.WriteLine("[RELAY-UDP] UDP streaming dihentikan")
         End Try
 
         Debug.WriteLine($"[RELAY-STREAM] Berhenti setelah {frameCount} frame")

@@ -125,7 +125,7 @@
     </Window.Resources>
 
     <!-- Main Container dengan Shadow -->
-    <Border Effect="{StaticResource CardShadow}" CornerRadius="10" Margin="15">
+    <Border Effect="{StaticResource CardShadow}" CornerRadius="10" Margin="15" ClipToBounds="True">
         <Border.Background>
             <SolidColorBrush Color="{StaticResource clrWhite}"/>
         </Border.Background>

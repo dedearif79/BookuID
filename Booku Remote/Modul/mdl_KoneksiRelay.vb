@@ -45,7 +45,7 @@ Public Module mdl_KoneksiRelay
     Public Event KoneksiRelayTerputus(alasan As String)
 
     ''' <summary>Event ketika ada permintaan koneksi via relay</summary>
-    Public Event PermintaanKoneksiViaRelay(idSesi As String, namaTamu As String, alamatIP As String)
+    Public Event PermintaanKoneksiViaRelay(idSesi As String, namaTamu As String, alamatIP As String, supportedCodecs As String())
 
     ''' <summary>Event ketika ada error dari relay</summary>
     Public Event ErrorDariRelay(kodeError As Integer, pesan As String)
@@ -112,6 +112,9 @@ Public Module mdl_KoneksiRelay
             ' Mulai heartbeat timer
             MulaiHeartbeatRelay()
 
+            ' Setup UDP relay endpoint untuk video streaming
+            mdl_UdpStreaming.SetupRelayUdpEndpoint(RelayServerIPAktif, PortUdpVideoAktif)
+
             TerhubungKeRelay = True
             ModeKoneksiSaatIni = ModeKoneksi.INTERNET
             SedangMenghubungkan = False
@@ -166,6 +169,7 @@ Public Module mdl_KoneksiRelay
             ' Reset state
             TerhubungKeRelay = False
             HostCodeAktif = ""
+            IdSesiRelay = ""
 
             Console.WriteLine("[RELAY] Koneksi ke relay ditutup")
 
@@ -354,10 +358,11 @@ Public Module mdl_KoneksiRelay
                 ' Ada permintaan koneksi dari Tamu via relay
                 Dim payload = DeserializePermintaanKoneksi(paket.Payload)
                 If payload IsNot Nothing Then
-                    ' Simpan IdSesi dari paket
-                    KunciSesiAktif = paket.IdSesi
-                    Console.WriteLine($"[RELAY] Permintaan koneksi dari: {payload.NamaPerangkat} ({payload.AlamatIP})")
-                    RaiseEvent PermintaanKoneksiViaRelay(paket.IdSesi, payload.NamaPerangkat, payload.AlamatIP)
+                    ' Simpan IdSesi dari Relay (untuk routing paket)
+                    ' PENTING: Jangan simpan ke KunciSesiAktif, karena itu akan di-overwrite oleh kunci sesi
+                    IdSesiRelay = paket.IdSesi
+                    Console.WriteLine($"[RELAY] Permintaan koneksi dari: {payload.NamaPerangkat} ({payload.AlamatIP}), IdSesiRelay={IdSesiRelay}")
+                    RaiseEvent PermintaanKoneksiViaRelay(paket.IdSesi, payload.NamaPerangkat, payload.AlamatIP, payload.SupportedCodecs)
                 End If
 
             Case TipePaket.RELAY_ERROR
@@ -397,7 +402,9 @@ Public Module mdl_KoneksiRelay
                 If payload IsNot Nothing Then
                     If payload.Hasil = HasilPersetujuan.DITERIMA Then
                         KunciSesiAktif = payload.KunciSesi
-                        Console.WriteLine($"[RELAY-TAMU] Koneksi diterima, kunci sesi: {KunciSesiAktif.Substring(0, 8)}...")
+                        ' PENTING: Simpan IdSesiRelay untuk routing paket streaming
+                        IdSesiRelay = paket.IdSesi
+                        Console.WriteLine($"[RELAY-TAMU] Koneksi diterima, kunci sesi: {KunciSesiAktif.Substring(0, 8)}..., IdSesiRelay: {IdSesiRelay}")
                         RaiseEvent KoneksiBerhasilViaRelay(payload.KunciSesi, payload.IzinKontrol)
                     Else
                         Console.WriteLine($"[RELAY-TAMU] Koneksi ditolak: {payload.Pesan}")
@@ -473,15 +480,21 @@ Public Module mdl_KoneksiRelay
     ''' <param name="idSesi">ID sesi dari permintaan</param>
     ''' <param name="diterima">True jika diterima</param>
     ''' <param name="izinKontrol">True jika izinkan kontrol keyboard/mouse</param>
+    ''' <param name="supportedCodecs">Daftar codec yang didukung Tamu (untuk negosiasi)</param>
     ''' <param name="pesan">Pesan opsional</param>
     Public Async Function KirimResponKoneksiViaRelayAsync(idSesi As String, diterima As Boolean,
-                                                          izinKontrol As Boolean, Optional pesan As String = "") As Task(Of Boolean)
+                                                          izinKontrol As Boolean,
+                                                          Optional supportedCodecs As String() = Nothing,
+                                                          Optional pesan As String = "") As Task(Of Boolean)
         Try
             ' Buat payload respon
             Dim hasil = If(diterima, HasilPersetujuan.DITERIMA, HasilPersetujuan.DITOLAK)
             Dim kunciSesi = If(diterima, AcakKarakter(32), "")
 
-            Dim paketRespon = BuatPaketResponKoneksi(hasil, kunciSesi, pesan, izinKontrol)
+            ' Tentukan codec berdasarkan supportedCodecs dari Tamu
+            Dim selectedCodec = mdl_KoneksiJaringan.TentukanCodecStreaming(supportedCodecs)
+
+            Dim paketRespon = BuatPaketResponKoneksi(hasil, kunciSesi, pesan, izinKontrol, False, False, selectedCodec)
             paketRespon.IdSesi = idSesi
 
             ' Kirim via relay
@@ -554,6 +567,9 @@ Public Module mdl_KoneksiRelay
             CtsRelay = New CancellationTokenSource()
             Dim taskDengarkan = Task.Run(Function() DengarkanPaketDariRelayAsync(CtsRelay.Token))
 
+            ' Setup UDP relay endpoint untuk video streaming
+            mdl_UdpStreaming.SetupRelayUdpEndpoint(RelayServerIPAktif, PortUdpVideoAktif)
+
             TerhubungKeRelay = True
             ModeKoneksiSaatIni = ModeKoneksi.INTERNET
             SedangMenghubungkan = False
@@ -610,12 +626,14 @@ Public Module mdl_KoneksiRelay
 
     ''' <summary>
     ''' Mengirim permintaan streaming ke Host via relay.
+    ''' Menggunakan IdSesiRelay (bukan KunciSesiAktif) karena relay routing berdasarkan SessionId.
     ''' </summary>
     Public Async Function MintaStreamingViaRelayAsync() As Task(Of Boolean)
-        If Not TerhubungKeRelay OrElse String.IsNullOrEmpty(KunciSesiAktif) Then Return False
+        If Not TerhubungKeRelay OrElse String.IsNullOrEmpty(IdSesiRelay) Then Return False
 
         Try
-            Dim paket = BuatPaketPermintaanStreaming(KunciSesiAktif)
+            ' PENTING: Gunakan IdSesiRelay untuk routing, bukan KunciSesiAktif
+            Dim paket = BuatPaketPermintaanStreaming(IdSesiRelay)
             Return Await KirimPaketKeRelayAsync(paket)
         Catch ex As Exception
             Console.WriteLine($"[RELAY-TAMU] Error minta streaming: {ex.Message}")
@@ -625,14 +643,15 @@ Public Module mdl_KoneksiRelay
 
     ''' <summary>
     ''' Mengirim input keyboard ke Host via relay.
+    ''' Menggunakan IdSesiRelay untuk routing di relay server.
     ''' </summary>
     Public Async Function KirimInputKeyboardViaRelayAsync(keyCode As Integer, isKeyDown As Boolean,
                                                            isExtended As Boolean, modifiers As Integer) As Task(Of Boolean)
-        If Not TerhubungKeRelay OrElse String.IsNullOrEmpty(KunciSesiAktif) Then Return False
+        If Not TerhubungKeRelay OrElse String.IsNullOrEmpty(IdSesiRelay) Then Return False
 
         Try
             Dim paket = BuatPaketInputKeyboard(keyCode, isKeyDown, isExtended, modifiers)
-            paket.IdSesi = KunciSesiAktif
+            paket.IdSesi = IdSesiRelay
             Return Await KirimPaketKeRelayAsync(paket)
         Catch ex As Exception
             Console.WriteLine($"[RELAY-TAMU] Error kirim keyboard: {ex.Message}")
@@ -642,15 +661,16 @@ Public Module mdl_KoneksiRelay
 
     ''' <summary>
     ''' Mengirim input mouse ke Host via relay.
+    ''' Menggunakan IdSesiRelay untuk routing di relay server.
     ''' </summary>
     Public Async Function KirimInputMouseViaRelayAsync(tipeAksi As TipeAksiMouse, x As Double, y As Double,
                                                         button As Integer, isButtonDown As Boolean,
                                                         wheelDelta As Integer) As Task(Of Boolean)
-        If Not TerhubungKeRelay OrElse String.IsNullOrEmpty(KunciSesiAktif) Then Return False
+        If Not TerhubungKeRelay OrElse String.IsNullOrEmpty(IdSesiRelay) Then Return False
 
         Try
             Dim paket = BuatPaketInputMouse(tipeAksi, x, y, button, isButtonDown, wheelDelta)
-            paket.IdSesi = KunciSesiAktif
+            paket.IdSesi = IdSesiRelay
             Return Await KirimPaketKeRelayAsync(paket)
         Catch ex As Exception
             Console.WriteLine($"[RELAY-TAMU] Error kirim mouse: {ex.Message}")

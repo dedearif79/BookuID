@@ -53,7 +53,9 @@ Booku Remote Android/
 │   ├── DiscoveryService.cs        # UDP broadcast discovery
 │   ├── SessionService.cs          # State management sesi
 │   ├── SettingsService.cs         # Konfigurasi port (MAUI Preferences API)
-│   └── NetworkService.cs          # Koneksi TCP + streaming (tanpa newline delimiter)
+│   ├── NetworkService.cs          # Koneksi TCP + streaming (tanpa newline delimiter)
+│   ├── UdpStreamingService.cs     # UDP video receiver + frame reassembly + codec routing
+│   └── H264DecoderService.cs      # Android MediaCodec H.264 decoder
 │
 ├── Views/                         # Additional pages
 │   ├── ViewerPage.xaml/.cs        # Viewer layar Host + touch input
@@ -87,13 +89,23 @@ Booku Remote Android/
 
 > **PENTING:** Protokol menggunakan JSON **TANPA newline delimiter**. Host (VB.NET) mengirim paket tanpa `\n` di akhir. Android harus parsing JSON dengan mendeteksi batas object `{}` menggunakan bracket tracking (bukan split by newline).
 
+### Arsitektur Hybrid TCP/UDP
+
+Sama dengan Booku Remote WPF, Android client menggunakan arsitektur **hybrid TCP/UDP**:
+
+| Layer | Protokol | Kegunaan |
+|-------|----------|----------|
+| **Control Plane** | TCP | Login, input touch, heartbeat |
+| **Data Plane** | UDP | Video frames (high-throughput, low-latency) |
+
 ### Port
 
 | Port | Protokol | Lokasi | Kegunaan |
 |------|----------|--------|----------|
 | `45678` | UDP | LAN | Discovery broadcast |
-| `45679` | TCP | LAN | Koneksi langsung |
+| `45679` | TCP | LAN | Koneksi langsung (control plane) |
 | `45680` | TCP | VPS | Relay Server (koneksi via internet) |
+| `45681` | **UDP** | LAN/Relay | **Video streaming** (data plane) |
 
 > **Catatan:** Semua port di atas adalah nilai **default** dan dapat dikonfigurasi melalui halaman Settings (⚙️ di toolbar). Settings disimpan menggunakan MAUI Preferences API.
 
@@ -145,8 +157,9 @@ Port jaringan dapat dikonfigurasi melalui halaman Settings yang dapat diakses vi
 | Port | Default | Deskripsi |
 |------|---------|-----------|
 | `PortDiscovery` | 45678 | UDP broadcast untuk discovery LAN |
-| `PortKoneksi` | 45679 | TCP koneksi remote LAN |
+| `PortKoneksi` | 45679 | TCP koneksi remote LAN (control plane) |
 | `PortRelay` | 45680 | TCP koneksi via relay server |
+| `PortUdpVideo` | 45681 | **UDP video streaming** (data plane) |
 | `RelayServerIP` | 155.117.43.209 | Alamat IP relay server |
 
 ### Cara Kerja
@@ -167,20 +180,121 @@ Port jaringan dapat dikonfigurasi melalui halaman Settings yang dapat diakses vi
 | Pan/Drag | Mouse Move |
 | Pinch In/Out | Scroll Wheel |
 
+## UDP Streaming (UdpStreamingService)
+
+Service untuk menerima video frame via UDP dengan frame reassembly dan codec routing.
+
+### Komponen
+
+| Class | Deskripsi |
+|-------|-----------|
+| `UdpStreamingService` | UDP receiver dengan frame reassembly + codec detection |
+| `FrameAssemblyInfo` | Info untuk assembly frame dari chunks |
+| `UdpFrameEventArgs` | Event args untuk frame yang diterima (+ CodecType) |
+| `UdpStatisticsEventArgs` | Event args untuk statistik UDP |
+
+### Konstanta
+
+| Konstanta | Nilai | Deskripsi |
+|-----------|-------|-----------|
+| `UDP_HEADER_SIZE` | 16 bytes | Ukuran header UDP packet |
+| `CODEC_TYPE_SIZE` | 1 byte | Ukuran codec type di payload |
+| `CODEC_TYPE_JPEG` | 0x00 | Codec type JPEG |
+| `CODEC_TYPE_H264` | 0x01 | Codec type H.264 |
+| `FRAME_TIMEOUT_MS` | 100 ms | Timeout untuk frame assembly |
+| `MAX_PENDING_FRAMES` | 10 | Maksimum concurrent frames yang di-track |
+
+### Events
+
+| Event | Deskripsi |
+|-------|-----------|
+| `FrameReceived` | Raised ketika frame lengkap diterima (dengan CodecType) |
+| `StatisticsUpdated` | Raised setiap 1 detik dengan info FPS |
+
+### Cara Kerja
+
+1. **Start Receiver:** `StartReceiver(sessionId)` - bind ke UDP port
+2. **Registration (Relay):** `SendRegistrationAsync()` - kirim header-only packet ke relay
+3. **Receive Loop:** Parse header, filter by SessionId, extract CodecType, add chunk ke assembler
+4. **Assembly:** Ketika semua chunks diterima, assemble dan raise `FrameReceived`
+5. **Codec Routing:** `UdpFrameEventArgs.CodecType` menentukan apakah JPEG atau H.264
+6. **Timeout:** Chunks yang tidak lengkap dalam 100ms di-drop
+
+### Static Method: GenerateSessionId()
+
+Method `UdpStreamingService.GenerateSessionId(string)` menggunakan **djb2 hash algorithm** untuk menghasilkan SessionId dari KunciSesi.
+
+> **PENTING:** Algoritma ini **HARUS** sama dengan Host (VB.NET) dan Relay Server (C#). Jangan gunakan `GetHashCode()` karena hasilnya tidak konsisten antar platform. Lihat dokumentasi Relay untuk detail algoritma.
+
+## H.264 Decoding (H264DecoderService)
+
+Service untuk decode H.264 video stream menggunakan Android MediaCodec.
+
+### Komponen
+
+| Class | Deskripsi |
+|-------|-----------|
+| `H264DecoderService` | Android MediaCodec H.264 decoder |
+| `DecodedFrameEventArgs` | Event args untuk frame decoded (JPEG bytes) |
+| `DecoderErrorEventArgs` | Event args untuk error decoder |
+
+### Cara Kerja
+
+1. **Start:** `Start(width, height)` - initialize MediaCodec dengan estimasi resolusi
+2. **Send Data:** `SendData(h264Data)` atau `ProcessH264Data(h264Data)` - kirim NAL unit ke decoder
+3. **Output Loop:** Background task membaca output buffer, convert YUV → JPEG
+4. **Format Changed:** MediaCodec otomatis detect resolusi dari SPS, raise `OUTPUT_FORMAT_CHANGED`
+5. **Frame Decoded:** Raise `FrameDecoded` dengan JPEG bytes
+
+### Dynamic Resolution
+
+MediaCodec akan auto-detect resolusi dari SPS (Sequence Parameter Set) yang dikirim Host bersama keyframe. ViewerPage tidak perlu tahu resolusi exact saat start.
+
+```csharp
+// Dalam OutputLoopAsync():
+if (outputBufferIndex == (int)MediaCodecInfoState.OutputFormatChanged)
+{
+    var newFormat = _decoder.OutputFormat;
+    _width = newFormat.GetInteger(MediaFormat.KeyWidth);
+    _height = newFormat.GetInteger(MediaFormat.KeyHeight);
+}
+```
+
+### Integrasi di ViewerPage
+
+```csharp
+// Auto-start decoder saat frame H.264 pertama diterima
+private void OnUdpFrameReceived(object? sender, UdpFrameEventArgs e)
+{
+    if (e.IsH264)
+    {
+        if (!_h264Decoder.IsRunning)
+        {
+            _h264Decoder.Start(768, 432); // Estimasi awal
+        }
+        _h264Decoder.ProcessH264Data(e.FrameData);
+    }
+    else // JPEG
+    {
+        RenderJpegFrame(e.FrameData);
+    }
+}
+```
+
 ## Rendering (ViewerPage)
 
-Menggunakan teknik **double buffering** untuk mengurangi flicker saat menampilkan frame:
+Menggunakan pendekatan **single Image** untuk menampilkan frame dengan smooth:
 
 | Komponen | Fungsi |
 |----------|--------|
-| `imgScreenA` | Image buffer A |
-| `imgScreenB` | Image buffer B (awalnya tersembunyi) |
-| `_useBufferA` | Flag untuk tracking buffer aktif |
+| `imgScreenA` | Image utama untuk menampilkan frame |
 
-**Alur Double Buffering:**
-1. Frame baru di-load ke buffer yang **tersembunyi**
-2. Setelah load selesai, swap visibility kedua buffer
-3. Toggle flag `_useBufferA` untuk frame berikutnya
+**Alur Rendering:**
+1. Frame diterima dari UDP, byte array di-copy untuk menghindari race condition
+2. `ImageSource.FromStream()` langsung di-set ke `imgScreenA`
+3. MAUI menangani transisi gambar secara internal
+
+> **Catatan:** Pendekatan double buffering dengan visibility swap sebelumnya justru menyebabkan flicker karena swap terjadi sebelum image selesai loading. Single Image approach lebih smooth karena MAUI sudah optimize rendering.
 
 ## Alur Kerja
 
@@ -233,7 +347,7 @@ Menggunakan teknik **double buffering** untuk mengurangi flicker saat menampilka
 │  3. STREAMING                                                   │
 │     ├── Kirim PERMINTAAN_STREAMING                              │
 │     ├── Terima FRAME_LAYAR (JPEG Base64)                        │
-│     ├── Decode dan tampilkan via double buffering               │
+│     ├── Decode dan tampilkan ke Image control                   │
 │     └── Maintain heartbeat setiap 5 detik                       │
 └─────────────────────────────────────────────────────────────────┘
                               │
@@ -317,6 +431,9 @@ bin/Release/net8.0-android/com.bookuid.remote-Signed.apk  (±28 MB)
 | Network Service (LAN) | Selesai | TCP + streaming (no newline delimiter) |
 | Network Service (Relay) | Selesai | Koneksi via relay server |
 | Protocol Service | Selesai | JSON serialization (bracket tracking) |
+| **UDP Streaming Service (JPEG)** | **Selesai** | **Port 45681, frame reassembly** |
+| **UDP Streaming Service (H.264)** | **Selesai** | **CodecType routing, auto-start decoder** |
+| **H.264 Decoder Service** | **⚠️ Issue** | **Android MediaCodec works, tapi ViewerPage crash "recycled bitmap"** |
 | Touch Input | Selesai | Gesture recognition |
 | Manual IP Input | Selesai | Untuk emulator (10.0.2.2) |
 | Mode Selector (LAN/Internet) | Selesai | UI untuk pilih mode koneksi |
@@ -326,7 +443,7 @@ bin/Release/net8.0-android/com.bookuid.remote-Signed.apk  (±28 MB)
 | Obfuscation | Selesai | IL Trimming + R8 |
 | Release Build | Selesai | `PUBLISH-RELEASE.bat` |
 | UI/UX | Dasar | Perlu polish |
-| Testing | Ongoing | LAN + Internet mode tested |
+| Testing | Ongoing | LAN + Internet + H.264 testing |
 
 ## Release Configuration
 

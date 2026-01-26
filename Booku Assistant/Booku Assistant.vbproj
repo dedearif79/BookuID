@@ -5,6 +5,30 @@
     <TargetFramework>net8.0-windows</TargetFramework>
     <RootNamespace>Booku_Assistant</RootNamespace>
     <UseWPF>true</UseWPF>
+    <AssemblyName>Booku Assistant</AssemblyName>
+    <!-- Entry point menggunakan App.Main() untuk Single Instance -->
+    <StartupObject>Booku_Assistant.App</StartupObject>
+    <!-- Windows x64 untuk target deployment -->
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  </PropertyGroup>
+
+  <!-- ============================================== -->
+  <!-- Release Configuration:                         -->
+  <!-- - Single Executable (Self-Contained)           -->
+  <!-- - Compressed                                   -->
+  <!-- Note: WPF tidak mendukung IL Trimming          -->
+  <!-- ============================================== -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <!-- SINGLE EXECUTABLE: Self-contained single file -->
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
+    <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
+
+    <!-- OPTIMIZATION flags -->
+    <DebugSymbols>false</DebugSymbols>
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
   </PropertyGroup>
 
   <ItemGroup>

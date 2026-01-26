@@ -173,18 +173,26 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Text="Port Discovery (UDP)" VerticalAlignment="Center"/>
                         <TextBox Grid.Row="0" Grid.Column="1" Name="txt_PortDiscovery" Width="100" HorizontalAlignment="Left"/>
 
-                        <Separator Grid.Row="1" Grid.ColumnSpan="2" Margin="0,15,0,10"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Port Koneksi (TCP)" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                        <TextBox Grid.Row="1" Grid.Column="1" Name="txt_PortKoneksi" Width="100" HorizontalAlignment="Left" Margin="0,8,0,0"/>
 
-                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Relay Server IP" VerticalAlignment="Center"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" Name="txt_RelayServerIP" Width="150" HorizontalAlignment="Left"/>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Port Video (UDP)" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" Name="txt_PortUdpVideo" Width="100" HorizontalAlignment="Left" Margin="0,8,0,0"/>
 
-                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Relay Server Port" VerticalAlignment="Center" Margin="0,8,0,0"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Name="txt_PortRelay" Width="100" HorizontalAlignment="Left" Margin="0,8,0,0"/>
+                        <Separator Grid.Row="3" Grid.ColumnSpan="2" Margin="0,15,0,10"/>
+
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Relay Server IP" VerticalAlignment="Center"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" Name="txt_RelayServerIP" Width="150" HorizontalAlignment="Left"/>
+
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Relay Server Port (TCP)" VerticalAlignment="Center" Margin="0,8,0,0"/>
+                        <TextBox Grid.Row="5" Grid.Column="1" Name="txt_PortRelay" Width="100" HorizontalAlignment="Left" Margin="0,8,0,0"/>
                     </Grid>
 
                     <StackPanel Orientation="Horizontal" Margin="0,15,0,0">

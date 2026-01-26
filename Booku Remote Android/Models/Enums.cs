@@ -111,3 +111,14 @@ public enum TombolMouse
     XBUTTON1 = 4,
     XBUTTON2 = 5
 }
+
+/// <summary>
+/// Tipe codec video untuk streaming.
+/// </summary>
+public enum TipeKodek
+{
+    /// <summary>JPEG per-frame (default, kompatibel dengan semua client)</summary>
+    JPEG = 0,
+    /// <summary>H.264 video codec (lebih efisien, memerlukan FFmpeg)</summary>
+    H264 = 1
+}

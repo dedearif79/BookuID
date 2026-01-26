@@ -182,6 +182,15 @@
     <Compile Update="Buku Pengawasan\Penerimaan-Pengeluaran\wpfWin_InputJumlahBankCashInOut.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Data\Data Toko\wpfUsc_DataToko.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Data Toko\wpfWin_InputToko.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Data\Data Toko\wpfWin_ListToko.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\Penjualan Eceran\wpfUsc_BukuPengawasanPenjualanEceran.xaml.vb">
       <SubType>Code</SubType>
     </Compile>

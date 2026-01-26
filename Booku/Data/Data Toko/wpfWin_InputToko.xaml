@@ -1,0 +1,70 @@
+<Window x:Class="wpfWin_InputToko"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Booku"
+        mc:Ignorable="d"
+        Title="Input Toko"
+        Height="Auto"
+        Width="Auto"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        >
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/BookuID.Styles;component/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
+
+        <!-- ScrollViewer dengan MaxHeight untuk layar kecil -->
+        <ScrollViewer   Style="{StaticResource styleScrollViewerFormDialogVertikal}" MaxHeight="600" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+
+                <Grid Style="{StaticResource styleGridFormDialog}" >
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150"/>
+                        <ColumnDefinition Width="210"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kode Toko"/>
+                    <TextBlock  Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Setelah disimpan, Kode Toko tidak dapat diedit." FontSize="8"  Margin="0 0 0 9" Foreground="{StaticResource clrStatusError}" />
+                    <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Nama Toko"/>
+                    <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Alamat"/>
+                    <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Deskripsi"/>
+
+                    <TextBox        Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogKapital}"  Name="txt_KodeToko"       Width="99"  HorizontalAlignment="Left"/>
+                    <TextBox        Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaToko" />
+                    <RichTextBox    Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Alamat" />
+                    <RichTextBox    Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Deskripsi" />
+
+                </Grid>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!--Tombol CRUD :-->
+        <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"   Name="pnl_TombolForm">
+            <Button Style="{StaticResource styleButtonFormDialogSimpan}"  Name="btn_Simpan" RenderTransformOrigin="0.5,0.5" />
+            <Button Style="{StaticResource styleButtonFormDialogBatal}"   Name="btn_Batal" />
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>
+
+

@@ -55,13 +55,22 @@ Public Class wpfWin_TryApp
 
 
     Private Sub Button2_Click(sender As Object, e As RoutedEventArgs) Handles Button2.Click
-        BukaDatabaseGeneral_MySQL()
-        PesanUntukProgrammer("Status Koneksi : " & StatusKoneksiDatabaseGeneral_MySQL)
-        cmdMySQL = New MySqlCommand(" Select * from tbl_Company ", KoneksiDatabaseGeneral_MySQL)
-        drMySQL = cmdMySQL.ExecuteReader
-        drMySQL.Read()
-        PesanUntukProgrammer(drMySQL.Item("Nama_Perusahaan"))
-        TutupDatabaseGeneral_MySQL()
+        Dim QueryPembuatanTabel As String
+        Dim QueryAlterTable As String
+        'Pembuatan Tabel : tbl_Toko
+        QueryPembuatanTabel = " CREATE TABLE `tbl_Toko` (" &
+                " `Kode_Toko` varchar(12) NOT NULL, " &
+                " `Nama_Toko` varchar(255) NOT NULL, " &
+                " `Alamat` longtext NOT NULL, " &
+                " `Deskripsi` longtext NOT NULL " &
+                " ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; "
+        AksesDatabase_General(Buka)
+        cmd = New OdbcCommand(QueryPembuatanTabel, KoneksiDatabaseGeneral)
+        cmd.ExecuteNonQuery()
+        QueryAlterTable = " ALTER TABLE `tbl_Toko` ADD PRIMARY KEY (`Kode_Toko`), ADD UNIQUE KEY (`Kode_Toko`); "
+        cmd = New OdbcCommand(QueryAlterTable, KoneksiDatabaseGeneral)
+        cmd.ExecuteNonQuery()
+        AksesDatabase_General(Tutup)
     End Sub
 
     Private Sub Button3_Click(sender As Object, e As RoutedEventArgs) Handles Button3.Click

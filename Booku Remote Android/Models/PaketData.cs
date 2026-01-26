@@ -134,6 +134,13 @@ public class PayloadRelayConnectRequest
 
     [JsonPropertyName("password")]
     public string Password { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Daftar codec video yang didukung oleh client.
+    /// Format: ["JPEG", "H264"] atau kosong untuk JPEG saja (backward compatible).
+    /// </summary>
+    [JsonPropertyName("supportedCodecs")]
+    public string[] SupportedCodecs { get; set; } = ["JPEG", "H264"];
 }
 
 /// <summary>
@@ -170,6 +177,13 @@ public class PayloadResponKoneksi
 
     [JsonPropertyName("izinClipboard")]
     public bool IzinClipboard { get; set; }
+
+    /// <summary>
+    /// Codec video yang dipilih oleh Host.
+    /// "JPEG" (default) atau "H264".
+    /// </summary>
+    [JsonPropertyName("selectedCodec")]
+    public string SelectedCodec { get; set; } = "JPEG";
 }
 
 /// <summary>
@@ -185,6 +199,13 @@ public class PayloadPermintaanKoneksi
 
     [JsonPropertyName("versiProtokol")]
     public string VersiProtokol { get; set; } = "1.0";
+
+    /// <summary>
+    /// Daftar codec video yang didukung oleh client.
+    /// Format: ["JPEG", "H264"] atau kosong untuk JPEG saja (backward compatible).
+    /// </summary>
+    [JsonPropertyName("supportedCodecs")]
+    public string[] SupportedCodecs { get; set; } = ["JPEG", "H264"];
 }
 
 #endregion

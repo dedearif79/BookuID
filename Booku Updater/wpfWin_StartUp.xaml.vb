@@ -1,4 +1,4 @@
-﻿Imports System.Diagnostics
+Imports System.Diagnostics
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Net.Http
@@ -14,15 +14,28 @@ Class wpfWin_StartUp
     Dim UpdateTerbaru As String
     Dim ProsesUpdate_Aplikasi As Boolean
     Dim UpdateBerhasil As Boolean
+
+    'Paket Booku
+    Dim FolderRootBooku As String
     Dim urlPaketBooku As String
     Dim FolderTempPaketBooku As String
     Dim FilePathPaketBooku As String
 
-    Dim FolderRootBooku As String
+    'Paket BookuAssistant
+    Dim FolderRootBookuAssistant As String
+    Dim urlPaketBookuAssistant As String
+    Dim FolderTempPaketBookuAssistant As String
+    Dim FilePathPaketBookuAssistant As String
+
+    'Paket BookuRemote
+    Dim FolderRootBookuRemote As String
+    Dim urlPaketBookuRemote As String
+    Dim FolderTempPaketBookuRemote As String
+    Dim FilePathPaketBookuRemote As String
+
     Dim FolderBookuAttach As String
     Dim FolderBookuAttachNotes As String
     Dim FolderBookuClient As String
-    Dim FolderBookuRuntimes As String
     Dim FolderTempAttach As String
     Dim FolderTempClient As String
 
@@ -32,7 +45,6 @@ Class wpfWin_StartUp
     Dim NamaFolder_Attach As String = "Attach"
     Dim NamaFolder_Client As String = "Client"
     Dim NamaFolder_Notes As String = "Notes"
-    Dim NamaFolder_Runtimes As String = "runtimes"
     Dim FilePathAplikasiBooku As String
     Dim NamaFileAplikasi As String = "Booku.exe"
 
@@ -56,14 +68,23 @@ Class wpfWin_StartUp
 
     Async Sub TahapanUpdating()
 
-
         AmbilValueDataPublic()
 
-        Await DownloadPaketBooku()
+        'Aplikasi Booku:
+        Await DownloadPaketAplikasi(urlPaketBooku, FilePathPaketBooku, FolderTempPaketBooku)
+        Await EkstrakPaketAplikasi(FilePathPaketBooku, FolderRootBooku)
 
-        Await EkstrakPaketBooku()
+        'Aplikasi Booku Assistant:
+        Await DownloadPaketAplikasi(urlPaketBookuAssistant, FilePathPaketBookuAssistant, FolderTempPaketBookuAssistant)
+        Await EkstrakPaketAplikasi(FilePathPaketBookuAssistant, FolderRootBookuAssistant)
+
+        'Aplikasi Booku Remote:
+        Await DownloadPaketAplikasi(urlPaketBookuRemote, FilePathPaketBookuRemote, FolderTempPaketBookuRemote)
+        Await EkstrakPaketAplikasi(FilePathPaketBookuRemote, FolderRootBookuRemote)
 
         HapusFolder(FolderTempPaketBooku)
+        HapusFolder(FolderTempPaketBookuAssistant)
+        HapusFolder(FolderTempPaketBookuRemote)
 
         BeriKeteranganVersiDanApdetPerangkat()
 
@@ -81,9 +102,18 @@ Class wpfWin_StartUp
             drPublic.Read()
             VersiTerbaru = drPublic.Item("Versi_App")
             UpdateTerbaru = drPublic.Item("Apdet_App")
+            'Paket Booku:
             urlPaketBooku = drPublic.Item("URL_Paket_Booku")
             FolderTempPaketBooku = Path.Combine(FolderRootBookuID, drPublic.Item("Folder_Temp_Paket_Booku"))
             FilePathPaketBooku = Path.Combine(FolderTempPaketBooku, drPublic.Item("File_Paket_Booku"))
+            'Paket BookuAssistant:
+            urlPaketBookuAssistant = drPublic.Item("URL_Paket_Booku_Assistant")
+            FolderTempPaketBookuAssistant = Path.Combine(FolderRootBookuID, drPublic.Item("Folder_Temp_Paket_Booku_Assistant"))
+            FilePathPaketBookuAssistant = Path.Combine(FolderTempPaketBookuAssistant, drPublic.Item("File_Paket_Booku_Assistant"))
+            'Paket BookuRemote:
+            urlPaketBookuRemote = drPublic.Item("URL_Paket_Booku_Remote")
+            FolderTempPaketBookuRemote = Path.Combine(FolderRootBookuID, drPublic.Item("Folder_Temp_Paket_Booku_Remote"))
+            FilePathPaketBookuRemote = Path.Combine(FolderTempPaketBookuRemote, drPublic.Item("File_Paket_Booku_Remote"))
             StatusKoneksiDatabasePublic = True
         Catch ex As Exception
             StatusKoneksiDatabasePublic = False
@@ -93,10 +123,11 @@ Class wpfWin_StartUp
         If StatusKoneksiDatabasePublic = True Then
             ProsesUpdate_Aplikasi = True
             FolderRootBooku = Path.Combine(FolderRootBookuID, NamaAplikasi)
+            FolderRootBookuAssistant = Path.Combine(FolderRootBookuID, NamaAplikasi & " Assistant")
+            FolderRootBookuRemote = Path.Combine(FolderRootBookuID, NamaAplikasi & " Remote")
             FolderBookuAttach = Path.Combine(FolderRootBooku, NamaFolder_Attach)
             FolderBookuAttachNotes = Path.Combine(FolderBookuAttach, NamaFolder_Notes)
             FolderBookuClient = Path.Combine(FolderRootBooku, NamaFolder_Client)
-            FolderbookuRuntimes = Path.Combine(FolderRootBooku, NamaFolder_Runtimes)
             FolderTempAttach = Path.Combine(FolderTempPaketBooku, NamaFolder_Attach)
             FolderTempClient = Path.Combine(FolderTempPaketBooku, NamaFolder_Client)
             FilePathAplikasiBooku = Path.Combine(FolderRootBooku, NamaFileAplikasi)
@@ -110,11 +141,11 @@ Class wpfWin_StartUp
     End Sub
 
 
-    Async Function DownloadPaketBooku() As Task
+    Async Function DownloadPaketAplikasi(urlPaketAplikasi As String, FilePathPaketAplikasi As String, FolderTempPaketAplikasi As String) As Task
 
         If ProsesUpdate_Aplikasi = True Then
-            BuatFolder(FolderTempPaketBooku)
-            DownloadBerhasil = Await DownloadFileDariServerAsync_MetodeHTTP(urlPaketBooku, FilePathPaketBooku, urlFileDownloader_PHP, pgb_Progress, lbl_Progress)
+            BuatFolder(FolderTempPaketAplikasi)
+            DownloadBerhasil = Await DownloadFileDariServerAsync_MetodeHTTP(urlPaketAplikasi, FilePathPaketAplikasi, urlFileDownloader_PHP, pgb_Progress, lbl_Progress)
         End If
 
         If DownloadBerhasil Then
@@ -128,10 +159,9 @@ Class wpfWin_StartUp
     End Function
 
 
-    Async Function EkstrakPaketBooku() As Task
+    Async Function EkstrakPaketAplikasi(FilePathPaketBooku As String, FolderRootBooku As String) As Task
 
         HapusHanyaFileDalamFolder(FolderRootBooku)
-        HapusFolder(FolderBookuRuntimes)
         Jeda(999)
 
         lbl_01.Text = "Proses update sedang berjalan."

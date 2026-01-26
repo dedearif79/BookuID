@@ -318,11 +318,16 @@ Public Module mdl_Protokol
     ''' <summary>
     ''' Membuat paket permintaan koneksi.
     ''' </summary>
-    Public Function BuatPaketPermintaanKoneksi(namaPerangkat As String, alamatIP As String) As cls_PaketData
+    ''' <param name="namaPerangkat">Nama perangkat Tamu</param>
+    ''' <param name="alamatIP">Alamat IP Tamu</param>
+    ''' <param name="supportedCodecs">Daftar codec yang didukung client (default: JPEG)</param>
+    Public Function BuatPaketPermintaanKoneksi(namaPerangkat As String, alamatIP As String,
+                                                Optional supportedCodecs As String() = Nothing) As cls_PaketData
         Dim payload As New cls_PayloadPermintaanKoneksi With {
             .NamaPerangkat = namaPerangkat,
             .AlamatIP = alamatIP,
-            .VersiProtokol = VERSI_PROTOKOL
+            .VersiProtokol = VERSI_PROTOKOL,
+            .SupportedCodecs = If(supportedCodecs, {"JPEG"})
         }
         Return New cls_PaketData(TipePaket.PERMINTAAN_KONEKSI, SerializePermintaanKoneksi(payload))
     End Function
@@ -334,14 +339,16 @@ Public Module mdl_Protokol
                                            Optional pesan As String = "",
                                            Optional izinKontrol As Boolean = True,
                                            Optional izinTransfer As Boolean = False,
-                                           Optional izinClipboard As Boolean = False) As cls_PaketData
+                                           Optional izinClipboard As Boolean = False,
+                                           Optional selectedCodec As String = "JPEG") As cls_PaketData
         Dim payload As New cls_PayloadResponKoneksi With {
             .Hasil = hasil,
             .KunciSesi = kunciSesi,
             .Pesan = pesan,
             .IzinKontrol = izinKontrol,
             .IzinTransferBerkas = izinTransfer,
-            .IzinClipboard = izinClipboard
+            .IzinClipboard = izinClipboard,
+            .SelectedCodec = selectedCodec
         }
         Return New cls_PaketData(TipePaket.RESPON_KONEKSI, SerializeResponKoneksi(payload))
     End Function
@@ -505,14 +512,20 @@ Public Module mdl_Protokol
     ''' <summary>
     ''' Membuat paket RELAY_CONNECT_REQUEST (Tamu minta koneksi via relay).
     ''' </summary>
+    ''' <param name="hostCode">HostCode 6 karakter</param>
+    ''' <param name="namaTamu">Nama perangkat Tamu</param>
+    ''' <param name="password">Password opsional</param>
+    ''' <param name="supportedCodecs">Daftar codec yang didukung client</param>
     Public Function BuatPaketRelayConnectRequest(hostCode As String, namaTamu As String,
-                                                   Optional password As String = "") As cls_PaketData
+                                                   Optional password As String = "",
+                                                   Optional supportedCodecs As String() = Nothing) As cls_PaketData
         Dim payload As New cls_PayloadRelayConnectRequest With {
             .HostCode = hostCode,
             .NamaPerangkat = namaTamu,
             .AlamatIP = AlamatIPLokal,
             .VersiProtokol = VERSI_PROTOKOL,
-            .Password = password
+            .Password = password,
+            .SupportedCodecs = If(supportedCodecs, {"JPEG", "H264"})
         }
         Return New cls_PaketData(TipePaket.RELAY_CONNECT_REQUEST, SerializeRelayConnectRequest(payload))
     End Function

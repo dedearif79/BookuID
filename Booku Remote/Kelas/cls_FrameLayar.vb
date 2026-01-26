@@ -170,6 +170,19 @@ Public Class cls_FrameLayar
         End Try
     End Function
 
+    ''' <summary>
+    ''' Mendapatkan data gambar sebagai byte array JPEG (untuk UDP streaming).
+    ''' Lebih efisien dari Base64 karena tidak ada encoding overhead.
+    ''' </summary>
+    Public Function DapatkanJpegBytes() As Byte()
+        Try
+            If String.IsNullOrEmpty(DataGambarBase64) Then Return Nothing
+            Return Convert.FromBase64String(DataGambarBase64)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
 #End Region
 
 #Region "Validation"

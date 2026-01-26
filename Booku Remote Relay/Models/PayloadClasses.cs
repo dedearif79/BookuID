@@ -78,6 +78,13 @@ public class PayloadRelayConnectRequest
 
     [JsonPropertyName("password")]
     public string Password { get; set; } = "";
+
+    /// <summary>
+    /// Daftar codec video yang didukung oleh client.
+    /// Default: ["JPEG"]
+    /// </summary>
+    [JsonPropertyName("supportedCodecs")]
+    public string[] SupportedCodecs { get; set; } = ["JPEG"];
 }
 
 /// <summary>
@@ -105,6 +112,13 @@ public class PayloadPermintaanKoneksi
 
     [JsonPropertyName("versiProtokol")]
     public string VersiProtokol { get; set; } = "1.0";
+
+    /// <summary>
+    /// Daftar codec video yang didukung oleh client.
+    /// Default: ["JPEG"]
+    /// </summary>
+    [JsonPropertyName("supportedCodecs")]
+    public string[] SupportedCodecs { get; set; } = ["JPEG"];
 }
 
 /// <summary>

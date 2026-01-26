@@ -28,12 +28,11 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="27"/>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="180"/>
                     <ColumnDefinition Width="270"/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -43,13 +42,15 @@
                 <CheckBox       Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 7"    VerticalAlignment="Center"  Name="chk_BuildBooku" HorizontalAlignment="Left" Width="21" />
                 <CheckBox       Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 7"    VerticalAlignment="Center"  Name="chk_BuildBookuUpdater" HorizontalAlignment="Left" Width="21" />
                 <CheckBox       Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 7"    VerticalAlignment="Center"  Name="chk_BuildBookuRemote" HorizontalAlignment="Left" Width="21" />
+                <CheckBox       Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 7"    VerticalAlignment="Center"  Name="chk_BuildBookuAssistant" HorizontalAlignment="Left" Width="21" />
 
                 <TextBlock      Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   VerticalAlignment="Center"  Text="Build Booku" />
                 <TextBlock      Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   VerticalAlignment="Center"  Text="Build Booku Updater" />
                 <TextBlock      Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   VerticalAlignment="Center"  Text="Build Booku Remote" />
+                <TextBlock      Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   VerticalAlignment="Center"  Text="Build Booku Assistant" />
 
                 <Button         Grid.Row="0"  Grid.Column="2"   Style="{StaticResource styleButtonFormDialog}"      VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                                Name="btn_Build" Height="Auto"  Content="Build" Grid.RowSpan="3"    Margin="0" />
+                                Name="btn_Build" Height="Auto"  Content="Build" Grid.RowSpan="4"    Margin="0" />
 
             </Grid>
 
@@ -57,7 +58,7 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="27"/>
-                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="180"/>
                     <ColumnDefinition Width="270"/>
                 </Grid.ColumnDefinitions>
 
@@ -67,27 +68,46 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <CheckBox       Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 9"    VerticalAlignment="Center"  Name="chk_KompressPaketBoku" HorizontalAlignment="Left" Width="21" />
-                <CheckBox       Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 9"    VerticalAlignment="Center"  Name="chk_UploadPaketBoku" />
+                <CheckBox       Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 9"    VerticalAlignment="Center"  Name="chk_KompressPaketBooku" HorizontalAlignment="Left" Width="21" />
+                <CheckBox       Grid.Row="1"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 9"    VerticalAlignment="Center"  Name="chk_UploadPaketBooku" />
                 <CheckBox       Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 9"    VerticalAlignment="Center"  Name="chk_KompressPaketUpdater" />
                 <CheckBox       Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 9"    VerticalAlignment="Center"  Name="chk_UploadPaketUpdater" />
+                <CheckBox       Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 9"    VerticalAlignment="Center"  Name="chk_KompressPaketBookuAssistant" />
+                <CheckBox       Grid.Row="5"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 9"    VerticalAlignment="Center"  Name="chk_UploadPaketBookuAssistant" />
+                <CheckBox       Grid.Row="6"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 9"    VerticalAlignment="Center"  Name="chk_KompressPaketBookuRemote" />
+                <CheckBox       Grid.Row="7"  Grid.Column="0"   Style="{StaticResource styleCheckBoxFormDialog}"    Margin="0 9"    VerticalAlignment="Center"  Name="chk_UploadPaketBookuRemote" />
 
                 <TextBlock      Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   VerticalAlignment="Center"  Text="Kompress Paket Booku" />
                 <TextBlock      Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   VerticalAlignment="Center"  Text="Upload Paket Booku"/>
                 <TextBlock      Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   VerticalAlignment="Center"  Text="Kompress Paket Updater"/>
                 <TextBlock      Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   VerticalAlignment="Center"  Text="Upload Paket Updater"/>
+                <TextBlock      Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   VerticalAlignment="Center"  Text="Kompress Paket Booku Assistant" />
+                <TextBlock      Grid.Row="5"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   VerticalAlignment="Center"  Text="Upload Paket Booku Assistant"/>
+                <TextBlock      Grid.Row="6"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   VerticalAlignment="Center"  Text="Kompress Paket Booku Remote" />
+                <TextBlock      Grid.Row="7"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   VerticalAlignment="Center"  Text="Upload Paket Booku Remote"/>
 
                 <ProgressBar    Grid.Row="0"  Grid.Column="2"   Height="27" Name="pgb_KompressPaketBooku"        />
                 <ProgressBar    Grid.Row="1"  Grid.Column="2"   Height="27" Name="pgb_UploadPaketBooku"     />
                 <ProgressBar    Grid.Row="2"  Grid.Column="2"   Height="27" Name="pgb_KompressPaketUpdater" />
                 <ProgressBar    Grid.Row="3"  Grid.Column="2"   Height="27" Name="pgb_UploadPaketUpdater"   />
+                <ProgressBar    Grid.Row="4"  Grid.Column="2"   Height="27" Name="pgb_KompressPaketBookuAssistant"        />
+                <ProgressBar    Grid.Row="5"  Grid.Column="2"   Height="27" Name="pgb_UploadPaketBookuAssistant"     />
+                <ProgressBar    Grid.Row="6"  Grid.Column="2"   Height="27" Name="pgb_KompressPaketBookuRemote"        />
+                <ProgressBar    Grid.Row="7"  Grid.Column="2"   Height="27" Name="pgb_UploadPaketBookuRemote"     />
 
                 <TextBlock      Grid.Row="0"  Grid.Column="2"   Style="{StaticResource styleTextBlockFormDialog}"   HorizontalAlignment="Center"    VerticalAlignment="Center"  Text="100 %"    Name="lbl_KompressPaketBooku" />
                 <TextBlock      Grid.Row="1"  Grid.Column="2"   Style="{StaticResource styleTextBlockFormDialog}"   HorizontalAlignment="Center"    VerticalAlignment="Center"  Text="100 %"    Name="lbl_UploadPaketBooku" />
                 <TextBlock      Grid.Row="2"  Grid.Column="2"   Style="{StaticResource styleTextBlockFormDialog}"   HorizontalAlignment="Center"    VerticalAlignment="Center"  Text="100 %"    Name="lbl_KompressPaketUpdater" />
                 <TextBlock      Grid.Row="3"  Grid.Column="2"   Style="{StaticResource styleTextBlockFormDialog}"   HorizontalAlignment="Center"    VerticalAlignment="Center"  Text="100 %"    Name="lbl_UploadPaketUpdater" />
+                <TextBlock      Grid.Row="4"  Grid.Column="2"   Style="{StaticResource styleTextBlockFormDialog}"   HorizontalAlignment="Center"    VerticalAlignment="Center"  Text="100 %"    Name="lbl_KompressPaketBookuAssistant" />
+                <TextBlock      Grid.Row="5"  Grid.Column="2"   Style="{StaticResource styleTextBlockFormDialog}"   HorizontalAlignment="Center"    VerticalAlignment="Center"  Text="100 %"    Name="lbl_UploadPaketBookuAssistant" />
+                <TextBlock      Grid.Row="6"  Grid.Column="2"   Style="{StaticResource styleTextBlockFormDialog}"   HorizontalAlignment="Center"    VerticalAlignment="Center"  Text="100 %"    Name="lbl_KompressPaketBookuRemote" />
+                <TextBlock      Grid.Row="7"  Grid.Column="2"   Style="{StaticResource styleTextBlockFormDialog}"   HorizontalAlignment="Center"    VerticalAlignment="Center"  Text="100 %"    Name="lbl_UploadPaketBookuRemote" />
 
             </Grid>
 

@@ -24,8 +24,9 @@
 
         <StackPanel Style="{StaticResource stylePanelFormDialogHorizontal}" >
 
-            <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
-                <Grid Style="{StaticResource styleGridFormDialog}" >
+            <ScrollViewer   Style="{StaticResource styleScrollViewerFormDialogVertikal}" Name="scv_Kiri">
+                <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+                    <Grid Style="{StaticResource styleGridFormDialog}" >
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="144"/>
@@ -122,20 +123,23 @@
 
                     </GroupBox>
                     <DatePicker     Grid.Row="15" Grid.Column="1"   Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalBayar" />
-                    <RichTextBox    Grid.Row="17" Grid.Column="0"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Catatan" Grid.ColumnSpan="2" Width="Auto"  />
-                </Grid>
-            </StackPanel>
+                        <RichTextBox    Grid.Row="17" Grid.Column="0"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Catatan" Grid.ColumnSpan="2" Width="Auto"  />
+                    </Grid>
+                </StackPanel>
+            </ScrollViewer>
 
             <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Width="1" Background="Black" Opacity=".2" Margin="0 27" Name="pnl_Pemisah" />
 
-            <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Name="pnl_Kanan" >
-                <StackPanel Style="{StaticResource stylePanelDataGridView}"  >
-                    <DataGrid Style="{StaticResource StyleDataGridFormDialog}" Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="222" MinHeight="33" >
-                    </DataGrid>
+            <ScrollViewer   Style="{StaticResource styleScrollViewerFormDialogVertikal}" Name="scv_Kanan">
+                <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" Name="pnl_Kanan" >
+                    <StackPanel Style="{StaticResource stylePanelDataGridView}"  >
+                        <DataGrid Style="{StaticResource StyleDataGridFormDialog}" Name="datagridUtama" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" MinWidth="222" MinHeight="33" >
+                        </DataGrid>
+                    </StackPanel>
+                    <Button Style="{StaticResource styleButtonFormDialogSingkirkan}"    Name="btn_Singkirkan" />
+                    <Button Style="{StaticResource styleButtonFormDialogTolak}"         Name="btn_Tolak" />
                 </StackPanel>
-                <Button Style="{StaticResource styleButtonFormDialogSingkirkan}"    Name="btn_Singkirkan" />
-                <Button Style="{StaticResource styleButtonFormDialogTolak}"         Name="btn_Tolak" />
-            </StackPanel>
+            </ScrollViewer>
 
         </StackPanel>
 

@@ -327,11 +327,12 @@ public class PacketRouter
 
         var session = _connectionManager.CreateSession(host, tamu, sessionId);
 
-        // Forward ke Host sebagai PERMINTAAN_KONEKSI
+        // Forward ke Host sebagai PERMINTAAN_KONEKSI (dengan SupportedCodecs)
         var permintaanPayload = new PayloadPermintaanKoneksi
         {
             NamaPerangkat = payload.NamaPerangkat,
-            AlamatIP = clientIP
+            AlamatIP = clientIP,
+            SupportedCodecs = payload.SupportedCodecs ?? ["JPEG"]
         };
         var permintaanPacket = PaketData.Create(
             TipePaket.PERMINTAAN_KONEKSI,

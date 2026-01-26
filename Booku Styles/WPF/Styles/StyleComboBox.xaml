@@ -1,5 +1,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="clr-namespace:BookuID.Styles">
 
     <!-- =================================================================== -->
     <!-- STYLE COMBOBOX                                                      -->
@@ -107,6 +108,8 @@
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="True"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource styleComboBoxItem}"/>
+        <!-- Mencegah scroll mouse mengubah nilai ComboBox -->
+        <Setter Property="behaviors:ComboBoxBehavior.AbaikanMouseWheel" Value="True"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ComboBox">

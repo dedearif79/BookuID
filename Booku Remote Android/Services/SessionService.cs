@@ -38,6 +38,11 @@ public class SessionService
     public bool IzinClipboard { get; private set; }
 
     /// <summary>
+    /// Codec video yang dipilih oleh Host ("JPEG" atau "H264")
+    /// </summary>
+    public string SelectedCodec { get; private set; } = "JPEG";
+
+    /// <summary>
     /// Waktu koneksi dimulai
     /// </summary>
     public DateTime? WaktuKoneksi { get; private set; }
@@ -57,8 +62,10 @@ public class SessionService
         IzinKontrol = respon.IzinKontrol;
         IzinTransferBerkas = respon.IzinTransferBerkas;
         IzinClipboard = respon.IzinClipboard;
+        SelectedCodec = respon.SelectedCodec ?? "JPEG";
         WaktuKoneksi = DateTime.UtcNow;
 
+        System.Diagnostics.Debug.WriteLine($"[SESSION] MulaiSesi: SelectedCodec={SelectedCodec}");
         SetStatus(StatusKoneksi.TERHUBUNG);
     }
 
@@ -86,8 +93,10 @@ public class SessionService
         IzinKontrol = respon.IzinKontrol;
         IzinTransferBerkas = respon.IzinTransferBerkas;
         IzinClipboard = respon.IzinClipboard;
+        SelectedCodec = respon.SelectedCodec ?? "JPEG";
         WaktuKoneksi = DateTime.UtcNow;
 
+        System.Diagnostics.Debug.WriteLine($"[SESSION] MulaiSesiRelay: SelectedCodec={SelectedCodec}");
         SetStatus(StatusKoneksi.TERHUBUNG);
     }
 
@@ -101,6 +110,7 @@ public class SessionService
         IzinKontrol = false;
         IzinTransferBerkas = false;
         IzinClipboard = false;
+        SelectedCodec = "JPEG";
         WaktuKoneksi = null;
 
         SetStatus(StatusKoneksi.TIDAK_TERHUBUNG);

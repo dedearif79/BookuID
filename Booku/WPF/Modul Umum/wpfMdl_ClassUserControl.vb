@@ -1,4 +1,4 @@
-﻿Module wpfMdl_ClassUserControl
+Module wpfMdl_ClassUserControl
 
     '═══════════════════════════════════════════════════════════════════════════
     ' LOADING
@@ -21,6 +21,11 @@
     ' DATA MASTER - LAWAN TRANSAKSI / MITRA
     '═══════════════════════════════════════════════════════════════════════════
     Public usc_DataLawanTransaksi As New wpfUsc_DataLawanTransaksi
+
+    '═══════════════════════════════════════════════════════════════════════════
+    ' DATA MASTER - TOKO
+    '═══════════════════════════════════════════════════════════════════════════
+    Public usc_DataToko As New wpfUsc_DataToko
 
     '═══════════════════════════════════════════════════════════════════════════
     ' DATA MASTER - USER

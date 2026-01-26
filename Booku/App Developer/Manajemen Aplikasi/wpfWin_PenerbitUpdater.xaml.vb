@@ -1,5 +1,6 @@
 Imports System.IO
 Imports System.Windows
+Imports System.Windows.Controls
 Imports bcomm
 
 Public Class wpfWin_PenerbitUpdater
@@ -10,21 +11,37 @@ Public Class wpfWin_PenerbitUpdater
     Public urlPaketUpdater
     Public NamaFolderTempPaketBooku
     Public NamaFolderTempPaketUpdater
-    Public NamaFileZipPaketBooku
-    Public NamaFileZipPaketUpdater
     Public NamaFileExeUpdater
 
     Dim ProsesPenerbitanUpdater As Boolean
 
+    'Paket Booku:
+    Public NamaFileZipPaketBooku
     Dim folderPathProjectBooku As String
     Dim folderPathBookuFinal As String
     Dim folderPathTempBooku As String
     Dim zipFilePathBooku As String
-    Dim folderPathUpdater As String
-    Dim zipFilePathUpdater As String
 
-    Dim folderPathProjectBookuUpdater As String
+    'Paket Booku Assistant:
+    Public NamaFileZipPaketBookuAssistant
+    Dim folderPathProjectBookuAssistant As String
+    Dim folderPathBookuAssistantFinal As String
+    'Dim folderPathTempBookuAssistant As String
+    Dim zipFilePathBookuAssistant As String
+
+    'Paket Booku Remote:
+    Public NamaFileZipPaketBookuRemote
     Dim folderPathProjectBookuRemote As String
+    Dim folderPathBookuRemoteFinal As String
+    'Dim folderPathTempBookuRemote As String
+    Dim zipFilePathBookuRemote As String
+
+    'Updater:
+    Public NamaFileZipPaketUpdater
+    Dim zipFilePathUpdater As String
+    Dim folderPathUpdaterFinal As String
+    Dim folderPathProjectBookuUpdater As String
+
 
     Private Async Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
@@ -34,20 +51,34 @@ Public Class wpfWin_PenerbitUpdater
         chk_BuildBookuUpdater.IsChecked = False
         chk_BuildBookuRemote.IsChecked = False
 
-        chk_KompressPaketBoku.IsChecked = True
-        chk_UploadPaketBoku.IsChecked = True
+        chk_KompressPaketBooku.IsChecked = True
+        chk_UploadPaketBooku.IsChecked = True
         chk_KompressPaketUpdater.IsChecked = False
         chk_UploadPaketUpdater.IsChecked = False
         btn_Batal.Visibility = Visibility.Collapsed
 
+        'Paket Booku:
         folderPathProjectBooku = Path.Combine("D:\VB .Net Project\BookuID\Booku\")
-        folderPathProjectBookuUpdater = Path.Combine("D:\VB .Net Project\BookuID\Booku Updater\")
-        folderPathProjectBookuRemote = Path.Combine("D:\VB .Net Project\BookuID\Booku Remote\")
         folderPathBookuFinal = Path.Combine("D:\VB .Net Project\BookuID\Booku\bin\Release\Final\")
         folderPathTempBooku = Path.Combine(FolderRootBookuID, "TempBookuZip")
         zipFilePathBooku = Path.Combine(FolderRootBookuID, NamaFileZipPaketBooku)
-        folderPathUpdater = Path.Combine("D:\VB .Net Project\BookuID\Booku Updater\bin\Release\Final\")
+
+        'Paket Booku Assistant:
+        folderPathProjectBookuAssistant = Path.Combine("D:\VB .Net Project\BookuID\Booku Assistant\")
+        folderPathBookuAssistantFinal = Path.Combine("D:\VB .Net Project\BookuID\Booku Assistant\bin\Release\Final\")
+        'folderPathTempBookuAssistant = Path.Combine(FolderRootBookuID, "TempBookuAssistantZip")
+        zipFilePathBookuAssistant = Path.Combine(FolderRootBookuID, NamaFileZipPaketBookuAssistant)
+
+        'Paket Booku Remote:
+        folderPathProjectBookuRemote = Path.Combine("D:\VB .Net Project\BookuID\Booku Remote\")
+        folderPathBookuRemoteFinal = Path.Combine("D:\VB .Net Project\BookuID\Booku Remote\bin\Release\Final\")
+        'folderPathTempBookuRemote = Path.Combine(FolderRootBookuID, "TempBookuRemoteZip")
+        zipFilePathBookuRemote = Path.Combine(FolderRootBookuID, NamaFileZipPaketBookuRemote)
+
+        'Updater
+        folderPathProjectBookuUpdater = Path.Combine("D:\VB .Net Project\BookuID\Booku Updater\")
         zipFilePathUpdater = Path.Combine(FolderRootBookuID, NamaFileZipPaketUpdater)
+        folderPathUpdaterFinal = Path.Combine("D:\VB .Net Project\BookuID\Booku Updater\bin\Release\Final\")
 
         ProsesLoadingForm = False
 
@@ -65,34 +96,16 @@ Public Class wpfWin_PenerbitUpdater
         lbl_UploadPaketBooku.Text = Kosongan
         lbl_KompressPaketUpdater.Text = Kosongan
         lbl_UploadPaketUpdater.Text = Kosongan
+        lbl_KompressPaketBookuAssistant.Text = Kosongan
+        lbl_UploadPaketBookuAssistant.Text = Kosongan
+        lbl_KompressPaketBookuRemote.Text = Kosongan
+        lbl_UploadPaketBookuRemote.Text = Kosongan
     End Sub
 
 
-    Async Function BuildBooku() As Task
+    Async Function BuildProject(folderPathProject) As Task
         Dim po As New Process
-        po.StartInfo.FileName = Path.Combine(folderPathProjectBooku, "PUBLISH-RELEASE.bat")
-        po.StartInfo.WindowStyle = ProcessWindowStyle.Normal
-        Try
-            po.Start()
-            Await Task.Run(Sub() po.WaitForExit())  ' Tunggu sampai proses selesai
-        Catch ex As Exception
-        End Try
-    End Function
-
-    Async Function BuildBookuUpdater() As Task
-        Dim po As New Process
-        po.StartInfo.FileName = Path.Combine(folderPathProjectBookuUpdater, "PUBLISH-RELEASE.bat")
-        po.StartInfo.WindowStyle = ProcessWindowStyle.Normal
-        Try
-            po.Start()
-            Await Task.Run(Sub() po.WaitForExit())  ' Tunggu sampai proses selesai
-        Catch ex As Exception
-        End Try
-    End Function
-
-    Async Function BuildBookuRemote() As Task
-        Dim po As New Process
-        po.StartInfo.FileName = Path.Combine(folderPathProjectBookuRemote, "PUBLISH-RELEASE.bat")
+        po.StartInfo.FileName = Path.Combine(folderPathProject, "PUBLISH-RELEASE.bat")
         po.StartInfo.WindowStyle = ProcessWindowStyle.Normal
         Try
             po.Start()
@@ -115,13 +128,21 @@ Public Class wpfWin_PenerbitUpdater
 
         HapusFolderCache()
 
-        Await KompressPaketBooku()
+        'Paket Booku:
+        If chk_KompressPaketBooku.IsChecked Then Await KompressPaketBooku() ' Ini agak laen memang...!!!!
+        If chk_UploadPaketBooku.IsChecked Then Await UploadPaketAplikasi(zipFilePathBooku, NamaFileZipPaketBooku, pgb_UploadPaketBooku, lbl_UploadPaketBooku)
 
-        Await UploadPaketBooku()
+        'Paket Updater:
+        If chk_KompressPaketUpdater.IsChecked Then Await KompressPaketAplikasi(folderPathUpdaterFinal, zipFilePathUpdater, pgb_KompressPaketUpdater, lbl_KompressPaketUpdater)
+        If chk_UploadPaketUpdater.IsChecked Then Await UploadPaketAplikasi(zipFilePathUpdater, NamaFileZipPaketUpdater, pgb_UploadPaketUpdater, lbl_UploadPaketUpdater)
 
-        Await KompressPaketUpdater()
+        'Paket Booku Assistant:
+        If chk_KompressPaketBookuAssistant.IsChecked Then Await KompressPaketAplikasi(folderPathBookuAssistantFinal, zipFilePathBookuAssistant, pgb_KompressPaketBookuAssistant, lbl_KompressPaketBookuAssistant)
+        If chk_UploadPaketBookuAssistant.IsChecked Then Await UploadPaketAplikasi(zipFilePathBookuAssistant, NamaFileZipPaketBookuAssistant, pgb_UploadPaketBookuAssistant, lbl_UploadPaketBookuAssistant)
 
-        Await UploadPaketUpdater()
+        'Paket Booku Remote:
+        If chk_KompressPaketBookuRemote.IsChecked Then Await KompressPaketAplikasi(folderPathBookuRemoteFinal, zipFilePathBookuRemote, pgb_KompressPaketBookuRemote, lbl_KompressPaketBookuRemote)
+        If chk_UploadPaketBookuRemote.IsChecked Then Await UploadPaketAplikasi(zipFilePathBookuRemote, NamaFileZipPaketBookuRemote, pgb_UploadPaketBookuRemote, lbl_UploadPaketBookuRemote)
 
     End Sub
 
@@ -130,8 +151,6 @@ Public Class wpfWin_PenerbitUpdater
     End Sub
 
     Async Function KompressPaketBooku() As Task
-
-        If Not chk_KompressPaketBoku.IsChecked Then Return
 
         If ProsesPenerbitanUpdater Then
             SalinFolder(folderPathBookuFinal, folderPathTempBooku)
@@ -161,87 +180,57 @@ Public Class wpfWin_PenerbitUpdater
 
     End Function
 
-    Async Function UploadPaketBooku() As Task
-
-        If Not chk_UploadPaketBoku.IsChecked Then Return
+    Async Function UploadPaketAplikasi(zipFilePathAplikasi As String, NamaFileZipPaketAplikasi As String, pgb_ProgressBar As ProgressBar, lbl_TextBlock As TextBlock) As Task
 
         If ProsesPenerbitanUpdater Then
             UploadBerhasil = Await UploadFileAsync_MetodeChunked(
-                zipFilePathBooku,
-                urlFolderServerBookuID_Support & NamaFileZipPaketBooku,
+                zipFilePathAplikasi,
+                urlFolderServerBookuID_Support & NamaFileZipPaketAplikasi,
                 urlFileUplaodChunk_PHP,
                 urlFileMergeChunks_PHP,
-                pgb_UploadPaketBooku,
-                lbl_UploadPaketBooku)
+                pgb_ProgressBar,
+                lbl_TextBlock)
             LogikaProsesPenerbitanUpdater(UploadBerhasil)
         End If
 
         If ProsesPenerbitanUpdater Then
-            lbl_UploadPaketBooku.Text = "Sukses"
+            lbl_TextBlock.Text = "Sukses"
         Else
-            lbl_UploadPaketBooku.Text = "Gagal"
-            lbl_UploadPaketBooku.Foreground = clrWhite
-            pgb_UploadPaketBooku.Background = clrError
+            lbl_TextBlock.Text = "Gagal"
+            lbl_TextBlock.Foreground = clrWhite
+            pgb_ProgressBar.Background = clrError
         End If
 
         Jeda(999)
 
     End Function
 
-    Async Function KompressPaketUpdater() As Task
-
-        If Not chk_KompressPaketUpdater.IsChecked Then Return
+    Async Function KompressPaketAplikasi(folderPathAplikasiFinal As String, zipFilePathAplikasi As String, pgb_ProgressBar As ProgressBar, lbl_TextBlock As TextBlock) As Task
 
         If ProsesPenerbitanUpdater Then
-            Await KompressFile(folderPathUpdater, zipFilePathUpdater, pgb_KompressPaketUpdater, lbl_KompressPaketUpdater, 1, 100)
+            Await KompressFile(folderPathAplikasiFinal, zipFilePathAplikasi, pgb_ProgressBar, lbl_TextBlock, 1, 100)
             LogikaProsesPenerbitanUpdater(KompressBerhasil)
         End If
 
         If ProsesPenerbitanUpdater Then
-            lbl_KompressPaketUpdater.Text = "Sukses"
+            lbl_TextBlock.Text = "Sukses"
         Else
-            lbl_KompressPaketUpdater.Text = "Gagal"
-            lbl_KompressPaketUpdater.Foreground = clrWhite
-            pgb_KompressPaketUpdater.Background = clrError
+            lbl_TextBlock.Text = "Gagal"
+            lbl_TextBlock.Foreground = clrWhite
+            pgb_ProgressBar.Background = clrError
         End If
 
         Jeda(999)
-
-    End Function
-
-    Async Function UploadPaketUpdater() As Task
-
-        If Not chk_UploadPaketUpdater.IsChecked Then Return
-
-        If ProsesPenerbitanUpdater Then
-            UploadBerhasil = Await UploadFileAsync_MetodeChunked(
-                zipFilePathUpdater,
-                urlFolderServerBookuID_Support & NamaFileZipPaketUpdater,
-                urlFileUplaodChunk_PHP,
-                urlFileMergeChunks_PHP,
-                pgb_UploadPaketUpdater,
-                lbl_UploadPaketUpdater)
-            LogikaProsesPenerbitanUpdater(UploadBerhasil)
-        End If
-
-        Jeda(999)
-
-        If ProsesPenerbitanUpdater Then
-            lbl_UploadPaketUpdater.Text = "Sukses"
-            HapusPaket()
-        Else
-            lbl_UploadPaketUpdater.Text = "Gagal"
-            lbl_UploadPaketUpdater.Foreground = clrWhite
-            pgb_UploadPaketUpdater.Background = clrError
-        End If
 
     End Function
 
     Sub HapusPaket()
 
         If ProsesPenerbitanUpdater Then
-            If chk_UploadPaketBoku.IsChecked Then HapusFile(zipFilePathBooku)
+            If chk_UploadPaketBooku.IsChecked Then HapusFile(zipFilePathBooku)
             If chk_UploadPaketUpdater.IsChecked Then HapusFile(zipFilePathUpdater)
+            If chk_UploadPaketBookuAssistant.IsChecked Then HapusFile(zipFilePathBookuAssistant)
+            If chk_UploadPaketBookuRemote.IsChecked Then HapusFile(zipFilePathBookuRemote)
         End If
 
     End Sub
@@ -249,9 +238,10 @@ Public Class wpfWin_PenerbitUpdater
     Private Async Sub btn_Build_Click(sender As Object, e As RoutedEventArgs) Handles btn_Build.Click
 
         btn_Build.IsEnabled = False
-        If chk_BuildBooku.IsChecked Then Await BuildBooku()
-        If chk_BuildBookuUpdater.IsChecked Then Await BuildBookuUpdater()
-        If chk_BuildBookuRemote.IsChecked Then Await BuildBookuRemote()
+        If chk_BuildBooku.IsChecked Then Await BuildProject(folderPathProjectBooku)
+        If chk_BuildBookuUpdater.IsChecked Then Await BuildProject(folderPathProjectBookuUpdater)
+        If chk_BuildBookuAssistant.IsChecked Then Await BuildProject(folderPathProjectBookuAssistant)
+        If chk_BuildBookuRemote.IsChecked Then Await BuildProject(folderPathProjectBookuRemote)
         btn_Build.IsEnabled = True
 
     End Sub

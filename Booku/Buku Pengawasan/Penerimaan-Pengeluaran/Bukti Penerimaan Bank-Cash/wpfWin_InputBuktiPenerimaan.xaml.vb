@@ -2726,6 +2726,8 @@ Public Class wpfWin_InputBuktiPenerimaan
         VisibilitasModal(False)
         VisibilitasSaldoAwalHutang(False)
         VisibilitasBiayaKontrakBankLeasing(False)
+        scv_Kiri.MaxHeight = TinggiMaximalScrollViewerFormDialogVertikal
+        scv_Kanan.MaxHeight = TinggiMaximalScrollViewerFormDialogVertikal
     End Sub
 
     Public datatabelUtama As DataTable

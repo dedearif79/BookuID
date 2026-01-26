@@ -33,13 +33,18 @@ Booku Remote/
 │   ├── cls_FrameLayar.vb         # Model frame layar (screenshot)
 │   ├── cls_SesiRemote.vb         # State management sesi remote
 │   ├── cls_PaketData.vb          # Payload classes untuk protokol
-│   └── cls_SetelPort.vb          # Konfigurasi port (load/save JSON)
+│   ├── cls_SetelPort.vb          # Konfigurasi port (load/save JSON)
+│   ├── cls_UdpPacket.vb          # UDP packet model + chunking/reassembly
+│   ├── cls_H264Encoder.vb        # FFmpeg H.264 encoder wrapper
+│   └── cls_NalParser.vb          # NAL unit parser untuk H.264 stream
 │
 ├── Modul/                        # Module files
 │   ├── mdl_VariabelUmum.vb       # Variabel global, enum, konstanta
 │   ├── mdl_PenemuanPerangkat.vb  # Discovery perangkat di LAN (UDP)
 │   ├── mdl_KoneksiJaringan.vb    # Koneksi TCP dan streaming (LAN)
 │   ├── mdl_KoneksiRelay.vb       # Koneksi via Relay Server (Internet)
+│   ├── mdl_UdpStreaming.vb       # UDP video streaming (sender/receiver) + H.264 integration
+│   ├── mdl_FFmpegManager.vb      # FFmpeg process lifecycle management
 │   ├── mdl_Protokol.vb           # Serialisasi/deserialisasi paket
 │   ├── mdl_TangkapLayar.vb       # Screen capture
 │   └── mdl_InjeksiInput.vb       # Keyboard/mouse injection (SendInput API)
@@ -72,15 +77,57 @@ Booku Remote/
 
 ## Arsitektur Jaringan
 
+### Arsitektur Hybrid TCP/UDP
+
+Booku Remote menggunakan arsitektur **hybrid TCP/UDP** untuk performa optimal:
+
+| Layer | Protokol | Kegunaan |
+|-------|----------|----------|
+| **Control Plane** | TCP | Login, input keyboard/mouse, heartbeat |
+| **Data Plane** | UDP | Video frames (high-throughput, low-latency) |
+
 ### Port yang Digunakan
 
 | Port | Protokol | Lokasi | Kegunaan |
 |------|----------|--------|----------|
 | `45678` | UDP | LAN | Discovery perangkat (broadcast) |
-| `45679` | TCP | LAN | Koneksi langsung (data, frame, input) |
+| `45679` | TCP | LAN | Koneksi langsung (control plane) |
 | `45680` | TCP | VPS | Relay Server (koneksi via internet) |
+| `45681` | **UDP** | LAN/Relay | **Video streaming** (data plane) |
 
 > **Catatan:** Semua port di atas adalah nilai **default** dan dapat dikonfigurasi manual melalui UI di window Host atau Tamu. Settings disimpan ke file JSON di `%AppData%\BookuID\Booku Remote\port-settings.json`.
+
+### UDP Packet Structure (Video Streaming)
+
+```
+┌────────────────────────────────────────────────────────────┐
+│  UDP Packet (max 1216 bytes)                               │
+├────────────────────────────────────────────────────────────┤
+│  Header (16 bytes)                                         │
+│  ├── SessionId     (4 bytes) - Routing key                 │
+│  ├── FrameId       (4 bytes) - Frame sequence number       │
+│  ├── ChunkIndex    (2 bytes) - Chunk number (0-based)      │
+│  ├── ChunkCount    (2 bytes) - Total chunks in frame       │
+│  └── TimestampMs   (4 bytes) - Capture timestamp           │
+├────────────────────────────────────────────────────────────┤
+│  Payload (max 1200 bytes)                                  │
+│  ├── CodecType     (1 byte)  - 0x00=JPEG, 0x01=H.264       │
+│  └── VideoData     (max 1199 bytes) - JPEG/H.264 chunk     │
+└────────────────────────────────────────────────────────────┘
+```
+
+**Video Codec Support:**
+| Codec | CodecType | Keterangan |
+|-------|-----------|------------|
+| **JPEG** | `0x00` | Default, backward compatible |
+| **H.264** | `0x01` | Low-latency encoding via FFmpeg |
+
+**Keunggulan UDP Streaming:**
+- **Latency rendah** - Tidak ada TCP acknowledgment overhead
+- **Frame dropping** - Timeout 100ms, frame lama diabaikan
+- **MTU-safe** - Chunk size 1200 bytes menghindari fragmentasi
+- **Multi-codec** - Support JPEG dan H.264
+- **Backward compatible** - JPEG fallback jika FFmpeg tidak tersedia
 
 ### Tipe Paket (Protokol)
 
@@ -304,9 +351,11 @@ Berisi konstanta, enum, dan variabel global:
 
 | Kategori | Contoh |
 |----------|--------|
-| **Konstanta Port Default** | `DEFAULT_PORT_DISCOVERY = 45678`, `DEFAULT_PORT_KONEKSI = 45679`, `DEFAULT_PORT_RELAY = 45680` |
-| **Port Aktif (Runtime)** | `PortDiscoveryAktif`, `PortKoneksiAktif`, `PortRelayAktif`, `RelayServerIPAktif` |
-| **Settings Object** | `SetelPortAktif As cls_SetelPort` — instance untuk load/save port settings |
+| **Konstanta Port Default** | `DEFAULT_PORT_DISCOVERY = 45678`, `DEFAULT_PORT_KONEKSI = 45679`, `DEFAULT_PORT_RELAY = 45680`, `DEFAULT_PORT_UDP_VIDEO = 45681` |
+| **Konstanta FPS** | `DEFAULT_TARGET_FPS = 15`, `MIN_TARGET_FPS = 5`, `MAX_TARGET_FPS = 30` |
+| **Port Aktif (Runtime)** | `PortDiscoveryAktif`, `PortKoneksiAktif`, `PortRelayAktif`, `PortUdpVideoAktif`, `RelayServerIPAktif` |
+| **FPS Aktif (Runtime)** | `TargetFPSAktif` — diambil dari `SetelPortAktif.TargetFPS` |
+| **Settings Object** | `SetelPortAktif As cls_SetelPort` — instance untuk load/save port & streaming settings |
 | **Timeout** | `TIMEOUT_DISCOVERY = 3000ms`, `TIMEOUT_KONEKSI = 10000ms` |
 | **Enum Status** | `StatusKoneksi`, `ModeAplikasi`, `TipeAksiMouse` |
 | **Variabel Global** | `ModeAplikasiSaatIni`, `StatusKoneksiSaatIni`, `KunciSesiAktif` |
@@ -364,7 +413,69 @@ Serialisasi dan deserialisasi paket data.
 | `SerializeInputKeyboard()` | Serialize input keyboard ke JSON |
 | `SerializeInputMouse()` | Serialize input mouse ke JSON |
 
-### 7. mdl_KoneksiRelay.vb
+### 7. mdl_UdpStreaming.vb
+
+Menangani UDP video streaming untuk performa tinggi dengan dukungan multi-codec (JPEG dan H.264).
+
+| Fungsi | Deskripsi |
+|--------|-----------|
+| `MulaiUdpSender()` | Host: Mulai UDP sender |
+| `KirimFrameUdpAsync()` | Host: Kirim frame JPEG via UDP (LAN direct) |
+| `KirimFrameViaRelayAsync()` | Host: Kirim frame via UDP relay |
+| `KirimH264NalUnitViaUdp()` | Host: Kirim NAL unit H.264 via UDP |
+| `MulaiUdpReceiverAsync()` | Tamu: Mulai UDP receiver |
+| `HentikanUdpStreaming()` | Stop UDP streaming |
+| `GenerateSessionId()` | Generate SessionId dari KunciSesi (djb2 hash) |
+| `MulaiH264EncoderAsync()` | Host: Mulai FFmpeg H.264 encoder |
+| `HentikanH264Encoder()` | Host: Hentikan FFmpeg encoder |
+
+| Event | Deskripsi |
+|-------|-----------|
+| `FrameUdpDiterima` | Raised ketika frame lengkap diterima |
+| `StatistikUdp` | Raised setiap 1 detik dengan info packets/FPS |
+
+| Class Pendukung | Deskripsi |
+|-----------------|-----------|
+| `cls_UdpPacket` | Model UDP packet dengan header 16 byte + CodecType |
+| `cls_UdpFrameChunker` | Memecah frame JPEG/H.264 menjadi chunks |
+| `cls_UdpFrameAssembler` | Menyusun chunks menjadi frame lengkap |
+| `UdpConstants` | Konstanta UDP (header size, max payload, codec types) |
+
+> **PENTING - SessionId Hash:** `GenerateSessionId()` menggunakan **djb2 hash algorithm** (bukan `GetHashCode()`) untuk konsistensi cross-platform. Relay Server dan Android juga menggunakan algoritma yang sama. Lihat dokumentasi Relay untuk detail.
+
+### 7a. H.264 Encoding Components (Host)
+
+| Komponen | File | Deskripsi |
+|----------|------|-----------|
+| **FFmpeg Manager** | `mdl_FFmpegManager.vb` | Deteksi FFmpeg, lifecycle management |
+| **H.264 Encoder** | `cls_H264Encoder.vb` | Wrapper FFmpeg via stdin/stdout pipe |
+| **NAL Parser** | `cls_NalParser.vb` | Parse NAL units dari H.264 stream |
+
+**Alur H.264 Encoding:**
+```
+Screen Capture (BGRA) → FFmpeg stdin → H.264 stream → NAL Parser → UDP Chunker → Send
+```
+
+**FFmpeg Settings (Low-Latency):**
+```bash
+ffmpeg -f rawvideo -pix_fmt bgra -s [W]x[H] -r [FPS] -i pipe:0 \
+       -c:v libx264 -preset ultrafast -tune zerolatency \
+       -profile:v baseline -level 3.0 -pix_fmt yuv420p \
+       -x264-params "bframes=0:keyint=30:min-keyint=30" \
+       -f h264 pipe:1
+```
+
+**NAL Unit Types:**
+| Type | Deskripsi | Handling |
+|------|-----------|----------|
+| 7 (SPS) | Sequence Parameter Set | Disimpan, dikirim dengan keyframe |
+| 8 (PPS) | Picture Parameter Set | Disimpan, dikirim dengan keyframe |
+| 5 (IDR) | Keyframe | Dikirim dengan SPS+PPS prepended |
+| 1 (Non-IDR) | P-frame | Dikirim langsung (setelah keyframe pertama) |
+
+> **PENTING:** Host akan skip non-keyframe NAL units sampai keyframe pertama dengan SPS/PPS terkirim. Ini memastikan decoder di client bisa initialize dengan benar.
+
+### 8. mdl_KoneksiRelay.vb
 
 Menangani koneksi ke Relay Server untuk remote via internet.
 
@@ -385,9 +496,9 @@ Menangani koneksi ke Relay Server untuk remote via internet.
 | `HostCodeSaatIni` | HostCode yang didapat setelah register |
 | `StatusKoneksiRelay` | Status koneksi ke relay |
 
-## Konfigurasi Port
+## Konfigurasi Port dan Streaming
 
-Port jaringan dapat dikonfigurasi manual melalui UI (Expander "Pengaturan Port" di window Host/Tamu).
+Port jaringan dan parameter streaming dapat dikonfigurasi manual melalui UI di window Host/Tamu.
 
 ### File dan Lokasi
 
@@ -396,22 +507,25 @@ Port jaringan dapat dikonfigurasi manual melalui UI (Expander "Pengaturan Port" 
 | **Class Settings** | `Kelas/cls_SetelPort.vb` |
 | **File JSON** | `%AppData%\BookuID\Booku Remote\port-settings.json` |
 
-### Port yang Dapat Dikonfigurasi
+### Parameter yang Dapat Dikonfigurasi
 
-| Port | Default | Deskripsi |
-|------|---------|-----------|
-| `PortDiscovery` | 45678 | UDP broadcast untuk discovery LAN |
-| `PortKoneksi` | 45679 | TCP koneksi remote LAN |
-| `PortRelay` | 45680 | TCP koneksi via relay server |
-| `RelayServerIP` | 155.117.43.209 | Alamat IP relay server |
+| Parameter | Default | Range | Deskripsi |
+|-----------|---------|-------|-----------|
+| `PortDiscovery` | 45678 | - | UDP broadcast untuk discovery LAN |
+| `PortKoneksi` | 45679 | - | TCP koneksi remote LAN (control plane) |
+| `PortRelay` | 45680 | - | TCP koneksi via relay server |
+| `PortUdpVideo` | 45681 | - | **UDP video streaming** (data plane) |
+| `RelayServerIP` | 155.117.43.209 | - | Alamat IP relay server |
+| `TargetFPS` | **15** | **5-30** | **Frame rate streaming (slider)** |
 
 ### Cara Kerja
 
 1. **Startup:** `MuatSetelPort()` dipanggil di `InisialisasiVariabelUmum()` untuk load settings dari file JSON
-2. **Runtime:** Variabel `PortDiscoveryAktif`, `PortKoneksiAktif`, `PortRelayAktif`, `RelayServerIPAktif` digunakan
-3. **UI:** User dapat mengubah port via Expander di window Host/Tamu
-4. **Simpan:** Perubahan disimpan ke file JSON via `SetelPortAktif.SimpanKeFile()`
-5. **Reset:** Tombol "Reset ke Default" mengembalikan ke nilai default
+2. **Runtime:** Variabel `PortDiscoveryAktif`, `PortKoneksiAktif`, `PortRelayAktif`, `RelayServerIPAktif`, `TargetFPSAktif` digunakan
+3. **UI (Port):** User dapat mengubah port via Expander "Pengaturan Port" di window Host/Tamu
+4. **UI (FPS):** User dapat mengubah FPS via slider di Expander "Pengaturan Streaming" di window Host
+5. **Simpan:** Perubahan disimpan ke file JSON via `SetelPortAktif.SimpanKeFile()`
+6. **Reset:** Tombol "Reset ke Default" mengembalikan ke nilai default
 
 ## Window dan UI
 
@@ -436,7 +550,8 @@ Window Host yang menunggu koneksi (LAN atau Internet).
 | `lbl_HostCode` | HostCode untuk mode Internet |
 | `txt_Password` | Password opsional untuk koneksi |
 | `btn_Hentikan` | Hentikan mode Host |
-| **Expander "Pengaturan Port"** | Konfigurasi port Discovery, Koneksi, Relay, dan Relay Server IP |
+| **Expander "Pengaturan Port"** | Konfigurasi port Discovery, Koneksi, Relay, UDP Video, dan Relay Server IP |
+| **Expander "Pengaturan Streaming"** | **Slider untuk Target FPS (5-30, default 15)** |
 
 ### wpfWin_ModeTamu
 
@@ -478,12 +593,14 @@ Window Viewer di Tamu untuk melihat dan mengontrol layar Host.
 
 ## Konfigurasi Streaming
 
-| Parameter | Nilai Default | Deskripsi |
-|-----------|---------------|-----------|
-| Skala Frame | 0.35 (35%) | Skala screenshot |
-| Target FPS | 20 | Frame per second |
-| JPEG Quality | 30 | Kualitas kompresi JPEG |
-| Mouse Throttle | 30ms | Interval minimum mouse move |
+| Parameter | Nilai Default | Range | Deskripsi |
+|-----------|---------------|-------|-----------|
+| Skala Frame | 0.35 (35%) | - | Skala screenshot |
+| **Target FPS** | **15** | **5-30** | **Frame per second (dapat dikonfigurasi via slider di Host)** |
+| JPEG Quality | 30 | - | Kualitas kompresi JPEG |
+| Mouse Throttle | 30ms | - | Interval minimum mouse move |
+
+> **Catatan:** Target FPS dapat diubah melalui slider di Expander "Pengaturan Streaming" pada window Host. Nilai lebih rendah mengurangi beban bandwidth dan CPU, berguna jika client (terutama Android) mengalami lag atau crash.
 
 ## Keamanan
 
@@ -508,10 +625,14 @@ Window Viewer di Tamu untuk melihat dan mengontrol layar Host.
 | Discovery UDP | Selesai | Broadcast + Response |
 | Koneksi TCP (LAN) | Selesai | Handshake + Heartbeat |
 | Koneksi Relay (Internet) | Selesai | Via VPS 155.117.43.209:45680 |
-| Screen Streaming | Selesai | JPEG compression |
+| Screen Streaming (TCP) | Selesai | JPEG compression, fallback mode |
+| **Screen Streaming (UDP/JPEG)** | **Selesai** | **Port 45681, chunking/reassembly, low-latency** |
+| **Screen Streaming (UDP/H.264) Host** | **Selesai** | **FFmpeg encoder, NAL parsing, codec routing** |
+| **Screen Streaming (UDP/H.264) Tamu WPF** | **Testing** | **FFmpeg decoder (cls_H264Decoder), BGRA render** |
 | Keyboard Control | Selesai | SendInput API |
 | Mouse Control | Selesai | Move, Click, Wheel |
 | **Port Settings** | Selesai | Configurable via UI, JSON persistence |
+| **FPS Settings** | **Selesai** | **Slider 5-30 FPS di Host, default 15** |
 | File Transfer | Belum | Fase 3 |
 | Clipboard Sync | Belum | Fase 3 |
 

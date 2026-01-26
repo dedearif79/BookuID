@@ -19,6 +19,9 @@ Public Module mdl_VariabelUmum
     ''' <summary>Port TCP default untuk relay server (internet)</summary>
     Public Const PORT_RELAY As Integer = cls_SetelPort.DEFAULT_PORT_RELAY
 
+    ''' <summary>Port UDP default untuk video streaming</summary>
+    Public Const PORT_UDP_VIDEO As Integer = cls_SetelPort.DEFAULT_PORT_UDP_VIDEO
+
     ''' <summary>Magic string untuk identifikasi broadcast discovery</summary>
     Public Const MAGIC_DISCOVERY As String = "BOOKU_REMOTE_DISCOVERY"
 
@@ -98,6 +101,16 @@ Public Module mdl_VariabelUmum
     End Property
 
     ''' <summary>
+    ''' Mendapatkan port UDP video aktif. Fallback ke default jika SetelPortAktif belum dimuat.
+    ''' </summary>
+    Public ReadOnly Property PortUdpVideoAktif As Integer
+        Get
+            If SetelPortAktif Is Nothing Then Return PORT_UDP_VIDEO
+            Return SetelPortAktif.PortUdpVideo
+        End Get
+    End Property
+
+    ''' <summary>
     ''' Mendapatkan IP relay server aktif. Fallback ke default jika SetelPortAktif belum dimuat.
     ''' </summary>
     Public ReadOnly Property RelayServerIPAktif As String
@@ -113,6 +126,16 @@ Public Module mdl_VariabelUmum
     Public ReadOnly Property RelayServerAddressAktif As String
         Get
             Return $"{RelayServerIPAktif}:{PortRelayAktif}"
+        End Get
+    End Property
+
+    ''' <summary>
+    ''' Mendapatkan target FPS aktif. Fallback ke default jika SetelPortAktif belum dimuat.
+    ''' </summary>
+    Public ReadOnly Property TargetFPSAktif As Integer
+        Get
+            If SetelPortAktif Is Nothing Then Return cls_SetelPort.DEFAULT_TARGET_FPS
+            Return SetelPortAktif.TargetFPS
         End Get
     End Property
 
@@ -255,6 +278,16 @@ Public Module mdl_VariabelUmum
         INTERNET = 2
     End Enum
 
+    ''' <summary>
+    ''' Tipe codec video untuk streaming.
+    ''' </summary>
+    Public Enum TipeKodek
+        ''' <summary>JPEG per-frame (default, kompatibel dengan semua client)</summary>
+        JPEG = 0
+        ''' <summary>H.264 video codec (lebih efisien, memerlukan FFmpeg)</summary>
+        H264 = 1
+    End Enum
+
 #End Region
 
 #Region "Variabel Global"
@@ -274,6 +307,9 @@ Public Module mdl_VariabelUmum
     ''' <summary>Kunci sesi untuk enkripsi (digenerate saat koneksi dibuat)</summary>
     Public KunciSesiAktif As String = ""
 
+    ''' <summary>ID Sesi dari Relay server (berbeda dari KunciSesi)</summary>
+    Public IdSesiRelay As String = ""
+
     ''' <summary>Sesi remote aktif (state management streaming)</summary>
     Public SesiRemoteAktif As cls_SesiRemote = Nothing
 
@@ -285,6 +321,12 @@ Public Module mdl_VariabelUmum
 
     ''' <summary>Flag apakah terhubung ke relay server</summary>
     Public TerhubungKeRelay As Boolean = False
+
+    ''' <summary>Codec video yang digunakan untuk streaming saat ini</summary>
+    Public KodekAktif As TipeKodek = TipeKodek.JPEG
+
+    ''' <summary>Flag apakah FFmpeg tersedia di sistem</summary>
+    Public FFmpegTersedia As Boolean = False
 
 #End Region
 

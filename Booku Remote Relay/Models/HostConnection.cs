@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Sockets;
 
 namespace BookuRemoteRelay.Models;
@@ -66,6 +67,16 @@ public class HostConnection
     /// ID sesi aktif (jika sedang dalam sesi dengan Tamu).
     /// </summary>
     public string? ActiveSessionId { get; set; }
+
+    /// <summary>
+    /// UDP endpoint untuk video streaming (IP:Port dari paket UDP pertama).
+    /// </summary>
+    public IPEndPoint? UdpEndPoint { get; set; }
+
+    /// <summary>
+    /// UDP Session ID (integer hash dari SessionId untuk routing UDP).
+    /// </summary>
+    public int UdpSessionId { get; set; }
 
     /// <summary>
     /// Cek apakah koneksi masih valid (belum expired dan masih terhubung).
@@ -153,6 +164,16 @@ public class TamuConnection
     /// ID sesi aktif (jika sedang dalam sesi dengan Host).
     /// </summary>
     public string? ActiveSessionId { get; set; }
+
+    /// <summary>
+    /// UDP endpoint untuk video streaming (IP:Port dari paket UDP pertama).
+    /// </summary>
+    public IPEndPoint? UdpEndPoint { get; set; }
+
+    /// <summary>
+    /// UDP Session ID (integer hash dari SessionId untuk routing UDP).
+    /// </summary>
+    public int UdpSessionId { get; set; }
 
     /// <summary>
     /// Cek apakah koneksi masih valid.

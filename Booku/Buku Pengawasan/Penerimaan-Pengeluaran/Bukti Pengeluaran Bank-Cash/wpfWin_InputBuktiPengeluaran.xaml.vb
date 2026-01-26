@@ -2912,6 +2912,8 @@ Public Class wpfWin_InputBuktiPengeluaran
         cmb_DitanggungOleh.IsReadOnly = True
         txt_JumlahTransfer.IsReadOnly = True
         txt_TotalBank.IsReadOnly = True
+        scv_Kiri.MaxHeight = TinggiMaximalScrollViewerFormDialogVertikal
+        scv_Kanan.MaxHeight = TinggiMaximalScrollViewerFormDialogVertikal
     End Sub
 
     Public datatabelUtama As DataTable

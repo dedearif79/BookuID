@@ -1,14 +1,16 @@
-﻿' Suppress warning untuk FtpWebRequest yang sudah obsolete tapi tidak ada pengganti langsung di .NET modern
+' Suppress warning untuk FtpWebRequest yang sudah obsolete tapi tidak ada pengganti langsung di .NET modern
 ' Microsoft merekomendasikan library pihak ketiga (seperti FluentFTP) untuk FTP di .NET 5+
 ' FtpWebRequest masih berfungsi, hanya ditandai obsolete
 #Disable Warning SYSLIB0014
 
+Imports System.Diagnostics
 Imports System.Globalization
 Imports System.IO
 Imports System.IO.Compression
 Imports System.Net
 Imports System.Net.Http
 Imports System.Net.Http.Headers
+Imports System.Runtime.InteropServices
 Imports System.Security.Cryptography
 Imports System.Text.Json
 Imports System.Threading
@@ -19,6 +21,24 @@ Imports System.Windows.Threading
 
 
 Public Module mdlPub_ModulUmum
+
+    ' =================================================================
+    ' WINDOWS API DECLARATIONS
+    ' =================================================================
+    <DllImport("user32.dll")>
+    Private Function SetForegroundWindow(hWnd As IntPtr) As Boolean
+    End Function
+
+    <DllImport("user32.dll")>
+    Private Function ShowWindow(hWnd As IntPtr, nCmdShow As Integer) As Boolean
+    End Function
+
+    <DllImport("user32.dll")>
+    Private Function IsIconic(hWnd As IntPtr) As Boolean
+    End Function
+
+    Private Const SW_RESTORE As Integer = 9
+    ' =================================================================
 
     Public FolderRootBookuID As String = "C:\BookuID\"
 
@@ -1312,7 +1332,48 @@ Public Module mdlPub_ModulUmum
     End Sub
 
 
-    Sub JalankanAplikasi(filePathExe)
+    ''' <summary>
+    ''' Menjalankan aplikasi dari path yang ditentukan.
+    ''' Jika aplikasi sudah berjalan, fokuskan ke window yang ada.
+    ''' Jika belum berjalan, jalankan aplikasi baru.
+    ''' </summary>
+    ''' <param name="filePathExe">Path lengkap ke file executable</param>
+    Sub JalankanAplikasi(filePathExe As String)
+        Try
+            ' Ambil nama process tanpa extension (misal: "Booku" dari "C:\BookuID\Booku\Booku.exe")
+            Dim namaProcess As String = Path.GetFileNameWithoutExtension(filePathExe)
+
+            ' Cari process yang sudah berjalan dengan nama tersebut
+            Dim prosesYangBerjalan() As Process = Process.GetProcessesByName(namaProcess)
+
+            If prosesYangBerjalan.Length > 0 Then
+                ' Aplikasi sudah berjalan - fokuskan ke window yang ada
+                For Each proses As Process In prosesYangBerjalan
+                    Dim hWnd As IntPtr = proses.MainWindowHandle
+                    If hWnd <> IntPtr.Zero Then
+                        ' Jika window sedang minimized, restore dulu
+                        If IsIconic(hWnd) Then
+                            ShowWindow(hWnd, SW_RESTORE)
+                        End If
+                        ' Bawa window ke depan (fokus)
+                        SetForegroundWindow(hWnd)
+                        Exit For
+                    End If
+                Next
+            Else
+                ' Aplikasi belum berjalan - jalankan baru
+                Dim po As New Process
+                po.StartInfo.FileName = filePathExe
+                po.StartInfo.WindowStyle = ProcessWindowStyle.Normal
+                po.Start()
+            End If
+        Catch ex As Exception
+            ' Silent fail - tidak perlu menampilkan error
+        End Try
+    End Sub
+
+
+    Sub JalankanAplikasiPaksa(filePathExe)
         Dim po As New Process
         po.StartInfo.FileName = filePathExe
         po.StartInfo.WindowStyle = ProcessWindowStyle.Normal

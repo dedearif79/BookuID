@@ -54,6 +54,12 @@ Module wpfMdl_ClassWindow
     Public win_ListLawanTransaksi As New wpfWin_ListLawanTransaksi
 
     '═══════════════════════════════════════════════════════════════════════════
+    ' DATA MASTER - TOKO
+    '═══════════════════════════════════════════════════════════════════════════
+    Public win_InputToko As New wpfWin_InputToko
+    Public win_ListToko As New wpfWin_ListToko
+
+    '═══════════════════════════════════════════════════════════════════════════
     ' DATA MASTER - USER
     '═══════════════════════════════════════════════════════════════════════════
     Public win_InputUser As New wpfWin_InputUser

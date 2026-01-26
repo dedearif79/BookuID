@@ -85,22 +85,42 @@
                 </VerticalStackLayout>
             </Frame>
 
-            <!-- Relay Server Port -->
+            <!-- Relay Server Port (TCP) -->
             <Frame BackgroundColor="{StaticResource Surface}"
                    BorderColor="{StaticResource Neutral300}"
                    CornerRadius="12"
                    Padding="16"
                    HasShadow="False">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="Port Relay Server"
+                    <Label Text="Port Relay Server (TCP)"
                            FontSize="14"
                            FontAttributes="Bold"
                            TextColor="{StaticResource TextPrimary}" />
-                    <Label Text="Port koneksi ke relay server"
+                    <Label Text="Port koneksi TCP ke relay server"
                            FontSize="12"
                            TextColor="{StaticResource TextSecondary}" />
                     <Entry x:Name="entryPortRelay"
                            Placeholder="45680"
+                           Keyboard="Numeric" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- UDP Video Port -->
+            <Frame BackgroundColor="{StaticResource Surface}"
+                   BorderColor="{StaticResource Neutral300}"
+                   CornerRadius="12"
+                   Padding="16"
+                   HasShadow="False">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="Port UDP Video"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+                    <Label Text="Port untuk streaming video via UDP (performa tinggi)"
+                           FontSize="12"
+                           TextColor="{StaticResource TextSecondary}" />
+                    <Entry x:Name="entryPortUdpVideo"
+                           Placeholder="45681"
                            Keyboard="Numeric" />
                 </VerticalStackLayout>
             </Frame>

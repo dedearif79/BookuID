@@ -15,16 +15,19 @@
 | **Namespace** | `Booku_Assistant` |
 | **Target Framework** | .NET 8.0 Windows |
 | **Arsitektur** | WPF dengan UserControl pattern |
-| **Entry Point** | `Application.xaml` → `wpfWin_StartUp.xaml` |
+| **Entry Point** | `Application.xaml` → `App.Main()` → `wpfWin_StartUp.xaml` |
+| **Single Instance** | Ya (Mutex protection) |
+| **Single Executable** | Ya (Self-contained, compressed) |
 
 ## Struktur File
 
 ```
 Booku Assistant/
-├── Booku Assistant.vbproj        # Project file
+├── Booku Assistant.vbproj        # Project file (dengan Release config)
 ├── Application.xaml              # Application entry point (merge StyleAplikasi.xaml)
-├── Application.xaml.vb           # Application code-behind
+├── Application.xaml.vb           # Application code-behind (Mutex + Single Instance)
 ├── AssemblyInfo.vb               # Assembly information
+├── PUBLISH-RELEASE.bat           # Script build Release
 ├── wpfWin_StartUp.xaml           # Main window (header + TabControl + ContentControl)
 ├── wpfWin_StartUp.xaml.vb        # Window controls + set Content tab ke UserControl
 │
@@ -220,6 +223,60 @@ Dari `StyleColor.xaml`:
 7. **Validasi**: Selalu cek `File.Exists()` sebelum menjalankan aplikasi
 8. **Icon**: Gunakan Segoe MDL2 Assets font untuk icon (karakter Unicode)
 
+## Fitur Keamanan & Optimasi
+
+| Fitur | Status | Implementasi |
+|-------|--------|--------------|
+| **Single Instance** | Selesai | Mutex protection (`BookuAssistantSingleInstance`) |
+| **Single Executable** | Selesai | Self-contained, compressed |
+| **Compression** | Selesai | `EnableCompressionInSingleFile=true` |
+
+> **Catatan:** WPF tidak mendukung IL Trimming. Untuk obfuscation, gunakan tool terpisah seperti Obfuscar.
+
+### Single Instance (Mutex)
+
+Aplikasi menggunakan Mutex untuk mencegah multiple instance:
+
+```vb
+' Di Application.xaml.vb (Static Constructor)
+Dim appName As String = "BookuAssistantSingleInstance"
+MutexApp = New Mutex(True, appName, createdNew)
+
+If Not createdNew Then
+    FocusExistingApp()
+    Environment.Exit(0)
+End If
+```
+
+Jika aplikasi sudah berjalan, instance baru akan fokus ke window yang ada dan keluar.
+
+## Build Release
+
+### Menggunakan Script (Recommended)
+
+```batch
+cd "D:\vb .net project\BookuID\Booku Assistant"
+PUBLISH-RELEASE.bat
+```
+
+### Manual Build
+
+```batch
+dotnet publish "Booku Assistant.vbproj" -c Release -o "bin\Release\Final"
+```
+
+### Output Release
+
+```
+bin/Release/Final/Booku Assistant.exe  (Single executable)
+```
+
+**Fitur Release Build:**
+- Single executable (tidak perlu file DLL tambahan)
+- Self-contained (.NET runtime sudah include)
+- Compressed (ukuran file lebih kecil)
+- No debug symbols (menyulitkan debugging)
+
 ## Status Pengembangan
 
 | Fitur | Status | Catatan |
@@ -231,3 +288,5 @@ Dari `StyleColor.xaml`:
 | Launcher Booku Remote | Selesai | Validasi ketersediaan |
 | UserControl Pattern | Selesai | Refactored dari inline content |
 | Modern UI | Selesai | Borderless window dengan custom header |
+| **Single Instance** | Selesai | Mutex protection |
+| **Single Executable** | Selesai | Self-contained, compressed |

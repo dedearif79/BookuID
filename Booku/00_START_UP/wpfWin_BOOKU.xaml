@@ -115,6 +115,7 @@
                 <MenuItem Header="Data User" Name="mnu_DataUser"/>
                 <MenuItem Header="Data COA" Name="mnu_DataCOA"/>
                 <MenuItem Header="Data Lawan Transaksi" Name="mnu_DataLawanTransaksi"/>
+                <MenuItem Header="Data Toko" Name="mnu_DataToko"/>
                 <MenuItem Header="Data Karyawan" Name="mnu_DataKaryawan"/>
                 <MenuItem Header="Daftar Pemegang Saham" Name="mnu_DaftarPemegangSaham"/>
                 <MenuItem Header="Data Project" Name="mnu_DataProject"/>

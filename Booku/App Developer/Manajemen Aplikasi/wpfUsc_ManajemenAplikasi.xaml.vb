@@ -1,4 +1,4 @@
-﻿Imports System.IO
+Imports System.IO
 Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
@@ -26,6 +26,8 @@ Public Class wpfUsc_ManajemenAplikasi
     Dim NamaFolderTempPaketInstaller
     Dim NamaFolderTempPaketUpdater
     Dim NamaFileZipPaketBooku
+    Dim NamaFileZipPaketBookuAssistant
+    Dim NamaFileZipPaketBookuRemote
     Dim NamaFileZipPaketInstaller
     Dim NamaFileZipPaketUpdater
     Dim NamaFileExeInstaller
@@ -116,6 +118,8 @@ Public Class wpfUsc_ManajemenAplikasi
             txt_UrlPaketBooku.Text = drPublic.Item("URL_Paket_Booku")
             txt_FolderTempPaketBooku.Text = drPublic.Item("Folder_Temp_Paket_Booku")
             txt_FilePaketBooku.Text = drPublic.Item("File_Paket_Booku")
+            NamaFileZipPaketBookuAssistant = drPublic.Item("File_Paket_Booku_Assistant")    'ByPass
+            NamaFileZipPaketBookuRemote = drPublic.Item("File_Paket_Booku_Remote")          'ByPass
         Else
             ResetForm()
             PesanPeringatan("Koneksi ke server gagal..!")
@@ -276,8 +280,8 @@ Public Class wpfUsc_ManajemenAplikasi
             Return
         End If
 
-        Win_PenerbitUpdater = New wpfWin_PenerbitUpdater
-        win_PenerbitUpdater.ResetForm
+        win_PenerbitUpdater = New wpfWin_PenerbitUpdater
+        win_PenerbitUpdater.ResetForm()
         win_PenerbitUpdater.VersiApp = VersiApp
         win_PenerbitUpdater.ApdetApp = ApdetApp
         win_PenerbitUpdater.urlPaketBooku = urlPaketBooku
@@ -285,6 +289,8 @@ Public Class wpfUsc_ManajemenAplikasi
         win_PenerbitUpdater.NamaFolderTempPaketBooku = NamaFolderTempPaketBooku
         win_PenerbitUpdater.NamaFolderTempPaketUpdater = NamaFolderTempPaketUpdater
         win_PenerbitUpdater.NamaFileZipPaketBooku = NamaFileZipPaketBooku
+        win_PenerbitUpdater.NamaFileZipPaketBookuAssistant = NamaFileZipPaketBookuAssistant
+        win_PenerbitUpdater.NamaFileZipPaketBookuRemote = NamaFileZipPaketBookuRemote
         win_PenerbitUpdater.NamaFileZipPaketUpdater = NamaFileZipPaketUpdater
         win_PenerbitUpdater.NamaFileExeUpdater = NamaFileExeUpdater
         win_PenerbitUpdater.ShowDialog()

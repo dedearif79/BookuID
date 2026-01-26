@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 
 Module mdl_PembuatanTabelDatabaseGeneral
@@ -455,6 +455,22 @@ Module mdl_PembuatanTabelDatabaseGeneral
             cmd = New OdbcCommand(QueryAlterTable, KoneksiDatabaseGeneral)
             cmd.ExecuteNonQuery()
             AksesDatabase_General(Tutup)
+
+            'Pembuatan Tabel : tbl_Toko
+            QueryPembuatanTabel = " CREATE TABLE `tbl_Toko` (" &
+                " `Kode_Toko` varchar(12) NOT NULL, " &
+                " `Nama_Toko` varchar(255) NOT NULL, " &
+                " `Alamat` longtext NOT NULL, " &
+                " `Deskripsi` longtext NOT NULL " &
+                " ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; "
+            AksesDatabase_General(Buka)
+            cmd = New OdbcCommand(QueryPembuatanTabel, KoneksiDatabaseGeneral)
+            cmd.ExecuteNonQuery()
+            QueryAlterTable = " ALTER TABLE `tbl_Toko` ADD PRIMARY KEY (`Kode_Toko`), ADD UNIQUE KEY (`Kode_Toko`); "
+            cmd = New OdbcCommand(QueryAlterTable, KoneksiDatabaseGeneral)
+            cmd.ExecuteNonQuery()
+            AksesDatabase_General(Tutup)
+
 
             'Pembuatan Tabel : tbl_User
             QueryPembuatanTabel = " CREATE TABLE `tbl_User` (" &

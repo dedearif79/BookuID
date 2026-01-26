@@ -79,6 +79,12 @@ Public Class cls_PayloadPermintaanKoneksi
     ''' <summary>Versi protokol</summary>
     Public Property VersiProtokol As String = VERSI_PROTOKOL
 
+    ''' <summary>
+    ''' Daftar codec video yang didukung oleh client.
+    ''' Format: ["JPEG", "H264"] atau kosong untuk JPEG saja (backward compatible).
+    ''' </summary>
+    Public Property SupportedCodecs As String() = {"JPEG", "H264"}
+
 End Class
 
 ''' <summary>
@@ -99,6 +105,12 @@ Public Class cls_PayloadResponKoneksi
     Public Property IzinKontrol As Boolean = True
     Public Property IzinTransferBerkas As Boolean = False
     Public Property IzinClipboard As Boolean = False
+
+    ''' <summary>
+    ''' Codec video yang dipilih oleh Host.
+    ''' "JPEG" (default) atau "H264".
+    ''' </summary>
+    Public Property SelectedCodec As String = "JPEG"
 
 End Class
 
@@ -233,6 +245,12 @@ Public Class cls_PayloadRelayConnectRequest
 
     ''' <summary>Password (jika Host memerlukan)</summary>
     Public Property Password As String = ""
+
+    ''' <summary>
+    ''' Daftar codec video yang didukung oleh client.
+    ''' Format: ["JPEG", "H264"]
+    ''' </summary>
+    Public Property SupportedCodecs As String() = {"JPEG", "H264"}
 
 End Class
 

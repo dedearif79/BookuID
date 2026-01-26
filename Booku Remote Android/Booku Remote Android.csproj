@@ -80,6 +80,7 @@
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.91" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
+		<!-- H.264 decode menggunakan Android.Media.MediaCodec (built-in, tidak perlu package tambahan) -->
 	</ItemGroup>
 
 </Project>

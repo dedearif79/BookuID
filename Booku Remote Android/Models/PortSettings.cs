@@ -16,6 +16,9 @@ public class PortSettings
     /// <summary>Port TCP default untuk relay server (internet)</summary>
     public const int DEFAULT_PORT_RELAY = 45680;
 
+    /// <summary>Port UDP default untuk video streaming</summary>
+    public const int DEFAULT_PORT_UDP_VIDEO = 45681;
+
     /// <summary>Alamat IP default relay server</summary>
     public const string DEFAULT_RELAY_SERVER_IP = "155.117.43.209";
 
@@ -31,6 +34,9 @@ public class PortSettings
 
     /// <summary>Port TCP untuk relay server (internet)</summary>
     public int PortRelay { get; set; } = DEFAULT_PORT_RELAY;
+
+    /// <summary>Port UDP untuk video streaming</summary>
+    public int PortUdpVideo { get; set; } = DEFAULT_PORT_UDP_VIDEO;
 
     /// <summary>Alamat IP relay server</summary>
     public string RelayServerIP { get; set; } = DEFAULT_RELAY_SERVER_IP;
@@ -56,6 +62,7 @@ public class PortSettings
         PortDiscovery = DEFAULT_PORT_DISCOVERY;
         PortKoneksi = DEFAULT_PORT_KONEKSI;
         PortRelay = DEFAULT_PORT_RELAY;
+        PortUdpVideo = DEFAULT_PORT_UDP_VIDEO;
         RelayServerIP = DEFAULT_RELAY_SERVER_IP;
     }
 
@@ -74,6 +81,9 @@ public class PortSettings
         if (PortRelay < 1 || PortRelay > 65535)
             PortRelay = DEFAULT_PORT_RELAY;
 
+        if (PortUdpVideo < 1 || PortUdpVideo > 65535)
+            PortUdpVideo = DEFAULT_PORT_UDP_VIDEO;
+
         // Validasi IP (tidak boleh kosong)
         if (string.IsNullOrWhiteSpace(RelayServerIP))
             RelayServerIP = DEFAULT_RELAY_SERVER_IP;
@@ -87,6 +97,7 @@ public class PortSettings
         return PortDiscovery == DEFAULT_PORT_DISCOVERY &&
                PortKoneksi == DEFAULT_PORT_KONEKSI &&
                PortRelay == DEFAULT_PORT_RELAY &&
+               PortUdpVideo == DEFAULT_PORT_UDP_VIDEO &&
                RelayServerIP == DEFAULT_RELAY_SERVER_IP;
     }
 
@@ -100,13 +111,14 @@ public class PortSettings
             PortDiscovery = this.PortDiscovery,
             PortKoneksi = this.PortKoneksi,
             PortRelay = this.PortRelay,
+            PortUdpVideo = this.PortUdpVideo,
             RelayServerIP = this.RelayServerIP
         };
     }
 
     public override string ToString()
     {
-        return $"PortSettings: Discovery={PortDiscovery}, Koneksi={PortKoneksi}, Relay={PortRelay}, IP={RelayServerIP}";
+        return $"PortSettings: Discovery={PortDiscovery}, Koneksi={PortKoneksi}, Relay={PortRelay}, UdpVideo={PortUdpVideo}, IP={RelayServerIP}";
     }
 
     #endregion

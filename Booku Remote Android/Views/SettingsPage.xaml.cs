@@ -24,6 +24,7 @@ public partial class SettingsPage : ContentPage
         entryPortKoneksi.Text = settings.PortKoneksi.ToString();
         entryRelayServerIP.Text = settings.RelayServerIP;
         entryPortRelay.Text = settings.PortRelay.ToString();
+        entryPortUdpVideo.Text = settings.PortUdpVideo.ToString();
     }
 
     private async void OnSaveClicked(object sender, EventArgs e)
@@ -53,6 +54,14 @@ public partial class SettingsPage : ContentPage
             return;
         }
 
+        if (!int.TryParse(entryPortUdpVideo.Text, out int portUdpVideo) ||
+            portUdpVideo < 1 || portUdpVideo > 65535)
+        {
+            await DisplayAlert("Validasi", "Port UDP Video harus berupa angka antara 1 - 65535.", "OK");
+            entryPortUdpVideo.Focus();
+            return;
+        }
+
         if (string.IsNullOrWhiteSpace(entryRelayServerIP.Text))
         {
             await DisplayAlert("Validasi", "Alamat IP Relay Server tidak boleh kosong.", "OK");
@@ -65,6 +74,7 @@ public partial class SettingsPage : ContentPage
         settings.PortDiscovery = portDiscovery;
         settings.PortKoneksi = portKoneksi;
         settings.PortRelay = portRelay;
+        settings.PortUdpVideo = portUdpVideo;
         settings.RelayServerIP = entryRelayServerIP.Text.Trim();
 
         SettingsService.Instance.SaveSettings();

@@ -149,6 +149,11 @@ Public Class wpfWin_BOOKU
         BukaUserControlDalamTab(usc_DataLawanTransaksi, host_DataLawanTransaksi.JudulForm)
     End Sub
 
+    Private Sub mnu_DataToko_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataToko.Click
+        host_DataToko = New wpfHost_DataToko
+        BukaUserControlDalamTab(usc_DataToko, host_DataToko.JudulForm)
+    End Sub
+
     Private Sub mnu_DataKaryawan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataKaryawan.Click
         host_DataKaryawan = New wpfHost_DataKaryawan
         BukaUserControlDalamTab(usc_DataKaryawan, host_DataKaryawan.JudulForm)
@@ -1606,13 +1611,7 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_BookuRemote_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BookuRemote.Click
-        Dim po As New Process
-        po.StartInfo.FileName = Path.Combine(FolderRootBookuID, "Booku Remote", "Booku Remote.exe")
-        po.StartInfo.WindowStyle = ProcessWindowStyle.Normal
-        Try
-            po.Start()
-        Catch ex As Exception
-        End Try
+        JalankanAplikasi(Path.Combine(FolderRootBookuID, "Booku Remote", "Booku Remote.exe"))
     End Sub
 
 

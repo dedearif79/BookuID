@@ -11,36 +11,41 @@
 | Properti | Nilai |
 |----------|-------|
 | **Nama Project** | Booku Remote Relay |
-| **Output** | `Booku Remote Relay.exe` (Console App) |
+| **Output** | `Booku Remote Relay` (Console App, tanpa .exe) |
 | **Namespace** | `BookuRemoteRelay` |
 | **Target Framework** | .NET 8.0 |
-| **Runtime** | win-x64 (self-contained) |
-| **Port** | 45680 |
+| **Runtime** | **win-x64** (self-contained) |
+| **Port TCP** | 45680 (control plane) |
+| **Port UDP** | 45681 (video streaming) |
 
 ## Fitur Keamanan & Optimasi
 
 | Fitur | Status | Implementasi |
 |-------|--------|--------------|
-| **Single Instance** | ✅ | Mutex `Global\BookuRemoteRelayServer` |
+| **Single Instance** | ✅ | Windows Mutex (`Global\BookuRemoteRelayServer`) |
 | **Obfuscation** | ✅ | IL Trimming (`PublishTrimmed=true`) |
 | **Single Executable** | ✅ | Self-contained, compressed |
 | **Compression** | ✅ | `EnableCompressionInSingleFile=true` |
+| **Cross-Platform** | ✅ | Windows x64 (primary target untuk VPS) |
 
 ## Struktur File
 
 ```
 Booku Remote Relay/
 ├── Booku Remote Relay.csproj     # Project file dengan Release config
-├── Program.cs                     # Entry point + Single Instance (Mutex)
+├── Program.cs                     # Entry point + Single Instance (PID file lock)
 ├── appsettings.json              # Konfigurasi server
-├── PUBLISH-RELEASE.bat           # Script build Release
+├── PUBLISH-RELEASE.sh            # Script build Release (Linux)
+├── PUBLISH-RELEASE.bat           # Script build Release (Windows, legacy)
+├── booku-relay.service           # Systemd service file untuk Linux
 │
 ├── Models/                        # Model classes
 │   ├── Enums.cs                   # TipePaket enum
 │   └── PaketData.cs               # Struktur paket data
 │
 └── Services/                      # Business logic
-    ├── TcpListenerService.cs      # TCP listener pada port 45680
+    ├── TcpListenerService.cs      # TCP listener pada port 45680 (control)
+    ├── UdpListenerService.cs      # UDP listener pada port 45681 (video)
     ├── ConnectionManager.cs       # Manajemen koneksi Host & Tamu
     ├── PacketRouter.cs            # Routing paket antar Host-Tamu
     └── ProtocolService.cs         # Serialisasi/deserialisasi JSON
@@ -61,6 +66,7 @@ Booku Remote Relay/
 {
   "RelayServer": {
     "Port": 45680,
+    "PortUdp": 45681,
     "HostExpiryMinutes": 60,
     "HeartbeatIntervalSeconds": 30,
     "SessionTimeoutMinutes": 30,
@@ -72,7 +78,8 @@ Booku Remote Relay/
 
 | Setting | Default | Deskripsi |
 |---------|---------|-----------|
-| `Port` | 45680 | Port TCP untuk listen |
+| `Port` | 45680 | Port TCP untuk listen (control plane) |
+| `PortUdp` | 45681 | Port UDP untuk video streaming (data plane) |
 | `HostExpiryMinutes` | 60 | Waktu expired Host tanpa heartbeat |
 | `HeartbeatIntervalSeconds` | 30 | Interval heartbeat dari Host |
 | `SessionTimeoutMinutes` | 30 | Timeout sesi tanpa aktivitas |
@@ -81,10 +88,18 @@ Booku Remote Relay/
 
 ## Arsitektur
 
+### Hybrid TCP/UDP Architecture
+
+Relay Server menggunakan arsitektur **hybrid TCP/UDP**:
+
+| Layer | Port | Protokol | Kegunaan |
+|-------|------|----------|----------|
+| **Control Plane** | 45680 | TCP | Login, heartbeat, session management |
+| **Data Plane** | 45681 | UDP | Video frames forwarding |
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │              RELAY SERVER (VPS)                             │
-│              IP:45680                                        │
 │                                                             │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────────┐ │
 │  │ Connection  │  │   Packet    │  │    Protocol         │ │
@@ -93,33 +108,54 @@ Booku Remote Relay/
 │         │                │                    │             │
 │         └────────────────┴────────────────────┘             │
 │                          │                                  │
-│              ┌───────────┴───────────┐                      │
-│              │  TcpListenerService   │                      │
-│              │      (Port 45680)      │                      │
-│              └───────────────────────┘                      │
+│      ┌───────────────────┼───────────────────┐              │
+│      │                   │                   │              │
+│  ┌───┴───────────┐  ┌────┴──────────┐        │              │
+│  │ TcpListener   │  │ UdpListener   │        │              │
+│  │ (Port 45680)  │  │ (Port 45681)  │        │              │
+│  │ Control Plane │  │ Data Plane    │        │              │
+│  └───────────────┘  └───────────────┘        │              │
 └─────────────────────────────────────────────────────────────┘
-         ▲                                    ▲
-         │ TCP 45680                           │ TCP 45680
-         │                                    │
-┌────────┴────────┐                ┌─────────┴─────────┐
-│      HOST       │                │       TAMU        │
-│  (Windows WPF)  │                │  (Windows/Android)│
-└─────────────────┘                └───────────────────┘
+         ▲                    ▲                ▲
+         │ TCP 45680          │ UDP 45681      │ TCP 45680
+         │                    │                │
+┌────────┴────────┐           │       ┌────────┴────────┐
+│      HOST       │───────────┘       │       TAMU      │
+│  (Windows WPF)  │                   │ (Windows/Android)│
+│  Sends frames   │◄──────────────────│  Receives frames │
+└─────────────────┘   UDP forwarding  └─────────────────┘
 ```
 
 ## Komponen Utama
 
 ### 1. TcpListenerService
 
-Mendengarkan koneksi TCP pada port 45680.
+Mendengarkan koneksi TCP pada port 45680 untuk control plane.
 
 | Fungsi | Deskripsi |
 |--------|-----------|
-| `StartAsync()` | Mulai listener |
+| `StartAsync()` | Mulai TCP listener |
 | `Stop()` | Hentikan listener |
 | `HandleClientAsync()` | Handle koneksi baru |
 
-### 2. ConnectionManager
+### 2. UdpListenerService
+
+Mendengarkan dan meneruskan paket UDP pada port 45681 untuk video streaming.
+
+| Fungsi | Deskripsi |
+|--------|-----------|
+| `StartAsync()` | Mulai UDP listener |
+| `Stop()` | Hentikan listener |
+| `ForwardPacketAsync()` | Forward UDP packet berdasarkan SessionId |
+| `RegisterEndpoint()` | Register endpoint Host/Tamu untuk session |
+
+**Cara Kerja UDP Forwarding:**
+1. Host/Tamu mengirim "registration packet" (header-only, FrameId=0) ke relay
+2. Relay menyimpan endpoint (IP:Port) berdasarkan SessionId
+3. Saat Host mengirim frame, relay lookup SessionId dan forward ke Tamu
+4. Sesi UDP expire otomatis setelah timeout tanpa aktivitas
+
+### 3. ConnectionManager
 
 Mengelola koneksi Host dan Tamu yang terdaftar.
 
@@ -131,7 +167,7 @@ Mengelola koneksi Host dan Tamu yang terdaftar.
 | `RegisterTamu()` | Daftarkan Tamu untuk sesi |
 | `CreateSession()` | Buat sesi Host-Tamu |
 
-### 3. PacketRouter
+### 4. PacketRouter
 
 Routing paket antara Host dan Tamu.
 
@@ -140,7 +176,7 @@ Routing paket antara Host dan Tamu.
 | `RoutePacket()` | Forward paket ke tujuan |
 | `HandleRelayPacket()` | Handle paket relay (register, query, dll) |
 
-### 4. ProtocolService
+### 5. ProtocolService
 
 Serialisasi dan deserialisasi paket JSON.
 
@@ -177,35 +213,48 @@ Serialisasi dan deserialisasi paket JSON.
 
 ### Build Release
 
-```bash
-# Menggunakan script batch (recommended)
+```batch
+# Menggunakan script batch (Windows)
 PUBLISH-RELEASE.bat
 
 # Atau manual
-dotnet publish "Booku Remote Relay.csproj" -c Release -o "bin\Publish"
+dotnet publish "Booku Remote Relay.csproj" -c Release -o "bin/Publish"
 ```
 
 ### Output
 
 ```
-bin\Publish\Booku Remote Relay.exe (~11 MB, self-contained)
+bin/Publish/Booku Remote Relay.exe (~11 MB, self-contained)
 ```
 
-### Deploy ke VPS
+### Deploy ke VPS Windows
 
-1. Copy `Booku Remote Relay.exe` ke VPS Windows
+1. Copy `Booku Remote Relay.exe` ke VPS Windows (misal ke `C:\BookuID\Relay\`)
 2. Pastikan port 45680 tidak digunakan aplikasi lain
 3. Jalankan executable
 4. Server akan listen pada `0.0.0.0:45680`
 
-### Menjalankan Server
+### Menjalankan Server (Manual)
 
-```cmd
+```batch
 # Jalankan dengan port default (45680)
-Booku Remote Relay.exe
+"Booku Remote Relay.exe"
 
 # Jalankan dengan port custom via CLI argument
-Booku Remote Relay.exe 8080
+"Booku Remote Relay.exe" 8080
+```
+
+### Menjalankan sebagai Windows Service
+
+Gunakan NSSM (Non-Sucking Service Manager) atau Task Scheduler:
+
+```batch
+# Menggunakan NSSM
+nssm install BookuRelay "C:\BookuID\Relay\Booku Remote Relay.exe"
+nssm start BookuRelay
+
+# Atau menggunakan Task Scheduler (at startup)
+schtasks /create /tn "Booku Remote Relay" /tr "C:\BookuID\Relay\Booku Remote Relay.exe" /sc onstart /ru SYSTEM
 ```
 
 ### Prioritas Konfigurasi Port
@@ -270,19 +319,59 @@ TAMU                    RELAY                    HOST
 
 | Aspek | Implementasi |
 |-------|--------------|
-| **Single Instance** | Mutex mencegah multiple server |
-| **Port 45680** | Port kustom untuk relay |
+| **Single Instance** | PID file lock mencegah multiple server |
+| **Port TCP 45680** | Port kustom untuk control plane |
+| **Port UDP 45681** | Port kustom untuk video streaming |
+| **SessionId** | 32-bit hash dari KunciSesi untuk UDP routing (djb2 algorithm) |
 | **HostCode** | 6 karakter = 2.1 miliar kombinasi |
 | **Password** | Opsional, untuk akses terbatas |
 | **Rate Limiting** | MaxHostsPerIP, MaxTamusPerIP |
+
+### Catatan Penting: SessionId Hash Algorithm
+
+Semua komponen (Relay, Host WPF, Android) **HARUS** menggunakan algoritma hash yang sama untuk SessionId:
+
+| Komponen | File | Method |
+|----------|------|--------|
+| **Relay** | `ConnectionManager.cs` | `GenerateUdpSessionId()` |
+| **Host (VB.NET)** | `mdl_UdpStreaming.vb` | `GenerateSessionId()` |
+| **Android (C#)** | `UdpStreamingService.cs` | `GenerateSessionId()` |
+
+**Algoritma:** djb2 hash (deterministic, cross-platform)
+
+```csharp
+uint hash = 5381;
+foreach (char c in sessionKey)
+{
+    hash = ((hash << 5) + hash) ^ c;
+}
+return (int)(hash & 0x7FFFFFFF);
+```
+
+> **PENTING:** Jangan gunakan `GetHashCode()` karena hasilnya **TIDAK konsisten** antar platform (.NET Windows vs Android). Hal ini menyebabkan UDP packet tidak bisa di-route dengan benar.
+
+## Single Instance (Mutex)
+
+Server menggunakan Windows Mutex untuk mencegah multiple instance:
+
+| Komponen | Nilai |
+|----------|-------|
+| **Mutex Name** | `Global\BookuRemoteRelayServer` |
+| **Scope** | System-wide (semua user session) |
+
+Mutex otomatis di-release saat server shutdown dengan Ctrl+C atau saat process terminated.
 
 ## Troubleshooting
 
 | Masalah | Solusi |
 |---------|--------|
 | Port 45680 sudah digunakan | Matikan aplikasi lain atau gunakan port custom |
+| Port 45681 (UDP) blocked | Buka port UDP 45681 di firewall |
 | Host tidak terdaftar | Cek koneksi internet Host, pastikan heartbeat jalan |
 | Tamu tidak bisa connect | Verifikasi HostCode benar, Host masih online |
+| Video tidak streaming | Pastikan UDP registration packet terkirim |
+| "Server sudah berjalan" padahal tidak | Cek Task Manager, kill process `Booku Remote Relay.exe` |
+| Firewall blocking | Buka port TCP 45680 dan UDP 45681 di Windows Firewall |
 
 ## Dokumentasi Terkait
 

@@ -491,6 +491,8 @@ Class wpfWin_ModeTamu
 
     Private Sub MuatPengaturanPortKeUI()
         txt_PortDiscovery.Text = PortDiscoveryAktif.ToString()
+        txt_PortKoneksi.Text = PortKoneksiAktif.ToString()
+        txt_PortUdpVideo.Text = PortUdpVideoAktif.ToString()
         txt_RelayServerIP.Text = RelayServerIPAktif
         txt_PortRelay.Text = PortRelayAktif.ToString()
     End Sub
@@ -498,11 +500,25 @@ Class wpfWin_ModeTamu
     Private Sub btn_SimpanPengaturan_Click(sender As Object, e As RoutedEventArgs) Handles btn_SimpanPengaturan.Click
         ' Validasi input
         Dim portDiscovery As Integer
+        Dim portKoneksi As Integer
+        Dim portUdpVideo As Integer
         Dim portRelay As Integer
 
         If Not Integer.TryParse(txt_PortDiscovery.Text, portDiscovery) OrElse portDiscovery < 1 OrElse portDiscovery > 65535 Then
             MessageBox.Show("Port Discovery harus berupa angka antara 1 - 65535.", "Validasi", MessageBoxButton.OK, MessageBoxImage.Warning)
             txt_PortDiscovery.Focus()
+            Return
+        End If
+
+        If Not Integer.TryParse(txt_PortKoneksi.Text, portKoneksi) OrElse portKoneksi < 1 OrElse portKoneksi > 65535 Then
+            MessageBox.Show("Port Koneksi harus berupa angka antara 1 - 65535.", "Validasi", MessageBoxButton.OK, MessageBoxImage.Warning)
+            txt_PortKoneksi.Focus()
+            Return
+        End If
+
+        If Not Integer.TryParse(txt_PortUdpVideo.Text, portUdpVideo) OrElse portUdpVideo < 1 OrElse portUdpVideo > 65535 Then
+            MessageBox.Show("Port Video (UDP) harus berupa angka antara 1 - 65535.", "Validasi", MessageBoxButton.OK, MessageBoxImage.Warning)
+            txt_PortUdpVideo.Focus()
             Return
         End If
 
@@ -520,6 +536,8 @@ Class wpfWin_ModeTamu
 
         ' Simpan ke settings
         SetelPortAktif.PortDiscovery = portDiscovery
+        SetelPortAktif.PortKoneksi = portKoneksi
+        SetelPortAktif.PortUdpVideo = portUdpVideo
         SetelPortAktif.PortRelay = portRelay
         SetelPortAktif.RelayServerIP = txt_RelayServerIP.Text.Trim()
 

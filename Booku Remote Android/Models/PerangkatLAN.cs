@@ -58,6 +58,16 @@ public class PermintaanKoneksiData
 
     [JsonPropertyName("versiProtokol")]
     public string VersiProtokol { get; set; } = "1.0";
+
+    /// <summary>
+    /// Daftar codec video yang didukung oleh client.
+    /// Format: ["JPEG", "H264"] atau kosong untuk JPEG saja (backward compatible).
+    /// CATATAN: Saat ini Android hanya mendukung JPEG karena H.264 decoder
+    /// (FFmpegKit) belum terimplementasi. Ubah ke ["JPEG", "H264"] setelah
+    /// decoder H.264 tersedia.
+    /// </summary>
+    [JsonPropertyName("supportedCodecs")]
+    public string[] SupportedCodecs { get; set; } = ["JPEG"];
 }
 
 /// <summary>
@@ -82,4 +92,11 @@ public class ResponKoneksiData
 
     [JsonPropertyName("izinClipboard")]
     public bool IzinClipboard { get; set; } = false;
+
+    /// <summary>
+    /// Codec video yang dipilih oleh Host.
+    /// "JPEG" (default) atau "H264".
+    /// </summary>
+    [JsonPropertyName("selectedCodec")]
+    public string SelectedCodec { get; set; } = "JPEG";
 }

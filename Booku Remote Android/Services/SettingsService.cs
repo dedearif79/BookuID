@@ -12,6 +12,7 @@ public class SettingsService
     private const string KEY_PORT_DISCOVERY = "port_discovery";
     private const string KEY_PORT_KONEKSI = "port_koneksi";
     private const string KEY_PORT_RELAY = "port_relay";
+    private const string KEY_PORT_UDP_VIDEO = "port_udp_video";
     private const string KEY_RELAY_SERVER_IP = "relay_server_ip";
 
     #endregion
@@ -77,6 +78,7 @@ public class SettingsService
             Settings.PortDiscovery = Preferences.Get(KEY_PORT_DISCOVERY, PortSettings.DEFAULT_PORT_DISCOVERY);
             Settings.PortKoneksi = Preferences.Get(KEY_PORT_KONEKSI, PortSettings.DEFAULT_PORT_KONEKSI);
             Settings.PortRelay = Preferences.Get(KEY_PORT_RELAY, PortSettings.DEFAULT_PORT_RELAY);
+            Settings.PortUdpVideo = Preferences.Get(KEY_PORT_UDP_VIDEO, PortSettings.DEFAULT_PORT_UDP_VIDEO);
             Settings.RelayServerIP = Preferences.Get(KEY_RELAY_SERVER_IP, PortSettings.DEFAULT_RELAY_SERVER_IP);
 
             // Validasi nilai yang dimuat
@@ -104,6 +106,7 @@ public class SettingsService
             Preferences.Set(KEY_PORT_DISCOVERY, Settings.PortDiscovery);
             Preferences.Set(KEY_PORT_KONEKSI, Settings.PortKoneksi);
             Preferences.Set(KEY_PORT_RELAY, Settings.PortRelay);
+            Preferences.Set(KEY_PORT_UDP_VIDEO, Settings.PortUdpVideo);
             Preferences.Set(KEY_RELAY_SERVER_IP, Settings.RelayServerIP);
 
             Console.WriteLine($"[SettingsService] Settings saved: {Settings}");
@@ -144,6 +147,7 @@ public class SettingsService
             Preferences.Remove(KEY_PORT_DISCOVERY);
             Preferences.Remove(KEY_PORT_KONEKSI);
             Preferences.Remove(KEY_PORT_RELAY);
+            Preferences.Remove(KEY_PORT_UDP_VIDEO);
             Preferences.Remove(KEY_RELAY_SERVER_IP);
 
             Settings.ResetToDefaults();
@@ -173,6 +177,11 @@ public class SettingsService
     /// Port relay aktif.
     /// </summary>
     public int PortRelay => Settings.PortRelay;
+
+    /// <summary>
+    /// Port UDP video streaming aktif.
+    /// </summary>
+    public int PortUdpVideo => Settings.PortUdpVideo;
 
     /// <summary>
     /// IP relay server aktif.

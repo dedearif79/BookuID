@@ -147,6 +147,7 @@ Module wpfMdl_ClassHost
     Public host_DaftarPemegangSaham As wpfHost_DaftarPemegangSaham
     Public host_DataCOA As wpfHost_DataCOA
     Public host_DataLawanTransaksi As wpfHost_DataLawanTransaksi
+    Public host_DataToko As wpfHost_DataToko
     Public host_DataKaryawan As wpfHost_DataKaryawan
     Public host_DataUser As wpfHost_DataUser
     Public host_DataProject As wpfHost_DataProject

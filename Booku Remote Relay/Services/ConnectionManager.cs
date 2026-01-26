@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using System.Net;
 using System.Net.Sockets;
 using BookuRemoteRelay.Models;
 using BookuRemoteRelay.Utils;
@@ -133,9 +134,14 @@ public class ConnectionManager
     /// </summary>
     public RelaySession CreateSession(HostConnection host, TamuConnection tamu, string sessionId)
     {
+        // Generate UdpSessionId menggunakan djb2 hash (konsisten dengan Host VB.NET dan Android)
+        // PENTING: GetHashCode() tidak konsisten antar platform, jadi gunakan djb2
+        int udpSessionId = GenerateUdpSessionId(sessionId);
+
         var session = new RelaySession
         {
             SessionId = sessionId,
+            UdpSessionId = udpSessionId,
             HostCode = host.HostCode,
             TamuConnectionId = tamu.ConnectionId,
             Host = host,
@@ -146,11 +152,13 @@ public class ConnectionManager
 
         _sessions[sessionId] = session;
 
-        // Update references
+        // Update references including UDP session ID
         host.ActiveSessionId = sessionId;
+        host.UdpSessionId = udpSessionId;
         tamu.ActiveSessionId = sessionId;
+        tamu.UdpSessionId = udpSessionId;
 
-        Console.WriteLine($"[SESSION] Created: {sessionId} ({host.NamaPerangkat} <-> {tamu.NamaPerangkat})");
+        Console.WriteLine($"[SESSION] Created: {sessionId} (UdpSessionId={udpSessionId}) ({host.NamaPerangkat} <-> {tamu.NamaPerangkat})");
         return session;
     }
 
@@ -209,6 +217,40 @@ public class ConnectionManager
     }
 
     /// <summary>
+    /// Dapatkan sesi berdasarkan UdpSessionId (untuk routing UDP packets).
+    /// </summary>
+    public RelaySession? GetSessionByUdpSessionId(int udpSessionId)
+    {
+        return _sessions.Values.FirstOrDefault(s => s.UdpSessionId == udpSessionId && s.IsActive);
+    }
+
+    /// <summary>
+    /// Update UDP endpoint untuk Host (dipanggil saat menerima paket UDP pertama dari Host).
+    /// </summary>
+    public void UpdateHostUdpEndpoint(int udpSessionId, IPEndPoint endpoint)
+    {
+        var session = GetSessionByUdpSessionId(udpSessionId);
+        if (session?.Host != null)
+        {
+            session.Host.UdpEndPoint = endpoint;
+            Console.WriteLine($"[UDP] Host endpoint updated: {endpoint} for UdpSessionId={udpSessionId}");
+        }
+    }
+
+    /// <summary>
+    /// Update UDP endpoint untuk Tamu (dipanggil saat menerima paket UDP pertama dari Tamu).
+    /// </summary>
+    public void UpdateTamuUdpEndpoint(int udpSessionId, IPEndPoint endpoint)
+    {
+        var session = GetSessionByUdpSessionId(udpSessionId);
+        if (session?.Tamu != null)
+        {
+            session.Tamu.UdpEndPoint = endpoint;
+            Console.WriteLine($"[UDP] Tamu endpoint updated: {endpoint} for UdpSessionId={udpSessionId}");
+        }
+    }
+
+    /// <summary>
     /// Update heartbeat Host.
     /// </summary>
     public void UpdateHostHeartbeat(string hostCode)
@@ -246,9 +288,9 @@ public class ConnectionManager
             UnregisterTamu(tamuId);
         }
 
-        // Cleanup dead sessions
+        // Cleanup dead sessions (gunakan IsValidForCleanup untuk menghormati PENDING timeout)
         var deadSessions = _sessions.Values
-            .Where(s => !s.IsActive)
+            .Where(s => !s.IsValidForCleanup)
             .Select(s => s.SessionId)
             .ToList();
 
@@ -264,5 +306,25 @@ public class ConnectionManager
     public (int hosts, int tamus, int sessions) GetStats()
     {
         return (_hosts.Count, _tamus.Count, _sessions.Count);
+    }
+
+    /// <summary>
+    /// Generate UDP Session ID menggunakan djb2 hash (deterministic, cross-platform).
+    /// PENTING: GetHashCode() tidak konsisten antar platform (.NET Windows vs Android).
+    /// djb2 menghasilkan hash yang sama di semua platform.
+    /// </summary>
+    private static int GenerateUdpSessionId(string? sessionKey)
+    {
+        if (string.IsNullOrEmpty(sessionKey)) return 0;
+
+        // djb2 hash algorithm - deterministic dan cross-platform
+        uint hash = 5381;
+        foreach (char c in sessionKey)
+        {
+            hash = ((hash << 5) + hash) ^ c;
+        }
+
+        // Convert to positive integer
+        return (int)(hash & 0x7FFFFFFF);
     }
 }

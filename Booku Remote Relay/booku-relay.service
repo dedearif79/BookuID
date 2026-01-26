@@ -1,0 +1,28 @@
+[Unit]
+Description=Booku Remote Relay Server
+Documentation=https://booku.id
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/opt/booku-relay
+ExecStart=/opt/booku-relay/Booku\ Remote\ Relay
+Restart=always
+RestartSec=10
+
+# Environment
+Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
+
+# Logging
+StandardOutput=append:/var/log/booku-relay.log
+StandardError=append:/var/log/booku-relay-error.log
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/run /tmp /var/log
+
+[Install]
+WantedBy=multi-user.target

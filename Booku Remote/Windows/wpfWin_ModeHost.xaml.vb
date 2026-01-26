@@ -222,7 +222,7 @@ Class wpfWin_ModeHost
                           End Sub)
     End Sub
 
-    Private Sub OnPermintaanKoneksiViaRelay(idSesi As String, namaTamu As String, alamatIP As String)
+    Private Sub OnPermintaanKoneksiViaRelay(idSesi As String, namaTamu As String, alamatIP As String, supportedCodecs As String())
         Dispatcher.Invoke(Sub()
                               TambahRiwayat($"{DateTime.Now:HH:mm} - Permintaan dari {namaTamu} ({alamatIP}) via Internet")
 
@@ -236,8 +236,8 @@ Class wpfWin_ModeHost
                                   winPersetujuan.IzinClipboard = chk_IzinClipboard.IsChecked.GetValueOrDefault()
                                   winPersetujuan.ShowDialog()
 
-                                  ' Kirim respon via relay
-                                  KirimResponKoneksiViaRelayAsync(idSesi, winPersetujuan.Diterima, winPersetujuan.IzinKontrol)
+                                  ' Kirim respon via relay (dengan supportedCodecs untuk codec negotiation)
+                                  KirimResponKoneksiViaRelayAsync(idSesi, winPersetujuan.Diterima, winPersetujuan.IzinKontrol, supportedCodecs)
 
                                   If winPersetujuan.Diterima Then
                                       TambahRiwayat($"{DateTime.Now:HH:mm} - Koneksi diterima: {namaTamu}")
@@ -245,15 +245,16 @@ Class wpfWin_ModeHost
                                       TambahRiwayat($"{DateTime.Now:HH:mm} - Koneksi ditolak: {namaTamu}")
                                   End If
                               Else
-                                  ' Auto terima
-                                  KirimResponKoneksiViaRelayAsync(idSesi, True, True)
+                                  ' Auto terima (dengan supportedCodecs untuk codec negotiation)
+                                  KirimResponKoneksiViaRelayAsync(idSesi, True, True, supportedCodecs)
                                   TambahRiwayat($"{DateTime.Now:HH:mm} - Koneksi diterima (auto): {namaTamu}")
                               End If
                           End Sub)
     End Sub
 
-    Private Async Sub KirimResponKoneksiViaRelayAsync(idSesi As String, diterima As Boolean, izinKontrol As Boolean)
-        Await mdl_KoneksiRelay.KirimResponKoneksiViaRelayAsync(idSesi, diterima, izinKontrol)
+    Private Async Sub KirimResponKoneksiViaRelayAsync(idSesi As String, diterima As Boolean, izinKontrol As Boolean,
+                                                       Optional supportedCodecs As String() = Nothing)
+        Await mdl_KoneksiRelay.KirimResponKoneksiViaRelayAsync(idSesi, diterima, izinKontrol, supportedCodecs)
 
         If diterima Then
             ' Update status UI
@@ -301,10 +302,11 @@ Class wpfWin_ModeHost
                                       KirimResponKoneksiAsync(clientSocket, HasilPersetujuan.DITERIMA,
                                                               winPersetujuan.IzinKontrol,
                                                               winPersetujuan.IzinTransferBerkas,
-                                                              winPersetujuan.IzinClipboard)
+                                                              winPersetujuan.IzinClipboard,
+                                                              "", permintaan.SupportedCodecs)
                                       TambahRiwayat($"{DateTime.Now:HH:mm} - Koneksi diterima: {permintaan.NamaPerangkat}")
                                   Else
-                                      KirimResponKoneksiAsync(clientSocket, HasilPersetujuan.DITOLAK, False, False, False, "Ditolak oleh Host")
+                                      KirimResponKoneksiAsync(clientSocket, HasilPersetujuan.DITOLAK, False, False, False, "Ditolak oleh Host", Nothing)
                                       TambahRiwayat($"{DateTime.Now:HH:mm} - Koneksi ditolak: {permintaan.NamaPerangkat}")
                                   End If
                               Else
@@ -312,7 +314,8 @@ Class wpfWin_ModeHost
                                   KirimResponKoneksiAsync(clientSocket, HasilPersetujuan.DITERIMA,
                                                           True,
                                                           chk_IzinTransferBerkas.IsChecked.GetValueOrDefault(),
-                                                          chk_IzinClipboard.IsChecked.GetValueOrDefault())
+                                                          chk_IzinClipboard.IsChecked.GetValueOrDefault(),
+                                                          "", permintaan.SupportedCodecs)
                                   TambahRiwayat($"{DateTime.Now:HH:mm} - Koneksi diterima (auto): {permintaan.NamaPerangkat}")
                               End If
                           End Sub)
@@ -320,8 +323,9 @@ Class wpfWin_ModeHost
 
     Private Async Sub KirimResponKoneksiAsync(clientSocket As TcpClient, hasil As HasilPersetujuan,
                                                izinKontrol As Boolean, izinTransfer As Boolean,
-                                               izinClipboard As Boolean, Optional pesan As String = "")
-        Await mdl_KoneksiJaringan.KirimResponKoneksiAsync(clientSocket, hasil, izinKontrol, izinTransfer, izinClipboard, pesan)
+                                               izinClipboard As Boolean, Optional pesan As String = "",
+                                               Optional supportedCodecs As String() = Nothing)
+        Await mdl_KoneksiJaringan.KirimResponKoneksiAsync(clientSocket, hasil, izinKontrol, izinTransfer, izinClipboard, pesan, supportedCodecs)
     End Sub
 
     Private Sub OnKoneksiBerhasil(kunciSesi As String)
@@ -407,14 +411,27 @@ Class wpfWin_ModeHost
     Private Sub MuatPengaturanPortKeUI()
         txt_PortDiscovery.Text = PortDiscoveryAktif.ToString()
         txt_PortKoneksi.Text = PortKoneksiAktif.ToString()
+        txt_PortUdpVideo.Text = PortUdpVideoAktif.ToString()
         txt_RelayServerIP.Text = RelayServerIPAktif
         txt_PortRelay.Text = PortRelayAktif.ToString()
+
+        ' Load nilai FPS
+        sld_TargetFPS.Value = TargetFPSAktif
+        lbl_TargetFPS.Text = $"{TargetFPSAktif} FPS"
+    End Sub
+
+    Private Sub sld_TargetFPS_ValueChanged(sender As Object, e As RoutedPropertyChangedEventArgs(Of Double)) Handles sld_TargetFPS.ValueChanged
+        ' Update label saat slider berubah
+        If lbl_TargetFPS IsNot Nothing Then
+            lbl_TargetFPS.Text = $"{CInt(sld_TargetFPS.Value)} FPS"
+        End If
     End Sub
 
     Private Sub btn_SimpanPengaturanPort_Click(sender As Object, e As RoutedEventArgs) Handles btn_SimpanPengaturanPort.Click
         ' Validasi input
         Dim portDiscovery As Integer
         Dim portKoneksi As Integer
+        Dim portUdpVideo As Integer
         Dim portRelay As Integer
 
         If Not Integer.TryParse(txt_PortDiscovery.Text, portDiscovery) OrElse portDiscovery < 1 OrElse portDiscovery > 65535 Then
@@ -426,6 +443,12 @@ Class wpfWin_ModeHost
         If Not Integer.TryParse(txt_PortKoneksi.Text, portKoneksi) OrElse portKoneksi < 1 OrElse portKoneksi > 65535 Then
             MessageBox.Show("Port Koneksi harus berupa angka antara 1 - 65535.", "Validasi", MessageBoxButton.OK, MessageBoxImage.Warning)
             txt_PortKoneksi.Focus()
+            Return
+        End If
+
+        If Not Integer.TryParse(txt_PortUdpVideo.Text, portUdpVideo) OrElse portUdpVideo < 1 OrElse portUdpVideo > 65535 Then
+            MessageBox.Show("Port Video UDP harus berupa angka antara 1 - 65535.", "Validasi", MessageBoxButton.OK, MessageBoxImage.Warning)
+            txt_PortUdpVideo.Focus()
             Return
         End If
 
@@ -444,8 +467,10 @@ Class wpfWin_ModeHost
         ' Simpan ke settings
         SetelPortAktif.PortDiscovery = portDiscovery
         SetelPortAktif.PortKoneksi = portKoneksi
+        SetelPortAktif.PortUdpVideo = portUdpVideo
         SetelPortAktif.PortRelay = portRelay
         SetelPortAktif.RelayServerIP = txt_RelayServerIP.Text.Trim()
+        SetelPortAktif.TargetFPS = CInt(sld_TargetFPS.Value)
 
         If SetelPortAktif.SimpanKeFile() Then
             ' Update tampilan port

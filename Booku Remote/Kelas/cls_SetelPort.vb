@@ -22,8 +22,20 @@ Public Class cls_SetelPort
     ''' <summary>Port TCP default untuk relay server (internet)</summary>
     Public Const DEFAULT_PORT_RELAY As Integer = 45680
 
+    ''' <summary>Port UDP default untuk video streaming</summary>
+    Public Const DEFAULT_PORT_UDP_VIDEO As Integer = 45681
+
     ''' <summary>Alamat IP default relay server</summary>
     Public Const DEFAULT_RELAY_SERVER_IP As String = "155.117.43.209"
+
+    ''' <summary>Target FPS default untuk streaming</summary>
+    Public Const DEFAULT_TARGET_FPS As Integer = 15
+
+    ''' <summary>Target FPS minimum</summary>
+    Public Const MIN_TARGET_FPS As Integer = 5
+
+    ''' <summary>Target FPS maksimum</summary>
+    Public Const MAX_TARGET_FPS As Integer = 30
 
     ''' <summary>Nama file settings</summary>
     Private Const NAMA_FILE_SETTINGS As String = "port-settings.json"
@@ -47,9 +59,17 @@ Public Class cls_SetelPort
     <JsonPropertyName("portRelay")>
     Public Property PortRelay As Integer = DEFAULT_PORT_RELAY
 
+    ''' <summary>Port UDP untuk video streaming</summary>
+    <JsonPropertyName("portUdpVideo")>
+    Public Property PortUdpVideo As Integer = DEFAULT_PORT_UDP_VIDEO
+
     ''' <summary>Alamat IP relay server</summary>
     <JsonPropertyName("relayServerIP")>
     Public Property RelayServerIP As String = DEFAULT_RELAY_SERVER_IP
+
+    ''' <summary>Target FPS untuk streaming video</summary>
+    <JsonPropertyName("targetFPS")>
+    Public Property TargetFPS As Integer = DEFAULT_TARGET_FPS
 
 #End Region
 
@@ -106,7 +126,9 @@ Public Class cls_SetelPort
         PortDiscovery = DEFAULT_PORT_DISCOVERY
         PortKoneksi = DEFAULT_PORT_KONEKSI
         PortRelay = DEFAULT_PORT_RELAY
+        PortUdpVideo = DEFAULT_PORT_UDP_VIDEO
         RelayServerIP = DEFAULT_RELAY_SERVER_IP
+        TargetFPS = DEFAULT_TARGET_FPS
     End Sub
 
     ''' <summary>
@@ -189,9 +211,18 @@ Public Class cls_SetelPort
             PortRelay = DEFAULT_PORT_RELAY
         End If
 
+        If PortUdpVideo < 1 OrElse PortUdpVideo > 65535 Then
+            PortUdpVideo = DEFAULT_PORT_UDP_VIDEO
+        End If
+
         ' Validasi IP (tidak boleh kosong)
         If String.IsNullOrWhiteSpace(RelayServerIP) Then
             RelayServerIP = DEFAULT_RELAY_SERVER_IP
+        End If
+
+        ' Validasi FPS (harus antara MIN dan MAX)
+        If TargetFPS < MIN_TARGET_FPS OrElse TargetFPS > MAX_TARGET_FPS Then
+            TargetFPS = DEFAULT_TARGET_FPS
         End If
     End Sub
 
@@ -212,14 +243,16 @@ Public Class cls_SetelPort
         Return PortDiscovery = DEFAULT_PORT_DISCOVERY AndAlso
                PortKoneksi = DEFAULT_PORT_KONEKSI AndAlso
                PortRelay = DEFAULT_PORT_RELAY AndAlso
-               RelayServerIP = DEFAULT_RELAY_SERVER_IP
+               PortUdpVideo = DEFAULT_PORT_UDP_VIDEO AndAlso
+               RelayServerIP = DEFAULT_RELAY_SERVER_IP AndAlso
+               TargetFPS = DEFAULT_TARGET_FPS
     End Function
 
     ''' <summary>
     ''' Override ToString untuk debugging.
     ''' </summary>
     Public Overrides Function ToString() As String
-        Return $"SetelPort: Discovery={PortDiscovery}, Koneksi={PortKoneksi}, Relay={PortRelay}, IP={RelayServerIP}"
+        Return $"SetelPort: Discovery={PortDiscovery}, Koneksi={PortKoneksi}, Relay={PortRelay}, UdpVideo={PortUdpVideo}, IP={RelayServerIP}, FPS={TargetFPS}"
     End Function
 
 #End Region

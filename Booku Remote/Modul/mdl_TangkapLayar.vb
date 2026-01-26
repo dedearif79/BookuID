@@ -235,6 +235,60 @@ Public Module mdl_TangkapLayar
     End Function
 
     ''' <summary>
+    ''' Ekstrak raw BGRA pixel data dari Bitmap untuk H.264 encoding.
+    ''' FFmpeg membutuhkan format bgra (Blue-Green-Red-Alpha, 4 bytes per pixel).
+    ''' </summary>
+    ''' <param name="bitmap">Bitmap source (Format32bppArgb)</param>
+    ''' <returns>Byte array berisi BGRA data, Nothing jika gagal</returns>
+    Public Function BitmapKeBgra(bitmap As Bitmap) As Byte()
+        If bitmap Is Nothing Then Return Nothing
+
+        Try
+            ' Lock bitmap untuk akses langsung ke pixel data
+            Dim rect As New Rectangle(0, 0, bitmap.Width, bitmap.Height)
+            Dim bmpData = bitmap.LockBits(rect, ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb)
+
+            Try
+                ' Calculate buffer size (4 bytes per pixel: BGRA)
+                Dim byteCount = Math.Abs(bmpData.Stride) * bitmap.Height
+                Dim bgraData(byteCount - 1) As Byte
+
+                ' Copy pixel data
+                System.Runtime.InteropServices.Marshal.Copy(bmpData.Scan0, bgraData, 0, byteCount)
+
+                Return bgraData
+            Finally
+                bitmap.UnlockBits(bmpData)
+            End Try
+
+        Catch ex As Exception
+            System.Diagnostics.Debug.WriteLine($"[BGRA] Error extracting BGRA: {ex.Message}")
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Tangkap layar dan return raw BGRA data untuk H.264 encoding.
+    ''' </summary>
+    ''' <param name="skala">Skala capture (0.0 - 1.0)</param>
+    ''' <param name="lebar">Output: lebar gambar</param>
+    ''' <param name="tinggi">Output: tinggi gambar</param>
+    ''' <returns>BGRA byte array, Nothing jika gagal</returns>
+    Public Function TangkapLayarKeBgra(skala As Double, ByRef lebar As Integer, ByRef tinggi As Integer) As Byte()
+        lebar = 0
+        tinggi = 0
+
+        Using bitmap = TangkapLayarDenganSkala(skala)
+            If bitmap Is Nothing Then Return Nothing
+
+            lebar = bitmap.Width
+            tinggi = bitmap.Height
+            Return BitmapKeBgra(bitmap)
+        End Using
+    End Function
+
+
+    ''' <summary>
     ''' Estimasi ukuran frame dalam KB berdasarkan skala.
     ''' </summary>
     Public Function EstimasiUkuranFrameKB(skala As Double) As Double
