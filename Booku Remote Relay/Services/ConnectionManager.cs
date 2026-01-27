@@ -312,16 +312,22 @@ public class ConnectionManager
     /// Generate UDP Session ID menggunakan djb2 hash (deterministic, cross-platform).
     /// PENTING: GetHashCode() tidak konsisten antar platform (.NET Windows vs Android).
     /// djb2 menghasilkan hash yang sama di semua platform.
+    ///
+    /// PENTING: Algoritma HARUS sama dengan VB.NET (mdl_UdpStreaming.vb)!
+    /// Gunakan ulong dan mask setiap iterasi untuk konsistensi dengan VB.NET.
     /// </summary>
     private static int GenerateUdpSessionId(string? sessionKey)
     {
         if (string.IsNullOrEmpty(sessionKey)) return 0;
 
-        // djb2 hash algorithm - deterministic dan cross-platform
-        uint hash = 5381;
+        // djb2 hash algorithm - HARUS konsisten dengan VB.NET!
+        // VB.NET menggunakan ULong dan mask setiap iterasi
+        ulong hash = 5381;
         foreach (char c in sessionKey)
         {
-            hash = ((hash << 5) + hash) ^ c;
+            // ((hash << 5) + hash) ^ c, lalu mask ke 32-bit
+            hash = ((hash << 5) + hash) ^ (ulong)c;
+            hash = hash & 0xFFFFFFFF;  // Mask setiap iterasi seperti VB.NET
         }
 
         // Convert to positive integer

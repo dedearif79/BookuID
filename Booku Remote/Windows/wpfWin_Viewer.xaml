@@ -112,7 +112,9 @@
                 <Image Name="img_Layar"
                        Stretch="Uniform"
                        RenderOptions.BitmapScalingMode="HighQuality"
-                       Focusable="True"/>
+                       Focusable="True"
+                       Cursor="Arrow"
+                       ForceCursor="True"/>
 
                 <!-- Loading/Waiting Overlay -->
                 <Border Name="bdr_Loading"

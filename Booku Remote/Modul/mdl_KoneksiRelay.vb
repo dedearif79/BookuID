@@ -170,6 +170,11 @@ Public Module mdl_KoneksiRelay
             TerhubungKeRelay = False
             HostCodeAktif = ""
             IdSesiRelay = ""
+            SedangMenghubungkan = False
+            ModeKoneksiSaatIni = ModeKoneksi.LAN ' Reset ke mode default
+
+            ' Hentikan UDP streaming dan H264 encoder jika masih aktif
+            mdl_UdpStreaming.HentikanUdpStreaming()
 
             Console.WriteLine("[RELAY] Koneksi ke relay ditutup")
 
@@ -327,16 +332,26 @@ Public Module mdl_KoneksiRelay
 
         Catch ex As OperationCanceledException
             ' Normal saat cancel
+            Console.WriteLine("[RELAY] Listen cancelled")
         Catch ex As Exception
             Console.WriteLine($"[RELAY] Error dengarkan paket: {ex.Message}")
-        End Try
+        Finally
+            ' Cleanup state - baik saat cancel, exception, maupun disconnect normal
+            ' Pastikan semua resources dibersihkan
+            If Not ct.IsCancellationRequested Then
+                ' Koneksi terputus tidak sengaja (error/disconnect)
+                TerhubungKeRelay = False
+                HostCodeAktif = ""
+                IdSesiRelay = ""
+                SedangMenghubungkan = False
+                ModeKoneksiSaatIni = ModeKoneksi.LAN
 
-        ' Koneksi terputus
-        If Not ct.IsCancellationRequested Then
-            TerhubungKeRelay = False
-            HostCodeAktif = ""
-            RaiseEvent KoneksiRelayTerputus("Koneksi ke relay server terputus")
-        End If
+                ' Hentikan streaming dan encoder
+                mdl_UdpStreaming.HentikanUdpStreaming()
+
+                RaiseEvent KoneksiRelayTerputus("Koneksi ke relay server terputus")
+            End If
+        End Try
     End Function
 
     ''' <summary>

@@ -130,6 +130,12 @@ Public Module mdl_InjeksiInput
     ''' <param name="isKeyDown">True untuk key down, False untuk key up</param>
     ''' <param name="isExtended">True jika extended key (arrows, numpad, dll)</param>
     Public Sub InjeksiKeyboard(virtualKeyCode As Integer, isKeyDown As Boolean, Optional isExtended As Boolean = False)
+        ' Local Test Mode: Hanya log, tidak inject ke Windows
+        If LocalTestMode Then
+            WriteLog($"[LOCAL-TEST] Keyboard VK={virtualKeyCode} Down={isKeyDown} (tidak di-inject)")
+            Return
+        End If
+
         Try
             Dim input As New INPUT()
             input.type = INPUT_KEYBOARD
@@ -325,6 +331,12 @@ Public Module mdl_InjeksiInput
     ''' </summary>
     Public Sub ProsesInputMouse(input As cls_PayloadInputMouse)
         If input Is Nothing Then Return
+
+        ' Local Test Mode: Hanya log, tidak inject ke Windows
+        If LocalTestMode Then
+            WriteLog($"[LOCAL-TEST] Mouse {input.TipeAksi} X={input.X:F3} Y={input.Y:F3} (tidak di-inject)")
+            Return
+        End If
 
         Select Case input.TipeAksi
             Case TipeAksiMouse.PINDAH

@@ -340,15 +340,19 @@ Semua komponen (Relay, Host WPF, Android) **HARUS** menggunakan algoritma hash y
 **Algoritma:** djb2 hash (deterministic, cross-platform)
 
 ```csharp
-uint hash = 5381;
+ulong hash = 5381;
 foreach (char c in sessionKey)
 {
-    hash = ((hash << 5) + hash) ^ c;
+    hash = ((hash << 5) + hash) ^ (ulong)c;
+    hash = hash & 0xFFFFFFFF;  // PENTING: Mask setiap iterasi untuk konsistensi dengan VB.NET
 }
 return (int)(hash & 0x7FFFFFFF);
 ```
 
-> **PENTING:** Jangan gunakan `GetHashCode()` karena hasilnya **TIDAK konsisten** antar platform (.NET Windows vs Android). Hal ini menyebabkan UDP packet tidak bisa di-route dengan benar.
+> **PENTING:**
+> - Jangan gunakan `GetHashCode()` karena hasilnya **TIDAK konsisten** antar platform (.NET Windows vs Android).
+> - Gunakan `ulong` dan mask `& 0xFFFFFFFF` **setiap iterasi** untuk konsistensi dengan VB.NET yang menggunakan overflow behavior berbeda.
+> - Tanpa mask setiap iterasi, hasil hash akan berbeda dan UDP packet tidak bisa di-route dengan benar.
 
 ## Single Instance (Mutex)
 

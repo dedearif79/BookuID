@@ -380,11 +380,13 @@ Namespace Booku_Remote
                     If line Is Nothing Then Exit While
 
                     Debug.WriteLine($"[FFMPEG-DEC-ERR] {line}")
+                    mdl_VariabelUmum.WriteLog($"[FFMPEG-DEC-ERR] {line}")
                 End While
             Catch ex As OperationCanceledException
                 ' Normal cancellation
             Catch ex As Exception
                 Debug.WriteLine($"[H264-DEC] ReadError error: {ex.Message}")
+                mdl_VariabelUmum.WriteLog($"[H264-DEC] ReadError error: {ex.Message}")
             End Try
         End Sub
 
@@ -410,6 +412,7 @@ Namespace Booku_Remote
                     If line Is Nothing Then Exit While
 
                     Debug.WriteLine($"[FFMPEG-DEC-ERR] {line}")
+                    mdl_VariabelUmum.WriteLog($"[FFMPEG-DEC-ERR] {line}")
 
                     ' Parse resolusi dari output stream jika belum terdeteksi
                     ' Cari line yang mengandung "Stream #" dan "Video:" dan "bgra" (output format kita)
@@ -430,6 +433,7 @@ Namespace Booku_Remote
                                 End SyncLock
 
                                 Debug.WriteLine($"[H264-DEC] Auto-detected resolution: {_width}x{_height}, bytesPerFrame={_bytesPerFrame}")
+                                mdl_VariabelUmum.WriteLog($"[H264-DEC] Auto-detected resolution: {_width}x{_height}, bytesPerFrame={_bytesPerFrame}")
                             End If
                         End If
                     End If

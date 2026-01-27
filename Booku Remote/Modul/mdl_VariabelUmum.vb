@@ -139,6 +139,16 @@ Public Module mdl_VariabelUmum
         End Get
     End Property
 
+    ''' <summary>
+    ''' Mendapatkan skala capture aktif. Fallback ke default jika SetelPortAktif belum dimuat.
+    ''' </summary>
+    Public ReadOnly Property SkalaCaptureAktif As Double
+        Get
+            If SetelPortAktif Is Nothing Then Return cls_SetelPort.DEFAULT_SKALA_CAPTURE
+            Return SetelPortAktif.SkalaCapture
+        End Get
+    End Property
+
 #End Region
 
 #Region "Konstanta Timeout"
@@ -290,6 +300,23 @@ Public Module mdl_VariabelUmum
 
 #End Region
 
+#Region "Mode Developer Detection"
+
+    ''' <summary>
+    ''' Mendeteksi apakah aplikasi berjalan dalam Mode Developer (dari folder Debug).
+    ''' - Debug folder: Multi-instance diizinkan, logging aktif
+    ''' - Release folder: Single instance, logging dinonaktifkan
+    ''' </summary>
+    Public ReadOnly Property ModeDeveloper As Boolean
+        Get
+            Dim baseDir = AppDomain.CurrentDomain.BaseDirectory
+            ' Cek apakah path mengandung "\Debug\" (case-insensitive)
+            Return baseDir.IndexOf("\Debug\", StringComparison.OrdinalIgnoreCase) >= 0
+        End Get
+    End Property
+
+#End Region
+
 #Region "Variabel Global"
 
     ''' <summary>Mode aplikasi saat ini</summary>
@@ -327,6 +354,12 @@ Public Module mdl_VariabelUmum
 
     ''' <summary>Flag apakah FFmpeg tersedia di sistem</summary>
     Public FFmpegTersedia As Boolean = False
+
+    ''' <summary>
+    ''' Local Test Mode: Jika True, input mouse/keyboard hanya di-log tanpa di-inject ke Windows.
+    ''' Berguna untuk testing Host dan Tamu di satu PC tanpa cursor pindah-pindah.
+    ''' </summary>
+    Public LocalTestMode As Boolean = False
 
 #End Region
 
@@ -373,6 +406,129 @@ Public Module mdl_VariabelUmum
             result.Append(chars(random.Next(chars.Length)))
         Next
         Return result.ToString()
+    End Function
+
+#End Region
+
+#Region "File Logging"
+
+    ''' <summary>
+    ''' Role aplikasi saat ini (untuk nama file log).
+    ''' Set saat user memilih mode Host atau Tamu.
+    ''' </summary>
+    Public LogRole As String = "App"
+
+    ''' <summary>
+    ''' Folder untuk menyimpan log files (di folder aplikasi/Logs).
+    ''' </summary>
+    Private ReadOnly LogFolder As String = IO.Path.Combine(
+        AppDomain.CurrentDomain.BaseDirectory, "Logs")
+
+    ''' <summary>
+    ''' Path file log saat ini.
+    ''' </summary>
+    Private _logFilePath As String = Nothing
+
+    ''' <summary>
+    ''' Lock object untuk thread-safe logging.
+    ''' </summary>
+    Private ReadOnly LogLock As New Object()
+
+    ''' <summary>
+    ''' Inisialisasi file log dengan role tertentu.
+    ''' Panggil saat user memilih mode Host atau Tamu.
+    ''' CATATAN: File log HANYA dibuat jika dalam Mode Developer (folder Debug).
+    ''' </summary>
+    ''' <param name="role">Role: "Host" atau "Tamu"</param>
+    Public Sub InitLogFile(role As String)
+        ' Logging hanya aktif di Mode Developer (folder Debug)
+        If Not ModeDeveloper Then
+            System.Diagnostics.Debug.WriteLine($"[LOG] Logging dinonaktifkan (Release mode)")
+            Return
+        End If
+
+        Try
+            LogRole = role
+
+            ' Buat folder jika belum ada
+            If Not IO.Directory.Exists(LogFolder) Then
+                IO.Directory.CreateDirectory(LogFolder)
+            End If
+
+            ' Hapus log lama (lebih dari 1 hari)
+            BersihkanLogLama()
+
+            ' Buat nama file dengan timestamp dan role
+            Dim timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss")
+            Dim fileName = $"BookuRemote_{role}_{timestamp}.log"
+            _logFilePath = IO.Path.Combine(LogFolder, fileName)
+
+            ' Tulis header
+            IO.File.WriteAllText(_logFilePath,
+                $"=== Booku Remote Log ===" & Environment.NewLine &
+                $"Role: {role}" & Environment.NewLine &
+                $"Started: {DateTime.Now:yyyy-MM-dd HH:mm:ss}" & Environment.NewLine &
+                $"Log Path: {_logFilePath}" & Environment.NewLine &
+                $"Mode: Developer (Debug folder)" & Environment.NewLine &
+                $"=========================" & Environment.NewLine & Environment.NewLine)
+
+            System.Diagnostics.Debug.WriteLine($"[LOG] File log dibuat: {_logFilePath}")
+
+        Catch ex As Exception
+            System.Diagnostics.Debug.WriteLine($"[LOG] Error init log file: {ex.Message}")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Tulis pesan ke file log dan Debug output.
+    ''' Thread-safe.
+    ''' CATATAN: File log HANYA ditulis jika dalam Mode Developer (folder Debug).
+    ''' Debug.WriteLine tetap dipanggil di semua mode.
+    ''' </summary>
+    ''' <param name="message">Pesan log (sudah termasuk tag seperti [UDP-HOST])</param>
+    Public Sub WriteLog(message As String)
+        ' Selalu tulis ke Debug output (bisa dilihat di Visual Studio)
+        System.Diagnostics.Debug.WriteLine(message)
+
+        ' Tulis ke file HANYA jika Mode Developer dan sudah diinisialisasi
+        If Not ModeDeveloper Then Return
+        If String.IsNullOrEmpty(_logFilePath) Then Return
+
+        Try
+            SyncLock LogLock
+                Dim timestamp = DateTime.Now.ToString("HH:mm:ss.fff")
+                Dim line = $"[{timestamp}] {message}" & Environment.NewLine
+                IO.File.AppendAllText(_logFilePath, line)
+            End SyncLock
+        Catch
+            ' Ignore file write errors
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Hapus file log yang lebih dari 1 hari.
+    ''' </summary>
+    Private Sub BersihkanLogLama()
+        Try
+            If Not IO.Directory.Exists(LogFolder) Then Return
+
+            Dim cutoff = DateTime.Now.AddDays(-1)
+            For Each file In IO.Directory.GetFiles(LogFolder, "*.log")
+                Dim info = New IO.FileInfo(file)
+                If info.CreationTime < cutoff Then
+                    IO.File.Delete(file)
+                End If
+            Next
+        Catch
+            ' Ignore cleanup errors
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Dapatkan path folder log untuk dibuka di Explorer.
+    ''' </summary>
+    Public Function GetLogFolder() As String
+        Return LogFolder
     End Function
 
 #End Region

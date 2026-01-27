@@ -4,12 +4,18 @@ Imports System.Windows
 Imports System.Windows.Threading
 Imports System.Windows.Input
 Imports System.Windows.Media.Imaging
+Imports System.Threading.Tasks
 Imports bcomm
 Imports System.IO
 
 Public Class wpfWin_StartUp
 
     Dim JumlahCompany
+
+    ''' <summary>
+    ''' Task untuk pre-loading komponen (berjalan di background)
+    ''' </summary>
+    Private _preLoadTask As Task = Nothing
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
 
@@ -42,6 +48,13 @@ Public Class wpfWin_StartUp
         'List Company :
         KontenComboCompyany()
 
+        ' =====================================================
+        ' PRE-LOADING: Jalankan di background untuk mengurangi cold start
+        ' Ini akan pre-load UserControl, assemblies, dan XAML resources
+        ' sehingga saat user membuka tab pertama kali, sudah siap
+        ' =====================================================
+        MulaiPreLoading()
+
         'Loading....
         Terabas()
         Dispatcher.BeginInvoke(Sub() ProgressLoading())
@@ -65,6 +78,24 @@ Public Class wpfWin_StartUp
             Me.Close()
         End If
 
+    End Sub
+
+    ''' <summary>
+    ''' Mulai pre-loading komponen di background.
+    ''' Pre-loading berjalan paralel dengan animasi progress bar.
+    ''' </summary>
+    Private Sub MulaiPreLoading()
+        ' Setup callback untuk update progress label
+        PreLoadProgressCallback = Sub(msg As String)
+                                      ' Update label progress (sudah di UI thread via callback)
+                                      If lbl_ProgressReport IsNot Nothing Then
+                                          lbl_ProgressReport.Text = msg
+                                      End If
+                                  End Sub
+
+        ' Jalankan pre-loading async (fire and forget)
+        ' Pre-loading berjalan di background sambil progress bar animasi
+        _preLoadTask = JalankanPreLoadAsync()
     End Sub
 
 

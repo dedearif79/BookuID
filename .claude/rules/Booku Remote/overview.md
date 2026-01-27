@@ -18,6 +18,8 @@
 | **Target Framework** | .NET 8.0 Windows |
 | **Arsitektur** | WPF + TCP/UDP Networking |
 | **Entry Point** | `Application.xaml` → `wpfWin_StartUp.xaml` |
+| **Single Instance** | Kondisional (Release mode only) |
+| **Mode Developer** | Otomatis berdasarkan path eksekusi |
 
 ## Struktur File
 
@@ -35,11 +37,12 @@ Booku Remote/
 │   ├── cls_PaketData.vb          # Payload classes untuk protokol
 │   ├── cls_SetelPort.vb          # Konfigurasi port (load/save JSON)
 │   ├── cls_UdpPacket.vb          # UDP packet model + chunking/reassembly
-│   ├── cls_H264Encoder.vb        # FFmpeg H.264 encoder wrapper
+│   ├── cls_H264Encoder.vb        # FFmpeg H.264 encoder wrapper (Host)
+│   ├── cls_H264Decoder.vb        # FFmpeg H.264 decoder wrapper (Tamu)
 │   └── cls_NalParser.vb          # NAL unit parser untuk H.264 stream
 │
 ├── Modul/                        # Module files
-│   ├── mdl_VariabelUmum.vb       # Variabel global, enum, konstanta
+│   ├── mdl_VariabelUmum.vb       # Variabel global, enum, konstanta, file logging
 │   ├── mdl_PenemuanPerangkat.vb  # Discovery perangkat di LAN (UDP)
 │   ├── mdl_KoneksiJaringan.vb    # Koneksi TCP dan streaming (LAN)
 │   ├── mdl_KoneksiRelay.vb       # Koneksi via Relay Server (Internet)
@@ -347,10 +350,11 @@ TAMU                    RELAY                    HOST
 
 ### 1. mdl_VariabelUmum.vb
 
-Berisi konstanta, enum, dan variabel global:
+Berisi konstanta, enum, variabel global, dan Mode Developer detection.
 
 | Kategori | Contoh |
 |----------|--------|
+| **Mode Developer** | `ModeDeveloper` property — deteksi otomatis berdasarkan path eksekusi (lihat section Mode Developer di bawah) |
 | **Konstanta Port Default** | `DEFAULT_PORT_DISCOVERY = 45678`, `DEFAULT_PORT_KONEKSI = 45679`, `DEFAULT_PORT_RELAY = 45680`, `DEFAULT_PORT_UDP_VIDEO = 45681` |
 | **Konstanta FPS** | `DEFAULT_TARGET_FPS = 15`, `MIN_TARGET_FPS = 5`, `MAX_TARGET_FPS = 30` |
 | **Port Aktif (Runtime)** | `PortDiscoveryAktif`, `PortKoneksiAktif`, `PortRelayAktif`, `PortUdpVideoAktif`, `RelayServerIPAktif` |
@@ -358,7 +362,7 @@ Berisi konstanta, enum, dan variabel global:
 | **Settings Object** | `SetelPortAktif As cls_SetelPort` — instance untuk load/save port & streaming settings |
 | **Timeout** | `TIMEOUT_DISCOVERY = 3000ms`, `TIMEOUT_KONEKSI = 10000ms` |
 | **Enum Status** | `StatusKoneksi`, `ModeAplikasi`, `TipeAksiMouse` |
-| **Variabel Global** | `ModeAplikasiSaatIni`, `StatusKoneksiSaatIni`, `KunciSesiAktif` |
+| **Variabel Global** | `ModeAplikasiSaatIni`, `StatusKoneksiSaatIni`, `KunciSesiAktif`, `LocalTestMode` |
 
 ### 2. mdl_PenemuanPerangkat.vb
 
@@ -385,13 +389,33 @@ Menangani koneksi TCP, streaming frame, dan event handling.
 
 ### 4. mdl_TangkapLayar.vb
 
-Menangkap screenshot layar dengan scaling.
+Menangkap screenshot layar dengan scaling dan cursor drawing.
 
 | Fungsi | Deskripsi |
 |--------|-----------|
+| `TangkapLayarPenuh()` | Tangkap seluruh layar utama (full resolution) |
+| `TangkapLayarDenganSkala()` | Tangkap layar dengan skala tertentu (default 0.6) |
 | `TangkapFrameAsync()` | Tangkap screenshot sebagai `cls_FrameLayar` |
-| `TangkapLayarDasar()` | Tangkap screenshot mentah (Bitmap) |
-| `KompresKeJPEG()` | Kompres Bitmap ke JPEG bytes |
+| `TangkapLayarKeBgra()` | Tangkap layar dan return BGRA data untuk H.264 |
+| `GambarCursorPadaBitmap()` | **Menggambar cursor pada screenshot** |
+
+**Cursor Drawing Feature:**
+
+Karena `CopyFromScreen()` tidak menangkap cursor, modul ini menggunakan Windows API untuk menggambar cursor secara manual pada screenshot:
+
+| Windows API | Fungsi |
+|-------------|--------|
+| `GetCursorInfo()` | Mendapatkan posisi dan handle cursor saat ini |
+| `GetIconInfo()` | Mendapatkan hotspot cursor |
+| `CopyIcon()` | Copy cursor handle untuk digunakan |
+| `DestroyIcon()` | Cleanup cursor handle |
+
+| Variabel | Default | Deskripsi |
+|----------|---------|-----------|
+| `GambarCursor` | `True` | Flag untuk mengaktifkan/menonaktifkan cursor drawing |
+| `SKALA_DEFAULT` | `0.6` | Skala default screen capture (60%) |
+
+> **Catatan:** Cursor di-draw setelah screenshot di-scale, dengan posisi dan ukuran yang disesuaikan dengan skala.
 
 ### 5. mdl_InjeksiInput.vb
 
@@ -423,7 +447,7 @@ Menangani UDP video streaming untuk performa tinggi dengan dukungan multi-codec 
 | `KirimFrameUdpAsync()` | Host: Kirim frame JPEG via UDP (LAN direct) |
 | `KirimFrameViaRelayAsync()` | Host: Kirim frame via UDP relay |
 | `KirimH264NalUnitViaUdp()` | Host: Kirim NAL unit H.264 via UDP |
-| `MulaiUdpReceiverAsync()` | Tamu: Mulai UDP receiver |
+| `MulaiUdpReceiverAsync()` | Tamu: Mulai UDP receiver (fire-and-forget pattern) |
 | `HentikanUdpStreaming()` | Stop UDP streaming |
 | `GenerateSessionId()` | Generate SessionId dari KunciSesi (djb2 hash) |
 | `MulaiH264EncoderAsync()` | Host: Mulai FFmpeg H.264 encoder |
@@ -443,6 +467,8 @@ Menangani UDP video streaming untuk performa tinggi dengan dukungan multi-codec 
 
 > **PENTING - SessionId Hash:** `GenerateSessionId()` menggunakan **djb2 hash algorithm** (bukan `GetHashCode()`) untuk konsistensi cross-platform. Relay Server dan Android juga menggunakan algoritma yang sama. Lihat dokumentasi Relay untuk detail.
 
+> **PENTING - Fire-and-Forget Pattern:** `MulaiUdpReceiverAsync()` menggunakan `Task.Run()` **tanpa** `Await` untuk memulai `LoopTerimaUdp()`. Ini penting karena loop berjalan terus sampai streaming dihentikan. Jika menggunakan `Await Task.Run(...)`, fungsi akan blocking forever dan kode setelahnya (seperti registrasi ke relay) tidak akan dieksekusi.
+
 ### 7a. H.264 Encoding Components (Host)
 
 | Komponen | File | Deskripsi |
@@ -453,8 +479,19 @@ Menangani UDP video streaming untuk performa tinggi dengan dukungan multi-codec 
 
 **Alur H.264 Encoding:**
 ```
-Screen Capture (BGRA) → FFmpeg stdin → H.264 stream → NAL Parser → UDP Chunker → Send
+Screen Capture → BitmapKeBgra() → FFmpeg stdin → H.264 stream → NAL Parser → UDP Chunker → Send
 ```
+
+**Screen Capture (`mdl_TangkapLayar.vb`):**
+- `TangkapLayarDenganSkala(skala)` - Capture layar dengan skala (default 0.6 = 60%)
+- `BitmapKeBgra(bitmap)` - Ekstrak raw BGRA pixel data untuk FFmpeg
+
+**Catatan Penting BitmapKeBgra():**
+- Gunakan copy langsung dari `bmpData.Scan0` ke byte array
+- **JANGAN** tambahkan stride padding handling row-by-row
+- **JANGAN** force alpha channel ke 255
+- Windows GDI sudah menghasilkan data BGRA yang benar
+- Format: `LockBits` → `Marshal.Copy` langsung → `Return`
 
 **FFmpeg Settings (Low-Latency):**
 ```bash
@@ -468,12 +505,101 @@ ffmpeg -f rawvideo -pix_fmt bgra -s [W]x[H] -r [FPS] -i pipe:0 \
 **NAL Unit Types:**
 | Type | Deskripsi | Handling |
 |------|-----------|----------|
-| 7 (SPS) | Sequence Parameter Set | Disimpan, dikirim dengan keyframe |
-| 8 (PPS) | Picture Parameter Set | Disimpan, dikirim dengan keyframe |
-| 5 (IDR) | Keyframe | Dikirim dengan SPS+PPS prepended |
-| 1 (Non-IDR) | P-frame | Dikirim langsung (setelah keyframe pertama) |
+| 7 (SPS) | Sequence Parameter Set | Disimpan saat di-parse, prepend ke keyframe PERTAMA saja |
+| 8 (PPS) | Picture Parameter Set | Disimpan saat di-parse, prepend ke keyframe PERTAMA saja |
+| 5 (IDR) | Keyframe | Keyframe PERTAMA: SPS+PPS prepended. Keyframe berikutnya: tanpa SPS+PPS |
+| 1 (Non-IDR) | P-frame | Dikirim langsung (setelah keyframe pertama terkirim) |
+
+**Catatan Penting SPS+PPS Handling:**
+- SPS+PPS **HANYA** dikirim dengan keyframe **PERTAMA** di awal sesi
+- Keyframe berikutnya dikirim **TANPA** SPS+PPS karena decoder sudah tahu parameternya
+- Flag `_firstKeyframeSent` digunakan untuk tracking ini
+- **JANGAN** kirim SPS+PPS dengan setiap keyframe - ini bisa menyebabkan decode error
 
 > **PENTING:** Host akan skip non-keyframe NAL units sampai keyframe pertama dengan SPS/PPS terkirim. Ini memastikan decoder di client bisa initialize dengan benar.
+
+### 7b. H.264 Decoding Components (Tamu)
+
+| Komponen | File | Deskripsi |
+|----------|------|-----------|
+| **H.264 Decoder** | `cls_H264Decoder.vb` | Wrapper FFmpeg decoder via stdin/stdout pipe |
+
+**Alur H.264 Decoding:**
+```
+UDP Receive → Frame Assembler → FFmpeg stdin → BGRA output → WriteableBitmap
+```
+
+**FFmpeg Decoder Settings:**
+```bash
+# Mode dengan resolusi fixed
+ffmpeg -f h264 -i pipe:0 -f rawvideo -pix_fmt bgra -s [W]x[H] pipe:1
+
+# Mode auto-resolusi (deteksi dari SPS)
+ffmpeg -f h264 -i pipe:0 -f rawvideo -pix_fmt bgra pipe:1
+```
+
+**Decoder Modes:**
+| Mode | Method | Deskripsi |
+|------|--------|-----------|
+| Fixed Resolution | `Start(width, height)` | Resolusi output di-specify saat start |
+| Auto Resolution | `StartAutoResolusi()` | Resolusi auto-detect dari SPS dalam H.264 stream |
+
+**BGRA Rendering di Viewer:**
+- **Direct Copy**: BGRA data dari FFmpeg langsung di-copy ke WriteableBitmap tanpa transformasi tambahan.
+- **Auto-Resolution**: Resolusi WriteableBitmap dibuat berdasarkan resolusi yang terdeteksi dari FFmpeg stderr output.
+- **Kesederhanaan**: Tidak perlu stride handling khusus karena resolusi sudah match.
+
+**Events:**
+| Event | Deskripsi |
+|-------|-----------|
+| `FrameReady` | BGRA frame tersedia (sudah di-decode) |
+| `DecoderError` | Error pada decoder |
+| `DecoderStopped` | Decoder berhenti |
+
+### 7c. File Logging System
+
+Sistem logging ke file untuk debugging, diimplementasikan di `mdl_VariabelUmum.vb`.
+
+> **PENTING:** File logging **HANYA aktif di Mode Developer** (aplikasi dijalankan dari folder Debug). Di Release mode, `WriteLog()` hanya menulis ke `Debug.WriteLine` tanpa membuat file log.
+
+**Lokasi Log Files:**
+```
+{AppDomain.CurrentDomain.BaseDirectory}\Logs\
+```
+Contoh: `Booku Remote\bin\Debug\net8.0-windows\Logs\`
+
+**Format Nama File:**
+```
+BookuRemote_{Role}_{timestamp}.log
+```
+Contoh: `BookuRemote_Host_20260126_214532.log`, `BookuRemote_Tamu_20260126_214535.log`
+
+**Fungsi Logging:**
+
+| Fungsi | Deskripsi |
+|--------|-----------|
+| `InitLogFile(role As String)` | Inisialisasi file log dengan role (Host/Tamu) dan timestamp. **Hanya aktif jika `ModeDeveloper = True`** |
+| `WriteLog(message As String)` | Menulis pesan ke `Debug.WriteLine` (selalu) + file log (hanya jika Mode Developer) |
+| `BersihkanLogLama()` | Menghapus file log yang lebih dari 7 hari |
+
+**Cara Penggunaan:**
+```vb
+' Di wpfWin_StartUp saat user pilih mode:
+InitLogFile("Host")  ' atau "Tamu"
+
+' Di seluruh kode untuk logging:
+WriteLog("[UDP-HOST] Mengirim frame #123")
+WriteLog($"[H264-DEC] Frame decoded: {width}x{height}")
+```
+
+**Fitur:**
+- Thread-safe dengan `SyncLock`
+- Dual output: `Debug.WriteLine` (selalu) + file logging (hanya Mode Developer)
+- Auto-cleanup file lama (>7 hari)
+- Graceful failure (tidak throw exception jika gagal write)
+- **Kondisional**: File logging dinonaktifkan di Release mode untuk performa
+
+> **Catatan:** Di Release mode, folder `Logs/` tidak akan dibuat dan tidak ada file log yang ditulis. Ini menghindari penumpukan file log di PC user.
 
 ### 8. mdl_KoneksiRelay.vb
 
@@ -552,6 +678,13 @@ Window Host yang menunggu koneksi (LAN atau Internet).
 | `btn_Hentikan` | Hentikan mode Host |
 | **Expander "Pengaturan Port"** | Konfigurasi port Discovery, Koneksi, Relay, UDP Video, dan Relay Server IP |
 | **Expander "Pengaturan Streaming"** | **Slider untuk Target FPS (5-30, default 15)** |
+| **Local Test Mode** | Checkbox untuk testing di 1 PC — **hanya tampil di Mode Developer** |
+
+**Local Test Mode:**
+- Hanya visible jika `ModeDeveloper = True` (aplikasi dijalankan dari folder Debug)
+- Saat diaktifkan, input dari Tamu **tidak di-inject ke Windows** (hanya di-log)
+- Berguna untuk testing Host + Tamu di satu PC tanpa input saling interferensi
+- Di Release mode, checkbox ini tersembunyi dan `LocalTestMode` selalu `False`
 
 ### wpfWin_ModeTamu
 
@@ -595,10 +728,11 @@ Window Viewer di Tamu untuk melihat dan mengontrol layar Host.
 
 | Parameter | Nilai Default | Range | Deskripsi |
 |-----------|---------------|-------|-----------|
-| Skala Frame | 0.35 (35%) | - | Skala screenshot |
+| **Skala Frame** | **0.6 (60%)** | 0.1-1.0 | Skala screenshot (resolusi output) |
 | **Target FPS** | **15** | **5-30** | **Frame per second (dapat dikonfigurasi via slider di Host)** |
 | JPEG Quality | 30 | - | Kualitas kompresi JPEG |
 | Mouse Throttle | 30ms | - | Interval minimum mouse move |
+| **Gambar Cursor** | **True** | - | **Menggambar cursor Host pada screenshot** |
 
 > **Catatan:** Target FPS dapat diubah melalui slider di Expander "Pengaturan Streaming" pada window Host. Nilai lebih rendah mengurangi beban bandwidth dan CPU, berguna jika client (terutama Android) mengalami lag atau crash.
 
@@ -626,15 +760,123 @@ Window Viewer di Tamu untuk melihat dan mengontrol layar Host.
 | Koneksi TCP (LAN) | Selesai | Handshake + Heartbeat |
 | Koneksi Relay (Internet) | Selesai | Via VPS 155.117.43.209:45680 |
 | Screen Streaming (TCP) | Selesai | JPEG compression, fallback mode |
-| **Screen Streaming (UDP/JPEG)** | **Selesai** | **Port 45681, chunking/reassembly, low-latency** |
+| **Screen Streaming (UDP/JPEG) LAN** | **Selesai** | **Port 45681, chunking/reassembly, low-latency** |
+| **Screen Streaming (UDP/JPEG) Relay** | **Selesai** | **Via relay server, fire-and-forget receiver pattern** |
 | **Screen Streaming (UDP/H.264) Host** | **Selesai** | **FFmpeg encoder, NAL parsing, codec routing** |
-| **Screen Streaming (UDP/H.264) Tamu WPF** | **Testing** | **FFmpeg decoder (cls_H264Decoder), BGRA render** |
+| **Screen Streaming (UDP/H.264) Tamu WPF** | **Selesai** | **FFmpeg decoder, BGRA render berfungsi** |
 | Keyboard Control | Selesai | SendInput API |
 | Mouse Control | Selesai | Move, Click, Wheel |
+| **Cursor Drawing** | **Selesai** | **Menggambar cursor Host pada screenshot via Windows API** |
 | **Port Settings** | Selesai | Configurable via UI, JSON persistence |
 | **FPS Settings** | **Selesai** | **Slider 5-30 FPS di Host, default 15** |
+| **File Logging System** | **Selesai** | **WriteLog() ke folder Logs/, auto-cleanup 7 hari, kondisional Mode Developer** |
+| **Mode Developer** | **Selesai** | **Deteksi otomatis berdasarkan path eksekusi (Debug vs Release)** |
+| **Local Test Mode** | **Selesai** | **Testing di 1 PC tanpa input injection, hanya tampil di Mode Developer** |
+| **Single Instance (Kondisional)** | **Selesai** | **Mutex hanya aktif di Release mode** |
 | File Transfer | Belum | Fase 3 |
 | Clipboard Sync | Belum | Fase 3 |
+
+### Catatan Implementasi H.264 Streaming
+
+**Prinsip Dasar - Kesederhanaan adalah Kunci:**
+
+Implementasi H.264 streaming yang berhasil menggunakan pendekatan **sederhana dan langsung**. Jangan menambahkan "perbaikan" yang tidak diperlukan.
+
+**Yang BENAR (Implementasi Saat Ini):**
+1. ✅ SPS+PPS hanya di-prepend pada keyframe **PERTAMA** saja
+2. ✅ `BitmapKeBgra()` menggunakan copy langsung tanpa stride handling
+3. ✅ Skala capture default 0.6 (60% dari resolusi layar)
+4. ✅ Cursor drawing via Windows API untuk menampilkan cursor di screenshot
+5. ✅ Decoder menggunakan auto-resolution detection dari SPS
+
+**Yang SALAH (Jangan Dilakukan):**
+- ❌ Jangan kirim SPS+PPS dengan setiap keyframe
+- ❌ Jangan tambahkan stride padding handling row-by-row di `BitmapKeBgra()`
+- ❌ Jangan force alpha channel ke 255
+- ❌ Jangan tambahkan `CompositingMode.SourceCopy` di screen capture
+
+> **Referensi:** Jika ada masalah, bandingkan dengan versi backup yang berhasil. Folder `X_Booku Remote` berisi versi yang gagal untuk referensi perbandingan.
+
+## Mode Developer
+
+Sistem deteksi otomatis yang membedakan antara Development mode dan Production mode berdasarkan path eksekusi.
+
+### Cara Kerja
+
+```vb
+Public ReadOnly Property ModeDeveloper As Boolean
+    Get
+        Dim baseDir = AppDomain.CurrentDomain.BaseDirectory
+        ' Cek apakah path mengandung "\Debug\" (case-insensitive)
+        Return baseDir.IndexOf("\Debug\", StringComparison.OrdinalIgnoreCase) >= 0
+    End Get
+End Property
+```
+
+### Perbedaan Mode
+
+| Aspek | Mode Developer (Debug) | Mode Production (Release) |
+|-------|------------------------|---------------------------|
+| **Path Eksekusi** | Mengandung `\Debug\` | Tidak mengandung `\Debug\` |
+| **Single Instance** | Dinonaktifkan (multi-instance OK) | Aktif (Mutex protection) |
+| **File Logging** | Aktif (folder `Logs/` dibuat) | Dinonaktifkan (tidak ada file log) |
+| **Local Test Mode** | Checkbox tampil di Host | Checkbox tersembunyi |
+| **Debug.WriteLine** | Output ke Visual Studio | Tetap aktif tapi tidak terlihat |
+
+### Implementasi
+
+| File | Perubahan |
+|------|-----------|
+| `mdl_VariabelUmum.vb` | Property `ModeDeveloper`, kondisional di `InitLogFile()` dan `WriteLog()` |
+| `Application.xaml.vb` | Mutex hanya aktif jika `Not ModeDeveloper` |
+| `wpfWin_ModeHost.xaml.vb` | Local Test Mode checkbox visibility berdasarkan `ModeDeveloper` |
+
+## Debugging Notes
+
+> **Prasyarat:** File log hanya tersedia jika aplikasi dijalankan dalam **Mode Developer** (dari folder Debug). Lihat section [Mode Developer](#mode-developer) untuk detail.
+
+### Cara Debugging dengan File Log
+
+1. **Jalankan aplikasi dari folder Debug** - Log file akan dibuat otomatis di `bin/Debug/net8.0-windows/Logs/`
+2. **Setelah test** - Baca file log dengan nama format `BookuRemote_Host_*.log` atau `BookuRemote_Tamu_*.log`
+3. **Cari error** - Gunakan `grep` atau search untuk mencari pattern seperti `[ERROR]`, `Exception`, atau komponen spesifik seperti `[H264-DEC]`
+
+**Tag Log yang Digunakan:**
+| Tag | Komponen |
+|-----|----------|
+| `[UDP-HOST]` | UDP streaming di Host |
+| `[UDP-TAMU]` | UDP streaming di Tamu |
+| `[H264-ENC]` | H.264 encoder (Host) |
+| `[H264-DEC]` | H.264 decoder (Tamu) |
+| `[H264-DIAG]` | Diagnostic pixel data |
+| `[VIEWER]` | Frame rendering di Viewer |
+| `[CURSOR]` | Cursor drawing pada screenshot |
+| `[FFMPEG-ENC-ERR]` | FFmpeg encoder stderr |
+| `[FFMPEG-DEC-ERR]` | FFmpeg decoder stderr |
+| `[LOCAL-TEST]` | Input yang tidak di-inject karena Local Test Mode aktif |
+| `[LOG]` | Status sistem logging |
+
+### Contoh Log H.264 yang Berhasil
+
+**Host Log:**
+```
+[H264-HOST] Encoder started: 1152x648 @ 15fps
+[H264-DATA] FIRST IDR frame with SPS+PPS prepended: 281 bytes
+[H264-DATA] IDR frame (no SPS+PPS): 248 bytes
+[H264-DATA] Non-IDR frame: 12 bytes (type=1)
+```
+
+**Tamu Log:**
+```
+[UDP-TAMU] H.264 detected, enabled ordered delivery mode
+[H264-DEC] Decoder STARTED with auto-resolution detection
+[FFMPEG-DEC-ERR] Stream #0:0: Video: rawvideo (BGRA), bgra, 1152x648
+[H264-DEC] Frame #1 decoded: 1152x648, BGRA size=2985984
+[H264] New WriteableBitmap: 1152x648, BackBufferStride=4608
+[VIEWER] First frame rendered, loading overlay hidden
+```
+
+> **Catatan:** BGRA size = Width × Height × 4 = 1152 × 648 × 4 = 2,985,984 bytes
 
 ## Aturan Pengembangan
 
@@ -644,6 +886,7 @@ Window Viewer di Tamu untuk melihat dan mengontrol layar Host.
 4. **Error Handling**: Tangani exception network dengan baik
 5. **UI Thread**: Gunakan `Dispatcher.Invoke` untuk update UI dari async task
 6. **Resource Cleanup**: Dispose TCP connections dan streams dengan benar
+7. **Logging**: Gunakan `WriteLog()` untuk logging, bukan `Console.WriteLine` atau `Debug.WriteLine` langsung. Gunakan tag yang konsisten (lihat Debugging Notes)
 
 ## Versi Android
 

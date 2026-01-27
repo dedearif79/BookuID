@@ -51,7 +51,7 @@ Public Class cls_SesiRemote
     Public Property TargetFPS As Integer = 15
 
     ''' <summary>Skala gambar (0.0 - 1.0)</summary>
-    Public Property SkalaGambar As Double = 0.5
+    Public Property SkalaGambar As Double = 0.6
 
     ''' <summary>Nomor frame terakhir yang dikirim/diterima</summary>
     Public Property NomorFrameTerakhir As Long = 0

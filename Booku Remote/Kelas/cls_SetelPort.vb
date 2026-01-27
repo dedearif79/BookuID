@@ -37,6 +37,15 @@ Public Class cls_SetelPort
     ''' <summary>Target FPS maksimum</summary>
     Public Const MAX_TARGET_FPS As Integer = 30
 
+    ''' <summary>Skala capture default (0.6 = 60% dari resolusi asli)</summary>
+    Public Const DEFAULT_SKALA_CAPTURE As Double = 0.6
+
+    ''' <summary>Skala capture minimum</summary>
+    Public Const MIN_SKALA_CAPTURE As Double = 0.3
+
+    ''' <summary>Skala capture maksimum</summary>
+    Public Const MAX_SKALA_CAPTURE As Double = 1.0
+
     ''' <summary>Nama file settings</summary>
     Private Const NAMA_FILE_SETTINGS As String = "port-settings.json"
 
@@ -70,6 +79,10 @@ Public Class cls_SetelPort
     ''' <summary>Target FPS untuk streaming video</summary>
     <JsonPropertyName("targetFPS")>
     Public Property TargetFPS As Integer = DEFAULT_TARGET_FPS
+
+    ''' <summary>Skala capture gambar (0.3 - 1.0)</summary>
+    <JsonPropertyName("skalaCapture")>
+    Public Property SkalaCapture As Double = DEFAULT_SKALA_CAPTURE
 
 #End Region
 
@@ -129,6 +142,7 @@ Public Class cls_SetelPort
         PortUdpVideo = DEFAULT_PORT_UDP_VIDEO
         RelayServerIP = DEFAULT_RELAY_SERVER_IP
         TargetFPS = DEFAULT_TARGET_FPS
+        SkalaCapture = DEFAULT_SKALA_CAPTURE
     End Sub
 
     ''' <summary>
@@ -224,6 +238,11 @@ Public Class cls_SetelPort
         If TargetFPS < MIN_TARGET_FPS OrElse TargetFPS > MAX_TARGET_FPS Then
             TargetFPS = DEFAULT_TARGET_FPS
         End If
+
+        ' Validasi Skala Capture (harus antara MIN dan MAX)
+        If SkalaCapture < MIN_SKALA_CAPTURE OrElse SkalaCapture > MAX_SKALA_CAPTURE Then
+            SkalaCapture = DEFAULT_SKALA_CAPTURE
+        End If
     End Sub
 
     ''' <summary>
@@ -245,14 +264,15 @@ Public Class cls_SetelPort
                PortRelay = DEFAULT_PORT_RELAY AndAlso
                PortUdpVideo = DEFAULT_PORT_UDP_VIDEO AndAlso
                RelayServerIP = DEFAULT_RELAY_SERVER_IP AndAlso
-               TargetFPS = DEFAULT_TARGET_FPS
+               TargetFPS = DEFAULT_TARGET_FPS AndAlso
+               SkalaCapture = DEFAULT_SKALA_CAPTURE
     End Function
 
     ''' <summary>
     ''' Override ToString untuk debugging.
     ''' </summary>
     Public Overrides Function ToString() As String
-        Return $"SetelPort: Discovery={PortDiscovery}, Koneksi={PortKoneksi}, Relay={PortRelay}, UdpVideo={PortUdpVideo}, IP={RelayServerIP}, FPS={TargetFPS}"
+        Return $"SetelPort: Discovery={PortDiscovery}, Koneksi={PortKoneksi}, Relay={PortRelay}, UdpVideo={PortUdpVideo}, IP={RelayServerIP}, FPS={TargetFPS}, Skala={SkalaCapture:F1}"
     End Function
 
 #End Region

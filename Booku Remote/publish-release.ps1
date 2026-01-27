@@ -36,6 +36,22 @@ Write-Host "============================================================" -Foreg
 
 # Step 1: Clean previous builds
 Write-Step "Membersihkan build sebelumnya..."
+
+# Backup ffmpeg.exe jika ada di folder Final (diperlukan untuk H.264 encoding)
+$ffmpegPath = Join-Path $FinalOutputDir "ffmpeg.exe"
+$ffmpegBackupDir = Join-Path $ProjectDir "bin\Release\_ffmpeg_backup"
+$ffmpegBackedUp = $false
+
+if (Test-Path $ffmpegPath) {
+    Write-Host "   Membackup ffmpeg.exe..." -ForegroundColor Gray
+    if (-not (Test-Path $ffmpegBackupDir)) {
+        New-Item -ItemType Directory -Path $ffmpegBackupDir -Force | Out-Null
+    }
+    Copy-Item -Path $ffmpegPath -Destination $ffmpegBackupDir -Force
+    $ffmpegBackedUp = $true
+    Write-Success "ffmpeg.exe dibackup"
+}
+
 if (Test-Path $BuildOutputDir) {
     Remove-Item -Path $BuildOutputDir -Recurse -Force -ErrorAction SilentlyContinue
 }
@@ -209,6 +225,19 @@ if (Test-Path $exeFile) {
     $finalExe = Join-Path $FinalOutputDir "Booku Remote.exe"
     $fileSize = [math]::Round((Get-Item $finalExe).Length / 1MB, 2)
     Write-Success "Booku Remote.exe ($fileSize MB) disalin ke folder Final"
+}
+
+# Restore ffmpeg.exe jika sebelumnya dibackup
+if ($ffmpegBackedUp) {
+    $ffmpegBackupFile = Join-Path $ffmpegBackupDir "ffmpeg.exe"
+    if (Test-Path $ffmpegBackupFile) {
+        Write-Host "   Mengembalikan ffmpeg.exe..." -ForegroundColor Gray
+        Copy-Item -Path $ffmpegBackupFile -Destination $FinalOutputDir -Force
+        Write-Success "ffmpeg.exe dikembalikan ke folder Final"
+
+        # Cleanup backup folder
+        Remove-Item -Path $ffmpegBackupDir -Recurse -Force -ErrorAction SilentlyContinue
+    }
 }
 
 # Summary

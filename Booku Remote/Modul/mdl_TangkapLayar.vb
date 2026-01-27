@@ -5,23 +5,138 @@ Imports System.Drawing
 Imports System.Drawing.Imaging
 Imports System.Windows.Forms
 Imports System.Threading.Tasks
+Imports System.Runtime.InteropServices
 
 ''' <summary>
 ''' Modul untuk menangkap layar (screen capture).
 ''' Menggunakan Graphics.CopyFromScreen untuk capture.
+''' Mendukung capture cursor untuk ditampilkan di remote viewer.
 ''' </summary>
 Public Module mdl_TangkapLayar
+
+#Region "Windows API untuk Cursor"
+
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure POINT
+        Public X As Integer
+        Public Y As Integer
+    End Structure
+
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure CURSORINFO
+        Public cbSize As Integer
+        Public flags As Integer
+        Public hCursor As IntPtr
+        Public ptScreenPos As POINT
+    End Structure
+
+    <StructLayout(LayoutKind.Sequential)>
+    Private Structure ICONINFO
+        Public fIcon As Boolean
+        Public xHotspot As Integer
+        Public yHotspot As Integer
+        Public hbmMask As IntPtr
+        Public hbmColor As IntPtr
+    End Structure
+
+    Private Const CURSOR_SHOWING As Integer = &H1
+
+    <DllImport("user32.dll")>
+    Private Function GetCursorInfo(ByRef pci As CURSORINFO) As Boolean
+    End Function
+
+    <DllImport("user32.dll")>
+    Private Function GetIconInfo(hIcon As IntPtr, ByRef piconinfo As ICONINFO) As Boolean
+    End Function
+
+    <DllImport("user32.dll")>
+    Private Function CopyIcon(hIcon As IntPtr) As IntPtr
+    End Function
+
+    <DllImport("user32.dll")>
+    Private Function DestroyIcon(hIcon As IntPtr) As Boolean
+    End Function
+
+    <DllImport("gdi32.dll")>
+    Private Function DeleteObject(hObject As IntPtr) As Boolean
+    End Function
+
+#End Region
 
 #Region "Variabel"
 
     ''' <summary>Counter nomor frame</summary>
     Private _nomorFrame As Long = 0
 
-    ''' <summary>Skala default untuk capture (0.4 = 40% - optimal untuk streaming)</summary>
-    Public Const SKALA_DEFAULT As Double = 0.4
+    ''' <summary>Skala default untuk capture (0.6 = 60% - balance kualitas dan bandwidth)</summary>
+    Public Const SKALA_DEFAULT As Double = 0.6
 
     ''' <summary>Kualitas JPEG untuk streaming (50 = balance antara kualitas dan ukuran)</summary>
     Public Const KUALITAS_JPEG As Integer = 50
+
+    ''' <summary>Flag untuk mengaktifkan/menonaktifkan capture cursor</summary>
+    Public GambarCursor As Boolean = True
+
+#End Region
+
+#Region "Cursor Drawing"
+
+    ''' <summary>
+    ''' Menggambar cursor pada bitmap.
+    ''' </summary>
+    ''' <param name="bitmap">Bitmap target untuk digambar cursor</param>
+    ''' <param name="screenBounds">Bounds layar asli (sebelum skala)</param>
+    ''' <param name="skala">Skala yang diterapkan pada bitmap</param>
+    Private Sub GambarCursorPadaBitmap(bitmap As Bitmap, screenBounds As Rectangle, skala As Double)
+        If Not GambarCursor Then Return
+
+        Try
+            Dim cursorInfo As New CURSORINFO()
+            cursorInfo.cbSize = Marshal.SizeOf(cursorInfo)
+
+            If GetCursorInfo(cursorInfo) AndAlso (cursorInfo.flags And CURSOR_SHOWING) <> 0 Then
+                ' Copy cursor handle
+                Dim hCursor = CopyIcon(cursorInfo.hCursor)
+                If hCursor = IntPtr.Zero Then Return
+
+                Try
+                    ' Get cursor icon info untuk hotspot
+                    Dim iconInfo As New ICONINFO()
+                    If GetIconInfo(hCursor, iconInfo) Then
+                        Try
+                            ' Hitung posisi cursor dengan memperhitungkan skala dan hotspot
+                            Dim cursorX = CInt((cursorInfo.ptScreenPos.X - screenBounds.X - iconInfo.xHotspot) * skala)
+                            Dim cursorY = CInt((cursorInfo.ptScreenPos.Y - screenBounds.Y - iconInfo.yHotspot) * skala)
+
+                            ' Gambar cursor ke bitmap
+                            Using cursorIcon = Icon.FromHandle(hCursor)
+                                Using g = Graphics.FromImage(bitmap)
+                                    ' Hitung ukuran cursor yang di-scale
+                                    Dim cursorWidth = CInt(cursorIcon.Width * skala)
+                                    Dim cursorHeight = CInt(cursorIcon.Height * skala)
+
+                                    ' Pastikan ukuran minimal
+                                    If cursorWidth < 16 Then cursorWidth = 16
+                                    If cursorHeight < 16 Then cursorHeight = 16
+
+                                    g.DrawIcon(cursorIcon, New Rectangle(cursorX, cursorY, cursorWidth, cursorHeight))
+                                End Using
+                            End Using
+                        Finally
+                            ' Cleanup bitmap handles dari ICONINFO
+                            If iconInfo.hbmMask <> IntPtr.Zero Then DeleteObject(iconInfo.hbmMask)
+                            If iconInfo.hbmColor <> IntPtr.Zero Then DeleteObject(iconInfo.hbmColor)
+                        End Try
+                    End If
+                Finally
+                    DestroyIcon(hCursor)
+                End Try
+            End If
+        Catch ex As Exception
+            ' Jangan crash jika gagal menggambar cursor
+            WriteLog($"[CURSOR] Error drawing cursor: {ex.Message}")
+        End Try
+    End Sub
 
 #End Region
 
@@ -38,6 +153,9 @@ Public Module mdl_TangkapLayar
             Using g = Graphics.FromImage(bitmap)
                 g.CopyFromScreen(bounds.X, bounds.Y, 0, 0, bounds.Size, CopyPixelOperation.SourceCopy)
             End Using
+
+            ' Gambar cursor pada skala 1.0
+            GambarCursorPadaBitmap(bitmap, bounds, 1.0)
 
             Return bitmap
 
@@ -70,6 +188,9 @@ Public Module mdl_TangkapLayar
                     g.PixelOffsetMode = Drawing2D.PixelOffsetMode.HighSpeed
                     g.DrawImage(fullBitmap, 0, 0, lebarBaru, tinggiBaru)
                 End Using
+
+                ' Gambar cursor pada bitmap yang sudah di-scale
+                GambarCursorPadaBitmap(scaledBitmap, bounds, skala)
 
                 Return scaledBitmap
             End Using

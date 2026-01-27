@@ -44,6 +44,9 @@ Class wpfWin_StartUp
         ' Set mode aplikasi
         ModeAplikasiSaatIni = ModeAplikasi.HOST
 
+        ' Inisialisasi file log untuk Host
+        InitLogFile("Host")
+
         ' Buka window Mode Host
         Dim winHost As New wpfWin_ModeHost()
         winHost.Owner = Me
@@ -58,6 +61,9 @@ Class wpfWin_StartUp
     Private Sub btn_CariPerangkat_Click(sender As Object, e As RoutedEventArgs) Handles btn_CariPerangkat.Click
         ' Set mode aplikasi
         ModeAplikasiSaatIni = ModeAplikasi.TAMU
+
+        ' Inisialisasi file log untuk Tamu
+        InitLogFile("Tamu")
 
         ' Buka window Mode Tamu
         Dim winTamu As New wpfWin_ModeTamu()

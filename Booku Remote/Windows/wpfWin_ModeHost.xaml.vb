@@ -59,6 +59,21 @@ Class wpfWin_ModeHost
         AddHandler rdo_ModeLAN.Checked, AddressOf OnModeKoneksiBerubah
         AddHandler rdo_ModeInternet.Checked, AddressOf OnModeKoneksiBerubah
 
+        ' Local Test Mode - hanya tampil di Mode Developer
+        If ModeDeveloper Then
+            sep_LocalTestMode.Visibility = Visibility.Visible
+            chk_LocalTestMode.Visibility = Visibility.Visible
+            lbl_LocalTestModeDesc.Visibility = Visibility.Visible
+
+            ' Subscribe Local Test Mode events
+            AddHandler chk_LocalTestMode.Checked, AddressOf OnLocalTestModeBerubah
+            AddHandler chk_LocalTestMode.Unchecked, AddressOf OnLocalTestModeBerubah
+            chk_LocalTestMode.IsChecked = LocalTestMode
+        Else
+            ' Reset LocalTestMode ke False di Release mode (untuk keamanan)
+            LocalTestMode = False
+        End If
+
         ' Aktifkan Host secara otomatis (mode LAN default)
         AktifkanHost()
     End Sub
@@ -76,6 +91,12 @@ Class wpfWin_ModeHost
         RemoveHandler mdl_KoneksiRelay.PermintaanKoneksiViaRelay, AddressOf OnPermintaanKoneksiViaRelay
         RemoveHandler mdl_KoneksiRelay.ErrorDariRelay, AddressOf OnErrorDariRelay
         RemoveHandler mdl_KoneksiRelay.PaketDariRelay, AddressOf OnPaketDariRelay
+
+        ' Unsubscribe Local Test Mode events (hanya jika Mode Developer)
+        If ModeDeveloper Then
+            RemoveHandler chk_LocalTestMode.Checked, AddressOf OnLocalTestModeBerubah
+            RemoveHandler chk_LocalTestMode.Unchecked, AddressOf OnLocalTestModeBerubah
+        End If
 
         ' Nonaktifkan Host
         NonaktifkanHost()
@@ -112,6 +133,19 @@ Class wpfWin_ModeHost
 
         ' Aktifkan mode baru
         AktifkanHost()
+    End Sub
+
+    ''' <summary>
+    ''' Event handler untuk checkbox Local Test Mode.
+    ''' </summary>
+    Private Sub OnLocalTestModeBerubah(sender As Object, e As RoutedEventArgs)
+        LocalTestMode = chk_LocalTestMode.IsChecked.GetValueOrDefault()
+        WriteLog($"[HOST] LocalTestMode diubah ke {LocalTestMode}")
+        If LocalTestMode Then
+            TambahRiwayat($"{DateTime.Now:HH:mm} - Local Test Mode AKTIF")
+        Else
+            TambahRiwayat($"{DateTime.Now:HH:mm} - Local Test Mode NONAKTIF")
+        End If
     End Sub
 
 #End Region
@@ -418,12 +452,28 @@ Class wpfWin_ModeHost
         ' Load nilai FPS
         sld_TargetFPS.Value = TargetFPSAktif
         lbl_TargetFPS.Text = $"{TargetFPSAktif} FPS"
+
+        ' Load nilai Skala Capture
+        sld_SkalaCapture.Value = SkalaCaptureAktif
+        lbl_SkalaCapture.Text = $"{CInt(SkalaCaptureAktif * 100)}%"
     End Sub
 
     Private Sub sld_TargetFPS_ValueChanged(sender As Object, e As RoutedPropertyChangedEventArgs(Of Double)) Handles sld_TargetFPS.ValueChanged
         ' Update label saat slider berubah
         If lbl_TargetFPS IsNot Nothing Then
             lbl_TargetFPS.Text = $"{CInt(sld_TargetFPS.Value)} FPS"
+        End If
+    End Sub
+
+    Private Sub sld_SkalaCapture_ValueChanged(sender As Object, e As RoutedPropertyChangedEventArgs(Of Double)) Handles sld_SkalaCapture.ValueChanged
+        ' Update label saat slider berubah
+        If lbl_SkalaCapture IsNot Nothing Then
+            lbl_SkalaCapture.Text = $"{CInt(sld_SkalaCapture.Value * 100)}%"
+        End If
+
+        ' Sync realtime ke SetelPortAktif agar perubahan langsung terasa saat streaming
+        If SetelPortAktif IsNot Nothing Then
+            SetelPortAktif.SkalaCapture = sld_SkalaCapture.Value
         End If
     End Sub
 
@@ -471,6 +521,7 @@ Class wpfWin_ModeHost
         SetelPortAktif.PortRelay = portRelay
         SetelPortAktif.RelayServerIP = txt_RelayServerIP.Text.Trim()
         SetelPortAktif.TargetFPS = CInt(sld_TargetFPS.Value)
+        SetelPortAktif.SkalaCapture = sld_SkalaCapture.Value
 
         If SetelPortAktif.SimpanKeFile() Then
             ' Update tampilan port

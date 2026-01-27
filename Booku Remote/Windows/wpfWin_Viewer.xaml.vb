@@ -136,7 +136,7 @@ Class wpfWin_Viewer
             Dim sessionId As Integer
             If ModeViaRelay Then
                 sessionId = mdl_UdpStreaming.GenerateSessionId(IdSesiRelay)
-                System.Diagnostics.Debug.WriteLine($"[UDP-TAMU] Using IdSesiRelay for SessionId: {IdSesiRelay} -> {sessionId}")
+                WriteLog($"[UDP-TAMU] Using IdSesiRelay for SessionId: {IdSesiRelay} -> {sessionId}")
             Else
                 sessionId = mdl_UdpStreaming.GenerateSessionId(KunciSesiAktif)
             End If
@@ -145,7 +145,7 @@ Class wpfWin_Viewer
             Await mdl_UdpStreaming.MulaiUdpReceiverAsync(PortUdpVideoAktif, sessionId)
             _useUdpReceiver = True
 
-            System.Diagnostics.Debug.WriteLine($"[UDP-TAMU] UDP receiver dimulai, port={PortUdpVideoAktif}, sessionId={sessionId}")
+            WriteLog($"[UDP-TAMU] UDP receiver dimulai, port={PortUdpVideoAktif}, sessionId={sessionId}")
 
             ' Untuk mode Internet: Kirim registration packet ke relay
             ' Ini memberitahu relay IP:Port Tamu agar bisa forward paket dari Host
@@ -153,15 +153,15 @@ Class wpfWin_Viewer
                 Await Task.Delay(100) ' Beri waktu receiver siap
                 Dim regResult = Await mdl_UdpStreaming.KirimRegistrasiKeRelayAsync(RelayServerIPAktif, PortUdpVideoAktif, sessionId)
                 If regResult Then
-                    System.Diagnostics.Debug.WriteLine($"[UDP-TAMU] Registration ke relay berhasil")
+                    WriteLog($"[UDP-TAMU] Registration ke relay berhasil")
                     ' Mulai periodic registration
                     MulaiPeriodicRegistration()
                 Else
-                    System.Diagnostics.Debug.WriteLine($"[UDP-TAMU] Registration ke relay gagal!")
+                    WriteLog($"[UDP-TAMU] Registration ke relay gagal!")
                 End If
             End If
         Catch ex As Exception
-            System.Diagnostics.Debug.WriteLine($"[UDP-TAMU] Gagal mulai UDP receiver: {ex.Message}")
+            WriteLog($"[UDP-TAMU] Gagal mulai UDP receiver: {ex.Message}")
             _useUdpReceiver = False
         End Try
     End Sub
@@ -364,13 +364,18 @@ Class wpfWin_Viewer
     ''' </summary>
     Private Sub OnStatistikUdp(packetsReceived As Integer, packetsDropped As Integer, fps As Double)
         ' Update statistik di UI jika perlu
-        System.Diagnostics.Debug.WriteLine($"[UDP] Packets: {packetsReceived}, Dropped: {packetsDropped}, FPS: {fps:F1}")
+        WriteLog($"[UDP] Packets: {packetsReceived}, Dropped: {packetsDropped}, FPS: {fps:F1}")
     End Sub
 
     ''' <summary>
     ''' Handler untuk frame BGRA yang sudah di-decode dari H.264.
     ''' </summary>
+    Private _bgraFrameCount As Integer = 0
     Private Sub OnFrameBgraDiterima(bgraData As Byte(), width As Integer, height As Integer)
+        _bgraFrameCount += 1
+        If _bgraFrameCount Mod 10 = 1 Then
+            WriteLog($"[VIEWER] OnFrameBgraDiterima #{_bgraFrameCount}: {width}x{height}, {bgraData.Length} bytes")
+        End If
         Dispatcher.Invoke(Sub()
                               ProsesFrameBgra(bgraData, width, height)
                           End Sub)
@@ -391,9 +396,45 @@ Class wpfWin_Viewer
             ' Validasi ukuran data (4 bytes per pixel: BGRA)
             Dim expectedSize = width * height * 4
             If bgraData.Length <> expectedSize Then
-                System.Diagnostics.Debug.WriteLine($"[H264] Invalid BGRA size: {bgraData.Length} (expected {expectedSize})")
+                WriteLog($"[H264] Invalid BGRA size: {bgraData.Length} (expected {expectedSize})")
                 Return
             End If
+
+            ' LOG DIAGNOSTIC: Tampilkan pixel di berbagai posisi untuk debug
+            If _bgraFrameCount <= 3 Then
+                Dim firstBytes = String.Join(",", bgraData.Take(16).Select(Function(b) b.ToString("X2")))
+                WriteLog($"[H264-DIAG] Frame #{_bgraFrameCount} first 16 bytes: {firstBytes}")
+
+                ' Pixel di berbagai posisi (BGRA = 4 bytes per pixel)
+                Dim stride = width * 4
+
+                ' Pixel [0,0] - top-left
+                WriteLog($"[H264-DIAG] Pixel[0,0]: B={bgraData(0)}, G={bgraData(1)}, R={bgraData(2)}, A={bgraData(3)}")
+
+                ' Pixel di tengah gambar
+                Dim midY = height \ 2
+                Dim midX = width \ 2
+                Dim midOffset = (midY * stride) + (midX * 4)
+                If midOffset + 3 < bgraData.Length Then
+                    WriteLog($"[H264-DIAG] Pixel[{midX},{midY}] (center): B={bgraData(midOffset)}, G={bgraData(midOffset + 1)}, R={bgraData(midOffset + 2)}, A={bgraData(midOffset + 3)}")
+                End If
+
+                ' Pixel di bottom-right (terakhir)
+                Dim lastOffset = bgraData.Length - 4
+                WriteLog($"[H264-DIAG] Pixel[last]: B={bgraData(lastOffset)}, G={bgraData(lastOffset + 1)}, R={bgraData(lastOffset + 2)}, A={bgraData(lastOffset + 3)}")
+
+                ' Hitung berapa pixel yang BUKAN hitam
+                Dim nonBlackCount = 0
+                For i As Integer = 0 To bgraData.Length - 4 Step 4
+                    If bgraData(i) <> 0 OrElse bgraData(i + 1) <> 0 OrElse bgraData(i + 2) <> 0 Then
+                        nonBlackCount += 1
+                    End If
+                Next
+                WriteLog($"[H264-DIAG] Non-black pixels: {nonBlackCount} / {width * height} ({100.0 * nonBlackCount / (width * height):F2}%)")
+            End If
+
+            ' Gunakan data langsung (FFmpeg rawvideo sudah dengan orientasi yang benar)
+            Dim sourceStride = width * 4
 
             ' Buat atau reuse WriteableBitmap jika resolusi berubah
             If _bgraWriteableBitmap Is Nothing OrElse
@@ -404,17 +445,30 @@ Class wpfWin_Viewer
                 _lastBgraWidth = width
                 _lastBgraHeight = height
                 img_Layar.Source = _bgraWriteableBitmap
-                System.Diagnostics.Debug.WriteLine($"[H264] New WriteableBitmap: {width}x{height}")
+                WriteLog($"[H264] New WriteableBitmap: {width}x{height}, BackBufferStride={_bgraWriteableBitmap.BackBufferStride}")
             End If
 
             ' Update pixels di WriteableBitmap
             _bgraWriteableBitmap.Lock()
             Try
                 Dim backBuffer = _bgraWriteableBitmap.BackBuffer
-                Dim stride = _bgraWriteableBitmap.BackBufferStride
+                Dim destStride = _bgraWriteableBitmap.BackBufferStride
 
-                ' Copy BGRA data ke back buffer
-                System.Runtime.InteropServices.Marshal.Copy(bgraData, 0, backBuffer, bgraData.Length)
+                ' PENTING: Handle stride mismatch
+                ' FFmpeg output BGRA dengan stride = width * 4
+                ' WriteableBitmap mungkin memiliki padding bytes di akhir setiap row
+                If sourceStride = destStride Then
+                    ' Fast path: stride cocok, direct copy
+                    System.Runtime.InteropServices.Marshal.Copy(bgraData, 0, backBuffer, bgraData.Length)
+                Else
+                    ' Slow path: copy row-by-row untuk handle stride yang berbeda
+                    For y As Integer = 0 To height - 1
+                        Dim srcOffset = y * sourceStride
+                        Dim dstOffset = y * destStride
+                        Dim destPtr = IntPtr.Add(backBuffer, dstOffset)
+                        System.Runtime.InteropServices.Marshal.Copy(bgraData, srcOffset, destPtr, sourceStride)
+                    Next
+                End If
 
                 ' Mark seluruh bitmap sebagai dirty
                 _bgraWriteableBitmap.AddDirtyRect(New Int32Rect(0, 0, width, height))
@@ -425,6 +479,7 @@ Class wpfWin_Viewer
             ' Sembunyikan loading overlay
             If bdr_Loading.Visibility = Visibility.Visible Then
                 bdr_Loading.Visibility = Visibility.Collapsed
+                WriteLog($"[VIEWER] First frame rendered, loading overlay hidden")
             End If
 
             ' Update statistik di SesiRemote
@@ -433,7 +488,8 @@ Class wpfWin_Viewer
             End If
 
         Catch ex As Exception
-            System.Diagnostics.Debug.WriteLine($"[H264] Error proses BGRA frame: {ex.Message}")
+            WriteLog($"[VIEWER] ERROR proses BGRA frame: {ex.Message}")
+            WriteLog($"[VIEWER] Stack: {ex.StackTrace}")
         End Try
     End Sub
 
@@ -467,7 +523,7 @@ Class wpfWin_Viewer
             End If
 
         Catch ex As Exception
-            System.Diagnostics.Debug.WriteLine($"[UDP] Error proses frame: {ex.Message}")
+            WriteLog($"[UDP] Error proses frame: {ex.Message}")
         End Try
     End Sub
 
@@ -514,7 +570,7 @@ Class wpfWin_Viewer
 
         Catch ex As Exception
             ' Log error tapi jangan ganggu streaming
-            System.Diagnostics.Debug.WriteLine($"Error proses frame: {ex.Message}")
+            WriteLog($"Error proses frame: {ex.Message}")
         End Try
     End Sub
 
@@ -621,10 +677,13 @@ Class wpfWin_Viewer
     ''' Toggle kontrol diaktifkan oleh user.
     ''' </summary>
     Private Sub tgl_Kontrol_Checked(sender As Object, e As RoutedEventArgs) Handles tgl_Kontrol.Checked
+        WriteLog($"[KONTROL] Toggle Checked - mengaktifkan kontrol")
         _kontrolAktif = True
         UpdateStatusKontrol()
         img_Layar.Focus()
-        img_Layar.Cursor = Cursors.None ' Sembunyikan cursor saat kontrol aktif
+        ' Pastikan cursor tetap terlihat (Arrow)
+        img_Layar.Cursor = Cursors.Arrow
+        WriteLog($"[KONTROL] _kontrolAktif={_kontrolAktif}")
     End Sub
 
     ''' <summary>
@@ -633,7 +692,6 @@ Class wpfWin_Viewer
     Private Sub tgl_Kontrol_Unchecked(sender As Object, e As RoutedEventArgs) Handles tgl_Kontrol.Unchecked
         _kontrolAktif = False
         UpdateStatusKontrol()
-        img_Layar.Cursor = Cursors.Arrow ' Kembalikan cursor normal
     End Sub
 
     ''' <summary>
@@ -689,7 +747,11 @@ Class wpfWin_Viewer
     End Sub
 
     Private Sub img_Layar_MouseDown(sender As Object, e As MouseButtonEventArgs) Handles img_Layar.MouseDown
-        If Not _kontrolAktif Then Return
+        WriteLog($"[MOUSE-EVENT] MouseDown di img_Layar, _kontrolAktif={_kontrolAktif}, Button={e.ChangedButton}")
+        If Not _kontrolAktif Then
+            WriteLog($"[MOUSE-EVENT] SKIP: _kontrolAktif=False")
+            Return
+        End If
 
         Dim pos = e.GetPosition(img_Layar)
         Dim normalizedX = NormalizeX(pos.X)
@@ -749,7 +811,7 @@ Class wpfWin_Viewer
             End If
 
         Catch ex As Exception
-            System.Diagnostics.Debug.WriteLine($"Error kirim keyboard: {ex.Message}")
+            WriteLog($"Error kirim keyboard: {ex.Message}")
         End Try
     End Sub
 
@@ -772,7 +834,7 @@ Class wpfWin_Viewer
             End If
 
         Catch ex As Exception
-            System.Diagnostics.Debug.WriteLine($"Error kirim mouse move: {ex.Message}")
+            WriteLog($"Error kirim mouse move: {ex.Message}")
         End Try
     End Sub
 
@@ -781,9 +843,17 @@ Class wpfWin_Viewer
     ''' </summary>
     Private Async Sub KirimInputMouseClick(button As Integer, isDown As Boolean,
                                             normalizedX As Double, normalizedY As Double)
+        ' Debug logging
+        WriteLog($"[INPUT] KirimInputMouseClick dipanggil: button={button}, isDown={isDown}, X={normalizedX:F3}, Y={normalizedY:F3}")
+
         ' Cek koneksi berdasarkan mode
         Dim terhubung As Boolean = If(ModeViaRelay, TerhubungKeRelay, mdl_KoneksiJaringan.Terhubung)
-        If Not terhubung Then Return
+        WriteLog($"[INPUT] Status koneksi: ModeViaRelay={ModeViaRelay}, terhubung={terhubung}")
+
+        If Not terhubung Then
+            WriteLog($"[INPUT] SKIP: Tidak terhubung!")
+            Return
+        End If
 
         Try
             If ModeViaRelay Then
@@ -796,7 +866,7 @@ Class wpfWin_Viewer
             End If
 
         Catch ex As Exception
-            System.Diagnostics.Debug.WriteLine($"Error kirim mouse click: {ex.Message}")
+            WriteLog($"Error kirim mouse click: {ex.Message}")
         End Try
     End Sub
 
@@ -819,7 +889,7 @@ Class wpfWin_Viewer
             End If
 
         Catch ex As Exception
-            System.Diagnostics.Debug.WriteLine($"Error kirim mouse wheel: {ex.Message}")
+            WriteLog($"Error kirim mouse wheel: {ex.Message}")
         End Try
     End Sub
 

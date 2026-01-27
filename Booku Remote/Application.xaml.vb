@@ -56,15 +56,18 @@ Partial Public Class App
     ''' Tempat ideal untuk Mutex.
     ''' </summary>
     Shared Sub New()
-        ' Single Instance Protection
-        Dim appName As String = "BookuRemoteSingleInstance"
-        Dim createdNew As Boolean
-        MutexApp = New Mutex(True, appName, createdNew)
+        ' Single Instance Protection - HANYA aktif di Release mode
+        ' Mode Developer (dari folder Debug) = multi-instance diizinkan
+        If Not mdl_VariabelUmum.ModeDeveloper Then
+            Dim appName As String = "BookuRemoteSingleInstance"
+            Dim createdNew As Boolean
+            MutexApp = New Mutex(True, appName, createdNew)
 
-        If Not createdNew Then
-            ' Aplikasi sudah berjalan, fokuskan window yang ada lalu keluar
-            FocusExistingApp()
-            Environment.Exit(0)
+            If Not createdNew Then
+                ' Aplikasi sudah berjalan, fokuskan window yang ada lalu keluar
+                FocusExistingApp()
+                Environment.Exit(0)
+            End If
         End If
 
         ' Setup exception handler

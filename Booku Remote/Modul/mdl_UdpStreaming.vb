@@ -122,10 +122,10 @@ Public Module mdl_UdpStreaming
             _udpClient.Client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, True)
 
             UdpStreamingAktif = True
-            Console.WriteLine($"[UDP-HOST] Sender dimulai, target: {targetIP}:{targetPort}, SessionId: {sessionId}")
+            WriteLog($"[UDP-HOST] Sender dimulai, target: {targetIP}:{targetPort}, SessionId: {sessionId}")
 
         Catch ex As Exception
-            Console.WriteLine($"[UDP-HOST] Error mulai sender: {ex.Message}")
+            WriteLog($"[UDP-HOST] Error mulai sender: {ex.Message}")
             UdpStreamingAktif = False
         End Try
     End Sub
@@ -136,12 +136,20 @@ Public Module mdl_UdpStreaming
     ''' <param name="jpegData">Data JPEG frame</param>
     Public Async Function KirimFrameUdpAsync(jpegData As Byte()) As Task(Of Boolean)
         If Not UdpStreamingAktif OrElse _udpClient Is Nothing OrElse _targetEndpoint Is Nothing Then
+            If _frameIdCounter = 0 Then
+                WriteLog($"[UDP-HOST] KirimFrameUdpAsync BLOCKED: Aktif={UdpStreamingAktif}, Client={_udpClient IsNot Nothing}, Endpoint={_targetEndpoint IsNot Nothing}")
+            End If
             Return False
         End If
 
         Try
             ' Increment frame ID
             _frameIdCounter += 1
+
+            ' Log first frame and every 100th frame
+            If _frameIdCounter = 1 OrElse _frameIdCounter Mod 100 = 0 Then
+                WriteLog($"[UDP-HOST] Sending JPEG frame #{_frameIdCounter}, size={jpegData.Length}, to={_targetEndpoint}")
+            End If
 
             ' Pecah frame menjadi chunks
             Dim packets = Booku_Remote.cls_UdpFrameChunker.ChunkFrame(UdpSessionId, _frameIdCounter, jpegData)
@@ -155,7 +163,7 @@ Public Module mdl_UdpStreaming
             Return True
 
         Catch ex As Exception
-            Console.WriteLine($"[UDP-HOST] Error kirim frame: {ex.Message}")
+            WriteLog($"[UDP-HOST] Error kirim frame: {ex.Message}")
             Return False
         End Try
     End Function
@@ -175,7 +183,7 @@ Public Module mdl_UdpStreaming
         Try
             ' Cek FFmpeg tersedia
             If Not mdl_FFmpegManager.FFmpegTersedia Then
-                Console.WriteLine("[H264] FFmpeg tidak tersedia, fallback ke JPEG")
+                WriteLog("[H264-HOST] FFmpeg tidak tersedia, fallback ke JPEG")
                 CodecStreaming = TipeKodek.JPEG
                 Return False
             End If
@@ -197,17 +205,17 @@ Public Module mdl_UdpStreaming
                 H264EncoderAktif = True
                 CodecStreaming = TipeKodek.H264
                 _firstKeyframeSent = False  ' Reset flag
-                Console.WriteLine($"[H264] Encoder started: {width}x{height} @ {fps}fps")
+                WriteLog($"[H264-HOST] Encoder started: {width}x{height} @ {fps}fps")
                 Return True
             Else
-                Console.WriteLine("[H264] Failed to start encoder, fallback ke JPEG")
+                WriteLog("[H264-HOST] Failed to start encoder, fallback ke JPEG")
                 HentikanH264Encoder()
                 CodecStreaming = TipeKodek.JPEG
                 Return False
             End If
 
         Catch ex As Exception
-            Console.WriteLine($"[H264] Error mulai encoder: {ex.Message}")
+            WriteLog($"[H264-HOST] Error mulai encoder: {ex.Message}")
             HentikanH264Encoder()
             CodecStreaming = TipeKodek.JPEG
             Return False
@@ -233,10 +241,10 @@ Public Module mdl_UdpStreaming
             End If
 
             H264EncoderAktif = False
-            Console.WriteLine("[H264] Encoder stopped")
+            WriteLog("[H264-HOST] Encoder stopped")
 
         Catch ex As Exception
-            Console.WriteLine($"[H264] Error menghentikan encoder: {ex.Message}")
+            WriteLog($"[H264-HOST] Error menghentikan encoder: {ex.Message}")
         End Try
     End Sub
 
@@ -259,10 +267,10 @@ Public Module mdl_UdpStreaming
     ''' Parse NAL units dan kirim via UDP.
     ''' </summary>
     Private Sub OnH264DataReady(sender As Object, e As Booku_Remote.H264DataEventArgs)
-        System.Diagnostics.Debug.WriteLine($"[H264-DATA] Event received: {e.Data.Length} bytes")
+        WriteLog($"[H264-DATA] Event received: {e.Data.Length} bytes")
 
         If Not UdpStreamingAktif OrElse _nalParser Is Nothing Then
-            System.Diagnostics.Debug.WriteLine($"[H264-DATA] DataReady ignored: UdpActive={UdpStreamingAktif}, Parser={(If(_nalParser IsNot Nothing, "OK", "NULL"))}")
+            WriteLog($"[H264-DATA] DataReady ignored: UdpActive={UdpStreamingAktif}, Parser={(If(_nalParser IsNot Nothing, "OK", "NULL"))}")
             Return
         End If
 
@@ -270,35 +278,42 @@ Public Module mdl_UdpStreaming
             ' Parse NAL units dari data
             Dim nalUnits = _nalParser.ParseData(e.Data)
 
-            System.Diagnostics.Debug.WriteLine($"[H264-DATA] Parsed {nalUnits.Count} NAL units from {e.Data.Length} bytes")
+            WriteLog($"[H264-DATA] Parsed {nalUnits.Count} NAL units from {e.Data.Length} bytes")
 
             For Each nalUnit In nalUnits
                 ' Log NAL type untuk debugging
-                System.Diagnostics.Debug.WriteLine($"[H264-NAL] Type={nalUnit.NalType} ({nalUnit.TypeName}), Size={nalUnit.Size}, IsKeyframe={nalUnit.IsKeyframe}, IsParam={nalUnit.IsParameterSet}")
+                WriteLog($"[H264-NAL] Type={nalUnit.NalType} ({nalUnit.TypeName}), Size={nalUnit.Size}, IsKeyframe={nalUnit.IsKeyframe}, IsParam={nalUnit.IsParameterSet}")
 
                 ' Skip parameter sets saja (akan di-include dengan keyframe)
                 If nalUnit.IsParameterSet Then
-                    System.Diagnostics.Debug.WriteLine($"[H264-DATA] Storing parameter set (type={nalUnit.NalType})")
+                    WriteLog($"[H264-DATA] Storing parameter set (type={nalUnit.NalType})")
                     Continue For
                 End If
 
                 ' PENTING: Skip non-keyframe sampai keyframe pertama terkirim
                 ' Decoder tidak bisa decode P/B-frame tanpa I-frame sebelumnya
                 If Not _firstKeyframeSent AndAlso Not nalUnit.IsKeyframe Then
-                    System.Diagnostics.Debug.WriteLine($"[H264-DATA] Skipping non-keyframe (type={nalUnit.NalType}) - waiting for first keyframe")
+                    WriteLog($"[H264-DATA] Skipping non-keyframe (type={nalUnit.NalType}) - waiting for first keyframe")
                     Continue For
                 End If
 
-                ' Untuk keyframe, include SPS+PPS
+                ' Untuk keyframe PERTAMA, include SPS+PPS
+                ' Keyframe berikutnya tidak perlu SPS+PPS karena decoder sudah tahu parameter-nya
                 Dim dataToSend As Byte()
-                If nalUnit.IsKeyframe AndAlso _nalParser.HasParameterSets Then
-                    Dim isFirstKeyframe = Not _firstKeyframeSent
-                    dataToSend = _nalParser.CreateAccessUnitWithParams(nalUnit)
-                    _firstKeyframeSent = True  ' Mark keyframe sent
-                    System.Diagnostics.Debug.WriteLine($"[H264-DATA] IDR frame with SPS+PPS prepended: {dataToSend.Length} bytes (FIRST={isFirstKeyframe})")
+                If nalUnit.IsKeyframe Then
+                    If Not _firstKeyframeSent AndAlso _nalParser.HasParameterSets Then
+                        ' Keyframe PERTAMA: prepend SPS+PPS
+                        dataToSend = _nalParser.CreateAccessUnitWithParams(nalUnit)
+                        _firstKeyframeSent = True
+                        WriteLog($"[H264-DATA] FIRST IDR frame with SPS+PPS prepended: {dataToSend.Length} bytes")
+                    Else
+                        ' Keyframe berikutnya: tanpa SPS+PPS
+                        dataToSend = nalUnit.RawData
+                        WriteLog($"[H264-DATA] IDR frame (no SPS+PPS): {dataToSend.Length} bytes")
+                    End If
                 Else
                     dataToSend = nalUnit.RawData
-                    System.Diagnostics.Debug.WriteLine($"[H264-DATA] Non-IDR frame: {dataToSend.Length} bytes (type={nalUnit.NalType})")
+                    WriteLog($"[H264-DATA] Non-IDR frame: {dataToSend.Length} bytes (type={nalUnit.NalType})")
                 End If
 
                 ' Kirim NAL unit sebagai frame
@@ -306,7 +321,7 @@ Public Module mdl_UdpStreaming
             Next
 
         Catch ex As Exception
-            System.Diagnostics.Debug.WriteLine($"[H264-DATA] Error processing NAL data: {ex.Message}")
+            WriteLog($"[H264-DATA] Error processing NAL data: {ex.Message}")
         End Try
     End Sub
 
@@ -315,7 +330,7 @@ Public Module mdl_UdpStreaming
     ''' </summary>
     Private Sub KirimH264NalUnitViaUdp(nalData As Byte(), isKeyframe As Boolean)
         If Not UdpStreamingAktif OrElse _udpClient Is Nothing Then
-            System.Diagnostics.Debug.WriteLine($"[H264-SEND] Cannot send: UdpActive={UdpStreamingAktif}, Client={(If(_udpClient IsNot Nothing, "OK", "NULL"))}")
+            WriteLog($"[H264-SEND] Cannot send: UdpActive={UdpStreamingAktif}, Client={(If(_udpClient IsNot Nothing, "OK", "NULL"))}")
             Return
         End If
         If nalData Is Nothing OrElse nalData.Length = 0 Then Return
@@ -330,7 +345,7 @@ Public Module mdl_UdpStreaming
             ' Tentukan endpoint (langsung atau via relay)
             Dim endpoint = If(_relayUdpEndpoint, _targetEndpoint)
             If endpoint Is Nothing Then
-                System.Diagnostics.Debug.WriteLine($"[H264-SEND] No endpoint! Relay={If(_relayUdpEndpoint IsNot Nothing, _relayUdpEndpoint.ToString(), "NULL")}, Target={If(_targetEndpoint IsNot Nothing, _targetEndpoint.ToString(), "NULL")}")
+                WriteLog($"[H264-SEND] No endpoint! Relay={If(_relayUdpEndpoint IsNot Nothing, _relayUdpEndpoint.ToString(), "NULL")}, Target={If(_targetEndpoint IsNot Nothing, _targetEndpoint.ToString(), "NULL")}")
                 Return
             End If
 
@@ -342,11 +357,11 @@ Public Module mdl_UdpStreaming
 
             ' Log pengiriman (setiap 10 frame untuk debugging)
             If _frameIdCounter Mod 10 = 1 OrElse _frameIdCounter <= 20 Then
-                System.Diagnostics.Debug.WriteLine($"[H264-SEND] Sent NAL #{_frameIdCounter}: {nalData.Length} bytes ({packets.Count} chunks) to {endpoint}, keyframe={isKeyframe}")
+                WriteLog($"[H264-SEND] Sent NAL #{_frameIdCounter}: {nalData.Length} bytes ({packets.Count} chunks) to {endpoint}, keyframe={isKeyframe}")
             End If
 
         Catch ex As Exception
-            System.Diagnostics.Debug.WriteLine($"[H264-SEND] Error kirim NAL unit: {ex.Message}")
+            WriteLog($"[H264-SEND] Error kirim NAL unit: {ex.Message}")
         End Try
     End Sub
 
@@ -354,7 +369,7 @@ Public Module mdl_UdpStreaming
     ''' Handler untuk error encoder.
     ''' </summary>
     Private Sub OnH264EncoderError(sender As Object, e As Booku_Remote.EncoderErrorEventArgs)
-        Console.WriteLine($"[H264] Encoder error: {e.Message}")
+        WriteLog($"[H264] Encoder error: {e.Message}")
         ' Fallback ke JPEG
         CodecStreaming = TipeKodek.JPEG
         H264EncoderAktif = False
@@ -364,7 +379,7 @@ Public Module mdl_UdpStreaming
     ''' Handler untuk encoder stopped.
     ''' </summary>
     Private Sub OnH264EncoderStopped(sender As Object, e As EventArgs)
-        Console.WriteLine("[H264] Encoder stopped event received")
+        WriteLog("[H264] Encoder stopped event received")
         H264EncoderAktif = False
     End Sub
 
@@ -382,7 +397,7 @@ Public Module mdl_UdpStreaming
         Try
             ' Cek FFmpeg tersedia
             If Not mdl_FFmpegManager.FFmpegTersedia Then
-                Console.WriteLine("[H264-DEC] FFmpeg tidak tersedia")
+                WriteLog("[H264-DEC] FFmpeg tidak tersedia")
                 Return False
             End If
 
@@ -404,16 +419,16 @@ Public Module mdl_UdpStreaming
             ' Start decoder
             If _h264Decoder.Start(width, height) Then
                 H264DecoderAktif = True
-                Console.WriteLine($"[H264-DEC] Decoder started: {width}x{height}")
+                WriteLog($"[H264-DEC] Decoder started: {width}x{height}")
                 Return True
             Else
-                Console.WriteLine("[H264-DEC] Failed to start decoder")
+                WriteLog("[H264-DEC] Failed to start decoder")
                 HentikanH264Decoder()
                 Return False
             End If
 
         Catch ex As Exception
-            Console.WriteLine($"[H264-DEC] Error mulai decoder: {ex.Message}")
+            WriteLog($"[H264-DEC] Error mulai decoder: {ex.Message}")
             HentikanH264Decoder()
             Return False
         End Try
@@ -426,11 +441,15 @@ Public Module mdl_UdpStreaming
     ''' <returns>True jika berhasil dimulai</returns>
     Public Function MulaiH264DecoderAutoResolusi() As Boolean
         Try
+            WriteLog("[H264-DEC] MulaiH264DecoderAutoResolusi() called")
+
             ' Cek FFmpeg tersedia
             If Not mdl_FFmpegManager.FFmpegTersedia Then
-                Console.WriteLine("[H264-DEC] FFmpeg tidak tersedia")
+                WriteLog("[H264-DEC] FFmpeg tidak tersedia!")
                 Return False
             End If
+
+            WriteLog("[H264-DEC] FFmpeg tersedia, proceeding...")
 
             ' Stop decoder lama jika ada
             HentikanH264Decoder()
@@ -441,6 +460,7 @@ Public Module mdl_UdpStreaming
 
             ' Buat decoder baru
             _h264Decoder = New Booku_Remote.cls_H264Decoder()
+            WriteLog("[H264-DEC] Decoder instance created")
 
             ' Subscribe ke events
             AddHandler _h264Decoder.FrameReady, AddressOf OnH264FrameDecoded
@@ -448,18 +468,20 @@ Public Module mdl_UdpStreaming
             AddHandler _h264Decoder.DecoderStopped, AddressOf OnH264DecoderStopped
 
             ' Start decoder dengan auto-resolusi
+            WriteLog("[H264-DEC] Calling StartAutoResolusi()...")
             If _h264Decoder.StartAutoResolusi() Then
                 H264DecoderAktif = True
-                Console.WriteLine("[H264-DEC] Decoder started with auto-resolution detection")
+                WriteLog("[H264-DEC] Decoder STARTED with auto-resolution detection")
                 Return True
             Else
-                Console.WriteLine("[H264-DEC] Failed to start auto-res decoder")
+                WriteLog("[H264-DEC] StartAutoResolusi() returned FALSE")
                 HentikanH264Decoder()
                 Return False
             End If
 
         Catch ex As Exception
-            Console.WriteLine($"[H264-DEC] Error mulai auto-res decoder: {ex.Message}")
+            WriteLog($"[H264-DEC] EXCEPTION mulai auto-res decoder: {ex.Message}")
+            WriteLog($"[H264-DEC] Stack: {ex.StackTrace}")
             HentikanH264Decoder()
             Return False
         End Try
@@ -481,10 +503,10 @@ Public Module mdl_UdpStreaming
             H264DecoderAktif = False
             _decoderWidth = 0
             _decoderHeight = 0
-            Console.WriteLine("[H264-DEC] Decoder stopped")
+            WriteLog("[H264-DEC] Decoder stopped")
 
         Catch ex As Exception
-            Console.WriteLine($"[H264-DEC] Error menghentikan decoder: {ex.Message}")
+            WriteLog($"[H264-DEC] Error menghentikan decoder: {ex.Message}")
         End Try
     End Sub
 
@@ -492,17 +514,31 @@ Public Module mdl_UdpStreaming
     ''' Kirim H.264 data ke decoder untuk di-decode.
     ''' </summary>
     Private Sub DecodeH264Data(h264Data As Byte())
-        If Not H264DecoderAktif OrElse _h264Decoder Is Nothing Then Return
+        If Not H264DecoderAktif OrElse _h264Decoder Is Nothing Then
+            WriteLog($"[H264-DEC] DecodeH264Data skipped: Active={H264DecoderAktif}, Decoder={(If(_h264Decoder IsNot Nothing, "OK", "NULL"))}")
+            Return
+        End If
         If h264Data Is Nothing OrElse h264Data.Length = 0 Then Return
 
         ' Kirim ke decoder (async)
+        WriteLog($"[H264-DEC] Sending {h264Data.Length} bytes to decoder")
         _h264Decoder.SendData(h264Data)
     End Sub
+
+    ''' <summary>
+    ''' Counter untuk frame decoded (untuk logging)
+    ''' </summary>
+    Private _decodedFrameCount As Integer = 0
 
     ''' <summary>
     ''' Handler untuk event FrameReady dari H.264 decoder.
     ''' </summary>
     Private Sub OnH264FrameDecoded(sender As Object, e As Booku_Remote.DecodedFrameEventArgs)
+        _decodedFrameCount += 1
+        ' Log setiap 10 frame
+        If _decodedFrameCount Mod 10 = 1 Then
+            WriteLog($"[H264-DEC] Frame #{_decodedFrameCount} decoded: {e.Width}x{e.Height}, BGRA size={e.BgraData.Length}")
+        End If
         ' Raise event untuk viewer
         RaiseEvent FrameBgraDiterima(e.BgraData, e.Width, e.Height)
         _framesRendered += 1
@@ -512,14 +548,14 @@ Public Module mdl_UdpStreaming
     ''' Handler untuk error decoder.
     ''' </summary>
     Private Sub OnH264DecoderError(sender As Object, e As Booku_Remote.DecoderErrorEventArgs)
-        Console.WriteLine($"[H264-DEC] Decoder error: {e.Message}")
+        WriteLog($"[H264-DEC] Decoder ERROR: {e.Message}")
     End Sub
 
     ''' <summary>
     ''' Handler untuk decoder stopped.
     ''' </summary>
     Private Sub OnH264DecoderStopped(sender As Object, e As EventArgs)
-        Console.WriteLine("[H264-DEC] Decoder stopped event received")
+        WriteLog("[H264-DEC] Decoder STOPPED event received")
         H264DecoderAktif = False
     End Sub
 
@@ -534,6 +570,8 @@ Public Module mdl_UdpStreaming
     ''' <param name="sessionId">Session ID untuk filter</param>
     Public Async Function MulaiUdpReceiverAsync(listenPort As Integer, sessionId As Integer) As Task
         Try
+            WriteLog($"[UDP-TAMU] MulaiUdpReceiverAsync called: port={listenPort}, sessionId={sessionId}")
+
             ' Stop jika sudah ada
             HentikanUdpStreaming()
 
@@ -554,13 +592,15 @@ Public Module mdl_UdpStreaming
             _udpClient.Client.ReceiveTimeout = 100 ' 100ms timeout untuk non-blocking
 
             UdpStreamingAktif = True
-            Console.WriteLine($"[UDP-TAMU] Receiver dimulai, port: {listenPort}, SessionId: {sessionId}")
+            WriteLog($"[UDP-TAMU] Receiver STARTED, port: {listenPort}, SessionId: {sessionId}")
 
-            ' Mulai loop receive di background
-            Await Task.Run(Sub() LoopTerimaUdp(_ctsUdpStreaming.Token))
+            ' Mulai loop receive di background (fire-and-forget, jangan blocking!)
+            ' PENTING: Jangan gunakan Await di sini karena loop akan berjalan terus sampai streaming dihentikan
+            Task.Run(Sub() LoopTerimaUdp(_ctsUdpStreaming.Token))
 
         Catch ex As Exception
-            Console.WriteLine($"[UDP-TAMU] Error mulai receiver: {ex.Message}")
+            WriteLog($"[UDP-TAMU] ERROR mulai receiver: {ex.Message}")
+            WriteLog($"[UDP-TAMU] Stack: {ex.StackTrace}")
             UdpStreamingAktif = False
         End Try
     End Function
@@ -571,9 +611,18 @@ Public Module mdl_UdpStreaming
     Private Sub LoopTerimaUdp(token As CancellationToken)
         Dim remoteEP As IPEndPoint = Nothing
         Dim orderedModeEnabled As Boolean = False  ' Flag untuk aktifkan ordered mode sekali saja
+        Dim loopStarted As Boolean = False
+        Dim firstPacketLogged As Boolean = False
+
+        WriteLog($"[UDP-TAMU] LoopTerimaUdp STARTED, UdpSessionId={UdpSessionId}")
 
         While UdpStreamingAktif AndAlso Not token.IsCancellationRequested
             Try
+                If Not loopStarted Then
+                    loopStarted = True
+                    WriteLog($"[UDP-TAMU] Loop entered, waiting for packets...")
+                End If
+
                 ' Non-blocking receive dengan timeout
                 If _udpClient Is Nothing Then Exit While
 
@@ -589,27 +638,42 @@ Public Module mdl_UdpStreaming
                     Continue While
                 End If
 
+                ' Log paket pertama yang diterima
+                If Not firstPacketLogged Then
+                    WriteLog($"[UDP-TAMU] FIRST PACKET received! Size={data.Length} from {remoteEP}")
+                    firstPacketLogged = True
+                End If
+
                 ' Parse packet
                 Dim packet = Booku_Remote.cls_UdpPacket.FromBytes(data)
                 If packet Is Nothing Then
                     _packetsDropped += 1
+                    WriteLog($"[UDP-TAMU] Packet parse failed, size={data.Length}")
                     Continue While
                 End If
 
                 ' Filter by SessionId (keamanan)
                 If packet.SessionId <> UdpSessionId Then
                     _packetsDropped += 1
+                    ' Log mismatch setiap 100 paket untuk debugging
+                    If _packetsDropped Mod 100 = 1 Then
+                        WriteLog($"[UDP-TAMU] SessionId MISMATCH! Received={packet.SessionId}, Expected={UdpSessionId}")
+                    End If
                     Continue While
                 End If
 
                 _packetsReceived += 1
+                ' Log setiap 100 paket yang berhasil
+                If _packetsReceived Mod 100 = 1 Then
+                    WriteLog($"[UDP-TAMU] Packet #{_packetsReceived} received: FrameId={packet.FrameId}, Chunk={packet.ChunkIndex}/{packet.ChunkCount}, Codec={packet.CodecType}")
+                End If
 
                 ' PENTING: Aktifkan ordered mode saat H.264 pertama kali terdeteksi
                 ' H.264 NAL units HARUS diproses berurutan untuk decoding yang benar
                 If Not orderedModeEnabled AndAlso packet.CodecType = Booku_Remote.UdpConstants.CODEC_TYPE_H264 Then
                     _frameAssembler.SetOrderedMode(True)
                     orderedModeEnabled = True
-                    Console.WriteLine("[UDP-TAMU] H.264 detected, enabled ordered delivery mode")
+                    WriteLog("[UDP-TAMU] H.264 detected, enabled ordered delivery mode")
                 End If
 
                 ' Tambahkan ke assembler dengan info codec
@@ -620,14 +684,18 @@ Public Module mdl_UdpStreaming
                     ' Frame lengkap - route berdasarkan codec type
                     If codecType = Booku_Remote.UdpConstants.CODEC_TYPE_H264 Then
                         ' H.264: Kirim ke decoder
+                        WriteLog($"[UDP-TAMU] H.264 frame complete: {frameData.Length} bytes, FrameId={packet.FrameId}")
                         If Not H264DecoderAktif Then
                             ' Start decoder dengan auto-deteksi resolusi dari SPS
-                            MulaiH264DecoderAutoResolusi()
+                            WriteLog("[UDP-TAMU] Starting H.264 decoder (auto-resolution)...")
+                            Dim decoderStarted = MulaiH264DecoderAutoResolusi()
+                            WriteLog($"[UDP-TAMU] Decoder started: {decoderStarted}")
                         End If
                         DecodeH264Data(frameData)
                     Else
                         ' JPEG: Raise event langsung
                         _framesRendered += 1
+                        WriteLog($"[UDP-TAMU] JPEG frame complete: {frameData.Length} bytes")
                         RaiseEvent FrameUdpDiterima(frameData, packet.FrameId, packet.TimestampMs)
                     End If
                 End If
@@ -644,11 +712,11 @@ Public Module mdl_UdpStreaming
                 ' UDP client sudah disposed, keluar
                 Exit While
             Catch ex As Exception
-                Console.WriteLine($"[UDP-TAMU] Error receive: {ex.Message}")
+                WriteLog($"[UDP-TAMU] Error receive: {ex.Message}")
             End Try
         End While
 
-        Console.WriteLine("[UDP-TAMU] Loop receive berakhir")
+        WriteLog("[UDP-TAMU] Loop receive berakhir")
     End Sub
 
 #End Region
@@ -663,9 +731,9 @@ Public Module mdl_UdpStreaming
     Public Sub SetupRelayUdpEndpoint(relayIP As String, relayUdpPort As Integer)
         Try
             _relayUdpEndpoint = New IPEndPoint(IPAddress.Parse(relayIP), relayUdpPort)
-            Console.WriteLine($"[UDP] Relay endpoint set: {relayIP}:{relayUdpPort}")
+            WriteLog($"[UDP] Relay endpoint set: {relayIP}:{relayUdpPort}")
         Catch ex As Exception
-            Console.WriteLine($"[UDP] Error setup relay endpoint: {ex.Message}")
+            WriteLog($"[UDP] Error setup relay endpoint: {ex.Message}")
         End Try
     End Sub
 
@@ -689,7 +757,7 @@ Public Module mdl_UdpStreaming
             Return True
 
         Catch ex As Exception
-            Console.WriteLine($"[UDP-HOST] Error kirim frame via relay: {ex.Message}")
+            WriteLog($"[UDP-HOST] Error kirim frame via relay: {ex.Message}")
             Return False
         End Try
     End Function
@@ -705,7 +773,7 @@ Public Module mdl_UdpStreaming
     ''' <returns>True jika berhasil, False jika gagal</returns>
     Public Async Function KirimRegistrasiKeRelayAsync(relayIP As String, relayUdpPort As Integer, sessionId As Integer) As Task(Of Boolean)
         If _udpClient Is Nothing Then
-            Console.WriteLine("[UDP-TAMU] Cannot send registration: UDP client not initialized")
+            WriteLog("[UDP-TAMU] Cannot send registration: UDP client not initialized")
             Return False
         End If
 
@@ -729,11 +797,11 @@ Public Module mdl_UdpStreaming
             Dim data = registrationPacket.ToBytes()
             Await _udpClient.SendAsync(data, data.Length, _relayUdpEndpoint)
 
-            Console.WriteLine($"[UDP-TAMU] Registration packet sent to relay {relayIP}:{relayUdpPort}, SessionId={sessionId}")
+            WriteLog($"[UDP-TAMU] Registration packet sent to relay {relayIP}:{relayUdpPort}, SessionId={sessionId}")
             Return True
 
         Catch ex As Exception
-            Console.WriteLine($"[UDP-TAMU] Error sending registration: {ex.Message}")
+            WriteLog($"[UDP-TAMU] Error sending registration: {ex.Message}")
             Return False
         End Try
     End Function
@@ -801,14 +869,15 @@ Public Module mdl_UdpStreaming
             _relayUdpEndpoint = Nothing
             _frameIdCounter = 0
             UdpSessionId = 0
-            ' CATATAN: CodecStreaming TIDAK di-reset di sini.
-            ' Codec negotiation sudah terjadi sebelum streaming dimulai dan hasilnya
-            ' harus dipertahankan. Reset codec hanya dilakukan saat koneksi berakhir sepenuhnya.
 
-            Console.WriteLine("[UDP] Streaming dihentikan")
+            ' Reset codec ke JPEG default agar negosiasi ulang terjadi saat koneksi baru
+            ' Ini penting untuk mencegah broken state saat beralih antara mode LAN dan Internet
+            CodecStreaming = TipeKodek.JPEG
+
+            WriteLog("[UDP] Streaming dihentikan, codec reset ke JPEG")
 
         Catch ex As Exception
-            Console.WriteLine($"[UDP] Error saat hentikan: {ex.Message}")
+            WriteLog($"[UDP] Error saat hentikan: {ex.Message}")
         End Try
     End Sub
 

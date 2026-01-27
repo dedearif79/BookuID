@@ -240,6 +240,36 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
    - **JANGAN** hardcode warna seperti `#388E3C` atau `Brushes.Red`
    - Lihat `.claude/rules/Booku/wpf-styling.md` untuk daftar lengkap warna
 
+## Penanganan Log Error/Crash
+
+Ketika user memberikan informasi **"Ada log error"** atau **"Ada crash"**, ikuti ketentuan berikut:
+
+**Lokasi Folder Log:**
+```
+D:\VB .Net Project\BookuID\Booku\bin\Debug\net8.0-windows\Logs\
+```
+
+**Alur Penanganan:**
+
+| Langkah | Aksi |
+|---------|------|
+| 1 | Baca file-file log di folder `Logs` untuk mengidentifikasi error |
+| 2 | Lakukan perbaikan berdasarkan informasi di file log, **satu persatu** |
+| 3 | Jika perbaikan berhasil, **minta persetujuan user** sebelum menghapus file log |
+| 4 | Jika log berisi informasi crash yang **sudah usang** (sudah diperbaiki sebelumnya), abaikan dan minta persetujuan untuk menghapus |
+| 5 | Hapus file log **hanya setelah mendapat persetujuan** dari user |
+
+**Perintah Khusus:**
+
+| Perintah | Aksi |
+|----------|------|
+| `bersihkan log` | Hapus **seluruh** file di folder `Logs` tanpa kecuali, tanpa perlu persetujuan per file |
+
+**Catatan Penting:**
+- Selalu baca isi file log sebelum melakukan perbaikan
+- Prioritaskan error yang paling kritis/terbaru
+- Jangan menghapus file log tanpa konfirmasi (kecuali perintah "bersihkan log")
+
 ## File Naming Convention
 
 | Prefix | Tipe | Contoh |
