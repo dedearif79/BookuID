@@ -47,6 +47,7 @@ Class wpfWin_ModeHost
         AddHandler mdl_KoneksiJaringan.KoneksiBerhasil, AddressOf OnKoneksiBerhasil
         AddHandler mdl_KoneksiJaringan.KoneksiTerputus, AddressOf OnKoneksiTerputus
         AddHandler mdl_KoneksiJaringan.ErrorKoneksi, AddressOf OnErrorKoneksi
+        AddHandler mdl_KoneksiJaringan.PermintaanTransferMasuk, AddressOf OnPermintaanTransferMasuk
 
         ' Subscribe ke events Relay (Internet)
         AddHandler mdl_KoneksiRelay.TerdaftarDiRelay, AddressOf OnTerdaftarDiRelay
@@ -84,6 +85,7 @@ Class wpfWin_ModeHost
         RemoveHandler mdl_KoneksiJaringan.KoneksiBerhasil, AddressOf OnKoneksiBerhasil
         RemoveHandler mdl_KoneksiJaringan.KoneksiTerputus, AddressOf OnKoneksiTerputus
         RemoveHandler mdl_KoneksiJaringan.ErrorKoneksi, AddressOf OnErrorKoneksi
+        RemoveHandler mdl_KoneksiJaringan.PermintaanTransferMasuk, AddressOf OnPermintaanTransferMasuk
 
         ' Unsubscribe events Relay
         RemoveHandler mdl_KoneksiRelay.TerdaftarDiRelay, AddressOf OnTerdaftarDiRelay
@@ -270,8 +272,9 @@ Class wpfWin_ModeHost
                                   winPersetujuan.IzinClipboard = chk_IzinClipboard.IsChecked.GetValueOrDefault()
                                   winPersetujuan.ShowDialog()
 
-                                  ' Kirim respon via relay (dengan supportedCodecs untuk codec negotiation)
-                                  KirimResponKoneksiViaRelayAsync(idSesi, winPersetujuan.Diterima, winPersetujuan.IzinKontrol, supportedCodecs)
+                                  ' Kirim respon via relay (dengan supportedCodecs, izinClipboard, dan izinTransferBerkas)
+                                  KirimResponKoneksiViaRelayAsync(idSesi, winPersetujuan.Diterima, winPersetujuan.IzinKontrol,
+                                                                  winPersetujuan.IzinClipboard, supportedCodecs, winPersetujuan.IzinTransferBerkas)
 
                                   If winPersetujuan.Diterima Then
                                       TambahRiwayat($"{DateTime.Now:HH:mm} - Koneksi diterima: {namaTamu}")
@@ -279,16 +282,20 @@ Class wpfWin_ModeHost
                                       TambahRiwayat($"{DateTime.Now:HH:mm} - Koneksi ditolak: {namaTamu}")
                                   End If
                               Else
-                                  ' Auto terima (dengan supportedCodecs untuk codec negotiation)
-                                  KirimResponKoneksiViaRelayAsync(idSesi, True, True, supportedCodecs)
+                                  ' Auto terima (dengan supportedCodecs, izinClipboard, dan izinTransferBerkas)
+                                  KirimResponKoneksiViaRelayAsync(idSesi, True, True,
+                                                                  chk_IzinClipboard.IsChecked.GetValueOrDefault(), supportedCodecs,
+                                                                  chk_IzinTransferBerkas.IsChecked.GetValueOrDefault())
                                   TambahRiwayat($"{DateTime.Now:HH:mm} - Koneksi diterima (auto): {namaTamu}")
                               End If
                           End Sub)
     End Sub
 
     Private Async Sub KirimResponKoneksiViaRelayAsync(idSesi As String, diterima As Boolean, izinKontrol As Boolean,
-                                                       Optional supportedCodecs As String() = Nothing)
-        Await mdl_KoneksiRelay.KirimResponKoneksiViaRelayAsync(idSesi, diterima, izinKontrol, supportedCodecs)
+                                                       Optional izinClipboard As Boolean = False,
+                                                       Optional supportedCodecs As String() = Nothing,
+                                                       Optional izinTransferBerkas As Boolean = False)
+        Await mdl_KoneksiRelay.KirimResponKoneksiViaRelayAsync(idSesi, diterima, izinKontrol, izinClipboard, supportedCodecs, izinTransferBerkas)
 
         If diterima Then
             ' Update status UI
@@ -297,6 +304,15 @@ Class wpfWin_ModeHost
                                   lbl_Status.Text = "TERHUBUNG"
                                   lbl_Status.Foreground = New SolidColorBrush(Color.FromRgb(&H21, &H96, &HF3))
                               End Sub)
+
+            ' Fase 3a: Mulai clipboard monitoring jika diizinkan (mode Internet)
+            If izinClipboard Then
+                mdl_Clipboard.ClipboardSyncAktif = True
+                mdl_Clipboard.IzinClipboardDariHost = True
+                mdl_Clipboard.ClipboardKirimCallback = AddressOf KirimClipboardKePeer
+                mdl_Clipboard.MulaiClipboardMonitoring(CLIPBOARD_SOURCE_HOST)
+                WriteLog("[HOST-RELAY] Clipboard monitoring dimulai")
+            End If
         End If
     End Sub
 
@@ -360,9 +376,33 @@ Class wpfWin_ModeHost
                                                izinClipboard As Boolean, Optional pesan As String = "",
                                                Optional supportedCodecs As String() = Nothing)
         Await mdl_KoneksiJaringan.KirimResponKoneksiAsync(clientSocket, hasil, izinKontrol, izinTransfer, izinClipboard, pesan, supportedCodecs)
+
+        ' Fase 3a: Mulai clipboard monitoring jika diizinkan
+        If hasil = HasilPersetujuan.DITERIMA AndAlso izinClipboard Then
+            mdl_Clipboard.ClipboardSyncAktif = True
+            mdl_Clipboard.IzinClipboardDariHost = True
+            mdl_Clipboard.ClipboardKirimCallback = AddressOf KirimClipboardKePeer
+            mdl_Clipboard.MulaiClipboardMonitoring(CLIPBOARD_SOURCE_HOST)
+            WriteLog("[HOST] Clipboard monitoring dimulai")
+        End If
     End Sub
 
-    Private Sub OnKoneksiBerhasil(kunciSesi As String)
+    ''' <summary>
+    ''' Callback untuk mengirim clipboard ke Tamu.
+    ''' </summary>
+    Private Async Sub KirimClipboardKePeer(payload As cls_PayloadClipboard)
+        Try
+            If _modeKoneksi = ModeKoneksi.INTERNET AndAlso TerhubungKeRelay Then
+                Await mdl_KoneksiRelay.KirimClipboardViaRelayAsync(payload)
+            Else
+                Await mdl_KoneksiJaringan.KirimClipboardAsync(payload)
+            End If
+        Catch ex As Exception
+            WriteLog($"[HOST-CLIPBOARD] Error kirim: {ex.Message}")
+        End Try
+    End Sub
+
+    Private Sub OnKoneksiBerhasil(kunciSesi As String, izinKontrol As Boolean, izinClipboard As Boolean, izinTransferBerkas As Boolean)
         Dispatcher.Invoke(Sub()
                               TambahRiwayat($"{DateTime.Now:HH:mm} - Sesi aktif dimulai")
                               led_Status.Fill = New SolidColorBrush(Color.FromRgb(&H21, &H96, &HF3)) ' Blue - connected
@@ -375,6 +415,13 @@ Class wpfWin_ModeHost
         Dispatcher.Invoke(Sub()
                               TambahRiwayat($"{DateTime.Now:HH:mm} - Koneksi terputus: {alasan}")
                               UpdateStatusUI(_hostAktif)
+
+                              ' Fase 3a: Hentikan clipboard monitoring saat koneksi terputus
+                              If mdl_Clipboard.ClipboardSyncAktif Then
+                                  mdl_Clipboard.HentikanClipboardMonitoring()
+                                  mdl_Clipboard.ResetClipboardState()
+                                  WriteLog("[HOST] Clipboard monitoring dihentikan")
+                              End If
                           End Sub)
     End Sub
 
@@ -563,6 +610,31 @@ Class wpfWin_ModeHost
                 MessageBox.Show("Gagal menyimpan pengaturan port.", "Error", MessageBoxButton.OK, MessageBoxImage.Error)
             End If
         End If
+    End Sub
+
+#End Region
+
+#Region "Transfer Berkas Event Handler"
+
+    ''' <summary>
+    ''' Handler ketika permintaan transfer masuk dari Tamu.
+    ''' Otomatis menerima karena izin sudah diberikan saat persetujuan koneksi.
+    ''' </summary>
+    Private Sub OnPermintaanTransferMasuk(payload As cls_PayloadPermintaanTransfer)
+        Dispatcher.Invoke(Async Sub()
+                              Try
+                                  WriteLog($"[TRANSFER-HOST] Permintaan transfer masuk: {payload.NamaFile}, Size: {payload.UkuranFile}")
+                                  TambahRiwayat($"{DateTime.Now:HH:mm} - Transfer masuk: {payload.NamaFile}")
+
+                                  ' Otomatis terima transfer (izin sudah diberikan saat koneksi)
+                                  Await mdl_KoneksiJaringan.KirimResponTransferAsync(payload.TransferId, True)
+
+                                  WriteLog($"[TRANSFER-HOST] Respon transfer terkirim (diterima)")
+
+                              Catch ex As Exception
+                                  WriteLog($"[TRANSFER-HOST] Error handle permintaan transfer: {ex.Message}")
+                              End Try
+                          End Sub)
     End Sub
 
 #End Region

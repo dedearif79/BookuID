@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports bcomm
 Imports MySql.Data.MySqlClient
 
@@ -70,6 +70,8 @@ Module mdl_UpdateDatabase
         Update_164()
 
         Update_166()
+
+        Update_188()
 
         'Reset Debet/Kredit COA
         CuciDebetKreditCOA()
@@ -2140,6 +2142,96 @@ Module mdl_UpdateDatabase
         UpdateDatabaseTransaksi(QueryUpdate, NomorUpdate)
 
     End Sub
+
+
+    Sub Update_188()
+        'Jika sudah dipublish, maka jangan ada lagi yang dirubah...!!!
+        'Jika ada kekeliruan, maka direvisi pada update-an berikutnya...!!!
+
+        Dim NomorUpdate = 188
+        Dim QueryUpdate As String = Kosongan
+
+        CekStatusUpdate(NomorUpdate)
+        If Not StatusSuntingDatabase Then Return
+
+        '------------------------------------------------------------------------------------------------------------------------------------------------
+        'Database General :
+
+        'Tambah COA:
+        QueryUpdate = Kosongan
+        QueryUpdate &= " INSERT INTO tbl_COA ( COA, Nama_Akun, Kode_Mata_Uang, D_K, Visibilitas ) VALUES "
+        QueryUpdate &= " ( '11221', 'Kas Outlet-1',             'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11222', 'Kas Outlet-2',             'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11223', 'Kas Outlet-3',             'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11224', 'Kas Outlet-4',             'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11225', 'Kas Outlet-5',             'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11226', 'Kas Outlet-6',             'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11227', 'Kas Outlet-7',             'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11228', 'Kas Outlet-8',             'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11229', 'Kas Outlet-9',             'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11314', 'Bank Eceran 4',            'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11315', 'Bank Eceran 5',            'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11316', 'Bank Eceran 6',            'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11317', 'Bank Eceran 7',            'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11318', 'Bank Eceran 8',            'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11319', 'Bank Eceran 9',            'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11351', 'e-Wallet-1',               'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11352', 'e-Wallet-2',               'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11353', 'e-Wallet-3',               'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11354', 'e-Wallet-4',               'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11355', 'e-Wallet-5',               'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11356', 'e-Wallet-6',               'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11357', 'e-Wallet-7',               'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11358', 'e-Wallet-8',               'IDR',  'DEBET',    'Tidak' ), "
+        QueryUpdate &= " ( '11359', 'e-Wallet-9',               'IDR',  'DEBET',    'Tidak' ); " & Enter1Baris  '<-- Ujurng Query, tidak pakai koma, tapi pakai titik koma..!
+
+        'Buat Tabel Toko (tbl_Toko):
+        QueryUpdate &=
+            "  CREATE TABLE `tbl_Toko` (" &
+            " `Kode_Toko`   varchar(12)     NOT NULL, " &
+            " `Nama_Toko`   varchar(255)    NOT NULL, " &
+            " `Alamat`      longtext        NOT NULL, " &
+            " `COA_Kas`     varchar(9)      NOT NULL, " &
+            " `Deskripsi`   longtext        NOT NULL " &
+            " ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; "
+        QueryUpdate &= " ALTER TABLE `tbl_Toko` ADD PRIMARY KEY (`Kode_Toko`), ADD UNIQUE KEY (`Kode_Toko`); "
+
+        UpdateDatabaseGeneral(QueryUpdate, NomorUpdate)
+
+
+        '------------------------------------------------------------------------------------------------------------------------------------------------
+        'Database Transaksi :
+        QueryUpdate = Kosongan
+        QueryUpdate &= " INSERT INTO tbl_saldoawalcoa ( COA, Saldo_Awal ) VALUES "
+        QueryUpdate &= " ( '11221', '0' ), "
+        QueryUpdate &= " ( '11222', '0' ), "
+        QueryUpdate &= " ( '11223', '0' ), "
+        QueryUpdate &= " ( '11224', '0' ), "
+        QueryUpdate &= " ( '11225', '0' ), "
+        QueryUpdate &= " ( '11226', '0' ), "
+        QueryUpdate &= " ( '11227', '0' ), "
+        QueryUpdate &= " ( '11228', '0' ), "
+        QueryUpdate &= " ( '11229', '0' ), "
+        QueryUpdate &= " ( '11314', '0' ), "
+        QueryUpdate &= " ( '11315', '0' ), "
+        QueryUpdate &= " ( '11316', '0' ), "
+        QueryUpdate &= " ( '11317', '0' ), "
+        QueryUpdate &= " ( '11318', '0' ), "
+        QueryUpdate &= " ( '11319', '0' ), "
+        QueryUpdate &= " ( '11351', '0' ), "
+        QueryUpdate &= " ( '11352', '0' ), "
+        QueryUpdate &= " ( '11353', '0' ), "
+        QueryUpdate &= " ( '11354', '0' ), "
+        QueryUpdate &= " ( '11355', '0' ), "
+        QueryUpdate &= " ( '11356', '0' ), "
+        QueryUpdate &= " ( '11357', '0' ), "
+        QueryUpdate &= " ( '11358', '0' ), "
+        QueryUpdate &= " ( '11359', '0' ); " & Enter1Baris  '<-- Ujurng Query, tidak pakai koma..!
+
+        UpdateDatabaseTransaksi(QueryUpdate, NomorUpdate)
+
+    End Sub
+
 
 
 End Module

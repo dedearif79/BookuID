@@ -160,7 +160,9 @@
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Remote/Booku Remote.vbproj\" -t:Clean -verbosity:quiet)",
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Remote/Booku Remote.vbproj\" -t:Build -verbosity:quiet)",
       "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Remote Relay.csproj\" /t:Build /p:Configuration=Release /verbosity:minimal)",
-      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"/mnt/d/vb .net project/BookuID/Booku Remote/Booku Remote.vbproj\" /t:Build /p:Configuration=Debug /verbosity:minimal)"
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"/mnt/d/vb .net project/BookuID/Booku Remote/Booku Remote.vbproj\" /t:Build /p:Configuration=Debug /verbosity:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"BookuID.sln\" /t:Build /p:Configuration=Debug /v:minimal)",
+      "Bash(\"/mnt/c/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/MSBuild.exe\" \"Booku Remote Relay/Booku Remote Relay.csproj\" -t:Build -verbosity:minimal)"
     ]
   }
 }

@@ -36,6 +36,19 @@ Class wpfWin_Viewer
     ''' <summary>Flag apakah Host mengizinkan kontrol</summary>
     Private _izinKontrol As Boolean = False
 
+    ' === FASE 3a: Clipboard Sync ===
+
+    ''' <summary>Flag apakah clipboard sync aktif (toggle oleh user)</summary>
+    Private _clipboardAktif As Boolean = False
+
+    ''' <summary>Flag apakah Host mengizinkan clipboard sync</summary>
+    Private _izinClipboard As Boolean = False
+
+    ' === FASE 3b: Transfer Berkas ===
+
+    ''' <summary>Flag apakah Host mengizinkan transfer berkas</summary>
+    Private _izinTransferBerkas As Boolean = False
+
     ''' <summary>Waktu terakhir mouse move dikirim (untuk throttling)</summary>
     Private _lastMouseMoveTime As DateTime = DateTime.MinValue
 
@@ -104,6 +117,7 @@ Class wpfWin_Viewer
             ' Mode Internet: Subscribe ke relay events untuk TCP fallback dan error handling
             AddHandler mdl_KoneksiRelay.FrameDiterimaViaRelay, AddressOf OnFrameDiterimaViaRelay
             AddHandler mdl_KoneksiRelay.ErrorDariRelay, AddressOf OnErrorDariRelay
+            AddHandler mdl_KoneksiRelay.PaketDariRelay, AddressOf OnPaketDariRelay
         Else
             ' Mode LAN: Subscribe ke TCP events untuk fallback dan kontrol
             AddHandler mdl_KoneksiJaringan.PaketDiterima, AddressOf OnPaketDiterima
@@ -199,6 +213,12 @@ Class wpfWin_Viewer
             _timerRegistration = Nothing
         End If
 
+        ' Hentikan clipboard sync (Fase 3a)
+        If _clipboardAktif Then
+            mdl_Clipboard.HentikanClipboardMonitoring()
+            mdl_Clipboard.ResetClipboardState()
+        End If
+
         ' Unsubscribe UDP events (baik LAN maupun Internet)
         RemoveHandler mdl_UdpStreaming.FrameUdpDiterima, AddressOf OnFrameUdpDiterima
         RemoveHandler mdl_UdpStreaming.StatistikUdp, AddressOf OnStatistikUdp
@@ -211,6 +231,7 @@ Class wpfWin_Viewer
         If ModeViaRelay Then
             RemoveHandler mdl_KoneksiRelay.FrameDiterimaViaRelay, AddressOf OnFrameDiterimaViaRelay
             RemoveHandler mdl_KoneksiRelay.ErrorDariRelay, AddressOf OnErrorDariRelay
+            RemoveHandler mdl_KoneksiRelay.PaketDariRelay, AddressOf OnPaketDariRelay
         Else
             ' Unsubscribe TCP events
             RemoveHandler mdl_KoneksiJaringan.PaketDiterima, AddressOf OnPaketDiterima
@@ -305,11 +326,22 @@ Class wpfWin_Viewer
 #Region "Event Handlers - Koneksi LAN"
 
     Private Sub OnPaketDiterima(paket As cls_PaketData)
-        If paket.TipePaket = TipePaket.FRAME_LAYAR Then
-            Dispatcher.Invoke(Sub()
-                                  ProsesFrameLayar(paket.Payload)
-                              End Sub)
-        End If
+        Select Case paket.TipePaket
+            Case TipePaket.FRAME_LAYAR
+                Dispatcher.Invoke(Sub()
+                                      ProsesFrameLayar(paket.Payload)
+                                  End Sub)
+
+            Case TipePaket.CLIPBOARD_DATA
+                ' Clipboard data dari Host (Fase 3a)
+                If _clipboardAktif Then
+                    Dim payload = DeserializeClipboard(paket.Payload)
+                    If payload IsNot Nothing Then
+                        WriteLog($"[CLIPBOARD] Diterima dari Host: {payload.TipeData}")
+                        mdl_Clipboard.TerimaClipboardDariRemote(payload)
+                    End If
+                End If
+        End Select
     End Sub
 
     Private Sub OnKoneksiTerputus(alasan As String)
@@ -344,6 +376,34 @@ Class wpfWin_Viewer
         Dispatcher.Invoke(Sub()
                               TampilkanError($"Relay Error ({kodeError}): {pesan}")
                           End Sub)
+    End Sub
+
+    ''' <summary>
+    ''' Handler untuk paket umum dari Relay (termasuk CLIPBOARD_DATA dan Transfer Berkas).
+    ''' </summary>
+    Private Sub OnPaketDariRelay(paket As cls_PaketData)
+        Select Case paket.TipePaket
+            Case TipePaket.CLIPBOARD_DATA
+                ' Clipboard data dari Host via Relay (Fase 3a)
+                If _clipboardAktif Then
+                    Dim payload = DeserializeClipboard(paket.Payload)
+                    If payload IsNot Nothing Then
+                        WriteLog($"[CLIPBOARD-RELAY] Diterima dari Host: {payload.TipeData}")
+                        mdl_Clipboard.TerimaClipboardDariRemote(payload)
+                    End If
+                End If
+
+            ' === FASE 3b: Handle Transfer Berkas via Relay ===
+            Case TipePaket.RESPON_TRANSFER,
+                 TipePaket.DATA_BERKAS,
+                 TipePaket.KONFIRMASI_CHUNK,
+                 TipePaket.KONFIRMASI_BERKAS,
+                 TipePaket.BATAL_TRANSFER,
+                 TipePaket.RESPON_DAFTAR_FOLDER
+                ' Forward ke handler transfer di mdl_KoneksiJaringan
+                WriteLog($"[TRANSFER-RELAY] Paket diterima: {paket.TipePaket}")
+                mdl_KoneksiJaringan.ProsesPaketMasukViaRelay(paket)
+        End Select
     End Sub
 
 #End Region
@@ -669,6 +729,84 @@ Class wpfWin_Viewer
         ' Untuk saat ini, skala diatur di sisi Host
     End Sub
 
+    ''' <summary>
+    ''' Tombol Transfer Berkas diklik (Fase 3b).
+    ''' </summary>
+    Private Async Sub btn_Transfer_Click(sender As Object, e As RoutedEventArgs) Handles btn_Transfer.Click
+        Try
+            WriteLog("[TRANSFER] btn_Transfer_Click - membuka FileBrowser")
+
+            ' Buka dialog file browser
+            Dim winBrowser As New wpfWin_FileBrowser()
+            winBrowser.ResetForm()
+            winBrowser.ModeViaRelay = ModeViaRelay  ' Set mode koneksi agar FileBrowser gunakan fungsi yang tepat
+            winBrowser.Owner = Me
+            WriteLog($"[TRANSFER] FileBrowser ModeViaRelay={ModeViaRelay}")
+            winBrowser.ShowDialog()
+
+            WriteLog($"[TRANSFER] FileBrowser ditutup. HasilTransfer={winBrowser.HasilTransfer}, FileTerpilih IsNot Nothing={winBrowser.FileTerpilih IsNot Nothing}")
+
+            ' Cek apakah user memilih file untuk transfer
+            If winBrowser.HasilTransfer AndAlso winBrowser.FileTerpilih IsNot Nothing Then
+                Dim fileItem = winBrowser.FileTerpilih
+                WriteLog($"[TRANSFER] File terpilih: {fileItem.Nama}, Path={fileItem.PathLengkap}, IsFolder={fileItem.IsFolder}")
+
+                ' Tentukan arah transfer
+                Dim arah As ArahTransfer
+                If winBrowser.ModeLokal Then
+                    arah = ArahTransfer.UPLOAD ' Upload dari Tamu ke Host
+                Else
+                    arah = ArahTransfer.DOWNLOAD ' Download dari Host ke Tamu
+                End If
+                WriteLog($"[TRANSFER] ModeLokal={winBrowser.ModeLokal}, Arah={arah}")
+
+                ' Buat transfer baru
+                WriteLog($"[TRANSFER] Memanggil MulaiTransferBaru dengan path={fileItem.PathLengkap}")
+                Dim transfer = mdl_TransferBerkas.MulaiTransferBaru(fileItem.PathLengkap, arah, 0)
+                If transfer Is Nothing Then
+                    WriteLog("[TRANSFER] MulaiTransferBaru mengembalikan Nothing")
+                    MessageBox.Show("Gagal membuat transfer baru.", "Error", MessageBoxButton.OK, MessageBoxImage.Error)
+                    Return
+                End If
+                WriteLog($"[TRANSFER] Transfer dibuat: {transfer.TransferId}")
+
+                ' Kirim permintaan transfer ke Host (sesuai mode koneksi)
+                If ModeViaRelay Then
+                    ' Mode Internet: Kirim via Relay
+                    WriteLog("[TRANSFER] Mengirim permintaan via Relay")
+                    Await mdl_KoneksiRelay.KirimPermintaanTransferViaRelayAsync(transfer)
+                Else
+                    ' Mode LAN: Kirim langsung
+                    WriteLog("[TRANSFER] Mengirim permintaan via LAN")
+                    Await mdl_KoneksiJaringan.KirimPermintaanTransferAsync(transfer)
+                End If
+
+                ' Tampilkan progress dialog
+                WriteLog("[TRANSFER] Membuka progress dialog")
+                Dim winProgress As New wpfWin_TransferProgress()
+                winProgress.SetTransferInfo(transfer.TransferId, transfer.NamaFile, transfer.UkuranFile)
+                winProgress.Owner = Me
+                winProgress.ShowDialog()
+
+                ' Cek hasil transfer
+                If winProgress.TransferSukses Then
+                    MessageBox.Show($"Transfer berhasil: {transfer.NamaFile}", "Sukses", MessageBoxButton.OK, MessageBoxImage.Information)
+                ElseIf winProgress.Dibatalkan Then
+                    WriteLog($"[TRANSFER] Transfer dibatalkan: {transfer.TransferId}")
+                Else
+                    WriteLog($"[TRANSFER] Transfer gagal: {transfer.TransferId}")
+                End If
+            Else
+                WriteLog("[TRANSFER] User tidak memilih file (HasilTransfer=False atau FileTerpilih=Nothing)")
+            End If
+
+        Catch ex As Exception
+            WriteLog($"[TRANSFER] Error: {ex.Message}")
+            WriteLog($"[TRANSFER] StackTrace: {ex.StackTrace}")
+            MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error)
+        End Try
+    End Sub
+
 #End Region
 
 #Region "Input Control (Fase 2b)"
@@ -723,6 +861,105 @@ Class wpfWin_Viewer
         Else
             tgl_Kontrol.ToolTip = "Aktifkan Kontrol Keyboard/Mouse (Ctrl+K)"
         End If
+    End Sub
+
+    ''' <summary>
+    ''' Aktifkan tombol transfer berkas jika Host mengizinkan (Fase 3b).
+    ''' Dipanggil setelah koneksi established.
+    ''' </summary>
+    Public Sub AktifkanTransferBerkasJikaDiizinkan(izinTransfer As Boolean)
+        WriteLog($"[TRANSFER-VIEWER] AktifkanTransferBerkasJikaDiizinkan dipanggil, izinTransfer={izinTransfer}")
+        _izinTransferBerkas = izinTransfer
+        btn_Transfer.IsEnabled = izinTransfer
+        If Not izinTransfer Then
+            btn_Transfer.ToolTip = "Host tidak mengizinkan transfer berkas"
+            WriteLog($"[TRANSFER-VIEWER] Tombol Transfer DISABLED - Host tidak mengizinkan")
+        Else
+            btn_Transfer.ToolTip = "Transfer Berkas"
+            WriteLog($"[TRANSFER-VIEWER] Tombol Transfer ENABLED")
+        End If
+    End Sub
+
+#End Region
+
+#Region "Clipboard Control (Fase 3a)"
+
+    ''' <summary>
+    ''' Toggle clipboard sync diaktifkan oleh user.
+    ''' </summary>
+    Private Sub tgl_Clipboard_Checked(sender As Object, e As RoutedEventArgs) Handles tgl_Clipboard.Checked
+        WriteLog($"[CLIPBOARD] Toggle Checked - mengaktifkan clipboard sync")
+        _clipboardAktif = True
+        UpdateStatusClipboard()
+
+        ' Mulai clipboard monitoring sebagai Tamu
+        mdl_Clipboard.ClipboardSyncAktif = True
+        mdl_Clipboard.ClipboardKirimCallback = AddressOf KirimClipboardKePeer
+        mdl_Clipboard.MulaiClipboardMonitoring(CLIPBOARD_SOURCE_TAMU)
+    End Sub
+
+    ''' <summary>
+    ''' Toggle clipboard sync dinonaktifkan oleh user.
+    ''' </summary>
+    Private Sub tgl_Clipboard_Unchecked(sender As Object, e As RoutedEventArgs) Handles tgl_Clipboard.Unchecked
+        WriteLog($"[CLIPBOARD] Toggle Unchecked - menonaktifkan clipboard sync")
+        _clipboardAktif = False
+        UpdateStatusClipboard()
+
+        ' Hentikan clipboard monitoring
+        mdl_Clipboard.HentikanClipboardMonitoring()
+        mdl_Clipboard.ClipboardSyncAktif = False
+    End Sub
+
+    ''' <summary>
+    ''' Update tampilan status clipboard di status bar dan toggle button.
+    ''' </summary>
+    Private Sub UpdateStatusClipboard()
+        If _clipboardAktif Then
+            lbl_StatusClipboard.Text = "Clipboard: ON"
+            lbl_StatusClipboard.Foreground = New SolidColorBrush(Color.FromRgb(&H4C, &HAF, &H50)) ' Green
+            tgl_Clipboard.Foreground = New SolidColorBrush(Color.FromRgb(&H4C, &HAF, &H50))
+            tgl_Clipboard.BorderBrush = New SolidColorBrush(Color.FromRgb(&H4C, &HAF, &H50))
+        Else
+            lbl_StatusClipboard.Text = "Clipboard: OFF"
+            lbl_StatusClipboard.Foreground = New SolidColorBrush(Color.FromRgb(&H9E, &H9E, &H9E)) ' Gray
+            tgl_Clipboard.Foreground = New SolidColorBrush(Color.FromRgb(&H9E, &H9E, &H9E))
+            tgl_Clipboard.BorderBrush = New SolidColorBrush(Color.FromRgb(&HBD, &HBD, &HBD))
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Aktifkan toggle button clipboard jika Host mengizinkan.
+    ''' Dipanggil setelah koneksi established.
+    ''' </summary>
+    Public Sub AktifkanClipboardJikaDiizinkan(izinClipboard As Boolean)
+        WriteLog($"[CLIPBOARD-VIEWER] AktifkanClipboardJikaDiizinkan dipanggil, izinClipboard={izinClipboard}")
+        _izinClipboard = izinClipboard
+        tgl_Clipboard.IsEnabled = izinClipboard
+        If Not izinClipboard Then
+            tgl_Clipboard.ToolTip = "Host tidak mengizinkan clipboard sync"
+            WriteLog($"[CLIPBOARD-VIEWER] Toggle button DISABLED - Host tidak mengizinkan")
+        Else
+            tgl_Clipboard.ToolTip = "Aktifkan Sinkronisasi Clipboard"
+            WriteLog($"[CLIPBOARD-VIEWER] Toggle button ENABLED - klik untuk mengaktifkan clipboard sync")
+        End If
+    End Sub
+
+    ''' <summary>
+    ''' Callback untuk mengirim clipboard ke peer (Host via LAN atau Relay).
+    ''' </summary>
+    Private Async Sub KirimClipboardKePeer(payload As cls_PayloadClipboard)
+        Try
+            If ModeViaRelay Then
+                ' Mode Internet: Kirim via Relay
+                Await mdl_KoneksiRelay.KirimClipboardViaRelayAsync(payload)
+            Else
+                ' Mode LAN: Kirim langsung
+                Await mdl_KoneksiJaringan.KirimClipboardAsync(payload)
+            End If
+        Catch ex As Exception
+            WriteLog($"[CLIPBOARD] Error kirim ke peer: {ex.Message}")
+        End Try
     End Sub
 
 #End Region

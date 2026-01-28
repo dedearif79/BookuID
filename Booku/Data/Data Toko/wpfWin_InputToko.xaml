@@ -39,18 +39,27 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <TextBlock  Grid.Row="0"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Kode Toko"/>
                     <TextBlock  Grid.Row="1"  Grid.Column="1"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Setelah disimpan, Kode Toko tidak dapat diedit." FontSize="8"  Margin="0 0 0 9" Foreground="{StaticResource clrStatusError}" />
                     <TextBlock  Grid.Row="2"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Nama Toko"/>
                     <TextBlock  Grid.Row="3"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Alamat"/>
-                    <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Deskripsi"/>
+                    <TextBlock  Grid.Row="4"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="COA Kas"/>
+                    <TextBlock  Grid.Row="5"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Nama Akun Kas"/>
+                    <TextBlock  Grid.Row="6"  Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Deskripsi"/>
 
                     <TextBox        Grid.Row="0"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogKapital}"  Name="txt_KodeToko"       Width="99"  HorizontalAlignment="Left"/>
                     <TextBox        Grid.Row="2"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaToko" />
                     <RichTextBox    Grid.Row="3"  Grid.Column="1"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Alamat" />
-                    <RichTextBox    Grid.Row="4"  Grid.Column="1"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Deskripsi" />
+                    <StackPanel     Grid.Row="4"  Grid.Column="1"   Style="{StaticResource stylePanelFormDialogKolom}"  >
+                        <TextBox    Width="135"                     Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_COAKas" />
+                        <Button                                     Style="{StaticResource styleButtonFormDialogPilihKode}" Name="btn_PilihCOA"/>
+                    </StackPanel>
+                    <TextBox        Grid.Row="5"  Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"         Name="txt_NamaAkunKas" />
+                    <RichTextBox    Grid.Row="6"  Grid.Column="1"   Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Deskripsi" />
 
                 </Grid>
 

@@ -1,4 +1,4 @@
-﻿<Window x:Class="wpfWin_InputPenjualanEceran"
+<Window x:Class="wpfWin_InputPenjualanEceran"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -20,44 +20,107 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-<StackPanel Style="{StaticResource stylePanelFormDialog}" >
 
-        <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" >
 
+        <ScrollViewer   Style="{StaticResource styleScrollViewerFormDialogVertikal}" Name="scv_Kiri">
 
-            <Grid Style="{StaticResource styleGridFormDialog}" >
+            <StackPanel Style="{StaticResource stylePanelFormDialogVertikal}" >
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="120"/>
-                    <ColumnDefinition Width="132"/>
-                </Grid.ColumnDefinitions>
+                <Grid Style="{StaticResource styleGridFormDialog}" >
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="210"/>
+                        <ColumnDefinition Width="132"/>
+                    </Grid.ColumnDefinitions>
 
-                <TextBlock  Grid.Row="0" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}"   Text="Tanggal"    />
-                <TextBlock  Grid.Row="1" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}"   Text="Kas"  />
-                <TextBlock  Grid.Row="2" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}"   Text="Bank"  />
-                <TextBlock  Grid.Row="3" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}"   Text="Jumlah"  />
-                <TextBlock  Grid.Row="4" Grid.Column="0"    Style="{StaticResource styleTextBlockFormDialog}"   Text="Keterangan :"  />
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
 
-                <DatePicker     Grid.Row="0" Grid.Column="1"    Style="{StaticResource styleDatePickerFormDialog}"      Name="dtp_TanggalTransaksi" />
-                <TextBox        Grid.Row="1" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_JumlahKas" />
-                <TextBox        Grid.Row="2" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_JumlahBank" />
-                <TextBox        Grid.Row="3" Grid.Column="1"    Style="{StaticResource styleTextBoxFormDialogAngkaPlus}"    Name="txt_JumlahTransaksi" />
-                <RichTextBox    Grid.Row="5" Grid.Column="0"    Style="{StaticResource styleRichTextBoxFormDialog}"     Name="txt_Keterangan"   Grid.ColumnSpan="2" />
+                    <TextBlock  Grid.Row="00" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Tanggal"    />
+                    <TextBlock  Grid.Row="01" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Toko / Outlet"  />
+                    <TextBlock  Grid.Row="02" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_KasEceran"    Text="Kas Eceran"  />
 
-            </Grid>
+                    <TextBlock  Grid.Row="03" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_Bank_01"      Text="Bank Eceran 1"  />
+                    <TextBlock  Grid.Row="04" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_Bank_02"      Text="Bank Eceran 2"  />
+                    <TextBlock  Grid.Row="05" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_Bank_03"      Text="Bank Eceran 3"  />
+                    <TextBlock  Grid.Row="06" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_Bank_04"      Text="Bank Eceran 4"  />
+                    <TextBlock  Grid.Row="07" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_Bank_05"      Text="Bank Eceran 5"  />
+                    <TextBlock  Grid.Row="08" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_Bank_06"      Text="Bank Eceran 6"  />
+                    <TextBlock  Grid.Row="09" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_Bank_07"      Text="Bank Eceran 7"  />
+                    <TextBlock  Grid.Row="10" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_Bank_08"      Text="Bank Eceran 8"  />
+                    <TextBlock  Grid.Row="11" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_Bank_09"      Text="Bank Eceran 9"  />
 
-        </StackPanel>
+                    <TextBlock  Grid.Row="12" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_eWallet_01"   Text="eWallet 1"  />
+                    <TextBlock  Grid.Row="13" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_eWallet_02"   Text="eWallet 2"  />
+                    <TextBlock  Grid.Row="14" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_eWallet_03"   Text="eWallet 3"  />
+                    <TextBlock  Grid.Row="15" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_eWallet_04"   Text="eWallet 4"  />
+                    <TextBlock  Grid.Row="16" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_eWallet_05"   Text="eWallet 5"  />
+                    <TextBlock  Grid.Row="17" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_eWallet_06"   Text="eWallet 6"  />
+                    <TextBlock  Grid.Row="18" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_eWallet_07"   Text="eWallet 7"  />
+                    <TextBlock  Grid.Row="19" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_eWallet_08"   Text="eWallet 8"  />
+                    <TextBlock  Grid.Row="20" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Name="lbl_eWallet_09"   Text="eWallet 9"  />
+
+                    <TextBlock  Grid.Row="21" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Jumlah"  />
+                    <TextBlock  Grid.Row="22" Grid.Column="0"   Style="{StaticResource styleTextBlockFormDialog}"   Text="Keterangan :"  />
+
+                    
+                    <DatePicker     Grid.Row="00" Grid.Column="1"   Style="{StaticResource styleDatePickerFormDialog}"                  Name="dtp_TanggalTransaksi" />
+                    <TextBox        Grid.Row="01" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialog}"                     Name="txt_NamaToko" />
+                    <TextBox        Grid.Row="02" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlahKas" />
+
+                    <TextBox        Grid.Row="03" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlahBank_01" />
+                    <TextBox        Grid.Row="04" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlahBank_02" />
+                    <TextBox        Grid.Row="05" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlahBank_03" />
+                    <TextBox        Grid.Row="06" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlahBank_04" />
+                    <TextBox        Grid.Row="07" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlahBank_05" />
+                    <TextBox        Grid.Row="08" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlahBank_06" />
+                    <TextBox        Grid.Row="09" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlahBank_07" />
+                    <TextBox        Grid.Row="10" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlahBank_08" />
+                    <TextBox        Grid.Row="11" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlahBank_09" />
+
+                    <TextBox        Grid.Row="12" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlaheWallet_01" />
+                    <TextBox        Grid.Row="13" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlaheWallet_02" />
+                    <TextBox        Grid.Row="14" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlaheWallet_03" />
+                    <TextBox        Grid.Row="15" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlaheWallet_04" />
+                    <TextBox        Grid.Row="16" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlaheWallet_05" />
+                    <TextBox        Grid.Row="17" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlaheWallet_06" />
+                    <TextBox        Grid.Row="18" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlaheWallet_07" />
+                    <TextBox        Grid.Row="19" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlaheWallet_08" />
+                    <TextBox        Grid.Row="20" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlaheWallet_09" />
+
+                    <TextBox        Grid.Row="21" Grid.Column="1"   Style="{StaticResource styleTextBoxFormDialogAngkaSeparatePlus}"    Name="txt_JumlahTransaksi" />
+                    <RichTextBox    Grid.Row="23" Grid.Column="0"   Style="{StaticResource styleRichTextBoxFormDialog}"                 Name="txt_Keterangan"   Grid.ColumnSpan="2" />
+
+                </Grid>
+
+            </StackPanel>
+
+        </ScrollViewer>
 
         <!--Tombol CRUD :-->
         <StackPanel Style="{StaticResource stylePanelFormDialogTombol}"   Name="pnl_TombolForm">

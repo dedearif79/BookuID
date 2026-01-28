@@ -162,6 +162,8 @@ Module wpfMdl_ClassUserControl
     Public usc_BukuPenjualan_Asset As New wpfUsc_BukuPenjualan
     Public usc_ReturPenjualan As New wpfUsc_ReturPenjualan
     Public usc_BukuPenjualanEceran As New wpfUsc_BukuPenjualanEceran
+    Public usc_BukuPenjualanEceran_RekapHarian As New wpfUsc_BukuPenjualanEceran_RekapHarian
+    Public usc_BukuPenjualanEceran_RekapBulanan As New wpfUsc_BukuPenjualanEceran_RekapBulanan
 
     '═══════════════════════════════════════════════════════════════════════════
     ' BUKU PENGAWASAN - BANK / CASH

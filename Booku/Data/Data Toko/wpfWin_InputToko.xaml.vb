@@ -13,6 +13,8 @@ Public Class wpfWin_InputToko
 
     Dim KodeToko
     Dim NamaToko
+    Dim COAKas
+    Dim NamaAkunKas
     Dim Alamat
     Dim Deskripsi
 
@@ -47,6 +49,7 @@ Public Class wpfWin_InputToko
         FungsiForm = Kosongan
         txt_KodeToko.Text = Kosongan
         txt_NamaToko.Text = Kosongan
+        txt_COAKas.Text = Kosongan
         KosongkanValueElemenRichTextBox(txt_Alamat)
         KosongkanValueElemenRichTextBox(txt_Deskripsi)
         ProsesIsiValueForm = False
@@ -62,6 +65,7 @@ Public Class wpfWin_InputToko
         dr.Read()
         txt_NamaToko.Text = dr.Item("Nama_Toko")
         IsiValueElemenRichTextBox(txt_Alamat, dr.Item("Alamat"))
+        txt_COAKas.Text = dr.Item("COA_Kas")
         IsiValueElemenRichTextBox(txt_Deskripsi, dr.Item("Deskripsi"))
         AksesDatabase_General(Tutup)
     End Sub
@@ -111,6 +115,25 @@ Public Class wpfWin_InputToko
     End Sub
 
 
+    Private Sub txt_COAKas_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_COAKas.TextChanged
+        COAKas = txt_COAKas.Text
+        txt_NamaAkunKas.Text = AmbilValue_NamaAkun(COAKas)
+    End Sub
+    Private Sub btn_PilihCOA_Click(sender As Object, e As RoutedEventArgs) Handles btn_PilihCOA.Click
+        win_ListCOA = New wpfWin_ListCOA
+        win_ListCOA.ResetForm()
+        win_ListCOA.ListAkun = ListAkun_KasOutlet
+        If txt_COAKas.Text <> Kosongan Then win_ListCOA.COATerseleksi = txt_COAKas.Text
+        If txt_NamaAkunKas.Text <> Kosongan Then win_ListCOA.NamaAkunTerseleksi = txt_NamaAkunKas.Text
+        win_ListCOA.ShowDialog()
+        txt_COAKas.Text = win_ListCOA.COATerseleksi
+    End Sub
+    Private Sub txt_NamaAkunKas_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_NamaAkunKas.TextChanged
+        NamaAkunKas = txt_NamaAkunKas.Text
+    End Sub
+
+
+
     Private Sub txt_Deskripsi_TextChanged(sender As Object, e As TextChangedEventArgs) Handles txt_Deskripsi.TextChanged
         Deskripsi = IsiValueVariabelRichTextBox(txt_Deskripsi)
     End Sub
@@ -134,6 +157,11 @@ Public Class wpfWin_InputToko
             Return
         End If
 
+        If COAKas = Kosongan Then
+            PesanPeringatan_SilakanIsiKolomTeks(txt_COAKas, "COA Kas")
+            Return
+        End If
+
         AksesDatabase_General(Buka)
 
         Dim QuerySimpan = Kosongan
@@ -144,6 +172,7 @@ Public Class wpfWin_InputToko
                 " '" & KodeToko & "', " &
                 " '" & NamaToko & "', " &
                 " '" & Alamat & "', " &
+                " '" & COAKas & "', " &
                 " '" & Deskripsi & "' ) "
 
         End If
@@ -153,6 +182,7 @@ Public Class wpfWin_InputToko
             QuerySimpan = " UPDATE tbl_Toko SET " &
                 " Nama_Toko         = '" & NamaToko & "', " &
                 " Alamat            = '" & Alamat & "', " &
+                " Coa_Kas           = '" & COAKas & "', " &
                 " Deskripsi         = '" & Deskripsi & "' " &
                 " WHERE Kode_Toko   = '" & KodeToko & "' "
 
@@ -185,6 +215,7 @@ Public Class wpfWin_InputToko
         InitializeComponent()
         StyleWindowDialogWPF_Dasar(Me)
         txt_KodeToko.MaxLength = 12
+        txt_COAKas.IsReadOnly = True
     End Sub
 
 End Class

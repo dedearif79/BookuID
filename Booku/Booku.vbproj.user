@@ -191,6 +191,15 @@
     <Compile Update="Data\Data Toko\wpfWin_ListToko.xaml.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\Penjualan Eceran\Rekap Bulanan\wpfUsc_BukuPenjualanEceran_RekapBulanan.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\Penjualan Eceran\Rekap Harian\wpfUsc_BukuPenjualanEceran_RekapHarian.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\Penjualan Eceran\X_wpfWin_InputPenjualanEceran.xaml.vb">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pembelian - Penjualan\Penjualan\1 - Buku Penjualan\Penjualan Eceran\wpfUsc_BukuPengawasanPenjualanEceran.xaml.vb">
       <SubType>Code</SubType>
     </Compile>

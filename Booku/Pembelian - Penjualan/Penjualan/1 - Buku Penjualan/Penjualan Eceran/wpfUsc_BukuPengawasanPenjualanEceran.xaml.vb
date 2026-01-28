@@ -1,4 +1,4 @@
-﻿Imports System.Data.Odbc
+Imports System.Data.Odbc
 Imports System.Threading.Tasks
 Imports System.Windows
 Imports System.Windows.Controls
@@ -165,7 +165,7 @@ Public Class wpfUsc_BukuPenjualanEceran
         win_InputPenjualanEceran.NomorJV = NomorJV_Terseleksi
         win_InputPenjualanEceran.dtp_TanggalTransaksi.SelectedDate = TanggalFormatWPF(TanggalTransaksi_Terseleksi)
         win_InputPenjualanEceran.txt_JumlahKas.Text = JumlahKas_Terseleksi
-        win_InputPenjualanEceran.txt_JumlahBank.Text = JumlahBank_Terseleksi
+        win_InputPenjualanEceran.txt_JumlahBank_01.Text = JumlahBank_Terseleksi
         IsiValueElemenRichTextBox(win_InputPenjualanEceran.txt_Keterangan, Keterangan_Terseleksi)
         win_InputPenjualanEceran.ShowDialog()
     End Sub

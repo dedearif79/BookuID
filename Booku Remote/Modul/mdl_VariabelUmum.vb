@@ -191,11 +191,15 @@ Public Module mdl_VariabelUmum
         PERMINTAAN_STREAMING = 24
         HENTIKAN_STREAMING = 25
 
-        ' Transfer Berkas (30-39) - Fase 3
-        PERMINTAAN_BERKAS = 30
-        DATA_BERKAS = 31
-        KONFIRMASI_BERKAS = 32
-        DAFTAR_FOLDER = 33
+        ' Transfer Berkas (30-39) - Fase 3b
+        PERMINTAAN_BERKAS = 30      ' Request transfer (metadata file)
+        DATA_BERKAS = 31            ' File chunk data
+        KONFIRMASI_BERKAS = 32      ' Transfer complete / final ACK
+        DAFTAR_FOLDER = 33          ' Request list folder contents
+        RESPON_TRANSFER = 34        ' Accept/reject transfer request
+        KONFIRMASI_CHUNK = 35       ' ACK per chunk (untuk reliability)
+        BATAL_TRANSFER = 36         ' Cancel transfer
+        RESPON_DAFTAR_FOLDER = 37   ' Folder listing response
 
         ' Relay / Internet (40-59) - Fase 4
         ''' <summary>Host mendaftar ke relay server</summary>
@@ -296,6 +300,36 @@ Public Module mdl_VariabelUmum
         JPEG = 0
         ''' <summary>H.264 video codec (lebih efisien, memerlukan FFmpeg)</summary>
         H264 = 1
+    End Enum
+
+    ''' <summary>
+    ''' Status transfer berkas.
+    ''' </summary>
+    Public Enum StatusTransfer
+        ''' <summary>Tidak ada transfer aktif</summary>
+        IDLE = 0
+        ''' <summary>Sedang menunggu persetujuan</summary>
+        REQUESTING = 1
+        ''' <summary>Sedang transfer data</summary>
+        TRANSFERRING = 2
+        ''' <summary>Sedang verifikasi hash</summary>
+        VERIFYING = 3
+        ''' <summary>Transfer selesai sukses</summary>
+        COMPLETED = 4
+        ''' <summary>Transfer dibatalkan</summary>
+        CANCELLED = 5
+        ''' <summary>Transfer gagal</summary>
+        FAILED = 6
+    End Enum
+
+    ''' <summary>
+    ''' Arah transfer berkas.
+    ''' </summary>
+    Public Enum ArahTransfer
+        ''' <summary>Upload: Tamu mengirim file ke Host</summary>
+        UPLOAD = 1
+        ''' <summary>Download: Tamu mengambil file dari Host</summary>
+        DOWNLOAD = 2
     End Enum
 
 #End Region

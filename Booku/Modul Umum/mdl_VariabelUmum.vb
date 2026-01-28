@@ -760,6 +760,7 @@ Module mdl_VariabelUmum
     Public ListAkun_Semua As String = "SEMUA AKUN"
     Public ListAkun_Pembelian As String = "DAFTAR AKUN PEMBELIAN"
     Public ListAkun_Bank As String = "DAFTAR AKUN BANK"
+    Public ListAkun_KasOutlet As String = "KAS OUTLET"
     Public ListAkun_BarangJasa As String = "DAFTAR AKUN BARANG/JASA"
     Public ListAkun_AssetTanah As String = "DAFTAR AKUN ASSET TANAH"
     Public ListAkun_AssetTetap As String = "DAFTAR AKUN ASSET TETAP"
@@ -1167,6 +1168,10 @@ Module mdl_VariabelUmum
     Public KodeAkun_Kas_Awal = 11201
     Public kodeakun_Kas_Akhir = 11299
 
+    'Range Akun-akun KasOutlet :
+    Public KodeAkun_KasOutlet_Awal = 11221
+    Public kodeakun_KasOutlet_Akhir = 11229
+
     'Range Akun-akun Bank :
     Public KodeAkun_Bank_Awal = 11301
     Public kodeakun_Bank_Akhir = 11399
@@ -1197,6 +1202,7 @@ Module mdl_VariabelUmum
     Public FilterListCOA_Kas = " AND COA BETWEEN " & KodeAkun_Kas_Awal & " AND " & kodeakun_Kas_Akhir & " "
     Public FilterListCOA_PettyCash = " AND COA LIKE '1110%' "
     Public FilterListCOA_CashAdvance = " AND COA LIKE '1140%' "
+    Public FilterListCOA_KasOutlet = " AND COA BETWEEN " & KodeAkun_KasOutlet_Awal & " AND " & kodeakun_KasOutlet_Akhir & " "
     Public FilterListCOA_Bank = " AND COA BETWEEN " & KodeAkun_Bank_Awal & " AND " & kodeakun_Bank_Akhir & " "
     Public FilterListCOA_SaranaPembayaran = " AND COA BETWEEN " & KodeAkun_SaranaPembayaran_Awal & " AND " & kodeakun_SaranaPembayaran_Akhir & " "
     Public FilterListCOA_Amortisasi = " AND COA LIKE '116%' "
@@ -1246,6 +1252,7 @@ Module mdl_VariabelUmum
     Public JenisJurnal_PembelianImpor = "Pembelian Impor"
     Public JenisJurnal_ReturPembelian = "Retur Pembelian"
     Public JenisJurnal_Penjualan = "Penjualan"
+    Public JenisJurnal_PenjualanEceran = "Penjualan Eceran"
     Public JenisJurnal_PenjualanEkspor = "Penjualan Ekspor"
     Public JenisJurnal_Asset = "Asset"
     Public JenisJurnal_DisposalAsset = "Disposal Asset"

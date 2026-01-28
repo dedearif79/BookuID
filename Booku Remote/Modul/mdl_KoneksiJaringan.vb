@@ -19,8 +19,8 @@ Public Module mdl_KoneksiJaringan
     ''' <summary>Event ketika ada permintaan koneksi masuk (untuk Host)</summary>
     Public Event PermintaanKoneksiMasuk(permintaan As cls_PayloadPermintaanKoneksi, clientSocket As TcpClient)
 
-    ''' <summary>Event ketika koneksi berhasil dibuat</summary>
-    Public Event KoneksiBerhasil(kunciSesi As String)
+    ''' <summary>Event ketika koneksi berhasil dibuat (dengan izin dari Host)</summary>
+    Public Event KoneksiBerhasil(kunciSesi As String, izinKontrol As Boolean, izinClipboard As Boolean, izinTransferBerkas As Boolean)
 
     ''' <summary>Event ketika koneksi ditolak</summary>
     Public Event KoneksiDitolak(pesan As String)
@@ -213,7 +213,7 @@ Public Module mdl_KoneksiJaringan
             Await stream.WriteAsync(data, 0, data.Length)
 
             If hasil = HasilPersetujuan.DITERIMA Then
-                RaiseEvent KoneksiBerhasil(kunciSesi)
+                RaiseEvent KoneksiBerhasil(kunciSesi, izinKontrol, izinClipboard, izinTransfer)
                 ' Mulai listening untuk paket data
                 Task.Run(Async Function()
                              Await DengarkanPaketAsync(client, _cancellationTokenSource.Token)
@@ -309,7 +309,7 @@ Public Module mdl_KoneksiJaringan
                             KunciSesiAktif = respon.KunciSesi
                             _terhubung = True
                             StatusKoneksiSaatIni = StatusKoneksi.TERHUBUNG
-                            RaiseEvent KoneksiBerhasil(respon.KunciSesi)
+                            RaiseEvent KoneksiBerhasil(respon.KunciSesi, respon.IzinKontrol, respon.IzinClipboard, respon.IzinTransferBerkas)
 
                             ' Mulai listening untuk paket data
                             Task.Run(Async Function()
@@ -409,6 +409,44 @@ Public Module mdl_KoneksiJaringan
                                 Else
                                     WriteLog($"[HOST] SKIP INPUT_MOUSE: Mode bukan HOST")
                                 End If
+
+                            Case TipePaket.CLIPBOARD_DATA
+                                ' Proses clipboard sync (bidirectional)
+                                ProsesClipboardData(paket.Payload)
+
+                            ' === FASE 3b: Handle Transfer Berkas ===
+
+                            Case TipePaket.PERMINTAAN_BERKAS
+                                ' Permintaan transfer masuk (di Host atau Tamu)
+                                ProsesPermintaanBerkas(paket.Payload)
+
+                            Case TipePaket.RESPON_TRANSFER
+                                ' Respon dari permintaan transfer
+                                ProsesResponTransfer(paket.Payload)
+
+                            Case TipePaket.DATA_BERKAS
+                                ' Data chunk file diterima
+                                ProsesDataBerkas(paket.Payload)
+
+                            Case TipePaket.KONFIRMASI_CHUNK
+                                ' ACK per chunk
+                                ProsesKonfirmasiChunk(paket.Payload)
+
+                            Case TipePaket.KONFIRMASI_BERKAS
+                                ' Transfer selesai
+                                mdl_TransferBerkas.ProsesKonfirmasiBerkas(DeserializeKonfirmasiBerkas(paket.Payload))
+
+                            Case TipePaket.BATAL_TRANSFER
+                                ' Transfer dibatalkan
+                                mdl_TransferBerkas.ProsesBatalTransfer(DeserializeBatalTransfer(paket.Payload))
+
+                            Case TipePaket.DAFTAR_FOLDER
+                                ' Request daftar folder (di Host)
+                                ProsesDaftarFolder(paket.Payload)
+
+                            Case TipePaket.RESPON_DAFTAR_FOLDER
+                                ' Response daftar folder (di Tamu)
+                                ProsesResponDaftarFolder(paket.Payload)
 
                             Case Else
                                 RaiseEvent PaketDiterima(paket)
@@ -821,6 +859,47 @@ Public Module mdl_KoneksiJaringan
 
 #End Region
 
+#Region "Clipboard Processing (Fase 3)"
+
+    ''' <summary>
+    ''' Proses clipboard data yang diterima dari peer (Host atau Tamu).
+    ''' </summary>
+    Private Sub ProsesClipboardData(payload As String)
+        Try
+            Dim clipboardPayload = DeserializeClipboard(payload)
+            If clipboardPayload Is Nothing Then
+                WriteLog("[CLIPBOARD] Gagal deserialize clipboard payload")
+                Return
+            End If
+
+            ' Serahkan ke modul clipboard untuk diproses
+            mdl_Clipboard.TerimaClipboardDariRemote(clipboardPayload)
+
+        Catch ex As Exception
+            WriteLog($"[CLIPBOARD] Error proses clipboard: {ex.Message}")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Kirim clipboard data ke peer yang terhubung.
+    ''' Dipanggil dari mdl_Clipboard via callback.
+    ''' </summary>
+    Public Async Function KirimClipboardAsync(payload As cls_PayloadClipboard) As Task
+        Try
+            Dim paket = BuatPaketClipboard(payload.TipeData, payload.Data, payload.Source, payload.HashData)
+            paket.IdSesi = KunciSesiAktif
+
+            ' Kirim via koneksi yang aktif
+            Await KirimPaketAsync(paket)
+            WriteLog($"[CLIPBOARD] Terkirim ke peer: {payload.TipeData}, hash={payload.HashData?.Substring(0, 8)}")
+
+        Catch ex As Exception
+            WriteLog($"[CLIPBOARD] Gagal kirim: {ex.Message}")
+        End Try
+    End Function
+
+#End Region
+
 #Region "Relay Mode - Internet"
 
     ''' <summary>
@@ -872,6 +951,44 @@ Public Module mdl_KoneksiJaringan
                     If ModeAplikasiSaatIni = ModeAplikasi.HOST Then
                         ProsesInputMouseDariPaket(paket.Payload)
                     End If
+
+                Case TipePaket.CLIPBOARD_DATA
+                    ' Proses clipboard sync via relay
+                    ProsesClipboardData(paket.Payload)
+
+                ' === FASE 3b: Handle Transfer Berkas via Relay ===
+
+                Case TipePaket.PERMINTAAN_BERKAS
+                    ' Permintaan transfer masuk
+                    ProsesPermintaanBerkas(paket.Payload)
+
+                Case TipePaket.RESPON_TRANSFER
+                    ' Respon dari permintaan transfer
+                    ProsesResponTransfer(paket.Payload)
+
+                Case TipePaket.DATA_BERKAS
+                    ' Data chunk file diterima
+                    ProsesDataBerkas(paket.Payload)
+
+                Case TipePaket.KONFIRMASI_CHUNK
+                    ' ACK per chunk
+                    ProsesKonfirmasiChunk(paket.Payload)
+
+                Case TipePaket.KONFIRMASI_BERKAS
+                    ' Transfer selesai
+                    mdl_TransferBerkas.ProsesKonfirmasiBerkas(DeserializeKonfirmasiBerkas(paket.Payload))
+
+                Case TipePaket.BATAL_TRANSFER
+                    ' Transfer dibatalkan
+                    mdl_TransferBerkas.ProsesBatalTransfer(DeserializeBatalTransfer(paket.Payload))
+
+                Case TipePaket.DAFTAR_FOLDER
+                    ' Request daftar folder (di Host)
+                    ProsesDaftarFolder(paket.Payload)
+
+                Case TipePaket.RESPON_DAFTAR_FOLDER
+                    ' Response daftar folder (di Tamu)
+                    ProsesResponDaftarFolder(paket.Payload)
 
                 Case Else
                     RaiseEvent PaketDiterima(paket)
@@ -1036,6 +1153,279 @@ Public Module mdl_KoneksiJaringan
         End Try
 
         WriteLog($"[RELAY-STREAM] Berhenti setelah {frameCount} frame")
+    End Function
+
+#End Region
+
+#Region "Transfer Berkas Handlers (Fase 3b)"
+
+    ''' <summary>Event ketika permintaan transfer masuk (untuk UI)</summary>
+    Public Event PermintaanTransferMasuk(payload As cls_PayloadPermintaanTransfer)
+
+    ''' <summary>Event ketika daftar folder diterima (untuk UI)</summary>
+    Public Event DaftarFolderDiterima(payload As cls_PayloadResponDaftarFolder)
+
+    ''' <summary>
+    ''' Folder default untuk menyimpan file yang diterima.
+    ''' </summary>
+    Public Property FolderDownload As String = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\Downloads"
+
+    ''' <summary>
+    ''' Proses permintaan transfer file yang masuk.
+    ''' </summary>
+    Private Sub ProsesPermintaanBerkas(payload As String)
+        Try
+            Dim data = DeserializePermintaanTransfer(payload)
+            If data Is Nothing Then Return
+
+            WriteLog($"[TRANSFER] Permintaan berkas diterima: {data.NamaFile}, Size: {data.UkuranFile}, Arah: {data.Arah}")
+
+            ' Buat state transfer untuk menerima
+            Dim transfer = mdl_TransferBerkas.TerimaPermintaanTransfer(data, FolderDownload)
+            If transfer IsNot Nothing Then
+                ' Raise event untuk UI menampilkan dialog konfirmasi
+                RaiseEvent PermintaanTransferMasuk(data)
+            End If
+
+        Catch ex As Exception
+            WriteLog($"[TRANSFER] Error proses permintaan berkas: {ex.Message}")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Proses respon dari permintaan transfer.
+    ''' </summary>
+    Private Sub ProsesResponTransfer(payload As String)
+        Try
+            Dim data = DeserializeResponTransfer(payload)
+            If data Is Nothing Then Return
+
+            WriteLog($"[TRANSFER] Respon transfer diterima: ID={data.TransferId}, Diterima={data.Diterima}")
+
+            Dim transfer = mdl_TransferBerkas.GetTransfer(data.TransferId)
+            If transfer Is Nothing Then Return
+
+            If data.Diterima Then
+                ' Mulai kirim file
+                transfer.MulaiTransfer()
+                Task.Run(Async Function()
+                             Await mdl_TransferBerkas.KirimFileAsync(data.TransferId, data.MulaiDariChunk)
+                         End Function)
+            Else
+                ' Transfer ditolak
+                transfer.GagalTransfer(data.Pesan)
+            End If
+
+        Catch ex As Exception
+            WriteLog($"[TRANSFER] Error proses respon transfer: {ex.Message}")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Proses data chunk file yang diterima.
+    ''' </summary>
+    Private Sub ProsesDataBerkas(payload As String)
+        Try
+            Dim data = DeserializeDataBerkas(payload)
+            If data Is Nothing Then Return
+
+            ' Proses chunk
+            Dim sukses = mdl_TransferBerkas.ProsesChunkDiterima(data)
+
+            ' Kirim konfirmasi chunk via metode yang sesuai (LAN atau Relay)
+            Dim paketKonfirmasi = BuatPaketKonfirmasiChunk(data.TransferId, data.ChunkIndex, sukses, Not sukses)
+            Task.Run(Async Function()
+                         If ModeKoneksiSaatIni = ModeKoneksi.INTERNET Then
+                             ' PENTING: Set IdSesi untuk routing di relay
+                             paketKonfirmasi.IdSesi = IdSesiRelay
+                             Await mdl_KoneksiRelay.KirimPaketKeRelayAsync(paketKonfirmasi)
+                         Else
+                             Await KirimPaketAsync(paketKonfirmasi)
+                         End If
+                     End Function)
+
+        Catch ex As Exception
+            WriteLog($"[TRANSFER] Error proses data berkas: {ex.Message}")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Proses konfirmasi chunk (ACK).
+    ''' </summary>
+    Private Sub ProsesKonfirmasiChunk(payload As String)
+        Try
+            Dim data = DeserializeKonfirmasiChunk(payload)
+            If data Is Nothing Then Return
+
+            If data.KirimUlang Then
+                WriteLog($"[TRANSFER] Chunk {data.ChunkIndex} perlu dikirim ulang")
+                ' TODO: Implementasi retry logic
+            End If
+
+        Catch ex As Exception
+            WriteLog($"[TRANSFER] Error proses konfirmasi chunk: {ex.Message}")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Proses permintaan daftar folder (di Host).
+    ''' </summary>
+    Private Sub ProsesDaftarFolder(payload As String)
+        Try
+            Dim data = DeserializeDaftarFolder(payload)
+            If data Is Nothing Then Return
+
+            WriteLog($"[TRANSFER] Request daftar folder: {data.Path}")
+
+            ' Dapatkan daftar folder
+            Dim response As cls_PayloadResponDaftarFolder
+            If String.IsNullOrEmpty(data.Path) Then
+                response = mdl_TransferBerkas.DapatkanDaftarDrive()
+            Else
+                response = mdl_TransferBerkas.DapatkanDaftarFolder(data.Path)
+            End If
+
+            ' Kirim response via metode yang sesuai (LAN atau Relay)
+            Dim paket = BuatPaketResponDaftarFolder(response.Path, response.Items, response.Sukses,
+                                                     response.ParentPath, response.Pesan)
+            Task.Run(Async Function()
+                         If ModeKoneksiSaatIni = ModeKoneksi.INTERNET Then
+                             ' PENTING: Set IdSesi untuk routing di relay
+                             paket.IdSesi = IdSesiRelay
+                             Await mdl_KoneksiRelay.KirimPaketKeRelayAsync(paket)
+                         Else
+                             Await KirimPaketAsync(paket)
+                         End If
+                     End Function)
+
+        Catch ex As Exception
+            WriteLog($"[TRANSFER] Error proses daftar folder: {ex.Message}")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Proses response daftar folder (di Tamu).
+    ''' </summary>
+    Private Sub ProsesResponDaftarFolder(payload As String)
+        Try
+            Dim data = DeserializeResponDaftarFolder(payload)
+            If data Is Nothing Then Return
+
+            WriteLog($"[TRANSFER] Response daftar folder: {data.Path}, Items: {data.Items?.Count}")
+
+            ' Raise event untuk UI
+            RaiseEvent DaftarFolderDiterima(data)
+
+        Catch ex As Exception
+            WriteLog($"[TRANSFER] Error proses respon daftar folder: {ex.Message}")
+        End Try
+    End Sub
+
+    ''' <summary>
+    ''' Mengirim permintaan transfer file ke peer.
+    ''' </summary>
+    ''' <param name="transfer">State transfer</param>
+    Public Async Function KirimPermintaanTransferAsync(transfer As cls_TransferBerkas) As Task
+        Try
+            Dim paket = BuatPaketPermintaanBerkas(transfer)
+            Await KirimPaketAsync(paket)
+            WriteLog($"[TRANSFER] Permintaan transfer terkirim: {transfer.NamaFile}")
+        Catch ex As Exception
+            WriteLog($"[TRANSFER] Error kirim permintaan transfer: {ex.Message}")
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Mengirim respon transfer (terima/tolak).
+    ''' </summary>
+    ''' <param name="transferId">ID transfer</param>
+    ''' <param name="diterima">True jika diterima</param>
+    ''' <param name="pesan">Pesan opsional</param>
+    Public Async Function KirimResponTransferAsync(transferId As String, diterima As Boolean,
+                                                    Optional pesan As String = "") As Task
+        Try
+            Dim paket = BuatPaketResponTransfer(transferId, diterima, pesan)
+
+            ' Pilih metode pengiriman berdasarkan mode koneksi
+            If ModeKoneksiSaatIni = ModeKoneksi.INTERNET Then
+                ' Kirim via Relay - PENTING: Set IdSesi untuk routing di relay
+                paket.IdSesi = IdSesiRelay
+                Await mdl_KoneksiRelay.KirimPaketKeRelayAsync(paket)
+                WriteLog($"[TRANSFER] Respon transfer terkirim via RELAY: ID={transferId}, Diterima={diterima}, IdSesi={paket.IdSesi}")
+            Else
+                ' Kirim via TCP langsung (LAN)
+                Await KirimPaketAsync(paket)
+                WriteLog($"[TRANSFER] Respon transfer terkirim via LAN: ID={transferId}, Diterima={diterima}")
+            End If
+
+            If diterima Then
+                ' Mulai menerima file
+                Dim transfer = mdl_TransferBerkas.GetTransfer(transferId)
+                If transfer IsNot Nothing Then
+                    transfer.MulaiTransfer()
+                    mdl_TransferBerkas.SedangTransfer = True
+                End If
+            End If
+
+        Catch ex As Exception
+            WriteLog($"[TRANSFER] Error kirim respon transfer: {ex.Message}")
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Mengirim permintaan daftar folder ke Host.
+    ''' </summary>
+    ''' <param name="path">Path folder (kosong = root/drives)</param>
+    Public Async Function KirimPermintaanDaftarFolderAsync(Optional path As String = "") As Task
+        Try
+            Dim paket = BuatPaketDaftarFolder(path)
+
+            ' Pilih metode pengiriman berdasarkan mode koneksi
+            If ModeKoneksiSaatIni = ModeKoneksi.INTERNET Then
+                ' PENTING: Set IdSesi untuk routing di relay
+                paket.IdSesi = IdSesiRelay
+                Await mdl_KoneksiRelay.KirimPaketKeRelayAsync(paket)
+                WriteLog($"[TRANSFER] Permintaan daftar folder terkirim via RELAY: {path}")
+            Else
+                Await KirimPaketAsync(paket)
+                WriteLog($"[TRANSFER] Permintaan daftar folder terkirim via LAN: {path}")
+            End If
+
+        Catch ex As Exception
+            WriteLog($"[TRANSFER] Error kirim permintaan daftar folder: {ex.Message}")
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Membatalkan transfer yang sedang berjalan.
+    ''' </summary>
+    ''' <param name="transferId">ID transfer</param>
+    ''' <param name="alasan">Alasan pembatalan</param>
+    Public Async Function BatalkanTransferAsync(transferId As String, alasan As String) As Task
+        Try
+            Dim paket = BuatPaketBatalTransfer(transferId, alasan)
+
+            ' Pilih metode pengiriman berdasarkan mode koneksi
+            If ModeKoneksiSaatIni = ModeKoneksi.INTERNET Then
+                ' PENTING: Set IdSesi untuk routing di relay
+                paket.IdSesi = IdSesiRelay
+                Await mdl_KoneksiRelay.KirimPaketKeRelayAsync(paket)
+                WriteLog($"[TRANSFER] Batal transfer terkirim via RELAY: {transferId}")
+            Else
+                Await KirimPaketAsync(paket)
+                WriteLog($"[TRANSFER] Batal transfer terkirim via LAN: {transferId}")
+            End If
+
+            ' Update state lokal
+            mdl_TransferBerkas.ProsesBatalTransfer(New cls_PayloadBatalTransfer With {
+                .TransferId = transferId,
+                .Alasan = alasan
+            })
+
+            WriteLog($"[TRANSFER] Transfer dibatalkan: {transferId}, Alasan: {alasan}")
+        Catch ex As Exception
+            WriteLog($"[TRANSFER] Error batalkan transfer: {ex.Message}")
+        End Try
     End Function
 
 #End Region

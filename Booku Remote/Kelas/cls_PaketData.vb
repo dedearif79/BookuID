@@ -269,3 +269,30 @@ Public Class cls_PayloadRelayError
 End Class
 
 #End Region
+
+#Region "Clipboard Payload Classes - Fase 3"
+
+''' <summary>
+''' Payload untuk CLIPBOARD_DATA (Host ↔ Tamu).
+''' Sinkronisasi clipboard bidirectional.
+''' </summary>
+Public Class cls_PayloadClipboard
+
+    ''' <summary>Tipe data clipboard: "TEXT" atau "IMAGE"</summary>
+    Public Property TipeData As String = ""
+
+    ''' <summary>Data clipboard (teks biasa atau Base64 untuk gambar PNG)</summary>
+    Public Property Data As String = ""
+
+    ''' <summary>Timestamp pengiriman (ticks) untuk loop prevention</summary>
+    Public Property Timestamp As Long = 0
+
+    ''' <summary>Sumber data: "HOST" atau "TAMU"</summary>
+    Public Property Source As String = ""
+
+    ''' <summary>MD5 hash dari data untuk deduplikasi</summary>
+    Public Property HashData As String = ""
+
+End Class
+
+#End Region

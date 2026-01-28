@@ -92,6 +92,15 @@ public class PacketRouter
                 case TipePaket.PERMINTAAN_STREAMING:
                 case TipePaket.HENTIKAN_STREAMING:
                 case TipePaket.HEARTBEAT:
+                // Transfer Berkas (Fase 3b) - transparent relay
+                case TipePaket.PERMINTAAN_BERKAS:
+                case TipePaket.RESPON_TRANSFER:
+                case TipePaket.DATA_BERKAS:
+                case TipePaket.KONFIRMASI_CHUNK:
+                case TipePaket.KONFIRMASI_BERKAS:
+                case TipePaket.BATAL_TRANSFER:
+                case TipePaket.DAFTAR_FOLDER:
+                case TipePaket.RESPON_DAFTAR_FOLDER:
                     await RelayPacketAsync(paket, result);
                     break;
 

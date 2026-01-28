@@ -67,6 +67,32 @@
                                   BorderBrush="{StaticResource clrBorderDefault}"
                                   ToolTip="Aktifkan Kontrol Keyboard/Mouse (Ctrl+K)"
                                   IsEnabled="False"/>
+                    <!-- Button Transfer Berkas (Fase 3b) -->
+                    <Button Name="btn_Transfer"
+                            Content="&#xE8A5;"
+                            FontFamily="Segoe MDL2 Assets"
+                            FontSize="14"
+                            Padding="10,5"
+                            Margin="0,0,10,0"
+                            Background="Transparent"
+                            Foreground="{StaticResource clrTeksSekunder}"
+                            BorderThickness="1"
+                            BorderBrush="{StaticResource clrBorderDefault}"
+                            ToolTip="Transfer Berkas"
+                            IsEnabled="False"/>
+                    <!-- Toggle Clipboard (Fase 3a) -->
+                    <ToggleButton Name="tgl_Clipboard"
+                                  Content="&#xE77F;"
+                                  FontFamily="Segoe MDL2 Assets"
+                                  FontSize="14"
+                                  Padding="10,5"
+                                  Margin="0,0,10,0"
+                                  Background="Transparent"
+                                  Foreground="{StaticResource clrTeksSekunder}"
+                                  BorderThickness="1"
+                                  BorderBrush="{StaticResource clrBorderDefault}"
+                                  ToolTip="Aktifkan Sinkronisasi Clipboard"
+                                  IsEnabled="False"/>
                     <Button Name="btn_Fullscreen"
                             Content="&#xE740;"
                             FontFamily="Segoe MDL2 Assets"
@@ -194,6 +220,26 @@
                                        VerticalAlignment="Center"/>
                             <TextBlock Name="lbl_StatusKontrol"
                                        Text="Kontrol: OFF"
+                                       Margin="4,0,0,0"
+                                       Foreground="{StaticResource clrTeksSekunder}"
+                                       FontSize="11"
+                                       VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <!-- Status Clipboard (Fase 3a) -->
+                    <Border Margin="10,0,0,0"
+                            Padding="6,2"
+                            CornerRadius="3"
+                            Background="{StaticResource clrBgPanel}"
+                            VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE77F;"
+                                       FontFamily="Segoe MDL2 Assets"
+                                       FontSize="10"
+                                       Foreground="{StaticResource clrTeksSekunder}"
+                                       VerticalAlignment="Center"/>
+                            <TextBlock Name="lbl_StatusClipboard"
+                                       Text="Clipboard: OFF"
                                        Margin="4,0,0,0"
                                        Foreground="{StaticResource clrTeksSekunder}"
                                        FontSize="11"

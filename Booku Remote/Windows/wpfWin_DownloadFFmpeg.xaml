@@ -1,0 +1,70 @@
+<Window x:Class="wpfWin_DownloadFFmpeg"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Download File Pendukung"
+        Height="Auto"
+        Width="400"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="SingleBorderWindow"
+        ResizeMode="NoResize"
+        SizeToContent="Height">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/BookuID.Styles;component/WPF/Styles/StyleAplikasi.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <StackPanel Style="{StaticResource stylePanelFormDialog}" Margin="20">
+
+        <!-- Header -->
+        <StackPanel Margin="0,0,0,15">
+            <TextBlock Text="&#xE896;"
+                       FontFamily="Segoe MDL2 Assets"
+                       FontSize="36"
+                       HorizontalAlignment="Center"
+                       Foreground="{StaticResource clrBorderFocus}"/>
+            <TextBlock Text="Mengunduh File Pendukung"
+                       FontSize="16"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Margin="0,10,0,5"/>
+            <TextBlock Name="lbl_Status"
+                       Text="Mempersiapkan download..."
+                       FontSize="12"
+                       HorizontalAlignment="Center"
+                       Foreground="{StaticResource clrTeksSekunder}"
+                       TextWrapping="Wrap"
+                       TextAlignment="Center"/>
+        </StackPanel>
+
+        <!-- Progress Bar -->
+        <StackPanel Margin="0,10,0,15">
+            <ProgressBar Name="pgb_Progress"
+                         Height="20"
+                         Minimum="0"
+                         Maximum="100"
+                         Value="0"
+                         Foreground="{StaticResource clrBorderFocus}"/>
+            <TextBlock Name="lbl_Progress"
+                       Text="0%"
+                       FontSize="11"
+                       HorizontalAlignment="Center"
+                       Margin="0,5,0,0"
+                       Foreground="{StaticResource clrTeksSekunder}"/>
+        </StackPanel>
+
+        <!-- Tombol Batal (hanya tampil saat download) -->
+        <Button Name="btn_Batal"
+                Content="Batal"
+                Style="{StaticResource styleButtonDasar}"
+                Width="100"
+                Padding="10,6"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Center"
+                Visibility="Collapsed"/>
+
+    </StackPanel>
+</Window>

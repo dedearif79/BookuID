@@ -1,6 +1,7 @@
 Option Explicit On
 Option Strict On
 
+Imports System.IO
 Imports System.Windows
 Imports BookuID.Styles
 
@@ -22,10 +23,74 @@ Class wpfWin_StartUp
 #Region "Window Events"
 
     Private Sub wpfWin_Loaded(sender As Object, e As RoutedEventArgs) Handles Me.Loaded
+        ' Cek ketersediaan FFmpeg terlebih dahulu
+        If Not CekDanDownloadFFmpeg() Then
+            ' User menolak download atau download gagal, keluar dari aplikasi
+            Application.Current.Shutdown()
+            Return
+        End If
+
         ' Tampilkan info perangkat
         lbl_NamaPerangkat.Text = NamaPerangkatIni
         lbl_AlamatIP.Text = AlamatIPLokal
     End Sub
+
+    ''' <summary>
+    ''' Mengecek ketersediaan FFmpeg dan menawarkan download jika tidak ada.
+    ''' </summary>
+    ''' <returns>True jika FFmpeg tersedia atau berhasil didownload, False jika tidak</returns>
+    Private Function CekDanDownloadFFmpeg() As Boolean
+        ' Cek apakah ffmpeg.exe ada di folder aplikasi
+        Dim folderAplikasi = AppDomain.CurrentDomain.BaseDirectory
+        Dim pathFFmpeg = Path.Combine(folderAplikasi, "ffmpeg.exe")
+
+        If File.Exists(pathFFmpeg) Then
+            ' FFmpeg sudah ada
+            Return True
+        End If
+
+        ' FFmpeg tidak ada, tampilkan konfirmasi
+        Dim hasil = MessageBox.Show(
+            "Untuk menjalankan aplikasi Booku Remote, diperlukan file pendukung (FFmpeg) yang harus diunduh dari server." & Environment.NewLine & Environment.NewLine &
+            "Ukuran file: sekitar 140 MB" & Environment.NewLine &
+            "File ini diperlukan untuk fitur streaming video." & Environment.NewLine & Environment.NewLine &
+            "Apakah Anda ingin mengunduh file tersebut sekarang?",
+            "Download File Pendukung",
+            MessageBoxButton.YesNo,
+            MessageBoxImage.Question)
+
+        If hasil = MessageBoxResult.No Then
+            ' User menolak download
+            MessageBox.Show(
+                "Anda tidak dapat menggunakan aplikasi Booku Remote untuk saat ini karena file pendukung belum tersedia." & Environment.NewLine & Environment.NewLine &
+                "Silakan jalankan aplikasi kembali jika ingin mengunduh file tersebut.",
+                "Booku Remote",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information)
+            Return False
+        End If
+
+        ' User setuju download, tampilkan window download
+        Dim winDownload As New wpfWin_DownloadFFmpeg()
+        winDownload.ShowDialog()
+
+        ' Cek hasil download
+        If winDownload.DownloadBerhasil Then
+            ' Verifikasi ulang file ada
+            If File.Exists(pathFFmpeg) Then
+                Return True
+            End If
+        End If
+
+        ' Download gagal
+        MessageBox.Show(
+            "Download file pendukung gagal. Silakan coba lagi nanti." & Environment.NewLine & Environment.NewLine &
+            "Pastikan koneksi internet Anda stabil.",
+            "Download Gagal",
+            MessageBoxButton.OK,
+            MessageBoxImage.Warning)
+        Return False
+    End Function
 
     Private Sub wpfWin_Closing(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles Me.Closing
         ' Cleanup saat window ditutup

@@ -299,6 +299,212 @@ Public Module mdl_Protokol
 
 #End Region
 
+#Region "Serialization - Clipboard (Fase 3)"
+
+    ''' <summary>
+    ''' Serialisasi payload clipboard.
+    ''' </summary>
+    Public Function SerializeClipboard(payload As cls_PayloadClipboard) As String
+        Try
+            Return JsonSerializer.Serialize(payload, JsonOptions)
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Deserialisasi payload clipboard.
+    ''' </summary>
+    Public Function DeserializeClipboard(json As String) As cls_PayloadClipboard
+        Try
+            Return JsonSerializer.Deserialize(Of cls_PayloadClipboard)(json, JsonOptions)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+#End Region
+
+#Region "Serialization - Transfer Berkas (Fase 3b)"
+
+    ''' <summary>
+    ''' Serialisasi payload permintaan transfer.
+    ''' </summary>
+    Public Function SerializePermintaanTransfer(payload As cls_PayloadPermintaanTransfer) As String
+        Try
+            Return JsonSerializer.Serialize(payload, JsonOptions)
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Deserialisasi payload permintaan transfer.
+    ''' </summary>
+    Public Function DeserializePermintaanTransfer(json As String) As cls_PayloadPermintaanTransfer
+        Try
+            Return JsonSerializer.Deserialize(Of cls_PayloadPermintaanTransfer)(json, JsonOptions)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Serialisasi payload respon transfer.
+    ''' </summary>
+    Public Function SerializeResponTransfer(payload As cls_PayloadResponTransfer) As String
+        Try
+            Return JsonSerializer.Serialize(payload, JsonOptions)
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Deserialisasi payload respon transfer.
+    ''' </summary>
+    Public Function DeserializeResponTransfer(json As String) As cls_PayloadResponTransfer
+        Try
+            Return JsonSerializer.Deserialize(Of cls_PayloadResponTransfer)(json, JsonOptions)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Serialisasi payload data berkas (chunk).
+    ''' </summary>
+    Public Function SerializeDataBerkas(payload As cls_PayloadDataBerkas) As String
+        Try
+            Return JsonSerializer.Serialize(payload, JsonOptions)
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Deserialisasi payload data berkas (chunk).
+    ''' </summary>
+    Public Function DeserializeDataBerkas(json As String) As cls_PayloadDataBerkas
+        Try
+            Return JsonSerializer.Deserialize(Of cls_PayloadDataBerkas)(json, JsonOptions)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Serialisasi payload konfirmasi chunk.
+    ''' </summary>
+    Public Function SerializeKonfirmasiChunk(payload As cls_PayloadKonfirmasiChunk) As String
+        Try
+            Return JsonSerializer.Serialize(payload, JsonOptions)
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Deserialisasi payload konfirmasi chunk.
+    ''' </summary>
+    Public Function DeserializeKonfirmasiChunk(json As String) As cls_PayloadKonfirmasiChunk
+        Try
+            Return JsonSerializer.Deserialize(Of cls_PayloadKonfirmasiChunk)(json, JsonOptions)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Serialisasi payload konfirmasi berkas (transfer selesai).
+    ''' </summary>
+    Public Function SerializeKonfirmasiBerkas(payload As cls_PayloadKonfirmasiBerkas) As String
+        Try
+            Return JsonSerializer.Serialize(payload, JsonOptions)
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Deserialisasi payload konfirmasi berkas.
+    ''' </summary>
+    Public Function DeserializeKonfirmasiBerkas(json As String) As cls_PayloadKonfirmasiBerkas
+        Try
+            Return JsonSerializer.Deserialize(Of cls_PayloadKonfirmasiBerkas)(json, JsonOptions)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Serialisasi payload batal transfer.
+    ''' </summary>
+    Public Function SerializeBatalTransfer(payload As cls_PayloadBatalTransfer) As String
+        Try
+            Return JsonSerializer.Serialize(payload, JsonOptions)
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Deserialisasi payload batal transfer.
+    ''' </summary>
+    Public Function DeserializeBatalTransfer(json As String) As cls_PayloadBatalTransfer
+        Try
+            Return JsonSerializer.Deserialize(Of cls_PayloadBatalTransfer)(json, JsonOptions)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Serialisasi payload daftar folder.
+    ''' </summary>
+    Public Function SerializeDaftarFolder(payload As cls_PayloadDaftarFolder) As String
+        Try
+            Return JsonSerializer.Serialize(payload, JsonOptions)
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Deserialisasi payload daftar folder.
+    ''' </summary>
+    Public Function DeserializeDaftarFolder(json As String) As cls_PayloadDaftarFolder
+        Try
+            Return JsonSerializer.Deserialize(Of cls_PayloadDaftarFolder)(json, JsonOptions)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Serialisasi payload respon daftar folder.
+    ''' </summary>
+    Public Function SerializeResponDaftarFolder(payload As cls_PayloadResponDaftarFolder) As String
+        Try
+            Return JsonSerializer.Serialize(payload, JsonOptions)
+        Catch
+            Return ""
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Deserialisasi payload respon daftar folder.
+    ''' </summary>
+    Public Function DeserializeResponDaftarFolder(json As String) As cls_PayloadResponDaftarFolder
+        Try
+            Return JsonSerializer.Deserialize(Of cls_PayloadResponDaftarFolder)(json, JsonOptions)
+        Catch
+            Return Nothing
+        End Try
+    End Function
+
+#End Region
+
 #Region "Paket Builder Helper"
 
     ''' <summary>
@@ -528,6 +734,170 @@ Public Module mdl_Protokol
             .SupportedCodecs = If(supportedCodecs, {"JPEG", "H264"})
         }
         Return New cls_PaketData(TipePaket.RELAY_CONNECT_REQUEST, SerializeRelayConnectRequest(payload))
+    End Function
+
+#End Region
+
+#Region "Paket Builder Helper - Clipboard (Fase 3)"
+
+    ''' <summary>
+    ''' Membuat paket CLIPBOARD_DATA untuk sinkronisasi clipboard.
+    ''' </summary>
+    ''' <param name="tipeData">"TEXT" atau "IMAGE"</param>
+    ''' <param name="data">Teks biasa atau Base64 PNG untuk gambar</param>
+    ''' <param name="source">"HOST" atau "TAMU"</param>
+    ''' <param name="hashData">MD5 hash dari data untuk deduplikasi</param>
+    Public Function BuatPaketClipboard(tipeData As String, data As String,
+                                        source As String, hashData As String) As cls_PaketData
+        Dim payload As New cls_PayloadClipboard With {
+            .TipeData = tipeData,
+            .Data = data,
+            .Timestamp = DateTime.UtcNow.Ticks,
+            .Source = source,
+            .HashData = hashData
+        }
+        Return New cls_PaketData(TipePaket.CLIPBOARD_DATA, SerializeClipboard(payload))
+    End Function
+
+#End Region
+
+#Region "Paket Builder Helper - Transfer Berkas (Fase 3b)"
+
+    ''' <summary>
+    ''' Membuat paket PERMINTAAN_BERKAS untuk meminta izin transfer file.
+    ''' </summary>
+    ''' <param name="transfer">State transfer yang berisi info file</param>
+    Public Function BuatPaketPermintaanBerkas(transfer As cls_TransferBerkas) As cls_PaketData
+        Dim payload As New cls_PayloadPermintaanTransfer With {
+            .TransferId = transfer.TransferId,
+            .Arah = If(transfer.Arah = ArahTransfer.UPLOAD, "UPLOAD", "DOWNLOAD"),
+            .NamaFile = transfer.NamaFile,
+            .UkuranFile = transfer.UkuranFile,
+            .HashFile = transfer.HashFile,
+            .TotalChunk = transfer.TotalChunk,
+            .UkuranChunk = transfer.UkuranChunk,
+            .PathSumber = transfer.PathSumber
+        }
+        Return New cls_PaketData(TipePaket.PERMINTAAN_BERKAS, SerializePermintaanTransfer(payload))
+    End Function
+
+    ''' <summary>
+    ''' Membuat paket RESPON_TRANSFER untuk menerima/menolak request transfer.
+    ''' </summary>
+    ''' <param name="transferId">ID transfer yang direspon</param>
+    ''' <param name="diterima">True jika request diterima</param>
+    ''' <param name="pesan">Pesan atau alasan penolakan</param>
+    ''' <param name="mulaiDariChunk">Index chunk untuk resume (default 0)</param>
+    Public Function BuatPaketResponTransfer(transferId As String, diterima As Boolean,
+                                             Optional pesan As String = "",
+                                             Optional mulaiDariChunk As Integer = 0) As cls_PaketData
+        Dim payload As New cls_PayloadResponTransfer With {
+            .TransferId = transferId,
+            .Diterima = diterima,
+            .Pesan = pesan,
+            .MulaiDariChunk = mulaiDariChunk
+        }
+        Return New cls_PaketData(TipePaket.RESPON_TRANSFER, SerializeResponTransfer(payload))
+    End Function
+
+    ''' <summary>
+    ''' Membuat paket DATA_BERKAS untuk mengirim satu chunk file.
+    ''' </summary>
+    ''' <param name="transferId">ID transfer</param>
+    ''' <param name="chunkIndex">Index chunk (0-based)</param>
+    ''' <param name="data">Data chunk dalam byte array</param>
+    Public Function BuatPaketDataBerkas(transferId As String, chunkIndex As Integer, data As Byte()) As cls_PaketData
+        Dim payload As New cls_PayloadDataBerkas With {
+            .TransferId = transferId,
+            .ChunkIndex = chunkIndex,
+            .Data = Convert.ToBase64String(data),
+            .Checksum = cls_TransferBerkas.HitungHashData(data)
+        }
+        Return New cls_PaketData(TipePaket.DATA_BERKAS, SerializeDataBerkas(payload))
+    End Function
+
+    ''' <summary>
+    ''' Membuat paket KONFIRMASI_CHUNK untuk ACK per chunk.
+    ''' </summary>
+    ''' <param name="transferId">ID transfer</param>
+    ''' <param name="chunkIndex">Index chunk yang dikonfirmasi</param>
+    ''' <param name="sukses">True jika chunk diterima dengan benar</param>
+    ''' <param name="kirimUlang">True jika perlu kirim ulang</param>
+    Public Function BuatPaketKonfirmasiChunk(transferId As String, chunkIndex As Integer,
+                                              sukses As Boolean,
+                                              Optional kirimUlang As Boolean = False) As cls_PaketData
+        Dim payload As New cls_PayloadKonfirmasiChunk With {
+            .TransferId = transferId,
+            .ChunkIndex = chunkIndex,
+            .Sukses = sukses,
+            .KirimUlang = kirimUlang
+        }
+        Return New cls_PaketData(TipePaket.KONFIRMASI_CHUNK, SerializeKonfirmasiChunk(payload))
+    End Function
+
+    ''' <summary>
+    ''' Membuat paket KONFIRMASI_BERKAS untuk konfirmasi transfer selesai.
+    ''' </summary>
+    ''' <param name="transferId">ID transfer</param>
+    ''' <param name="sukses">True jika transfer sukses</param>
+    ''' <param name="hashHasil">Hash file hasil untuk verifikasi</param>
+    ''' <param name="pesan">Pesan error jika gagal</param>
+    Public Function BuatPaketKonfirmasiBerkas(transferId As String, sukses As Boolean,
+                                               Optional hashHasil As String = "",
+                                               Optional pesan As String = "") As cls_PaketData
+        Dim payload As New cls_PayloadKonfirmasiBerkas With {
+            .TransferId = transferId,
+            .Sukses = sukses,
+            .HashHasil = hashHasil,
+            .Pesan = pesan
+        }
+        Return New cls_PaketData(TipePaket.KONFIRMASI_BERKAS, SerializeKonfirmasiBerkas(payload))
+    End Function
+
+    ''' <summary>
+    ''' Membuat paket BATAL_TRANSFER untuk membatalkan transfer.
+    ''' </summary>
+    ''' <param name="transferId">ID transfer yang dibatalkan</param>
+    ''' <param name="alasan">Alasan pembatalan</param>
+    Public Function BuatPaketBatalTransfer(transferId As String, alasan As String) As cls_PaketData
+        Dim payload As New cls_PayloadBatalTransfer With {
+            .TransferId = transferId,
+            .Alasan = alasan
+        }
+        Return New cls_PaketData(TipePaket.BATAL_TRANSFER, SerializeBatalTransfer(payload))
+    End Function
+
+    ''' <summary>
+    ''' Membuat paket DAFTAR_FOLDER untuk request daftar folder.
+    ''' </summary>
+    ''' <param name="path">Path folder yang diminta (kosong = home folder)</param>
+    Public Function BuatPaketDaftarFolder(Optional path As String = "") As cls_PaketData
+        Dim payload As New cls_PayloadDaftarFolder With {
+            .Path = path
+        }
+        Return New cls_PaketData(TipePaket.DAFTAR_FOLDER, SerializeDaftarFolder(payload))
+    End Function
+
+    ''' <summary>
+    ''' Membuat paket RESPON_DAFTAR_FOLDER untuk response daftar folder.
+    ''' </summary>
+    ''' <param name="path">Path folder yang di-list</param>
+    ''' <param name="items">Daftar item file dan folder</param>
+    ''' <param name="sukses">True jika berhasil</param>
+    ''' <param name="parentPath">Path parent folder</param>
+    ''' <param name="pesan">Pesan error jika gagal</param>
+    Public Function BuatPaketResponDaftarFolder(path As String, items As List(Of cls_ItemFolder),
+                                                 sukses As Boolean,
+                                                 Optional parentPath As String = "",
+                                                 Optional pesan As String = "") As cls_PaketData
+        Dim payload As New cls_PayloadResponDaftarFolder With {
+            .Path = path,
+            .Items = items,
+            .Sukses = sukses,
+            .ParentPath = parentPath,
+            .Pesan = pesan
+        }
+        Return New cls_PaketData(TipePaket.RESPON_DAFTAR_FOLDER, SerializeResponDaftarFolder(payload))
     End Function
 
 #End Region

@@ -29,6 +29,10 @@ public enum TipePaket
     DATA_BERKAS = 31,
     KONFIRMASI_BERKAS = 32,
     DAFTAR_FOLDER = 33,
+    RESPON_TRANSFER = 34,
+    KONFIRMASI_CHUNK = 35,
+    BATAL_TRANSFER = 36,
+    RESPON_DAFTAR_FOLDER = 37,
 
     // === RELAY / INTERNET (40-59) ===
 

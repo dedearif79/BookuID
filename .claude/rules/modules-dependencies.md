@@ -23,7 +23,7 @@ Solution BookuID berisi 12 project yang saling terintegrasi. Jumlah project dapa
 | 7 | **Booku Styles** | **Project Styling Terpusat.** Berisi XAML resources, behaviors, dan styling modules. Dikompilasi menjadi `BookuID.Styles.dll`. | Sudah jalan (post-migrasi) |
 | 8 | **Booku Uninstaller** | Sistem untuk mencabut instalasi Booku di PC klien/user. | Belum dibuat |
 | 9 | **Booku Updater** | Sistem update aplikasi Booku secara otomatis. | Sudah jalan (sederhana), akan dikembangkan |
-| 10 | **Booku Remote** | Aplikasi remote desktop untuk mengontrol PC lain dalam jaringan LAN maupun internet. Mendukung screen sharing, keyboard/mouse control. | Fase 1, 2, 2b, 4 selesai. Fase 3 belum |
+| 10 | **Booku Remote** | Aplikasi remote desktop untuk mengontrol PC lain dalam jaringan LAN maupun internet. Mendukung screen sharing, keyboard/mouse control, clipboard sync, file transfer. | Semua fase selesai (1, 2, 2b, 3a, 3b, 4) |
 | 11 | **Booku Remote Android** | Aplikasi Android (MAUI/C#) untuk remote desktop sebagai Tamu. Menggunakan protokol yang sama dengan Booku Remote WPF. | Sudah jalan (LAN & Internet mode) |
 | 12 | **Booku Remote Relay** | Server relay untuk koneksi remote desktop via internet. Berjalan di VPS sebagai perantara Host-Tamu. | Sudah jalan (port 45680) |
 

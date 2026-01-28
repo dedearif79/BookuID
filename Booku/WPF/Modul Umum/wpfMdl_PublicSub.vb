@@ -216,6 +216,7 @@ Module wpfMdl_PublicSub
         JenisJurnal.Items.Add(JenisJurnal_Pembelian)
         JenisJurnal.Items.Add(JenisJurnal_PembelianImpor)
         JenisJurnal.Items.Add(JenisJurnal_Penjualan)
+        JenisJurnal.Items.Add(JenisJurnal_PenjualanEceran)
         JenisJurnal.Items.Add(JenisJurnal_PenjualanEkspor)
         JenisJurnal.Items.Add(JenisJurnal_ReturPembelian)
         JenisJurnal.Items.Add(JenisJurnal_ReturPenjualan)

@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 
 Module mdl_IsiTabelCOA
@@ -34,6 +34,17 @@ Module mdl_IsiTabelCOA
         QITC &= "( '11216', 'Kas (SGD)',                                                'SGD',  'DEBET',  'Tidak' ), "
         QITC &= "( '11217', 'Kas (GBP)',                                                'GBP',  'DEBET',  'Tidak' ), "
 
+        'AKTIVA LANCAR  - Kas Outlet :
+        QITC &= "( '11221', 'Kas Outlet-1',                                             'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11222', 'Kas Outlet-2',                                             'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11223', 'Kas Outlet-3',                                             'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11224', 'Kas Outlet-4',                                             'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11225', 'Kas Outlet-5',                                             'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11226', 'Kas Outlet-6',                                             'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11227', 'Kas Outlet-7',                                             'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11228', 'Kas Outlet-8',                                             'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11229', 'Kas Outlet-9',                                             'IDR',  'DEBET',  'Tidak' ), "
+
         'AKTIVA LANCAR  - Bank :
         QITC &= "( '11301', 'Bank 1',                                                   'IDR',  'DEBET',  'Tidak' ), "
         QITC &= "( '11302', 'Bank 2',                                                   'IDR',  'DEBET',  'Tidak' ), "
@@ -47,6 +58,24 @@ Module mdl_IsiTabelCOA
         QITC &= "( '11311', 'Bank Eceran 1',                                            'IDR',  'DEBET',  'Tidak' ), "
         QITC &= "( '11312', 'Bank Eceran 2',                                            'IDR',  'DEBET',  'Tidak' ), "
         QITC &= "( '11313', 'Bank Eceran 3',                                            'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11314', 'Bank Eceran 4',                                            'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11315', 'Bank Eceran 5',                                            'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11316', 'Bank Eceran 6',                                            'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11317', 'Bank Eceran 7',                                            'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11318', 'Bank Eceran 8',                                            'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11319', 'Bank Eceran 9',                                            'IDR',  'DEBET',  'Tidak' ), "
+
+        'AKTIVA LANCAR  - e-Wallet :
+        QITC &= "( '11351', 'e-Wallet-1',                                               'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11352', 'e-Wallet-2',                                               'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11353', 'e-Wallet-3',                                               'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11354', 'e-Wallet-4',                                               'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11355', 'e-Wallet-5',                                               'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11356', 'e-Wallet-6',                                               'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11357', 'e-Wallet-7',                                               'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11358', 'e-Wallet-8',                                               'IDR',  'DEBET',  'Tidak' ), "
+        QITC &= "( '11359', 'e-Wallet-9',                                               'IDR',  'DEBET',  'Tidak' ), "
+
 
         'AKTIVA LANCAR  - Cash Advance :
         QITC &= "( '11401', 'Cash Advance',                                             'IDR',  'DEBET',  'Tidak' ), "

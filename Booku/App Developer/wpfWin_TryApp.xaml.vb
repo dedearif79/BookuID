@@ -457,7 +457,7 @@ Public Class wpfWin_TryApp
     End Sub
 
     Private Sub btn_UpdateDatabase_Click(sender As Object, e As RoutedEventArgs) Handles btn_UpdateDatabase.Click
-        ApdetBooku_SisiAplikasi = 151
+        ApdetBooku_SisiAplikasi = 188
         PesanUntukProgrammer("Tentukan Dulu Veri Updatenya...!!!" & Enter2Baris &
                              "Versi sekarang : " & ApdetBooku_SisiAplikasi)
         UpdateDatabase()

@@ -1,0 +1,84 @@
+<Window x:Class="wpfWin_TransferProgress"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Transfer Berkas"
+        Width="400" Height="220"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/BookuID.Styles;component/WPF/Styles/StyleAplikasi.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- File Icon and Name -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,15">
+            <TextBlock Text="&#xE8A5;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                       Foreground="{StaticResource clrTeksLink}" VerticalAlignment="Center"
+                       Margin="0,0,10,0"/>
+            <StackPanel>
+                <TextBlock x:Name="lbl_NamaFile" Text="filename.ext" FontWeight="SemiBold"
+                           FontSize="14" TextTrimming="CharacterEllipsis" MaxWidth="300"/>
+                <TextBlock x:Name="lbl_InfoFile" Text="0 KB" FontSize="11"
+                           Foreground="{StaticResource clrTeksSekunder}"/>
+            </StackPanel>
+        </StackPanel>
+
+        <!-- Progress Bar -->
+        <ProgressBar Grid.Row="1" x:Name="pgb_Progress" Height="20" Minimum="0" Maximum="100" Value="0"/>
+
+        <!-- Progress Text -->
+        <Grid Grid.Row="2" Margin="0,10,0,0">
+            <TextBlock x:Name="lbl_Persentase" Text="0%" HorizontalAlignment="Left"/>
+            <TextBlock x:Name="lbl_Status" Text="Memulai..." HorizontalAlignment="Right"
+                       Foreground="{StaticResource clrTeksSekunder}"/>
+        </Grid>
+
+        <!-- Transfer Details -->
+        <Grid Grid.Row="3" Margin="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Kecepatan:" FontSize="11" Foreground="{StaticResource clrTeksSekunder}"/>
+                <TextBlock x:Name="lbl_Kecepatan" Text="0 KB/s" FontWeight="SemiBold"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1">
+                <TextBlock Text="Estimasi Waktu:" FontSize="11" Foreground="{StaticResource clrTeksSekunder}"/>
+                <TextBlock x:Name="lbl_Waktu" Text="-" FontWeight="SemiBold"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- Bytes Transferred -->
+        <TextBlock Grid.Row="4" x:Name="lbl_BytesInfo" Text="0 KB / 0 KB" Margin="0,10,0,0"
+                   FontSize="11" Foreground="{StaticResource clrTeksSekunder}"
+                   HorizontalAlignment="Center"/>
+
+        <!-- Spacer -->
+        <Border Grid.Row="5"/>
+
+        <!-- Button -->
+        <Button Grid.Row="6" x:Name="btn_Batalkan" Content="Batalkan" Width="100" Height="30"
+                HorizontalAlignment="Center"
+                Click="btn_Batalkan_Click"
+                Style="{StaticResource styleButtonFormDialogBatal}"/>
+    </Grid>
+</Window>

@@ -1,4 +1,4 @@
-﻿Imports bcomm
+Imports bcomm
 Imports System.Data.Odbc
 
 Module mdl_TautanCOA
@@ -149,12 +149,43 @@ Module mdl_TautanCOA
     Public KodeTautanCOA_PPhPasal42DibayarDimuka_BPBelumDiterima
     Public NamaTautanCOA_PPhPasal42DibayarDimuka_BPBelumDiterima = "PPH PASAL 4 (2) DIBAYAR DIMUKA - BP BELUM DITERIMA"
 
-    Public KodeTautanCOA_BankEceran1
-    Public NamaTautanCOA_BankEceran1 = "BANK ECERAN 1"
-    Public KodeTautanCOA_BankEceran2
-    Public NamaTautanCOA_BankEceran2 = "BANK ECERAN 2"
-    Public KodeTautanCOA_BankEceran3
-    Public NamaTautanCOA_BankEceran3 = "BANK ECERAN 3"
+    Public KodeTautanCOA_BankEceran_01
+    Public NamaTautanCOA_BankEceran_01 = "BANK ECERAN 01"
+    Public KodeTautanCOA_BankEceran_02
+    Public NamaTautanCOA_BankEceran_02 = "BANK ECERAN 02"
+    Public KodeTautanCOA_BankEceran_03
+    Public NamaTautanCOA_BankEceran_03 = "BANK ECERAN 03"
+    Public KodeTautanCOA_BankEceran_04
+    Public NamaTautanCOA_BankEceran_04 = "BANK ECERAN 04"
+    Public KodeTautanCOA_BankEceran_05
+    Public NamaTautanCOA_BankEceran_05 = "BANK ECERAN 05"
+    Public KodeTautanCOA_BankEceran_06
+    Public NamaTautanCOA_BankEceran_06 = "BANK ECERAN 06"
+    Public KodeTautanCOA_BankEceran_07
+    Public NamaTautanCOA_BankEceran_07 = "BANK ECERAN 07"
+    Public KodeTautanCOA_BankEceran_08
+    Public NamaTautanCOA_BankEceran_08 = "BANK ECERAN 08"
+    Public KodeTautanCOA_BankEceran_09
+    Public NamaTautanCOA_BankEceran_09 = "BANK ECERAN 09"
+
+    Public KodeTautanCOA_eWallet_01
+    Public NamaTautanCOA_eWallet_01 = "E-WALLET 01"
+    Public KodeTautanCOA_eWallet_02
+    Public NamaTautanCOA_eWallet_02 = "E-WALLET 02"
+    Public KodeTautanCOA_eWallet_03
+    Public NamaTautanCOA_eWallet_03 = "E-WALLET 03"
+    Public KodeTautanCOA_eWallet_04
+    Public NamaTautanCOA_eWallet_04 = "E-WALLET 04"
+    Public KodeTautanCOA_eWallet_05
+    Public NamaTautanCOA_eWallet_05 = "E-WALLET 05"
+    Public KodeTautanCOA_eWallet_06
+    Public NamaTautanCOA_eWallet_06 = "E-WALLET 06"
+    Public KodeTautanCOA_eWallet_07
+    Public NamaTautanCOA_eWallet_07 = "E-WALLET 07"
+    Public KodeTautanCOA_eWallet_08
+    Public NamaTautanCOA_eWallet_08 = "E-WALLET 08"
+    Public KodeTautanCOA_eWallet_09
+    Public NamaTautanCOA_eWallet_09 = "E-WALLET 09"
 
     Public KodeTautanCOA_Bangunan
     Public NamaTautanCOA_Bangunan = "BANGUNAN"
@@ -574,9 +605,26 @@ Module mdl_TautanCOA
         KodeTautanCOA_PPhPasal23DibayarDimuka_BPBelumDiterima = AmbilValueKodeTautanCOA(NamaTautanCOA_PPhPasal23DibayarDimuka_BPBelumDiterima)
         KodeTautanCOA_PPhPasal42DibayarDimuka_BPBelumDiterima = AmbilValueKodeTautanCOA(NamaTautanCOA_PPhPasal42DibayarDimuka_BPBelumDiterima)
 
-        KodeTautanCOA_BankEceran1 = AmbilValueKodeTautanCOA(NamaTautanCOA_BankEceran1)
-        KodeTautanCOA_BankEceran2 = AmbilValueKodeTautanCOA(NamaTautanCOA_BankEceran2)
-        KodeTautanCOA_BankEceran3 = AmbilValueKodeTautanCOA(NamaTautanCOA_BankEceran3)
+        KodeTautanCOA_BankEceran_01 = AmbilValueKodeTautanCOA(NamaTautanCOA_BankEceran_01)
+        KodeTautanCOA_BankEceran_02 = AmbilValueKodeTautanCOA(NamaTautanCOA_BankEceran_02)
+        KodeTautanCOA_BankEceran_03 = AmbilValueKodeTautanCOA(NamaTautanCOA_BankEceran_03)
+        KodeTautanCOA_BankEceran_04 = AmbilValueKodeTautanCOA(NamaTautanCOA_BankEceran_04)
+        KodeTautanCOA_BankEceran_05 = AmbilValueKodeTautanCOA(NamaTautanCOA_BankEceran_05)
+        KodeTautanCOA_BankEceran_06 = AmbilValueKodeTautanCOA(NamaTautanCOA_BankEceran_06)
+        KodeTautanCOA_BankEceran_07 = AmbilValueKodeTautanCOA(NamaTautanCOA_BankEceran_07)
+        KodeTautanCOA_BankEceran_06 = AmbilValueKodeTautanCOA(NamaTautanCOA_BankEceran_08)
+        KodeTautanCOA_BankEceran_09 = AmbilValueKodeTautanCOA(NamaTautanCOA_BankEceran_09)
+
+        KodeTautanCOA_eWallet_01 = AmbilValueKodeTautanCOA(NamaTautanCOA_eWallet_01)
+        KodeTautanCOA_eWallet_02 = AmbilValueKodeTautanCOA(NamaTautanCOA_eWallet_02)
+        KodeTautanCOA_eWallet_03 = AmbilValueKodeTautanCOA(NamaTautanCOA_eWallet_03)
+        KodeTautanCOA_eWallet_04 = AmbilValueKodeTautanCOA(NamaTautanCOA_eWallet_04)
+        KodeTautanCOA_eWallet_05 = AmbilValueKodeTautanCOA(NamaTautanCOA_eWallet_05)
+        KodeTautanCOA_eWallet_06 = AmbilValueKodeTautanCOA(NamaTautanCOA_eWallet_06)
+        KodeTautanCOA_eWallet_07 = AmbilValueKodeTautanCOA(NamaTautanCOA_eWallet_07)
+        KodeTautanCOA_eWallet_06 = AmbilValueKodeTautanCOA(NamaTautanCOA_eWallet_08)
+        KodeTautanCOA_eWallet_09 = AmbilValueKodeTautanCOA(NamaTautanCOA_eWallet_09)
+
         KodeTautanCOA_Bangunan = AmbilValueKodeTautanCOA(NamaTautanCOA_Bangunan)
 
         KodeTautanCOA_InvestasiDeposito = AmbilValueKodeTautanCOA(NamaTautanCOA_InvestasiDeposito)
@@ -854,9 +902,25 @@ Module mdl_TautanCOA
         QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_PPhPasal23DibayarDimuka_BPBelumDiterima & "',    '11914'), "
         QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_PPhPasal42DibayarDimuka_BPBelumDiterima & "',    '11915'), "
 
-        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_BankEceran1 & "',                                '11301'), "
-        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_BankEceran2 & "',                                '11302'), "
-        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_BankEceran3 & "',                                '11303'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_BankEceran_01 & "',                              '11311'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_BankEceran_02 & "',                              '11312'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_BankEceran_03 & "',                              '11313'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_BankEceran_04 & "',                              '11314'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_BankEceran_05 & "',                              '11315'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_BankEceran_06 & "',                              '11316'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_BankEceran_07 & "',                              '11317'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_BankEceran_08 & "',                              '11318'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_BankEceran_09 & "',                              '11319'), "
+
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_eWallet_01 & "',                                 '11351'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_eWallet_02 & "',                                 '11352'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_eWallet_03 & "',                                 '11353'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_eWallet_04 & "',                                 '11354'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_eWallet_05 & "',                                 '11355'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_eWallet_06 & "',                                 '11356'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_eWallet_07 & "',                                 '11357'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_eWallet_08 & "',                                 '11358'), "
+        QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_eWallet_09 & "',                                 '11359'), "
 
         QueryIsiTautanCOA_Reg &= " ('" & NamaTautanCOA_Bangunan & "',                                   '12220'), "
 

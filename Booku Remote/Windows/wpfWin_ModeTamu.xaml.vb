@@ -183,7 +183,7 @@ Class wpfWin_ModeTamu
 
 #Region "Event Handlers - Koneksi"
 
-    Private Sub OnKoneksiBerhasil(kunciSesi As String)
+    Private Sub OnKoneksiBerhasil(kunciSesi As String, izinKontrol As Boolean, izinClipboard As Boolean, izinTransferBerkas As Boolean)
         Dispatcher.Invoke(Sub()
                               lbl_StatusKoneksi.Text = "Terhubung!"
                               lbl_IconStatus.Text = ChrW(&HE73E) ' Checkmark icon
@@ -205,11 +205,17 @@ Class wpfWin_ModeTamu
 
                               ' Inisialisasi sesi remote
                               SesiRemoteAktif = New cls_SesiRemote(kunciSesi, ModeAplikasi.TAMU, namaHost, alamatIPHost)
+                              SesiRemoteAktif.IzinKontrol = izinKontrol
+                              SesiRemoteAktif.IzinClipboard = izinClipboard
+                              SesiRemoteAktif.IzinTransferBerkas = izinTransferBerkas
 
                               ' Buka window viewer
                               Dim viewer As New wpfWin_Viewer()
                               viewer.NamaHost = namaHost
                               viewer.AlamatIPHost = alamatIPHost
+                              viewer.AktifkanKontrolJikaDiizinkan(izinKontrol)
+                              viewer.AktifkanClipboardJikaDiizinkan(izinClipboard)
+                              viewer.AktifkanTransferBerkasJikaDiizinkan(izinTransferBerkas)
                               viewer.Show()
 
                               ' Tutup window Mode Tamu
@@ -432,7 +438,7 @@ Class wpfWin_ModeTamu
                           End Sub)
     End Sub
 
-    Private Sub OnKoneksiBerhasilViaRelay(kunciSesi As String, izinKontrol As Boolean)
+    Private Sub OnKoneksiBerhasilViaRelay(kunciSesi As String, izinKontrol As Boolean, izinClipboard As Boolean, izinTransferBerkas As Boolean)
         Dispatcher.Invoke(Sub()
                               lbl_StatusKoneksi.Text = "Terhubung!"
                               lbl_IconStatus.Text = ChrW(&HE73E) ' Checkmark icon
@@ -443,12 +449,17 @@ Class wpfWin_ModeTamu
                               ' Inisialisasi sesi remote
                               SesiRemoteAktif = New cls_SesiRemote(kunciSesi, ModeAplikasi.TAMU, _namaHostInternet, "via-relay")
                               SesiRemoteAktif.IzinKontrol = izinKontrol
+                              SesiRemoteAktif.IzinClipboard = izinClipboard
+                              SesiRemoteAktif.IzinTransferBerkas = izinTransferBerkas
 
                               ' Buka window viewer
                               Dim viewer As New wpfWin_Viewer()
                               viewer.NamaHost = _namaHostInternet
                               viewer.AlamatIPHost = $"Relay ({_hostCodeTerseleksi})"
                               viewer.ModeViaRelay = True
+                              viewer.AktifkanKontrolJikaDiizinkan(izinKontrol)
+                              viewer.AktifkanClipboardJikaDiizinkan(izinClipboard)
+                              viewer.AktifkanTransferBerkasJikaDiizinkan(izinTransferBerkas)
                               viewer.Show()
 
                               ' Tutup window Mode Tamu

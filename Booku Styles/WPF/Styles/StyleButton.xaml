@@ -294,6 +294,12 @@
         <Setter Property="Padding" Value="15 0"/>
     </Style>
 
+    <!-- Button Form Halaman - Daftar -->
+    <Style x:Key="styleButtonFormHalamanDaftar" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
+        <Setter Property="Content" Value="Daftar"/>
+        <Setter Property="Padding" Value="15 0"/>
+    </Style>
+
     <!-- Button Form Halaman - Import -->
     <Style x:Key="styleButtonFormHalamanImport" BasedOn="{StaticResource styleButtonFormHalaman}" TargetType="Button">
         <Setter Property="Content" Value="Impor"/>

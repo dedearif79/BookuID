@@ -150,6 +150,9 @@ Public Class wpfWin_BOOKU
     End Sub
 
     Private Sub mnu_DataToko_Click(sender As Object, e As RoutedEventArgs) Handles mnu_DataToko.Click
+        BukaHalaman_DataToko()
+    End Sub
+    Sub BukaHalaman_DataToko()
         host_DataToko = New wpfHost_DataToko
         BukaUserControlDalamTab(usc_DataToko, host_DataToko.JudulForm)
     End Sub
@@ -869,6 +872,26 @@ Public Class wpfWin_BOOKU
     Sub BukaModul_BukuPenjualanEceran()
         host_BukuPenjualanEceran = New wpfHost_BukuPenjualanEceran
         BukaUserControlDalamTab(usc_BukuPenjualanEceran, host_BukuPenjualanEceran.JudulForm)
+    End Sub
+
+    Private Sub mnu_BukuPenjualanEceran_RekapHarian_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPenjualanEceran_RekapHarian.Click
+        BukaModul_BukuPenjualanEceran_RekapHarian()
+    End Sub
+    Sub BukaModul_BukuPenjualanEceran_RekapHarian()
+        host_BukuPenjualanEceran_RekapHarian = New wpfHost_BukuPenjualanEceran_RekapHarian
+        BukaUserControlDalamTab(usc_BukuPenjualanEceran_RekapHarian, host_BukuPenjualanEceran_RekapHarian.JudulForm)
+    End Sub
+
+    Private Sub mnu_BukuPenjualanEceran_RekapBulanan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPenjualanEceran_RekapBulanan.Click
+        BukaModul_BukuPenjualanEceran_RekapBulanan()
+    End Sub
+    Sub BukaModul_BukuPenjualanEceran_RekapBulanan()
+        If LevelUserAktif < LevelUser_99_AppDeveloper Then
+            MenuIniMasihDalamPengembangan()
+            Return
+        End If
+        host_BukuPenjualanEceran_RekapBulanan = New wpfHost_BukuPenjualanEceran_RekapBulanan
+        BukaUserControlDalamTab(usc_BukuPenjualanEceran_RekapBulanan, host_BukuPenjualanEceran_RekapBulanan.JudulForm)
     End Sub
 
     Private Sub mnu_BukuPengawasanReturPenjualan_Click(sender As Object, e As RoutedEventArgs) Handles mnu_BukuPengawasanReturPenjualan.Click

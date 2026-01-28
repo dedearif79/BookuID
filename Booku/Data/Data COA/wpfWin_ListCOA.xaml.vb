@@ -39,6 +39,12 @@ Public Class wpfWin_ListCOA
                 COA_.Header = "Kode"
                 Nama_Akun.Header = "Nama Akun"
                 FilterKategori = FilterListCOA_Pembelian
+            Case ListAkun_KasOutlet
+                JudulForm = "Daftar Akun Kas Outlet"
+                lbl_CariCOA.Text = "Cari Akun Kas Outlet :"
+                COA_.Header = "Kode"
+                Nama_Akun.Header = "Nama Kas"
+                FilterKategori = FilterListCOA_KasOutlet
             Case ListAkun_Bank
                 JudulForm = "Daftar Akun Bank"
                 lbl_CariCOA.Text = "Cari Akun Bank :"
@@ -256,10 +262,10 @@ Public Class wpfWin_ListCOA
         NamaAkunTerseleksi = rowviewUtama("Nama_Akun")
         Dim VisibilitasTerseleksi = rowviewUtama("Visibilitas_")
 
-        If VisibilitasTerseleksi = Keterangan_TIDAK_ Then
+        If VisibilitasTerseleksi = Keterangan_Tidak Then
 
             If Not TanyaKonfirmasi("Dengan memilih Akun ini berarti Anda setuju untuk mengubah Visibilitas-nya menjadi 'Terlihat'." & Enter2Baris &
-                                      "Lanjutkan?") Then
+                                   "Lanjutkan?") Then
                 COATerseleksi = Kosongan
                 NamaAkunTerseleksi = Kosongan
                 Return

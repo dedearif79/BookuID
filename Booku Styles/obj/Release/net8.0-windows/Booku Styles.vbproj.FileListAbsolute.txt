@@ -7,7 +7,6 @@ D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\St
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleButton.baml
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleCheckBox.baml
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleColor.baml
-D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleComboBox.baml
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleDataGrid.baml
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleDatePicker.baml
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleGrid.baml
@@ -27,6 +26,7 @@ D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\St
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\GeneratedInternalTypeHelper.g.vb
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\BookuID.Styles_MarkupCompile.cache
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\BookuID.Styles_MarkupCompile.lref
+D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleComboBox.baml
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\WPF\Styles\StyleTextBox.baml
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\BookuID.Styles.g.resources
 D:\VB .Net Project\BookuID\Booku Styles\obj\Release\net8.0-windows\Booku Styles.GeneratedMSBuildEditorConfig.editorconfig

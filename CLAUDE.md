@@ -169,12 +169,19 @@ Obrolan dan dokumentasi menggunakan **Bahasa Indonesia**.
 | Fase 1 | Discovery + Koneksi LAN | Selesai |
 | Fase 2 | View-Only Screen Streaming | Selesai |
 | Fase 2b | Kontrol Keyboard dan Mouse | Selesai |
-| Fase 3 | Transfer Berkas | Belum dimulai |
+| Fase 3a | Clipboard Sync | Selesai |
+| Fase 3b | Transfer Berkas | Dalam Proses (LAN ✓, Internet ✗) |
 | Fase 4 | Remote via Internet (Relay Server) | Selesai |
 
 | Topik | File Rules |
 |-------|------------|
-| Overview, Arsitektur & Protokol | `.claude/rules/Booku Remote/overview.md` |
+| Overview & Quick Reference | `.claude/rules/Booku Remote/overview.md` |
+| Arsitektur Jaringan & Protokol | `.claude/rules/Booku Remote/network-protocol.md` |
+| Alur Kerja (Fase 1-4) | `.claude/rules/Booku Remote/workflow.md` |
+| Komponen Utama (Modul VB) | `.claude/rules/Booku Remote/components.md` |
+| H.264 Streaming | `.claude/rules/Booku Remote/h264-streaming.md` |
+| Window dan UI | `.claude/rules/Booku Remote/ui-windows.md` |
+| Developer Guide | `.claude/rules/Booku Remote/developer-guide.md` |
 
 **Dokumentasi Khusus Project Booku Remote Android**
 

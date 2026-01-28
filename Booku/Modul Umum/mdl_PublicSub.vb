@@ -1072,6 +1072,34 @@ Public Module mdl_PublicSub
 
 
     'AMBIL VALUE NAMA AKUN :
+    Public Function VisibilitasCOA(ByVal COA As String) As Boolean
+        Dim Visibilitas As Boolean
+        Dim cmdAkun As OdbcCommand
+        Dim drAkun As OdbcDataReader
+        If COA <> Kosongan Then
+            BukaDatabaseGeneral_Kondisional()
+            cmdAkun = New OdbcCommand(" SELECT Visibilitas FROM tbl_COA WHERE COA = '" & COA & "' ", KoneksiDatabaseGeneral)
+            drAkun = cmdAkun.ExecuteReader
+            drAkun.Read()
+            If drAkun.HasRows Then
+                If drAkun.Item("Visibilitas") = Keterangan_Ya Then
+                    Visibilitas = True
+                Else
+                    Visibilitas = False
+                End If
+                jur_AkunTerdaftar = True
+            Else
+                jur_AkunTerdaftar = False
+                PesanUntukProgrammer("Akun tidak terdaftar...!!!" & Enter2Baris &
+                                     "Pesan ini berasal dari Sub Function 'AmbilValue_NamaAkun'.")
+            End If
+            TutupDatabaseGeneral_Kondisional()
+        End If
+        Return Visibilitas
+    End Function
+
+
+    'AMBIL VALUE NAMA AKUN :
     Public Function AmbilValue_NamaAkun(ByVal COA As String) As String
         Dim NamaAkun = Kosongan
         Dim cmdAkun As OdbcCommand

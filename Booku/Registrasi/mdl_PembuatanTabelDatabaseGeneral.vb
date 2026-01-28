@@ -227,6 +227,7 @@ Module mdl_PembuatanTabelDatabaseGeneral
             'Pembuatan Tabel : tbl_Dummy
             QueryPembuatanTabel = " CREATE TABLE `tbl_Dummy` (" &
                 " `Upd_99999`    varchar(9)     NOT NULL, " &
+                " `Upd_188`      varchar(9)     NOT NULL, " &
                 " `Upd_166`      varchar(9)     NOT NULL, " &
                 " `Upd_164`      varchar(9)     NOT NULL, " &
                 " `Upd_160`      varchar(9)     NOT NULL, " &
@@ -461,6 +462,7 @@ Module mdl_PembuatanTabelDatabaseGeneral
                 " `Kode_Toko` varchar(12) NOT NULL, " &
                 " `Nama_Toko` varchar(255) NOT NULL, " &
                 " `Alamat` longtext NOT NULL, " &
+                " `COA_Kas` varchar(9) NOT NULL, " &
                 " `Deskripsi` longtext NOT NULL " &
                 " ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; "
             AksesDatabase_General(Buka)

@@ -58,7 +58,7 @@ Public Module mdl_KoneksiRelay
     Public Event HasilQueryHost(found As Boolean, namaHost As String, requiresPassword As Boolean, pesan As String)
 
     ''' <summary>Event ketika koneksi berhasil via relay (untuk Tamu)</summary>
-    Public Event KoneksiBerhasilViaRelay(kunciSesi As String, izinKontrol As Boolean)
+    Public Event KoneksiBerhasilViaRelay(kunciSesi As String, izinKontrol As Boolean, izinClipboard As Boolean, izinTransferBerkas As Boolean)
 
     ''' <summary>Event ketika koneksi ditolak via relay (untuk Tamu)</summary>
     Public Event KoneksiDitolakViaRelay(pesan As String)
@@ -398,8 +398,13 @@ Public Module mdl_KoneksiRelay
 
             Case TipePaket.PERMINTAAN_STREAMING, TipePaket.HENTIKAN_STREAMING,
                  TipePaket.INPUT_KEYBOARD, TipePaket.INPUT_MOUSE,
-                 TipePaket.TUTUP_KONEKSI, TipePaket.HEARTBEAT
-                ' Paket dari Tamu via relay - forward ke handler yang ada (Host mode)
+                 TipePaket.TUTUP_KONEKSI, TipePaket.HEARTBEAT,
+                 TipePaket.CLIPBOARD_DATA,
+                 TipePaket.PERMINTAAN_BERKAS, TipePaket.RESPON_TRANSFER,
+                 TipePaket.DATA_BERKAS, TipePaket.KONFIRMASI_CHUNK,
+                 TipePaket.KONFIRMASI_BERKAS, TipePaket.BATAL_TRANSFER,
+                 TipePaket.DAFTAR_FOLDER
+                ' Paket dari Tamu/Host via relay - forward ke handler yang ada
                 RaiseEvent PaketDariRelay(paket)
 
             ' === Paket untuk Tamu ===
@@ -420,7 +425,7 @@ Public Module mdl_KoneksiRelay
                         ' PENTING: Simpan IdSesiRelay untuk routing paket streaming
                         IdSesiRelay = paket.IdSesi
                         Console.WriteLine($"[RELAY-TAMU] Koneksi diterima, kunci sesi: {KunciSesiAktif.Substring(0, 8)}..., IdSesiRelay: {IdSesiRelay}")
-                        RaiseEvent KoneksiBerhasilViaRelay(payload.KunciSesi, payload.IzinKontrol)
+                        RaiseEvent KoneksiBerhasilViaRelay(payload.KunciSesi, payload.IzinKontrol, payload.IzinClipboard, payload.IzinTransferBerkas)
                     Else
                         Console.WriteLine($"[RELAY-TAMU] Koneksi ditolak: {payload.Pesan}")
                         RaiseEvent KoneksiDitolakViaRelay(payload.Pesan)
@@ -430,6 +435,14 @@ Public Module mdl_KoneksiRelay
             Case TipePaket.FRAME_LAYAR
                 ' Frame layar dari Host (untuk Tamu via relay)
                 RaiseEvent FrameDiterimaViaRelay(paket)
+
+            Case TipePaket.RESPON_DAFTAR_FOLDER
+                ' Respon daftar folder dari Host (untuk Tamu via relay - File Browser)
+                Dim payload = DeserializeResponDaftarFolder(paket.Payload)
+                If payload IsNot Nothing Then
+                    Console.WriteLine($"[RELAY-TAMU] Daftar folder diterima: {payload.Path}, Sukses={payload.Sukses}")
+                    RaiseDaftarFolderDiterimaViaRelay(payload)
+                End If
 
             Case Else
                 Console.WriteLine($"[RELAY] Paket tidak dikenal: {paket.TipePaket}")
@@ -495,11 +508,15 @@ Public Module mdl_KoneksiRelay
     ''' <param name="idSesi">ID sesi dari permintaan</param>
     ''' <param name="diterima">True jika diterima</param>
     ''' <param name="izinKontrol">True jika izinkan kontrol keyboard/mouse</param>
+    ''' <param name="izinClipboard">True jika izinkan clipboard sync</param>
     ''' <param name="supportedCodecs">Daftar codec yang didukung Tamu (untuk negosiasi)</param>
+    ''' <param name="izinTransferBerkas">True jika izinkan transfer berkas</param>
     ''' <param name="pesan">Pesan opsional</param>
     Public Async Function KirimResponKoneksiViaRelayAsync(idSesi As String, diterima As Boolean,
                                                           izinKontrol As Boolean,
+                                                          Optional izinClipboard As Boolean = False,
                                                           Optional supportedCodecs As String() = Nothing,
+                                                          Optional izinTransferBerkas As Boolean = False,
                                                           Optional pesan As String = "") As Task(Of Boolean)
         Try
             ' Buat payload respon
@@ -509,7 +526,7 @@ Public Module mdl_KoneksiRelay
             ' Tentukan codec berdasarkan supportedCodecs dari Tamu
             Dim selectedCodec = mdl_KoneksiJaringan.TentukanCodecStreaming(supportedCodecs)
 
-            Dim paketRespon = BuatPaketResponKoneksi(hasil, kunciSesi, pesan, izinKontrol, False, False, selectedCodec)
+            Dim paketRespon = BuatPaketResponKoneksi(hasil, kunciSesi, pesan, izinKontrol, izinTransferBerkas, izinClipboard, selectedCodec)
             paketRespon.IdSesi = idSesi
 
             ' Kirim via relay
@@ -692,6 +709,90 @@ Public Module mdl_KoneksiRelay
             Return False
         End Try
     End Function
+
+    ''' <summary>
+    ''' Mengirim clipboard data ke peer via relay. Fase 3.
+    ''' Bidirectional: Host → Tamu atau Tamu → Host.
+    ''' </summary>
+    Public Async Function KirimClipboardViaRelayAsync(payload As cls_PayloadClipboard) As Task(Of Boolean)
+        If Not TerhubungKeRelay OrElse String.IsNullOrEmpty(IdSesiRelay) Then Return False
+
+        Try
+            Dim paket = BuatPaketClipboard(payload.TipeData, payload.Data, payload.Source, payload.HashData)
+            paket.IdSesi = IdSesiRelay
+            Dim berhasil = Await KirimPaketKeRelayAsync(paket)
+            If berhasil Then
+                WriteLog($"[CLIPBOARD-RELAY] Terkirim: {payload.TipeData}, hash={payload.HashData?.Substring(0, 8)}")
+            End If
+            Return berhasil
+        Catch ex As Exception
+            WriteLog($"[CLIPBOARD-RELAY] Error kirim: {ex.Message}")
+            Return False
+        End Try
+    End Function
+
+#End Region
+
+#Region "Transfer Berkas via Relay (Fase 3b)"
+
+    ''' <summary>Event ketika daftar folder diterima via relay (untuk Tamu)</summary>
+    Public Event DaftarFolderDiterimaViaRelay(payload As cls_PayloadResponDaftarFolder)
+
+    ''' <summary>
+    ''' Mengirim permintaan transfer berkas via relay server.
+    ''' </summary>
+    ''' <param name="transfer">State transfer</param>
+    Public Async Function KirimPermintaanTransferViaRelayAsync(transfer As cls_TransferBerkas) As Task(Of Boolean)
+        If Not TerhubungKeRelay OrElse String.IsNullOrEmpty(IdSesiRelay) Then
+            WriteLog("[TRANSFER-RELAY] Tidak terhubung ke relay atau IdSesiRelay kosong")
+            Return False
+        End If
+
+        Try
+            Dim paket = BuatPaketPermintaanBerkas(transfer)
+            paket.IdSesi = IdSesiRelay
+            Dim berhasil = Await KirimPaketKeRelayAsync(paket)
+            If berhasil Then
+                WriteLog($"[TRANSFER-RELAY] Permintaan transfer terkirim: {transfer.NamaFile}")
+            End If
+            Return berhasil
+        Catch ex As Exception
+            WriteLog($"[TRANSFER-RELAY] Error kirim permintaan transfer: {ex.Message}")
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Mengirim permintaan daftar folder via relay server (untuk browse remote).
+    ''' </summary>
+    ''' <param name="path">Path folder (kosong = root/drives)</param>
+    Public Async Function KirimPermintaanDaftarFolderViaRelayAsync(Optional path As String = "") As Task(Of Boolean)
+        If Not TerhubungKeRelay OrElse String.IsNullOrEmpty(IdSesiRelay) Then
+            WriteLog("[TRANSFER-RELAY] Tidak terhubung ke relay atau IdSesiRelay kosong")
+            Return False
+        End If
+
+        Try
+            Dim paket = BuatPaketDaftarFolder(path)
+            paket.IdSesi = IdSesiRelay
+            Dim berhasil = Await KirimPaketKeRelayAsync(paket)
+            If berhasil Then
+                WriteLog($"[TRANSFER-RELAY] Permintaan daftar folder terkirim: {path}")
+            End If
+            Return berhasil
+        Catch ex As Exception
+            WriteLog($"[TRANSFER-RELAY] Error kirim permintaan daftar folder: {ex.Message}")
+            Return False
+        End Try
+    End Function
+
+    ''' <summary>
+    ''' Raise event ketika daftar folder diterima via relay.
+    ''' Dipanggil dari handler paket.
+    ''' </summary>
+    Public Sub RaiseDaftarFolderDiterimaViaRelay(payload As cls_PayloadResponDaftarFolder)
+        RaiseEvent DaftarFolderDiterimaViaRelay(payload)
+    End Sub
 
 #End Region
 

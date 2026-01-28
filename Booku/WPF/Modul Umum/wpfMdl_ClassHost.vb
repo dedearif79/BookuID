@@ -132,6 +132,8 @@ Module wpfMdl_ClassHost
     ' PENJUALAN ECERAN
     ' =================================================================
     Public host_BukuPenjualanEceran As wpfHost_BukuPenjualanEceran
+    Public host_BukuPenjualanEceran_RekapHarian As wpfHost_BukuPenjualanEceran_RekapHarian
+    Public host_BukuPenjualanEceran_RekapBulanan As wpfHost_BukuPenjualanEceran_RekapBulanan
 
     ' =================================================================
     ' BANK CASH (Bank, Kas, PettyCash, CashAdvance)
